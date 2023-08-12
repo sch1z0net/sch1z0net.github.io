@@ -2,9 +2,303 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>sch1z0.net projects</title>
+    <style>
+        body {
+            background-color: rgb(140,140,140);
+            margin: 0;
+            padding: 0; 
+            width: 100%;
+            height: 100%;
+            font-family: monospace;
+        }
+
+        p {
+            line-height: 14px;
+            margin: 0px;
+            text-align: justify;
+        }
+
+        #center {
+            display: flex;
+            flex-direction: column;
+            margin: auto auto;
+            width: 90%;
+            height: 90%;
+            top:0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-radius: 6px;
+        }
+
+        #header {
+            margin: auto auto;
+            width: 90%;
+            border-radius: 6px;
+        }
+
+        #header_row {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .header_row_item {
+            margin-right: 20px;
+        }
+
+        #grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1px;
+            padding-bottom: 100px;
+            margin: auto auto;
+            gap: 1rem;
+            width: 100%;
+            flex-wrap: wrap;
+        }        
+
+        .grid-item {
+            border-radius: 6px;
+            border: solid 1px rgb(30, 30, 30);
+            background-color: rgb(60, 60, 60);
+            padding: 2px;
+            margin: 1px;
+            display: flex;
+            flex-direction: row;
+            color: white;
+            height: 200px;
+            width: 500px;
+            box-shadow: 2px 2px 2px black;
+            cursor: pointer;
+        }
+
+        .thumb {
+            border-radius: 6px;
+            height: 200px; 
+            width: 200px;
+        }
+
+
+        .grid-item:hover {
+            background-color: rgb(160, 160, 160);
+            box-shadow: 2px 2px 6px black;
+        }
+
+        .info {
+            margin: 10px;
+            width: 280px;
+        }
+
+        #profile_div {
+            display: flex;
+            flex-direction: row;
+            width: 400px;
+            border-right: 1px solid black;
+            padding-right: 20px;
+            filter: drop-shadow(1px 1px 10px rgba(0,0,0,0.5));
+        }
+
+        #profile {
+            border-radius: 50%;
+            height: 200px; 
+            width: 200px;
+            border: 1px solid white;
+        }
+
+        .links {
+            width: 30px;
+            height: 30px;
+            mix-blend-mode: multiply;
+            cursor: pointer;
+            filter: grayscale(100%) drop-shadow(1px 1px 10px rgba(0,0,0,0.5));
+        }
+ 
+        a {
+            text-decoration: none;
+        }
+
+        #imprint {
+            width: 100%;
+            text-align: center;
+            padding-bottom: 100px;
+            padding-top: 40px;
+            background-color: black;
+            color: white;
+        }
+
+        .tools {
+            height: 30px;
+            width: 30px;
+            object-fit: contain;
+            border-radius: 5px;
+            background-color: black;
+        }
+
+    </style>
 </head>
 <body>
+
+  <div style="width:100%; height: 20px; background-color: black; color: white">
+  </div>
+
+  <div id="center">
+   <div id="header">
+
+    <div id="header_row">
+    <div class="header_row_item">
+         <h1>
+            About me:
+         </h1>
+
+         <div id="profile_div">
+            <img id="profile" src="profile.png" />
+            <div>
+            <p style="padding-left:0px;"> Hi, I'm Sebastian. </p>
+            <p style="padding-left:10px;"> I am diagnosed with paranoid schizophrenia. </p>
+            <p style="padding-left:20px;"> Although this illness has taken much quality from my life, </p> 
+            <p style="padding-left:30px;"> I am still trying to stay creative and sane. </p> 
+            <p style="padding-left:20px;"> I am into coding with a certain background in computer science. </p>
+            <p style="padding-left:10px;"> You can learn more about me on www.sch1z0.net</p>
+            </div>
+         </div>
+    </div>
+    <div class="header_row_item" style="width: 200px">
+        <div style="border-bottom: solid 1px black;">
+         <h1>Links:</h1>
+
+           <a href="https://www.sch1z0.net">
+            <img class="links" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Home-icon.svg"/>
+           </a>
+
+           <a href="https://github.com/sch1z0net">
+            <img class="links" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/GitHub_Invertocat_Logo.svg/1280px-GitHub_Invertocat_Logo.svg.png"/>
+           </a>
+
+           <a href="https://www.reddit.com/user/EinDudeVomMond">
+            <img class="links" src="https://upload.wikimedia.org/wikipedia/en/thumb/b/bd/Reddit_Logo_Icon.svg/1280px-Reddit_Logo_Icon.svg.png"/>
+           </a>
+
+           <a href="https://www.instagram.com/sch1z0net/">
+            <img class="links" src="https://upload.wikimedia.org/wikipedia/commons/2/27/CIS-A2K_Instagram_Icon_%28Black%29.svg"/>
+           </a>
+
+           <a href="mailto:sebastianprusak@sch1z0.net">
+            <img class="links" src="https://upload.wikimedia.org/wikipedia/commons/2/2a/High-contrast-emblem-mail.svg"/>
+           </a> 
+        </div>
+        <div>
+           <h1>Donate:</h1>
+           <div style="text-align: justify;">
+           You can help me through my life with a small donation on Paypal, if you like my work.
+           <div id="donate-button-container" style=" margin-left: 50%; margin-top: 10px">
+            <div id="donate-button"></div>
+               <script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
+               <script>
+                 PayPal.Donation.Button({
+                  env:'production',
+                  hosted_button_id:'TZW3JS7UQ5KTG',
+                  image: {
+                  src:'https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif',
+                  alt:'Donate with PayPal button',
+                  title:'PayPal - The safer, easier way to pay online!',
+                  }
+                 }).render('#donate-button');
+               </script>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    </div>
+
+
+    <h1>Projects:</h1>
+
+   </div>
+   <div id="grid">
+       <a href="https://www.sch1z0.net">
+        <div class="grid-item">
+            <img class="thumb" src="artproject.png" />
+            <div class="info">
+               <h2> sch1z0.net </h2>
+               <hr>
+               A website about my person and my mental disorder, 
+               which led me to creating a collection of schizophrenic art.
+               <hr>
+               <img class="tools" src="html5-icon.svg.png"/>
+               <img class="tools" src="css3-icon.svg.png"/>
+               <img class="tools" src="js-icon.svg.png"/>
+               <img class="tools" src="webgl-icon.svg.png"/>
+            </div>
+        </div>
+       </a>
+       <a href="https://sch1z0net.github.io/tiles/">
+        <div class="grid-item">
+            <img class="thumb" src="tiles.png" />
+            <div class="info">
+               <h2> Youtube Tiles </h2>
+               <hr>
+               A tool where you can take a youtube video of your choice and
+               display it as a kind of 'hologram', accomplished by 
+               tiles with different depth.
+               <hr>
+               <img class="tools" src="react-icon.svg.png"/>
+               <img class="tools" src="webgl-icon.svg.png"/>
+            </div>
+        </div>
+       </a>
+        <div class="grid-item">
+            <img src="glassy.png" />
+            <div class="info">
+               <h2> Glassy Logo </h2>
+               <hr>
+               A tool where you can take a background image via url and add a glassy logo to it.
+               <hr>
+               <img class="tools" src="react-icon.svg.png"/>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img class="thumb" src="black.png" alt="yet to come" />
+            <div class="info">
+               <h2> -Empty Project- </h2>
+               <hr>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img class="thumb" src="black.png" alt="yet to come" />
+            <div class="info">
+               <h2> -Empty Project- </h2>
+               <hr>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img class="thumb" src="black.png" alt="yet to come" />
+            <div class="info">
+               <h2> -Empty Project- </h2>
+               <hr>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img class="thumb" src="black.png" alt="yet to come" />
+            <div class="info">
+               <h2> -Empty Project- </h2>
+               <hr>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img class="thumb" src="black.png" alt="yet to come" />
+            <div class="info">
+               <h2> -Empty Project- </h2>
+               <hr>
+            </div>
+        </div>
+   </div>
+  </div>
+      <div id="imprint">
+            © 2023 • Sebastian Prusak
+    </div>
 
 </body>
 </html>
