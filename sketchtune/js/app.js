@@ -6,11 +6,14 @@ $(document).ready(function() {
       super();
       this.name = name;
 
-      $(this).mousewheel(function(event, delta) {
-         //this.scrollLeft -= (delta * 30);
-         console.log((delta * 30));
-         event.preventDefault();
-      });
+     $(this).bind('mousewheel', function(e) {
+      if(e.originalEvent.wheelDelta / 120 > 0) {
+         alert('up');
+      } else {
+         alert('down');
+      }
+     });
+
     }
 
     connectedCallback() {
