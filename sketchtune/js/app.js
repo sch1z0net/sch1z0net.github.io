@@ -79,12 +79,49 @@ $(document).ready(function() {
     }
   }
 
+  class SideWindow extends HTMLElement {
+    constructor(name) {
+      super();
+      this.name = name;
+    }
+
+    connectedCallback() {
+    }
+  }
+
+  class TrackTitleContainer extends HTMLElement {
+    constructor(name) {
+      super();
+      this.name = name;
+    }
+
+    connectedCallback() {
+      for(var i = 1; i<60; i++){
+         $(this).append($("<track-title>"));
+         $("track-window").append($("<track-row>"));
+      }
+    }
+  }
+
+  class TrackTitle extends HTMLElement {
+    constructor(name) {
+      super();
+      this.name = name;
+    }
+
+    connectedCallback() {
+    }
+  }
+
+
   // Define the custom element
   customElements.define('grid-window' , GridWindow);
   customElements.define('beat-bar'    , BeatBar);
   customElements.define('beat-col'    , BeatCol);
   customElements.define('track-window', TrackWindow);
   customElements.define('track-row'   , TrackRow);
-
+  customElements.define('side-window' , SideWindow);
+  customElements.define('track-title-container', TrackTitleContainer);
+  customElements.define('track-title' , TrackTitle);
 
 });
