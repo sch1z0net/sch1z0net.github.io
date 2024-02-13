@@ -48,12 +48,15 @@ beat-col {
 }
 
 beat-col > span{
-  margin-top: -20px;
+  margin-top: -12px;
   font-size: 10px;
   font-family: system-ui;
+  font-weight: bold;
   color: rgba(0,0,0,0.5);
+  position: absolute;
 }
 
+.fullbar > span { border-left: 2px solid rgba(90,90,90,0.5); }
 .col_a { background-color: rgba(0,0,0,0); }
 .col_b { background-color: rgba(0,0,0,0.1); }
 
