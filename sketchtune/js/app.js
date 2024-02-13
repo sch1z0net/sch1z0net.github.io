@@ -19,7 +19,9 @@ $(document).ready(function() {
     }
 
     connectedCallback() {
-        // Add any initial setup logic here
+      for(var i = 1; i<100; i++){
+         $(this).append($("<beat-col>").attr('data-beat',i));
+      }
     }
   }
 
