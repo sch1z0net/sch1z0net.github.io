@@ -45,7 +45,14 @@ beat-bar-container {
   /** z-index: 100; **/
 }
 
+beat-bar::-webkit-scrollbar {
+  display: none;
+}
+
 beat-bar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+
   height: calc(100% - 10px);
   width: 100%;
   display: flex;
@@ -66,7 +73,7 @@ beat-col {
   position: relative;
 }
 
-beat-col > span{
+beat-col > span {
   margin-top: -5px;
   font-size: 8px;
   font-family: system-ui;
@@ -88,7 +95,14 @@ beat-col > span{
 .col_a { background-color: rgba(0,0,0,0); }
 .col_b { background-color: rgba(0,0,0,0.1); }
 
+track-window::-webkit-scrollbar {
+  display: none;
+}
+
 track-window {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+
   margin-top: 30px;
   position: absolute;
   font-size: 0;
