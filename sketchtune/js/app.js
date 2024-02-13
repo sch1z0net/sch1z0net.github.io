@@ -6,7 +6,7 @@ $(document).ready(function() {
        $("track-title-container").scrollTop(e.originalEvent.deltaY + $("track-title-container").scrollTop());
 
        $("beat-bar").scrollLeft(e.originalEvent.deltaX + $("beat-bar").scrollLeft());
-       $("track-window").scrollLeft(e.originalEvent.deltaX + $("track-window").scrollLeft());
+       $("track-window").scrollLeft($("beat-bar").scrollLeft());
   });
 
   class GridWindow extends HTMLElement {
