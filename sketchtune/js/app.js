@@ -50,7 +50,7 @@ $(document).ready(function() {
         $(this).addClass("col_a");
       }
       $(this).append($('<span>').text(beat)); 
-      tracks_row_length += 20;
+      tracks_row_length += 20+1;
     }
 
     connectedCallback() {

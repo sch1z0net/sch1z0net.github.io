@@ -67,6 +67,7 @@ beat-bar {
   width: 100%;
   display: flex;
   overflow-x: scroll;
+  overscroll-behavior-x: none;
   padding-top: 10px;
   padding-bottom: 20px;
 }
@@ -120,12 +121,12 @@ track-window {
   width: calc(var(--main-width) - 40px);
   overflow-y: scroll;
   overflow-x: scroll;
+  overscroll-behavior-x: none;
   /** z-index: 10; **/
 }
 
 track-row-container {
   display: block;
-  width: 1000px;
   height: 100%;
   box-sizing: border-box;
 }
