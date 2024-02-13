@@ -28,7 +28,7 @@ $(document).ready(function() {
       super();
       this.name = name;
       var beat = $(this).attr('data-beat');
-      if((beat-1) % 8 < 4){
+      if(((beat-1) % 8) < 4){
          $(this).addClass("col_b");
       }else{
          $(this).addClass("col_a");
