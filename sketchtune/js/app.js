@@ -28,13 +28,15 @@ $(document).ready(function() {
       super();
       this.name = name;
       var beat = $(this).attr('data-beat');
-      if(((beat-1) % 4) == 0){
-         $(this).addClass("fullbar");
+      if((beat-1) != 0){
+        if(((beat-1) % 4) == 0){
+           $(this).addClass("fullbar");
+        }
       }
       if(((beat-1) % 8) < 4){
-         $(this).addClass("col_b");
+        $(this).addClass("col_b");
       }else{
-         $(this).addClass("col_a");
+        $(this).addClass("col_a");
       }
       $(this).append($('<span>').text(beat)); 
     }
