@@ -90,7 +90,7 @@ track-window {
   position: absolute;
   font-size: 0;
   height: 100%;
-  width: calc(100% - 80px);
+  width: calc(100% - 40px);
   z-index: 10;
 }
 
