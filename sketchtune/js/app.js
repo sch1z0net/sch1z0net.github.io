@@ -68,6 +68,7 @@ $(document).ready(function() {
     connectedCallback() {
         tracks_height_sum += 20;
         $('beat-bar').css("max-height",tracks_height_sum+"px");
+        $('track-row-empty').css("max-height","calc(100% - "+tracks_height_sum+"px)")
     }
   }
 
