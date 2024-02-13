@@ -8,9 +8,11 @@ $(document).ready(function() {
 
      $(this).bind('wheel', function(e) {
       if(e.originalEvent.deltaY / 120 > 0) {
-         alert('up');
+         //alert('up');
+         $("track-window").scrollTop(e.originalEvent.deltaY);
       } else {
-         alert('down');
+         //alert('down');
+         $("track-window").scrollTop(e.originalEvent.deltaY);
       }
      });
 
