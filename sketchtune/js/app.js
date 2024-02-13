@@ -99,12 +99,22 @@ $(document).ready(function() {
       for(var i = 1; i<60; i++){
          var color = "hsl("+(i*4)+",75%,85%)";
          $(this).append($("<track-title>").css("background-color",color));
-         $("track-window").append($("<track-row>"));
+         $("track-window").append($("<track-row>").append("<track-pattern>"));
       }
     }
   }
 
   class TrackTitle extends HTMLElement {
+    constructor(name) {
+      super();
+      this.name = name;
+    }
+
+    connectedCallback() {
+    }
+  }
+
+  class TrackPattern extends HTMLElement {
     constructor(name) {
       super();
       this.name = name;
@@ -124,5 +134,6 @@ $(document).ready(function() {
   customElements.define('side-window' , SideWindow);
   customElements.define('track-title-container', TrackTitleContainer);
   customElements.define('track-title' , TrackTitle);
+  customElements.define('track-pattern' , TrackPattern);
 
 });

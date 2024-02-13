@@ -167,3 +167,12 @@ track-title {
   background-color: rgba(200,100,100,1);
 }
 
+track-pattern {
+  display: inline-block;
+  width: 100px;
+  height: 100%;
+  border: 1px solid rgba(90,90,90,0.8);
+  box-sizing: border-box;
+  background-color: rgba(200,200,200,1);
+}
+
