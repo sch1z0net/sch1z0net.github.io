@@ -33,8 +33,7 @@ $(document).ready(function() {
       }else{
          $(this).addClass("col_a");
       }
-      $(this).append($('<span>')).text(beat);
-      
+      $(this).append($('<span>').text(beat)); 
     }
 
     connectedCallback() {
