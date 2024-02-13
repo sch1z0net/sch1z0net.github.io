@@ -49,6 +49,7 @@ beat-bar {
   display: flex;
   overflow-x: scroll;
   padding-top: 10px;
+  padding-bottom: 20px;
 }
 
 beat-col {
@@ -100,6 +101,7 @@ track-row {
   height: 20px;
   border-top: 1px solid rgba(90,90,90,0.8);
   border-bottom: 1px solid rgba(90,90,90,0.8);
+  box-sizing: border-box;
 }
 
 track-row-empty {
