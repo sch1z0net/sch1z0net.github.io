@@ -119,12 +119,13 @@ track-window {
   height: calc(100% - 80px);
   width: calc(var(--main-width) - 40px);
   overflow-y: scroll;
+  overflow-x: scroll;
   /** z-index: 10; **/
 }
 
 track-row-container {
   display: block;
-  width: 100%;
+  width: 1000px;
   height: 100%;
   box-sizing: border-box;
 }
