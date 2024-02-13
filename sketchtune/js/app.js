@@ -1,15 +1,17 @@
 
 $(document).ready(function() {
 
+  $("#root").bind('wheel', function(e) {
+       $("track-window").scrollTop(e.originalEvent.deltaY + $("track-window").scrollTop());
+       $("track-title-container").scrollTop(e.originalEvent.deltaY + $("track-title-container").scrollTop());
+
+       $("beat-bar").scrollLeft(e.originalEvent.deltaX + $("beat-bar").scrollLeft());
+  });
+
   class GridWindow extends HTMLElement {
     constructor(name) {
       super();
       this.name = name;
-
-     $(this).bind('wheel', function(e) {
-       $("track-window").scrollTop(e.originalEvent.deltaY + $("track-window").scrollTop());
-       $("beat-bar").scrollLeft(e.originalEvent.deltaX + $("beat-bar").scrollLeft());
-     });
     }
 
     connectedCallback() {
