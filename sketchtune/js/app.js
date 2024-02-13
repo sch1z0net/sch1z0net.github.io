@@ -33,6 +33,7 @@ $(document).ready(function() {
       }else{
          $(this).addClass("col_a");
       }
+      $(this).text(beat);
       
     }
 
