@@ -97,7 +97,7 @@ $(document).ready(function() {
 
     connectedCallback() {
       for(var i = 1; i<120; i++){
-         var color = "hsl("+i+",75,75)";
+         var color = "hsl("+i+",75%,85%)";
          $(this).append($("<track-title>").css("background-color",color));
          $("track-window").append($("<track-row>"));
       }
