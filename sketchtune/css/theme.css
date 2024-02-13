@@ -63,7 +63,7 @@ beat-col > span{
 }
 
 .fullbar > span { 
-  background: linear-gradient(to top, #fb111111 50%) left no-repeat;
+  background: linear-gradient(to top, #fb111111 50%, #fb111111 50%) left no-repeat;
   background-size: 2px 100%;
  }
 .col_a { background-color: rgba(0,0,0,0); }
