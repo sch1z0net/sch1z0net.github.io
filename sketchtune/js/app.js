@@ -41,7 +41,18 @@ $(document).ready(function() {
     }
   }
 
-  class Track extends HTMLElement {
+  class TrackWindow extends HTMLElement {
+    constructor(name) {
+      super();
+      this.name = name;
+    }
+
+    connectedCallback() {
+        // Add any initial setup logic here
+    }
+  }
+
+  class TrackRow extends HTMLElement {
     constructor(name) {
       super();
       this.name = name;
@@ -53,9 +64,11 @@ $(document).ready(function() {
   }
 
   // Define the custom element
-  customElements.define('grid-window', GridWindow);
-  customElements.define('beat-bar', BeatBar);
-  customElements.define('beat-col', BeatCol);
+  customElements.define('grid-window' , GridWindow);
+  customElements.define('beat-bar'    , BeatBar);
+  customElements.define('beat-col'    , BeatCol);
+  customElements.define('track-window', TrackWindow);
+  customElements.define('track-row'   , TrackRow);
 
 
 });
