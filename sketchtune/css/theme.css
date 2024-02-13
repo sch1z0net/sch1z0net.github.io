@@ -25,10 +25,18 @@ grid-window {
   border-radius: 5px;
 }
 
-beat-bar {
+beat-bar-header {
   position: absolute;
   font-size: 0;
-  height: calc(100% - 40px);
+  height: 20px;
+  width: calc(100% - 40px);
+}
+
+beat-bar {
+  margin-top: 20px;
+  position: absolute;
+  font-size: 0;
+  height: calc(100% - 40px - 20px);
 }
 
 beat-col {
@@ -43,16 +51,17 @@ beat-col {
 .col_b { background-color: rgba(0,0,0,0.1); }
 
 track-window {
+  margin-top: 20px;
   position: absolute;
   font-size: 0;
   height: 100%;
-  width: 100%;
+  width: calc(100% - 40px);
 }
 
 track-row {
   display: block;
   width: 100%;
-  height: 100px;
+  height: 20px;
   border-top: 1px solid rgba(90,90,90,0.8);
   border-bottom: 1px solid rgba(90,90,90,0.8);
 }
