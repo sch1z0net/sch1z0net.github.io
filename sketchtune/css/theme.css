@@ -45,10 +45,13 @@ beat-col {
   display: inline-block;
   border-left: 1px solid rgba(90,90,90,0.5);
   border-right: 1px solid rgba(90,90,90,0.5);
-  
+}
+
+beat-col > span{
+  margin-top: -20px;
   font-size: 10px;
   font-family: system-ui;
-  color: rgba(0,0,0,0.1);
+  color: rgba(0,0,0,0.5);
 }
 
 .col_a { background-color: rgba(0,0,0,0); }
