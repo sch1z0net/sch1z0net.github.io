@@ -32,6 +32,9 @@ $(document).ready(function() {
     }
   }
 
+  var tracks_height_sum = 0;
+  var tracks_row_length = 0;
+
   class BeatCol extends HTMLElement {
     constructor(name) {
       super();
@@ -46,10 +49,11 @@ $(document).ready(function() {
         $(this).addClass("col_a");
       }
       $(this).append($('<span>').text(beat)); 
+      tracks_row_length += 20;
     }
 
     connectedCallback() {
-
+      
     }
   }
 
@@ -64,7 +68,17 @@ $(document).ready(function() {
     }
   }
 
-  var tracks_height_sum = 0;
+  class TrackRowContainer extends HTMLElement {
+    constructor(name) {
+      super();
+      this.name = name;
+    }
+
+    connectedCallback() {
+      $(this).css("width",tracks_row_length+"px")
+    }
+  }
+
 
   class TrackRow extends HTMLElement {
     constructor(name) {
@@ -99,7 +113,7 @@ $(document).ready(function() {
       for(var i = 1; i<60; i++){
          var color = "hsl("+(i*4)+",75%,85%)";
          $(this).append($("<track-title>").css("background-color",color));
-         $("track-window").append($("<track-row>").append($("<track-pattern>").css("margin-left",(i*5)+"px")));
+         $("track-row-container").append($("<track-row>").append($("<track-pattern>").css("margin-left",(i*5)+"px")));
       }
     }
   }
@@ -130,6 +144,7 @@ $(document).ready(function() {
   customElements.define('beat-bar'    , BeatBar);
   customElements.define('beat-col'    , BeatCol);
   customElements.define('track-window', TrackWindow);
+  customElements.define('track-row-container'  , TrackRowContainer);
   customElements.define('track-row'   , TrackRow);
   customElements.define('side-window' , SideWindow);
   customElements.define('track-title-container', TrackTitleContainer);
