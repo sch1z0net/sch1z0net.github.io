@@ -99,7 +99,7 @@ $(document).ready(function() {
       for(var i = 1; i<60; i++){
          var color = "hsl("+(i*4)+",75%,85%)";
          $(this).append($("<track-title>").css("background-color",color));
-         $("track-window").append($("<track-row>").append("<track-pattern>"));
+         $("track-window").append($("<track-row>").append($("<track-pattern>").css("margin-left",(i*5)+"px"));
       }
     }
   }
