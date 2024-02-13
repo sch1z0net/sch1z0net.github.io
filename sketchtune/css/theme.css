@@ -56,6 +56,7 @@ beat-col > span{
   color: rgba(0,0,0,0.5);
   position: absolute;
   margin-left: -2px;
+  padding-left: 2px;
 
   background: linear-gradient(to top, #0006 50%, #fb111111 50%) left no-repeat;
   background-size: 2px 100%;
