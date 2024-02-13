@@ -28,7 +28,7 @@ grid-window {
 beat-bar {
   position: absolute;
   font-size: 0;
-  height: 100%;
+  height: calc(100% - 40px);
 }
 
 beat-col {
