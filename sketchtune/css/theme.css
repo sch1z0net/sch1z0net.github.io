@@ -40,7 +40,7 @@ beat-bar-container {
   font-size: 0;
   height: calc(100% - 40px - 20px);
   width: calc(100% - 40px);
-  z-index: 100;
+  /** z-index: 100; **/
 }
 
 beat-bar {
@@ -92,7 +92,7 @@ track-window {
   font-size: 0;
   height: calc(100% - 80px);
   width: calc(100% - 40px);
-  z-index: 10;
+  /** z-index: 10; **/
 }
 
 track-row {

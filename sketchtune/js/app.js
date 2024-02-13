@@ -50,10 +50,21 @@ $(document).ready(function() {
     constructor(name) {
       super();
       this.name = name;
+
+      $(this).scroll(function() {
+        // Get the current scroll position
+        var scrollPosition = $(this).scrollLeft();
+
+        // Do something with the scroll position
+        console.log('Scroll position:', scrollPosition);
+        
+        // Example: Manually set the scroll position
+        //$(this).scrollLeft(newScrollPosition);
+      });
     }
 
     connectedCallback() {
-        // Add any initial setup logic here
+      
     }
   }
 
