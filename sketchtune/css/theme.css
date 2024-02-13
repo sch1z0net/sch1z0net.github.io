@@ -38,13 +38,16 @@ beat-bar-container {
   position: absolute;
   font-size: 0;
   height: calc(100% - 40px - 20px);
+  width: calc(100% - 40px);
+  z-index: 100;
 }
 
 beat-bar {
-  height: 100%;
+  height: calc(100% - 10px);
   width: 100%;
   display: flex;
   overflow-x: scroll;
+  padding-top: 10px;
 }
 
 beat-col {
@@ -59,15 +62,16 @@ beat-col {
 }
 
 beat-col > span{
-  margin-top: -12px;
+  margin-top: -5px;
   font-size: 8px;
   font-family: system-ui;
   font-weight: bold;
   color: rgba(0,0,0,0.5);
-  position: absolute;
+  transform: translateY(-50%);
   margin-left: -2px;
   padding-left: 4px;
 
+  position: absolute;
   background: linear-gradient(to top, #0003 50%, #11111100 50%) left no-repeat;
   background-size: 2px 100%;
 }
@@ -80,11 +84,12 @@ beat-col > span{
 .col_b { background-color: rgba(0,0,0,0.1); }
 
 track-window {
-  margin-top: 20px;
+  margin-top: 30px;
   position: absolute;
   font-size: 0;
   height: 100%;
   width: calc(100% - 40px);
+  z-index: 10;
 }
 
 track-row {
