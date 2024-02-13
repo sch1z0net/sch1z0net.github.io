@@ -6,16 +6,10 @@ $(document).ready(function() {
       super();
       this.name = name;
 
-      $(this).scroll(function() {
-        
-        // Get the current scroll position
-        var scrollPositionLeft = $(this).scrollLeft();
-        var scrollPositionTop= $(this).scrollTop();
-        // Do something with the scroll position
-        console.log('Scroll position:', scrollPositionLeft, scrollPositionTop);
-        
-        // Example: Manually set the scroll position
-        //$(this).scrollLeft(newScrollPosition);
+      $(this).mousewheel(function(event, delta) {
+         //this.scrollLeft -= (delta * 30);
+         console.log((delta * 30));
+         event.preventDefault();
       });
     }
 
