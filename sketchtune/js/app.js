@@ -27,7 +27,7 @@ $(document).ready(function() {
     }
 
     connectedCallback() {
-      for(var i = 1; i<40; i++){
+      for(var i = 1; i<=40; i++){
          $(this).append($("<beat-col>").attr('data-beat',i));
       }
     }
