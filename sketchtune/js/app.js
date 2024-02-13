@@ -7,15 +7,9 @@ $(document).ready(function() {
       this.name = name;
 
      $(this).bind('wheel', function(e) {
-      if(e.originalEvent.deltaY / 120 > 0) {
-         //alert('up');
-         $("track-window").scrollTop(e.originalEvent.deltaY);
-      } else {
-         //alert('down');
-         $("track-window").scrollTop(e.originalEvent.deltaY);
-      }
+       $("track-window").scrollTop(e.originalEvent.deltaY + $("track-window").scrollTop());
+       $("beat-bar").scrollLeft(e.originalEvent.deltaX + $("beat-bar").scrollLeft());
      });
-
     }
 
     connectedCallback() {

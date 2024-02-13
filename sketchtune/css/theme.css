@@ -92,6 +92,7 @@ track-window {
   font-size: 0;
   height: calc(100% - 80px);
   width: calc(100% - 40px);
+  overflow-y: scroll;
   /** z-index: 10; **/
 }
 
