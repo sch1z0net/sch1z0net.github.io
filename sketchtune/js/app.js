@@ -57,6 +57,8 @@ $(document).ready(function() {
     }
   }
 
+  var tracks_height_sum = 0;
+
   class TrackRow extends HTMLElement {
     constructor(name) {
       super();
@@ -64,7 +66,8 @@ $(document).ready(function() {
     }
 
     connectedCallback() {
-        // Add any initial setup logic here
+        tracks_height_sum += 20;
+        $('beat-bar').css("max-height",tracks_height_sum+"px");
     }
   }
 
