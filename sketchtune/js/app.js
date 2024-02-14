@@ -2,7 +2,7 @@
   let isDragging = false;
   let isResizingR = false;
   let isResizingL = false;
-  let activeDraggable = null;
+  let activePattern = null;
 
   document.addEventListener('mousemove', (event) => {
     //DRAG
@@ -10,32 +10,32 @@
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
       const y = event.clientY;
 
-      var newmargin = x - activeDraggable.offsetWidth / 2;
+      var newmargin = x - activePattern.offsetWidth / 2;
       if(newmargin < 0){
          newmargin = 0;
       }
-      activeDraggable.style.marginLeft = newmargin + 'px';
+      activePattern.style.marginLeft = newmargin + 'px';
     }
     //Resize on Right side
     if (isResizingR) {
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
-      var posStart = parseInt(activeDraggable.style.marginLeft);
+      var posStart = parseInt(activePattern.style.marginLeft);
 
       var newwidth = x - posStart;
       if(newwidth < 20){
          newwidth = 20;
       }
-      activeDraggable.style.width = newwidth + 'px';
+      activePattern.style.width = newwidth + 'px';
     }
   });
 
   document.addEventListener('mouseup', () => {
      isDragging = false;
      isResizingR = false;
-     if(activeDraggable != null){
-        activeDraggable.style.marginLeft = (Math.round(parseInt(activeDraggable.style.marginLeft) / 20) * 20) + "px";
+     if(activePattern != null){
+        activePattern.style.marginLeft = (Math.round(parseInt(activePattern.style.marginLeft) / 20) * 20) + "px";
      }
-     activeDraggable = null;
+     activePattern = null;
   });
 
 
@@ -127,7 +127,7 @@
       this.addEventListener('mousedown', (event) => {
          event.stopPropagation();
          isResizingR = true;
-         activeDraggable = $(this).parent();
+         activePattern = $(this).parent();
       });
     }
   }
@@ -141,7 +141,7 @@
       this.addEventListener('mousedown', (event) => {
          isDragging = true;
          //this.classList.add('dragging');
-         activeDraggable = this;
+         activePattern = this;
       });
 
       $(this).append($('<track-pattern-bl>'));
