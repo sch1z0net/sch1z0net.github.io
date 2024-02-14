@@ -92,7 +92,7 @@
 
     connectedCallback() {
       $(this).addClass("unselectable");
-      for(var i = 1; i<=120; i++){
+      for(var i = 1; i<=300; i++){
          $(this).append($("<beat-col>").attr('data-beat',i));
       }
     }
@@ -266,8 +266,8 @@
     connectedCallback() {
      $(this).addClass("unselectable");
      try {
-      for(var i = 1; i<60; i++){
-         var color = "hsl("+(i*4)+",75%,85%)";
+      for(var i = 1; i<30; i++){
+         var color = "hsl("+(i*8)+",75%,75%)";
          $(this).append($("<track-title>").css("background-color",color));
          var trackrow = document.createElement('track-row');
          var trackpat = document.createElement('track-pattern');
