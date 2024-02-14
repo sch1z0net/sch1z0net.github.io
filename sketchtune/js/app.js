@@ -294,9 +294,10 @@
      try {
       for(var i = 1; i<30; i++){
          var color = "hsl("+(i*8)+",65%,65%)";
-         $(this).append($("<track-title>").css("background-color",color).attr("data-id",trackID++));
+         $(this).append($("<track-title>").css("background-color",color).attr("data-id",trackID));
          var tr = $("<track-row>").attr('data-stdcolor',color).attr('id','track_'+trackID);
          $("track-row-container").append(tr);
+         trackID++;
       }
      } catch (error) {
         console.error('Error while creating DOM:', error);
