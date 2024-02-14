@@ -327,7 +327,7 @@
 
         this.addEventListener('mousedown', (event) => {
            event.stopPropagation();
-           alert("bla");
+           
            activeTrack = this;
            $(activeTrack).addClass("selected");
            var id = $(activeTrack).attr("data-id");
