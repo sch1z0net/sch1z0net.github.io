@@ -2,6 +2,7 @@
   let isDragging = false;
   let activeDraggable = null;
   document.addEventListener('mousemove', (event) => {
+    //DRAG
     if (isDragging) {
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
       const y = event.clientY;
@@ -12,10 +13,22 @@
       }
       activeDraggable.style.marginLeft = newmargin + 'px';
     }
+    //Resize on Right side
+    if (isResizingR) {
+      const x = event.clientX + $("beat-bar").scrollLeft() - 20;
+      var posStart = parseInt(activeDraggable.style.marginLeft);
+
+      var newwidth = x - posStart;
+      if(newwidth < 20){
+         newwidth = 20;
+      }
+      activeDraggable.style.width = newwidth + 'px';
+    }
   });
 
   document.addEventListener('mouseup', () => {
      isDragging = false;
+     isResizingR = false;
      if(activeDraggable != null){
         activeDraggable.style.marginLeft = (Math.round(parseInt(activeDraggable.style.marginLeft) / 20) * 20) + "px";
      }
@@ -98,6 +111,7 @@
     }
 
     connectedCallback() {
+
     }
   }
 
@@ -107,6 +121,10 @@
     }
 
     connectedCallback() {
+      this.addEventListener('mousedown', (event) => {
+         isResizingR = true;
+         activeDraggable = $(this).parent();
+      });
     }
   }
 
