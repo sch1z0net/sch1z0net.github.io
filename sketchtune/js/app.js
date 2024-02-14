@@ -333,7 +333,8 @@
         this.addEventListener('dblclick', (event) => {
            event.stopPropagation();
            
-           input.data('disabled', false);
+           input.data('disabled', true);
+           input.focus();
 
            activeTrack = null;
            isDraggingTitle = false;
