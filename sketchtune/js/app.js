@@ -255,6 +255,7 @@
 
     connectedCallback() {
       $(this).addClass("unselectable");
+      $(this).append($("<input>"));
     }
   }
 
