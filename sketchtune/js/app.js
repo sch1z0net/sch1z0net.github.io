@@ -319,12 +319,6 @@
         var input = $("<input>");
         $(this).append(input);
 
-        /*input.on({ 
-          focus: function() { if (!$(this).data('disabled')) this.blur() },
-          dblclick: function() { $(this).data('disabled', true); this.focus() },
-          blur: function() { $(this).data('disabled', false); } 
-        });*/
-
         this.addEventListener('mousedown', (event) => {
            event.stopPropagation();
 
@@ -343,6 +337,12 @@
 
            activeTrack = null;
            isDraggingTitle = false;
+        });
+
+        input.on({ 
+          focus: function() { if (!$(this).data('disabled')) this.blur() },
+          //dblclick: function() { $(this).data('disabled', true); this.focus() },
+          blur: function() { $(this).data('disabled', false); } 
         });
 
         this.initialized = true;
