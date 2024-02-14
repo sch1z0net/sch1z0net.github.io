@@ -238,10 +238,11 @@
   customElements.define('track-title-container', TrackTitleContainer);
   customElements.define('side-window' , SideWindow);
   
-$(document).ready(function() {  
+
   //$("#root").append($(document.createElement("grid-window")));
   var sidewindow = document.createElement("side-window");
-  $("#root").append($(sidewindow));
+  document.getElementById("root").append(sidewindow);
+  //$("#root").append($(sidewindow));
 
 /*
   $("#root").bind('wheel', function(e) {
@@ -252,5 +253,3 @@ $(document).ready(function() {
        $("track-window").scrollLeft($("beat-bar").scrollLeft());
   });
 */
-
-});
