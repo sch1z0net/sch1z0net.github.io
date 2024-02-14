@@ -213,7 +213,7 @@ $(document).ready(function() {
     constructor() {
       super();
       $(this).addClass("unselectable");
-      $(this).append("<track-title-container>");
+      //$(this).append("<track-title-container>");
     }
 
     connectedCallback() {
@@ -242,9 +242,11 @@ $(document).ready(function() {
   customElements.define('side-window' , SideWindow);
   
 
-  $("#root").append($(document.createElement("grid-window")));
-  $("#root").append($(document.createElement("side-window")));
+  //$("#root").append($(document.createElement("grid-window")));
+  var sidewindow = document.createElement("side-window");
+  $("#root").append($(sidewindow));
 
+/*
   $("#root").bind('wheel', function(e) {
        $("track-window").scrollTop(e.originalEvent.deltaY + $("track-window").scrollTop());
        $("track-title-container").scrollTop(e.originalEvent.deltaY + $("track-title-container").scrollTop());
@@ -252,5 +254,6 @@ $(document).ready(function() {
        $("beat-bar").scrollLeft(e.originalEvent.deltaX + $("beat-bar").scrollLeft());
        $("track-window").scrollLeft($("beat-bar").scrollLeft());
   });
+*/
 
 });
