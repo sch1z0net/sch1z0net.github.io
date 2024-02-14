@@ -1,6 +1,9 @@
 
   let isDragging = false;
+  let isResizingR = false;
+  let isResizingL = false;
   let activeDraggable = null;
+
   document.addEventListener('mousemove', (event) => {
     //DRAG
     if (isDragging) {
