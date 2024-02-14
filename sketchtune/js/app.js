@@ -122,6 +122,8 @@ $(document).ready(function() {
       super();
       this.name = name;
       $(this).addClass("unselectable");
+
+      $(this).append("<track-title-container>");
     }
 
     connectedCallback() {
