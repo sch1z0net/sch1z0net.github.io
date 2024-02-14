@@ -220,6 +220,8 @@
     }
   }
 
+$(document).ready(function(){
+
   // Define the custom element
   /*customElements.define('beat-col'    , BeatCol);
   customElements.define('beat-bar'    , BeatBar);
@@ -238,13 +240,13 @@
   customElements.define('track-title-container', TrackTitleContainer);*/
   customElements.define('side-window' , SideWindow);
   
-  var root = document.createElement("div");
-  document.body.append(root);
+  //var root = document.createElement("div");
+  //document.body.append(root);
 
   //$("#root").append($(document.createElement("grid-window")));
-  var sidewindow = document.createElement("side-window");
-  root.append(sidewindow);
-  //$("#root").append($(sidewindow));
+  //var sidewindow = document.createElement("side-window");
+  //root.append(sidewindow);
+  $("#root").append($("<side-window>"));
 
 /*
   $("#root").bind('wheel', function(e) {
@@ -255,3 +257,6 @@
        $("track-window").scrollLeft($("beat-bar").scrollLeft());
   });
 */
+
+
+});
