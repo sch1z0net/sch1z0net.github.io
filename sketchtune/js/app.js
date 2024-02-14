@@ -5,17 +5,18 @@
     if (isDragging) {
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
       const y = event.clientY;
-      activeDraggable.style.marginLeft = x - activeDraggable.offsetWidth / 2 + 'px';
 
-      if(activeDraggable.style.marginLeft < 0){
-         activeDraggable.style.marginLeft = 0;
+      var newmargin = x - activeDraggable.offsetWidth / 2;
+      if(newmargin < 0){
+         newmargin = 0;
       }
+      activeDraggable.style.marginLeft = newmargin + 'px';
     }
   });
 
   document.addEventListener('mouseup', () => {
      isDragging = false;
-     activeDraggable.style.marginLeft = Math.floor(activeDraggable.style.marginLeft / 20) * 20;
+     activeDraggable.style.marginLeft = (Math.floor(parseInt(activeDraggable.style.marginLeft) / 20) * 20) + "px";
   });
 
 
