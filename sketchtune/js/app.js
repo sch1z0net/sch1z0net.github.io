@@ -132,7 +132,11 @@
     }
 
     connectedCallback() {
-
+      this.addEventListener('mousedown', (event) => {
+         event.stopPropagation();
+         isResizingL = true;
+         activePattern = $(this).parent()[0];
+      });
     }
   }
 
