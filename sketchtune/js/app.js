@@ -60,10 +60,11 @@
 
      if(activeTrack != null){
         $(activeTrack).removeClass("selected");
+         var id = $(activeTrack).attr("data-id");
+         $("#track_"+id).removeClass("selected");
      }
      activeTrack = null;
   });
-
 
   var tracks_height_sum = 0;
   var tracks_row_length = 0;
@@ -275,11 +276,14 @@
          event.stopPropagation();
          activeTrack = this;
          $(activeTrack).addClass("selected");
+         var id = $(activeTrack).attr("data-id");
+         $("#track_"+id).addClass("selected");
       });
 
     }
   }
 
+  var trackID = 0;
   class TrackTitleContainer extends HTMLElement {
     constructor() {
       super();
@@ -290,8 +294,8 @@
      try {
       for(var i = 1; i<30; i++){
          var color = "hsl("+(i*8)+",65%,65%)";
-         $(this).append($("<track-title>").css("background-color",color));
-         var tr = $("<track-row>").attr('data-stdcolor',color);
+         $(this).append($("<track-title>").css("background-color",color).attr("data-id",trackID++));
+         var tr = $("<track-row>").attr('data-stdcolor',color).attr('id','track_'+trackID);
          $("track-row-container").append(tr);
       }
      } catch (error) {
