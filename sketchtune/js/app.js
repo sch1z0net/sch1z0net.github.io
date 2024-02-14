@@ -2,6 +2,7 @@
   let isDragging = false;
   let isResizingR = false;
   let isResizingL = false;
+  let isDraggingTitle = false;
   let activePattern = null;
   let activeTrack = null;
 
@@ -9,7 +10,6 @@
     //DRAG
     if (isDragging) {
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
-      const y = event.clientY;
 
       var newmargin = x - activePattern.offsetWidth / 2;
       if(newmargin < 0){
@@ -46,6 +46,17 @@
       activePattern.style.marginLeft = newmargin + 'px';
       activePattern.style.width = newwidth + 'px';
     }
+
+    if (isDraggingTitle) {
+      const y = event.clientY;
+      
+      $('track-title').each(function(){
+          $(this).removeClass("insertMarkB");
+          if($(this).is(':hover')) { $(this).addClass("insertMarkB"); }
+      });
+
+    }
+
   });
 
   document.addEventListener('mouseup', () => {
@@ -279,6 +290,8 @@
          $(activeTrack).addClass("selected");
          var id = $(activeTrack).attr("data-id");
          $("#track_"+id).addClass("selected");
+
+         isDraggingTitle = true;
       });
 
     }

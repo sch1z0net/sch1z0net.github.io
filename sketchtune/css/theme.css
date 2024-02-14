@@ -201,6 +201,10 @@ track-title.selected {
   border: 1px solid white;
 }
 
+track-title.insertMarkB{
+  border-bottom: 3px dotted white;
+}
+
 track-title > input {
   background-color: transparent;
   border: none;
