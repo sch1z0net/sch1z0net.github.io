@@ -9,7 +9,7 @@ body {
 }
 
 #root {
-  --main-width: 90%;
+  --main-width: 80%;
 
   display: block;
   width: 100%;
