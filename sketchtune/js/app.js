@@ -32,7 +32,7 @@
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
 
       var posEnd = parseInt(activePattern.style.marginLeft) + activePattern.offsetWidth;
-      var newmargin = x - activePattern.offsetWidth / 2;
+      var newmargin = x;
       if(newmargin < 0){
          newmargin = 0;
       }
