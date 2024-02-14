@@ -198,7 +198,7 @@
            const x = event.clientX + $("beat-bar").scrollLeft() - 20;
            var newmargin = (Math.floor(x / 20) * 20);
            var newpat = $('<track-pattern>').css("margin-left",newmargin+"px");
-           newpat.css("background-color",this.attr('data-stdcolor'));
+           newpat.css("background-color",$(this).attr('data-stdcolor'));
 
            $(this).append(newpat);
         });
