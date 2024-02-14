@@ -1,6 +1,3 @@
-
-$(document).ready(function() {
-
   $("#root").bind('wheel', function(e) {
        $("track-window").scrollTop(e.originalEvent.deltaY + $("track-window").scrollTop());
        $("track-title-container").scrollTop(e.originalEvent.deltaY + $("track-title-container").scrollTop());
@@ -204,6 +201,9 @@ $(document).ready(function() {
   });
 
 
+
+$(document).ready(function() {
+
   // Define the custom element
   customElements.define('track-pattern' , TrackPattern);
   customElements.define('track-row'   , TrackRow);
@@ -219,7 +219,7 @@ $(document).ready(function() {
   customElements.define('track-title-container', TrackTitleContainer);
   customElements.define('side-window' , SideWindow);
   
-  
+
   $("#root").append("<grid-window>");
   $("#root").append("<side-window>");
 
