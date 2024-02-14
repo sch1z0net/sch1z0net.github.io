@@ -5,7 +5,8 @@
   let isDraggingTitle = false;
   let activePattern = null;
   let activeTrack = null;
-
+  let activeInsertSlot = null;
+  let activeInsertPosition = null;
   document.addEventListener('mousemove', (event) => {
     //DRAG
     if (isDragging) {
@@ -54,13 +55,16 @@
           $(this).removeClass("insertMarkB");
           $(this).removeClass("insertMarkT");
           if($(this).is(':hover')) { 
+            activeInsertSlot = this;
             var clientRect = this.getBoundingClientRect();
             var clientT = clientRect.top;
             var clientB = clientRect.bottom;
             if(Math.abs(y-clientB) > Math.abs(y-clientT)){
                $(this).addClass("insertMarkT"); 
+               activeInsertPos  = "top";
             }else{
                $(this).addClass("insertMarkB"); 
+               activeInsertPos  = "bot";
             }
           }
       });
@@ -86,11 +90,21 @@
          $("#track_"+id).removeClass("selected");
      }
      activeTrack = null;
+     activeInsertSlot = null;
+     activeInsertPosition = null;
 
      $('track-title').each(function(){
           $(this).removeClass("insertMarkB");
           $(this).removeClass("insertMarkT");
-      });
+     });
+
+     if(activeInsertSlot != null){
+        if(activeInsertPos == "top"){
+           activeTrack.prependTo($(activeInsertSlot));
+        }else if(activeInsertPos == "bot"){
+           activeTrack.appendTo($(activeInsertSlot));
+        }
+     }
   });
 
   var tracks_height_sum = 0;
