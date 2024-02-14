@@ -1,4 +1,4 @@
-$(document).ready(function() {  
+/*
   let isDragging = false;
   let activeDraggable = null;
   document.addEventListener('mousemove', (event) => {
@@ -13,7 +13,7 @@ $(document).ready(function() {
     isDragging = false;
     //draggable.classList.remove('dragging');
   });
-
+*/
 
 
 
@@ -220,9 +220,6 @@ $(document).ready(function() {
     }
   }
 
-
-
-
   // Define the custom element
   customElements.define('beat-col'    , BeatCol);
   customElements.define('beat-bar'    , BeatBar);
@@ -241,7 +238,7 @@ $(document).ready(function() {
   customElements.define('track-title-container', TrackTitleContainer);
   customElements.define('side-window' , SideWindow);
   
-
+$(document).ready(function() {  
   //$("#root").append($(document.createElement("grid-window")));
   var sidewindow = document.createElement("side-window");
   $("#root").append($(sidewindow));
