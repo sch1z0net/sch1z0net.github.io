@@ -238,10 +238,12 @@
   customElements.define('track-title-container', TrackTitleContainer);*/
   customElements.define('side-window' , SideWindow);
   
+  var root = document.createElement("div");
+  document.body.append(root);
 
   //$("#root").append($(document.createElement("grid-window")));
   var sidewindow = document.createElement("side-window");
-  document.getElementById("root").append(sidewindow);
+  root.append(sidewindow);
   //$("#root").append($(sidewindow));
 
 /*
