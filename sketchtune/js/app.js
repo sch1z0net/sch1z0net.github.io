@@ -129,10 +129,32 @@ $(document).ready(function() {
     }
   }
 
+  let isDragging = false;
+  let activeDraggable = null;
+  document.addEventListener('mousemove', (event) => {
+    if (isDragging) {
+      const x = event.clientX;
+      const y = event.clientY;
+      activeDraggable.style.marginLeft = x - activeDraggable.offsetWidth / 2 + 'px';
+    }
+  });
+
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+    //draggable.classList.remove('dragging');
+  });
+
   class TrackPattern extends HTMLElement {
     constructor(name) {
       super();
       this.name = name;
+
+      this.addEventListener('mousedown', (event) => {
+         isDragging = true;
+         //this.classList.add('dragging');
+         activeDraggable = this;
+      });
+
     }
 
     connectedCallback() {
