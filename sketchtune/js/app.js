@@ -317,6 +317,7 @@
         $(this).addClass("unselectable");
         //$(this).prop("draggable",true);
         var input = $("<input>");
+        input.addClass("unselectable");
         $(this).append(input);
 
         this.addEventListener('mousedown', (event) => {
