@@ -164,7 +164,7 @@ $(document).ready(function() {
      try {
       for(var i = 1; i<60; i++){
          var color = "hsl("+(i*4)+",75%,85%)";
-         $(shadow).append($("<track-title>").css("background-color",color));
+         $(this).append($("<track-title>").css("background-color",color));
          var trackrow = document.createElement('track-row');
          var trackpat = document.createElement('track-pattern');
          $(trackpat).css("margin-left",(i*5)+"px");
