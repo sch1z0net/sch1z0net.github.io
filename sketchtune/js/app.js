@@ -117,9 +117,7 @@ $(document).ready(function() {
       super();
       this.name = name;
       $(this).addClass("unselectable");
-    }
 
-    connectedCallback() {
       for(var i = 1; i<60; i++){
          var color = "hsl("+(i*4)+",75%,85%)";
          $(this).append($("<track-title>").css("background-color",color));
@@ -128,6 +126,10 @@ $(document).ready(function() {
          tr.append(tp);
          $("track-row-container").append(tr);
       }
+    }
+
+    connectedCallback() {
+
     }
   }
 
