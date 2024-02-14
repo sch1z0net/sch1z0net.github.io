@@ -137,10 +137,10 @@ $(document).ready(function() {
       for(var i = 1; i<60; i++){
          var color = "hsl("+(i*4)+",75%,85%)";
          $(this).append($("<track-title>").css("background-color",color));
-         var tr = $("<track-row></track-row>");
-         var tp = $("<track-pattern></track-pattern>").css("margin-left",(i*5)+"px");
-         tr.append(tp);
-         $("track-row-container").append(tr);
+         var trackrow = $("<track-row></track-row>");
+         var trackpat = $("<track-pattern></track-pattern>").css("margin-left",(i*5)+"px");
+         trackrow.append(trackpat);
+         $("track-row-container").append(trackrow);
       }
     }
 
