@@ -131,7 +131,7 @@
         $('track-row-empty').css("max-height","calc(100% - "+tracks_height_sum+"px - 20px)");
 
         $(this).dblclick(function(event) {
-           const x = event.clientX + $("beat-bar").scrollLeft();
+           const x = event.clientX + $("beat-bar").scrollLeft() - 20;
            var newmargin = (Math.round(x / 20) * 20);
            var newpat = $('<track-pattern>').css("margin-left",newmargin+"px");
            $(this).append(newpat);
