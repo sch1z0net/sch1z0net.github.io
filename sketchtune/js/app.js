@@ -1,60 +1,21 @@
-  $("#root").bind('wheel', function(e) {
-       $("track-window").scrollTop(e.originalEvent.deltaY + $("track-window").scrollTop());
-       $("track-title-container").scrollTop(e.originalEvent.deltaY + $("track-title-container").scrollTop());
-
-       $("beat-bar").scrollLeft(e.originalEvent.deltaX + $("beat-bar").scrollLeft());
-       $("track-window").scrollLeft($("beat-bar").scrollLeft());
+  let isDragging = false;
+  let activeDraggable = null;
+  document.addEventListener('mousemove', (event) => {
+    if (isDragging) {
+      const x = event.clientX + $("beat-bar").scrollLeft();
+      const y = event.clientY;
+      activeDraggable.style.marginLeft = x - activeDraggable.offsetWidth / 2 + 'px';
+    }
   });
 
-  class GridWindow extends HTMLElement {
-    constructor(name) {
-      super();
-      this.name = name;
-      $(this).addClass("unselectable");
-      $(this).append("<beat-bar-container>");
-      $(this).append("<track-window>");
-    }
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+    //draggable.classList.remove('dragging');
+  });
 
-    connectedCallback() {
-        // Add any initial setup logic here
-    }
-  }
 
-  class BeatBarHeader extends HTMLElement {
-    constructor() {
-      super();
-      $(this).addClass("unselectable");
-    }
 
-    connectedCallback() {
-    }
-  }
 
-  class BeatBar extends HTMLElement {
-    constructor(name) {
-      super();
-      this.name = name;
-      $(this).addClass("unselectable");
-    }
-
-    connectedCallback() {
-      for(var i = 1; i<=40; i++){
-         $(this).append($("<beat-col>").attr('data-beat',i));
-      }
-    }
-  }
-
-  class BeatBarContainer extends HTMLElement {
-    constructor() {
-      super();
-      $(this).addClass("unselectable");
-      $(this).append("<beat-bar-header>");
-      $(this).append("<beat-bar>");
-    }
-
-    connectedCallback() {
-    }
-  }
 
   var tracks_height_sum = 0;
   var tracks_row_length = 0;
@@ -83,20 +44,7 @@
     }
   }
 
-  class TrackWindow extends HTMLElement {
-    constructor(name) {
-      super();
-      this.name = name;
-      $(this).addClass("unselectable");
-      $(this).append("<track-row-container>");
-    }
-
-    connectedCallback() {
-      
-    }
-  }
-
-  class TrackRowContainer extends HTMLElement {
+  class BeatBar extends HTMLElement {
     constructor(name) {
       super();
       this.name = name;
@@ -104,9 +52,44 @@
     }
 
     connectedCallback() {
-      $(this).css("width",tracks_row_length+"px")
+      for(var i = 1; i<=40; i++){
+         $(this).append($("<beat-col>").attr('data-beat',i));
+      }
     }
   }
+
+  class BeatBarHeader extends HTMLElement {
+    constructor() {
+      super();
+      $(this).addClass("unselectable");
+    }
+
+    connectedCallback() {
+    }
+  }
+
+  class BeatBarContainer extends HTMLElement {
+    constructor() {
+      super();
+      $(this).addClass("unselectable");
+      $(this).append("<beat-bar-header>");
+      $(this).append("<beat-bar>");
+    }
+
+    connectedCallback() {
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
 
   class TrackPattern extends HTMLElement {
     constructor(name) {
@@ -119,6 +102,16 @@
          activeDraggable = this;
       });
 
+    }
+
+    connectedCallback() {
+    }
+  }
+
+  class TrackRowEmpty extends HTMLElement {
+    constructor() {
+      super();
+      $(this).addClass("unselectable");
     }
 
     connectedCallback() {
@@ -139,12 +132,61 @@
     }
   }
 
-  class SideWindow extends HTMLElement {
+  class TrackRowContainer extends HTMLElement {
     constructor(name) {
       super();
       this.name = name;
       $(this).addClass("unselectable");
-      $(this).append("<track-title-container>");
+    }
+
+    connectedCallback() {
+      $(this).css("width",tracks_row_length+"px")
+    }
+  }
+
+  class TrackWindow extends HTMLElement {
+    constructor(name) {
+      super();
+      this.name = name;
+      $(this).addClass("unselectable");
+      $(this).append("<track-row-container>");
+    }
+
+    connectedCallback() {
+      
+    }
+  }
+
+
+
+  class GridWindow extends HTMLElement {
+    constructor(name) {
+      super();
+      this.name = name;
+      $(this).addClass("unselectable");
+      $(this).append("<beat-bar-container>");
+      $(this).append("<track-window>");
+    }
+
+    connectedCallback() {
+        // Add any initial setup logic here
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+  class TrackTitle extends HTMLElement {
+    constructor(name) {
+      super();
+      this.name = name;
+      $(this).addClass("unselectable");
     }
 
     connectedCallback() {
@@ -174,45 +216,34 @@
     }
   }
 
-  class TrackTitle extends HTMLElement {
+  class SideWindow extends HTMLElement {
     constructor(name) {
       super();
       this.name = name;
       $(this).addClass("unselectable");
+      $(this).append("<track-title-container>");
     }
 
     connectedCallback() {
     }
   }
 
-  let isDragging = false;
-  let activeDraggable = null;
-  document.addEventListener('mousemove', (event) => {
-    if (isDragging) {
-      const x = event.clientX + $("beat-bar").scrollLeft();
-      const y = event.clientY;
-      activeDraggable.style.marginLeft = x - activeDraggable.offsetWidth / 2 + 'px';
-    }
-  });
-
-  document.addEventListener('mouseup', () => {
-    isDragging = false;
-    //draggable.classList.remove('dragging');
-  });
-
 
 
 $(document).ready(function() {
 
   // Define the custom element
-  customElements.define('track-pattern' , TrackPattern);
-  customElements.define('track-row'   , TrackRow);
-  customElements.define('track-row-container'  , TrackRowContainer);
-  customElements.define('track-window', TrackWindow);
-
   customElements.define('beat-col'    , BeatCol);
   customElements.define('beat-bar'    , BeatBar);
+  customElements.define('beat-bar-header' , BeatBarHeader);
   customElements.define('beat-bar-container'    , BeatBarContainer);
+
+  customElements.define('track-pattern' , TrackPattern);
+  customElements.define('track-row'   , TrackRow);
+  customElements.define('track-row-empty'   , TrackRowEmpty);
+  customElements.define('track-row-container'  , TrackRowContainer);
+  customElements.define('track-window', TrackWindow);
+  
   customElements.define('grid-window' , GridWindow);
 
   customElements.define('track-title' , TrackTitle);
@@ -222,5 +253,13 @@ $(document).ready(function() {
 
   $("#root").append("<grid-window>");
   $("#root").append("<side-window>");
+
+  $("#root").bind('wheel', function(e) {
+       $("track-window").scrollTop(e.originalEvent.deltaY + $("track-window").scrollTop());
+       $("track-title-container").scrollTop(e.originalEvent.deltaY + $("track-title-container").scrollTop());
+
+       $("beat-bar").scrollLeft(e.originalEvent.deltaX + $("beat-bar").scrollLeft());
+       $("track-window").scrollLeft($("beat-bar").scrollLeft());
+  });
 
 });
