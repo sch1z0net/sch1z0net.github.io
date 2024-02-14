@@ -198,6 +198,8 @@
            const x = event.clientX + $("beat-bar").scrollLeft() - 20;
            var newmargin = (Math.floor(x / 20) * 20);
            var newpat = $('<track-pattern>').css("margin-left",newmargin+"px");
+           newpat.css("background-color",this.attr('data-stdcolor'));
+
            $(this).append(newpat);
         });
     }
@@ -270,7 +272,8 @@
       for(var i = 1; i<30; i++){
          var color = "hsl("+(i*8)+",65%,65%)";
          $(this).append($("<track-title>").css("background-color",color));
-         $("track-row-container").append($("<track-row>"));
+         var tr = $("<track-row>").attr('data-stdcolor',color);
+         $("track-row-container").append(tr);
       }
      } catch (error) {
         console.error('Error while creating DOM:', error);
