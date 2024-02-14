@@ -127,7 +127,7 @@
       this.addEventListener('mousedown', (event) => {
          event.stopPropagation();
          isResizingR = true;
-         activePattern = $(this).parent();
+         activePattern = $(this).parent()[0];
       });
     }
   }
