@@ -125,13 +125,13 @@ track-window {
   /** z-index: 10; **/
 }
 
-track-line-container {
+track-row-container {
   display: block;
   height: 100%;
   box-sizing: border-box;
 }
 
-track-line {
+track-row {
   display: block;
   width: 100%;
   height: 20px;
@@ -140,7 +140,7 @@ track-line {
   box-sizing: border-box;
 }
 
-track-line-empty {
+track-row-empty {
   display: flex;
   width: 100%;
   height: 100%;
@@ -150,7 +150,7 @@ track-line-empty {
   justify-content: center;
 }
 
-track-line-empty > span {
+track-row-empty > span {
   font-size: 10px;
   height: 40px;
   padding: 20px;
