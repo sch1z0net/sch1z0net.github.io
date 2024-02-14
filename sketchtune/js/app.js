@@ -123,7 +123,8 @@ $(document).ready(function() {
       for(var i = 1; i<60; i++){
          var color = "hsl("+(i*4)+",75%,85%)";
          $(this).append($("<track-title>").css("background-color",color));
-         $("track-row-container").append($("<track-row>").append($("<track-pattern>").css("margin-left",(i*5)+"px")));
+         var tr = $("<track-row>").append($("<track-pattern>").css("margin-left",(i*5)+"px"));
+         $("track-row-container").append(tr);
       }
     }
   }
@@ -143,7 +144,7 @@ $(document).ready(function() {
   let activeDraggable = null;
   document.addEventListener('mousemove', (event) => {
     if (isDragging) {
-      const x = event.clientX;
+      const x = event.clientX - $("beat-bar").scrollLeft();
       const y = event.clientY;
       activeDraggable.style.marginLeft = x - activeDraggable.offsetWidth / 2 + 'px';
     }
