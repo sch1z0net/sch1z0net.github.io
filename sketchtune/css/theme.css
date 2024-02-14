@@ -191,18 +191,18 @@ track-pattern {
 
 track-pattern-bl {
   display: inline-block;
-  width: 1px;
+  width: 3px;
   height: 100%;
-  background-color: rgba(20,20,20,1);
+  background-color: rgba(20,20,20,0.5);
   cursor: col-resize;
   float: left;
 }
 
 track-pattern-br {
   display: inline-block;
-  width: 1px;
+  width: 3px;
   height: 100%;
-  background-color: rgba(20,20,20,1);
+  background-color: rgba(20,20,20,0.5);
   cursor: col-resize;
   float: right;
 }

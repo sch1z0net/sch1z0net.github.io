@@ -122,6 +122,7 @@
 
     connectedCallback() {
       this.addEventListener('mousedown', (event) => {
+         event.stopPropagation();
          isResizingR = true;
          activeDraggable = $(this).parent();
       });
