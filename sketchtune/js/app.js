@@ -134,8 +134,6 @@
            const x = event.clientX + $("beat-bar").scrollLeft();
            var newmargin = (Math.round(x / 20) * 20) + "px";
            var newpat = $('<track-pattern>').css("margin-left",newmargin+"px");
-           activeDraggable = newpat;
-           isDragging = true;
            $(this).append(newpat);
         });
     }
