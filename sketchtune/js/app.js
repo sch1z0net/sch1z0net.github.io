@@ -309,30 +309,34 @@
   class TrackTitle extends HTMLElement {
     constructor() {
       super();
+      this.initialized = false;
     }
 
     connectedCallback() {
-      $(this).addClass("unselectable");
-      //$(this).prop("draggable",true);
-      var input = $("<input>");
-      $(this).append(input);
+      if (!this.initialized) {
+        $(this).addClass("unselectable");
+        //$(this).prop("draggable",true);
+        var input = $("<input>");
+        $(this).append(input);
 
-      input.on({ 
-        focus: function() { if (!$(this).data('disabled')) this.blur() },
-        dblclick: function() { $(this).data('disabled', true); this.focus() },
-        blur: function() { $(this).data('disabled', false); } 
-      });
+        input.on({ 
+          focus: function() { if (!$(this).data('disabled')) this.blur() },
+          dblclick: function() { $(this).data('disabled', true); this.focus() },
+          blur: function() { $(this).data('disabled', false); } 
+        });
 
-      this.addEventListener('mousedown', (event) => {
-         event.stopPropagation();
-         activeTrack = this;
-         $(activeTrack).addClass("selected");
-         var id = $(activeTrack).attr("data-id");
-         $("#track_"+id).addClass("selected");
+        this.addEventListener('mousedown', (event) => {
+           event.stopPropagation();
+           activeTrack = this;
+           $(activeTrack).addClass("selected");
+           var id = $(activeTrack).attr("data-id");
+           $("#track_"+id).addClass("selected");
 
-         isDraggingTitle = true;
-      });
-
+           isDraggingTitle = true;
+        });
+        this.initialized = true;
+      }
+      
     }
   }
 
