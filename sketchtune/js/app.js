@@ -3,6 +3,7 @@
   let isResizingR = false;
   let isResizingL = false;
   let activePattern = null;
+  let activeTrack = null;
 
   document.addEventListener('mousemove', (event) => {
     //DRAG
@@ -56,6 +57,11 @@
         activePattern.style.width = (Math.round(parseInt(activePattern.style.width) / 20) * 20) + "px";
      }
      activePattern = null;
+
+     if(activeTrack != null){
+        $(activeTrack).removeClass("selected");
+     }
+     activeTrack = null;
   });
 
 
@@ -264,7 +270,13 @@
         dblclick: function() { $(this).data('disabled', true); this.focus() },
         blur: function() { $(this).data('disabled', false); } 
       });
-      
+
+      this.addEventListener('mousedown', (event) => {
+         event.stopPropagation();
+         activeTrack = this;
+         $(activeTrack).addClass("selected");
+      });
+
     }
   }
 

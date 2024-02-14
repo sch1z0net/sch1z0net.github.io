@@ -189,10 +189,18 @@ track-title {
   cursor: pointer;
 }
 
+track-title:hover {
+  filter: drop-shadow(1px 1px 2px black);
+}
+
+track-title .selected {
+  border: 1px solid white;
+}
+
 track-title > input {
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid rgba(10,10,10,0.5);
+  /*border-bottom: 1px solid rgba(10,10,10,0.5);*/
   font-size: 12px;
   height: 12px;
   margin-left: 5px;
