@@ -13,6 +13,7 @@ $(document).ready(function() {
     constructor(name) {
       super();
       this.name = name;
+      this.addClass("unselectable");
     }
 
     connectedCallback() {
@@ -24,6 +25,7 @@ $(document).ready(function() {
     constructor(name) {
       super();
       this.name = name;
+      this.addClass("unselectable");
     }
 
     connectedCallback() {
@@ -40,6 +42,8 @@ $(document).ready(function() {
     constructor(name) {
       super();
       this.name = name;
+      this.addClass("unselectable");
+
       var beat = $(this).attr('data-beat');
       if(((beat-1) % 4) == 0){
         $(this).addClass("fullbar");
@@ -62,6 +66,7 @@ $(document).ready(function() {
     constructor(name) {
       super();
       this.name = name;
+      this.addClass("unselectable");
     }
 
     connectedCallback() {
@@ -73,6 +78,7 @@ $(document).ready(function() {
     constructor(name) {
       super();
       this.name = name;
+      this.addClass("unselectable");
     }
 
     connectedCallback() {
@@ -85,6 +91,7 @@ $(document).ready(function() {
     constructor(name) {
       super();
       this.name = name;
+      this.addClass("unselectable");
     }
 
     connectedCallback() {
@@ -98,6 +105,7 @@ $(document).ready(function() {
     constructor(name) {
       super();
       this.name = name;
+      this.addClass("unselectable");
     }
 
     connectedCallback() {
@@ -108,6 +116,7 @@ $(document).ready(function() {
     constructor(name) {
       super();
       this.name = name;
+      this.addClass("unselectable");
     }
 
     connectedCallback() {
@@ -123,6 +132,7 @@ $(document).ready(function() {
     constructor(name) {
       super();
       this.name = name;
+      this.addClass("unselectable");
     }
 
     connectedCallback() {
