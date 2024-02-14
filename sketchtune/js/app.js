@@ -211,9 +211,7 @@
   class TrackPattern extends HTMLElement {
     constructor() {
       super();
-    }
 
-    connectedCallback() {
       this.addEventListener('mousedown', (event) => {
          isDragging = true;
          //this.classList.add('dragging');
@@ -222,6 +220,9 @@
 
       $(this).append($('<track-pattern-bl>'));
       $(this).append($('<track-pattern-br>'));
+    }
+
+    connectedCallback() {
     }
   }
 
