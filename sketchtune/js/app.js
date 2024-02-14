@@ -5,7 +5,7 @@
     if (isDragging) {
       const x = event.clientX + $("beat-bar").scrollLeft();
       const y = event.clientY;
-      activeDraggable.style.marginLeft = x /*- activeDraggable.offsetWidth / 2*/ + 'px';
+      activeDraggable.style.marginLeft = x - activeDraggable.offsetWidth + 'px';
     }
   });
 
