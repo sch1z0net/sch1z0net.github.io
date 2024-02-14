@@ -95,10 +95,14 @@
      });
 
      if(activeInsertSlot != null){
+        var id = $(activeTrack).attr("data-id");
+        var idSlot = $(activeInsertSlot).attr("data-id");
         if(activeInsertPos == "top"){
            $(activeTrack).insertBefore($(activeInsertSlot));
+           $("#track_"+id).insertBefore($("#track_"+idSlot));
         }else if(activeInsertPos == "bot"){
            $(activeTrack).insertAfter($(activeInsertSlot));
+           $("#track_"+id).insertAfter($("#track_"+idSlot));
         }
      }
 
