@@ -263,7 +263,7 @@
 
     connectedCallback() {
       $(this).addClass("unselectable");
-      $(this).prop("draggable",true);
+      //$(this).prop("draggable",true);
       var input = $("<input>");
       $(this).append(input);
 
