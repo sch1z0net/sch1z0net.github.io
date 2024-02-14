@@ -5,7 +5,7 @@
     if (isDragging) {
       const x = event.clientX + $("beat-bar").scrollLeft();
       const y = event.clientY;
-      activeDraggable.style.marginLeft = x - activeDraggable.offsetWidth / 2 + 'px';
+      activeDraggable.style.marginLeft = x /*- activeDraggable.offsetWidth / 2*/ + 'px';
     }
   });
 
@@ -122,7 +122,6 @@
         $('track-row-empty').css("max-height","calc(100% - "+tracks_height_sum+"px - 20px)");
 
         $(this).dblclick(function(event) {
-           alert("bla");
            $(this).append($('<track-pattern>').css("margin-left",0+"px"));
         });
     }
