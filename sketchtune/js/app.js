@@ -52,7 +52,18 @@
       
       $('track-title').each(function(){
           $(this).removeClass("insertMarkB");
-          if($(this).is(':hover')) { $(this).addClass("insertMarkB"); }
+          $(this).removeClass("insertMarkT");
+          if($(this).is(':hover')) { 
+            var clientRect = $(this).getBoundingClientRect();
+            var clientT = clientRect.top;
+            var clientB = clientRect.bottom;
+            if((clientB-y) > (y-clientT)){
+               $(this).addClass("insertMarkB"); 
+            }else{
+               $(this).addClass("insertMarkT"); 
+            }
+            
+          }
       });
 
     }
