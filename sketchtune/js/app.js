@@ -16,7 +16,7 @@
 */
 
 
-
+/*
 
   var tracks_height_sum = 0;
   var tracks_row_length = 0;
@@ -208,20 +208,20 @@
      }
     }
   }
-
+*/
   class SideWindow extends HTMLElement {
     constructor() {
       super();
-      $(this).addClass("unselectable");
-      //$(this).append("<track-title-container>");
     }
 
     connectedCallback() {
+      $(this).addClass("unselectable");
+      //$(this).append("<track-title-container>");
     }
   }
 
   // Define the custom element
-  customElements.define('beat-col'    , BeatCol);
+  /*customElements.define('beat-col'    , BeatCol);
   customElements.define('beat-bar'    , BeatBar);
   customElements.define('beat-bar-header' , BeatBarHeader);
   customElements.define('beat-bar-container'    , BeatBarContainer);
@@ -235,7 +235,7 @@
   customElements.define('grid-window' , GridWindow);
 
   customElements.define('track-title' , TrackTitle);
-  customElements.define('track-title-container', TrackTitleContainer);
+  customElements.define('track-title-container', TrackTitleContainer);*/
   customElements.define('side-window' , SideWindow);
   
 
