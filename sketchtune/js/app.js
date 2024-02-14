@@ -72,8 +72,8 @@
     constructor() {
       super();
       $(this).addClass("unselectable");
-      $(this).append(document.createElement("beat-bar-header"));
-      $(this).append(document.createElement("beat-bar"));
+      $(this).append($(document.createElement("beat-bar-header")));
+      $(this).append($(document.createElement("beat-bar")));
     }
 
     connectedCallback() {
