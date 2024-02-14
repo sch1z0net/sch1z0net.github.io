@@ -58,9 +58,9 @@
             var clientT = clientRect.top;
             var clientB = clientRect.bottom;
             if((clientB-y) > (y-clientT)){
-               $(this).addClass("insertMarkB"); 
-            }else{
                $(this).addClass("insertMarkT"); 
+            }else{
+               $(this).addClass("insertMarkB"); 
             }
             
           }

@@ -201,8 +201,12 @@ track-title.selected {
   border: 1px solid white;
 }
 
+track-title.insertMarkT{
+  border-bottom: 3px solid rgba(250,250,250,0.8);
+}
+
 track-title.insertMarkB{
-  border-bottom: 3px solid rgba(200,200,200,0.5);
+  border-bottom: 3px solid rgba(250,250,250,0.8);
 }
 
 track-title > input {
