@@ -122,8 +122,8 @@
          activeDraggable = this;
       });
 
-      this.append($('<track-pattern-bl>'));
-      this.append($('<track-pattern-br>'));
+      $(this).append($('<track-pattern-bl>'));
+      $(this).append($('<track-pattern-br>'));
     }
   }
 

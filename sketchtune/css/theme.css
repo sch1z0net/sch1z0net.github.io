@@ -195,6 +195,7 @@ track-pattern-bl {
   height: 100%;
   background-color: rgba(0,100,200,1);
   cursor: col-resize;
+  float: left;
 }
 
 track-pattern-br {
@@ -203,6 +204,7 @@ track-pattern-br {
   height: 100%;
   background-color: rgba(0,100,200,1);
   cursor: col-resize;
+  float: right;
 }
 
 .unselectable {
