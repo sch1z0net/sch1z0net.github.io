@@ -189,6 +189,10 @@ track-title > input {
   font-family: "Varela", sans-serif;
 }
 
+track-title > input:focus {
+    outline:none;
+}
+
 track-pattern {
   position: absolute;
   display: inline-block;
