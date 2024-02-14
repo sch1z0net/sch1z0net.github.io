@@ -128,7 +128,9 @@
         $('track-row-empty').css("max-height","calc(100% - "+tracks_height_sum+"px - 20px)");
 
         $(this).dblclick(function(event) {
-           $(this).append($('<track-pattern>').css("margin-left",0+"px"));
+           const x = event.clientX + $("beat-bar").scrollLeft();
+           var newmargin = (Math.round(x / 20) * 20) + "px";
+           $(this).append($('<track-pattern>').css("margin-left",newmargin+"px"));
         });
     }
   }
