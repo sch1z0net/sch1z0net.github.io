@@ -86,6 +86,22 @@ $(document).ready(function() {
     }
   }
 
+  class TrackPattern extends HTMLElement {
+    constructor(name) {
+      super();
+      this.name = name;
+
+      this.addEventListener('mousedown', (event) => {
+         isDragging = true;
+         //this.classList.add('dragging');
+         activeDraggable = this;
+      });
+
+    }
+
+    connectedCallback() {
+    }
+  }
 
   class TrackRow extends HTMLElement {
     constructor(name) {
@@ -159,23 +175,6 @@ $(document).ready(function() {
     //draggable.classList.remove('dragging');
   });
 
-  class TrackPattern extends HTMLElement {
-    constructor(name) {
-      super();
-      this.name = name;
-
-      this.addEventListener('mousedown', (event) => {
-         isDragging = true;
-         //this.classList.add('dragging');
-         activeDraggable = this;
-      });
-
-    }
-
-    connectedCallback() {
-    }
-  }
-
 
   // Define the custom element
   customElements.define('grid-window' , GridWindow);
@@ -183,10 +182,10 @@ $(document).ready(function() {
   customElements.define('beat-col'    , BeatCol);
   customElements.define('track-window', TrackWindow);
   customElements.define('track-row-container'  , TrackRowContainer);
+  customElements.define('track-pattern' , TrackPattern);
   customElements.define('track-row'   , TrackRow);
   customElements.define('side-window' , SideWindow);
   customElements.define('track-title-container', TrackTitleContainer);
   customElements.define('track-title' , TrackTitle);
-  customElements.define('track-pattern' , TrackPattern);
 
 });
