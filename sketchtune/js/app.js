@@ -96,9 +96,9 @@
 
      if(activeInsertSlot != null){
         if(activeInsertPos == "top"){
-           $(activeTrack).prependTo($(activeInsertSlot));
+           $(activeTrack).insertBefore($(activeInsertSlot));
         }else if(activeInsertPos == "bot"){
-           $(activeTrack).appendTo($(activeInsertSlot));
+           $(activeTrack).insertAfter($(activeInsertSlot));
         }
      }
 
