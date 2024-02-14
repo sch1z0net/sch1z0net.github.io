@@ -344,11 +344,13 @@
         input.on("mousedown", function(event){
            event.preventDefault();
            input.data('disabled', true);
+           input.blur();
         });
 
         input.on('keypress',function(e) {
            if(e.which == 13) {
               input.data('disabled', true);
+              input.blur();
            }
         });
 
