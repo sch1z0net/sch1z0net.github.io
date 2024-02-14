@@ -57,7 +57,7 @@
             var clientRect = this.getBoundingClientRect();
             var clientT = clientRect.top;
             var clientB = clientRect.bottom;
-            if((clientB-y) > (y-clientT)){
+            if(Math.abs(y-clientB) > Math.abs(y-clientT)){
                $(this).addClass("insertMarkT"); 
             }else{
                $(this).addClass("insertMarkB"); 
