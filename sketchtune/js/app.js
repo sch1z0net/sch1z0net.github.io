@@ -1,3 +1,4 @@
+$(document).ready(function() {  
   let isDragging = false;
   let activeDraggable = null;
   document.addEventListener('mousemove', (event) => {
@@ -221,7 +222,6 @@
 
 
 
-$(document).ready(function() {
 
   // Define the custom element
   customElements.define('beat-col'    , BeatCol);
