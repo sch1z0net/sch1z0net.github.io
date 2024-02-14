@@ -130,7 +130,9 @@
         $(this).dblclick(function(event) {
            const x = event.clientX + $("beat-bar").scrollLeft();
            var newmargin = (Math.round(x / 20) * 20) + "px";
-           $(this).append($('<track-pattern>').css("margin-left",newmargin+"px"));
+           var newpat = $('<track-pattern>').css("margin-left",newmargin+"px");
+           activeDraggable = newpat;
+           $(this).append(newpat);
         });
     }
   }
