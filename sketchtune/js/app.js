@@ -24,6 +24,9 @@
   class BeatCol extends HTMLElement {
     constructor() {
       super();
+    }
+
+    connectedCallback() {
       $(this).addClass("unselectable");
 
       var beat = $(this).attr('data-beat');
@@ -38,19 +41,15 @@
       $(this).append($('<span>').text(beat)); 
       tracks_row_length += 20+2; //+2 Because of border
     }
-
-    connectedCallback() {
-      
-    }
   }
 
   class BeatBar extends HTMLElement {
     constructor() {
       super();
-      $(this).addClass("unselectable");
     }
 
     connectedCallback() {
+      $(this).addClass("unselectable");
       for(var i = 1; i<=40; i++){
          $(this).append($("<beat-col>").attr('data-beat',i));
       }
@@ -60,22 +59,22 @@
   class BeatBarHeader extends HTMLElement {
     constructor() {
       super();
-      $(this).addClass("unselectable");
     }
 
     connectedCallback() {
+      $(this).addClass("unselectable");
     }
   }
 
   class BeatBarContainer extends HTMLElement {
     constructor() {
       super();
-      $(this).addClass("unselectable");
-      $(this).append($("<beat-bar-header>"));
-      $(this).append($("<beat-bar>"));
     }
 
     connectedCallback() {
+      $(this).addClass("unselectable");
+      $(this).append($("<beat-bar-header>"));
+      $(this).append($("<beat-bar>"));
     }
   }
 
@@ -93,36 +92,34 @@
   class TrackPattern extends HTMLElement {
     constructor() {
       super();
+    }
 
+    connectedCallback() {
       this.addEventListener('mousedown', (event) => {
          isDragging = true;
          //this.classList.add('dragging');
          activeDraggable = this;
       });
-
-    }
-
-    connectedCallback() {
     }
   }
 
   class TrackRowEmpty extends HTMLElement {
     constructor() {
       super();
-      $(this).addClass("unselectable");
     }
 
     connectedCallback() {
+      $(this).addClass("unselectable");
     }
   }
 
   class TrackRow extends HTMLElement {
     constructor() {
       super();
-      $(this).addClass("unselectable");
     }
 
     connectedCallback() {
+       $(this).addClass("unselectable");
         tracks_height_sum += 20;
         $('beat-bar').css("max-height",tracks_height_sum+"px");
         $('track-row-empty').css("max-height","calc(100% - "+tracks_height_sum+"px - 20px)")
@@ -132,10 +129,10 @@
   class TrackRowContainer extends HTMLElement {
     constructor() {
       super();
-      $(this).addClass("unselectable");
     }
 
     connectedCallback() {
+      $(this).addClass("unselectable");
       $(this).css("width",tracks_row_length+"px")
     }
   }
@@ -143,12 +140,11 @@
   class TrackWindow extends HTMLElement {
     constructor() {
       super();
-      $(this).addClass("unselectable");
-      $(this).append("<track-row-container>");
     }
 
     connectedCallback() {
-      
+      $(this).addClass("unselectable");
+      $(this).append("<track-row-container>");
     }
   }
 
@@ -157,13 +153,12 @@
   class GridWindow extends HTMLElement {
     constructor() {
       super();
-      $(this).addClass("unselectable");
-      $(this).append("<beat-bar-container>");
-      $(this).append("<track-window>");
     }
 
     connectedCallback() {
-        // Add any initial setup logic here
+      $(this).addClass("unselectable");
+      $(this).append("<beat-bar-container>");
+      $(this).append("<track-window>");
     }
   }
 
