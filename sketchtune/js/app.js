@@ -3,9 +3,9 @@
   let activeDraggable = null;
   document.addEventListener('mousemove', (event) => {
     if (isDragging) {
-      const x = event.clientX + $("beat-bar").scrollLeft();
+      const x = event.clientX + $("beat-bar").scrollLeft() + 20;
       const y = event.clientY;
-      activeDraggable.style.marginLeft = x - activeDraggable.offsetWidth + 'px';
+      activeDraggable.style.marginLeft = x - activeDraggable.offsetWidth / 2 + 'px';
     }
   });
 
