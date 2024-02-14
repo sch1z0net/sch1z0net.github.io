@@ -319,15 +319,15 @@
         var input = $("<input>");
         $(this).append(input);
 
-        input.on({ 
+        /*input.on({ 
           focus: function() { if (!$(this).data('disabled')) this.blur() },
           dblclick: function() { $(this).data('disabled', true); this.focus() },
           blur: function() { $(this).data('disabled', false); } 
-        });
+        });*/
 
         this.addEventListener('mousedown', (event) => {
            event.stopPropagation();
-           
+
            activeTrack = this;
            $(activeTrack).addClass("selected");
            var id = $(activeTrack).attr("data-id");
@@ -335,6 +335,16 @@
 
            isDraggingTitle = true;
         });
+
+        this.addEventListener('dblclick', (event) => {
+           event.stopPropagation();
+           
+           input.data('disabled', false);
+
+           activeTrack = null;
+           isDraggingTitle = false;
+        });
+
         this.initialized = true;
       }
 
