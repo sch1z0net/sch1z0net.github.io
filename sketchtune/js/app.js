@@ -27,6 +27,23 @@
       }
       activePattern.style.width = newwidth + 'px';
     }
+    //Resize on Left side
+    if (isResizingL) {
+      const x = event.clientX + $("beat-bar").scrollLeft() - 20;
+
+      var posEnd = parseInt(activePattern.style.marginLeft) + activePattern.offsetWidth;
+      var newmargin = x - activePattern.offsetWidth / 2;
+      if(newmargin < 0){
+         newmargin = 0;
+      }
+      var posStart = newmargin;
+
+      var newwidth = posEnd - posStart;
+      if(newwidth < 20){
+         newwidth = 20;
+      }
+      activePattern.style.width = newwidth + 'px';
+    }
   });
 
   document.addEventListener('mouseup', () => {
@@ -34,6 +51,7 @@
      isResizingR = false;
      if(activePattern != null){
         activePattern.style.marginLeft = (Math.round(parseInt(activePattern.style.marginLeft) / 20) * 20) + "px";
+        activePattern.style.width = (Math.round(parseInt(activePattern.style.width) / 20) * 20) + "px";
      }
      activePattern = null;
   });
