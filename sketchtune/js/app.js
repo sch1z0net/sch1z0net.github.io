@@ -14,10 +14,22 @@ $(document).ready(function() {
       super();
       this.name = name;
       $(this).addClass("unselectable");
+      $(this).append("<beat-bar-container>");
+      $(this).append("<track-window>");
     }
 
     connectedCallback() {
         // Add any initial setup logic here
+    }
+  }
+
+  class BeatBarHeader extends HTMLElement {
+    constructor() {
+      super();
+      $(this).addClass("unselectable");
+    }
+
+    connectedCallback() {
     }
   }
 
@@ -32,6 +44,18 @@ $(document).ready(function() {
       for(var i = 1; i<=40; i++){
          $(this).append($("<beat-col>").attr('data-beat',i));
       }
+    }
+  }
+
+  class BeatBarContainer extends HTMLElement {
+    constructor() {
+      super();
+      $(this).addClass("unselectable");
+      $(this).append("<beat-bar-header>");
+      $(this).append("<beat-bar>");
+    }
+
+    connectedCallback() {
     }
   }
 
@@ -67,6 +91,7 @@ $(document).ready(function() {
       super();
       this.name = name;
       $(this).addClass("unselectable");
+      $(this).append("<track-row-container>");
     }
 
     connectedCallback() {
@@ -122,7 +147,6 @@ $(document).ready(function() {
       super();
       this.name = name;
       $(this).addClass("unselectable");
-
       $(this).append("<track-title-container>");
     }
 
@@ -140,7 +164,7 @@ $(document).ready(function() {
      try {
       for(var i = 1; i<60; i++){
          var color = "hsl("+(i*4)+",75%,85%)";
-         $(this).append($("<track-title>").css("background-color",color));
+         $(shadow).append($("<track-title>").css("background-color",color));
          var trackrow = document.createElement('track-row');
          var trackpat = document.createElement('track-pattern');
          $(trackpat).css("margin-left",(i*5)+"px");
@@ -183,6 +207,7 @@ $(document).ready(function() {
   // Define the custom element
   customElements.define('grid-window' , GridWindow);
   customElements.define('beat-bar'    , BeatBar);
+  customElements.define('beat-bar-container'    , BeatBarContainer);
   customElements.define('beat-col'    , BeatCol);
   customElements.define('track-window', TrackWindow);
   customElements.define('track-row-container'  , TrackRowContainer);
@@ -191,5 +216,8 @@ $(document).ready(function() {
   customElements.define('side-window' , SideWindow);
   customElements.define('track-title-container', TrackTitleContainer);
   customElements.define('track-title' , TrackTitle);
+
+  $("#root").append("<grid-window>");
+  $("#root").append("<side-window>");
 
 });
