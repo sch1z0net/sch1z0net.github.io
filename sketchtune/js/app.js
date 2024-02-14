@@ -135,7 +135,7 @@
            var newmargin = (Math.round(x / 20) * 20) + "px";
            var newpat = $('<track-pattern>').css("margin-left",newmargin+"px");
            activeDraggable = newpat;
-           dragging = true;
+           isDragging = true;
            $(this).append(newpat);
         });
     }
