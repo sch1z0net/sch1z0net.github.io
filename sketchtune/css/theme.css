@@ -189,6 +189,22 @@ track-pattern {
   cursor: move;
 }
 
+track-pattern-bl {
+  display: inline-block;
+  width: 2px;
+  height: 100%;
+  background-color: rgba(0,100,200,1);
+  cursor: col-resize;
+}
+
+track-pattern-br {
+  display: inline-block;
+  width: 2px;
+  height: 100%;
+  background-color: rgba(0,100,200,1);
+  cursor: col-resize;
+}
+
 .unselectable {
   -webkit-user-select: none; /* Safari */        
   -moz-user-select: none; /* Firefox */

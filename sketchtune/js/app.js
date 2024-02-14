@@ -56,7 +56,7 @@
 
     connectedCallback() {
       $(this).addClass("unselectable");
-      for(var i = 1; i<=40; i++){
+      for(var i = 1; i<=120; i++){
          $(this).append($("<beat-col>").attr('data-beat',i));
       }
     }
@@ -92,8 +92,23 @@
 
 
 
+  class TrackPatternBl extends HTMLElement {
+    constructor() {
+      super();
+    }
 
+    connectedCallback() {
+    }
+  }
 
+  class TrackPatternBr extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+    }
+  }
 
   class TrackPattern extends HTMLElement {
     constructor() {
@@ -106,6 +121,9 @@
          //this.classList.add('dragging');
          activeDraggable = this;
       });
+
+      this.append($('<track-pattern-bl>'));
+      this.append($('<track-pattern-br>'));
     }
   }
 
@@ -236,6 +254,8 @@ $(document).ready(function(){
   customElements.define('beat-bar-header' , BeatBarHeader);
   customElements.define('beat-bar-container'    , BeatBarContainer);
 
+  customElements.define('track-pattern-bl' , TrackPatternBl);
+  customElements.define('track-pattern-br' , TrackPatternBr);
   customElements.define('track-pattern' , TrackPattern);
   customElements.define('track-row'   , TrackRow);
   customElements.define('track-row-empty'   , TrackRowEmpty);
