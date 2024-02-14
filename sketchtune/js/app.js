@@ -11,7 +11,6 @@
 
   document.addEventListener('mouseup', () => {
     isDragging = false;
-    //draggable.classList.remove('dragging');
   });
 
 
@@ -120,7 +119,11 @@
        $(this).addClass("unselectable");
         tracks_height_sum += 20;
         $('beat-bar').css("max-height",tracks_height_sum+"px");
-        $('track-row-empty').css("max-height","calc(100% - "+tracks_height_sum+"px - 20px)")
+        $('track-row-empty').css("max-height","calc(100% - "+tracks_height_sum+"px - 20px)");
+
+        $(this).dblclick(function(event) {
+           this.append($('<track-pattern>').css("margin-left",0+"px");
+        });
     }
   }
 
