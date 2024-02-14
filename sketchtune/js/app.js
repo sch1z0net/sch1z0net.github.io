@@ -82,16 +82,12 @@
         activePattern.style.marginLeft = (Math.round(parseInt(activePattern.style.marginLeft) / 20) * 20) + "px";
         activePattern.style.width = (Math.round(parseInt(activePattern.style.width) / 20) * 20) + "px";
      }
-     activePattern = null;
 
      if(activeTrack != null){
         $(activeTrack).removeClass("selected");
          var id = $(activeTrack).attr("data-id");
          $("#track_"+id).removeClass("selected");
      }
-     activeTrack = null;
-     activeInsertSlot = null;
-     activeInsertPosition = null;
 
      $('track-title').each(function(){
           $(this).removeClass("insertMarkB");
@@ -105,6 +101,11 @@
            $(activeTrack).appendTo($(activeInsertSlot));
         }
      }
+
+     activePattern = null;
+     activeTrack = null;
+     activeInsertSlot = null;
+     activeInsertPosition = null;
   });
 
   var tracks_height_sum = 0;
