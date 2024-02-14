@@ -74,7 +74,7 @@ $(document).ready(function() {
     }
   }
 
-  class TrackRowContainer extends HTMLElement {
+  class TrackLineContainer extends HTMLElement {
     constructor(name) {
       super();
       this.name = name;
@@ -103,7 +103,7 @@ $(document).ready(function() {
     }
   }
 
-  class TrackRow extends HTMLElement {
+  class TrackLine extends HTMLElement {
     constructor(name) {
       super();
       this.name = name;
@@ -113,7 +113,7 @@ $(document).ready(function() {
     connectedCallback() {
         tracks_height_sum += 20;
         $('beat-bar').css("max-height",tracks_height_sum+"px");
-        $('track-row-empty').css("max-height","calc(100% - "+tracks_height_sum+"px - 20px)")
+        $('track-line-empty').css("max-height","calc(100% - "+tracks_height_sum+"px - 20px)")
     }
   }
 
@@ -139,11 +139,11 @@ $(document).ready(function() {
       for(var i = 1; i<60; i++){
          var color = "hsl("+(i*4)+",75%,85%)";
          $(this).append($("<track-title>").css("background-color",color));
-         var trackrow = document.createElement('track-row');
+         var trackrow = document.createElement('track-line');
          var trackpat = document.createElement('track-pattern');
          $(trackpat).css("margin-left",(i*5)+"px");
          $(trackrow).append($(trackpat));
-         $("track-row-container").append($(trackrow));
+         $("track-line-container").append($(trackrow));
       }
     }
 
@@ -184,9 +184,9 @@ $(document).ready(function() {
   customElements.define('beat-bar'    , BeatBar);
   customElements.define('beat-col'    , BeatCol);
   customElements.define('track-window', TrackWindow);
-  customElements.define('track-row-container'  , TrackRowContainer);
+  customElements.define('track-line-container'  , TrackLineContainer);
   customElements.define('track-pattern' , TrackPattern);
-  customElements.define('track-row'   , TrackRow);
+  customElements.define('track-line'   , TrackLine);
   customElements.define('side-window' , SideWindow);
   customElements.define('track-title-container', TrackTitleContainer);
   customElements.define('track-title' , TrackTitle);
