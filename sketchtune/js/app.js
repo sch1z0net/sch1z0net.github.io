@@ -132,7 +132,7 @@
 
         $(this).dblclick(function(event) {
            const x = event.clientX + $("beat-bar").scrollLeft() - 20;
-           var newmargin = (Math.round(x / 20) * 20);
+           var newmargin = (Math.floor(x / 20) * 20);
            var newpat = $('<track-pattern>').css("margin-left",newmargin+"px");
            $(this).append(newpat);
         });
