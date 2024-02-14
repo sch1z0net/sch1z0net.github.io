@@ -16,7 +16,7 @@
 
   document.addEventListener('mouseup', () => {
      isDragging = false;
-     activeDraggable.style.marginLeft = (Math.floor(parseInt(activeDraggable.style.marginLeft) / 20) * 20) + "px";
+     activeDraggable.style.marginLeft = (Math.round(parseInt(activeDraggable.style.marginLeft) / 20) * 20) + "px";
   });
 
 
@@ -42,7 +42,7 @@
         $(this).addClass("col_a");
       }
       $(this).append($('<span>').text(beat)); 
-      tracks_row_length += 20+2; //+2 Because of border
+      tracks_row_length += 20; //+2 Because of border
     }
   }
 
