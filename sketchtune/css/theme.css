@@ -180,6 +180,14 @@ track-title {
   background-color: rgba(200,100,100,1);
 }
 
+track-title > input {
+  background-color: transparent;
+  border: none;
+  font-size: 12px;
+  padding-left: 6px;
+  font-family: "Oswald", sans-serif;
+}
+
 track-pattern {
   position: absolute;
   display: inline-block;
