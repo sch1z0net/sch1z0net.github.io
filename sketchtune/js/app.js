@@ -42,6 +42,7 @@
       if(newwidth < 20){
          newwidth = 20;
       }
+      activePattern.style.marginLeft = newmargin + 'px';
       activePattern.style.width = newwidth + 'px';
     }
   });
