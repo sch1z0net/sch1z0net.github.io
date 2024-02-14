@@ -193,7 +193,7 @@ track-title:hover {
   filter: drop-shadow(1px 1px 2px black);
 }
 
-track-title .selected {
+track-title.selected {
   border: 1px solid white;
 }
 
