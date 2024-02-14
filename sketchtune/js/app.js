@@ -131,9 +131,8 @@ $(document).ready(function() {
   }
 
   class TrackTitleContainer extends HTMLElement {
-    constructor(name) {
+    constructor() {
       super();
-      this.name = name;
       $(this).addClass("unselectable");
     }
 
