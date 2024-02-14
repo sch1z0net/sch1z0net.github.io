@@ -135,8 +135,9 @@ $(document).ready(function() {
       super();
       this.name = name;
       $(this).addClass("unselectable");
+    }
 
-
+    connectedCallback() {
      try {
       for(var i = 1; i<60; i++){
          var color = "hsl("+(i*4)+",75%,85%)";
@@ -150,10 +151,6 @@ $(document).ready(function() {
      } catch (error) {
         console.error('Error while creating DOM:', error);
      }
-    }
-
-    connectedCallback() {
-
     }
   }
 
