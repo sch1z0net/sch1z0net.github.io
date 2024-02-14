@@ -217,6 +217,7 @@ track-title > input {
   height: 12px;
   margin-left: 5px;
   font-family: "Varela", sans-serif;
+  cursor: pointer;
 }
 
 track-title > input:focus {
