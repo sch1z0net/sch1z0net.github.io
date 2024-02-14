@@ -1,4 +1,4 @@
-/*
+
   let isDragging = false;
   let activeDraggable = null;
   document.addEventListener('mousemove', (event) => {
@@ -13,8 +13,6 @@
     isDragging = false;
     //draggable.classList.remove('dragging');
   });
-*/
-
 
 
 
@@ -238,7 +236,7 @@ $(document).ready(function(){
   $("#root").append($("<grid-window>"));
   $("#root").append($("<side-window>"));
 
-/*
+
   $("#root").bind('wheel', function(e) {
        $("track-window").scrollTop(e.originalEvent.deltaY + $("track-window").scrollTop());
        $("track-title-container").scrollTop(e.originalEvent.deltaY + $("track-title-container").scrollTop());
@@ -246,7 +244,6 @@ $(document).ready(function(){
        $("beat-bar").scrollLeft(e.originalEvent.deltaX + $("beat-bar").scrollLeft());
        $("track-window").scrollLeft($("beat-bar").scrollLeft());
   });
-*/
 
 
 });
