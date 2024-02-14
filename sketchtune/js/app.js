@@ -13,7 +13,7 @@ $(document).ready(function() {
     constructor(name) {
       super();
       this.name = name;
-      this.addClass("unselectable");
+      $(this).addClass("unselectable");
     }
 
     connectedCallback() {
@@ -25,7 +25,7 @@ $(document).ready(function() {
     constructor(name) {
       super();
       this.name = name;
-      this.addClass("unselectable");
+      $(this).addClass("unselectable");
     }
 
     connectedCallback() {
@@ -42,7 +42,7 @@ $(document).ready(function() {
     constructor(name) {
       super();
       this.name = name;
-      this.addClass("unselectable");
+      $(this).addClass("unselectable");
 
       var beat = $(this).attr('data-beat');
       if(((beat-1) % 4) == 0){
@@ -66,7 +66,7 @@ $(document).ready(function() {
     constructor(name) {
       super();
       this.name = name;
-      this.addClass("unselectable");
+      $(this).addClass("unselectable");
     }
 
     connectedCallback() {
@@ -78,7 +78,7 @@ $(document).ready(function() {
     constructor(name) {
       super();
       this.name = name;
-      this.addClass("unselectable");
+      $(this).addClass("unselectable");
     }
 
     connectedCallback() {
@@ -91,7 +91,7 @@ $(document).ready(function() {
     constructor(name) {
       super();
       this.name = name;
-      this.addClass("unselectable");
+      $(this).addClass("unselectable");
     }
 
     connectedCallback() {
@@ -105,7 +105,7 @@ $(document).ready(function() {
     constructor(name) {
       super();
       this.name = name;
-      this.addClass("unselectable");
+      $(this).addClass("unselectable");
     }
 
     connectedCallback() {
@@ -116,7 +116,7 @@ $(document).ready(function() {
     constructor(name) {
       super();
       this.name = name;
-      this.addClass("unselectable");
+      $(this).addClass("unselectable");
     }
 
     connectedCallback() {
@@ -132,7 +132,7 @@ $(document).ready(function() {
     constructor(name) {
       super();
       this.name = name;
-      this.addClass("unselectable");
+      $(this).addClass("unselectable");
     }
 
     connectedCallback() {
