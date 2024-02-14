@@ -174,20 +174,20 @@
   class TrackTitle extends HTMLElement {
     constructor() {
       super();
-      $(this).addClass("unselectable");
     }
 
     connectedCallback() {
+      $(this).addClass("unselectable");
     }
   }
 
   class TrackTitleContainer extends HTMLElement {
     constructor() {
       super();
-      $(this).addClass("unselectable");
     }
 
     connectedCallback() {
+     $(this).addClass("unselectable");
      try {
       for(var i = 1; i<60; i++){
          var color = "hsl("+(i*4)+",75%,85%)";
@@ -211,7 +211,7 @@
 
     connectedCallback() {
       $(this).addClass("unselectable");
-      //$(this).append("<track-title-container>");
+      $(this).append("<track-title-container>");
     }
   }
 
