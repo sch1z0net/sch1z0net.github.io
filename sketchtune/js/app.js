@@ -21,9 +21,8 @@
   var tracks_row_length = 0;
 
   class BeatCol extends HTMLElement {
-    constructor(name) {
+    constructor() {
       super();
-      this.name = name;
       $(this).addClass("unselectable");
 
       var beat = $(this).attr('data-beat');
@@ -45,9 +44,8 @@
   }
 
   class BeatBar extends HTMLElement {
-    constructor(name) {
+    constructor() {
       super();
-      this.name = name;
       $(this).addClass("unselectable");
     }
 
@@ -92,9 +90,8 @@
 
 
   class TrackPattern extends HTMLElement {
-    constructor(name) {
+    constructor() {
       super();
-      this.name = name;
 
       this.addEventListener('mousedown', (event) => {
          isDragging = true;
@@ -119,9 +116,8 @@
   }
 
   class TrackRow extends HTMLElement {
-    constructor(name) {
+    constructor() {
       super();
-      this.name = name;
       $(this).addClass("unselectable");
     }
 
@@ -133,9 +129,8 @@
   }
 
   class TrackRowContainer extends HTMLElement {
-    constructor(name) {
+    constructor() {
       super();
-      this.name = name;
       $(this).addClass("unselectable");
     }
 
@@ -145,9 +140,8 @@
   }
 
   class TrackWindow extends HTMLElement {
-    constructor(name) {
+    constructor() {
       super();
-      this.name = name;
       $(this).addClass("unselectable");
       $(this).append("<track-row-container>");
     }
@@ -160,9 +154,8 @@
 
 
   class GridWindow extends HTMLElement {
-    constructor(name) {
+    constructor() {
       super();
-      this.name = name;
       $(this).addClass("unselectable");
       $(this).append("<beat-bar-container>");
       $(this).append("<track-window>");
@@ -183,9 +176,8 @@
 
 
   class TrackTitle extends HTMLElement {
-    constructor(name) {
+    constructor() {
       super();
-      this.name = name;
       $(this).addClass("unselectable");
     }
 
@@ -217,9 +209,8 @@
   }
 
   class SideWindow extends HTMLElement {
-    constructor(name) {
+    constructor() {
       super();
-      this.name = name;
       $(this).addClass("unselectable");
       $(this).append("<track-title-container>");
     }
