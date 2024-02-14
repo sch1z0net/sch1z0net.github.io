@@ -205,18 +205,21 @@ $(document).ready(function() {
 
 
   // Define the custom element
-  customElements.define('grid-window' , GridWindow);
-  customElements.define('beat-bar'    , BeatBar);
-  customElements.define('beat-bar-container'    , BeatBarContainer);
-  customElements.define('beat-col'    , BeatCol);
-  customElements.define('track-window', TrackWindow);
-  customElements.define('track-row-container'  , TrackRowContainer);
   customElements.define('track-pattern' , TrackPattern);
   customElements.define('track-row'   , TrackRow);
-  customElements.define('side-window' , SideWindow);
-  customElements.define('track-title-container', TrackTitleContainer);
-  customElements.define('track-title' , TrackTitle);
+  customElements.define('track-row-container'  , TrackRowContainer);
+  customElements.define('track-window', TrackWindow);
 
+  customElements.define('beat-col'    , BeatCol);
+  customElements.define('beat-bar'    , BeatBar);
+  customElements.define('beat-bar-container'    , BeatBarContainer);
+  customElements.define('grid-window' , GridWindow);
+
+  customElements.define('track-title' , TrackTitle);
+  customElements.define('track-title-container', TrackTitleContainer);
+  customElements.define('side-window' , SideWindow);
+  
+  
   $("#root").append("<grid-window>");
   $("#root").append("<side-window>");
 
