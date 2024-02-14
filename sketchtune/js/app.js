@@ -16,7 +16,10 @@
 
   document.addEventListener('mouseup', () => {
      isDragging = false;
-     activeDraggable.style.marginLeft = (Math.round(parseInt(activeDraggable.style.marginLeft) / 20) * 20) + "px";
+     if(activeDraggable != null){
+        activeDraggable.style.marginLeft = (Math.round(parseInt(activeDraggable.style.marginLeft) / 20) * 20) + "px";
+     }
+     activeDraggable = null;
   });
 
 
@@ -132,6 +135,7 @@
            var newmargin = (Math.round(x / 20) * 20) + "px";
            var newpat = $('<track-pattern>').css("margin-left",newmargin+"px");
            activeDraggable = newpat;
+           dragging = true;
            $(this).append(newpat);
         });
     }
