@@ -251,8 +251,8 @@ $(document).ready(function() {
   customElements.define('side-window' , SideWindow);
   
 
-  $("#root").append("<grid-window>");
-  $("#root").append("<side-window>");
+  $("#root").append($(document.createElement("grid-window")));
+  $("#root").append($(document.createElement("side-window")));
 
   $("#root").bind('wheel', function(e) {
        $("track-window").scrollTop(e.originalEvent.deltaY + $("track-window").scrollTop());
