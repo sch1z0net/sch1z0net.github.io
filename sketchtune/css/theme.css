@@ -184,8 +184,9 @@ track-title > input {
   background-color: transparent;
   border: none;
   font-size: 12px;
-  padding-left: 6px;
-  font-family: "Oswald", sans-serif;
+  height: 12px;
+  margin-left: 5px;
+  font-family: "Varela", sans-serif;
 }
 
 track-pattern {
