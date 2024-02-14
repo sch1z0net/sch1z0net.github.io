@@ -59,7 +59,6 @@
   });
 
 
-
   var tracks_height_sum = 0;
   var tracks_row_length = 0;
 
@@ -257,7 +256,15 @@
 
     connectedCallback() {
       $(this).addClass("unselectable");
-      $(this).append($("<input>"));
+      var input = $("<input>");
+      $(this).append(input);
+
+      input.on({ 
+        focus: function() { if (!$(this).data('disabled')) this.blur() },
+        dblclick: function() { $(this).data('disabled', true); this.focus() },
+        blur: function() { $(this).data('disabled', false); } 
+      });
+      
     }
   }
 
