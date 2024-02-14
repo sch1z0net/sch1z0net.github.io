@@ -53,7 +53,7 @@
 
     connectedCallback() {
       for(var i = 1; i<=40; i++){
-         $(this).append($("<beat-col>").attr('data-beat',i));
+         $(this).append($(document.createElement("beat-col")).attr('data-beat',i));
       }
     }
   }
@@ -72,8 +72,8 @@
     constructor() {
       super();
       $(this).addClass("unselectable");
-      $(this).append("<beat-bar-header>");
-      $(this).append("<beat-bar>");
+      $(this).append(document.createElement("beat-bar-header"));
+      $(this).append(document.createElement("beat-bar"));
     }
 
     connectedCallback() {
@@ -243,7 +243,7 @@ $(document).ready(function() {
   customElements.define('track-row-empty'   , TrackRowEmpty);
   customElements.define('track-row-container'  , TrackRowContainer);
   customElements.define('track-window', TrackWindow);
-  
+
   customElements.define('grid-window' , GridWindow);
 
   customElements.define('track-title' , TrackTitle);
