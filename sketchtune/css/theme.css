@@ -161,7 +161,14 @@ track-row-empty > span {
   border: 3px dashed rgba(0,0,0,0.2);
 }
 
+track-title-container::-webkit-scrollbar {
+  display: none;
+}
+
 track-title-container {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+
   padding-top: 30px;
   padding-bottom: 10px;
   box-sizing: border-box;
