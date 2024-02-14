@@ -75,6 +75,7 @@
      isDragging = false;
      isResizingR = false;
      isResizingL = false;
+     isDraggingTitle = false;
      if(activePattern != null){
         activePattern.style.marginLeft = (Math.round(parseInt(activePattern.style.marginLeft) / 20) * 20) + "px";
         activePattern.style.width = (Math.round(parseInt(activePattern.style.width) / 20) * 20) + "px";
