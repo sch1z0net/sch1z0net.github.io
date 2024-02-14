@@ -215,13 +215,13 @@
     }
 
     connectedCallback() {
-      this.addEventListener('mousedown', (event) => {
-        isDragging = true;
-        //this.classList.add('dragging');
-        activePattern = this;
-      });
-
       if (!this.initialized) {
+        this.addEventListener('mousedown', (event) => {
+          isDragging = true;
+          //this.classList.add('dragging');
+          activePattern = this;
+        });
+
         $(this).append($('<track-pattern-bl>'));
         $(this).append($('<track-pattern-br>'));
         this.initialized = true;
