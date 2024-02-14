@@ -62,7 +62,6 @@
             }else{
                $(this).addClass("insertMarkB"); 
             }
-            
           }
       });
 
@@ -87,6 +86,11 @@
          $("#track_"+id).removeClass("selected");
      }
      activeTrack = null;
+
+     $('track-title').each(function(){
+          $(this).removeClass("insertMarkB");
+          $(this).removeClass("insertMarkT");
+      });
   });
 
   var tracks_height_sum = 0;
