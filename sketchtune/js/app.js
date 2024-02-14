@@ -341,6 +341,10 @@
            isDraggingTitle = false;
         });
 
+        input.on("mousedown", function(event){
+           event.preventDefault();
+        });
+
         input.on({ 
           focus: function() { if (!$(this).data('disabled')) this.blur() },
           //dblclick: function() { $(this).data('disabled', true); this.focus() },
