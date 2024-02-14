@@ -9,7 +9,7 @@ body {
 }
 
 #root {
-  --main-width: 75%;
+  --main-width: 90%;
 
   display: block;
   width: 100%;
@@ -68,6 +68,7 @@ beat-bar {
   display: flex;
   overflow-x: scroll;
   overscroll-behavior-x: none;
+  overscroll-behavior-y: none;
   padding-top: 10px;
   padding-bottom: 20px;
 }
@@ -123,6 +124,7 @@ track-window {
   overflow-y: scroll;
   overflow-x: scroll;
   overscroll-behavior-x: none;
+  overscroll-behavior-y: none;
   /** z-index: 10; **/
 }
 

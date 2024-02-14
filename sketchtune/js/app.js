@@ -269,11 +269,7 @@
       for(var i = 1; i<30; i++){
          var color = "hsl("+(i*8)+",75%,75%)";
          $(this).append($("<track-title>").css("background-color",color));
-         var trackrow = document.createElement('track-row');
-         var trackpat = document.createElement('track-pattern');
-         $(trackpat).css("margin-left",(i*5)+"px");
-         $(trackrow).append($(trackpat));
-         $("track-row-container").append($(trackrow));
+         $("track-row-container").append($("<track-row>"));
       }
      } catch (error) {
         console.error('Error while creating DOM:', error);
