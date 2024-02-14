@@ -268,7 +268,7 @@
      $(this).addClass("unselectable");
      try {
       for(var i = 1; i<30; i++){
-         var color = "hsl("+(i*8)+",75%,75%)";
+         var color = "hsl("+(i*8)+",65%,65%)";
          $(this).append($("<track-title>").css("background-color",color));
          $("track-row-container").append($("<track-row>"));
       }
