@@ -86,17 +86,15 @@ var colors = [
   document.addEventListener('mousemove', (event) => {
     //DRAG
     if (isDragging) {
-
+      activePattern.addClass("multiSelectedPattern");
 
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
-
-      var newmargin = x - activePattern.offsetWidth / 2;
-      if(newmargin < 0){
-         newmargin = 0;
-      }
-      activePattern.style.marginLeft = newmargin + 'px';
-
-
+      $(".multiSelectedPattern").each(function(){
+         var newmargin = x - this.offsetWidth / 2;
+         if(newmargin < 0){ newmargin = 0; }
+         this.style.marginLeft = newmargin + 'px';
+      });
+      
     }
     //Resize on Right side
     if (isResizingR) {
