@@ -396,10 +396,10 @@ var colors = [
 
 
   class TrackTitle extends HTMLElement {
-    constructor(text="") {
+    constructor() {
       super();
       this.initialized = false;
-      this.text = text;
+      this.text = this.getAttribute('text') || '';
     }
 
     connectedCallback() {
@@ -408,7 +408,7 @@ var colors = [
         //$(this).prop("draggable",true);
         var input = $("<input/>");
         input.addClass("unselectable");
-        input.val("test");
+        input.val(this.text);
         $(this).append(input);
 
         this.addEventListener('mousedown', (event) => {
