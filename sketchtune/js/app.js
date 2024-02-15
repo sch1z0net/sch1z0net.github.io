@@ -369,10 +369,12 @@ var colors = [
         });
 
         $(this).on('mousedown', (event) => {
+          if(!isSelectingPatterns){
            isSelectingPatterns = true;
            selectRootX = event.clientX;
            selectRootY = event.clientY;
-        }
+          }
+        });
     }
   }
 
