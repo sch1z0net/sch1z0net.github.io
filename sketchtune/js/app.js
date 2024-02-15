@@ -219,7 +219,7 @@ var colors = [
      activeTrack = null;
      activeInsertSlot = null;
      activeInsertPosition = null;
-     
+
      isSelectingPatterns = false;
      selectionArea.css("display", "none");
   });
