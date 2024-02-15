@@ -63,6 +63,10 @@ var colors = [
             contextMenu.css("display", "none");
             focusTrack = null;
         }
+
+        $("track-pattern").each(function(){
+          $(this).removeClass("multiSelectedPattern");
+        });
     });
 
     $(document).on("scroll", function () {
@@ -224,9 +228,6 @@ var colors = [
 
      isSelectingPatterns = false;
      selectionArea.css("display", "none");
-      $("track-pattern").each(function(){
-          $(this).removeClass("multiSelectedPattern");
-      });
   });
 
   var tracks_height_sum = 0;
@@ -336,7 +337,6 @@ var colors = [
         this.addEventListener('mousedown', (event) => {
           event.stopPropagation();
           isDragging = true;
-          //this.classList.add('dragging');
           activePattern = this;
         });
 
