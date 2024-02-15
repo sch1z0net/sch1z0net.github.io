@@ -96,10 +96,11 @@ var colors = [
       activePattern_oldmargin = newmargin;
 
       $(".multiSelectedPattern").each(function(){
-         if(this == activePattern){ continue };
-         var newmargin = this.getBoundingClientRect().left + dx;
-         if(newmargin < 0){ newmargin = 0; }
-         this.style.marginLeft = newmargin + 'px';
+          if(this != activePattern){
+            var newmargin = this.getBoundingClientRect().left + dx;
+            if(newmargin < 0){ newmargin = 0; }
+            this.style.marginLeft = newmargin + 'px';
+          }
       });
       
     }
