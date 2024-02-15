@@ -479,7 +479,9 @@ var colors = [
         $(this).addClass("unselectable");
         for(var i = 1; i<10; i++){
            var color = "hsl(0,0%,85%)";
-           $(this).append($("<track-title>").css("background-color",color).attr("data-id",trackID));
+           var tt = $("<track-title>").css("background-color",color).attr("data-id",trackID);
+           tt.find("input").text("Track "+trackID);
+           $(this).append(tt);
            var tr = $("<track-row>").attr('data-stdcolor',color).attr('id','track_'+trackID);
            $("track-row-container").append(tr);
            trackID++;
