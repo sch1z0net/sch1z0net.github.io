@@ -86,6 +86,8 @@ var colors = [
   document.addEventListener('mousemove', (event) => {
     //DRAG
     if (isDragging) {
+
+
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
 
       var newmargin = x - activePattern.offsetWidth / 2;
@@ -93,6 +95,8 @@ var colors = [
          newmargin = 0;
       }
       activePattern.style.marginLeft = newmargin + 'px';
+
+
     }
     //Resize on Right side
     if (isResizingR) {
@@ -155,7 +159,7 @@ var colors = [
       var h = y2 - y1;  
 
       if(w < 0){ w = -w; x2 = x1; x1 = x1 - w;}
-      //if(h < 0){ h = -h; y2 = y1; y1 = y1 - h;}
+      if(h < 0){ h = -h; y2 = y1; y1 = y1 - h;}
 
       selectionArea.css("display", "block");
       selectionArea.css("left", x1 + "px");
