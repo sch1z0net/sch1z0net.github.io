@@ -479,6 +479,9 @@ var colors = [
 
     connectedCallback() {
       if (!this.initialized) {
+
+        
+
         $(this).addClass("unselectable");
         for(var i = 1; i<10; i++){
            var color = "hsl(0,0%,85%)";
@@ -501,10 +504,49 @@ var colors = [
 
     connectedCallback() {
       $(this).addClass("unselectable");
+      $(this).append("<track-title-header>");
       $(this).append("<track-title-container>");
+      $(this).append("<track-title-footer>");
     }
   }
 
+  class TrackTitleHeader extends HTMLElement {
+    constructor() {
+      super();
+      this.initialized = false;
+    }
+
+    connectedCallback() {
+      if (!this.initialized) {
+      }
+    }
+  }
+
+
+  class TrackTitleFooter extends HTMLElement {
+    constructor() {
+      super();
+      this.initialized = false;
+    }
+
+    connectedCallback() {
+      if (!this.initialized) {
+      }
+    }
+  }
+
+  class SideWindow extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+      $(this).addClass("unselectable");
+      $(this).append("<track-title-header>");
+      $(this).append("<track-title-container>");
+      $(this).append("<track-title-footer>");
+    }
+  }
 
 
 
@@ -531,6 +573,8 @@ $(document).ready(function(){
 
   customElements.define('track-title' , TrackTitle);
   customElements.define('track-title-container', TrackTitleContainer);
+  customElements.define('track-title-header', TrackTitleHeader);
+  customElements.define('track-title-footer', TrackTitleFooter);
   customElements.define('side-window' , SideWindow);
 
   $("#root").append($("<grid-window>"));

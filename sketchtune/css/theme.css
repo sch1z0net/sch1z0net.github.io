@@ -185,6 +185,20 @@ track-title-container {
   overscroll-behavior-y: none;
 }
 
+track-title-header {
+  box-sizing: border-box;
+  height: 40px;
+  display: block;
+  position: fixed;
+}
+
+track-title-footer {
+  box-sizing: border-box;
+  height: 40px;
+  display: block;
+  position: fixed;
+}
+
 track-title {
   display: block;
   width: 100%;
