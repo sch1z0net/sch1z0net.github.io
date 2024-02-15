@@ -316,6 +316,9 @@ var colors = [
            var tr = $("<track-row>").attr('data-stdcolor',color).attr('id','track_'+trackID);
            $("track-row-container").append(tr);
            trackID++;
+
+           $("track-window").scrollTop($("track-window")[0].scrollHeight);
+           $("track-title-container").scrollTop($("track-title-container")[0].scrollHeight);
         });
 
         this.initialized = true;
