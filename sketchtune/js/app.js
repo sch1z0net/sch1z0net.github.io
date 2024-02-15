@@ -90,7 +90,7 @@ var colors = [
       $(activePattern).addClass("multiSelectedPattern");
 
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
-      var clientXtoCursor = x - activePattern.getBoundingClientRect().left;
+      var clientXtoCursor = event.clientX - activePattern.getBoundingClientRect().left;
       var newmargin = x - clientXtoCursor;
       if(newmargin < 0){ newmargin = 0; }
       var dx = newmargin - activePattern_oldmargin;
