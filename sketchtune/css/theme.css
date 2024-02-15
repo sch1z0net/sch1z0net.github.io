@@ -278,3 +278,20 @@ track-pattern-br {
     background-color: #f0f0f0;
 }
 
+.color-palette {
+    display: grid;
+    grid-template-columns: repeat(4, 50px); /* Adjust as needed */
+    gap: 5px; /* Adjust the gap between color items */
+}
+
+.color-item {
+    width: 50px; /* Adjust the width of each color item */
+    height: 50px; /* Adjust the height of each color item */
+    border: 1px solid #ccc; /* Add border for clarity */
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.color-item:hover {
+    border-color: #000; /* Change border color on hover */
+}
+

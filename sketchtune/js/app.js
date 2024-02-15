@@ -12,11 +12,27 @@
   /**** CONTEXT MENU ****/
     // Create context menu
     var contextMenu = $("<div>", {id: "context-menu", "class": "context-menu", css: { display: "none" }});
-    // Create context menu items
-    var contextMenuItem1 = $("<div>", {"class": "context-menu-item", text: "Option 1" });
-    var contextMenuItem2 = $("<div>", {"class": "context-menu-item", text: "Option 2" });
-    contextMenu.append(contextMenuItem1, contextMenuItem2);
-    $("body").append(contextMenu);
+
+    // Define colors for the palette
+    var colors = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff", "#000000", "#ffffff"];
+
+    // Function to create color palette
+    function createColorPalette() {
+        var palette = $("<div>", {"class": "color-palette"});
+        colors.forEach(function (color) {
+            var colorItem = $("<div>", {
+                "class": "color-item",
+                css: { backgroundColor: color }
+            });
+            palette.append(colorItem);
+        });
+        return palette;
+    }
+
+    // Append color palette and target to the body
+    $("body").append(contextMenu.append(createColorPalette()));
+
+
 
     $(document).on("click", function (event) {
         if (event.button !== 2) {
@@ -32,6 +48,10 @@
         event.stopPropagation();
         event.preventDefault();
     });
+
+
+
+
 
 
 
