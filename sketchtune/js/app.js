@@ -354,7 +354,8 @@ var colors = [
 
     connectedCallback() {
       $(this).addClass("unselectable");
-      $(this).append("<track-row-container>");
+      $(this).append($("<track-row-container>"));
+      $(this).append($("<track-row-empty>"));
     }
   }
 
@@ -367,8 +368,8 @@ var colors = [
 
     connectedCallback() {
       $(this).addClass("unselectable");
-      $(this).append("<beat-bar-container>");
-      $(this).append("<track-window>");
+      $(this).append($("<beat-bar-container>"));
+      $(this).append($("<track-window>"));
     }
   }
 
@@ -471,8 +472,6 @@ var colors = [
            $("track-row-container").append(tr);
            trackID++;
         }
-        
-        $("track-row-container").append($("<track-row-empty>"));
 
         this.initialized = true;
       }

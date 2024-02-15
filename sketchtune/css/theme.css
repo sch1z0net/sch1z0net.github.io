@@ -150,10 +150,12 @@ track-row.selected {
 
 track-row-empty {
   display: flex;
-  width: 100%;
+  width: calc(var(--main-width) - 40px);
   height: 40px;
   background-color: rgba(160,160,160,1);
   align-items: center;
+  position: fixed;
+  margin-top: -40px;
 }
 
 track-row-empty > span {
