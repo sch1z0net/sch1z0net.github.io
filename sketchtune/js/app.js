@@ -312,8 +312,7 @@ var colors = [
 
         $(this).on("click",function(){
            var color = "hsl(0,0%,85%)";
-           var tt = $("<track-title>").css("background-color",color).attr("data-id",trackID);
-           tt.find("input").val("Track "+trackID);
+           var tt = $("<track-title text='Track #"+trackID+"'>").css("background-color",color).attr("data-id",trackID);
            $("track-title-container").append(tt);
            var tr = $("<track-row>").attr('data-stdcolor',color).attr('id','track_'+trackID);
            $("track-row-container").append(tr);
@@ -397,9 +396,10 @@ var colors = [
 
 
   class TrackTitle extends HTMLElement {
-    constructor() {
+    constructor(text="") {
       super();
       this.initialized = false;
+      this.text = text;
     }
 
     connectedCallback() {
@@ -408,6 +408,7 @@ var colors = [
         //$(this).prop("draggable",true);
         var input = $("<input/>");
         input.addClass("unselectable");
+        input.val(this.text);
         $(this).append(input);
 
         this.addEventListener('mousedown', (event) => {
@@ -481,8 +482,7 @@ var colors = [
         $(this).addClass("unselectable");
         for(var i = 1; i<10; i++){
            var color = "hsl(0,0%,85%)";
-           var tt = $("<track-title>").css("background-color",color).attr("data-id",trackID);
-           tt.find("input").val("Track "+trackID);
+           var tt = $("<track-title text='Track #"+trackID+"'>").css("background-color",color).attr("data-id",trackID);
            $(this).append(tt);
            var tr = $("<track-row>").attr('data-stdcolor',color).attr('id','track_'+trackID);
            $("track-row-container").append(tr);
