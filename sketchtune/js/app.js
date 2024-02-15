@@ -38,7 +38,6 @@ var colors = [
             palette.append(colorItem);
 
             colorItem.on("click",function(){
-                alert(color);
                 $(activeTrack).css("background-color",color);
             });
 
@@ -436,6 +435,7 @@ var colors = [
           contextMenu.css("display", "block");
           contextMenu.css("left", posX-100 + "px");
           contextMenu.css("top", posY + "px");
+          activeTrack = this;
         });
 
 
