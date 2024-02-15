@@ -154,8 +154,8 @@ var colors = [
       var w = x2 - x1;
       var h = y2 - y1;  
 
-      if(w < 0){ w = -w; x2 = x1; x1 = x1 - w; }
-      if(h < 0){ h = -h; y2 = y1; y1 = y1 - h; }
+      if(w < 0){ w = -w; x2 = x1; x1 = x1 - w; selectRootX = x1;}
+      if(h < 0){ h = -h; y2 = y1; y1 = y1 - h; selectRootY = y1;}
 
       selectionArea.css("display", "block");
       selectionArea.css("left", selectRootX + "px");
