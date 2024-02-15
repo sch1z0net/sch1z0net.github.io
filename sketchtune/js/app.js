@@ -313,7 +313,7 @@ var colors = [
         $(this).on("click",function(){
            var color = "hsl(0,0%,85%)";
            var tt = $("<track-title>").css("background-color",color).attr("data-id",trackID);
-           tt.find("input").text("Track "+trackID);
+           tt.find("input").val("Track "+trackID);
            $("track-title-container").append(tt);
            var tr = $("<track-row>").attr('data-stdcolor',color).attr('id','track_'+trackID);
            $("track-row-container").append(tr);
@@ -406,7 +406,7 @@ var colors = [
       if (!this.initialized) {
         $(this).addClass("unselectable");
         //$(this).prop("draggable",true);
-        var input = $("<input>");
+        var input = $("<input/>");
         input.addClass("unselectable");
         $(this).append(input);
 
@@ -482,7 +482,7 @@ var colors = [
         for(var i = 1; i<10; i++){
            var color = "hsl(0,0%,85%)";
            var tt = $("<track-title>").css("background-color",color).attr("data-id",trackID);
-           tt.find("input").text("Track "+trackID);
+           tt.find("input").val("Track "+trackID);
            $(this).append(tt);
            var tr = $("<track-row>").attr('data-stdcolor',color).attr('id','track_'+trackID);
            $("track-row-container").append(tr);
