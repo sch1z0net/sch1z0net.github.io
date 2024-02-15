@@ -14,35 +14,20 @@
     var contextMenu = $("<div>", {id: "context-menu", "class": "context-menu", css: { display: "none" }});
 
     // Define colors for the palette
-    var colors = [
-        "#b2b2b2", // Gray
-        "#363636", // Dark Gray
-        "#ff4444", // Red
-        "#ff8888", // Light Red
-        "#ff8800", // Orange
-        "#ffcc44", // Light Orange
-        "#ffaa22", // Bright Orange
-        "#ffcc00", // Yellow
-        "#ffff44", // Light Yellow
-        "#88cc00", // Lime Green
-        "#aaff22", // Light Lime Green
-        "#00cc00", // Green
-        "#22ff22", // Light Green
-        "#00cc88", // Turquoise
-        "#22ffcc", // Light Turquoise
-        "#00cccc", // Cyan
-        "#22ffff", // Light Cyan
-        "#0099ff", // Sky Blue
-        "#22aaff", // Light Sky Blue
-        "#0000ff", // Blue
-        "#2222ff", // Light Blue
-        "#4400cc", // Indigo
-        "#7744ff", // Light Indigo
-        "#9900ff", // Purple
-        "#cc44ff", // Light Purple
-        "#ff00ff", // Magenta
-        "#ff44ff"  // Light Magenta
-    ];
+var colors = [
+    "#b2b2b2", "#363636", "#ff4444", "#ff8888", "#ff8800", "#ffcc44", "#ffaa22", "#ffcc00", "#ffff44", "#88cc00",
+    "#aaff22", "#00cc00", "#22ff22", "#00cc88", "#22ffcc", "#00cccc", "#22ffff", "#0099ff", "#22aaff", "#0000ff",
+    "#2222ff", "#4400cc", "#7744ff", "#9900ff", "#cc44ff", "#ff00ff", "#ff44ff", "#ffccff", "#ff88ff", "#ffcc88",
+    "#ffaa00", "#cccc00", "#88cc00", "#22ff00", "#00ff22", "#00ff88", "#00ffcc", "#00ccaa", "#00cccc", "#00aaff",
+    "#0099ff", "#0088ff", "#3344ff", "#0011ff", "#3f00ff", "#8a00ff", "#cc00ff", "#ff00cc", "#ff3399", "#ff6699",
+    "#ff9999", "#ff6600", "#ff9966", "#ffcc66", "#ffcc33", "#ffff66", "#ccff33", "#99ff66", "#66ff99", "#66ffcc",
+    "#33ffff", "#66ccff", "#3399ff", "#6666ff", "#9933ff", "#cc99ff", "#ff99ff", "#ff66cc", "#ff6699", "#ff6666",
+    "#ff9966", "#ffcc66", "#ffff66", "#ccff66", "#99ff66", "#66ff99", "#66ffcc", "#66ccff", "#6699ff", "#9966ff",
+    "#cc66ff", "#ff66ff", "#ff6fcf", "#ff9db3", "#ff8d3c", "#ffda36", "#ffff66", "#c3ff52", "#77ff4e", "#26c281",
+    "#26c2ac", "#22aaff", "#2351ff", "#6932ff", "#a65bff", "#e63afc", "#ff4aa6", "#ff7980", "#ffbb72", "#ffff7d",
+    "#acff6f", "#5fff73", "#14d790", "#18c5b7"
+];
+
 
     // Function to create color palette
     function createColorPalette() {
