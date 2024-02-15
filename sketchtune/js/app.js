@@ -350,7 +350,8 @@ var colors = [
           isDragging = true;
           activePattern = this;
           activePattern_oldmargin = this.getBoundingClientRect().left;
-          xOffsetOnPattern = event.clientX - activePattern_oldmargin;
+          const x = event.clientX + $("beat-bar").scrollLeft() - 20;
+          xOffsetOnPattern = x - activePattern_oldmargin;
         });
 
         $(this).append($('<track-pattern-bl>'));
