@@ -453,21 +453,24 @@ var colors = [
   class TrackTitleContainer extends HTMLElement {
     constructor() {
       super();
+      this.initialized = false;
     }
 
     connectedCallback() {
-     $(this).addClass("unselectable");
-     try {
-      for(var i = 1; i<30; i++){
-         var color = "hsl("+(i*8)+",65%,65%)";
-         $(this).append($("<track-title>").css("background-color",color).attr("data-id",trackID));
-         var tr = $("<track-row>").attr('data-stdcolor',color).attr('id','track_'+trackID);
-         $("track-row-container").append(tr);
-         trackID++;
+      if (!this.initialized) {
+        $(this).addClass("unselectable");
+        for(var i = 1; i<10; i++){
+           var color = "hsl(0,0%,55%)";
+           $(this).append($("<track-title>").css("background-color",color).attr("data-id",trackID));
+           var tr = $("<track-row>").attr('data-stdcolor',color).attr('id','track_'+trackID);
+           $("track-row-container").append(tr);
+           trackID++;
+        }
+        
+        $("track-row-container").append($("track-row-empty"));
+
+        this.initialized = true;
       }
-     } catch (error) {
-        console.error('Error while creating DOM:', error);
-     }
     }
   }
 
