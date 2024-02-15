@@ -408,7 +408,7 @@ var colors = [
         //$(this).prop("draggable",true);
         var input = $("<input/>");
         input.addClass("unselectable");
-        input.val(this.text);
+        input.val("test");
         $(this).append(input);
 
         this.addEventListener('mousedown', (event) => {
