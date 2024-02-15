@@ -335,3 +335,7 @@ track-pattern-br {
     z-index: 1000;
 }
 
+.multiSelectedPattern{
+	border: 1px solid white;
+}
+

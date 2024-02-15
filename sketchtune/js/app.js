@@ -147,16 +147,34 @@ var colors = [
     }
 
     if (isSelectingPatterns) {
-      const y = event.clientY;
-      const x = event.clientX;
-      var w = x - selectRootX;
-      var h = y - selectRootY;
+      var x2 = event.clientX;
+      var y2 = event.clientY;
+      var x1 = selectRootX;
+      var y1 = selectRootY;   
+      var w = x2 - x1;
+      var h = y2 - y1;  
 
       selectionArea.css("display", "block");
       selectionArea.css("left", selectRootX + "px");
       selectionArea.css("top", selectRootY + "px");
       selectionArea.css("width", w);
       selectionArea.css("height", h);
+
+      $("track-pattern").each(function(){
+          $(this).removeClass("multiSelectedPattern");
+      });
+
+      $("track-pattern").each(function(){
+          var clientRect = this.getBoundingClientRect();
+          var clientT = clientRect.top;
+          var clientB = clientRect.bottom;
+          var clientL = clientRect.left;
+          var clientR = clientRect.right;
+
+          if( !(x2 < clientL || clientR < x1) && !(y2 < clientT || clientB < y1)){
+             $(this).addClass("multiSelectedPattern");
+          }
+      });
     }
 
   });
