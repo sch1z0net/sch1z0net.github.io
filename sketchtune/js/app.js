@@ -92,16 +92,22 @@ var colors = [
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
 
       var newmargin = x;// - (activePattern.offsetWidth / 2);
-      var dx = newmargin - activePattern_oldmargin;
-      activePattern_oldmargin = newmargin;
+      if(newmargin < 0){ newmargin = 0; }
 
+      var dx = newmargin - activePattern_oldmargin;
+      newmargin = this.getBoundingClientRect().left + dx;
+      this.style.marginLeft = newmargin + 'px';
+      
+      activePattern_oldmargin = newmargin;
+      /*
       $(".multiSelectedPattern").each(function(){
           if(this != activePattern){
-            var newmargin = this.getBoundingClientRect().left + dx;
-            if(newmargin < 0){ newmargin = 0; }
-            this.style.marginLeft = newmargin + 'px';
+           var newmargin = this.getBoundingClientRect().left + dx;
+           if(newmargin < 0){ newmargin = 0; }
+           this.style.marginLeft = newmargin + 'px';
           }
       });
+      */
       
     }
     //Resize on Right side
