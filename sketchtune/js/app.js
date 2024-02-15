@@ -90,7 +90,8 @@ var colors = [
 
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
       $(".multiSelectedPattern").each(function(){
-         var newmargin = x - this.offsetWidth / 2;
+         var distFromCursor = x - this.clientX;
+         var newmargin = x - this.offsetWidth / 2 + distFromCursor;
          if(newmargin < 0){ newmargin = 0; }
          this.style.marginLeft = newmargin + 'px';
       });
