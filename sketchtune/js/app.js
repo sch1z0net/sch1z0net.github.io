@@ -63,10 +63,6 @@ var colors = [
             contextMenu.css("display", "none");
             focusTrack = null;
         }
-
-        $("track-pattern").each(function(){
-          $(this).removeClass("multiSelectedPattern");
-        });
     });
 
     $(document).on("scroll", function () {
@@ -397,6 +393,9 @@ var colors = [
 
         $(this).on('mousedown', (event) => {
           if(!isSelectingPatterns){
+           $("track-pattern").each(function(){
+             $(this).removeClass("multiSelectedPattern");
+           });
            isSelectingPatterns = true;
            selectRootX = event.clientX;
            selectRootY = event.clientY;
