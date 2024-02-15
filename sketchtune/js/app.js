@@ -14,7 +14,35 @@
     var contextMenu = $("<div>", {id: "context-menu", "class": "context-menu", css: { display: "none" }});
 
     // Define colors for the palette
-    var colors = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff", "#000000", "#ffffff"];
+    var colors = [
+        "#b2b2b2", // Gray
+        "#363636", // Dark Gray
+        "#ff4444", // Red
+        "#ff8888", // Light Red
+        "#ff8800", // Orange
+        "#ffcc44", // Light Orange
+        "#ffaa22", // Bright Orange
+        "#ffcc00", // Yellow
+        "#ffff44", // Light Yellow
+        "#88cc00", // Lime Green
+        "#aaff22", // Light Lime Green
+        "#00cc00", // Green
+        "#22ff22", // Light Green
+        "#00cc88", // Turquoise
+        "#22ffcc", // Light Turquoise
+        "#00cccc", // Cyan
+        "#22ffff", // Light Cyan
+        "#0099ff", // Sky Blue
+        "#22aaff", // Light Sky Blue
+        "#0000ff", // Blue
+        "#2222ff", // Light Blue
+        "#4400cc", // Indigo
+        "#7744ff", // Light Indigo
+        "#9900ff", // Purple
+        "#cc44ff", // Light Purple
+        "#ff00ff", // Magenta
+        "#ff44ff"  // Light Magenta
+    ];
 
     // Function to create color palette
     function createColorPalette() {
