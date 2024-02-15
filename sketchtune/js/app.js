@@ -90,7 +90,7 @@ var colors = [
 
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
       $(".multiSelectedPattern").each(function(){
-         var distFromCursor = x - this.clientX;
+         var distFromCursor = x - this.getBoundingClientRect.left;
          var newmargin = x - this.offsetWidth / 2 + distFromCursor;
          if(newmargin < 0){ newmargin = 0; }
          this.style.marginLeft = newmargin + 'px';
@@ -190,6 +190,8 @@ var colors = [
      isResizingR = false;
      isResizingL = false;
      isDraggingTitle = false;
+
+     // SNAPPING PATTERNS
      if(activePattern != null){
         activePattern.style.marginLeft = (Math.round(parseInt(activePattern.style.marginLeft) / 20) * 20) + "px";
         activePattern.style.width = (Math.round(parseInt(activePattern.style.width) / 20) * 20) + "px";
