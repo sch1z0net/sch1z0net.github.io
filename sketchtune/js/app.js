@@ -323,7 +323,7 @@ var colors = [
        $(this).addClass("unselectable");
         tracks_height_sum += 20;
         $('beat-bar').css("max-height",tracks_height_sum+"px");
-        $('track-row-empty').css("max-height","calc(100% - "+tracks_height_sum+"px - 20px)");
+        /*$('track-row-empty').css("max-height","calc(100% - "+tracks_height_sum+"px - 20px)");*/
 
         $(this).dblclick(function(event) {
            const x = event.clientX + $("beat-bar").scrollLeft() - 20;
