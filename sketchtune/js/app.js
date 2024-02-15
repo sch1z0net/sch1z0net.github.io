@@ -91,20 +91,31 @@ var colors = [
       $(activePattern).addClass("multiSelectedPattern");
 
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
-      var newmargin = x - xOffsetOnPattern;
-      var dx = newmargin - activePattern_oldmargin;
-      newmargin = activePattern.getBoundingClientRect().left + dx;
-      if(newmargin < 0){ newmargin = 0; }
-      activePattern.style.marginLeft = newmargin + 'px';
-      activePattern_oldmargin = newmargin;
+      var newmarginA = x - xOffsetOnPattern;
+      var dx = newmarginA - activePattern_oldmargin;
       
+      var overborder = false;
       $(".multiSelectedPattern").each(function(){
           if(this != activePattern){
            var newmargin = this.getBoundingClientRect().left + dx;
-           this.style.marginLeft = newmargin + 'px';
+           if(newmargin < 0){ overborder = true; }
           }
       });
       
+      if(!overborder){
+          newmarginA = activePattern.getBoundingClientRect().left + dx;
+          if(newmarginA < 0){ newmarginA = 0; }
+          activePattern_oldmargin = newmarginA; 
+          activePattern.style.marginLeft = newmarginA + 'px';
+
+          $(".multiSelectedPattern").each(function(){
+             if(this != activePattern){
+               var newmargin = this.getBoundingClientRect().left + dx;
+               this.style.marginLeft = newmargin + 'px';
+             }
+          });
+      }
+
       
     }
     //Resize on Right side
