@@ -11,6 +11,7 @@
   let activeInsertSlot = null;
   let activeInsertPosition = null;
   let activePattern_oldmargin = null;
+  let xOffsetOnPattern = null;
 
   let selectRootX = null;
   let selectRootY = null;
@@ -90,8 +91,7 @@ var colors = [
       $(activePattern).addClass("multiSelectedPattern");
 
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
-      var clientXtoCursor = event.clientX - activePattern.getBoundingClientRect().left;
-      var newmargin = x - clientXtoCursor;
+      var newmargin = x - xOffsetOnPattern;
       if(newmargin < 0){ newmargin = 0; }
       var dx = newmargin - activePattern_oldmargin;
       newmargin = activePattern.getBoundingClientRect().left + dx;
@@ -350,6 +350,7 @@ var colors = [
           isDragging = true;
           activePattern = this;
           activePattern_oldmargin = this.getBoundingClientRect().left;
+          xOffsetOnPattern = event.clientX - activePattern_oldmargin;
         });
 
         $(this).append($('<track-pattern-bl>'));
