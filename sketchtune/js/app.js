@@ -28,6 +28,11 @@
         contextMenu.css("display", "none");
     });
 
+    $(document).on("contextmenu", function (event) {
+        event.stopPropagation();
+    });
+
+
 
 
 
@@ -386,7 +391,7 @@
 
 
 
-        this.on("contextmenu", function (event) {
+        $(this).on("contextmenu", function (event) {
           event.preventDefault();
           var posX = event.clientX;
           var posY = event.clientY;
