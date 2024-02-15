@@ -132,6 +132,7 @@ track-row-container {
   display: block;
   height: 100%;
   box-sizing: border-box;
+  padding-bottom: calc(10px + 40px);
 }
 
 track-row {

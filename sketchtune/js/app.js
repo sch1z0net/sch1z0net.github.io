@@ -312,7 +312,7 @@ var colors = [
 
         $(this).on("click",function(){
            var color = "hsl(0,0%,85%)";
-           $(this).append($("<track-title>").css("background-color",color).attr("data-id",trackID));
+           $("track-title-container").append($("<track-title>").css("background-color",color).attr("data-id",trackID));
            var tr = $("<track-row>").attr('data-stdcolor',color).attr('id','track_'+trackID);
            $("track-row-container").append(tr);
            trackID++;
