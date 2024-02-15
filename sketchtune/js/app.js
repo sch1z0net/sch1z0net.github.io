@@ -38,6 +38,7 @@ var colors = [
             palette.append(colorItem);
 
             colorItem.on("click",function(){
+                alert(color);
                 $(activeTrack).css("background-color",color);
             });
 
