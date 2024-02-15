@@ -30,6 +30,7 @@
 
     $(document).on("contextmenu", function (event) {
         event.stopPropagation();
+        event.preventDefault();
     });
 
 
