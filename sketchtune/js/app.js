@@ -15,17 +15,15 @@
 
     // Define colors for the palette
 var colors = [
-    "#ff0000", "#ff3333", "#ff6666", "#ff9999", "#ffcccc", "#ffe6e6", "#ffffff", "#e6e6ff", "#ccccff", "#9999ff",
-    "#ffaa00", "#ffb333", "#ffc266", "#ffd699", "#ffe6cc", "#fff2e6", "#ffffff", "#f2f2ff", "#e6e6ff", "#ccccff",
-    "#ffff00", "#ffff33", "#ffff66", "#ffff99", "#ffffcc", "#ffffe6", "#ffffff", "#e6e6ff", "#ccccff", "#9999ff",
-    "#aaff00", "#b3ff33", "#c2ff66", "#d6ff99", "#e6ffcc", "#f2ffe6", "#ffffff", "#e6f2ff", "#ccddff", "#99b3ff",
-    "#00ff00", "#33ff33", "#66ff66", "#99ff99", "#ccffcc", "#e6ffe6", "#ffffff", "#e6e6ff", "#ccccff", "#9999ff",
-    "#00ffaa", "#33ffb3", "#66ffc2", "#99ffd6", "#ccffe6", "#e6fff2", "#ffffff", "#e6e6ff", "#ccccff", "#9999ff",
-    "#00ffff", "#33ffff", "#66ffff", "#99ffff", "#ccffff", "#e6ffff", "#ffffff", "#e6e6ff", "#ccccff", "#9999ff",
-    "#00aaff", "#3399ff", "#6699ff", "#99aaff", "#ccd6ff", "#e6e6ff", "#ffffff", "#e6e6ff", "#ccccff", "#9999ff",
-    "#0000ff", "#3333ff", "#6666ff", "#9999ff", "#ccccff", "#e6e6ff", "#ffffff", "#e6e6ff", "#ccccff", "#9999ff",
-    "#aa00ff", "#b333ff", "#c266ff", "#d699ff", "#e6ccff", "#f2e6ff", "#ffffff", "#f2f2ff", "#e6e6ff", "#ccccff"
+    "#fe9aaa", "#fea741", "#d19d3a", "#f7f58c", "#c1fc40", "#2dfe50", "#34feaf", "#65ffea", "#90c7fc", "#5c86e1",
+    "#97abfb", "#d975e2", "#e55ca2", "#ffffff", "#fe3e40", "#f76f23", "#9f7752", "#fff054", "#8dff79", "#42c52e",
+    "#11c2b2", "#28e9fd", "#1aa6eb", "#5c86e1", "#8e74e2", "#ba81c7", "#fe41d1", "#d9d9d9", "#e26f64", "#fea67e",
+    "#d6b27f", "#eeffb7", "#d6e6a6", "#bfd383", "#a4c99a", "#d9fde5", "#d2f3f9", "#c2c9e6", "#d3c4e5", "#b5a1e4",
+    "#eae3e7", "#b3b3b3", "#cb9b96", "#bb8862", "#9f8a75", "#c3be78", "#a9c12f", "#84b45d", "#93c7c0", "#a5bbc9",
+    "#8facc5", "#8d9ccd", "#ae9fbb", "#c6a9c4", "#bf7a9c", "#838383", "#b53637", "#ae5437", "#775345", "#dec633",
+    "#899b31", "#57a53f", "#139f91", "#256686", "#1a3096", "#3155a4", "#6751ae", "#a752af", "#ce3571", "#3f3f3f"
 ];
+
 
 
 
@@ -430,7 +428,7 @@ var colors = [
           var posX = event.clientX;
           var posY = event.clientY;
           contextMenu.css("display", "block");
-          contextMenu.css("left", posX + "px");
+          contextMenu.css("left", posX-100 + "px");
           contextMenu.css("top", posY + "px");
         });
 
