@@ -39,7 +39,7 @@ var colors = [
             palette.append(colorItem);
 
             colorItem.on("click",function(){
-                var id = $(focusTrack).attr("id");
+                var id = $(focusTrack).attr("data-id");
                 $("#track_"+id).attr("data-stdcolor",color);
                 $(focusTrack).css("background-color",color);
                 focusTrack = null;
