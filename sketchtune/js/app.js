@@ -5,6 +5,7 @@
   let isDraggingTitle = false;
   let activePattern = null;
   let activeTrack = null;
+  let focusTrack = null;
   let activeInsertSlot = null;
   let activeInsertPosition = null;
 
@@ -38,7 +39,8 @@ var colors = [
             palette.append(colorItem);
 
             colorItem.on("click",function(){
-                $(activeTrack).css("background-color",color);
+                $(focusTrack).css("background-color",color);
+                focusTrack = null;
             });
 
         });
@@ -53,11 +55,13 @@ var colors = [
     $(document).on("click", function (event) {
         if (event.button !== 2) {
             contextMenu.css("display", "none");
+            focusTrack = null;
         }
     });
 
     $(document).on("scroll", function () {
         contextMenu.css("display", "none");
+        focusTrack = null;
     });
 
     $(document).on("contextmenu", function (event) {
@@ -435,7 +439,7 @@ var colors = [
           contextMenu.css("display", "block");
           contextMenu.css("left", posX-100 + "px");
           contextMenu.css("top", posY + "px");
-          activeTrack = this;
+          focusTrack = this;
         });
 
 
