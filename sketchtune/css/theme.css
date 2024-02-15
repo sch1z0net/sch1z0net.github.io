@@ -154,6 +154,7 @@ track-row-empty {
   height: 40px;
   background-color: rgba(160,160,160,1);
   align-items: center;
+  justify-content: center;
   position: fixed;
   margin-top: -40px;
   cursor: pointer;
