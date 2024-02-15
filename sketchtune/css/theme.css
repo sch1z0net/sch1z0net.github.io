@@ -260,3 +260,21 @@ track-pattern-br {
   user-select: none; /* Standard */
 }
 
+
+
+.context-menu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px 0;
+    z-index: 1000;
+}
+.context-menu-item {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.context-menu-item:hover {
+    background-color: #f0f0f0;
+}
+
