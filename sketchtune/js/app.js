@@ -90,24 +90,20 @@ var colors = [
       $(activePattern).addClass("multiSelectedPattern");
 
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
-
       var newmargin = x - (activePattern.offsetWidth / 2);
       if(newmargin < 0){ newmargin = 0; }
-
       var dx = newmargin - activePattern_oldmargin;
       newmargin = activePattern.getBoundingClientRect().left + dx;
       activePattern.style.marginLeft = newmargin + 'px';
-
       activePattern_oldmargin = newmargin;
-      /*
+      
       $(".multiSelectedPattern").each(function(){
           if(this != activePattern){
            var newmargin = this.getBoundingClientRect().left + dx;
-           if(newmargin < 0){ newmargin = 0; }
            this.style.marginLeft = newmargin + 'px';
           }
       });
-      */
+      
       
     }
     //Resize on Right side
