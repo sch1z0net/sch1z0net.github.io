@@ -92,9 +92,9 @@ var colors = [
 
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
       var newmargin = x - xOffsetOnPattern;
-      if(newmargin < 0){ newmargin = 0; }
       var dx = newmargin - activePattern_oldmargin;
       newmargin = activePattern.getBoundingClientRect().left + dx;
+      if(newmargin < 0){ newmargin = 0; }
       activePattern.style.marginLeft = newmargin + 'px';
       activePattern_oldmargin = newmargin;
       
