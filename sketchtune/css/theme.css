@@ -328,3 +328,10 @@ track-pattern-br {
     border-color: #000; /* Change border color on hover */
 }
 
+#selectionArea {
+    display: none;
+    position: absolute;
+    border: 1px dashed; #ccc;
+    z-index: 1000;
+}
+

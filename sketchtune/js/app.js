@@ -3,12 +3,16 @@
   let isResizingR = false;
   let isResizingL = false;
   let isDraggingTitle = false;
+  let isSelectingPatterns = false;
+
   let activePattern = null;
   let activeTrack = null;
   let focusTrack = null;
   let activeInsertSlot = null;
   let activeInsertPosition = null;
 
+  let selectRootX = null;
+  let selectRootY = null;
 
   /**** CONTEXT MENU ****/
     // Create context menu
@@ -74,9 +78,9 @@ var colors = [
 
 
 
-
-
-
+    // Create selection area
+    var selectionArea = $("<div>", {id: "selectionArea", css: { display: "none" }});
+    $("body").append(selectionArea);
 
 
   document.addEventListener('mousemove', (event) => {
@@ -140,7 +144,19 @@ var colors = [
             }
           }
       });
+    }
 
+    if (isSelectingPatterns) {
+      const y = event.clientY;
+      const x = event.clientX;
+      var w = x - selectRootX;
+      var h = y - selectRootY;
+
+      selectionArea.css("display", "block");
+      selectionArea.css("left", selectRootX + "px");
+      selectionArea.css("top", selectRootY + "px");
+      selectionArea.css("width", w);
+      selectionArea.css("height", h);
     }
 
   });
@@ -182,6 +198,9 @@ var colors = [
      activeTrack = null;
      activeInsertSlot = null;
      activeInsertPosition = null;
+     
+     isSelectingPatterns = false;
+     selectionArea.css("display", "none");
   });
 
   var tracks_height_sum = 0;
@@ -348,6 +367,12 @@ var colors = [
 
            $(this).append(newpat);
         });
+
+        $(this).on('mousedown', (event) => {
+           isSelectingPatterns = true;
+           selectRootX = event.clientX;
+           selectRootY = event.clientY;
+        }
     }
   }
 
