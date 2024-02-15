@@ -36,6 +36,11 @@ var colors = [
                 css: { backgroundColor: color }
             });
             palette.append(colorItem);
+
+            colorItem.on("click",function(){
+                $(activeTrack).css("background-color",color);
+            });
+
         });
         return palette;
     }
