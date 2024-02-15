@@ -10,6 +10,7 @@
   let focusTrack = null;
   let activeInsertSlot = null;
   let activeInsertPosition = null;
+  let activePattern_oldmargin = null;
 
   let selectRootX = null;
   let selectRootY = null;
@@ -87,11 +88,13 @@ var colors = [
     //DRAG PATTERN (single or multiple)
     if (isDragging) {
       $(activePattern).addClass("multiSelectedPattern");
+      var newmargin = x - (activePattern.offsetWidth / 2);
+      var dx = newmargin - activePattern_oldmargin;
+      activePattern_oldmargin = newmargin;
 
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
       $(".multiSelectedPattern").each(function(){
-         //var distFromCursor = x - this.getBoundingClientRect().left;
-         var newmargin = x - (this.offsetWidth / 2);// + distFromCursor;
+         var newmargin = this.getBoundingClientRect().left + dx;
          if(newmargin < 0){ newmargin = 0; }
          this.style.marginLeft = newmargin + 'px';
       });
@@ -339,6 +342,7 @@ var colors = [
           event.stopPropagation();
           isDragging = true;
           activePattern = this;
+          activePattern_oldmargin = this.getBoundingClientRect().left;
         });
 
         $(this).append($('<track-pattern-bl>'));
