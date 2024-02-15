@@ -90,7 +90,7 @@ var colors = [
     if (isDragging) {
       $(activePattern).addClass("multiSelectedPattern");
 
-      const x = event.clientX + $("beat-bar").scrollLeft() - 20;
+      const x = event.clientX + $("beat-bar").scrollLeft();
       var newmargin = x - xOffsetOnPattern;
       if(newmargin < 0){ newmargin = 0; }
       var dx = newmargin - activePattern_oldmargin;
@@ -350,7 +350,7 @@ var colors = [
           isDragging = true;
           activePattern = this;
           activePattern_oldmargin = this.getBoundingClientRect().left;
-          const x = event.clientX + $("beat-bar").scrollLeft() - 20;
+          const x = event.clientX;
           xOffsetOnPattern = x - activePattern_oldmargin;
         });
 
