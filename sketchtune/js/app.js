@@ -224,6 +224,9 @@ var colors = [
 
      isSelectingPatterns = false;
      selectionArea.css("display", "none");
+      $("track-pattern").each(function(){
+          $(this).removeClass("multiSelectedPattern");
+      });
   });
 
   var tracks_height_sum = 0;
