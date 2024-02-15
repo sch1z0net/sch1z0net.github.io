@@ -302,10 +302,15 @@ var colors = [
   class TrackRowEmpty extends HTMLElement {
     constructor() {
       super();
+      this.initialized = false;
     }
 
     connectedCallback() {
-      $(this).addClass("unselectable");
+      if (!this.initialized) {
+        $(this).addClass("unselectable");
+        $(this).append("<span>Create New Track</span>");
+        this.initialized = true;
+      }
     }
   }
 
