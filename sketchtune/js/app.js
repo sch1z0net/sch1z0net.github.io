@@ -399,6 +399,41 @@
     }
   }
 
+
+
+
+    var contextMenu = $("#context-menu");
+    var target = $("#target");
+
+    $(document).on("contextmenu", function (event) {
+        event.preventDefault();
+        var posX = event.clientX;
+        var posY = event.clientY;
+        contextMenu.css("display", "block");
+        contextMenu.css("left", posX + "px");
+        contextMenu.css("top", posY + "px");
+    });
+
+    $(document).on("click", function (event) {
+        if (event.button !== 2) {
+            contextMenu.css("display", "none");
+        }
+    });
+
+    $(document).on("scroll", function () {
+        contextMenu.css("display", "none");
+    });
+
+    target.on("contextmenu", function (event) {
+        event.stopPropagation();
+    });
+
+
+
+
+
+
+
 $(document).ready(function(){
 
   // Define the custom element
@@ -432,6 +467,41 @@ $(document).ready(function(){
        $("beat-bar").scrollLeft(e.originalEvent.deltaX + $("beat-bar").scrollLeft());
        $("track-window").scrollLeft($("beat-bar").scrollLeft());
   });
+
+
+    // Create context menu
+    var contextMenu = $("<div>", {id: "context-menu", "class": "context-menu", css: { display: "none" }});
+    // Create context menu items
+    var contextMenuItem1 = $("<div>", {"class": "context-menu-item", text: "Option 1" });
+    var contextMenuItem2 = $("<div>", {"class": "context-menu-item", text: "Option 2" });
+    contextMenu.append(contextMenuItem1, contextMenuItem2);
+    $("body").append(contextMenu);
+    
+    // Event listeners
+    $(document).on("contextmenu", function (event) {
+        event.preventDefault();
+        var posX = event.clientX;
+        var posY = event.clientY;
+        contextMenu.css("display", "block");
+        contextMenu.css("left", posX + "px");
+        contextMenu.css("top", posY + "px");
+    });
+
+    $(document).on("click", function (event) {
+        if (event.button !== 2) {
+            contextMenu.css("display", "none");
+        }
+    });
+
+    $(document).on("scroll", function () {
+        contextMenu.css("display", "none");
+    });
+
+    /*
+    target.on("contextmenu", function (event) {
+        event.stopPropagation();
+    });*/
+
 
 
 });
