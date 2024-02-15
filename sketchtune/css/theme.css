@@ -156,6 +156,7 @@ track-row-empty {
   align-items: center;
   position: fixed;
   margin-top: -40px;
+  cursor: pointer;
 }
 
 track-row-empty > span {
