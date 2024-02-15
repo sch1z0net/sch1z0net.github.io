@@ -497,18 +497,6 @@ var colors = [
     }
   }
 
-  class SideWindow extends HTMLElement {
-    constructor() {
-      super();
-    }
-
-    connectedCallback() {
-      $(this).addClass("unselectable");
-      $(this).append("<track-title-header>");
-      $(this).append("<track-title-container>");
-      $(this).append("<track-title-footer>");
-    }
-  }
 
   class TrackTitleHeader extends HTMLElement {
     constructor() {
