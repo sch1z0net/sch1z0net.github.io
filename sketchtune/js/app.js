@@ -460,14 +460,14 @@ var colors = [
       if (!this.initialized) {
         $(this).addClass("unselectable");
         for(var i = 1; i<10; i++){
-           var color = "hsl(0,0%,55%)";
+           var color = "hsl(0,0%,85%)";
            $(this).append($("<track-title>").css("background-color",color).attr("data-id",trackID));
            var tr = $("<track-row>").attr('data-stdcolor',color).attr('id','track_'+trackID);
            $("track-row-container").append(tr);
            trackID++;
         }
         
-        $("track-row-container").append($("track-row-empty"));
+        $("track-row-container").append($("<track-row-empty>"));
 
         this.initialized = true;
       }
