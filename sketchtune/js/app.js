@@ -95,9 +95,9 @@ var colors = [
       if(newmargin < 0){ newmargin = 0; }
 
       var dx = newmargin - activePattern_oldmargin;
-      newmargin = this.getBoundingClientRect().left + dx;
-      this.style.marginLeft = newmargin + 'px';
-      
+      newmargin = activePattern.getBoundingClientRect().left + dx;
+      activePattern.style.marginLeft = newmargin + 'px';
+
       activePattern_oldmargin = newmargin;
       /*
       $(".multiSelectedPattern").each(function(){
