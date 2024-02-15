@@ -84,9 +84,9 @@ var colors = [
 
 
   document.addEventListener('mousemove', (event) => {
-    //DRAG
+    //DRAG PATTERN (single or multiple)
     if (isDragging) {
-      activePattern.addClass("multiSelectedPattern");
+      $(activePattern).addClass("multiSelectedPattern");
 
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
       $(".multiSelectedPattern").each(function(){
