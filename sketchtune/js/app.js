@@ -15,18 +15,18 @@
 
     // Define colors for the palette
 var colors = [
-    "#b2b2b2", "#363636", "#ff4444", "#ff8888", "#ff8800", "#ffcc44", "#ffaa22", "#ffcc00", "#ffff44", "#88cc00",
-    "#aaff22", "#00cc00", "#22ff22", "#00cc88", "#22ffcc", "#00cccc", "#22ffff", "#0099ff", "#22aaff", "#0000ff",
-    "#2222ff", "#4400cc", "#7744ff", "#9900ff", "#cc44ff", "#ff00ff", "#ff44ff", "#ffccff", "#ff88ff", "#ffcc88",
-    "#ffaa00", "#cccc00", "#88cc00", "#22ff00", "#00ff22", "#00ff88", "#00ffcc", "#00ccaa", "#00cccc", "#00aaff",
-    "#0099ff", "#0088ff", "#3344ff", "#0011ff", "#3f00ff", "#8a00ff", "#cc00ff", "#ff00cc", "#ff3399", "#ff6699",
-    "#ff9999", "#ff6600", "#ff9966", "#ffcc66", "#ffcc33", "#ffff66", "#ccff33", "#99ff66", "#66ff99", "#66ffcc",
-    "#33ffff", "#66ccff", "#3399ff", "#6666ff", "#9933ff", "#cc99ff", "#ff99ff", "#ff66cc", "#ff6699", "#ff6666",
-    "#ff9966", "#ffcc66", "#ffff66", "#ccff66", "#99ff66", "#66ff99", "#66ffcc", "#66ccff", "#6699ff", "#9966ff",
-    "#cc66ff", "#ff66ff", "#ff6fcf", "#ff9db3", "#ff8d3c", "#ffda36", "#ffff66", "#c3ff52", "#77ff4e", "#26c281",
-    "#26c2ac", "#22aaff", "#2351ff", "#6932ff", "#a65bff", "#e63afc", "#ff4aa6", "#ff7980", "#ffbb72", "#ffff7d",
-    "#acff6f", "#5fff73", "#14d790", "#18c5b7"
+    "#ff0000", "#ff3333", "#ff6666", "#ff9999", "#ffcccc", "#ffe6e6", "#ffffff", "#e6e6ff", "#ccccff", "#9999ff",
+    "#ffaa00", "#ffb333", "#ffc266", "#ffd699", "#ffe6cc", "#fff2e6", "#ffffff", "#f2f2ff", "#e6e6ff", "#ccccff",
+    "#ffff00", "#ffff33", "#ffff66", "#ffff99", "#ffffcc", "#ffffe6", "#ffffff", "#e6e6ff", "#ccccff", "#9999ff",
+    "#aaff00", "#b3ff33", "#c2ff66", "#d6ff99", "#e6ffcc", "#f2ffe6", "#ffffff", "#e6f2ff", "#ccddff", "#99b3ff",
+    "#00ff00", "#33ff33", "#66ff66", "#99ff99", "#ccffcc", "#e6ffe6", "#ffffff", "#e6e6ff", "#ccccff", "#9999ff",
+    "#00ffaa", "#33ffb3", "#66ffc2", "#99ffd6", "#ccffe6", "#e6fff2", "#ffffff", "#e6e6ff", "#ccccff", "#9999ff",
+    "#00ffff", "#33ffff", "#66ffff", "#99ffff", "#ccffff", "#e6ffff", "#ffffff", "#e6e6ff", "#ccccff", "#9999ff",
+    "#00aaff", "#3399ff", "#6699ff", "#99aaff", "#ccd6ff", "#e6e6ff", "#ffffff", "#e6e6ff", "#ccccff", "#9999ff",
+    "#0000ff", "#3333ff", "#6666ff", "#9999ff", "#ccccff", "#e6e6ff", "#ffffff", "#e6e6ff", "#ccccff", "#9999ff",
+    "#aa00ff", "#b333ff", "#c266ff", "#d699ff", "#e6ccff", "#f2e6ff", "#ffffff", "#f2f2ff", "#e6e6ff", "#ccccff"
 ];
+
 
 
     // Function to create color palette
