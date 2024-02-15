@@ -308,6 +308,7 @@ var colors = [
     connectedCallback() {
       if (!this.initialized) {
         this.addEventListener('mousedown', (event) => {
+          event.stopPropagation();
           isDragging = true;
           //this.classList.add('dragging');
           activePattern = this;
