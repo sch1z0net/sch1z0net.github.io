@@ -791,16 +791,18 @@ $(document).ready(function(){
   }
 
   let playbackRate = 1;
-  function playSample(audioContext, audioBuffer, time) {
+  function playSample(audioContext, audioBuffer, time, offset, duration) {
     const sampleSource = new AudioBufferSourceNode(audioContext, {
       buffer: audioBuffer,
       playbackRate,
     });
     sampleSource.connect(audioContext.destination);
-    sampleSource.start(time);
+    sampleSource.start(time, offset, duration);
     return sampleSource;
   }
 
+  var bpm = 120;
+  var spb = 60 / bpm;
 
   const button_load = $("#load");
   const button_play = $("#play");
@@ -811,15 +813,15 @@ $(document).ready(function(){
       context = new AudioContext();
       setupSamples(context).then((samples) => {
         button_play.on("click", function(){    
-          playSample(context, samples[0], 0);
-          playSample(context, samples[1], 0);
-          playSample(context, samples[2], 0);
+          playSample(context, samples[0], 0*spb, 0, spb*4);
+          playSample(context, samples[1], 0*spb, 0, spb*4);
+          playSample(context, samples[2], 0*spb, 0, spb*4);
 
-          playSample(context, samples[1], 4);
-          playSample(context, samples[2], 4);
+          playSample(context, samples[1], 4*spb, 0, spb*4);
+          playSample(context, samples[2], 4*spb, 0, spb*4);
 
-          playSample(context, samples[0], 8);
-          playSample(context, samples[1], 8);
+          playSample(context, samples[0], 8*spb, 0, spb*4);
+          playSample(context, samples[1], 8*spb, 0, spb*4);
         });
       });
   });
