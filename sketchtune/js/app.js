@@ -552,7 +552,7 @@ var colors = [
     }
 
     connectedCallback() {
-      ROOT_PADDING = $("grid-window").getBoundingClientRect().left;
+      ROOT_PADDING = this.getBoundingClientRect().left;
       $(this).addClass("unselectable");
       $(this).append($("<beat-bar-container>"));
       $(this).append($("<track-window>"));
