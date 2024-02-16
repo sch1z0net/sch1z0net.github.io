@@ -736,8 +736,7 @@ var colors = [
 
       $(this).on('drop', function(event) {
           event.preventDefault();
-          alert("TEST");
-          /*
+          
           const files = event.originalEvent.dataTransfer.files;
           const urls = [];
 
@@ -753,8 +752,7 @@ var colors = [
           }
 
           console.log(urls);
-
-          */
+          
       });
     }
   }
