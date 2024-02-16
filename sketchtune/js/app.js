@@ -815,15 +815,15 @@ $(document).ready(function(){
       setupSamples(context).then((samples) => {
         button_play.css("display","inline-block");
         button_play.on("click", function(){    
-          playSample(context, samples[0], context.currentTime + 0*spb, 0, spb*4);
-          playSample(context, samples[1], context.currentTime + 0*spb, 0, spb*4);
-          playSample(context, samples[2], context.currentTime + 0*spb, 0, spb*4);
+          playSample(context, samples[0], context.currentTime + 0*spb, 0, spb*8);
+          playSample(context, samples[1], context.currentTime + 0*spb, 0, spb*8);
+          playSample(context, samples[2], context.currentTime + 0*spb, 0, spb*8);
 
-          playSample(context, samples[1], context.currentTime + 4*spb, 0, spb*4);
-          playSample(context, samples[2], context.currentTime + 4*spb, 0, spb*4);
+          playSample(context, samples[1], context.currentTime + 8*spb, 0, spb*8);
+          playSample(context, samples[2], context.currentTime + 8*spb, 0, spb*8);
 
-          playSample(context, samples[0], context.currentTime + 8*spb, 0, spb*4);
-          playSample(context, samples[1], context.currentTime + 8*spb, 0, spb*4);
+          playSample(context, samples[0], context.currentTime + 16*spb, 0, spb*8);
+          playSample(context, samples[1], context.currentTime + 16*spb, 0, spb*8);
         });
       });
   });
