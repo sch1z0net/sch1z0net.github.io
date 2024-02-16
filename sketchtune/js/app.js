@@ -218,6 +218,7 @@ var colors = [
           this.style.marginLeft = (pos * BEAT_WIDTH) + "px";
 
           var length = Math.round(parseInt(this.style.width) / BEAT_WIDTH);
+          alert(length);
           $(this).attr('data-length',length);
           this.style.width = (length * BEAT_WIDTH) + "px";
         });
