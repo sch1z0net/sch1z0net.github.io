@@ -824,6 +824,7 @@ $(document).ready(function(){
   var is_playing = false;
   var init = false;
   var samples;
+  var startTime;
 
   button_load.on("click", function(){
       context = new AudioContext();
@@ -834,7 +835,7 @@ $(document).ready(function(){
           is_playing = false;
           init = true;
           // Record the start time
-          const startTime = performance.now();
+          startTime = performance.now();
           requestAnimationFrame(renderloop);
         });
       });
