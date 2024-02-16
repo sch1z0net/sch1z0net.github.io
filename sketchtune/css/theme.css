@@ -193,7 +193,7 @@ track-title-container {
   scrollbar-width: none;  /* Firefox */
 
   padding-top: 30px;
-  padding-bottom: calc(10px + 40px - 24px);
+  padding-bottom: 40px;
   box-sizing: border-box;
   height: 100%;
   display: block;
