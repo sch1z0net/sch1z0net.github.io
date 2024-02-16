@@ -214,11 +214,11 @@ var colors = [
      if(activePattern != null){
         $(".multiSelectedPattern").each(function(){
           var pos = Math.round(parseInt(this.style.marginLeft) / BEAT_WIDTH);
-          this.attr('data-pos',pos);
+          $(this).attr('data-pos',pos);
           this.style.marginLeft = (pos * BEAT_WIDTH) + "px";
 
           var length = Math.round(parseInt(this.style.width) / BEAT_WIDTH);
-          this.attr('data-length',length);
+          $(this).attr('data-length',length);
           this.style.width = (length * BEAT_WIDTH) + "px";
         });
      }
@@ -302,9 +302,9 @@ var colors = [
 
   function resizePatterns(){
     $("track-pattern").each(function(){
-      this.attr('data-pos',pos);
+      $(this).attr('data-pos',pos);
       this.style.marginLeft = (pos * BEAT_WIDTH) + "px";
-      this.attr('data-length',length);
+      $(this).attr('data-length',length);
       this.style.width = (length * BEAT_WIDTH) + "px"; 
     });
   }
