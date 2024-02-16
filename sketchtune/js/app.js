@@ -217,9 +217,8 @@ var colors = [
           $(this).attr('data-pos',pos);
           this.style.marginLeft = (pos * BEAT_WIDTH) + "px";
 
-          var length = Math.round(parseInt(this.style.width) / BEAT_WIDTH);
-          alert(this.style.width);
-          alert(parseInt(this.style.width));
+          var length = Math.round($(this).width() / BEAT_WIDTH);
+          alert(this.width());
           $(this).attr('data-length',length);
           this.style.width = (length * BEAT_WIDTH) + "px";
         });
