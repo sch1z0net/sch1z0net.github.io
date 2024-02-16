@@ -802,23 +802,17 @@ $(document).ready(function(){
 
 
   const button = document.querySelector("button");
-  button.addEventListener(
-    "click",
-    () => { 
-      const context = new AudioContext();
-      /*const buffer = new AudioBuffer(context, {
-        numberOfChannels: 2,
-        length: 22050,
-        sampleRate: 44100,
-      });*/
+  const context = new AudioContext();
 
-      setupSamples(context).then((samples) => {
-          playSample(context, samples[0], 0);
-      });
-    },
-    false,
-  );
-
+  setupSamples(context).then((samples) => {
+      button.addEventListener("click", () => {    
+        playSample(context, samples[0], 0);
+        playSample(context, samples[1], 0);
+        playSample(context, samples[2], 0);
+      },
+      false,
+    );
+  });
 
 
 
