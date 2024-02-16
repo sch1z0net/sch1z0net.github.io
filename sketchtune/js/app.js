@@ -706,8 +706,16 @@ var colors = [
     }
   }
 
+  class TopWindow extends HTMLElement {
+    constructor() {
+      super();
+    }
 
-
+    connectedCallback() {
+      $(this).addClass("unselectable");
+      $(this).append("<button>play</button>");
+    }
+  }
 
 
 
@@ -735,8 +743,12 @@ $(document).ready(function(){
   customElements.define('track-title-footer', TrackTitleFooter);
   customElements.define('side-window' , SideWindow);
 
+  customElements.define('top-window' , TopWindow);
+
+  $("#root").append($("<top-window>"));
   $("#root").append($("<grid-window>"));
   $("#root").append($("<side-window>"));
+
 
   $("beat-bar").scrollLeft(0);
   $("#root").bind('wheel', function(e) {
@@ -746,5 +758,37 @@ $(document).ready(function(){
        $("beat-bar").scrollLeft(e.originalEvent.deltaX + $("beat-bar").scrollLeft());
        $("track-window").scrollLeft($("beat-bar").scrollLeft());
   });
+
+  
+
+
+
+
+
+
+
+
+
+  const button = document.querySelector("button");
+  button.addEventListener(
+    "click",
+    () => { 
+      const context = new AudioContext();
+      const buffer = new AudioBuffer(context, {
+        numberOfChannels: 2,
+        length: 22050,
+        sampleRate: 44100,
+      });
+    },
+    false,
+  );
+
+
+
+
+
+
+
+
 
 });
