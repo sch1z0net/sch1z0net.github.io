@@ -96,21 +96,21 @@ var colors = [
 
       var overborder = 0;
       $(".multiSelectedPattern").each(function(){
-          var newmargin = this.getBoundingClientRect().left + dx;
+          var newmargin = this.getBoundingClientRect().left + $("beat-bar").scrollLeft() + dx;
           if(newmargin < 0){ 
             if(newmargin < overborder){ overborder = newmargin; }
           }
       });
       overborder = -overborder;
 
-      newmarginA = activePattern.getBoundingClientRect().left + dx + overborder;
+      newmarginA = activePattern.getBoundingClientRect().left + $("beat-bar").scrollLeft() + dx + overborder;
       if(newmarginA < 0){ newmarginA = 0; }
       activePattern_oldmargin = newmarginA; 
       activePattern.style.marginLeft = newmarginA + 'px';
 
       $(".multiSelectedPattern").each(function(){
           if(this != activePattern){
-            var newmargin = this.getBoundingClientRect().left + dx + overborder;
+            var newmargin = this.getBoundingClientRect().left + $("beat-bar").scrollLeft() + dx + overborder;
             this.style.marginLeft = newmargin + 'px';
           }
       });
