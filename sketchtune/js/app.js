@@ -553,6 +553,7 @@ var colors = [
       $(this).addClass("unselectable");
       $(this).append($("<beat-bar-container>"));
       $(this).append($("<track-window>"));
+      $(this).append($("<time-marker>"));
     }
   }
 
@@ -718,6 +719,15 @@ var colors = [
     }
   }
 
+  class TimeMarker extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+      $(this).addClass("unselectable");
+    }
+  }
 
 
 $(document).ready(function(){
@@ -745,6 +755,7 @@ $(document).ready(function(){
   customElements.define('side-window' , SideWindow);
 
   customElements.define('top-window' , TopWindow);
+  customElements.define('time-marker' , TimeMarker);
 
   $("#root").append($("<top-window>"));
   $("#root").append($("<grid-window>"));

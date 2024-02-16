@@ -385,3 +385,11 @@ track-pattern-br {
     cursor: pointer;
 } 
 
+time-marker {
+	position: absolute;
+	width: 1px;
+	height: 100%;
+	border: 1px solid red;
+	margin-left: 0px;
+}
+
