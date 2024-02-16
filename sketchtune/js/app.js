@@ -399,6 +399,11 @@ var colors = [
 
     connectedCallback() {
       if (!this.initialized) {
+        $(this).dblclick(function(event) {
+          event.stopPropagation(); 
+          
+        }
+
         this.addEventListener('mousedown', (event) => {
           event.stopPropagation();
           isDragging = true;
