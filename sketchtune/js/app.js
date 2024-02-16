@@ -763,10 +763,28 @@ $(document).ready(function(){
 
 
 
+  async function getFile(audioContext, filepath) {
+    const response = await fetch(filepath);
+    const arrayBuffer = await response.arrayBuffer();
+    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+    return audioBuffer;
+  }
 
+  async function setupSample(audioCtx) {
+    const filePath = "./sounds/moo.mp3";
+    const sample = await getFile(audioCtx, filePath);
+    return sample;
+  }
 
-
-
+  function playSample(audioContext, audioBuffer, time) {
+    const sampleSource = new AudioBufferSourceNode(audioContext, {
+      buffer: audioBuffer,
+      playbackRate,
+    });
+    sampleSource.connect(audioContext.destination);
+    sampleSource.start(time);
+    return sampleSource;
+  }
 
 
   const button = document.querySelector("button");
@@ -774,10 +792,14 @@ $(document).ready(function(){
     "click",
     () => { 
       const context = new AudioContext();
-      const buffer = new AudioBuffer(context, {
+      /*const buffer = new AudioBuffer(context, {
         numberOfChannels: 2,
         length: 22050,
         sampleRate: 44100,
+      });*/
+
+      setupSample(context).then((sample) => {
+          playSample(context, sample, 0);
       });
     },
     false,
