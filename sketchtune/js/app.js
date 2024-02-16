@@ -744,11 +744,10 @@ var colors = [
             const reader = new FileReader();
 
             reader.onload = function(event) {
-              const url = event.target.result;
+              const url = URL.createObjectURL(files[i]);
               urls.push(url);
             };
 
-            reader.readAsDataURL(files[i]);
           }
 
           console.log(urls);
