@@ -472,7 +472,7 @@ var colors = [
   function updateGridHeight(){
     var tracks_height_sum = $("track-row").length * 20;
     $('beat-bar').css("max-height",tracks_height_sum+"px");
-    $('time-marker').css("max-height",tracks_height_sum+"px");
+    $('time-marker').css("max-height",30+tracks_height_sum+"px");
   }
 
   class TrackRow extends HTMLElement {
@@ -822,6 +822,7 @@ $(document).ready(function(){
 
   let context;
   var is_playing = false;
+  var init = false;
 
   button_load.on("click", function(){
       context = new AudioContext();
@@ -829,8 +830,7 @@ $(document).ready(function(){
         button_play.css("display","inline-block");
         button_play.on("click", function(){ 
           is_playing = false;
-
-          var init = true;
+          init = true;
           // Record the start time
           const startTime = performance.now();
           requestAnimationFrame(renderloop);
