@@ -18,7 +18,7 @@
 
 
   var BEAT_WIDTH = parseInt($("#root").css("--beat-width"));
-  var ROOT_PADDING = 20;
+  var ROOT_PADDING;
 
 
 
@@ -552,6 +552,7 @@ var colors = [
     }
 
     connectedCallback() {
+      ROOT_PADDING = $("grid-window").getBoundingClientRect().left;
       $(this).addClass("unselectable");
       $(this).append($("<beat-bar-container>"));
       $(this).append($("<track-window>"));
@@ -770,13 +771,12 @@ $(document).ready(function(){
 
   customElements.define('sound-browser', SoundBrowser);
   
-  $("#root").append($("<sound-browser>").css("width","29%"));
-  var side_layout = $("<div>").css("height","100%").css("width","70%").css("display","inline-block");
+  $("#root").append($("<sound-browser>"));
+  var side_layout = $("<div>").css("height","100%").css("width","84%").css("display","inline-block");
   $("#root").append(side_layout);
   side_layout.append($("<top-window>"));
   side_layout.append($("<grid-window>"));
   side_layout.append($("<side-window>"));
-
 
   $("beat-bar").scrollLeft(0);
   $("#root").bind('wheel', function(e) {

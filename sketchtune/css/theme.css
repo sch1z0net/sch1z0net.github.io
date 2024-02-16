@@ -27,10 +27,13 @@ body {
 }
 
 sound-browser {
-  display: block;
+  display: inline-block;
+  margin-right: 0.5%;
+  width: 15.5%;
+
   height: 100%;
   background-color: rgba(120,120,120,1);
-  border-radius: 5px;
+  border-radius: 5px;  
 }
 
 top-window {
