@@ -341,6 +341,10 @@ track-pattern-br {
 	border: 1px solid white;
 }
 
+.extended_beat_marker{
+	display: block;
+}
+
 #zoom_in_grid{
 	border: 1px solid white;
 	border-radius: 50%;

@@ -271,7 +271,11 @@ var colors = [
       }else{
         $(this).addClass("col_a");
       }
-      $(this).append($('<span>').text(bar+"."+beat)); 
+      var beat_marker = $('<span>').text(bar+"."+beat);
+      if(beat!=1){
+         beat_marker.addClass("extended_beat_marker");
+      }
+      $(this).append(beat_marker); 
       tracks_row_length += 20; //+2 Because of border
     }
   }
@@ -302,7 +306,7 @@ var colors = [
       zoom_in.on("click",function(){
          var beat_width = parseInt($("#root").css("--beat-width"));
          beat_width += 5;
-         if(beat_width >= 40){ beat_width = 30; }
+         if(beat_width >= 30){ beat_width = 30; }
          $("#root")[0].style.setProperty("--beat-width", beat_width+"px");
       });
 
