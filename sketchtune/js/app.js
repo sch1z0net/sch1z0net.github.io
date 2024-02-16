@@ -713,7 +713,8 @@ var colors = [
 
     connectedCallback() {
       $(this).addClass("unselectable");
-      $(this).append("<button>play</button>");
+      $(this).append("<button id='load'>load</button>");
+      $(this).append("<button id='play'>play</button>");
     }
   }
 
@@ -801,17 +802,21 @@ $(document).ready(function(){
   }
 
 
-  const button = document.querySelector("button");
-  const context = new AudioContext();
+  const button_load = $("#load");
+  const button_play = $("#play");
+
+  let context;
+  
+  button_load.on("click", function(){
+     context = new AudioContext();;
+  });
 
   setupSamples(context).then((samples) => {
-      button.addEventListener("click", () => {    
+      button_play.on("click", function(){    
         playSample(context, samples[0], 0);
         playSample(context, samples[1], 0);
         playSample(context, samples[2], 0);
-      },
-      false,
-    );
+      });
   });
 
 
