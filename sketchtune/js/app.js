@@ -772,7 +772,7 @@ $(document).ready(function(){
   customElements.define('sound-browser', SoundBrowser);
   
   $("#root").append($("<sound-browser>"));
-  var side_layout = $("<div>").css("height","100%").css("width","84%").css("display","inline-block");
+  var side_layout = $("<div>").css("height","100%").css("width","85%").css("display","inline-block");
   $("#root").append(side_layout);
   side_layout.append($("<top-window>"));
   side_layout.append($("<grid-window>"));
