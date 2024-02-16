@@ -811,19 +811,19 @@ $(document).ready(function(){
   let context;
 
   button_load.on("click", function(){
+      context = new AudioContext();
       setupSamples(context).then((samples) => {
         button_play.css("display","inline-block");
         button_play.on("click", function(){    
-          context = new AudioContext();
-          playSample(context, samples[0], 0*spb, 0, spb*4);
-          playSample(context, samples[1], 0*spb, 0, spb*4);
-          playSample(context, samples[2], 0*spb, 0, spb*4);
+          playSample(context, samples[0], context.currentTime + 0*spb, 0, spb*4);
+          playSample(context, samples[1], context.currentTime + 0*spb, 0, spb*4);
+          playSample(context, samples[2], context.currentTime + 0*spb, 0, spb*4);
 
-          playSample(context, samples[1], 4*spb, 0, spb*4);
-          playSample(context, samples[2], 4*spb, 0, spb*4);
+          playSample(context, samples[1], context.currentTime + 4*spb, 0, spb*4);
+          playSample(context, samples[2], context.currentTime + 4*spb, 0, spb*4);
 
-          playSample(context, samples[0], 8*spb, 0, spb*4);
-          playSample(context, samples[1], 8*spb, 0, spb*4);
+          playSample(context, samples[0], context.currentTime + 8*spb, 0, spb*4);
+          playSample(context, samples[1], context.currentTime + 8*spb, 0, spb*4);
         });
       });
   });
