@@ -406,7 +406,6 @@ var colors = [
           activePattern_oldmargin = this.getBoundingClientRect().left + $("beat-bar").scrollLeft() - ROOT_PADDING;
           const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
           xOffsetOnPattern = x - activePattern_oldmargin;
-          $(activePattern).addClass("multiSelectedPattern");
         });
 
         $(this).append($('<track-pattern-bl>'));
