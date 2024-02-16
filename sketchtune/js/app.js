@@ -770,10 +770,20 @@ $(document).ready(function(){
     return audioBuffer;
   }
 
-  async function setupSample(audioCtx) {
+  /*async function setupSample(audioCtx) {
     const filePath = "./sounds/moo.mp3";
     const sample = await getFile(audioCtx, filePath);
     return sample;
+  }*/
+
+  async function setupSamples(audioCtx) {
+    var samples = [];
+    for (let i = 1; i <= 3; i++) {
+      const sample = await getFile(audioCtx, '/sounds/file${i}.wav');
+      samples.push(sample);
+    }
+    
+    return samples;
   }
 
   let playbackRate = 1;
@@ -799,8 +809,8 @@ $(document).ready(function(){
         sampleRate: 44100,
       });*/
 
-      setupSample(context).then((sample) => {
-          playSample(context, sample, 0);
+      setupSample(context).then((samples) => {
+          playSample(context, samples[0], 0);
       });
     },
     false,
