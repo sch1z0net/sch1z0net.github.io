@@ -39,7 +39,7 @@ top-window {
 side-window {
   display: inline-block;
   width: calc(100% - var(--main-width) + 8px);
-  height: calc(100% - 24px);
+  height: calc(100% - 20px - 4px);
   background-color: rgba(120,120,120,1);
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
@@ -49,7 +49,7 @@ side-window {
 grid-window {
   display: inline-block;
   width: var(--main-width);
-  height: calc(100% - 24px);
+  height: calc(100% - 20px - 4px);
   background-color: rgba(150,150,150,1);
   border-radius: 5px;
 }
@@ -193,7 +193,7 @@ track-title-container {
   scrollbar-width: none;  /* Firefox */
 
   padding-top: 30px;
-  padding-bottom: calc(10px + 40px);
+  padding-bottom: calc(10px + 40px - 24px);
   box-sizing: border-box;
   height: 100%;
   display: block;
@@ -221,7 +221,7 @@ track-title-footer {
   display: block;
   position: relative;
   width: 100%;
-  margin-top: -50px;
+  margin-top: calc(-50px + 24px);
   z-index: 10;
   background-color: rgba(90,90,90,0.9);
   border-bottom-right-radius: 5px;
