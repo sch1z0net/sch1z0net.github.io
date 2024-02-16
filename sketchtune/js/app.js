@@ -264,11 +264,16 @@ var colors = [
               $("#track_"+id).remove();
               $(activeTrack).remove(); 
             }
-            
 
-            activePattern.remove(); 
-            $(".multiSelectedPattern").remove(); 
-            
+            if(isDragging){ 
+              activePattern.remove(); 
+              $(".multiSelectedPattern").remove(); 
+            }
+
+            if($(".multiSelectedPattern").length > 0){
+              $(".multiSelectedPattern").remove();
+            }
+
             event.preventDefault();
         }
   });
