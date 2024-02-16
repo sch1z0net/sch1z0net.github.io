@@ -213,8 +213,13 @@ var colors = [
      // SNAPPING PATTERNS
      if(activePattern != null){
         $(".multiSelectedPattern").each(function(){
-          this.style.marginLeft = (Math.round(parseInt(this.style.marginLeft) / BEAT_WIDTH) * BEAT_WIDTH) + "px";
-          this.style.width = (Math.round(parseInt(this.style.width) / BEAT_WIDTH) * BEAT_WIDTH) + "px";
+          var pos = Math.round(parseInt(this.style.marginLeft) / BEAT_WIDTH);
+          this.attr('data-pos',pos);
+          this.style.marginLeft = (pos * BEAT_WIDTH) + "px";
+
+          var length = Math.round(parseInt(this.style.width) / BEAT_WIDTH);
+          this.attr('data-length',length);
+          this.style.width = (length * BEAT_WIDTH) + "px";
         });
      }
 
@@ -296,7 +301,12 @@ var colors = [
   }
 
   function resizePatterns(){
-     
+    $("track-pattern").each(function(){
+      this.attr('data-pos',pos);
+      this.style.marginLeft = (pos * BEAT_WIDTH) + "px";
+      this.attr('data-length',length);
+      this.style.width = (length * BEAT_WIDTH) + "px"; 
+    });
   }
 
   class BeatBarHeader extends HTMLElement {
@@ -443,8 +453,13 @@ var colors = [
 
         $(this).dblclick(function(event) {
            const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
-           var newmargin = (Math.floor(x / BEAT_WIDTH) * BEAT_WIDTH); //Snap to Grid
-           var newpat = $('<track-pattern>').css("margin-left",newmargin+"px");
+
+           var beatpos = Math.floor(x / BEAT_WIDTH);
+           var newmargin = (beatpos * BEAT_WIDTH); //Snap to Grid
+           var newpat = $('<track-pattern>');
+           newpat.attr('data-pos',beatpos);
+           newpat.attr('data-length',4);
+           newpat.css("margin-left",newmargin+"px");
            newpat.css("background-color",$(this).attr('data-stdcolor'));
 
            $(this).append(newpat);
