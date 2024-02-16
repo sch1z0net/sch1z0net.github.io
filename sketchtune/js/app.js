@@ -298,11 +298,18 @@ var colors = [
 
     connectedCallback() {
       $(this).addClass("unselectable");
-      var zoom = $("<div id='zoom_in_grid'>+</div>");
-      zoom.on("click",function(){
+      var zoom_in = $("<div id='zoom_in_grid'>+</div>");
+      zoom_in.on("click",function(){
+         $("#root")[0].style.setProperty("--beat-width", "40px");
+      });
+
+      var zoom_out = $("<div id='zoom_out_grid'>-</div>");
+      zoom_out.on("click",function(){
          $("#root")[0].style.setProperty("--beat-width", "10px");
       });
-      $(this).append(zoom);
+
+      $(this).append(zoom_in);
+      $(this).append(zoom_out);
     }
   }
 
