@@ -261,16 +261,17 @@ var colors = [
     connectedCallback() {
       $(this).addClass("unselectable");
 
+      var bar = $(this).attr('data-bar');
       var beat = $(this).attr('data-beat');
-      if(((beat-1) % 4) == 0){
+      if(((bar-1) % 4) == 0){
         $(this).addClass("fullbar");
       }
-      if(((beat-1) % 8) < 4){
+      if(((bar-1) % 8) < 4){
         $(this).addClass("col_b");
       }else{
         $(this).addClass("col_a");
       }
-      $(this).append($('<span>').text(beat)); 
+      $(this).append($('<span>').text(bar+"."+beat)); 
       tracks_row_length += 20; //+2 Because of border
     }
   }
@@ -284,7 +285,7 @@ var colors = [
       $(this).addClass("unselectable");
       for(var bar = 1; bar<=300; bar++){
          for(var beat = 1; beat<=4; beat++){
-             $(this).append($("<beat-col>").attr('data-beat', bar+"."+beat));
+             $(this).append($("<beat-col>").attr('data-bar', bar).attr('data-beat', beat));
          }
       }
     }
