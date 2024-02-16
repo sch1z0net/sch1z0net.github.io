@@ -730,6 +730,11 @@ var colors = [
     connectedCallback() {
       $(this).addClass("unselectable");
 
+      $(this).on('dragover', function(event) {
+         event.preventDefault();
+         alert("BLA");
+      });
+
       $(this).on('drop', function(event) {
           event.preventDefault();
           alert("TEST");
