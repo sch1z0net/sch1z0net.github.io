@@ -801,7 +801,7 @@ $(document).ready(function(){
     return sampleSource;
   }
 
-  var bpm = 120;
+  var bpm = 125;
   var spb = 60 / bpm;
 
   const button_load = $("#load");
