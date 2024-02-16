@@ -264,10 +264,11 @@ var colors = [
               $("#track_"+id).remove();
               $(activeTrack).remove(); 
             }
-            if(isDragging){ 
-              activePattern.remove(); 
-              $(".multiSelectedPattern").remove(); 
-            }
+            
+
+            activePattern.remove(); 
+            $(".multiSelectedPattern").remove(); 
+            
             event.preventDefault();
         }
   });
