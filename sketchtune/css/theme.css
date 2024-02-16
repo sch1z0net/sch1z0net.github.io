@@ -15,7 +15,7 @@ body {
 #root {
   --main-width: 80%;
   --beat-width: 20px;
-
+  --layout-width : calc(85/100);
 
   display: block;
   width: 100%;
@@ -76,7 +76,7 @@ beat-bar-container {
   position: absolute;
   font-size: 0;
   height: calc(100% - 40px - 30px - 20px);
-  width: calc(var(--main-width) * 70 / 100 - 32px);
+  width: calc(var(--main-width) * var(--layout-width) - 32px);
   /** z-index: 100; **/
 }
 
@@ -145,7 +145,7 @@ track-window {
   position: absolute;
   font-size: 0;
   height: calc(100% - 80px - 40px - 14px);
-  width: calc(var(--main-width) * 70 / 100 - 32px);
+  width: calc(var(--main-width) * var(--layout-width) - 32px);
   overflow-y: scroll;
   overflow-x: scroll;
   overscroll-behavior-x: none;
@@ -185,7 +185,7 @@ track-row.selected {
 
 track-row-empty {
   display: flex;
-  width: calc(var(--main-width) * 70 / 100 - 32px);
+  width: calc(var(--main-width) * var(--layout-width) - 32px);
   height: 40px;
   background-color: rgba(160,160,160,1);
   align-items: center;
