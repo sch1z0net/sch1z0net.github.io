@@ -721,6 +721,7 @@ var colors = [
     }
   }
 
+
   class SoundBrowser extends HTMLElement {
     constructor() {
       super();
@@ -728,6 +729,25 @@ var colors = [
 
     connectedCallback() {
       $(this).addClass("unselectable");
+
+      $(this).on('drop', function(event) {
+          event.preventDefault();
+          const files = event.originalEvent.dataTransfer.files;
+          const urls = [];
+
+          for (let i = 0; i < files.length; i++) {
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+              const url = URL.createObjectURL(event.target.result);
+              urls.push(url);
+            };
+
+            reader.readAsDataURL(files[i]);
+          }
+
+          console.log(urls);
+      });
     }
   }
 
