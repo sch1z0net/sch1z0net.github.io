@@ -776,6 +776,7 @@ $(document).ready(function(){
     return sample;
   }
 
+  let playbackRate = 1;
   function playSample(audioContext, audioBuffer, time) {
     const sampleSource = new AudioBufferSourceNode(audioContext, {
       buffer: audioBuffer,
