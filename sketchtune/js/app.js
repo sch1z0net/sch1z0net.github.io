@@ -97,7 +97,7 @@ var colors = [
     if (isDragging) {
       $(activePattern).addClass("multiSelectedPattern");
 
-      const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
+      const x = event.clientX + $("beat-bar").scrollLeft();
       var newmarginA = x - xOffsetOnPattern;
       var dx = newmarginA - activePattern_oldmargin;
 
