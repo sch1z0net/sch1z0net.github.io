@@ -48,7 +48,7 @@ beat-bar-header {
   position: absolute;
   font-size: 0;
   height: 20px;
-  width: calc(var(--main-width) - 40px);
+  width: 100%;
   margin-top: -20px;
 }
 

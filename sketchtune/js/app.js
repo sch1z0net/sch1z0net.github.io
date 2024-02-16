@@ -298,6 +298,8 @@ var colors = [
 
     connectedCallback() {
       $(this).addClass("unselectable");
+      var zoom = $("<div>+</div>").css("border","1px solid white").css("border-radius","50%");
+      zoom.css("position","absolute").css("right","0px");
     }
   }
 
