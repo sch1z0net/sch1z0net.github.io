@@ -32,12 +32,14 @@ top-window {
   height: 20px;
   background-color: rgba(120,120,120,1);
   border-radius: 5px;
+  margin-bottom: 4px;
+
 }
 
 side-window {
   display: inline-block;
-  width: calc(100% - var(--main-width) - 10px);
-  height: 100%;
+  width: calc(100% - var(--main-width) + 8px);
+  height: calc(100% - 24px);
   background-color: rgba(120,120,120,1);
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
@@ -47,7 +49,7 @@ side-window {
 grid-window {
   display: inline-block;
   width: var(--main-width);
-  height: 100%;
+  height: calc(100% - 24px);
   background-color: rgba(150,150,150,1);
   border-radius: 5px;
 }
