@@ -300,12 +300,18 @@ var colors = [
       $(this).addClass("unselectable");
       var zoom_in = $("<div id='zoom_in_grid'>+</div>");
       zoom_in.on("click",function(){
-         $("#root")[0].style.setProperty("--beat-width", "40px");
+         var beat_width = parseInt($("#root").css("--beat-width"));
+         beat_width += 5;
+         if(beat_width >= 40){ beat_width = 30; }
+         $("#root")[0].style.setProperty("--beat-width", beat_width+"px");
       });
 
       var zoom_out = $("<div id='zoom_out_grid'>-</div>");
       zoom_out.on("click",function(){
-         $("#root")[0].style.setProperty("--beat-width", "10px");
+         var beat_width = parseInt($("#root").css("--beat-width"));
+         beat_width -= 5;
+         if(beat_width <= 5){ beat_width = 5; }
+         $("#root")[0].style.setProperty("--beat-width", beat_width+"px");
       });
 
       $(this).append(zoom_in);
