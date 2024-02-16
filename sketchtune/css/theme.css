@@ -341,3 +341,10 @@ track-pattern-br {
 	border: 1px solid white;
 }
 
+#zoom_in_grid{
+	border: 1px solid white;
+	border-radius: 50%;
+    position: absolute;
+    right: 0px;
+} 
+
