@@ -258,7 +258,7 @@ var colors = [
 
   $(document).on('keydown', function(event) {
         // Check if the pressed key is the delete key
-        if (key === "Backspace" || key === "Delete") {
+        if (event.key === "Backspace" || event.key === "Delete") {
             if(activeTrack != null){ $(activeTrack).remove(); }
             if(isDragging){ $(".multiSelectedPattern").remove(); }
             event.preventDefault();
