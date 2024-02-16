@@ -258,7 +258,7 @@ var colors = [
 
   $(document).on('keydown', function(event) {
         // Check if the pressed key is the delete key
-        if (event.keyCode == 46 || event.key == "Delete") {
+        if (key === "Backspace" || key === "Delete") {
             if(activeTrack != null){ $(activeTrack).remove(); }
             event.preventDefault();
         }
