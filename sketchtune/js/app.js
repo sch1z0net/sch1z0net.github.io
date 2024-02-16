@@ -782,7 +782,7 @@ $(document).ready(function(){
   async function setupSamples(audioCtx) {
     var samples = [];
     for (let i = 1; i <= 3; i++) {
-      const sample = await getFile(audioCtx, '/sounds/file${i}.wav');
+      const sample = await getFile(audioCtx, '/sounds/file'+i+'.wav');
       samples.push(sample);
     }
     
