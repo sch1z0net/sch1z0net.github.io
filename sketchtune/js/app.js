@@ -263,10 +263,10 @@ var colors = [
 
       var bar = $(this).attr('data-bar');
       var beat = $(this).attr('data-beat');
-      if(((bar-1) % 4) == 0){
+      if(beat == 1){
         $(this).addClass("fullbar");
       }
-      if(((bar-1) % 8) < 4){
+      if(bar % 2 == 0){
         $(this).addClass("col_b");
       }else{
         $(this).addClass("col_a");
