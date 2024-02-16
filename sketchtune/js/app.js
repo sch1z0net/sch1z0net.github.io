@@ -371,6 +371,7 @@ var colors = [
          event.stopPropagation();
          isResizingL = true;
          activePattern = $(this).parent()[0];
+         activePattern.addClass("multiSelectedPattern");
       });
     }
   }
@@ -385,6 +386,7 @@ var colors = [
          event.stopPropagation();
          isResizingR = true;
          activePattern = $(this).parent()[0];
+         activePattern.addClass("multiSelectedPattern");
       });
     }
   }
