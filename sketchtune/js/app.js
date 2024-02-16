@@ -272,7 +272,6 @@ var colors = [
         }
   });
 
-  var tracks_height_sum = 0;
   var tracks_row_length = 0;
 
   class BeatCol extends HTMLElement {
@@ -464,40 +463,53 @@ var colors = [
     }
   }
 
+  function updateGridHeight(){
+    var tracks_height_sum = $("track-row").length * 20
+    $('beat-bar').css("max-height",tracks_height_sum+"px");
+  }
+
   class TrackRow extends HTMLElement {
     constructor() {
       super();
+      this.initialized = false;
+    }
+
+    disconnectedCallback() {
+      updateGridHeight();
     }
 
     connectedCallback() {
-       $(this).addClass("unselectable");
-        tracks_height_sum += 20;
-        $('beat-bar').css("max-height",tracks_height_sum+"px");
+      updateGridHeight();
 
-        $(this).dblclick(function(event) {
-           const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
+      if (!this.initialized) {
+          $(this).addClass("unselectable");
 
-           var beatpos = Math.floor(x / BEAT_WIDTH);
-           var newmargin = (beatpos * BEAT_WIDTH); //Snap to Grid
-           var newpat = $('<track-pattern>');
-           newpat.attr('data-pos',beatpos);
-           newpat.attr('data-length',4);
-           newpat.css("margin-left",newmargin+"px");
-           newpat.css("background-color",$(this).attr('data-stdcolor'));
+          $(this).dblclick(function(event) {
+             const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
 
-           $(this).append(newpat);
-        });
+             var beatpos = Math.floor(x / BEAT_WIDTH);
+             var newmargin = (beatpos * BEAT_WIDTH); //Snap to Grid
+             var newpat = $('<track-pattern>');
+             newpat.attr('data-pos',beatpos);
+             newpat.attr('data-length',4);
+             newpat.css("margin-left",newmargin+"px");
+             newpat.css("background-color",$(this).attr('data-stdcolor'));
 
-        $(this).on('mousedown', (event) => {
-          if(!isSelectingPatterns){
-           $("track-pattern").each(function(){
-             $(this).removeClass("multiSelectedPattern");
-           });
-           isSelectingPatterns = true;
-           selectRootX = event.clientX;
-           selectRootY = event.clientY;
-          }
-        });
+             $(this).append(newpat);
+          });
+
+          $(this).on('mousedown', (event) => {
+            if(!isSelectingPatterns){
+             $("track-pattern").each(function(){
+               $(this).removeClass("multiSelectedPattern");
+             });
+             isSelectingPatterns = true;
+             selectRootX = event.clientX;
+             selectRootY = event.clientY;
+            }
+          });
+          this.initialized = true;
+      }
     }
   }
 
