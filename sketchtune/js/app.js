@@ -650,7 +650,7 @@ $(document).ready(function(){
   $("#root").append($("<grid-window>"));
   $("#root").append($("<side-window>"));
 
-
+  $("beat-bar").scrollLeft(0);
   $("#root").bind('wheel', function(e) {
        $("track-window").scrollTop(e.originalEvent.deltaY + $("track-window").scrollTop());
        $("track-title-container").scrollTop(e.originalEvent.deltaY + $("track-title-container").scrollTop());
