@@ -295,6 +295,11 @@ var colors = [
     }
   }
 
+  function resizePatterns(){
+    
+
+  }
+
   class BeatBarHeader extends HTMLElement {
     constructor() {
       super();
@@ -304,20 +309,22 @@ var colors = [
       $(this).addClass("unselectable");
       var zoom_in = $("<div id='zoom_in_grid'>+</div>");
       zoom_in.on("click",function(){
-         var beat_width = parseInt($("#root").css("--beat-width"));
+         beat_width = parseInt($("#root").css("--beat-width"));
          beat_width += 5;
          if(beat_width >= 30){ beat_width = 30; }
          if(beat_width > 15){ $(".extended_beat_marker").css("display","block"); }
          $("#root")[0].style.setProperty("--beat-width", beat_width+"px");
+         resizePatterns();
       });
 
       var zoom_out = $("<div id='zoom_out_grid'>-</div>");
       zoom_out.on("click",function(){
-         var beat_width = parseInt($("#root").css("--beat-width"));
+         beat_width = parseInt($("#root").css("--beat-width"));
          beat_width -= 5;
          if(beat_width <= 5){ beat_width = 5; }
          if(beat_width <= 15){ $(".extended_beat_marker").css("display","none"); }
          $("#root")[0].style.setProperty("--beat-width", beat_width+"px");
+         resizePatterns();
       });
 
       $(this).append(zoom_in);
@@ -425,6 +432,8 @@ var colors = [
     }
   }
 
+  var beat_width = 0;
+
   class TrackRow extends HTMLElement {
     constructor() {
       super();
@@ -434,11 +443,10 @@ var colors = [
        $(this).addClass("unselectable");
         tracks_height_sum += 20;
         $('beat-bar').css("max-height",tracks_height_sum+"px");
-        /*$('track-row-empty').css("max-height","calc(100% - "+tracks_height_sum+"px - 20px)");*/
 
         $(this).dblclick(function(event) {
            const x = event.clientX + $("beat-bar").scrollLeft() - 20;
-           var newmargin = (Math.floor(x / 20) * 20);
+           var newmargin = (Math.floor(x / beat_width) * beat_width); //Snap to Grid
            var newpat = $('<track-pattern>').css("margin-left",newmargin+"px");
            newpat.css("background-color",$(this).attr('data-stdcolor'));
 
