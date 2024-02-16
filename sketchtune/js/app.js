@@ -106,7 +106,10 @@ var colors = [
       overborder = -overborder;
 
       newmarginA = activePattern.getBoundingClientRect().left + dx + overborder;
-      if(newmarginA < 0){ newmarginA = 0; }
+      if(newmarginA < 0){ 
+        newmarginA = 0; 
+        overborder = 0;
+      }
       activePattern_oldmargin = newmarginA; 
       activePattern.style.marginLeft = newmarginA + 'px';
 
