@@ -260,6 +260,7 @@ var colors = [
         // Check if the pressed key is the delete key
         if (key === "Backspace" || key === "Delete") {
             if(activeTrack != null){ $(activeTrack).remove(); }
+            if(isDragging){ $(".multiSelectedPattern").remove(); }
             event.preventDefault();
         }
   });
