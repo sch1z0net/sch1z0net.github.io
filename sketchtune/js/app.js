@@ -303,9 +303,9 @@ var colors = [
 
   function resizePatterns(){
     $("track-pattern").each(function(){
-      $(this).attr('data-pos',pos);
+      var pos = $(this).attr('data-pos');
       this.style.marginLeft = (pos * BEAT_WIDTH) + "px";
-      $(this).attr('data-length',length);
+      var length = $(this).attr('data-length');
       this.style.width = (length * BEAT_WIDTH) + "px"; 
     });
   }
