@@ -810,12 +810,12 @@ $(document).ready(function(){
   button_load.on("click", function(){
       context = new AudioContext();
       setupSamples(context).then((samples) => {
-      button_play.on("click", function(){    
-        playSample(context, samples[0], 0);
-        playSample(context, samples[1], 0);
-        playSample(context, samples[2], 0);
+        button_play.on("click", function(){    
+          playSample(context, samples[0], 0);
+          playSample(context, samples[1], 0);
+          playSample(context, samples[2], 0);
+        });
       });
   });
-
 
 });
