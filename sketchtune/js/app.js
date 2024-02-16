@@ -307,7 +307,7 @@ var colors = [
          var beat_width = parseInt($("#root").css("--beat-width"));
          beat_width += 5;
          if(beat_width >= 30){ beat_width = 30; }
-         if(beat_width > 15){ alert("BLA"); $(".extended_beat_marker").css("display","block"); }
+         if(beat_width > 15){ $(".extended_beat_marker").css("display","block"); }
          $("#root")[0].style.setProperty("--beat-width", beat_width+"px");
       });
 
@@ -316,7 +316,7 @@ var colors = [
          var beat_width = parseInt($("#root").css("--beat-width"));
          beat_width -= 5;
          if(beat_width <= 5){ beat_width = 5; }
-         if(beat_width <= 15){ alert("BLI"); $(".extended_beat_marker").css("display","none"); }
+         if(beat_width <= 15){ $(".extended_beat_marker").css("display","none"); }
          $("#root")[0].style.setProperty("--beat-width", beat_width+"px");
       });
 
