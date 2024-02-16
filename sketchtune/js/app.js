@@ -470,8 +470,9 @@ var colors = [
   }
 
   function updateGridHeight(){
-    var tracks_height_sum = $("track-row").length * 20
+    var tracks_height_sum = $("track-row").length * 20;
     $('beat-bar').css("max-height",tracks_height_sum+"px");
+    $('time-marker').css("max-height",tracks_height_sum+"px");
   }
 
   class TrackRow extends HTMLElement {
@@ -820,12 +821,26 @@ $(document).ready(function(){
   button_play.css("display","none");
 
   let context;
+  var is_playing = false;
 
   button_load.on("click", function(){
       context = new AudioContext();
       setupSamples(context).then((samples) => {
         button_play.css("display","inline-block");
-        button_play.on("click", function(){    
+        button_play.on("click", function(){ 
+          is_playing = false;
+
+          var init = true;
+          // Record the start time
+          const startTime = performance.now();
+          requestAnimationFrame(renderloop);
+        });
+      });
+  });
+
+  function renderloop(){
+       if(init == true){
+          is_playing = true;
           playSample(context, samples[0], context.currentTime + 0*spb, 0, spb*8);
           playSample(context, samples[1], context.currentTime + 0*spb, 0, spb*8);
           playSample(context, samples[2], context.currentTime + 0*spb, 0, spb*8);
@@ -835,8 +850,15 @@ $(document).ready(function(){
 
           playSample(context, samples[0], context.currentTime + 16*spb, 0, spb*8);
           playSample(context, samples[1], context.currentTime + 16*spb, 0, spb*8);
-        });
-      });
-  });
+
+          init = false;
+       }
+
+       var duration_in_sec = (performance.now() - startTime) / 1000;
+       
+       $("time-marker").css("margin-left",duration_in_sec*BEAT_WIDTH/spb);
+
+       if(is_playing){ requestAnimationFrame(renderloop); }
+  }
 
 });
