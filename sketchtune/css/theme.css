@@ -47,12 +47,11 @@ top-window {
 
 side-window {
   display: inline-block;
-  width: calc(100% - var(--main-width) + 8px);
+  width: calc(100% - var(--main-width));
   height: calc(100% - 20px - 4px);
   background-color: rgba(120,120,120,1);
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
-  margin-left: -8px;
 }
 
 grid-window {
@@ -60,7 +59,7 @@ grid-window {
   width: var(--main-width);
   height: calc(100% - 20px - 4px);
   background-color: rgba(150,150,150,1);
-  border-radius: 5px;
+  border-top-left-radius: 5px;
 }
 
 beat-bar-header {
@@ -185,7 +184,7 @@ track-row.selected {
 
 track-row-empty {
   display: flex;
-  width: calc(var(--main-width) * var(--layout-width) - 32px);
+  width: calc(var(--main-width) * var(--layout-width) - 26px);
   height: 40px;
   background-color: rgba(160,160,160,1);
   align-items: center;
