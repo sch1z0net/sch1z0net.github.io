@@ -16,6 +16,12 @@
   let selectRootX = null;
   let selectRootY = null;
 
+
+  var BEAT_WIDTH = parseInt($("#root").css("--beat-width"));
+  var ROOT_PADDING = 20;
+
+
+
   /**** CONTEXT MENU ****/
     // Create context menu
     var contextMenu = $("<div>", {id: "context-menu", "class": "context-menu", css: { display: "none" }});
@@ -90,7 +96,7 @@ var colors = [
     if (isDragging) {
       $(activePattern).addClass("multiSelectedPattern");
 
-      const x = event.clientX + $("beat-bar").scrollLeft() - 20;
+      const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
       var newmarginA = x - xOffsetOnPattern;
       var dx = newmarginA - activePattern_oldmargin;
 
@@ -118,30 +124,24 @@ var colors = [
 
     //Resize on Right side
     if (isResizingR) {
-      const x = event.clientX + $("beat-bar").scrollLeft() - 20;
+      const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
       var posStart = parseInt(activePattern.style.marginLeft);
 
       var newwidth = x - posStart;
-      if(newwidth < 20){
-         newwidth = 20;
-      }
+      if(newwidth < BEAT_WIDTH){ newwidth = BEAT_WIDTH; }
       activePattern.style.width = newwidth + 'px';
     }
     //Resize on Left side
     if (isResizingL) {
-      const x = event.clientX + $("beat-bar").scrollLeft() - 20;
+      const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
 
       var posEnd = parseInt(activePattern.style.marginLeft) + activePattern.offsetWidth;
       var newmargin = x;
-      if(newmargin < 0){
-         newmargin = 0;
-      }
+      if(newmargin < 0){ newmargin = 0; }
       var posStart = newmargin;
 
       var newwidth = posEnd - posStart;
-      if(newwidth < 20){
-         newwidth = 20;
-      }
+      if(newwidth < BEAT_WIDTH){ newwidth = BEAT_WIDTH; }
       activePattern.style.marginLeft = newmargin + 'px';
       activePattern.style.width = newwidth + 'px';
     }
@@ -213,8 +213,8 @@ var colors = [
      // SNAPPING PATTERNS
      if(activePattern != null){
         $(".multiSelectedPattern").each(function(){
-          this.style.marginLeft = (Math.round(parseInt(this.style.marginLeft) / 20) * 20) + "px";
-          this.style.width = (Math.round(parseInt(this.style.width) / 20) * 20) + "px";
+          this.style.marginLeft = (Math.round(parseInt(this.style.marginLeft) / BEAT_WIDTH) * BEAT_WIDTH) + "px";
+          this.style.width = (Math.round(parseInt(this.style.width) / BEAT_WIDTH) * BEAT_WIDTH) + "px";
         });
      }
 
@@ -296,8 +296,7 @@ var colors = [
   }
 
   function resizePatterns(){
-    
-
+     
   }
 
   class BeatBarHeader extends HTMLElement {
@@ -309,21 +308,21 @@ var colors = [
       $(this).addClass("unselectable");
       var zoom_in = $("<div id='zoom_in_grid'>+</div>");
       zoom_in.on("click",function(){
-         beat_width = parseInt($("#root").css("--beat-width"));
-         beat_width += 5;
-         if(beat_width >= 30){ beat_width = 30; }
-         if(beat_width > 15){ $(".extended_beat_marker").css("display","block"); }
-         $("#root")[0].style.setProperty("--beat-width", beat_width+"px");
+         BEAT_WIDTH = parseInt($("#root").css("--beat-width"));
+         BEAT_WIDTH += 5;
+         if(BEAT_WIDTH >= 30){ BEAT_WIDTH = 30; }
+         if(BEAT_WIDTH > 15){ $(".extended_beat_marker").css("display","block"); }
+         $("#root")[0].style.setProperty("--beat-width", BEAT_WIDTH+"px");
          resizePatterns();
       });
 
       var zoom_out = $("<div id='zoom_out_grid'>-</div>");
       zoom_out.on("click",function(){
-         beat_width = parseInt($("#root").css("--beat-width"));
-         beat_width -= 5;
-         if(beat_width <= 5){ beat_width = 5; }
-         if(beat_width <= 15){ $(".extended_beat_marker").css("display","none"); }
-         $("#root")[0].style.setProperty("--beat-width", beat_width+"px");
+         BEAT_WIDTH = parseInt($("#root").css("--beat-width"));
+         BEAT_WIDTH -= 5;
+         if(BEAT_WIDTH <= 5){ BEAT_WIDTH = 5; }
+         if(BEAT_WIDTH <= 15){ $(".extended_beat_marker").css("display","none"); }
+         $("#root")[0].style.setProperty("--beat-width", BEAT_WIDTH+"px");
          resizePatterns();
       });
 
@@ -392,8 +391,8 @@ var colors = [
           event.stopPropagation();
           isDragging = true;
           activePattern = this;
-          activePattern_oldmargin = this.getBoundingClientRect().left + $("beat-bar").scrollLeft() - 20;
-          const x = event.clientX + $("beat-bar").scrollLeft() - 20;
+          activePattern_oldmargin = this.getBoundingClientRect().left + $("beat-bar").scrollLeft() - ROOT_PADDING;
+          const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
           xOffsetOnPattern = x - activePattern_oldmargin;
         });
 
@@ -432,8 +431,6 @@ var colors = [
     }
   }
 
-  var beat_width = 0;
-
   class TrackRow extends HTMLElement {
     constructor() {
       super();
@@ -445,8 +442,8 @@ var colors = [
         $('beat-bar').css("max-height",tracks_height_sum+"px");
 
         $(this).dblclick(function(event) {
-           const x = event.clientX + $("beat-bar").scrollLeft() - 20;
-           var newmargin = (Math.floor(x / beat_width) * beat_width); //Snap to Grid
+           const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
+           var newmargin = (Math.floor(x / BEAT_WIDTH) * BEAT_WIDTH); //Snap to Grid
            var newpat = $('<track-pattern>').css("margin-left",newmargin+"px");
            newpat.css("background-color",$(this).attr('data-stdcolor'));
 
