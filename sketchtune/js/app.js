@@ -472,7 +472,7 @@ var colors = [
   function updateGridHeight(){
     var tracks_height_sum = $("track-row").length * 20;
     $('beat-bar').css("max-height",tracks_height_sum+"px");
-    $('time-marker').css("max-height",30+tracks_height_sum+"px");
+    $('time-marker').css("height",30+tracks_height_sum+"px");
   }
 
   class TrackRow extends HTMLElement {
