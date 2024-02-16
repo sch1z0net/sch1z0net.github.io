@@ -262,7 +262,7 @@ track-title > input:focus {
 track-pattern {
   position: absolute;
   display: inline-block;
-  width: 160px;
+  width: calc(2 * var(--beat-width));
   height: calc(20px - 2px);
   border: 1px solid rgba(90,90,90,0.8);
   box-sizing: border-box;
