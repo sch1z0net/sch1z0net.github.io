@@ -282,8 +282,10 @@ var colors = [
 
     connectedCallback() {
       $(this).addClass("unselectable");
-      for(var i = 1; i<=300; i++){
-         $(this).append($("<beat-col>").attr('data-beat',i));
+      for(var bar = 1; bar<=300; bar++){
+         for(var beat = 1; beat<=4; beat++){
+             $(this).append($("<beat-col>").attr('data-beat', bar+"."+beat));
+         }
       }
     }
   }
