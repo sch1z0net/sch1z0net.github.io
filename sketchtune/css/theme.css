@@ -201,6 +201,7 @@ track-title-container {
   overscroll-behavior-y: none;
   position: relative;
   z-index: 5;
+  width: calc(100% - 3px);
 }
 
 track-title-header {
