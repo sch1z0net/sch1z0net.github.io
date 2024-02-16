@@ -93,31 +93,30 @@ var colors = [
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
       var newmarginA = x - xOffsetOnPattern;
       var dx = newmarginA - activePattern_oldmargin;
+      activePattern_oldmargin = newmarginA; 
       
-      var overborder = false;
+      var overborder = 0;
       $(".multiSelectedPattern").each(function(){
           if(this != activePattern){
            var newmargin = this.getBoundingClientRect().left + dx;
-           if(newmargin < 0){ overborder = true; }
+           if(newmargin < 0){ 
+            if(newmargin < overborder){ overborder = newmargin; }
+           }
           }
       });
-      
-      if(!overborder){
-          newmarginA = activePattern.getBoundingClientRect().left + dx;
-          if(newmarginA < 0){ newmarginA = 0; }
-          activePattern_oldmargin = newmarginA; 
-          activePattern.style.marginLeft = newmarginA + 'px';
+      overborder = -overborder;
 
-          $(".multiSelectedPattern").each(function(){
-             if(this != activePattern){
-               var newmargin = this.getBoundingClientRect().left + dx;
-               this.style.marginLeft = newmargin + 'px';
-             }
-          });
-      }
+      /*newmarginA = activePattern.getBoundingClientRect().left + dx;
+      if(newmarginA < 0){ newmarginA = 0; }
+      activePattern_oldmargin = newmarginA; 
+      activePattern.style.marginLeft = newmarginA + 'px';*/
 
-      
+      $(".multiSelectedPattern").each(function(){
+            var newmargin = this.getBoundingClientRect().left + dx + overborder;
+            this.style.marginLeft = newmargin + 'px';
+      });
     }
+
     //Resize on Right side
     if (isResizingR) {
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
