@@ -358,7 +358,7 @@ var colors = [
           event.stopPropagation();
           isDragging = true;
           activePattern = this;
-          activePattern_oldmargin = this.getBoundingClientRect().left - 20;
+          activePattern_oldmargin = this.getBoundingClientRect().left + $("beat-bar").scrollLeft() - 20;
           const x = event.clientX + $("beat-bar").scrollLeft() - 20;
           xOffsetOnPattern = x - activePattern_oldmargin;
         });
