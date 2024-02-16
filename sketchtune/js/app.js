@@ -299,6 +299,9 @@ var colors = [
     connectedCallback() {
       $(this).addClass("unselectable");
       var zoom = $("<div id='zoom_in_grid'>+</div>");
+      zoom.on("click",function(){
+         $("#root").style.setProperty("--beat-width", "10px");
+      });
       $(this).append(zoom);
     }
   }

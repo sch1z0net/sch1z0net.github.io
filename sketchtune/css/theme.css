@@ -346,8 +346,12 @@ track-pattern-br {
 	border-radius: 50%;
     position: absolute;
     right: 0px;
-    width: 20px;
-    height: 20px;
-    font-size: 10px;
+    width: 15px;
+    height: 15px;
+    font-size: 15px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 } 
 
