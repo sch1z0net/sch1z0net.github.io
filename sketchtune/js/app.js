@@ -97,27 +97,27 @@ var colors = [
     if (isDragging) {
       $(activePattern).addClass("multiSelectedPattern");
 
-      const x = event.clientX + $("beat-bar").scrollLeft();
+      const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
       var newmarginA = x - xOffsetOnPattern;
       var dx = newmarginA - activePattern_oldmargin;
 
       var overborder = 0;
       $(".multiSelectedPattern").each(function(){
-          var newmargin = this.getBoundingClientRect().left + $("beat-bar").scrollLeft() + dx;
+          var newmargin = this.getBoundingClientRect().left + $("beat-bar").scrollLeft() - ROOT_PADDING + dx;
           if(newmargin < 0){ 
             if(newmargin < overborder){ overborder = newmargin; }
           }
       });
       overborder = -overborder;
 
-      newmarginA = activePattern.getBoundingClientRect().left + $("beat-bar").scrollLeft() + dx + overborder;
+      newmarginA = activePattern.getBoundingClientRect().left + $("beat-bar").scrollLeft() - ROOT_PADDING + dx + overborder;
       if(newmarginA < 0){ newmarginA = 0; }
       activePattern_oldmargin = newmarginA; 
       activePattern.style.marginLeft = newmarginA + 'px';
 
       $(".multiSelectedPattern").each(function(){
           if(this != activePattern){
-            var newmargin = this.getBoundingClientRect().left + $("beat-bar").scrollLeft() + dx + overborder;
+            var newmargin = this.getBoundingClientRect().left + $("beat-bar").scrollLeft()  - ROOT_PADDING + dx + overborder;
             this.style.marginLeft = newmargin + 'px';
           }
       });
