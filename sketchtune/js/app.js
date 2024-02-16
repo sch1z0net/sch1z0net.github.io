@@ -806,12 +806,14 @@ $(document).ready(function(){
 
   const button_load = $("#load");
   const button_play = $("#play");
+  button_play.css("display","none");
 
   let context;
 
   button_load.on("click", function(){
       context = new AudioContext();
       setupSamples(context).then((samples) => {
+        button_play.css("display","block");
         button_play.on("click", function(){    
           playSample(context, samples[0], 0*spb, 0, spb*4);
           playSample(context, samples[1], 0*spb, 0, spb*4);
