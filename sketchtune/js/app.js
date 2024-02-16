@@ -259,8 +259,15 @@ var colors = [
   $(document).on('keydown', function(event) {
         // Check if the pressed key is the delete key
         if (event.key === "Backspace" || event.key === "Delete") {
-            if(activeTrack != null){ $(activeTrack).remove(); }
-            if(isDragging){ $(".multiSelectedPattern").remove(); }
+            if(activeTrack != null){ 
+              var id = $(activeTrack).attr("data-id");
+              $("#track_"+id).remove();
+              $(activeTrack).remove(); 
+            }
+            if(isDragging){ 
+              activePattern.remove(); 
+              $(".multiSelectedPattern").remove(); 
+            }
             event.preventDefault();
         }
   });
