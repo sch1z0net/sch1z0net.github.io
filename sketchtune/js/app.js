@@ -53,6 +53,7 @@ var colors = [
             colorItem.on("click",function(){
                 var id = $(focusTrack).attr("data-id");
                 $("#track_"+id).attr("data-stdcolor",color);
+                $("#track_"+id+">track-pattern").css("background-color",color);
                 $(focusTrack).css("background-color",color);
                 focusTrack = null;
             });
