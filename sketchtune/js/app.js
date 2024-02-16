@@ -770,6 +770,9 @@ $(document).ready(function(){
     return audioBuffer;
   }
 
+
+
+
   /*async function setupSample(audioCtx) {
     const filePath = "./sounds/moo.mp3";
     const sample = await getFile(audioCtx, filePath);
@@ -809,7 +812,7 @@ $(document).ready(function(){
         sampleRate: 44100,
       });*/
 
-      setupSample(context).then((samples) => {
+      setupSamples(context).then((samples) => {
           playSample(context, samples[0], 0);
       });
     },
