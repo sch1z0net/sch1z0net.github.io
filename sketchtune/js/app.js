@@ -93,8 +93,7 @@ var colors = [
       const x = event.clientX + $("beat-bar").scrollLeft() - 20;
       var newmarginA = x - xOffsetOnPattern;
       var dx = newmarginA - activePattern_oldmargin;
-      activePattern_oldmargin = newmarginA; 
-      
+
       var overborder = 0;
       $(".multiSelectedPattern").each(function(){
           if(this != activePattern){
@@ -106,14 +105,16 @@ var colors = [
       });
       overborder = -overborder;
 
-      /*newmarginA = activePattern.getBoundingClientRect().left + dx;
+      newmarginA = activePattern.getBoundingClientRect().left + dx + overborder;
       if(newmarginA < 0){ newmarginA = 0; }
       activePattern_oldmargin = newmarginA; 
-      activePattern.style.marginLeft = newmarginA + 'px';*/
+      activePattern.style.marginLeft = newmarginA + 'px';
 
       $(".multiSelectedPattern").each(function(){
+          if(this != activePattern){
             var newmargin = this.getBoundingClientRect().left + dx + overborder;
             this.style.marginLeft = newmargin + 'px';
+          }
       });
     }
 
