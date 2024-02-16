@@ -256,6 +256,14 @@ var colors = [
      selectionArea.css("display", "none");
   });
 
+  $(document).on('keydown', function(event) {
+        // Check if the pressed key is the delete key
+        if (event.keyCode == 46 || event.key == "Delete") {
+            if(activeTrack != null){ $(activeTrack).remove(); }
+            event.preventDefault();
+        }
+  });
+
   var tracks_height_sum = 0;
   var tracks_row_length = 0;
 
