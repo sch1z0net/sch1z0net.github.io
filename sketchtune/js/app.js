@@ -300,7 +300,7 @@ var colors = [
       $(this).addClass("unselectable");
       var zoom = $("<div id='zoom_in_grid'>+</div>");
       zoom.on("click",function(){
-         $("#root").style.setProperty("--beat-width", "10px");
+         $("#root")[0].style.setProperty("--beat-width", "10px");
       });
       $(this).append(zoom);
     }
