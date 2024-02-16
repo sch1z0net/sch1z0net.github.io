@@ -814,6 +814,12 @@ $(document).ready(function(){
           playSample(context, samples[0], 0);
           playSample(context, samples[1], 0);
           playSample(context, samples[2], 0);
+
+          playSample(context, samples[1], 4);
+          playSample(context, samples[2], 4);
+
+          playSample(context, samples[0], 8);
+          playSample(context, samples[1], 8);
         });
       });
   });
