@@ -720,6 +720,16 @@ var colors = [
     }
   }
 
+  class SoundBrowser extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+      $(this).addClass("unselectable");
+    }
+  }
+
   class TimeMarker extends HTMLElement {
     constructor() {
       super();
@@ -758,9 +768,14 @@ $(document).ready(function(){
   customElements.define('top-window' , TopWindow);
   customElements.define('time-marker' , TimeMarker);
 
-  $("#root").append($("<top-window>"));
-  $("#root").append($("<grid-window>"));
-  $("#root").append($("<side-window>"));
+  customElements.define('sound-browser', SoundBrowser);
+  
+  $("#root").append($("<sound-browser>").css("width","29%"));
+  var side_layout = $("<div>").css("height","100%").css("width","70%").css("display","inline-block");
+  $("#root").append(side_layout);
+  side_layout.append($("<top-window>"));
+  side_layout.append($("<grid-window>"));
+  side_layout.append($("<side-window>"));
 
 
   $("beat-bar").scrollLeft(0);
