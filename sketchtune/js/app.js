@@ -506,14 +506,6 @@ var colors = [
     $('time-marker').css("height",tracks_height_sum+"px");
   }
 
-  function getSoundById(id) {
-    var matchingElement = $.grep(sounds, function(element) {
-        return element.id === id;
-    })[0]; // Retrieve the first matching element
-
-    return matchingElement || null; // Return the first matching element or null if none found
-  }
-
 
   class TrackRow extends HTMLElement {
     constructor() {
@@ -784,7 +776,8 @@ var colors = [
     }
   }
 
-  var sounds = [];
+  var ready_sounds = [];
+  var loading_sounds = [];
 
   class SoundElement extends HTMLElement {
     constructor() {
@@ -874,7 +867,7 @@ var colors = [
                        duration: duration,
                        id: soundID
                     };
-                    sounds.push(sound);
+                    loading_sounds.push(sound);
                     console.log(sound.id, sound.name, sound.type, sound.size, sound.duration);
                     $(that).append($("<sound-element name='"+files[i].name+"' data-soundid='"+soundID+"' data-fulldur='"+duration+"'>"));
                     soundID++;
@@ -973,44 +966,15 @@ $(document).ready(function(){
   }
 
 
-
-
-  /*async function setupSample(audioCtx) {
-    const filePath = "./sounds/moo.mp3";
-    const sample = await getFile(audioCtx, filePath);
-    return sample;
-  }*/
-
-  /*async function setupSamples(audioCtx) {
-    var samples = [];
-    for (let i = 1; i <= 3; i++) {
-      const sample = await getFile(audioCtx, './sounds/file'+i+'.wav');
-      samples.push(sample);
-    }
-    
-    return samples;
-  }*/
-
   let samplesMap = {}; // Define a map to store samples with soundid as the key
 
-  /*async function setupSamples(audioCtx) {
-    var samples = [];
-    for (let i = 0; i < sounds.length; i++) {
-      const sample = await getFile(audioCtx, sounds[i].url);
-      samples.push({
-        sample: sample,
-        soundid: sounds[i].id;
-      });
-    }
-    
-    return samples;
-  }*/
-
   async function setupSamples(audioCtx) {
-    for (let i = 0; i < sounds.length; i++) {
-        const sample = await getFile(audioCtx, sounds[i].url);
-        samplesMap[sounds[i].id] = sample; // Store the sample in the map with soundid as the key
+    for (let i = 0; i < loading_sounds.length; i++) {
+        const sample = await getFile(audioCtx, loading_sounds[i].url);
+        samplesMap[loading_sounds[i].id] = sample; // Store the sample in the map with soundid as the key
+        ready_sounds.push(loading_sounds[i]);
     }
+    loading_sounds = [];
   }
 
    // Function to retrieve a sample by providing the soundid
@@ -1066,9 +1030,10 @@ $(document).ready(function(){
         context.close();
       }
       button_load.css("display","none");
+      button_stop.css("display","inline-block");
       context = new AudioContext();
-      setupSamples(context).then(() => {
-        button_play.css("display","inline-block");
+
+
         button_play.on("click", function(){ 
           button_play.css("display","none");
           button_stop.css("display","inline-block");
@@ -1087,10 +1052,13 @@ $(document).ready(function(){
         });
 
         button_play.click();
-      });
   });
 
-
+  function onSoundUpload(){
+      setupSamples(context).then(() => {
+          
+      });
+  }
   
 
   function schedule(){
@@ -1098,7 +1066,12 @@ $(document).ready(function(){
         var soundid = $(this).attr("data-soundid");
         var start = $(this).attr("data-pos");
         var duration = $(this).attr("data-length");
-        playSample(context, getSample(soundid), context.currentTime + start*spb, 0, duration*spb);
+        var sample = getSample(soundid);
+        if(sample==null){ 
+          console.log("Sample with ID "+soundid+" is still loading."); 
+        } else {
+          playSample(context, getSample(soundid), context.currentTime + start*spb, 0, duration*spb);
+        }
     });
   }
 
