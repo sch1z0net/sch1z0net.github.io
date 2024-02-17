@@ -521,6 +521,7 @@ var colors = [
 
           $(this).on('mouseup', (event) => {
              if(isDraggingSound){
+                console.log("DRAGGED");
                 const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
 
                 var beatpos = Math.floor(x / BEAT_WIDTH);
@@ -532,6 +533,7 @@ var colors = [
                 newpat.css("background-color",$(this).attr('data-stdcolor'));
                 
                 $(this).append(newpat);
+                isDraggingSound = false;
              }
           });
 
