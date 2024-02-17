@@ -441,10 +441,34 @@ var colors = [
           xOffsetOnPattern = x - activePattern_oldmargin;
         });
 
+        // Initialize width based on data-length attribute
+        this.updateWidth();
+
         $(this).append($('<track-pattern-bl>'));
         $(this).append($('<track-pattern-br>'));
         this.initialized = true;
       }
+    }
+
+    // Listen for changes in the data-length attribute
+    static get observedAttributes() {
+        return ['data-length'];
+    }
+
+    // Handle attribute changes
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'data-length') {
+            // Update width when data-length attribute changes
+            this.updateWidth();
+        }
+    }
+
+    // Update width based on data-length attribute
+    updateWidth() {
+        const dataLength = this.getAttribute('data-length');
+        if (dataLength) {
+            this.style.width = dataLength + 'px';
+        }
     }
   }
 
