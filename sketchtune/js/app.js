@@ -534,14 +534,13 @@ var colors = [
 
           $(this).on('mouseup', (event) => {
              if(isDraggingSound){
-                console.log("DRAGGED");
                 const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
 
                 var beatpos = Math.floor(x / BEAT_WIDTH);
                 var newmargin = (beatpos * BEAT_WIDTH); //Snap to Grid
                 var newpat = $('<track-pattern>');
                 newpat.attr('data-pos',beatpos);
-                var fulldur = getSoundById(draggedSoundElement).fulldur;
+                var fulldur = draggedSoundElement.fulldur;
                 alert(fulldur);
                 newpat.attr('data-length',4);
                 newpat.css("margin-left",newmargin+"px");
