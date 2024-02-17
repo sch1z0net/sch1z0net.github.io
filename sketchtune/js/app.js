@@ -1046,6 +1046,7 @@ $(document).ready(function(){
   var startTime;
 
   button_load.on("click", function(){
+      button_load.css("display","none");
       context = new AudioContext();
       setupSamples(context).then(() => {
         button_play.css("display","inline-block");

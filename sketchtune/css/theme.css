@@ -433,7 +433,7 @@ track-pattern-br {
 #load {
    font-size: 20px;
    cursor: pointer;
-   color: orangered;
+   color: orange;
 }
 
 #play, #stop {
