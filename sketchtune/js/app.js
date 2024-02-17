@@ -1,6 +1,4 @@
 
-  $(document).ready(function(){
-  
   let isDragging = false;
   let isResizingR = false;
   let isResizingL = false;
@@ -42,7 +40,7 @@
     ROOT_PADDING = $("grid-window")[0].getBoundingClientRect().left;
   }
 
-  function reinitTimebar(){
+  function reinitTimeBar(){
       $("time-bar").empty();
 
       var sec_length = (bpm / 60) * BEAT_WIDTH;
@@ -410,7 +408,7 @@ var colors = [
          if(BEAT_WIDTH > 15){ $(".extended_beat_marker").css("display","block"); }
          $("#root")[0].style.setProperty("--beat-width", BEAT_WIDTH+"px");
          resizePatterns();
-         reinitTimebar();
+         reinitTimeBar();
       });
 
       var zoom_out = $("<div id='zoom_out_grid'>-</div>");
@@ -421,7 +419,7 @@ var colors = [
          if(BEAT_WIDTH <= 15){ $(".extended_beat_marker").css("display","none"); }
          $("#root")[0].style.setProperty("--beat-width", BEAT_WIDTH+"px");
          resizePatterns();
-         reinitTimebar();
+         reinitTimeBar();
       });
 
       $(this).append(zoom_in);
@@ -1016,7 +1014,7 @@ var colors = [
   }
 
 
-
+$(document).ready(function(){
 
   // Define the custom element
   customElements.define('beat-col'    , BeatCol);
