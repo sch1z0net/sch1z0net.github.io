@@ -727,13 +727,20 @@ var colors = [
     constructor() {
       super();
       this.name = this.getAttribute('name') || '';
+      this.soundid = this.getAttribute('data-soundid') || '';
       this.innerHTML = this.name;
       $(this).prop("draggable",true);
     }
 
     connectedCallback() {
+        this.addEventListener('mousedown', (event) => {
+          event.stopPropagation();
+          isDraggingSound = true;
+        });
     }
   }
+
+  var soundID = 0;
 
   class SoundBrowser extends HTMLElement {
     constructor() {
@@ -758,16 +765,16 @@ var colors = [
 
             reader.onload = function(event) {
               var file = files[i];
-              console.log(file.type);
               if (file.type === 'audio/x-wav' || file.type === 'audio/mpeg'){
                  const url = event.target.result;
                  sounds.push({ 
                     name: files[i].name,
                     url: url,
                     type: files[i].type,
-                    size: files[i].size
+                    size: files[i].size,
+                    id: soundID++
                  });
-                 $(that).append($("<sound-element name='"+files[i].name+"'>"));
+                 $(that).append($("<sound-element name='"+files[i].name+"' data-soundid='"+soundID+"'>"));
               }
             };
 
