@@ -870,11 +870,17 @@ var colors = [
                     $(that).append($("<sound-element name='"+files[i].name+"' data-soundid='"+soundID+"' data-fulldur='"+duration+"'>"));
                  }).catch(error => {
                      // Error: handle the rejected promise
-                     console.log("Couldn't load: ",files[i].name);
+                     console.log("Couldn't get Duration of: ",files[i].name);
                  });
-
               }
             };
+
+            reader.onerror = function(event) {
+               console.log("Couldn't read: ",files[i].name);
+            };
+
+
+
 
             reader.readAsDataURL(files[i]);
           } 
