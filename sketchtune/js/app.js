@@ -866,14 +866,14 @@ var colors = [
                     soundID++;
                     processed++;
                     if(processed >= files.length){
-                        onSoundUpload();
+                        
                     }
                  }).catch(error => {
                      // Error: handle the rejected promise
                      console.log("Couldn't get Duration of: ",files[i].name);
                      processed++;
                      if(processed >= files.length){
-                        onSoundUpload();
+                        
                      }
                  });
               }
@@ -963,12 +963,13 @@ $(document).ready(function(){
 
   async function setupSamples(audioCtx) {
     var soundamt = loading_sounds.length;
-    for (let i = 0; i < loading_sounds.length; i++) {
-        const sample = await getFile(audioCtx, loading_sounds[i].url);
-        samplesMap[loading_sounds[i].id] = sample; // Store the sample in the map with soundid as the key
-        ready_sounds.push(loading_sounds[i]);
+    while(loading_sounds.length > 0) {
+        var sound = loading_sounds.pop();
+        const sample = await getFile(audioCtx, sound.url);
+        samplesMap[sound.id] = sample; // Store the sample in the map with soundid as the key
+        ready_sounds.push(sound);
+        console.log("Sound "+sound.id+" ready.");
     }
-    loading_sounds = [];
     return soundamt;
   }
 
@@ -1049,7 +1050,7 @@ $(document).ready(function(){
         button_play.click();
   });
 
-  function onSoundUpload(){
+  function onSoundsAdded(){
       setupSamples(context).then((soundamt) => {
           console.log(soundamt+" samples were setup.");
       });
@@ -1074,16 +1075,16 @@ $(document).ready(function(){
   function renderloop(){
        if(init == true){
           is_playing = true;
-
           schedule();
-
           init = false;
        }
 
-       var duration_in_sec = (performance.now() - startTime) / 1000;
-       
-       $("time-marker").css("margin-left",duration_in_sec*BEAT_WIDTH/spb);
+       if(loading_sounds.length > 0){
+           onSoundsAdded();
+       }
 
+       var duration_in_sec = (performance.now() - startTime) / 1000;
+       $("time-marker").css("margin-left",duration_in_sec*BEAT_WIDTH/spb);
        if(is_playing){ requestAnimationFrame(renderloop); }
   }
 
