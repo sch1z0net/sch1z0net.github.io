@@ -781,9 +781,6 @@ var colors = [
       $(this).append("<button id='load'>load</button>");
       $(this).append("<i id='play' class='material-icons'>play_circle_filled</i>");
       $(this).append("<i id='stop' class='material-icons'>stop</i>");
-
-
-
     }
   }
 
@@ -1010,6 +1007,9 @@ $(document).ready(function(){
 
 
 
+  // Array to store references to all playing audio nodes
+  let playingAudioNodes = [];
+
   let playbackRate = 1;
   function playSample(audioContext, audioBuffer, time, offset, duration) {
     const sampleSource = new AudioBufferSourceNode(audioContext, {
@@ -1018,7 +1018,22 @@ $(document).ready(function(){
     });
     sampleSource.connect(audioContext.destination);
     sampleSource.start(time, offset, duration);
+
+    // Add the source node to the list of playing audio nodes
+    playingAudioNodes.push(sampleSource);
+
     return sampleSource;
+  }
+
+  // Function to stop all playing samples
+  function stopAllSamples() {
+    // Iterate over the list of playing audio nodes and stop each one
+    playingAudioNodes.forEach(source => {
+        source.stop();
+    });
+
+    // Clear the list of playing audio nodes
+    playingAudioNodes = [];
   }
 
   const button_load = $("#load");
@@ -1040,7 +1055,6 @@ $(document).ready(function(){
         button_play.on("click", function(){ 
           button_play.css("display","none");
           button_stop.css("display","inline-block");
-          is_playing = false;
           init = true;
           // Record the start time
           startTime = performance.now();
@@ -1050,9 +1064,12 @@ $(document).ready(function(){
         button_stop.on("click", function(){ 
           button_stop.css("display","none");
           button_play.css("display","inline-block");
+          is_playing = false;
         });
       });
   });
+
+
 
   
 
