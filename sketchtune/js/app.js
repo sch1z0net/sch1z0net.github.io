@@ -846,6 +846,8 @@ var colors = [
           var that = this;          
           const files = event.originalEvent.dataTransfer.files;
 
+          console.log("------LOADING SOUNDS INTO BROWSER------");
+
           for (let i = 0; i < files.length; i++) {
             const reader = new FileReader();
 
@@ -853,7 +855,7 @@ var colors = [
               var file = files[i];
               if (file.type === 'audio/x-wav' || file.type === 'audio/mpeg'){
                  const url = event.target.result;
-                 console.log("------LOADING SOUNDS INTO BROWSER------");
+                 
                  getAudioDuration(url).then(duration => { 
                     var sound = { 
                        name: files[i].name,
@@ -868,7 +870,7 @@ var colors = [
                     $(that).append($("<sound-element name='"+files[i].name+"' data-soundid='"+soundID+"' data-fulldur='"+duration+"'>"));
                  }).catch(error => {
                      // Error: handle the rejected promise
-                     console.error("Error loading audio duration:", error);
+                     console.error("Couldn't load: ",files[i].name);
                  });
 
               }
