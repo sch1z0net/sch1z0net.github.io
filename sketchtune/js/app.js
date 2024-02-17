@@ -765,6 +765,24 @@ var colors = [
 
   var soundID = 0;
 
+
+  function getAudioDuration(url) {
+    return new Promise((resolve, reject) => {
+        var audio = new Audio();
+        audio.src = url;
+
+        audio.onloadedmetadata = function() {
+            // Once metadata is loaded, resolve with the duration
+            resolve(audio.duration);
+        };
+
+        audio.onerror = function(e) {
+            // If an error occurs while loading the audio, reject with the error
+            reject(e);
+        };
+    });
+  }
+
   class SoundBrowser extends HTMLElement {
     constructor() {
       super();
@@ -790,14 +808,20 @@ var colors = [
               var file = files[i];
               if (file.type === 'audio/x-wav' || file.type === 'audio/mpeg'){
                  const url = event.target.result;
-                 sounds.push({ 
-                    name: files[i].name,
-                    url: url,
-                    type: files[i].type,
-                    size: files[i].size,
-                    id: soundID++
+
+                 getAudioDuration(url).then(duration => { 
+
+                    sounds.push({ 
+                       name: files[i].name,
+                       url: url,
+                       type: files[i].type,
+                       size: files[i].size,
+                       duration: duration,
+                       id: soundID++
+                    });
+                    $(that).append($("<sound-element name='"+files[i].name+"' data-soundid='"+soundID+"'>"));
+
                  });
-                 $(that).append($("<sound-element name='"+files[i].name+"' data-soundid='"+soundID+"'>"));
               }
             };
 
