@@ -26,7 +26,7 @@
 
   var startTimeInMS;
   var time_marker_in_sec;
-  var initPlayingTracks = false;
+  var initPlayingTracks;
 
   var bpm = 125;
   var spb = 60 / bpm;
@@ -1063,7 +1063,7 @@ $(document).ready(function(){
         button_play.on("click", function(){ 
           button_play.css("display","none");
           button_stop.css("display","inline-block");
-          init = true;
+          initPlayingTracks = true;
           // Record the start time
           startTimeInMS = performance.now();
           requestAnimationFrame(renderloop);
