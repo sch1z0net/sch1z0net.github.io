@@ -269,7 +269,8 @@ var colors = [
         var seconds = spb*beats;
         startTimeInMS = performance.now() - seconds*1000;
 
-        $("#play").click();
+        initPlayingTracks = true;
+        
      }
 
      activePattern = null;
