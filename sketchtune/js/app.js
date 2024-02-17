@@ -1050,9 +1050,11 @@ $(document).ready(function(){
         button_play.click();
   });
 
+  var samplesSetupProcess = false;
   function onSoundsAdded(){
       setupSamples(context).then((soundamt) => {
           console.log(soundamt+" samples were setup.");
+          samplesSetupProcess = false;
       });
   }
   
@@ -1079,8 +1081,9 @@ $(document).ready(function(){
           init = false;
        }
 
-       if(loading_sounds.length > 0){
-           onSoundsAdded();
+       if(!samplesSetupProcess && loading_sounds.length > 0){
+          samplesSetupProcess = true;
+          onSoundsAdded();
        }
 
        var duration_in_sec = (performance.now() - startTime) / 1000;
