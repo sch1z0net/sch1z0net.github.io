@@ -670,7 +670,9 @@ var colors = [
       var sec_length = (bpm / 60) * BEAT_WIDTH;
       var dsec_length = sec_length/10;
       for(var second = 0; second <=300; second++){
-         $(this).append($("<span>"+second+"</span>").css("margin-left",sec_length*second))
+         var minutestr = Math.floor(second/60);
+         var secondstr = second<10 ? "0"+second : second;
+         $(this).append($("<span>"+minutestr+":"+secondstr+"</span>").css("margin-left",sec_length*second))
          $(this).append($("<time-bar-sec>").css("margin-left",sec_length*second));
          for(var ds = 0; ds<=10; ds++){
              $(this).append($("<time-bar-dsec>").css("margin-left",sec_length*second+dsec_length*ds));
