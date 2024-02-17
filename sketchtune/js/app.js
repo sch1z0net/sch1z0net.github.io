@@ -756,7 +756,7 @@ var colors = [
 
     connectedCallback() {
         this.addEventListener('dragstart', function(event) {
-           event.stopPropagation();
+           event.preventDefault();
         });
 
         this.addEventListener('mousedown', (event) => {
