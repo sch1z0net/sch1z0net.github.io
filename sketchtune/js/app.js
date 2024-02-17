@@ -564,10 +564,11 @@ var colors = [
                 var newmargin = (beatpos * BEAT_WIDTH); //Snap to Grid
                 var newpat = $('<track-pattern>');
                 newpat.attr('data-pos',beatpos);
+                var soundid = draggedSoundElement.soundid;
                 var fulldur = draggedSoundElement.fulldur;
                 var beats = fulldur/spb;
-
                 newpat.attr('data-length',beats);
+                newpat.attr('data-soundid',soundid);
                 newpat.css("margin-left",newmargin+"px");
                 newpat.css("background-color",$(this).attr('data-stdcolor'));
                 
