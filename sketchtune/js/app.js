@@ -974,7 +974,6 @@ $(document).ready(function(){
   let samplesMap = {}; // Define a map to store samples with soundid as the key
 
   async function setupSamples(audioCtx) {
-    var soundamt = queue_sounds.length;
     while(queue_sounds.length > 0) {
         var sound = queue_sounds.pop();
         const sample = await getFile(audioCtx, sound.url);
@@ -984,7 +983,6 @@ $(document).ready(function(){
         var lc = $('sound-element[data-soundid="' + sound.id + '"]').find('loading-circle');
         if (lc.length > 0) { lc.remove(); }
     }
-    return soundamt;
   }
 
    // Function to retrieve a sample by providing the soundid
@@ -1072,7 +1070,6 @@ $(document).ready(function(){
       });
 
       setupSamples(context).then((soundamt) => {
-          console.log(soundamt+" samples were setup.");
           samplesSetupProcess = false;
       });
   }
