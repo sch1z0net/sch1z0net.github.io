@@ -856,7 +856,7 @@ var colors = [
               if (file.type === 'audio/x-wav' || file.type === 'audio/mpeg'){
                  const url = event.target.result;
                  
-                 getAudioDuration(url).then(duration => { 
+                 getAudioDuration(file).then(duration => { 
                     var sound = { 
                        name: files[i].name,
                        url: url,
