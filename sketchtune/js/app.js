@@ -265,6 +265,7 @@ var colors = [
         var beats = x / BEAT_WIDTH;
         var seconds = spb*beats;
         startTime = performance.now() - seconds;
+        console.log(event.clientX, beats, seconds, startTime);
      }
 
      activePattern = null;
