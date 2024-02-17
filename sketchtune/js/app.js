@@ -1116,7 +1116,7 @@ $(document).ready(function(){
                //Marker is on sample
                var offset = time_marker_in_sec - sampleStartTimeInSec;
                console.log(sampleStartTimeInSec);
-               playSample(context, getSample(soundid), context.currentTime + sampleStartTimeInSec, offset, sampleDurationInSec);
+               playSample(context, getSample(soundid), context.currentTime + 0, offset, sampleDurationInSec);
             }
              
           }
