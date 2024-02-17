@@ -264,8 +264,7 @@ var colors = [
         $("time-marker").css("margin-left",x);
         var beats = x / BEAT_WIDTH;
         var seconds = spb*beats;
-        startTime = performance.now() - seconds;
-        console.log(event.clientX, beats, seconds, startTime);
+        startTime = performance.now()/1000 - seconds;
      }
 
      activePattern = null;
