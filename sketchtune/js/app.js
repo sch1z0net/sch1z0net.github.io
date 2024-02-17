@@ -830,6 +830,7 @@ var colors = [
   }
 
   function reloadAudioContext(){
+    $("#stop").click();
     $("#load").css("display","inline-block");
     $("#play").css("display","none");
     $("#stop").css("display","none");
