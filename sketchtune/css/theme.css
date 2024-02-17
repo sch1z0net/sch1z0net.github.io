@@ -429,3 +429,8 @@ track-pattern-br {
     cursor: pointer;
 } 
 
+#play, #stop{
+   font-size: 10px;
+   cursor: pointer;
+}
+
