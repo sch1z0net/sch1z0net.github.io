@@ -28,7 +28,7 @@
   var time_marker_in_sec;
   var initPlayingTracks;
 
-  var bpm = 125;
+  var bpm = 128;
   var spb = 60 / bpm;
 
 
