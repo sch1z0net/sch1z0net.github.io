@@ -70,7 +70,7 @@ top-window {
   background-color: rgba(120,120,120,1);
   border-radius: 5px;
   margin-bottom: 4px;
-  justify-content: center;
+  align-items: center;
 }
 
 side-window {
@@ -435,7 +435,7 @@ track-pattern-br {
 }
 
 #play, #stop {
-   font-size: 16px;
+   font-size: 20px;
    cursor: pointer;
    color: white;
 }
