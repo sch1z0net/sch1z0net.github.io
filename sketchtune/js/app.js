@@ -4,6 +4,7 @@
   let isResizingL = false;
   let isDraggingTitle = false;
   let isSelectingPatterns = false;
+  let isMouseDownOnTrackRow = false;
 
   let activePattern = null;
   let activeTrack = null;
