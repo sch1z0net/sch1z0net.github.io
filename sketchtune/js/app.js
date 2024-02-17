@@ -969,12 +969,14 @@ $(document).ready(function(){
   let samplesMap = {}; // Define a map to store samples with soundid as the key
 
   async function setupSamples(audioCtx) {
+    var soundamt = loading_sounds.length;
     for (let i = 0; i < loading_sounds.length; i++) {
         const sample = await getFile(audioCtx, loading_sounds[i].url);
         samplesMap[loading_sounds[i].id] = sample; // Store the sample in the map with soundid as the key
         ready_sounds.push(loading_sounds[i]);
     }
     loading_sounds = [];
+    return soundamt;
   }
 
    // Function to retrieve a sample by providing the soundid
@@ -1055,8 +1057,8 @@ $(document).ready(function(){
   });
 
   function onSoundUpload(){
-      setupSamples(context).then(() => {
-          
+      setupSamples(context).then((soundamt) => {
+          console.log(soundamt+" samples were setup.");
       });
   }
   
