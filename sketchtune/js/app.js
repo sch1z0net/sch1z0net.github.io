@@ -777,7 +777,16 @@ var colors = [
   }
 
   var ready_sounds = [];
-  var loading_sounds = [];
+  var queue_sounds = [];
+
+  class LoadingCircle extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+    } 
+  }
 
   class SoundElement extends HTMLElement {
     constructor() {
@@ -799,6 +808,8 @@ var colors = [
           isDraggingSound = true;
           draggedSoundElement = this;
         });
+
+        $(this).prepend("<loading-circle>");
     }
   }
 
@@ -860,7 +871,7 @@ var colors = [
                        duration: duration,
                        id: soundID
                     };
-                    loading_sounds.push(sound);
+                    queue_sounds.push(sound);
                     console.log(sound.id, sound.name, sound.type, sound.size, sound.duration);
                     $(that).append($("<sound-element name='"+files[i].name+"' data-soundid='"+soundID+"' data-fulldur='"+duration+"'>"));
                     soundID++;
@@ -928,6 +939,7 @@ $(document).ready(function(){
   customElements.define('top-window' , TopWindow);
   customElements.define('time-marker' , TimeMarker);
 
+  customElements.define('loading-circle', LoadingCircle);
   customElements.define('sound-element', SoundElement);
   customElements.define('sound-browser', SoundBrowser);
   
@@ -962,13 +974,15 @@ $(document).ready(function(){
   let samplesMap = {}; // Define a map to store samples with soundid as the key
 
   async function setupSamples(audioCtx) {
-    var soundamt = loading_sounds.length;
-    while(loading_sounds.length > 0) {
-        var sound = loading_sounds.pop();
+    var soundamt = queue_sounds.length;
+    while(queue_sounds.length > 0) {
+        var sound = queue_sounds.pop();
         const sample = await getFile(audioCtx, sound.url);
         samplesMap[sound.id] = sample; // Store the sample in the map with soundid as the key
         ready_sounds.push(sound);
         console.log("Sound "+sound.id+" ready.");
+        var lc = $('sound-element[data-id="' + sound.id + '"]').find('loading-circle');
+        if (lc.length > 0) { lc.remove(); }
     }
     return soundamt;
   }
@@ -1051,7 +1065,12 @@ $(document).ready(function(){
   });
 
   var samplesSetupProcess = false;
-  function onSoundsAdded(){
+  function setupSamplesInQueue(){
+      $(queue_sounds).each(function(){
+         var sound = this;
+         $('sound-element[data-id="' + sound.id + '"]').prepend("<loading-circle>");
+      });
+
       setupSamples(context).then((soundamt) => {
           console.log(soundamt+" samples were setup.");
           samplesSetupProcess = false;
@@ -1081,9 +1100,9 @@ $(document).ready(function(){
           init = false;
        }
 
-       if(!samplesSetupProcess && loading_sounds.length > 0){
+       if(!samplesSetupProcess && queue_sounds.length > 0){
           samplesSetupProcess = true;
-          onSoundsAdded();
+          setupSamplesInQueue();
        }
 
        var duration_in_sec = (performance.now() - startTime) / 1000;

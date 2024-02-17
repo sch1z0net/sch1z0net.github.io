@@ -46,6 +46,31 @@ sound-browser {
 }
 
 
+loading-circle {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+}
+loading-circle:after {
+  content: " ";
+  display: block;
+  width: 8px;
+  height: 8px;
+  margin: 6px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: loading-circle 1.2s linear infinite;
+}
+@keyframes loading-circle {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 
 sound-element {
   display: block;
@@ -441,4 +466,8 @@ track-pattern-br {
    cursor: pointer;
    color: white;
 }
+
+
+
+
 
