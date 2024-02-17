@@ -40,7 +40,7 @@
     ROOT_PADDING = $("grid-window")[0].getBoundingClientRect().left;
   }
 
-  function resizeTimeBar()(){
+  function resizeTimeBar(){
       var sec_length = (bpm / 60) * BEAT_WIDTH;
       var dsec_length = sec_length/10;
       $("<time-bar-sec>").css("width",sec_length);
