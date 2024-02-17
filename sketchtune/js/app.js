@@ -17,12 +17,16 @@
   let selectRootY = null;
 
   let isDraggingSound = false;
-  let draggedSound = null;
+  let draggedSoundElement = null;
 
 
   var BEAT_WIDTH = parseInt($("#root").css("--beat-width"));
   var ROOT_PADDING;
 
+
+
+  var bpm = 125;
+  var spb = 60 / bpm;
 
 
   /**** CONTEXT MENU ****/
@@ -478,6 +482,15 @@ var colors = [
     $('time-marker').css("height",tracks_height_sum+"px");
   }
 
+  function getSoundById(id) {
+    var matchingElement = $.grep(sounds, function(element) {
+        return element.id === id;
+    })[0]; // Retrieve the first matching element
+
+    return matchingElement || null; // Return the first matching element or null if none found
+  }
+
+
   class TrackRow extends HTMLElement {
     constructor() {
       super();
@@ -528,6 +541,8 @@ var colors = [
                 var newmargin = (beatpos * BEAT_WIDTH); //Snap to Grid
                 var newpat = $('<track-pattern>');
                 newpat.attr('data-pos',beatpos);
+                var fulldur = getSoundById(draggedSoundElement).fulldur;
+                alert(fulldur);
                 newpat.attr('data-length',4);
                 newpat.css("margin-left",newmargin+"px");
                 newpat.css("background-color",$(this).attr('data-stdcolor'));
@@ -763,7 +778,7 @@ var colors = [
         this.addEventListener('mousedown', (event) => {
           event.stopPropagation();
           isDraggingSound = true;
-          draggedSound = this.soundid;
+          draggedSoundElement = this;
         });
     }
   }
@@ -943,9 +958,6 @@ $(document).ready(function(){
     sampleSource.start(time, offset, duration);
     return sampleSource;
   }
-
-  var bpm = 125;
-  var spb = 60 / bpm;
 
   const button_load = $("#load");
   const button_play = $("#play");
