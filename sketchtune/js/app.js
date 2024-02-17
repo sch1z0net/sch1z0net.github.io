@@ -829,12 +829,6 @@ var colors = [
     });
   }
 
-  function reloadAudioContext(){
-    button_load.css("display","inline-block");
-    button_play.css("display","none");
-    button_stop.css("display","none");
-  }
-
   class SoundBrowser extends HTMLElement {
     constructor() {
       super();
@@ -1053,6 +1047,12 @@ $(document).ready(function(){
   const button_stop = $("#stop");
   button_play.css("display","none");
   button_stop.css("display","none");
+
+  function reloadAudioContext(){
+    $("#load").css("display","inline-block");
+    $("#play").css("display","none");
+    $("#stop").css("display","none");
+  }
 
   let context;
   var is_playing = false;
