@@ -265,7 +265,6 @@ var colors = [
         var beats = x / BEAT_WIDTH;
         var seconds = spb*beats;
         startTime = performance.now() - seconds;
-        isMouseDownOnTrackRow = false;
      }
 
      activePattern = null;
@@ -273,6 +272,7 @@ var colors = [
      activeInsertSlot = null;
      activeInsertPosition = null;
 
+     isMouseDownOnTrackRow = false;
      isSelectingPatterns = false;
      selectionArea.css("display", "none");
   });
