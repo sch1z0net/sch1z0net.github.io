@@ -145,8 +145,6 @@ var colors = [
       var newwidth = x - posStart;
       if(newwidth < BEAT_WIDTH){ newwidth = BEAT_WIDTH; }
       activePattern.style.width = newwidth + 'px';
-
-      reinitPlayingTracks = true;
     }
     //Resize on Left side
     if (isResizingL) {
@@ -161,8 +159,6 @@ var colors = [
       if(newwidth < BEAT_WIDTH){ newwidth = BEAT_WIDTH; }
       activePattern.style.marginLeft = newmargin + 'px';
       activePattern.style.width = newwidth + 'px';
-
-      reinitPlayingTracks = true;
     }
 
     if (isDraggingTitle) {
@@ -241,6 +237,8 @@ var colors = [
           $(this).attr('data-length',length);
           this.style.width = (length * BEAT_WIDTH) + "px";
         });
+
+        reinitPlayingTracks = true;
      }
 
      if(activeTrack != null){
