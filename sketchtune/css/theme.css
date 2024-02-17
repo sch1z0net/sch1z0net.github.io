@@ -35,6 +35,7 @@ sound-browser {
   background-color: rgba(120,120,120,1);
   border-radius: 5px;  
   padding: 1px;
+  box-sizing: border-box;
 }
 
 sound-element {
