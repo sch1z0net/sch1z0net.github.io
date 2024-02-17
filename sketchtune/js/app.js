@@ -756,13 +756,17 @@ var colors = [
             const reader = new FileReader();
 
             reader.onload = function(event) {
-              const url = event.target.result;
-              sounds.push({ 
-                 name: files[i].name,
-                 url: url
-              });
-
-              $(that).append($("<sound-element name='"+files[i].name+"'>"));
+              var file = files[i];
+              if (file.type === 'audio/wav' || file.type === 'audio/mpeg'){
+                 const url = event.target.result;
+                 sounds.push({ 
+                    name: files[i].name,
+                    url: url,
+                    type: files[i].type,
+                    size: files[i].size
+                 });
+                 $(that).append($("<sound-element name='"+files[i].name+"'>"));
+              }
             };
 
             reader.readAsDataURL(files[i]);
