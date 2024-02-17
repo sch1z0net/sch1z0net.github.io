@@ -229,6 +229,7 @@ time-bar-sec {
 	height: 100%;
 	width: 1px;
 	background-color: red;
+	box-sizing: border-box;
 }
 
 time-bar-dsec {
@@ -236,6 +237,7 @@ time-bar-dsec {
 	height: 100%;	
 	width: 1px;
 	background-color: red;
+	box-sizing: border-box;
 }
 
 

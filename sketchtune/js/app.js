@@ -667,11 +667,13 @@ var colors = [
     connectedCallback() {
       $(this).addClass("unselectable");
       
+      var sec_length = (bpm / 60) * BEAT_WIDTH;
+      var dsec_length = second_length/10;
       for(var second = 0; second <=300; second++){
-         $(this).append($("<time-bar-sec>"));
-         for(var ds = 1; ds<=9; ds++){
+         $(this).append($("<time-bar-sec>").css("margin-left",sec_length));
+         /*for(var ds = 1; ds<=9; ds++){
              $(this).append($("<time-bar-dsec>"));
-         }
+         }*/
       }
     }
   }
