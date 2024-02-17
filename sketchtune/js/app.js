@@ -26,6 +26,7 @@
 
   var startTimeInMS;
   var time_marker_in_sec;
+  var initPlayingTracks = false;
 
   var bpm = 125;
   var spb = 60 / bpm;
@@ -268,8 +269,7 @@ var colors = [
         var seconds = spb*beats;
         startTimeInMS = performance.now() - seconds*1000;
 
-        stopAllSamples();
-        schedule();
+        initPlayingTracks = true;
      }
 
      activePattern = null;
@@ -1124,10 +1124,11 @@ $(document).ready(function(){
 
 
   function renderloop(){
-       if(init == true){
+       if(initPlayingTracks == true){
           is_playing = true;
+          stopAllSamples();
           schedule();
-          init = false;
+          initPlayingTracks = false;
        }
 
        if(!samplesSetupProcess && queue_sounds.length > 0){
