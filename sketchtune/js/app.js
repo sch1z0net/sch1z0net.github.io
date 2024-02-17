@@ -871,9 +871,21 @@ var colors = [
                     console.log(sound.id, sound.name, sound.type, sound.size, sound.duration);
                     $(that).append($("<sound-element name='"+files[i].name+"' data-soundid='"+soundID+"' data-fulldur='"+duration+"'>"));
                     soundID++;
+                    processed++;
+                    if(processed >= files.length){
+                        button_load.css("display","inline-block");
+                        button_play.css("display","none");
+                        button_stop.css("display","none");
+                    }
                  }).catch(error => {
                      // Error: handle the rejected promise
                      console.log("Couldn't get Duration of: ",files[i].name);
+                     processed++;
+                     if(processed >= files.length){
+                        button_load.css("display","inline-block");
+                        button_play.css("display","none");
+                        button_stop.css("display","none");
+                     }
                  });
               }
             };
@@ -884,6 +896,7 @@ var colors = [
 
             reader.readAsDataURL(files[i]);
           } 
+
       });
     }
   }
@@ -1046,6 +1059,9 @@ $(document).ready(function(){
   var startTime;
 
   button_load.on("click", function(){
+      if(context != null){
+        context.close();
+      }
       button_load.css("display","none");
       context = new AudioContext();
       setupSamples(context).then(() => {
