@@ -835,10 +835,20 @@ $(document).ready(function(){
     return sample;
   }*/
 
-  async function setupSamples(audioCtx) {
+  /*async function setupSamples(audioCtx) {
     var samples = [];
     for (let i = 1; i <= 3; i++) {
       const sample = await getFile(audioCtx, './sounds/file'+i+'.wav');
+      samples.push(sample);
+    }
+    
+    return samples;
+  }*/
+
+  async function setupSamples(audioCtx) {
+    var samples = [];
+    for (let i = 0; i < sounds.length; i++) {
+      const sample = await getFile(audioCtx, sounds[i].url);
       samples.push(sample);
     }
     
@@ -895,7 +905,7 @@ $(document).ready(function(){
           playSample(context, samples[2], context.currentTime + 8*spb, 0, spb*8);
 
           playSample(context, samples[0], context.currentTime + 16*spb, 0, spb*8);
-          playSample(context, samples[1], context.currentTime + 16*spb, 0, spb*8);
+          playSample(context, samples[3], context.currentTime + 16*spb, 0, spb*8);
 
           init = false;
        }
