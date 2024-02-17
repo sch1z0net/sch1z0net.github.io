@@ -24,7 +24,7 @@
   var BEAT_WIDTH = parseInt($("#root").css("--beat-width"));
   var ROOT_PADDING;
 
-  var startTime;
+  var startTimeInMS;
 
   var bpm = 125;
   var spb = 60 / bpm;
@@ -264,7 +264,7 @@ var colors = [
         $("time-marker").css("margin-left",x);
         var beats = x / BEAT_WIDTH;
         var seconds = spb*beats;
-        startTime = performance.now()/1000 - seconds;
+        startTimeInMS = performance.now() - seconds*1000;
      }
 
      activePattern = null;
@@ -1060,7 +1060,7 @@ $(document).ready(function(){
           button_stop.css("display","inline-block");
           init = true;
           // Record the start time
-          startTime = performance.now();
+          startTimeInMS = performance.now();
           requestAnimationFrame(renderloop);
         });
 
@@ -1115,7 +1115,7 @@ $(document).ready(function(){
           setupSamplesInQueue();
        }
 
-       var time_marker_in_sec = (performance.now() - startTime) / 1000;
+       var time_marker_in_sec = (performance.now() - startTimeInMS) / 1000;
        $("time-marker").css("margin-left",time_marker_in_sec*BEAT_WIDTH/spb);
        if(is_playing){ requestAnimationFrame(renderloop); }
   }
