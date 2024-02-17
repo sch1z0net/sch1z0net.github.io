@@ -981,7 +981,7 @@ $(document).ready(function(){
         samplesMap[sound.id] = sample; // Store the sample in the map with soundid as the key
         ready_sounds.push(sound);
         console.log("Sound "+sound.id+" ready.");
-        var lc = $('sound-element[data-id="' + sound.id + '"]').find('loading-circle');
+        var lc = $('sound-element[data-soundid="' + sound.id + '"]').find('loading-circle');
         if (lc.length > 0) { lc.remove(); }
     }
     return soundamt;

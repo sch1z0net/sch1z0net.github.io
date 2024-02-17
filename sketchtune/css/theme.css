@@ -57,7 +57,7 @@ loading-circle:after {
   border-radius: 50%;
   border: 2px solid #fff;
   border-color: #fff transparent #fff transparent;
-  animation: loading-circle 1.2s linear infinite;
+  animation: loading-circle 0.8s linear infinite;
 }
 @keyframes loading-circle {
   0% {
