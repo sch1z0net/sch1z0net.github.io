@@ -467,7 +467,7 @@ var colors = [
     updateWidth() {
         const dataLength = this.getAttribute('data-length');
         if (dataLength) {
-            this.style.width = dataLength + 'px';
+            this.style.width = dataLength*BEAT_WIDTH + 'px';
         }
     }
   }
