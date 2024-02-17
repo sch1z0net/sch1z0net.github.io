@@ -1055,7 +1055,7 @@ $(document).ready(function(){
 
        $("beat-bar").scrollLeft(e.originalEvent.deltaX + $("beat-bar").scrollLeft());
        $("track-window").scrollLeft($("beat-bar").scrollLeft());
-       $("time-bar").scrollLeft($("beat-bar").scrollLeft());
+       $("time-bar-container").scrollLeft($("beat-bar").scrollLeft());
   });
 
   

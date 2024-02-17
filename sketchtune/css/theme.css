@@ -209,7 +209,7 @@ time-bar-container {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 
-  bottom: 50px;
+  bottom: 10px;
   position: absolute;
   font-size: 0;
   height: 10px;
@@ -220,15 +220,19 @@ time-bar-container {
 }
 
 time-bar {
-	height: 20px;
+	height: 10px;
 	width: 100%;
+	display: inline-block;
 }
 
 time-bar > span {
-	font-size: 10px;
-	position: absolute;
-	margin-top: 10px;
-	color: black;
+  font-size: 8px;
+  position: absolute;
+  margin-top: 2px;
+  color: black;
+  width: 10px;
+  height: 10px;
+  padding-left: 2px;
 }
 
 time-bar-sec {
@@ -243,7 +247,7 @@ time-bar-sec {
 time-bar-dsec {
 	position: absolute;
 	display: inline-block;
-	height: 50%;
+	height: 30%;
     vertical-align: top;	
 	width: 1px;
 	background-color: black;
