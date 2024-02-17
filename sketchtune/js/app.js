@@ -209,7 +209,6 @@ var colors = [
   });
 
   document.addEventListener('mouseup', () => {
-     console.log("DOC");
      isDragging = false;
      isResizingR = false;
      isResizingL = false;
@@ -756,6 +755,10 @@ var colors = [
     }
 
     connectedCallback() {
+        this.addEventListener('dragstart', function(event) {
+           event.stopPropagation();
+        });
+
         this.addEventListener('mousedown', (event) => {
           event.stopPropagation();
           isDraggingSound = true;
