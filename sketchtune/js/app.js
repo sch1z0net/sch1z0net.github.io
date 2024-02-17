@@ -721,6 +721,7 @@ var colors = [
     }
   }
 
+  var sounds = [];
 
   class SoundBrowser extends HTMLElement {
     constructor() {
@@ -738,22 +739,22 @@ var colors = [
           event.preventDefault();
           
           const files = event.originalEvent.dataTransfer.files;
-          const urls = [];
 
           for (let i = 0; i < files.length; i++) {
             const reader = new FileReader();
 
             reader.onload = function(event) {
               const url = event.target.result;
-              //urls.push(url);
+              sounds.push({ 
+                 name: files[i].name,
+                 url: url
+              });
             };
 
             reader.readAsDataURL(files[i]);
-            urls.push(files[i].name);
           }
-
-          console.log(urls);
           
+          console.log(sounds);
       });
     }
   }
