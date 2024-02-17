@@ -962,15 +962,34 @@ $(document).ready(function(){
     return samples;
   }*/
 
-  async function setupSamples(audioCtx) {
+  let samplesMap = {}; // Define a map to store samples with soundid as the key
+
+  /*async function setupSamples(audioCtx) {
     var samples = [];
     for (let i = 0; i < sounds.length; i++) {
       const sample = await getFile(audioCtx, sounds[i].url);
-      samples.push(sample);
+      samples.push({
+        sample: sample,
+        soundid: sounds[i].id;
+      });
     }
     
     return samples;
+  }*/
+
+  async function setupSamples(audioCtx) {
+    for (let i = 0; i < sounds.length; i++) {
+        const sample = await getFile(audioCtx, sounds[i].url);
+        samplesMap[sounds[i].id] = sample; // Store the sample in the map with soundid as the key
+    }
   }
+
+   // Function to retrieve a sample by providing the soundid
+   function getSample(soundid) {
+      return samplesMap[soundid]; // Retrieve the sample from the map using soundid as the key
+   }
+
+
 
   let playbackRate = 1;
   function playSample(audioContext, audioBuffer, time, offset, duration) {
@@ -1008,18 +1027,23 @@ $(document).ready(function(){
       });
   });
 
+  
+
+  function schedule(){
+    $("track-pattern").each(function(){
+        var soundid = $(this).attr("data-soundid");
+        var start = $(this).attr("data-pos");
+        var duration = $(this).attr("data-length");
+        playSample(context, getSample(soundid), context.currentTime + start*spb, 0, duration*spb);
+    });
+  }
+
+
   function renderloop(){
        if(init == true){
           is_playing = true;
-          playSample(context, samples[0], context.currentTime + 0*spb, 0, spb*8);
-          playSample(context, samples[1], context.currentTime + 0*spb, 0, spb*8);
-          playSample(context, samples[2], context.currentTime + 0*spb, 0, spb*8);
 
-          playSample(context, samples[1], context.currentTime + 8*spb, 0, spb*8);
-          playSample(context, samples[2], context.currentTime + 8*spb, 0, spb*8);
-
-          playSample(context, samples[0], context.currentTime + 16*spb, 0, spb*8);
-          playSample(context, samples[3], context.currentTime + 16*spb, 0, spb*8);
+          schedule();
 
           init = false;
        }
