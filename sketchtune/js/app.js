@@ -866,7 +866,7 @@ var colors = [
                        id: soundID++
                     };
                     sounds.push(sound);
-                    console.log(sound);
+                    console.log(sound.id, sound.name, sound.type, sound.size, sound.duration);
                     $(that).append($("<sound-element name='"+files[i].name+"' data-soundid='"+soundID+"' data-fulldur='"+duration+"'>"));
                  }).catch(error => {
                      // Error: handle the rejected promise
