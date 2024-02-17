@@ -1098,7 +1098,20 @@ $(document).ready(function(){
           if(sample==null){ 
             console.log("Sample with ID "+soundid+" is still loading."); 
           } else {
-            playSample(context, getSample(soundid), context.currentTime + start*spb, 0, duration*spb);
+            var sampleStartTimeInSec = context.currentTime + start*spb;
+            var sampleDurationInSec = duration*spb;
+            var sampleEndTimeInSec = sampleStartTimeInSec + sampleDurationInSec;
+            if(time_marker_in_sec >= sampleEndTimeInSec){
+               //Marker has passed the sample
+            }else if(time_marker_in_sec <= sampleStartTimeInSec){
+               //Marker hasn't reached sample yet
+               playSample(context, getSample(soundid), sampleStartTimeInSec, 0, sampleDurationInSec);
+            }else{
+               //Marker is on sample
+               var offset = time_marker_in_sec - sampleStartTimeInSec;
+               playSample(context, getSample(soundid), time_marker_in_sec, offset, sampleDurationInSec-offset);
+            }
+             
           }
         }
     });
