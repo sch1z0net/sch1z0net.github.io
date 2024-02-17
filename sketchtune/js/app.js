@@ -43,16 +43,18 @@
   function reinitTimeBar(){
       $("time-bar").empty();
 
+      $("<time-bar-sec>").css("width",sec_length*second);
+
       var sec_length = (bpm / 60) * BEAT_WIDTH;
       var dsec_length = sec_length/10;
       for(var second = 0; second <=60*15; second++){
          var minutestr = Math.floor(second/60);
          var secondstr = (second%60)<10 ? "0"+second%60 : second%60;
-         $("time-bar").append($("<span>"+minutestr+":"+secondstr+"</span>").css("margin-left",sec_length*second));
-         $("time-bar").append($("<time-bar-sec>").css("margin-left",sec_length*second));
-         for(var ds = 0; ds<=10; ds++){
+         $("time-bar").append($("<time-bar-sec>").append($("<span>"+minutestr+":"+secondstr+"</span>"));
+         
+         /*for(var ds = 0; ds<=10; ds++){
              $("time-bar").append($("<time-bar-dsec>").css("margin-left",sec_length*second+dsec_length*ds));
-         }
+         }*/
       }
   }
 
