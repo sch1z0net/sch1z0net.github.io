@@ -36,13 +36,14 @@
     BEAT_WIDTH = parseInt($("#root").css("--beat-width"));
   }
 
+  function updateRootPadding(){
+    ROOT_PADDING = $("grid-window").getBoundingClientRect().left;
+  }
+
   // Attach resize event listener to window
   $(window).on("resize", function() {
-     // Call updateBeatWidth function when window is resized
-     updateBeatWidth();
+     updateRootPadding();
   });
-
-
 
 
 
@@ -646,7 +647,7 @@ var colors = [
     }
 
     connectedCallback() {
-      ROOT_PADDING = this.getBoundingClientRect().left;
+      updateRootPadding();
       $(this).addClass("unselectable");
       $(this).append($("<beat-bar-container>"));
       $(this).append($("<track-window>"));
