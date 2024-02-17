@@ -822,8 +822,8 @@ var colors = [
         };
 
         audio.onerror = function(e) {
-            // If an error occurs while loading the audio, reject with the error
-            reject(e);
+            // Ignore the error and resolve with null or another default value
+            resolve(null);
         };
     });
   }
