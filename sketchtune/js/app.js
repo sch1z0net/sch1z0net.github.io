@@ -815,7 +815,6 @@ var colors = [
     return new Promise((resolve, reject) => {
         var audio = new Audio();
         audio.src = url;
-        console.log("URL:", url);
 
         audio.onloadedmetadata = function() {
             // Once metadata is loaded, resolve with the duration
@@ -855,8 +854,9 @@ var colors = [
             reader.onload = function(event) {
               var file = files[i];
               if (file.type === 'audio/x-wav' || file.type === 'audio/mpeg'){
-                 const url = event.target.result;
-                 
+                 //const url = event.target.result;
+                 const url = URL.createObjectURL(file);
+
                  getAudioDuration(url).then(duration => { 
                     var sound = { 
                        name: files[i].name,
