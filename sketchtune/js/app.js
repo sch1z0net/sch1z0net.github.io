@@ -822,13 +822,6 @@ var colors = [
     });
   }
 
-  function reloadAudioContext(){
-    $("#stop").click();
-    $("#load").css("display","inline-block");
-    $("#play").css("display","none");
-    $("#stop").css("display","none");
-  }
-
   class SoundBrowser extends HTMLElement {
     constructor() {
       super();
@@ -873,14 +866,14 @@ var colors = [
                     soundID++;
                     processed++;
                     if(processed >= files.length){
-                        reloadAudioContext();
+                        onSoundUpload();
                     }
                  }).catch(error => {
                      // Error: handle the rejected promise
                      console.log("Couldn't get Duration of: ",files[i].name);
                      processed++;
                      if(processed >= files.length){
-                        reloadAudioContext();
+                        onSoundUpload();
                      }
                  });
               }
