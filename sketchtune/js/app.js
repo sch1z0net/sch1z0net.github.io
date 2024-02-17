@@ -37,7 +37,7 @@
   }
 
   function updateRootPadding(){
-    ROOT_PADDING = $("grid-window").getBoundingClientRect().left;
+    ROOT_PADDING = $("grid-window")[0].getBoundingClientRect().left;
   }
 
   // Attach resize event listener to window
