@@ -1112,13 +1112,14 @@ $(document).ready(function(){
             }else if(time_marker_in_sec <= sampleStartTimeInSec){
                //Marker hasn't reached sample yet
                var waitUntilPlay = sampleStartTimeInSec - time_marker_in_sec;
+               console.log("Wait seconds until play:",waitUntilPlay);
                var offset = 0;
                playSample(context, getSample(soundid), context.currentTime + waitUntilPlay, offset, sampleDurationInSec);
             }else{
                //Marker is on sample
                var waitUntilPlay = 0;
                var offset = time_marker_in_sec - sampleStartTimeInSec;
-               console.log(sampleStartTimeInSec);
+               console.log("Play offset seconds:",offset);
                playSample(context, getSample(soundid), context.currentTime + waitUntilPlay, offset, sampleDurationInSec);
             }
              
