@@ -40,22 +40,11 @@
     ROOT_PADDING = $("grid-window")[0].getBoundingClientRect().left;
   }
 
-  function reinitTimeBar(){
-      $("time-bar").empty();
-
-      $("<time-bar-sec>").css("width",sec_length*second);
-
+  function resizeTimeBar()(){
       var sec_length = (bpm / 60) * BEAT_WIDTH;
       var dsec_length = sec_length/10;
-      for(var second = 0; second <=60*15; second++){
-         var minutestr = Math.floor(second/60);
-         var secondstr = (second%60)<10 ? "0"+second%60 : second%60;
-         $("time-bar").append($("<time-bar-sec>").append($("<span>"+minutestr+":"+secondstr+"</span>")));
-         
-         /*for(var ds = 0; ds<=10; ds++){
-             $("time-bar").append($("<time-bar-dsec>").css("margin-left",sec_length*second+dsec_length*ds));
-         }*/
-      }
+      $("<time-bar-sec>").css("width",sec_length);
+      $("<time-bar-dsec>").css("width",dsec_length);
   }
 
   // Attach resize event listener to window
@@ -410,7 +399,7 @@ var colors = [
          if(BEAT_WIDTH > 15){ $(".extended_beat_marker").css("display","block"); }
          $("#root")[0].style.setProperty("--beat-width", BEAT_WIDTH+"px");
          resizePatterns();
-         reinitTimeBar();
+         resizeTimeBar();
       });
 
       var zoom_out = $("<div id='zoom_out_grid'>-</div>");
@@ -421,7 +410,7 @@ var colors = [
          if(BEAT_WIDTH <= 15){ $(".extended_beat_marker").css("display","none"); }
          $("#root")[0].style.setProperty("--beat-width", BEAT_WIDTH+"px");
          resizePatterns();
-         reinitTimeBar();
+         resizeTimeBar();
       });
 
       $(this).append(zoom_in);
@@ -686,7 +675,16 @@ var colors = [
     
     connectedCallback() {
       $(this).addClass("unselectable");
-      reinitTimeBar();
+      for(var second = 0; second <=60*15; second++){
+         var minutestr = Math.floor(second/60);
+         var secondstr = (second%60)<10 ? "0"+second%60 : second%60;
+         $("time-bar").append($("<time-bar-sec>").append($("<span>"+minutestr+":"+secondstr+"</span>")));
+
+         /*for(var ds = 0; ds<=10; ds++){
+             $("time-bar").append($("<time-bar-dsec>").css("margin-left",sec_length*second+dsec_length*ds));
+         }*/
+      }
+      resizeTimeBar();
     }
   }
 
