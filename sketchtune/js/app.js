@@ -100,6 +100,10 @@ var colors = [
 
 
   document.addEventListener('mousemove', (event) => {
+    if(isMouseDownOnTrackRow){
+       isSelectingPatterns = true;
+    }
+    
     //DRAG PATTERN (single or multiple)
     if (isDragging) {
       $(activePattern).addClass("multiSelectedPattern");
@@ -252,6 +256,14 @@ var colors = [
            $(activeTrack).insertAfter($(activeInsertSlot));
            $("#track_"+id).insertAfter($("#track_"+idSlot));
         }
+     }
+
+     if(isMouseDownOnTrackRow && !isSelectingPatterns){
+        const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
+        $("time-marker").css("margin-left",x);
+        var beats = x / BEAT_WIDTH;
+        var seconds = spb*beats;
+        startTime = performance.now() - seconds;
      }
 
      activePattern = null;
@@ -542,15 +554,9 @@ var colors = [
              $("track-pattern").each(function(){
                $(this).removeClass("multiSelectedPattern");
              });
-             isSelectingPatterns = true;
+             isMouseDownOnTrackRow = true;
              selectRootX = event.clientX;
              selectRootY = event.clientY;
-            }else{
-              const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
-              $("time-marker").css("margin-left",x);
-              var beats = x / BEAT_WIDTH;
-              var seconds = spb*beats;
-              startTime = performance.now() - seconds;
             }
           });
 
