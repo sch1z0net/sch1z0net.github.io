@@ -82,6 +82,7 @@ sound-element {
   font-size: 10px;
   font-family: "Varela", sans-serif;
   cursor: pointer;
+  align-items: center;
 }
 
 sound-element:hover {
