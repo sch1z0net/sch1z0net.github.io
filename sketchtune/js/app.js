@@ -659,6 +659,23 @@ var colors = [
     }
   }
 
+  class TimeBar extends HTMLElement {
+    constructor() {
+      super();
+    }
+    
+    connectedCallback() {
+      $(this).addClass("unselectable");
+      
+      for(var second = 0; second <=300; second++){
+         $(this).append($("<time-bar-sec>"));
+         for(var ds = 1; ds<=9; ds++){
+             $(this).append($("<time-bar-dsec>"));
+         }
+      }
+    }
+  }
+
   class TimeBarContainer extends HTMLElement {
     constructor() {
       super();
@@ -666,23 +683,7 @@ var colors = [
 
     connectedCallback() {
       $(this).addClass("unselectable");
-    }
-  }
-
-  class TimeBar extends HTMLElement {
-    constructor() {
-      super();
-    }
-
-    connectedCallback() {
-      $(this).addClass("unselectable");
-
-      for(var second = 0; second <=300; second++){
-         $(this).append($("<time-bar-sec>"));
-         for(var ds = 1; ds<=10; ds++){
-             $(this).append($("<time-bar-dsec>"));
-         }
-      }
+      $(this).append($("<time-bar>"));
     }
   }
 

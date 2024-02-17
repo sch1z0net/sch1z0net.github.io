@@ -209,10 +209,10 @@ time-bar-container {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 
-  bottom: 100px;
+  bottom: 60px;
   position: absolute;
   font-size: 0;
-  height: calc(100% - 80px - 40px - 14px);
+  height: 20px;
   width: calc(var(--main-width) * var(--layout-width) - 32px);
   overflow-x: scroll;
   overscroll-behavior-x: none;
