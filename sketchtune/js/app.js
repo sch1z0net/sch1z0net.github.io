@@ -25,6 +25,7 @@
   var ROOT_PADDING;
 
   var startTimeInMS;
+  var time_marker_in_sec;
 
   var bpm = 125;
   var spb = 60 / bpm;
@@ -1130,7 +1131,7 @@ $(document).ready(function(){
           setupSamplesInQueue();
        }
 
-       var time_marker_in_sec = (performance.now() - startTimeInMS) / 1000;
+       time_marker_in_sec = (performance.now() - startTimeInMS) / 1000;
        $("time-marker").css("margin-left",time_marker_in_sec*BEAT_WIDTH/spb);
        if(is_playing){ requestAnimationFrame(renderloop); }
   }
