@@ -1145,7 +1145,6 @@ $(document).ready(function(){
        time_marker_in_sec = (performance.now() - startTimeInMS) / 1000;
        $("time-marker").css("margin-left",time_marker_in_sec*BEAT_WIDTH/spb);
        if(is_playing){ requestAnimationFrame(renderloop); }
-       console.log(context.currentTime);
   }
 
 });
