@@ -671,7 +671,7 @@ var colors = [
       var dsec_length = sec_length/10;
       for(var second = 0; second <=300; second++){
          var minutestr = Math.floor(second/60);
-         var secondstr = second<10 ? "0"+second : second;
+         var secondstr = second<10 ? "0"+second : second%60;
          $(this).append($("<span>"+minutestr+":"+secondstr+"</span>").css("margin-left",sec_length*second))
          $(this).append($("<time-bar-sec>").css("margin-left",sec_length*second));
          for(var ds = 0; ds<=10; ds++){
