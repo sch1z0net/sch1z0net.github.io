@@ -23,7 +23,7 @@
   var BEAT_WIDTH = parseInt($("#root").css("--beat-width"));
   var ROOT_PADDING;
 
-
+  var startTime;
 
   var bpm = 125;
   var spb = 60 / bpm;
@@ -545,6 +545,12 @@ var colors = [
              isSelectingPatterns = true;
              selectRootX = event.clientX;
              selectRootY = event.clientY;
+            }else{
+              const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
+              $("time-marker").css("margin-left",x);
+              var beats = x / BEAT_WIDTH;
+              var seconds = spb*beats;
+              startTime = performance.now() - seconds;
             }
           });
 
@@ -1031,7 +1037,6 @@ $(document).ready(function(){
   var is_playing = false;
   var init = false;
   var samples;
-  var startTime;
 
   button_load.on("click", function(){
       if(context != null){
@@ -1102,8 +1107,8 @@ $(document).ready(function(){
           setupSamplesInQueue();
        }
 
-       var duration_in_sec = (performance.now() - startTime) / 1000;
-       $("time-marker").css("margin-left",duration_in_sec*BEAT_WIDTH/spb);
+       var time_marker_in_sec = (performance.now() - startTime) / 1000;
+       $("time-marker").css("margin-left",time_marker_in_sec*BEAT_WIDTH/spb);
        if(is_playing){ requestAnimationFrame(renderloop); }
   }
 
