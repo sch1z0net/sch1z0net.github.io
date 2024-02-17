@@ -43,8 +43,8 @@
   function resizeTimeBar(){
       var sec_length = (bpm / 60) * BEAT_WIDTH;
       var dsec_length = sec_length/10;
-      $("<time-bar-sec>").css("width",sec_length);
-      $("<time-bar-dsec>").css("width",dsec_length);
+      $("time-bar-sec").css("width",sec_length);
+      $("time-bar-dsec").css("width",dsec_length);
   }
 
   // Attach resize event listener to window
