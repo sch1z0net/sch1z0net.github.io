@@ -269,7 +269,7 @@ var colors = [
         var seconds = spb*beats;
         startTimeInMS = performance.now() - seconds*1000;
 
-        initPlayingTracks = true;
+        $("#play").click();
      }
 
      activePattern = null;
@@ -1114,6 +1114,7 @@ $(document).ready(function(){
             }else{
                //Marker is on sample
                var offset = time_marker_in_sec - sampleStartTimeInSec;
+               console.log(offset);
                playSample(context, getSample(soundid), time_marker_in_sec, offset, sampleDurationInSec-offset);
             }
              
