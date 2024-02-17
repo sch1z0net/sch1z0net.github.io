@@ -1,4 +1,6 @@
 
+  $(document).ready(function(){
+  
   let isDragging = false;
   let isResizingR = false;
   let isResizingL = false;
@@ -1014,7 +1016,7 @@ var colors = [
   }
 
 
-$(document).ready(function(){
+
 
   // Define the custom element
   customElements.define('beat-col'    , BeatCol);
