@@ -853,21 +853,24 @@ var colors = [
               var file = files[i];
               if (file.type === 'audio/x-wav' || file.type === 'audio/mpeg'){
                  const url = event.target.result;
-
+                 console.log("------LOADING SOUNDS INTO BROWSER------");
                  getAudioDuration(url).then(duration => { 
-
-                    sounds.push({ 
+                    var sound = { 
                        name: files[i].name,
                        url: url,
                        type: files[i].type,
                        size: files[i].size,
                        duration: duration,
                        id: soundID++
-                    });
+                    };
+                    sounds.push(sound);
+                    console.log(sound);
                     $(that).append($("<sound-element name='"+files[i].name+"' data-soundid='"+soundID+"' data-fulldur='"+duration+"'>"));
-                    console.log("------SOUNDS LOADED-------");
-                    console.log(sounds);
+                 }).catch(error => {
+                     // Error: handle the rejected promise
+                     console.error("Error loading audio duration:", error);
                  });
+
               }
             };
 
