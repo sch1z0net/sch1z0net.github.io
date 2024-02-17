@@ -209,10 +209,10 @@ time-bar-container {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 
-  bottom: 60px;
+  bottom: 50px;
   position: absolute;
   font-size: 0;
-  height: 20px;
+  height: 10px;
   width: calc(var(--main-width) * var(--layout-width) - 32px);
   overflow-x: scroll;
   overscroll-behavior-x: none;
@@ -229,16 +229,17 @@ time-bar-sec {
 	display: inline-block;
 	height: 100%;
 	width: 1px;
-	background-color: red;
+	background-color: black;
 	box-sizing: border-box;
 }
 
 time-bar-dsec {
 	position: absolute;
 	display: inline-block;
-	height: 100%;	
+	height: 50%;
+    vertical-align: top;	
 	width: 1px;
-	background-color: red;
+	background-color: black;
 	box-sizing: border-box;
 }
 

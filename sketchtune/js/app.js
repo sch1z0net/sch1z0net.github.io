@@ -671,9 +671,9 @@ var colors = [
       var dsec_length = sec_length/10;
       for(var second = 0; second <=300; second++){
          $(this).append($("<time-bar-sec>").css("margin-left",sec_length*second));
-         /*for(var ds = 1; ds<=9; ds++){
-             $(this).append($("<time-bar-dsec>"));
-         }*/
+         for(var ds = 0; ds<=10; ds++){
+             $(this).append($("<time-bar-dsec>").css("margin-left",sec_length*second+dsec_length*ds));
+         }
       }
     }
   }
