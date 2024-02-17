@@ -224,6 +224,13 @@ time-bar {
 	width: 100%;
 }
 
+time-bar > span {
+	font-size: 10px;
+	position: absolute;
+	margin-top: 10px;
+	color: black;
+}
+
 time-bar-sec {
 	position: absolute;
 	display: inline-block;
