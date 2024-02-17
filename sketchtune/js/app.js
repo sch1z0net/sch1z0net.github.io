@@ -1107,17 +1107,17 @@ $(document).ready(function(){
             var sampleStartTimeInSec = start*spb;
             var sampleDurationInSec = duration*spb;
             var sampleEndTimeInSec = sampleStartTimeInSec + sampleDurationInSec;
-            console.log(time_marker_in_sec,sampleStartTimeInSec,sampleEndTimeInSec);
+            console.log(time_marker_in_sec,sampleStartTimeInSec,sampleEndTimeInSec)
             if(time_marker_in_sec >= sampleEndTimeInSec){
                //Marker has passed the sample
             }else if(time_marker_in_sec <= sampleStartTimeInSec){
                //Marker hasn't reached sample yet
-               playSample(context, getSample(soundid), sampleStartTimeInSec, 0, sampleDurationInSec);
+               playSample(context, getSample(soundid), context.currentTime + sampleStartTimeInSec, 0, sampleDurationInSec);
             }else{
                //Marker is on sample
                var offset = time_marker_in_sec - sampleStartTimeInSec;
                console.log(offset);
-               playSample(context, getSample(soundid), time_marker_in_sec, offset, sampleDurationInSec-offset);
+               playSample(context, getSample(soundid), context.currentTime + time_marker_in_sec, offset, sampleDurationInSec-offset);
             }
              
           }
