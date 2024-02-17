@@ -1111,12 +1111,15 @@ $(document).ready(function(){
                //Marker has passed the sample
             }else if(time_marker_in_sec <= sampleStartTimeInSec){
                //Marker hasn't reached sample yet
-               playSample(context, getSample(soundid), context.currentTime + sampleStartTimeInSec, 0, sampleDurationInSec);
+               var waitUntilPlay = sampleStartTimeInSec - time_marker_in_sec;
+               var offset = 0;
+               playSample(context, getSample(soundid), context.currentTime + waitUntilPlay, offset, sampleDurationInSec);
             }else{
                //Marker is on sample
+               var waitUntilPlay = 0;
                var offset = time_marker_in_sec - sampleStartTimeInSec;
                console.log(sampleStartTimeInSec);
-               playSample(context, getSample(soundid), context.currentTime + 0, offset, sampleDurationInSec);
+               playSample(context, getSample(soundid), context.currentTime + waitUntilPlay, offset, sampleDurationInSec);
             }
              
           }
