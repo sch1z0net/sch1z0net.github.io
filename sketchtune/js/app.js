@@ -1091,14 +1091,15 @@ $(document).ready(function(){
   function schedule(){
     $("track-pattern").each(function(){
         var soundid = $(this).attr("data-soundid");
-        if(soundid == null){ continue; }
-        var start = $(this).attr("data-pos");
-        var duration = $(this).attr("data-length");
-        var sample = getSample(soundid);
-        if(sample==null){ 
-          console.log("Sample with ID "+soundid+" is still loading."); 
-        } else {
-          playSample(context, getSample(soundid), context.currentTime + start*spb, 0, duration*spb);
+        if(soundid != null){
+          var start = $(this).attr("data-pos");
+          var duration = $(this).attr("data-length");
+          var sample = getSample(soundid);
+          if(sample==null){ 
+            console.log("Sample with ID "+soundid+" is still loading."); 
+          } else {
+            playSample(context, getSample(soundid), context.currentTime + start*spb, 0, duration*spb);
+          }
         }
     });
   }
