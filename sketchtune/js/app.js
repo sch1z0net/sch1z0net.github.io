@@ -31,6 +31,21 @@
   var bpm = 128;
   var spb = 60 / bpm;
 
+  // Function to update BEAT_WIDTH
+  function updateBeatWidth() {
+    BEAT_WIDTH = parseInt($("#root").css("--beat-width"));
+  }
+
+  // Attach resize event listener to window
+  $(window).on("resize", function() {
+     // Call updateBeatWidth function when window is resized
+     updateBeatWidth();
+  });
+
+
+
+
+
 
   /**** CONTEXT MENU ****/
     // Create context menu
@@ -370,7 +385,7 @@ var colors = [
       $(this).addClass("unselectable");
       var zoom_in = $("<div id='zoom_in_grid'>+</div>");
       zoom_in.on("click",function(){
-         BEAT_WIDTH = parseInt($("#root").css("--beat-width"));
+         updateBeatWidth();
          BEAT_WIDTH += 5;
          if(BEAT_WIDTH >= 30){ BEAT_WIDTH = 30; }
          if(BEAT_WIDTH > 15){ $(".extended_beat_marker").css("display","block"); }
@@ -380,7 +395,7 @@ var colors = [
 
       var zoom_out = $("<div id='zoom_out_grid'>-</div>");
       zoom_out.on("click",function(){
-         BEAT_WIDTH = parseInt($("#root").css("--beat-width"));
+         updateBeatWidth();
          BEAT_WIDTH -= 5;
          if(BEAT_WIDTH <= 5){ BEAT_WIDTH = 5; }
          if(BEAT_WIDTH <= 15){ $(".extended_beat_marker").css("display","none"); }
