@@ -222,7 +222,7 @@ time-bar-container {
 
 time-bar {
 	height: 10px;
-	width: 100%;
+	width: max-content;
 	display: inline-block;
 }
 

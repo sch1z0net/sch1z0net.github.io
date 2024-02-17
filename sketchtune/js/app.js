@@ -675,14 +675,17 @@ var colors = [
     
     connectedCallback() {
       $(this).addClass("unselectable");
+      var sec_div = $("<div>").css("width","max-content");
+      var dsec_div = $("<div>").css("width","max-content");
+      $("time-bar").append(sec_div);
+      $("time-bar").append(dsec_div);
       for(var second = 0; second <=60*15; second++){
          var minutestr = Math.floor(second/60);
          var secondstr = (second%60)<10 ? "0"+second%60 : second%60;
-         $("time-bar").append($("<time-bar-sec>").append($("<span>"+minutestr+":"+secondstr+"</span>")));
-
-         /*for(var ds = 0; ds<=10; ds++){
-             $("time-bar").append($("<time-bar-dsec>").css("margin-left",sec_length*second+dsec_length*ds));
-         }*/
+         sec_div.append($("<time-bar-sec>").append($("<span>"+minutestr+":"+secondstr+"</span>")));
+         for(var ds = 0; ds<10; ds++){
+             dsec_div.append($("<time-bar-dsec>"));
+         }
       }
       resizeTimeBar();
     }
