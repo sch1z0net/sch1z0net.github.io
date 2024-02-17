@@ -566,7 +566,7 @@ var colors = [
                 newpat.attr('data-pos',beatpos);
                 var fulldur = draggedSoundElement.fulldur;
                 var beats = fulldur/spb;
-                alert(beats);
+
                 newpat.attr('data-length',beats);
                 newpat.css("margin-left",newmargin+"px");
                 newpat.css("background-color",$(this).attr('data-stdcolor'));
