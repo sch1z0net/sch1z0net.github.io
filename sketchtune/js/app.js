@@ -779,7 +779,8 @@ var colors = [
     connectedCallback() {
       $(this).addClass("unselectable");
       $(this).append("<button id='load'>load</button>");
-      $(this).append("<button id='play'>play</button>");
+      $(this).append("<button id='play'>&#x23F5;</button>");
+      $(this).append("<button id='stop'>&#x23F9;</button>");
     }
   }
 
@@ -1019,7 +1020,9 @@ $(document).ready(function(){
 
   const button_load = $("#load");
   const button_play = $("#play");
+  const button_stop = $("#stop");
   button_play.css("display","none");
+  button_stop.css("display","none");
 
   let context;
   var is_playing = false;
@@ -1032,11 +1035,18 @@ $(document).ready(function(){
       setupSamples(context).then(() => {
         button_play.css("display","inline-block");
         button_play.on("click", function(){ 
+          button_play.css("display","none");
+          button_stop.css("display","inline-block");
           is_playing = false;
           init = true;
           // Record the start time
           startTime = performance.now();
           requestAnimationFrame(renderloop);
+        });
+
+        button_stop.on("click", function(){ 
+          button_stop.css("display","none");
+          button_play.css("display","inline-block");
         });
       });
   });
