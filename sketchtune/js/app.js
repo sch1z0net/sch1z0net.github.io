@@ -865,7 +865,8 @@ var colors = [
                        id: soundID++
                     });
                     $(that).append($("<sound-element name='"+files[i].name+"' data-soundid='"+soundID+"' data-fulldur='"+duration+"'>"));
-
+                    console.log("------SOUNDS LOADED-------");
+                    console.log(sounds);
                  });
               }
             };
