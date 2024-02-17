@@ -723,6 +723,16 @@ var colors = [
 
   var sounds = [];
 
+  class SoundElement extends HTMLElement {
+    constructor() {
+      super();
+      this.name = this.getAttribute('name') || '';
+    }
+
+    connectedCallback() {
+    }
+  }
+
   class SoundBrowser extends HTMLElement {
     constructor() {
       super();
@@ -755,6 +765,11 @@ var colors = [
           }
           
           console.log(sounds);
+
+          var that = this;
+          $(sounds).each(function(){
+              $(that).append($("<sound-element name='"+this.name+"'>"));
+          });
       });
     }
   }
@@ -797,6 +812,7 @@ $(document).ready(function(){
   customElements.define('top-window' , TopWindow);
   customElements.define('time-marker' , TimeMarker);
 
+  customElements.define('sound-element', SoundElement);
   customElements.define('sound-browser', SoundBrowser);
   
   $("#root").append($("<sound-browser>"));
