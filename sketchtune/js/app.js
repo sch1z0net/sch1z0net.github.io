@@ -1090,6 +1090,8 @@ $(document).ready(function(){
 
       setupSamples(context).then((soundamt) => {
           samplesSetupProcess = false;
+          stopAllSamples();
+          schedule();
       });
   }
   
