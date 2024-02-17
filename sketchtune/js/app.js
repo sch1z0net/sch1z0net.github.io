@@ -856,7 +856,7 @@ var colors = [
               if (file.type === 'audio/x-wav' || file.type === 'audio/mpeg'){
                  const url = event.target.result;
                  
-                 getAudioDuration(file).then(duration => { 
+                 getAudioDuration(url).then(duration => { 
                     var sound = { 
                        name: files[i].name,
                        url: url,
@@ -870,7 +870,7 @@ var colors = [
                     $(that).append($("<sound-element name='"+files[i].name+"' data-soundid='"+soundID+"' data-fulldur='"+duration+"'>"));
                  }).catch(error => {
                      // Error: handle the rejected promise
-                     console.error("Couldn't load: ",files[i].name);
+                     console.log("Couldn't load: ",files[i].name);
                  });
 
               }
