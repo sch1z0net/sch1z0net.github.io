@@ -26,7 +26,7 @@
 
   var startTimeInMS;
   var time_marker_in_sec;
-  var initPlayingTracks;
+  var reinitPlayingTracks;
 
   var bpm = 128;
   var spb = 60 / bpm;
@@ -269,7 +269,7 @@ var colors = [
         var seconds = spb*beats;
         startTimeInMS = performance.now() - seconds*1000;
 
-        initPlayingTracks = true;
+        reinitPlayingTracks = true;
 
      }
 
@@ -586,6 +586,8 @@ var colors = [
                 
                 $(this).append(newpat);
                 isDraggingSound = false;
+
+                reinitPlayingTracks = true;
              }
           });
 
@@ -1064,7 +1066,7 @@ $(document).ready(function(){
         button_play.on("click", function(){ 
           button_play.css("display","none");
           button_stop.css("display","inline-block");
-          initPlayingTracks = true;
+          reinitPlayingTracks = true;
           // Record the start time
           startTimeInMS = performance.now();
           requestAnimationFrame(renderloop);
@@ -1135,11 +1137,11 @@ $(document).ready(function(){
        time_marker_in_sec = (performance.now() - startTimeInMS) / 1000;
        $("time-marker").css("margin-left",time_marker_in_sec*BEAT_WIDTH/spb); 
 
-       if(initPlayingTracks == true){
+       if(reinitPlayingTracks == true){
           is_playing = true;
           stopAllSamples();
           schedule();
-          initPlayingTracks = false;
+          reinitPlayingTracks = false;
        }
 
        if(!samplesSetupProcess && queue_sounds.length > 0){
