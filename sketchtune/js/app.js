@@ -1079,6 +1079,8 @@ $(document).ready(function(){
           button_stop.css("display","none");
           button_play.css("display","inline-block");
           is_playing = false;
+          stopAllSamples();
+          $("time-marker").css("margin-left",0);
         });
 
         button_play.click();
