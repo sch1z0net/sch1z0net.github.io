@@ -225,6 +225,7 @@ time-bar {
 }
 
 time-bar-sec {
+	position: absolute;
 	display: inline-block;
 	height: 100%;
 	width: 1px;
@@ -233,6 +234,7 @@ time-bar-sec {
 }
 
 time-bar-dsec {
+	position: absolute;
 	display: inline-block;
 	height: 100%;	
 	width: 1px;
