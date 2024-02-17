@@ -217,7 +217,7 @@ var colors = [
 
   });
 
-  document.addEventListener('mouseup', () => {
+  document.addEventListener('mouseup', (event) => {
      isDragging = false;
      isResizingR = false;
      isResizingL = false;
