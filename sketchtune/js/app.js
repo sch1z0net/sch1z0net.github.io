@@ -16,6 +16,9 @@
   let selectRootX = null;
   let selectRootY = null;
 
+  let isDraggingSound = false;
+  let draggedSound = null;
+
 
   var BEAT_WIDTH = parseInt($("#root").css("--beat-width"));
   var ROOT_PADDING;
@@ -515,6 +518,23 @@ var colors = [
              selectRootY = event.clientY;
             }
           });
+
+          $(this).on('mouseup', (event) => {
+             if(isDraggingSound){
+                const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
+
+                var beatpos = Math.floor(x / BEAT_WIDTH);
+                var newmargin = (beatpos * BEAT_WIDTH); //Snap to Grid
+                var newpat = $('<track-pattern>');
+                newpat.attr('data-pos',beatpos);
+                newpat.attr('data-length',4);
+                newpat.css("margin-left",newmargin+"px");
+                newpat.css("background-color",$(this).attr('data-stdcolor'));
+                
+                $(this).append(newpat);
+             }
+          });
+
           this.initialized = true;
       }
     }
@@ -736,6 +756,7 @@ var colors = [
         this.addEventListener('mousedown', (event) => {
           event.stopPropagation();
           isDraggingSound = true;
+          draggedSound = this.soundid;
         });
     }
   }
