@@ -779,8 +779,11 @@ var colors = [
     connectedCallback() {
       $(this).addClass("unselectable");
       $(this).append("<button id='load'>load</button>");
-      $(this).append("<button id='play'>&#x23F5;</button>");
-      $(this).append("<button id='stop'>&#x23F9;</button>");
+      $(this).append("<i id='play' class='material-icons'>play_circle_filled</i>");
+      $(this).append("<i id='stop' class='material-icons'>stop</i>");
+
+
+
     }
   }
 
