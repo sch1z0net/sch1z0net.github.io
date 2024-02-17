@@ -164,13 +164,14 @@ beat-col {
 
 beat-col > span {
   margin-top: -5px;
-  font-size: 6px;
+  font-size: 5px;
   font-family: system-ui;
   font-weight: bold;
   color: rgba(0,0,0,0.5);
   transform: translateY(-50%);
   margin-left: -2px;
   padding-left: 4px;
+  letter-spacing: -0.5px;
 
   position: absolute;
   background: linear-gradient(to top, #0003 50%, #11111100 50%) left no-repeat;
