@@ -882,11 +882,11 @@ var colors = [
                console.log("Couldn't read: ",files[i].name);
             };
 
-
-
-
             reader.readAsDataURL(files[i]);
           } 
+
+          console.log("------LOAD AUDIO CONTEXT------");
+          $("#load").click();
       });
     }
   }
