@@ -209,6 +209,7 @@ var colors = [
   });
 
   document.addEventListener('mouseup', () => {
+     console.log("DOC");
      isDragging = false;
      isResizingR = false;
      isResizingL = false;
