@@ -757,6 +757,7 @@ var colors = [
 
             reader.onload = function(event) {
               var file = files[i];
+              console.log(file.type);
               if (file.type === 'audio/wav' || file.type === 'audio/mpeg'){
                  const url = event.target.result;
                  sounds.push({ 
