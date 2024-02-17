@@ -1091,6 +1091,7 @@ $(document).ready(function(){
   function schedule(){
     $("track-pattern").each(function(){
         var soundid = $(this).attr("data-soundid");
+        if(soundid == null){ continue; }
         var start = $(this).attr("data-pos");
         var duration = $(this).attr("data-length");
         var sample = getSample(soundid);
