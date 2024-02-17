@@ -578,7 +578,7 @@ var colors = [
     connectedCallback() {
       if (!this.initialized) {
         $(this).addClass("unselectable");
-        //$(this).prop("draggable",true);
+        
         var input = $("<input/>");
         input.addClass("unselectable");
         input.val(this.text);
@@ -728,6 +728,7 @@ var colors = [
       super();
       this.name = this.getAttribute('name') || '';
       this.innerHTML = this.name;
+      $(this).prop("draggable",true);
     }
 
     connectedCallback() {
@@ -758,7 +759,7 @@ var colors = [
             reader.onload = function(event) {
               var file = files[i];
               console.log(file.type);
-              if (file.type === 'audio/wav' || file.type === 'audio/mpeg'){
+              if (file.type === 'audio/x-wav' || file.type === 'audio/mpeg'){
                  const url = event.target.result;
                  sounds.push({ 
                     name: files[i].name,
@@ -771,11 +772,7 @@ var colors = [
             };
 
             reader.readAsDataURL(files[i]);
-          }
-          
-          console.log(sounds);
-
-         
+          } 
       });
     }
   }
