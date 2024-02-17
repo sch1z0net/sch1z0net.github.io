@@ -270,7 +270,7 @@ var colors = [
         startTimeInMS = performance.now() - seconds*1000;
 
         initPlayingTracks = true;
-        
+
      }
 
      activePattern = null;
@@ -1107,6 +1107,7 @@ $(document).ready(function(){
             var sampleStartTimeInSec = context.currentTime + start*spb;
             var sampleDurationInSec = duration*spb;
             var sampleEndTimeInSec = sampleStartTimeInSec + sampleDurationInSec;
+            console.log(time_marker_in_sec,sampleStartTimeInSec,sampleEndTimeInSec);
             if(time_marker_in_sec >= sampleEndTimeInSec){
                //Marker has passed the sample
             }else if(time_marker_in_sec <= sampleStartTimeInSec){
