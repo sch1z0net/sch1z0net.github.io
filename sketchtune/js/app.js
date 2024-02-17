@@ -815,6 +815,7 @@ var colors = [
     return new Promise((resolve, reject) => {
         var audio = new Audio();
         audio.src = url;
+        console.log("URL:", url);
 
         audio.onloadedmetadata = function() {
             // Once metadata is loaded, resolve with the duration
@@ -822,8 +823,8 @@ var colors = [
         };
 
         audio.onerror = function(e) {
-            // Ignore the error and resolve with null or another default value
-            resolve(null);
+            // If an error occurs while loading the audio, reject with the error
+            reject(e);
         };
     });
   }
