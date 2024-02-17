@@ -669,7 +669,7 @@ var colors = [
       
       var sec_length = (bpm / 60) * BEAT_WIDTH;
       var dsec_length = sec_length/10;
-      for(var second = 0; second <=600; second++){
+      for(var second = 0; second <=60*30; second++){
          var minutestr = Math.floor(second/60);
          var secondstr = (second%60)<10 ? "0"+second%60 : second%60;
          $(this).append($("<span>"+minutestr+":"+secondstr+"</span>").css("margin-left",sec_length*second))
