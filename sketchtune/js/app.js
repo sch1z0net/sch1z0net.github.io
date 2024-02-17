@@ -864,11 +864,12 @@ var colors = [
                        type: files[i].type,
                        size: files[i].size,
                        duration: duration,
-                       id: soundID++
+                       id: soundID
                     };
                     sounds.push(sound);
                     console.log(sound.id, sound.name, sound.type, sound.size, sound.duration);
                     $(that).append($("<sound-element name='"+files[i].name+"' data-soundid='"+soundID+"' data-fulldur='"+duration+"'>"));
+                    soundID++;
                  }).catch(error => {
                      // Error: handle the rejected promise
                      console.log("Couldn't get Duration of: ",files[i].name);
