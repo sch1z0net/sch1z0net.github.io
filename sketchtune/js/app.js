@@ -750,6 +750,7 @@ var colors = [
       super();
       this.name = this.getAttribute('name') || '';
       this.soundid = this.getAttribute('data-soundid') || '';
+      this.fulldur = this.getAttribute('data-fulldur') || '';
       this.innerHTML = this.name;
       $(this).prop("draggable",true);
     }
@@ -823,7 +824,7 @@ var colors = [
                        duration: duration,
                        id: soundID++
                     });
-                    $(that).append($("<sound-element name='"+files[i].name+"' data-soundid='"+soundID+"'>"));
+                    $(that).append($("<sound-element name='"+files[i].name+"' data-soundid='"+soundID+"' data-fulldur='"+duration+"'>"));
 
                  });
               }
