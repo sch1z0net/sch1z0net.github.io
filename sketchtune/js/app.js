@@ -1104,7 +1104,7 @@ $(document).ready(function(){
           if(sample==null){ 
             console.log("Sample with ID "+soundid+" is still loading."); 
           } else {
-            var sampleStartTimeInSec = context.currentTime + start*spb;
+            var sampleStartTimeInSec = start*spb;
             var sampleDurationInSec = duration*spb;
             var sampleEndTimeInSec = sampleStartTimeInSec + sampleDurationInSec;
             console.log(time_marker_in_sec,sampleStartTimeInSec,sampleEndTimeInSec);
