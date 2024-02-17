@@ -639,6 +639,53 @@ var colors = [
     }
   }
 
+  class TimeBarSec extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+      $(this).addClass("unselectable");
+    }
+  }
+
+  class TimeBarDsec extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+      $(this).addClass("unselectable");
+    }
+  }
+
+  class TimeBarContainer extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+      $(this).addClass("unselectable");
+    }
+  }
+
+  class TimeBar extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+      $(this).addClass("unselectable");
+
+      for(var second = 0; second <=300; second++){
+         $(this).append($("<time-bar-sec>"));
+         for(var ds = 1; ds<=10; ds++){
+             $(this).append($("<time-bar-dsec>"));
+         }
+      }
+    }
+  }
+
 
 
   class GridWindow extends HTMLElement {
@@ -651,6 +698,7 @@ var colors = [
       $(this).addClass("unselectable");
       $(this).append($("<beat-bar-container>"));
       $(this).append($("<track-window>"));
+      $(this).append($("<time-bar-container>"));
     }
   }
 
@@ -968,6 +1016,11 @@ $(document).ready(function(){
   customElements.define('track-row-empty'   , TrackRowEmpty);
   customElements.define('track-row-container'  , TrackRowContainer);
   customElements.define('track-window', TrackWindow);
+
+  customElements.define('time-bar-dsec', TimeBarDsec);
+  customElements.define('time-bar-sec', TimeBarSec);
+  customElements.define('time-bar-container', TimeBarContainer);
+  customElements.define('time-bar', TimeBar);
 
   customElements.define('grid-window' , GridWindow);
 

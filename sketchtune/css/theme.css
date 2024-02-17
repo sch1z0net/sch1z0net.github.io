@@ -204,6 +204,43 @@ track-window {
   /** z-index: 10; **/
 }
 
+
+time-bar-container {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+
+  bottom: 100px;
+  position: absolute;
+  font-size: 0;
+  height: calc(100% - 80px - 40px - 14px);
+  width: calc(var(--main-width) * var(--layout-width) - 32px);
+  overflow-x: scroll;
+  overscroll-behavior-x: none;
+  overscroll-behavior-y: none;    
+}
+
+time-bar {
+	height: 20px;
+	width: 100%;
+}
+
+time-bar-sec {
+	display: inline-block;
+	height: 100%;
+	width: 1px;
+	background-color: red;
+}
+
+time-bar-dsec {
+	display: inline-block;
+	height: 100%;	
+	width: 1px;
+	background-color: red;
+}
+
+
+
+
 time-marker {
 	position: absolute;
 	width: 1px;
