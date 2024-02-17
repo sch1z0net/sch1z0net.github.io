@@ -242,12 +242,10 @@ time-bar-sec > span {
 }
 
 time-bar-dsec {
-	position: absolute;
 	display: inline-block;
 	height: 30%;
     vertical-align: top;	
-	width: 1px;
-	background-color: black;
+	border-left: 1px solid black;
 	box-sizing: border-box;
 }
 
