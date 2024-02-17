@@ -48,15 +48,12 @@ sound-browser {
 
 loading-circle {
   display: inline-block;
-  width: 10px;
-  height: 10px;
 }
 loading-circle:after {
   content: " ";
   display: block;
   width: 8px;
   height: 8px;
-  margin: 6px;
   border-radius: 50%;
   border: 2px solid #fff;
   border-color: #fff transparent #fff transparent;
@@ -83,6 +80,7 @@ sound-element {
   font-family: "Varela", sans-serif;
   cursor: pointer;
   align-items: center;
+  vertical-align: middle;
 }
 
 sound-element:hover {
