@@ -1114,13 +1114,13 @@ $(document).ready(function(){
                var waitUntilPlay = sampleStartTimeInSec - time_marker_in_sec;
                console.log("Wait seconds until play:",waitUntilPlay);
                var offset = 0;
-               playSample(context, getSample(soundid), context.currentTime + waitUntilPlay, offset, sampleDurationInSec);
+               playSample(context, getSample(soundid), context.currentTime + waitUntilPlay, offset, sampleDurationInSec-offset);
             }else{
                //Marker is on sample
                var waitUntilPlay = 0;
                var offset = time_marker_in_sec - sampleStartTimeInSec;
                console.log("Play offset seconds:",offset);
-               playSample(context, getSample(soundid), context.currentTime + waitUntilPlay, offset, sampleDurationInSec);
+               playSample(context, getSample(soundid), context.currentTime + waitUntilPlay, offset, sampleDurationInSec-offset);
             }
              
           }
@@ -1132,7 +1132,7 @@ $(document).ready(function(){
   function renderloop(){
        time_marker_in_sec = (performance.now() - startTimeInMS) / 1000;
        $("time-marker").css("margin-left",time_marker_in_sec*BEAT_WIDTH/spb); 
-        
+
        if(initPlayingTracks == true){
           is_playing = true;
           stopAllSamples();
