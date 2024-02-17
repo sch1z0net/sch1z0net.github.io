@@ -1014,8 +1014,7 @@ $(document).ready(function(){
 
   button_load.on("click", function(){
       context = new AudioContext();
-      setupSamples(context).then((_samples) => {
-        samples = _samples;
+      setupSamples(context).then(() => {
         button_play.css("display","inline-block");
         button_play.on("click", function(){ 
           is_playing = false;
