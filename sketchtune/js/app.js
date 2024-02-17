@@ -778,7 +778,7 @@ var colors = [
 
     connectedCallback() {
       $(this).addClass("unselectable");
-      $(this).append("<button id='load'>load</button>");
+      $(this).append("<i id='load' class='material-icons'>play_circle_filled</i>");
       $(this).append("<i id='play' class='material-icons'>play_circle_filled</i>");
       $(this).append("<i id='stop' class='material-icons'>stop</i>");
     }
@@ -884,9 +884,6 @@ var colors = [
 
             reader.readAsDataURL(files[i]);
           } 
-
-          console.log("------LOAD AUDIO CONTEXT------");
-          $("#load").click();
       });
     }
   }
@@ -1066,6 +1063,8 @@ $(document).ready(function(){
           button_play.css("display","inline-block");
           is_playing = false;
         });
+
+        button_play.click();
       });
   });
 

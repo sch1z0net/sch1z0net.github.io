@@ -431,7 +431,9 @@ track-pattern-br {
 } 
 
 #load {
-   display: none;
+   font-size: 20px;
+   cursor: pointer;
+   color: orangered;
 }
 
 #play, #stop {
