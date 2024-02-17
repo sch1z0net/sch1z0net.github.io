@@ -748,6 +748,7 @@ var colors = [
       $(this).on('drop', function(event) {
           event.preventDefault();
           
+          var that = this;          
           const files = event.originalEvent.dataTransfer.files;
 
           for (let i = 0; i < files.length; i++) {
@@ -759,6 +760,8 @@ var colors = [
                  name: files[i].name,
                  url: url
               });
+
+              $(that).append($("<sound-element name='"+files[i].name+"'>"));
             };
 
             reader.readAsDataURL(files[i]);
@@ -766,10 +769,7 @@ var colors = [
           
           console.log(sounds);
 
-          var that = this;
-          $(sounds).each(function(){
-              $(that).append($("<sound-element name='"+this.name+"'>"));
-          });
+         
       });
     }
   }
