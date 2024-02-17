@@ -848,7 +848,7 @@ var colors = [
           const files = event.originalEvent.dataTransfer.files;
 
           console.log("------LOADING SOUNDS INTO BROWSER------");
-
+          var processed = 0;
           for (let i = 0; i < files.length; i++) {
             const reader = new FileReader();
 
