@@ -36,6 +36,7 @@ sound-browser {
   border-radius: 5px;  
   padding: 1px;
   box-sizing: border-box;
+  padding-top: 4px;
 }
 
 sound-element {
