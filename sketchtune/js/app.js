@@ -873,18 +873,14 @@ var colors = [
                     soundID++;
                     processed++;
                     if(processed >= files.length){
-                        button_load.css("display","inline-block");
-                        button_play.css("display","none");
-                        button_stop.css("display","none");
+                        reloadAudioContext();
                     }
                  }).catch(error => {
                      // Error: handle the rejected promise
                      console.log("Couldn't get Duration of: ",files[i].name);
                      processed++;
                      if(processed >= files.length){
-                        button_load.css("display","inline-block");
-                        button_play.css("display","none");
-                        button_stop.css("display","none");
+                        reloadAudioContext();
                      }
                  });
               }
@@ -1046,6 +1042,12 @@ $(document).ready(function(){
     playingAudioNodes = [];
   }
 
+  function reloadAudioContext(){
+    button_load.css("display","inline-block");
+    button_play.css("display","none");
+    button_stop.css("display","none");
+  }
+
   const button_load = $("#load");
   const button_play = $("#play");
   const button_stop = $("#stop");
@@ -1086,7 +1088,6 @@ $(document).ready(function(){
         button_play.click();
       });
   });
-
 
 
   
