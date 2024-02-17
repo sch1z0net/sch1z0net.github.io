@@ -260,12 +260,16 @@ var colors = [
         }
      }
 
+     // Reposition Time Marker
      if(isMouseDownOnTrackRow && !isSelectingPatterns){
         const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
         $("time-marker").css("margin-left",x);
         var beats = x / BEAT_WIDTH;
         var seconds = spb*beats;
         startTimeInMS = performance.now() - seconds*1000;
+
+        stopAllSamples();
+        schedule();
      }
 
      activePattern = null;
