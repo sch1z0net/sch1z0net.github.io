@@ -1054,7 +1054,7 @@ $(document).ready(function(){
       button_load.css("display","none");
       button_stop.css("display","inline-block");
       context = new AudioContext();
-
+      setupSamplesInQueue();
 
         button_play.on("click", function(){ 
           button_play.css("display","none");
