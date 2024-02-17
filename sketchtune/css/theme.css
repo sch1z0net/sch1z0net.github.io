@@ -37,7 +37,11 @@ sound-browser {
   padding: 1px;
   box-sizing: border-box;
   padding-top: 4px;
+  white-space: nowrap;
+  vertical-align: top;
 }
+
+
 
 sound-element {
   display: block;
@@ -47,6 +51,8 @@ sound-element {
   margin-bottom: 1px; 
   color: rgb(50,50,50);
   font-size: 10px;
+  font-family: "Varela", sans-serif;
+  cursor: pointer;
 }
 
 top-window {
