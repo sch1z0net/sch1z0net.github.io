@@ -727,6 +727,7 @@ var colors = [
     constructor() {
       super();
       this.name = this.getAttribute('name') || '';
+      this.innerHTML = this.name;
     }
 
     connectedCallback() {
