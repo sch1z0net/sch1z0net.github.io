@@ -675,8 +675,8 @@ var colors = [
     
     connectedCallback() {
       $(this).addClass("unselectable");
-      var sec_div = $("<div>").css("width","max-content");
-      var dsec_div = $("<div>").css("width","max-content");
+      var sec_div = $("<div>").css("width","max-content").css("position","absolute");;
+      var dsec_div = $("<div>").css("width","max-content").css("position","absolute");
       $("time-bar").append(sec_div);
       $("time-bar").append(dsec_div);
       for(var second = 0; second <=60*15; second++){

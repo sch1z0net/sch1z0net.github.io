@@ -236,6 +236,7 @@ time-bar-sec {
 time-bar-sec > span {
   font-size: 8px;
   margin-left: 2px;
+  margin-top: 2px;
   color: black;
   width: 10px;
   height: 10px;
@@ -245,7 +246,7 @@ time-bar-dsec {
 	display: inline-block;
 	height: 30%;
     vertical-align: top;	
-	border-left: 1px solid black;
+	border-left: 1px solid rgba(10,10,10,0.2);
 	box-sizing: border-box;
 }
 
