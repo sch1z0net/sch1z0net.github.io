@@ -1,4 +1,228 @@
 
+  /***************************************************************/
+  // SOUND PROCESSING
+
+// Fast Fourier Transform (FFT) function
+function FFT(input) {
+    const N = input.length;
+    if (N <= 1) return input;
+
+    // Divide the input into even and odd indices
+    const even = [];
+    const odd = [];
+    for (let i = 0; i < N; i++) {
+        if (i % 2 === 0) {
+            even.push(input[i]);
+        } else {
+            odd.push(input[i]);
+        }
+    }
+
+    // Perform FFT recursively on even and odd indices
+    const evenFFT = FFT(even);
+    const oddFFT = FFT(odd);
+
+    // Combine the results
+    const output = [];
+    for (let k = 0; k < N / 2; k++) {
+        const theta = -2 * Math.PI * k / N;
+        const exp = new Complex(Math.cos(theta), Math.sin(theta));
+        const t = exp.mul(oddFFT[k]);
+        output[k] = evenFFT[k].add(t);
+        output[k + N / 2] = evenFFT[k].sub(t);
+    }
+
+    return output;
+}
+
+// Inverse Fast Fourier Transform (IFFT) function
+function IFFT(input) {
+    // Take the conjugate of the input
+    const conjugateInput = input.map(x => x.conjugate());
+
+    // Perform FFT on the conjugate input
+    const outputFFT = FFT(conjugateInput).map(x => x.conjugate());
+
+    // Scale the result by 1/N
+    return outputFFT.map(x => x.div(input.length));
+}
+
+// Complex number class to represent complex values
+class Complex {
+    constructor(re, im) {
+        this.re = re;
+        this.im = im;
+    }
+
+    add(other) {
+        return new Complex(this.re + other.re, this.im + other.im);
+    }
+
+    sub(other) {
+        return new Complex(this.re - other.re, this.im - other.im);
+    }
+
+    mul(other) {
+        return new Complex(this.re * other.re - this.im * other.im, this.re * other.im + this.im * other.re);
+    }
+
+    div(other) {
+        const denominator = other.re * other.re + other.im * other.im;
+        return new Complex(
+            (this.re * other.re + this.im * other.im) / denominator,
+            (this.im * other.re - this.re * other.im) / denominator
+        );
+    }
+
+    conjugate() {
+        return new Complex(this.re, -this.im);
+    }
+}
+
+// Example usage
+const inputSignal = [
+    new Complex(1, 0),
+    new Complex(2, 0),
+    new Complex(3, 0),
+    new Complex(4, 0),
+    new Complex(5, 0),
+    new Complex(6, 0),
+    new Complex(7, 0),
+    new Complex(8, 0)
+];
+const spectrum = FFT(inputSignal);
+console.log("FFT result:", spectrum);
+
+const invertedSignal = IFFT(spectrum);
+console.log("IFFT result:", invertedSignal);
+
+
+
+
+
+
+
+
+
+
+/*
+  function timeStretchSample(audioContext, audioBuffer, resamplingRatio){
+    // Create an AudioBuffer to hold the resampled data
+    const resampledBuffer = audioContext.createBuffer(
+      audioBuffer.numberOfChannels,
+      Math.ceil(audioBuffer.length * resamplingRatio),
+      audioBuffer.sampleRate
+    );
+
+    // Copy and stretch the audio data to the resampled buffer
+    for (let channel = 0; channel < audioBuffer.numberOfChannels; channel++) {
+      const channelData = audioBuffer.getChannelData(channel);
+      const resampledChannelData = resampledBuffer.getChannelData(channel);
+      for (let i = 0; i < resampledBuffer.length; i++) {
+        const position = i / resamplingRatio;
+        const leftIndex = Math.floor(position);
+        const rightIndex = Math.ceil(position);
+        const frac = position - leftIndex;
+        resampledChannelData[i] = (1 - frac) * channelData[leftIndex] + frac * channelData[rightIndex];
+      }
+    }
+
+    return resampledBuffer;
+  }*/
+
+
+
+/*
+  function granularSynthesis(audioBuffer, stretchFactor, grainSize, overlap) {
+    const audioContext = new AudioContext();
+    const bufferLength = audioBuffer.length;
+    const resampledBuffer = audioContext.createBuffer(audioBuffer.numberOfChannels, bufferLength * stretchFactor, audioBuffer.sampleRate);
+
+    const grainSamples = Math.floor(grainSize * audioContext.sampleRate);
+    const hopSize = Math.floor(grainSamples * (1 - overlap));
+
+    for (let channel = 0; channel < audioBuffer.numberOfChannels; channel++) {
+      const inputChannelData = audioBuffer.getChannelData(channel);
+      const outputChannelData = resampledBuffer.getChannelData(channel);
+
+      for (let i = 0; i < bufferLength * stretchFactor; i++) {
+        let index = Math.floor(i / stretchFactor);
+        let sum = 0;
+        let count = 0;
+        for (let j = 0; j < grainSamples; j++) {
+          if (index + j < bufferLength) {
+            sum += inputChannelData[index + j];
+            count++;
+          }
+        }
+        outputChannelData[i] = count > 0 ? sum / count : 0;
+      }
+    }
+
+    return resampledBuffer;
+  }
+  */
+
+
+  // Function to perform phase vocoding
+  function phaseVocoder(inputBuffer, stretchFactor) {
+    const windowSize = 2048; // Size of the analysis window
+    const hopSize = Math.floor(windowSize / 4); // Hop size for overlap-add
+    const analysisWindow = new Float32Array(windowSize); // Analysis window
+    // Initialize analysis window with Hanning window function
+    for (let i = 0; i < windowSize; i++) {
+        analysisWindow[i] = 0.5 * (1 - Math.cos(2 * Math.PI * i / windowSize));
+    }
+    
+    const numChannels = inputBuffer.numberOfChannels;
+    const numFrames = Math.ceil(inputBuffer.length / hopSize);
+    const outputBuffer = audioContext.createBuffer(numChannels, numFrames * hopSize, audioContext.sampleRate);
+    
+    // Process inputBuffer frame by frame for each channel
+    for (let ch = 0; ch < numChannels; ch++) {
+        const inputData = inputBuffer.getChannelData(ch);
+        const outputData = outputBuffer.getChannelData(ch);
+        for (let i = 0; i < numFrames; i++) {
+            // Extract frame
+            const start = i * hopSize;
+            const end = Math.min(start + windowSize, inputData.length);
+            const frame = inputData.subarray(start, end);
+            
+            // Apply window function
+            for (let j = 0; j < frame.length; j++) {
+                frame[j] *= analysisWindow[j];
+            }
+            
+            // Perform FFT (you need to implement FFT function)
+            const spectrum = FFT(frame);
+            
+            // Modify spectrum phase and magnitude (time stretching)
+            // You would typically interpolate between frames to change the phase and magnitude
+            
+            // Perform IFFT (you need to implement IFFT function)
+            const processedFrame = IFFT(spectrum);
+            
+            // Overlap-add
+            for (let j = 0; j < processedFrame.length; j++) {
+                outputData[i * hopSize + j] += processedFrame[j];
+            }
+        }
+    }
+    
+    return outputBuffer;
+  }
+
+
+
+
+
+
+
+
+
+  /***************************************************************/
+  // MAIN APP
+
   let isDragging = false;
   let isResizingR = false;
   let isResizingL = false;
@@ -1213,63 +1437,6 @@ $(document).ready(function(){
   // Array to store references to all playing audio nodes
   let playingAudioNodes = [];
 
-/*
-  function timeStretchSample(audioContext, audioBuffer, resamplingRatio){
-    // Create an AudioBuffer to hold the resampled data
-    const resampledBuffer = audioContext.createBuffer(
-      audioBuffer.numberOfChannels,
-      Math.ceil(audioBuffer.length * resamplingRatio),
-      audioBuffer.sampleRate
-    );
-
-    // Copy and stretch the audio data to the resampled buffer
-    for (let channel = 0; channel < audioBuffer.numberOfChannels; channel++) {
-      const channelData = audioBuffer.getChannelData(channel);
-      const resampledChannelData = resampledBuffer.getChannelData(channel);
-      for (let i = 0; i < resampledBuffer.length; i++) {
-        const position = i / resamplingRatio;
-        const leftIndex = Math.floor(position);
-        const rightIndex = Math.ceil(position);
-        const frac = position - leftIndex;
-        resampledChannelData[i] = (1 - frac) * channelData[leftIndex] + frac * channelData[rightIndex];
-      }
-    }
-
-    return resampledBuffer;
-  }*/
-
-
-
-  function granularSynthesis(audioBuffer, stretchFactor, grainSize, overlap) {
-    const audioContext = new AudioContext();
-    const bufferLength = audioBuffer.length;
-    const resampledBuffer = audioContext.createBuffer(audioBuffer.numberOfChannels, bufferLength * stretchFactor, audioBuffer.sampleRate);
-
-    const grainSamples = Math.floor(grainSize * audioContext.sampleRate);
-    const hopSize = Math.floor(grainSamples * (1 - overlap));
-
-    for (let channel = 0; channel < audioBuffer.numberOfChannels; channel++) {
-      const inputChannelData = audioBuffer.getChannelData(channel);
-      const outputChannelData = resampledBuffer.getChannelData(channel);
-
-      for (let i = 0; i < bufferLength * stretchFactor; i++) {
-        let index = Math.floor(i / stretchFactor);
-        let sum = 0;
-        let count = 0;
-        for (let j = 0; j < grainSamples; j++) {
-          if (index + j < bufferLength) {
-            sum += inputChannelData[index + j];
-            count++;
-          }
-        }
-        outputChannelData[i] = count > 0 ? sum / count : 0;
-      }
-    }
-
-    return resampledBuffer;
-  }
-
-
   function playSample(audioContext, audioBuffer, time, offset, duration) {
     
     // Calculate the resampling ratio
@@ -1277,13 +1444,17 @@ $(document).ready(function(){
     //const resamplingRatio = desiredDuration / originalDuration;
     //var resampledBuffer = timeStretchSample(audioContext, audioBuffer, 1/GLOBAL_PLAYBACK_RATE);
     
-
+    /*
     const originalAudioBuffer = audioBuffer;
     const stretchFactor = 1/GLOBAL_PLAYBACK_RATE;
     const grainSize = 0.01;
     const overlap = 0.5;
 
     const resampledBuffer = granularSynthesis(originalAudioBuffer, stretchFactor, grainSize, overlap);
+    */
+
+    const stretchFactor = 1/GLOBAL_PLAYBACK_RATE;
+    const resampledBuffer = phaseVocoder(audioBuffer, stretchFactor);
 
     const sampleSource = new AudioBufferSourceNode(audioContext, {
       buffer: resampledBuffer,
@@ -1459,5 +1630,4 @@ $(document).ready(function(){
 
        if(is_playing){ requestAnimationFrame(renderloop); }
   }
-
 });
