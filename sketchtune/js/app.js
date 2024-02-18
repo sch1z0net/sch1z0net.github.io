@@ -16,6 +16,23 @@ function generateSineWaveBuffer(durationInSeconds, sampleRate, frequency) {
     return buffer;
 }
 
+function generateSawtoothWaveBuffer(durationInSeconds, sampleRate, frequency) {
+    const numSamples = durationInSeconds * sampleRate;
+    const buffer = new Float32Array(numSamples);
+    const amplitude = 0.5; // Amplitude of the sawtooth wave
+
+    for (let i = 0; i < numSamples; i++) {
+        const t = i / sampleRate; // Time in seconds
+        const period = 1 / frequency;
+        const phase = t % period; // Phase within one period
+        buffer[i] = (phase / period - 0.5) * 2 * amplitude; // Sawtooth wave formula
+    }
+
+    return buffer;
+}
+
+
+
 function nextPowerOf2(n) {
     return Math.pow(2, Math.ceil(Math.log2(n)));
 }
@@ -75,12 +92,9 @@ const frequency = 5000; // Frequency of the sine wave in Hz
 
 // Generate sine wave buffer
 const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
+const sawtoothWaveBuffer = generateSawtoothWaveBuffer(durationInSeconds, sampleRate, frequency);
 const spectrum = fft_audio_buffer(sineWaveBuffer);
 console.log("FFT result:", spectrum);
-
-
-
-
 
 
 
@@ -146,11 +160,9 @@ console.log("FFT result:", spectrum);
                 ctx.stroke();
             }
 
-            const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
-
             // Plot waveform
             const waveformCanvas = document.getElementById('waveformCanvas');
-            plotWaveform(waveformCanvas, sineWaveBuffer);
+            plotWaveform(waveformCanvas, sineWaveBuffer, sampleRate);
             // Plot spectrum
             const spectrumCanvas = document.getElementById('spectrumCanvas');
             plotSpectrum(spectrumCanvas, spectrum);
