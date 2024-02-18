@@ -304,7 +304,7 @@ var audiobuffer = sawtoothWaveBuffer;
 
 
   // Function to perform phase vocoding
-  function phaseVocoder(inputBuffer, stretchFactor) {
+  function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
     const windowSize = 2048; // Size of the analysis window
     const hopSize = Math.floor(windowSize / 4); // Hop size for overlap-add
     const analysisWindow = new Float32Array(windowSize); // Analysis window
@@ -1592,7 +1592,7 @@ $(document).ready(function(){
     */
 
     const stretchFactor = 1/GLOBAL_PLAYBACK_RATE;
-    const resampledBuffer = phaseVocoder(audioBuffer, stretchFactor);
+    const resampledBuffer = phaseVocoder(audioContext, audioBuffer, stretchFactor);
 
     const sampleSource = new AudioBufferSourceNode(audioContext, {
       buffer: resampledBuffer,
