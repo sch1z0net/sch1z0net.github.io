@@ -1326,14 +1326,14 @@ $(document).ready(function(){
             }else if(time_marker_in_sec <= sampleStartTimeInSec){
                //Marker hasn't reached sample yet
                var waitUntilPlay = sampleStartTimeInSec - time_marker_in_sec;
-               console.log("►", soundid, "in", waitUntilPlay.toFixed(2), "seconds.");
+               console.log("►", soundid, "in", waitUntilPlay.toFixed(2), "seconds.", "for", sampleDurationInSec-offset);
                var offset = 0;
                playSample(context, getSample(soundid), context.currentTime + waitUntilPlay, offset, sampleDurationInSec-offset);
             }else{
                //Marker is on sample
                var waitUntilPlay = 0;
                var offset = time_marker_in_sec - sampleStartTimeInSec;
-               console.log("►", soundid, "from", offset.toFixed(2), "seconds.");
+               console.log("►", soundid, "from", offset.toFixed(2), "seconds.", "for", sampleDurationInSec-offset);
                playSample(context, getSample(soundid), context.currentTime + waitUntilPlay, offset, sampleDurationInSec-offset);
             }
              
