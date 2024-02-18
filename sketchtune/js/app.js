@@ -169,7 +169,6 @@ console.log("FFT result:", spectrum);
 
                 const fixedFrequencies = [20, 30, 40, 50, 100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000, 10000];
 
-                const numBins = spectrum.length;
                 const logMinFrequency = Math.log10(minFrequency);
                 const logMaxFrequency = Math.log10(maxFrequency);
 
