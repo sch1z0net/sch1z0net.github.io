@@ -875,10 +875,13 @@ var colors = [
 
     connectedCallback() {
       $(this).addClass("unselectable");
-      $(this).append("<i id='load' class='material-icons'>play_circle_filled</i>");
-      $(this).append("<i id='play' class='material-icons'>play_circle_filled</i>");
-      $(this).append("<i id='stop' class='material-icons'>stop</i>");
-      $(this).append("<input id='bpm'>");
+      var bpm_div = $("<div id='bpm_div'>BPM<div>").append("<input id='bpm'>");
+      $(this).append(bpm_div);
+      var play_div = $("<div id='play_div'>");
+      play_div.append("<i id='load' class='material-icons'>play_circle_filled</i>");
+      play_div.append("<i id='play' class='material-icons'>play_circle_filled</i>");
+      play_div.append("<i id='stop' class='material-icons'>stop</i>");
+      $(this).append(play_div);
     }
   }
 
