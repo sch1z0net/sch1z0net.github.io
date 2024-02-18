@@ -1175,22 +1175,23 @@ $(document).ready(function(){
       });
 
       button_pause.on("click", function(){ 
-        startOffsetInSec = startOffsetInSec + (performance.now() - startTimeInMS) / 1000;
-        updateTimeMarker();
         button_pause.css("display","none");
         button_play.css("display","inline-block");
         is_playing = false;
         stopAllSamples();
+
+        startOffsetInSec = startOffsetInSec + (performance.now() - startTimeInMS) / 1000;
+        updateTimeMarker();
       });
 
       button_stop.on("click", function(){ 
-        startOffsetInSec = 0;
-        updateTimeMarker();
         button_pause.css("display","none");
         button_play.css("display","inline-block");
         is_playing = false;
         stopAllSamples();
-        $("time-marker").css("margin-left",0);
+
+        startOffsetInSec = 0;
+        updateTimeMarker();
       });
 
       button_play.click();
