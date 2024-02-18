@@ -212,7 +212,11 @@ const frequency = 500; // Frequency of the sine wave in Hz
 // Generate sine wave buffer
 const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
 const sawtoothWaveBuffer = generateSawtoothWaveBuffer(durationInSeconds, sampleRate, frequency);
-const spectrum = fft_audio_buffer(sineWaveBuffer);
+
+
+var audiobuffer = sawtoothWaveBuffer;
+
+const spectrum = fft_audio_buffer(audiobuffer);
 const numBins = spectrum.length;
 const maxFrequency = 10000; // Maximum frequency (10 kHz)
 const minFrequency = 20; // Minimum frequency (20 Hz)
@@ -228,7 +232,7 @@ console.log("Peak frequency:", peakFrequency, "Hz");
 
 // Plot waveform
 const waveformCanvas = document.getElementById('waveformCanvas');
-plotWaveform(waveformCanvas, sawtoothWaveBuffer);
+plotWaveform(waveformCanvas, audiobuffer);
 // Plot spectrum
 const spectrumCanvas = document.getElementById('spectrumCanvas');
 plotSpectrum(spectrumCanvas, subsetSpectrum, sampleRate);
