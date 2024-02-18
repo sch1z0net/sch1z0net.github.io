@@ -1280,7 +1280,7 @@ $(document).ready(function(){
 
     const originalAudioBuffer = audioBuffer;
     const stretchFactor = 1/GLOBAL_PLAYBACK_RATE;
-    const grainSize = 0.2;
+    const grainSize = 0.01;
     const overlap = 0.5;
 
     const resampledBuffer = granularSynthesis(originalAudioBuffer, stretchFactor, grainSize, overlap);
