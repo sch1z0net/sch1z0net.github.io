@@ -875,7 +875,7 @@ var colors = [
 
     connectedCallback() {
       $(this).addClass("unselectable");
-      var bpm_div = $("<div id='bpm_div'>BPM<div>").append("<input id='bpm'>");
+      var bpm_div = $("<div id='bpm_div'>BPM</div>").prepend("<input id='bpm'>");
       $(this).append(bpm_div);
       var play_div = $("<div id='play_div'>");
       play_div.append("<i id='load' class='material-icons'>play_circle_filled</i>");

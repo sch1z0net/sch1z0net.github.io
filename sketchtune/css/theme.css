@@ -524,16 +524,23 @@ track-pattern-br {
 #play_div {
   background-color: rgba(120,120,120,1);
   border-radius: 5px;
-  left: auto;
-  right: auto;
-  height: 100%;
+  text-align: center;
+  height: 20px;
+  width: 100px;
+  margin-left: 2px;
+  border: 1px solid white;
 }
 
 #bpm_div {
   background-color: rgba(120,120,120,1);
   border-radius: 5px;
-  height: 100%;
-  font-size: 20px;
+  height: 20px;
+  font-size: 12px;
+  align-items: center;
+  display: flex;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: rgba(10,10,10,0.5);
 }
 
 #bpm {
