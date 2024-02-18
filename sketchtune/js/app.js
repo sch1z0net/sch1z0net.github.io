@@ -1,4 +1,4 @@
-
+$(document).ready(function(){
   /***************************************************************/
   // SOUND PROCESSING
 
@@ -39,7 +39,7 @@
         const spectrum = math.fft(inputSignal);
         console.log("FFT result:", spectrum);
 
-
+});
 
 
 
