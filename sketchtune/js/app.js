@@ -1,4 +1,3 @@
-$(document).ready(function(){
   /***************************************************************/
   // SOUND PROCESSING
 
@@ -23,24 +22,6 @@ $(document).ready(function(){
 
   // Generate sine wave buffer
   const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
-
-
-        // Example usage
-        const inputSignal = [
-            math.complex(1, 0),
-            math.complex(2, 0),
-            math.complex(3, 0),
-            math.complex(4, 0),
-            math.complex(5, 0),
-            math.complex(6, 0),
-            math.complex(7, 0),
-            math.complex(8, 0)
-        ];
-        const spectrum = math.fft(inputSignal);
-        console.log("FFT result:", spectrum);
-
-});
-
 
 
 
