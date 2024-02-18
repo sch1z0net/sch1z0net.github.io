@@ -51,6 +51,8 @@
     resizeTimeBar();
     resetClock();
     updateTimeMarker();
+    console.log("Update BPM to: ",BPM);
+    console.log("at Beat: ",time_marker_in_beats);
   }
 
   function updateBeatWidth() {
