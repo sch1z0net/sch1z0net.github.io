@@ -168,63 +168,55 @@ console.log("Peak frequency:", peakFrequency, "Hz");
             }
 
 
-            // Plot spectrum on canvas in a logarithmic scale
-            function plotSpectrum(canvas, spectrum, sampleRate) {
-                const ctx = canvas.getContext('2d');
+// Plot spectrum on canvas in a logarithmic scale
+function plotSpectrum(canvas, spectrum, sampleRate) {
+    const ctx = canvas.getContext('2d');
 
-                const width = canvas.width;
-                const height = canvas.height;
+    const width = canvas.width;
+    const height = canvas.height;
 
-                ctx.clearRect(0, 0, width, height);
-                ctx.beginPath();
+    ctx.clearRect(0, 0, width, height);
+    ctx.beginPath();
 
-                const maxFrequency = 10000; // Maximum frequency (10 kHz)
-                const minFrequency = 20; // Minimum frequency (20 Hz)
-                // Calculate the number of bins corresponding to frequencies up to 10 kHz
-                const numBins = Math.ceil((maxFrequency - minFrequency) / sampleRate * spectrum.length);
+    const maxFrequency = 10000; // Maximum frequency (10 kHz)
+    const minFrequency = 20; // Minimum frequency (20 Hz)
+    const numBins = spectrum.length;
 
-                // Plot the spectrum using a logarithmic scale
-                const logScaleFactor = Math.log10(numBins); // Scale factor for logarithmic scaling
-                for (let x = 0; x < width; x++) {
-                    const binIndex = Math.pow(10, x / width * logScaleFactor); // Calculate bin index using logarithmic scale
-                    const lowerBinIndex = Math.floor(binIndex);
-                    const upperBinIndex = Math.ceil(binIndex);
-                    const fraction = binIndex - lowerBinIndex;
+    // Plot the spectrum using a logarithmic scale
+    for (let x = 0; x < width; x++) {
+        const frequency = minFrequency * Math.pow(10, x / width * Math.log10(maxFrequency / minFrequency));
+        const binIndex = Math.round((frequency / maxFrequency) * numBins);
+        const magnitude = spectrum[binIndex]; // Get magnitude at bin index
 
-                    // Interpolate between neighboring frequency bins
-                    const magnitude = Math.sqrt(
-                        (1 - fraction) * (spectrum[lowerBinIndex].re * spectrum[lowerBinIndex].re + spectrum[lowerBinIndex].im * spectrum[lowerBinIndex].im) +
-                        fraction * (spectrum[upperBinIndex].re * spectrum[upperBinIndex].re + spectrum[upperBinIndex].im * spectrum[upperBinIndex].im)
-                    );
+        // Normalize magnitude for plotting
+        const normalizedMagnitude = magnitude / Math.sqrt(numBins);
 
-                    // Normalize magnitude for logarithmic scale
-                    const normalizedMagnitude = magnitude / Math.sqrt(numBins);
+        const y = height - normalizedMagnitude * height; // Invert Y-axis
+        ctx.lineTo(x, y);
+    }
 
-                    const y = height - normalizedMagnitude * height; // Invert Y-axis
-                    ctx.lineTo(x, y);
-                }
+    ctx.strokeStyle = 'red';
+    ctx.stroke();
 
-                ctx.strokeStyle = 'red';
-                ctx.stroke();
+    // Plot logarithmic number grid
+    ctx.fillStyle = 'black';
+    ctx.font = '10px Arial';
+    ctx.textAlign = 'center';
 
-                // Plot logarithmic number grid
-                ctx.fillStyle = 'black';
-                ctx.font = '10px Arial';
-                ctx.textAlign = 'center';
+    const fixedFrequencies = [20, 30, 40, 50, 100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000, 10000];
 
-                const fixedFrequencies = [20, 30, 40, 50, 100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000, 10000];
+    for (let i = 0; i < fixedFrequencies.length; i++) {
+        const frequency = fixedFrequencies[i];
+        const x = (Math.log10(frequency) - Math.log10(minFrequency)) / Math.log10(maxFrequency / minFrequency) * width;
+        ctx.fillText(frequency.toFixed(0), x, height - 5); // Display frequency
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.strokeStyle = 'gray';
+        ctx.stroke();
+    }
+}
 
-                for (let i = 0; i < fixedFrequencies.length; i++) {
-                    const frequency = fixedFrequencies[i];
-                    const x = (Math.log10(frequency) - Math.log10(minFrequency)) / Math.log10(maxFrequency / minFrequency) * width;
-                    ctx.fillText(frequency.toFixed(0), x, height - 5); // Display frequency
-                    ctx.beginPath();
-                    ctx.moveTo(x, 0);
-                    ctx.lineTo(x, height);
-                    ctx.strokeStyle = 'gray';
-                    ctx.stroke();
-                }
-            }
 
            
 
