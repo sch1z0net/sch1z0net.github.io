@@ -910,16 +910,14 @@ var colors = [
          var validFormat = /^\d+(\.\d+)?$/;
          // Check if the entered value matches the valid format
          if (validFormat.test(inputValue)) {
-            newbpm = parseFloat(inputValue);
+            var newbpm = parseFloat(inputValue);
             if(newbpm >= 60 && newbpm <= 240){
-               updateBPM(parseFloat(inputValue));
             }else if(newbpm < 60){ 
                newbpm = 60;
-               updateBPM(newbpm);
             }else{
                newbpm = 240;
-               updateBPM(newbpm);
             }
+            updateBPM(newbpm);
          } else { updateBPM(BPM); } // Invalid format 
       });
       bpm_input.on('keypress', function(event) {
