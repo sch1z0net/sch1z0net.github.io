@@ -139,6 +139,7 @@ console.log("FFT result:", spectrum);
                 ctx.strokeStyle = 'red';
                 ctx.stroke();
             }
+          });
 
 
 
