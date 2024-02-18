@@ -1213,12 +1213,53 @@ $(document).ready(function(){
   // Array to store references to all playing audio nodes
   let playingAudioNodes = [];
 
+
+  function timeStretchSample(audioBuffer){
+    const originalDuration = audioBuffer.duration;
+    const desiredDuration = 4; // Desired duration in seconds
+
+    // Calculate the resampling ratio
+    const resamplingRatio = desiredDuration / originalDuration;
+
+    // Create an AudioBuffer to hold the resampled data
+    const resampledBuffer = audioContext.createBuffer(
+      audioBuffer.numberOfChannels,
+      Math.ceil(audioBuffer.length * resamplingRatio),
+      audioBuffer.sampleRate
+    );
+
+    // Copy and stretch the audio data to the resampled buffer
+    for (let channel = 0; channel < audioBuffer.numberOfChannels; channel++) {
+      const channelData = audioBuffer.getChannelData(channel);
+      const resampledChannelData = resampledBuffer.getChannelData(channel);
+      for (let i = 0; i < resampledBuffer.length; i++) {
+        const position = i / resamplingRatio;
+        const leftIndex = Math.floor(position);
+        const rightIndex = Math.ceil(position);
+        const frac = position - leftIndex;
+        resampledChannelData[i] = (1 - frac) * channelData[leftIndex] + frac * channelData[rightIndex];
+      }
+    }
+
+    return resampledBuffer;
+  }
+
+
   function playSample(audioContext, audioBuffer, time, offset, duration) {
+    
+    var resampledBuffer = timeStretchSample(audioBuffer);
+
+    const sampleSource = new AudioBufferSourceNode(audioContext, {
+      buffer: resampledBuffer,
+      playbackRate: 1.0,
+    });
+    /*
     const sampleSource = new AudioBufferSourceNode(audioContext, {
       buffer: audioBuffer,
       playbackRate: GLOBAL_PLAYBACK_RATE,
-    });
-    console.log(duration, sampleSource.buffer.duration);
+    });*/
+
+    //console.log(duration, sampleSource.buffer.duration);
     sampleSource.connect(audioContext.destination);
     sampleSource.start(time, offset, duration);
 
