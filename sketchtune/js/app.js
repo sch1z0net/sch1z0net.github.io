@@ -46,6 +46,60 @@ $(document).ready(function(){
 
 
 
+function fft(input) {
+    const N = input.length;
+
+    if (N <= 1) {
+        return input;
+    }
+
+    const even = [];
+    const odd = [];
+    for (let i = 0; i < N; i++) {
+        if (i % 2 === 0) {
+            even.push(input[i]);
+        } else {
+            odd.push(input[i]);
+        }
+    }
+
+    const evenFFT = fft(even);
+    const oddFFT = fft(odd);
+
+    const output = [];
+    for (let k = 0; k < N / 2; k++) {
+        const theta = -2 * Math.PI * k / N;
+        const exp = { re: Math.cos(theta), im: Math.sin(theta) };
+        const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
+        output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
+        output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
+    }
+
+    return output;
+}
+
+// Example usage
+const inputSignal = [
+    { re: 1, im: 0 },
+    { re: 2, im: 0 },
+    { re: 3, im: 0 },
+    { re: 4, im: 0 },
+    { re: 5, im: 0 },
+    { re: 6, im: 0 },
+    { re: 7, im: 0 },
+    { re: 8, im: 0 }
+];
+const spectrum = fft(inputSignal);
+console.log("FFT result:", spectrum);
+
+
+
+
+
+
+
+
+
 
 
 
