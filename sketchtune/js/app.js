@@ -131,8 +131,6 @@ console.log("FFT result:", spectrum);
             // Plot waveform
             const waveformCanvas = document.getElementById('waveformCanvas');
             plotWaveform(waveformCanvas, sineWaveBuffer);
-            // Compute FFT
-            const spectrum = fft(sineWaveBuffer);
             // Plot spectrum
             const spectrumCanvas = document.getElementById('spectrumCanvas');
             plotSpectrum(spectrumCanvas, spectrum);
