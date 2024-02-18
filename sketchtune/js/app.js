@@ -58,6 +58,9 @@
       $("time-marker").css("margin-left",time_marker_in_sec*BEAT_WIDTH/spb);
   }
 
+  function setStartOffset(offset){
+     startOffsetInSec = offset;
+  }
 
 
 
@@ -303,6 +306,7 @@ var colors = [
 
         reinitPlayingTracks = true;
 
+        setStartOffset(startOffsetInSec + (performance.now() - startTimeInMS) / 1000);
         updateTimeMarker();
      }
 
@@ -1180,7 +1184,7 @@ $(document).ready(function(){
         is_playing = false;
         stopAllSamples();
 
-        startOffsetInSec = startOffsetInSec + (performance.now() - startTimeInMS) / 1000;
+        setStartOffset(startOffsetInSec + (performance.now() - startTimeInMS) / 1000);
         updateTimeMarker();
       });
 
@@ -1190,7 +1194,7 @@ $(document).ready(function(){
         is_playing = false;
         stopAllSamples();
 
-        startOffsetInSec = 0;
+        setStartOffset(0);
         updateTimeMarker();
       });
 
