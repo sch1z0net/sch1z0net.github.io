@@ -882,7 +882,7 @@ var colors = [
       play_div.append("<i id='load' class='material-icons'>play_circle_filled</i>");
       play_div.append("<i id='play' class='material-icons'>play_circle_filled</i>")
       play_div.append("<i id='pause' class='material-icons'>pause_circle_filled</i>");
-      play_div.append("<i id='stop' class='material-icons'>stop_circle/i>");
+      play_div.append("<i id='stop' class='material-icons'>stop_circle</i>");
       $(this).append(play_div);
     }
   }
