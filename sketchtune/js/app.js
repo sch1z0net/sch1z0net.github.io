@@ -2,99 +2,39 @@
   /***************************************************************/
   // SOUND PROCESSING
 
-// Fast Fourier Transform (FFT) function
-function FFT(input) {
-    const N = input.length;
-    if (N <= 1) return input;
 
-    // Divide the input into even and odd indices
-    const even = [];
-    const odd = [];
-    for (let i = 0; i < N; i++) {
-        if (i % 2 === 0) {
-            even.push(input[i]);
-        } else {
-            odd.push(input[i]);
-        }
+  function generateSineWaveBuffer(durationInSeconds, sampleRate, frequency) {
+    const numSamples = durationInSeconds * sampleRate;
+    const buffer = new Float32Array(numSamples);
+    const amplitude = 0.5; // Amplitude of the sine wave
+
+    for (let i = 0; i < numSamples; i++) {
+        const t = i / sampleRate; // Time in seconds
+        buffer[i] = amplitude * Math.sin(2 * Math.PI * frequency * t);
     }
 
-    // Perform FFT recursively on even and odd indices
-    const evenFFT = FFT(even);
-    const oddFFT = FFT(odd);
+    return buffer;
+  }
 
-    // Combine the results
-    const output = [];
-    for (let k = 0; k < N / 2; k++) {
-        const theta = -2 * Math.PI * k / N;
-        const exp = new Complex(Math.cos(theta), Math.sin(theta));
-        const t = exp.mul(oddFFT[k]);
-        output[k] = evenFFT[k].add(t);
-        output[k + N / 2] = evenFFT[k].sub(t);
-    }
+  // Example parameters
+  const durationInSeconds = 1; // Duration of the audio in seconds
+  const sampleRate = 44100; // Sample rate (samples per second)
+  const frequency = 440; // Frequency of the sine wave in Hz
 
-    return output;
-}
+  // Generate sine wave buffer
+  const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
 
-// Inverse Fast Fourier Transform (IFFT) function
-function IFFT(input) {
-    // Take the conjugate of the input
-    const conjugateInput = input.map(x => x.conjugate());
 
-    // Perform FFT on the conjugate input
-    const outputFFT = FFT(conjugateInput).map(x => x.conjugate());
 
-    // Scale the result by 1/N
-    return outputFFT.map(x => x.div(input.length));
-}
+  // Compute FFT on the sine wave buffer
+  const fft = new FFT(sineWaveBuffer.length, sampleRate);
+  fft.forward(sineWaveBuffer);
 
-// Complex number class to represent complex values
-class Complex {
-    constructor(re, im) {
-        this.re = re;
-        this.im = im;
-    }
+  // Get the frequency spectrum
+  const frequencySpectrum = fft.spectrum;
+  console.log(frequencySpectrum);
 
-    add(other) {
-        return new Complex(this.re + other.re, this.im + other.im);
-    }
 
-    sub(other) {
-        return new Complex(this.re - other.re, this.im - other.im);
-    }
-
-    mul(other) {
-        return new Complex(this.re * other.re - this.im * other.im, this.re * other.im + this.im * other.re);
-    }
-
-    div(other) {
-        const denominator = other.re * other.re + other.im * other.im;
-        return new Complex(
-            (this.re * other.re + this.im * other.im) / denominator,
-            (this.im * other.re - this.re * other.im) / denominator
-        );
-    }
-
-    conjugate() {
-        return new Complex(this.re, -this.im);
-    }
-}
-
-// Example usage
-const inputSignal = [
-    new Complex(1, 0),
-    new Complex(2, 0),
-    new Complex(3, 0),
-    new Complex(4, 0),
-    new Complex(5, 0),
-    new Complex(6, 0),
-    new Complex(7, 0),
-    new Complex(8, 0)
-];
-const spectrum = FFT(inputSignal);
-console.log("FFT result:", spectrum);
-
-const invertedSignal = IFFT(spectrum);
-console.log("IFFT result:", invertedSignal);
 
 
 
