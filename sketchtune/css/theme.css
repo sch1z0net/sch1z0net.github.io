@@ -520,6 +520,11 @@ track-pattern-br {
    color: white;
 }
 
+#bpm {
+	position: absolute;
+	right: 30px;
+	width: 30px;
+}
 
 
 

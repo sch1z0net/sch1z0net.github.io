@@ -878,6 +878,7 @@ var colors = [
       $(this).append("<i id='load' class='material-icons'>play_circle_filled</i>");
       $(this).append("<i id='play' class='material-icons'>play_circle_filled</i>");
       $(this).append("<i id='stop' class='material-icons'>stop</i>");
+      $(this).append("<input id='bpm'>");
     }
   }
 
@@ -1152,24 +1153,24 @@ $(document).ready(function(){
       context = new AudioContext();
       setupSamplesInQueue();
 
-        button_play.on("click", function(){ 
-          button_play.css("display","none");
-          button_stop.css("display","inline-block");
-          reinitPlayingTracks = true;
-          // Record the start time
-          startTimeInMS = performance.now();
-          requestAnimationFrame(renderloop);
-        });
+      button_play.on("click", function(){ 
+        button_play.css("display","none");
+        button_stop.css("display","inline-block");
+        reinitPlayingTracks = true;
+        // Record the start time
+        startTimeInMS = performance.now();
+        requestAnimationFrame(renderloop);
+      });
 
-        button_stop.on("click", function(){ 
-          button_stop.css("display","none");
-          button_play.css("display","inline-block");
-          is_playing = false;
-          stopAllSamples();
-          $("time-marker").css("margin-left",0);
-        });
+      button_stop.on("click", function(){ 
+        button_stop.css("display","none");
+        button_play.css("display","inline-block");
+        is_playing = false;
+        stopAllSamples();
+        $("time-marker").css("margin-left",0);
+      });
 
-        button_play.click();
+      button_play.click();
   });
 
   var samplesSetupProcess = false;
