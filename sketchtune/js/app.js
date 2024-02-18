@@ -136,9 +136,9 @@ console.log("FFT result:", spectrum);
                 const numBins = Math.min(spectrum.length, Math.ceil(10000 / sampleRate * spectrum.length));
 
                 // Plot the spectrum using a logarithmic scale
-                const logScaleFactor = Math.log10(numBins) / width; // Scale factor for logarithmic scaling
+                const logScaleFactor = Math.log10(numBins); // Scale factor for logarithmic scaling
                 for (let x = 0; x < width; x++) {
-                    const binIndex = Math.pow(10, x * logScaleFactor); // Calculate bin index using logarithmic scale
+                    const binIndex = Math.pow(10, x / width * logScaleFactor); // Calculate bin index using logarithmic scale
                     const lowerBinIndex = Math.floor(binIndex);
                     const upperBinIndex = Math.ceil(binIndex);
                     const fraction = binIndex - lowerBinIndex;
@@ -149,12 +149,14 @@ console.log("FFT result:", spectrum);
                         fraction * (spectrum[upperBinIndex].re * spectrum[upperBinIndex].re + spectrum[upperBinIndex].im * spectrum[upperBinIndex].im)
                     );
 
-                    // Normalize magnitude by the number of bins
-                    const normalizedMagnitude = magnitude / numBins;
+                    // Normalize magnitude for logarithmic scale
+                    const normalizedMagnitude = magnitude / Math.sqrt(numBins);
 
                     const y = height - normalizedMagnitude * height; // Invert Y-axis
                     ctx.lineTo(x, y);
                 }
+
+
 
                 ctx.strokeStyle = 'red';
                 ctx.stroke();
