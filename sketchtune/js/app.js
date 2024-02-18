@@ -890,7 +890,7 @@ var colors = [
       $(this).addClass("unselectable");
       var bpm_div = $("<div id='bpm_div'>BPM</div>").prepend("<input id='bpm'>");
       bpm_div.on('input', function() {
-         old_bpm = bpm;
+         var old_bpm = bpm;
          // Get the entered value
          var inputValue = $(this).val();
          // Define a regular expression for the valid format (integer or float)
