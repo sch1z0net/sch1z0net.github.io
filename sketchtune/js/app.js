@@ -59,7 +59,7 @@ function fft_audio_buffer(input) {
     input.forEach((value, index) => paddedInput[index] = value);
     const complexInput = convertToComplex(paddedInput);
 
-    fft(complexInput);
+    return fft(complexInput);
 }
 
 function convertToComplex(inputSignal) {
