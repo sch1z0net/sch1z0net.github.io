@@ -49,7 +49,6 @@
     WPB = BEAT_WIDTH;
     $("#bpm").val(BPM);
     resizeTimeBar();
-    setStartOffsetInBeats(startOffsetInBeats + elapsedBeats());
     resetClock();
     updateTimeMarker();
   }
@@ -105,6 +104,7 @@
   function setStartOffsetInSec(offset){
      startOffsetInSec = offset;
      startOffsetInBeats = startOffsetInSec*BPS;
+     console.log("Start from Beat ",startOffsetInBeats);
   }
 
   function setStartOffsetInBeats(offset){
