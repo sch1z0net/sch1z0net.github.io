@@ -1163,7 +1163,7 @@ $(document).ready(function(){
         button_pause.css("display","inline-block");
         reinitPlayingTracks = true;
         // Record the start time
-        startTimeInMS = performance.now();
+        startTimeInMS = performance.now() - time_marker_in_sec/1000;
         requestAnimationFrame(renderloop);
       });
 
