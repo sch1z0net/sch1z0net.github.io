@@ -26,6 +26,7 @@
 
   var startTimeInMS;
   var startOffsetInSec = 0;
+  var startOffsetInBeats = 0;
   var reinitPlayingTracks;
   var is_playing = false;
 
@@ -47,7 +48,8 @@
     WPS = BEAT_WIDTH * BPS;
     WPB = BEAT_WIDTH;
     $("#bpm").val(BPM);
-    resizeTimeBar(); 
+    resizeTimeBar();
+    updateTimeMarker();
   }
 
   function updateBeatWidth() {
@@ -70,17 +72,39 @@
      updateRootPadding();
   });
 
+  function elapsedSec(){
+    return (performance.now() - startTimeInMS) / 1000;
+  }
+
+  function elapsedBeats(){
+    return elapsedSec()*BPS;
+  }
+
+  function updateTimeMarker(){
+      time_marker_in_beats = startOffsetInBeats;
+      if(is_playing){ 
+        time_marker_in_beats += elapsedBeats();
+      }
+      time_marker_in_sec = time_marker_in_beats * SPB;
+      $("time-marker").css("margin-left",time_marker_in_beats*WPB);
+  }
+  /*
   function updateTimeMarker(){
       time_marker_in_sec   = startOffsetInSec;
       if(is_playing){ time_marker_in_sec += (performance.now() - startTimeInMS) / 1000; }
       time_marker_in_beats = time_marker_in_sec * BPS;
       $("time-marker").css("margin-left",time_marker_in_beats*WPB);
-  }
+  }*/
 
-  function setStartOffset(offset){
+  function setStartOffsetInSec(offset){
      startOffsetInSec = offset;
+     startOffsetInBeats = startOffsetInSec*BPS;
   }
 
+  function setStartOffsetInBeats(offset){
+     startOffsetInBeats = offset;
+     startOffsetInSec = startOffsetInBeats*SPB;
+  }
 
 
   /**** CONTEXT MENU ****/
@@ -1229,7 +1253,7 @@ $(document).ready(function(){
         is_playing = false;
         stopAllSamples();
 
-        setStartOffset(startOffsetInSec + (performance.now() - startTimeInMS) / 1000);
+        setStartOffsetInBeats(startOffsetInBeats + elapsedBeats());
         updateTimeMarker();
       });
 
@@ -1239,7 +1263,7 @@ $(document).ready(function(){
         is_playing = false;
         stopAllSamples();
 
-        setStartOffset(0);
+        setStartOffsetInBeats(0);
         updateTimeMarker();
       });
 
