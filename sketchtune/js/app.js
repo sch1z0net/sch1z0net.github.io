@@ -37,7 +37,8 @@
   function updateBPM(bpm){
     BPM = bpm;
     SPB = 60 / BPM;
-    $("#bpm").val(BPM); 
+    $("#bpm").val(BPM);
+    resizeTimeBar(); 
   }
 
   function updateBeatWidth() {
@@ -924,9 +925,9 @@ var colors = [
           // Check if Enter key is pressed (key code 13)
           if (event.which === 13) {  $(this).blur();  }
       });
+      $(this).append(bpm_div);
       updateBPM(BPM);
 
-      $(this).append(bpm_div);
       var play_div = $("<div id='play_div'>");
       play_div.append("<i id='load' class='material-icons'>play_circle_filled</i>");
       play_div.append("<i id='play' class='material-icons'>play_circle_filled</i>")
