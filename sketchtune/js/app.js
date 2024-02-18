@@ -28,6 +28,7 @@
   var startOffsetInSec = 0;
   var time_marker_in_sec;
   var reinitPlayingTracks;
+  var is_playing = false;
 
   var bpm = 128;
   var spb = 60 / bpm;
@@ -1157,7 +1158,6 @@ $(document).ready(function(){
   button_pause.css("display","none");
 
   let context;
-  var is_playing = false;
   var init = false;
   var samples;
 
