@@ -1327,16 +1327,26 @@ $(document).ready(function(){
                //Marker has passed the sample
             }else if(time_marker_in_sec <= sampleStartTimeInSec){
                //Marker hasn't reached sample yet
-               var waitUntilPlay = sampleStartTimeInSec - time_marker_in_sec;
+               var waitSecUntilPlay = sampleStartTimeInSec - time_marker_in_sec;
                var offset = 0;
-               console.log("►", soundid, "in", waitUntilPlay.toFixed(2), "seconds.", "for", (sampleDurationInSec-offset));
-               playSample(context, getSample(soundid), context.currentTime + waitUntilPlay, offset, sampleDurationInSec-offset);
+
+               var sample_play_offset   = offset * GLOBAL_PLAYBACK_RATE;
+               var sample_play_start    = context.currentTime + waitSecUntilPlay;
+               var sample_play_duration = sampleDurationInSec-offset;
+
+               console.log("►", soundid, "in", waitSecUntilPlay.toFixed(2), "seconds.", "for", sample_play_duration);
+               playSample(context, getSample(soundid), sample_play_start, sample_play_offset, sample_play_duration);
             }else{
                //Marker is on sample
-               var waitUntilPlay = 0;
-               var offset = (time_marker_in_sec - sampleStartTimeInSec) * GLOBAL_PLAYBACK_RATE;
-               console.log("►", soundid, "from", offset.toFixed(2), "seconds.", "for", (sampleDurationInSec-offset));
-               playSample(context, getSample(soundid), context.currentTime + waitUntilPlay, offset, sampleDurationInSec-offset);
+               var waitSecUntilPlay = 0;
+               var offset = time_marker_in_sec - sampleStartTimeInSec;
+
+               var sample_play_offset   = offset * GLOBAL_PLAYBACK_RATE;
+               var sample_play_start    = context.currentTime + waitSecUntilPlay;
+               var sample_play_duration = sampleDurationInSec-offset;
+
+               console.log("►", soundid, "from", sample_play_offset.toFixed(2), "seconds.", "for", sample_play_duration);
+               playSample(context, getSample(soundid), sample_play_start, sample_play_offset, sample_play_duration);
             }
              
           }
