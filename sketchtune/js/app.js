@@ -1243,9 +1243,7 @@ $(document).ready(function(){
   }
 
   function renderloop(){
-       if(is_playing){
-         updateTimeMarker();
-       } 
+       updateTimeMarker();
 
        if(reinitPlayingTracks == true){
           is_playing = true;
