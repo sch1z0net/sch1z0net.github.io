@@ -879,7 +879,8 @@ var colors = [
       $(this).append(bpm_div);
       var play_div = $("<div id='play_div'>");
       play_div.append("<i id='load' class='material-icons'>play_circle_filled</i>");
-      play_div.append("<i id='play' class='material-icons'>play_circle_filled</i>");
+      play_div.append("<i id='play' class='material-icons'>play_circle_filled</i>")
+      play_div.append("<i id='pause' class='material-icons'>pause_circle_filled</i>");
       play_div.append("<i id='stop' class='material-icons'>stop</i>");
       $(this).append(play_div);
     }
@@ -1136,10 +1137,12 @@ $(document).ready(function(){
     playingAudioNodes = [];
   }
 
-  const button_load = $("#load");
-  const button_play = $("#play");
-  const button_stop = $("#stop");
+  const button_load  = $("#load");
+  const button_play  = $("#play");
+  const button_pause = $("#pause");
+  const button_stop  = $("#stop");
   button_play.css("display","none");
+  button_pause.css("display","none");
   button_stop.css("display","none");
 
   let context;
@@ -1152,21 +1155,21 @@ $(document).ready(function(){
         context.close();
       }
       button_load.css("display","none");
-      button_stop.css("display","inline-block");
+      button_pause.css("display","inline-block");
       context = new AudioContext();
       setupSamplesInQueue();
 
       button_play.on("click", function(){ 
         button_play.css("display","none");
-        button_stop.css("display","inline-block");
+        button_pause.css("display","inline-block");
         reinitPlayingTracks = true;
         // Record the start time
         startTimeInMS = performance.now();
         requestAnimationFrame(renderloop);
       });
 
-      button_stop.on("click", function(){ 
-        button_stop.css("display","none");
+      button_pause.on("click", function(){ 
+        button_pause.css("display","none");
         button_play.css("display","inline-block");
         is_playing = false;
         stopAllSamples();
