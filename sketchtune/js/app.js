@@ -1243,7 +1243,7 @@ $(document).ready(function(){
   }
 
   function renderloop(){
-       if(isPlaying){
+       if(is_playing){
           updateTimeMarker();
        }
 
