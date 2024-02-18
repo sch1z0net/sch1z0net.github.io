@@ -902,12 +902,19 @@ var colors = [
          var validFormat = /^\d+(\.\d+)?$/;
          // Check if the entered value matches the valid format
          if (validFormat.test(inputValue)) {
-            // Convert the value to a number (float)
-            updateBPM(parseFloat(inputValue));
-         } else {
-           // Invalid format
-           $(this).val(BPM);
-         }
+            newbpm = parseFloat(inputValue);
+            if(newbpm >= 60 && <= 240){
+               updateBPM(parseFloat(inputValue));
+            }else if(newbpm < 60){ 
+               newbpm = 60;
+               $(this).val(newbpm); 
+               updateBPM(newbpm);
+            }else{
+               newbpm = 240;
+               $(this).val(newbpm); 
+               updateBPM(newbpm);
+            }
+         } else { $(this).val(BPM); } // Invalid format 
       });
       bpm_input.on('keypress', function(event) {
           // Check if Enter key is pressed (key code 13)
