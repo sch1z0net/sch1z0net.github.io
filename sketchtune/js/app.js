@@ -139,7 +139,16 @@ console.log("FFT result:", spectrum);
                 ctx.strokeStyle = 'red';
                 ctx.stroke();
             }
-          });
+
+            const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
+
+            // Plot waveform
+            const waveformCanvas = document.getElementById('waveformCanvas');
+            plotWaveform(waveformCanvas, sineWaveBuffer);
+            // Plot spectrum
+            const spectrumCanvas = document.getElementById('spectrumCanvas');
+            plotSpectrum(spectrumCanvas, spectrum);
+        });
 
 
 
