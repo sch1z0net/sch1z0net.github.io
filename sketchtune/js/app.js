@@ -911,7 +911,7 @@ var colors = [
          // Check if the entered value matches the valid format
          if (validFormat.test(inputValue)) {
             newbpm = parseFloat(inputValue);
-            if(newbpm >= 60 && <= 240){
+            if(newbpm >= 60 && newbpm <= 240){
                updateBPM(parseFloat(inputValue));
             }else if(newbpm < 60){ 
                newbpm = 60;
