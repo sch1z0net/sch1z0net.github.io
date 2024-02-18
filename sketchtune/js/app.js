@@ -33,12 +33,14 @@
   var time_marker_in_sec = 0;
   var time_marker_in_beats = 0;
 
-  var BPM = 128;           //60      120      240
+  var BPM = 120;           //60      120      240
   var MPB = 1 / BPM;       //1/60    1/120    1/240
   var SPB = 60 * MPB;      //1       0.5      0.25
   var BPS = 1 / SPB;       //1       2        4
   var WPS = BEAT_WIDTH * BPS;
   var WPB = BEAT_WIDTH;
+
+  let GLOBAL_PLAYBACK_RATE = 1;
 
   function reScheduleSamples(){
     initScheduling = true;
@@ -51,6 +53,9 @@
     BPS = 1 / SPB;
     WPS = BEAT_WIDTH * BPS;
     WPB = BEAT_WIDTH;
+
+    GLOBAL_PLAYBACK_RATE = BPM / 120;
+
     $("#bpm").val(BPM);
     resizeTimeBar();
     console.log("----------SETTINGS----------");
@@ -1204,11 +1209,10 @@ $(document).ready(function(){
   // Array to store references to all playing audio nodes
   let playingAudioNodes = [];
 
-  let playbackRate = 1;
   function playSample(audioContext, audioBuffer, time, offset, duration) {
     const sampleSource = new AudioBufferSourceNode(audioContext, {
       buffer: audioBuffer,
-      playbackRate,
+      GLOBAL_PLAYBACK_RATE,
     });
     sampleSource.connect(audioContext.destination);
     sampleSource.start(time, offset, duration);
