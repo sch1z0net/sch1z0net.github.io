@@ -32,11 +32,12 @@
 
   var BPM = 128;
   var SPB = 60 / BPM;
-
+  var BPS = 1 / SPB;
 
   function updateBPM(bpm){
     BPM = bpm;
     SPB = 60 / BPM;
+    BPS = 1 / SPB;
     $("#bpm").val(BPM);
     resizeTimeBar(); 
   }
@@ -50,7 +51,7 @@
   }
 
   function resizeTimeBar(){
-      var sec_length = (BPM / 60) * BEAT_WIDTH;
+      var sec_length = BEAT_WIDTH * BPS;
       var dsec_length = sec_length/10;
       $("time-bar-sec").css("width",sec_length);
       $("time-bar-dsec").css("width",dsec_length);
@@ -912,12 +913,8 @@ var colors = [
          // Check if the entered value matches the valid format
          if (validFormat.test(inputValue)) {
             var newbpm = parseFloat(inputValue);
-            if(newbpm >= 60 && newbpm <= 240){
-            }else if(newbpm < 60){ 
-               newbpm = 60;
-            }else{
-               newbpm = 240;
-            }
+            if(newbpm < 60){ newbpm = 60; }
+            if(newbpm > 240){ newbpm = 240; }
             updateBPM(newbpm);
          } else { updateBPM(BPM); } // Invalid format 
       });
