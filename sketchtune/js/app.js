@@ -352,7 +352,7 @@ var colors = [
         var sec_from_start  = SPB*beats_from_start ;
 
         resetClock();
-        setStartOffset(sec_from_start);
+        setStartOffsetInSec(sec_from_start);
         updateTimeMarker();
 
         reinitPlayingTracks = true;
