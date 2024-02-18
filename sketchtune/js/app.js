@@ -1212,7 +1212,7 @@ $(document).ready(function(){
   function playSample(audioContext, audioBuffer, time, offset, duration) {
     const sampleSource = new AudioBufferSourceNode(audioContext, {
       buffer: audioBuffer,
-      GLOBAL_PLAYBACK_RATE,
+      playbackRate: GLOBAL_PLAYBACK_RATE,
     });
     sampleSource.connect(audioContext.destination);
     sampleSource.start(time, offset, duration);
