@@ -53,6 +53,11 @@
      updateRootPadding();
   });
 
+  function updateTimeMarker(){
+      time_marker_in_sec = startOffsetInSec + (performance.now() - startTimeInMS) / 1000;
+      $("time-marker").css("margin-left",time_marker_in_sec*BEAT_WIDTH/spb);
+  }
+
 
 
 
@@ -298,6 +303,7 @@ var colors = [
 
         reinitPlayingTracks = true;
 
+        updateTimeMarker();
      }
 
      activePattern = null;
@@ -1170,6 +1176,7 @@ $(document).ready(function(){
 
       button_pause.on("click", function(){ 
         startOffsetInSec = startOffsetInSec + (performance.now() - startTimeInMS) / 1000;
+        updateTimeMarker();
         button_pause.css("display","none");
         button_play.css("display","inline-block");
         is_playing = false;
@@ -1178,6 +1185,7 @@ $(document).ready(function(){
 
       button_stop.on("click", function(){ 
         startOffsetInSec = 0;
+        updateTimeMarker();
         button_pause.css("display","none");
         button_play.css("display","inline-block");
         is_playing = false;
@@ -1235,11 +1243,6 @@ $(document).ready(function(){
           }
         }
     });
-  }
-
-  function updateTimeMarker(){
-      time_marker_in_sec = startOffsetInSec + (performance.now() - startTimeInMS) / 1000;
-      $("time-marker").css("margin-left",time_marker_in_sec*BEAT_WIDTH/spb);
   }
 
   function renderloop(){
