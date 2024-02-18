@@ -84,6 +84,33 @@ console.log("FFT result:", spectrum);
 
 
 
+$(document).ready(function() {
+            // Plot waveform on canvas
+            const canvas = document.getElementById('waveformCanvas');
+            const ctx = canvas.getContext('2d');
+
+            const width = canvas.width;
+            const height = canvas.height;
+
+            ctx.clearRect(0, 0, width, height);
+            ctx.beginPath();
+            ctx.moveTo(0, height / 2);
+
+            for (let i = 0; i < sineWaveBuffer.length; i++) {
+                const x = (i / sineWaveBuffer.length) * width;
+                const y = (1 - sineWaveBuffer[i]) * height / 2;
+                ctx.lineTo(x, y);
+            }
+
+            ctx.strokeStyle = 'blue';
+            ctx.stroke();
+});
+
+
+
+
+
+
 
 
 
