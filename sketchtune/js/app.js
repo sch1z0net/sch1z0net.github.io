@@ -1333,7 +1333,7 @@ $(document).ready(function(){
 
                var sample_play_offset   = offset * GLOBAL_PLAYBACK_RATE;
                var sample_play_start    = context.currentTime + waitSecUntilPlay;
-               var sample_play_duration = (sampleDurationInSec * GLOBAL_PLAYBACK_RATE)-offset;
+               var sample_play_duration = (sampleDurationInSec - offset) * GLOBAL_PLAYBACK_RATE;
 
                playSample(context, getSample(soundid), sample_play_start, sample_play_offset, sample_play_duration);
                console.log(
@@ -1349,7 +1349,7 @@ $(document).ready(function(){
 
                var sample_play_offset   = offset * GLOBAL_PLAYBACK_RATE;
                var sample_play_start    = context.currentTime + waitSecUntilPlay;
-               var sample_play_duration = (sampleDurationInSec * GLOBAL_PLAYBACK_RATE)-offset;
+               var sample_play_duration = (sampleDurationInSec - offset) * GLOBAL_PLAYBACK_RATE;
 
                playSample(context, getSample(soundid), sample_play_start, sample_play_offset, sample_play_duration);
                console.log(
