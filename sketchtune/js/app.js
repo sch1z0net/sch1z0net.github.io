@@ -1334,7 +1334,7 @@ $(document).ready(function(){
             }else{
                //Marker is on sample
                var waitUntilPlay = 0;
-               var offset = time_marker_in_sec - sampleStartTimeInSec;
+               var offset = (time_marker_in_sec - sampleStartTimeInSec) * GLOBAL_PLAYBACK_RATE;
                console.log("►", soundid, "from", offset.toFixed(2), "seconds.", "for", (sampleDurationInSec-offset));
                playSample(context, getSample(soundid), context.currentTime + waitUntilPlay, offset, sampleDurationInSec-offset);
             }
