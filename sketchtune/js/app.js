@@ -1321,7 +1321,7 @@ $(document).ready(function(){
             var sampleDurationInSec = duration*SPB;
             var sampleEndTimeInSec = sampleStartTimeInSec + sampleDurationInSec;
 
-            console.log(start, duration, SPB);
+            console.log(start, duration, SPB, time_marker_in_sec, sampleStartTimeInSec);
 
             if(time_marker_in_sec >= sampleEndTimeInSec){
                //Marker has passed the sample
