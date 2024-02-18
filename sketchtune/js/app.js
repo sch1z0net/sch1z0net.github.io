@@ -1311,8 +1311,8 @@ $(document).ready(function(){
     $("track-pattern").each(function(){
         var soundid = $(this).attr("data-soundid");
         if(soundid != null){
-          var start = $(this).attr("data-pos");
-          var duration = $(this).attr("data-length");
+          var start = parseFloat($(this).attr("data-pos"));
+          var duration = parseFloat($(this).attr("data-length"));
           var sample = getSample(soundid);
           if(sample==null){ 
             console.log("⟲ Load",soundid); 
