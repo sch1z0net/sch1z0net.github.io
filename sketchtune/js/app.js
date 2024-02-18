@@ -476,6 +476,8 @@ var colors = [
          if(BEAT_WIDTH >= 30){ BEAT_WIDTH = 30; }
          if(BEAT_WIDTH > 15){ $(".extended_beat_marker").css("display","block"); }
          $("#root")[0].style.setProperty("--beat-width", BEAT_WIDTH+"px");
+         WPS = BEAT_WIDTH * BPS;
+         WPB = BEAT_WIDTH;
          resizePatterns();
          resizeTimeBar();
       });
@@ -487,6 +489,8 @@ var colors = [
          if(BEAT_WIDTH <= 5){ BEAT_WIDTH = 5; }
          if(BEAT_WIDTH <= 15){ $(".extended_beat_marker").css("display","none"); }
          $("#root")[0].style.setProperty("--beat-width", BEAT_WIDTH+"px");
+         WPS = BEAT_WIDTH * BPS;
+         WPB = BEAT_WIDTH;
          resizePatterns();
          resizeTimeBar();
       });
