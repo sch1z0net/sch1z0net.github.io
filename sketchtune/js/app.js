@@ -1214,12 +1214,8 @@ $(document).ready(function(){
   let playingAudioNodes = [];
 
 
-  function timeStretchSample(audioContext, audioBuffer){
+  function timeStretchSample(audioContext, audioBuffer, resamplingRatio){
     const originalDuration = audioBuffer.duration;
-    const desiredDuration = 4; // Desired duration in seconds
-
-    // Calculate the resampling ratio
-    const resamplingRatio = desiredDuration / originalDuration;
 
     // Create an AudioBuffer to hold the resampled data
     const resampledBuffer = audioContext.createBuffer(
@@ -1247,7 +1243,10 @@ $(document).ready(function(){
 
   function playSample(audioContext, audioBuffer, time, offset, duration) {
     
-    var resampledBuffer = timeStretchSample(audioContext, audioBuffer);
+    // Calculate the resampling ratio
+    //const resamplingRatio = desiredDuration / originalDuration;
+
+    var resampledBuffer = timeStretchSample(audioContext, audioBuffer, 1/GLOBAL_PLAYBACK_RATE);
 
     const sampleSource = new AudioBufferSourceNode(audioContext, {
       buffer: resampledBuffer,
