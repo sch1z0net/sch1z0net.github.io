@@ -122,7 +122,7 @@ console.log("FFT result:", spectrum);
                 ctx.stroke();
             }
 
-            // Plot spectrum on canvas in a logarithmic scale
+            // Plot spectrum on canvas in a logarithmic scale with logarithmic number grid
             function plotSpectrum(canvas, spectrum, sampleRate) {
                 const ctx = canvas.getContext('2d');
 
@@ -136,9 +136,9 @@ console.log("FFT result:", spectrum);
                 const numBins = Math.min(spectrum.length, Math.ceil(10000 / sampleRate * spectrum.length));
 
                 // Plot the spectrum using a logarithmic scale
-                const logScaleFactor = Math.log10(numBins); // Scale factor for logarithmic scaling
+                const logScaleFactor = Math.log10(numBins) / width; // Scale factor for logarithmic scaling
                 for (let x = 0; x < width; x++) {
-                    const binIndex = Math.pow(10, x / width * logScaleFactor); // Calculate bin index using logarithmic scale
+                    const binIndex = Math.pow(10, x * logScaleFactor); // Calculate bin index using logarithmic scale
                     const lowerBinIndex = Math.floor(binIndex);
                     const upperBinIndex = Math.ceil(binIndex);
                     const fraction = binIndex - lowerBinIndex;
@@ -149,18 +149,34 @@ console.log("FFT result:", spectrum);
                         fraction * (spectrum[upperBinIndex].re * spectrum[upperBinIndex].re + spectrum[upperBinIndex].im * spectrum[upperBinIndex].im)
                     );
 
-                    // Normalize magnitude for logarithmic scale
-                    const normalizedMagnitude = magnitude / Math.sqrt(numBins);
+                    // Normalize magnitude by the number of bins
+                    const normalizedMagnitude = magnitude / numBins;
 
                     const y = height - normalizedMagnitude * height; // Invert Y-axis
                     ctx.lineTo(x, y);
                 }
 
-
-
                 ctx.strokeStyle = 'red';
                 ctx.stroke();
+
+                // Plot logarithmic number grid
+                ctx.fillStyle = 'black';
+                ctx.font = '8px Arial';
+                ctx.textAlign = 'center';
+
+                const numDecades = Math.floor(Math.log10(10000) - Math.log10(20)); // Number of decades between 20 Hz and 10 kHz
+                for (let i = 0; i <= numDecades; i++) {
+                    const freq = 20 * Math.pow(10, i); // Frequency in Hz
+                    const x = (Math.log10(freq) - Math.log10(20)) / Math.log10(10000 / 20) * width;
+                    ctx.fillText(freq.toFixed(0), x, height - 5); // Display frequency
+                    ctx.beginPath();
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, height);
+                    ctx.strokeStyle = 'gray';
+                    ctx.stroke();
+                }
             }
+
 
             // Plot waveform
             const waveformCanvas = document.getElementById('waveformCanvas');
