@@ -54,7 +54,7 @@
     $("#bpm").val(BPM);
     resizeTimeBar();
     console.log("----------SETTINGS----------");
-    console.log("⚙︎BPM",BPM,"at",(Math.floor(time_marker_in_beats/4)+1)+"."+(Math.floor(time_marker_in_beats%4)+1));
+    console.log("⚙︎ BPM",BPM,"at",(Math.floor(time_marker_in_beats/4)+1)+"."+(Math.floor(time_marker_in_beats%4)+1));
     resetClock();
     setStartOffsetInBeats(time_marker_in_beats); 
     updateTimeMarker();
@@ -1188,7 +1188,7 @@ $(document).ready(function(){
         const sample = await getFile(audioCtx, sound.url);
         samplesMap[sound.id] = sample; // Store the sample in the map with soundid as the key
         ready_sounds.push(sound);
-        console.log("✔︎",soundid); 
+        console.log("✔︎ Ready",sound.id); 
         var lc = $('sound-element[data-soundid="' + sound.id + '"]').find('loading-circle');
         if (lc.length > 0) { lc.remove(); }
     }
@@ -1306,7 +1306,7 @@ $(document).ready(function(){
           var duration = $(this).attr("data-length");
           var sample = getSample(soundid);
           if(sample==null){ 
-            console.log("⟲",soundid); 
+            console.log("⟲ Load",soundid); 
           } else {
             var sampleStartTimeInSec = start*SPB;
             var sampleDurationInSec = duration*SPB;
