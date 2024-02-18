@@ -71,7 +71,7 @@ const durationInSeconds = 0.0091*100; // Duration of the audio in seconds
 const sampleRate = 44100; // Sample rate (samples per second)
 //const frequency = 440; // Frequency of the sine wave in Hz
 const frequency = 5000; // Frequency of the sine wave in Hz
-//max is 10k
+//max is 20k
 
 // Generate sine wave buffer
 const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
@@ -108,8 +108,8 @@ console.log("FFT result:", spectrum);
                 ctx.stroke();
             }
 
-            // Plot spectrum on canvas
-            function plotSpectrum(canvas, spectrum) {
+            // Plot spectrum on canvas in a logarithmic scale
+            function plotSpectrum(canvas, spectrum, sampleRate) {
                 const ctx = canvas.getContext('2d');
 
                 const width = canvas.width;
@@ -118,23 +118,27 @@ console.log("FFT result:", spectrum);
                 ctx.clearRect(0, 0, width, height);
                 ctx.beginPath();
 
-                // Find the maximum magnitude in the spectrum
-                let maxMagnitude = 0;
-                for (let i = 0; i < spectrum.length; i++) {
-                    const magnitude = Math.sqrt(spectrum[i].re * spectrum[i].re + spectrum[i].im * spectrum[i].im);
-                    if (magnitude > maxMagnitude) {
-                        maxMagnitude = magnitude;
-                    }
-                }
+                // Calculate the number of bins corresponding to frequencies up to 10 kHz
+                const numBins = Math.min(spectrum.length, Math.ceil(10000 / sampleRate * spectrum.length));
 
-                // Plot normalized spectrum
-                const binWidth = width / spectrum.length;
-                for (let i = 0; i < spectrum.length; i++) {
-                    const magnitude = Math.sqrt(spectrum[i].re * spectrum[i].re + spectrum[i].im * spectrum[i].im);
-                    const normalizedMagnitude = magnitude / maxMagnitude;
-                    const x = i * binWidth;
+                // Plot the spectrum using a logarithmic scale
+                const logScaleFactor = Math.log10(numBins) / width; // Scale factor for logarithmic scaling
+                for (let x = 0; x < width; x++) {
+                    const binIndex = Math.pow(10, x * logScaleFactor); // Calculate bin index using logarithmic scale
+                    const lowerBinIndex = Math.floor(binIndex);
+                    const upperBinIndex = Math.ceil(binIndex);
+                    const fraction = binIndex - lowerBinIndex;
+
+                    // Interpolate between neighboring frequency bins
+                    const magnitude = Math.sqrt(
+                        (1 - fraction) * (spectrum[lowerBinIndex].re * spectrum[lowerBinIndex].re + spectrum[lowerBinIndex].im * spectrum[lowerBinIndex].im) +
+                        fraction * (spectrum[upperBinIndex].re * spectrum[upperBinIndex].re + spectrum[upperBinIndex].im * spectrum[upperBinIndex].im)
+                    );
+
+                    // Normalize magnitude by the number of bins
+                    const normalizedMagnitude = magnitude / numBins;
+
                     const y = height - normalizedMagnitude * height; // Invert Y-axis
-                    ctx.moveTo(x, height);
                     ctx.lineTo(x, y);
                 }
 
