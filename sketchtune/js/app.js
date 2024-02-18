@@ -889,6 +889,24 @@ var colors = [
     connectedCallback() {
       $(this).addClass("unselectable");
       var bpm_div = $("<div id='bpm_div'>BPM</div>").prepend("<input id='bpm'>");
+      bpm_div.on('input', function() {
+         old_bpm = bpm;
+         // Get the entered value
+         var inputValue = $(this).val();
+         // Define a regular expression for the valid format (integer or float)
+         var validFormat = /^\d+(\.\d+)?$/;
+         // Check if the entered value matches the valid format
+         if (validFormat.test(inputValue)) {
+            // Convert the value to a number (float)
+            bpm = parseFloat(inputValue);
+         } else {
+           // Invalid format
+           bpm = old_bpm;
+           $(this).val(bpm);
+         }
+      });
+
+
       $(this).append(bpm_div);
       var play_div = $("<div id='play_div'>");
       play_div.append("<i id='load' class='material-icons'>play_circle_filled</i>");
