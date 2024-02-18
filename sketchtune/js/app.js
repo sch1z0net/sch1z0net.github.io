@@ -1213,10 +1213,8 @@ $(document).ready(function(){
   // Array to store references to all playing audio nodes
   let playingAudioNodes = [];
 
-
+/*
   function timeStretchSample(audioContext, audioBuffer, resamplingRatio){
-    const originalDuration = audioBuffer.duration;
-
     // Create an AudioBuffer to hold the resampled data
     const resampledBuffer = audioContext.createBuffer(
       audioBuffer.numberOfChannels,
@@ -1238,15 +1236,54 @@ $(document).ready(function(){
     }
 
     return resampledBuffer;
+  }*/
+
+
+
+  function granularSynthesis(audioBuffer, stretchFactor, grainSize, overlap) {
+    const audioContext = new AudioContext();
+    const bufferLength = audioBuffer.length;
+    const resampledBuffer = audioContext.createBuffer(audioBuffer.numberOfChannels, bufferLength * stretchFactor, audioBuffer.sampleRate);
+
+    const grainSamples = Math.floor(grainSize * audioContext.sampleRate);
+    const hopSize = Math.floor(grainSamples * (1 - overlap));
+
+    for (let channel = 0; channel < audioBuffer.numberOfChannels; channel++) {
+      const inputChannelData = audioBuffer.getChannelData(channel);
+      const outputChannelData = resampledBuffer.getChannelData(channel);
+
+      for (let i = 0; i < bufferLength * stretchFactor; i++) {
+        let index = Math.floor(i / stretchFactor);
+        let sum = 0;
+        let count = 0;
+        for (let j = 0; j < grainSamples; j++) {
+          if (index + j < bufferLength) {
+            sum += inputChannelData[index + j];
+            count++;
+          }
+        }
+        outputChannelData[i] = count > 0 ? sum / count : 0;
+      }
+    }
+
+    return resampledBuffer;
   }
 
 
   function playSample(audioContext, audioBuffer, time, offset, duration) {
     
     // Calculate the resampling ratio
+    //const originalDuration = audioBuffer.duration;
     //const resamplingRatio = desiredDuration / originalDuration;
+    //var resampledBuffer = timeStretchSample(audioContext, audioBuffer, 1/GLOBAL_PLAYBACK_RATE);
+    
 
-    var resampledBuffer = timeStretchSample(audioContext, audioBuffer, 1/GLOBAL_PLAYBACK_RATE);
+    const originalAudioBuffer = audioBuffer;
+    const stretchFactor = 2.0;
+    const grainSize = 0.02;
+    const overlap = 0.5;
+
+    const resampledBuffer = granularSynthesis(originalAudioBuffer, stretchFactor, grainSize, overlap);
 
     const sampleSource = new AudioBufferSourceNode(audioContext, {
       buffer: resampledBuffer,
