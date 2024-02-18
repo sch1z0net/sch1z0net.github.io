@@ -2,7 +2,6 @@
   // SOUND PROCESSING
 
 
-
 function generateSineWaveBuffer(durationInSeconds, sampleRate, frequency) {
     const numSamples = durationInSeconds * sampleRate;
     const buffer = new Float32Array(numSamples);
@@ -200,7 +199,7 @@ function plotSpectrum(canvas, spectrum, sampleRate) {
 
 
 
-
+$(document).ready(function(){
 
 // Example parameters
 const durationInSeconds = 1; // Duration of the audio in seconds
@@ -237,6 +236,8 @@ plotWaveform(waveformCanvas, audiobuffer);
 const spectrumCanvas = document.getElementById('spectrumCanvas');
 plotSpectrum(spectrumCanvas, subsetSpectrum, sampleRate);
 
+  
+});
 
 
 
