@@ -30,10 +30,15 @@
   var reinitPlayingTracks;
   var is_playing = false;
 
-  var bpm = 128;
-  var spb = 60 / bpm;
+  var BPM = 128;
+  var SPB = 60 / BPM;
 
-  // Function to update BEAT_WIDTH
+
+  function updateBPM(bpm){
+    BPM = bpm;
+    SPB = 60 / BPM;
+  }
+
   function updateBeatWidth() {
     BEAT_WIDTH = parseInt($("#root").css("--beat-width"));
   }
@@ -43,7 +48,7 @@
   }
 
   function resizeTimeBar(){
-      var sec_length = (bpm / 60) * BEAT_WIDTH;
+      var sec_length = (BPM / 60) * BEAT_WIDTH;
       var dsec_length = sec_length/10;
       $("time-bar-sec").css("width",sec_length);
       $("time-bar-dsec").css("width",dsec_length);
@@ -57,7 +62,7 @@
   function updateTimeMarker(){
       time_marker_in_sec = startOffsetInSec;
       if(is_playing){ time_marker_in_sec += (performance.now() - startTimeInMS) / 1000; }
-      $("time-marker").css("margin-left",time_marker_in_sec*BEAT_WIDTH/spb);
+      $("time-marker").css("margin-left",time_marker_in_sec*BEAT_WIDTH/SPB);
   }
 
   function setStartOffset(offset){
@@ -302,7 +307,7 @@ var colors = [
      if(isMouseDownOnTrackRow && !isSelectingPatterns){
         const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
         var beats_from_start = x / BEAT_WIDTH;
-        var sec_from_start  = spb*beats_from_start ;
+        var sec_from_start  = SPB*beats_from_start ;
 
         startTimeInMS = performance.now();
 
@@ -619,7 +624,7 @@ var colors = [
                 newpat.attr('data-pos',beatpos);
                 var soundid = draggedSoundElement.soundid;
                 var fulldur = draggedSoundElement.fulldur;
-                var beats = fulldur/spb;
+                var beats = fulldur/SPB;
                 newpat.attr('data-length',beats);
                 newpat.attr('data-soundid',soundid);
                 newpat.css("margin-left",newmargin+"px");
@@ -891,7 +896,6 @@ var colors = [
       var bpm_input = $("<input id='bpm'>");
       var bpm_div = $("<div id='bpm_div'>BPM</div>").prepend(bpm_input);
       bpm_input.on('change', function() {
-         var old_bpm = bpm;
          // Get the entered value
          var inputValue = $(this).val();
          // Define a regular expression for the valid format (integer or float)
@@ -899,18 +903,17 @@ var colors = [
          // Check if the entered value matches the valid format
          if (validFormat.test(inputValue)) {
             // Convert the value to a number (float)
-            bpm = parseFloat(inputValue);
+            updateBPM(parseFloat(inputValue));
          } else {
            // Invalid format
-           bpm = old_bpm;
-           $(this).val(bpm);
+           $(this).val(BPM);
          }
       });
       bpm_input.on('keypress', function(event) {
           // Check if Enter key is pressed (key code 13)
           if (event.which === 13) {  $(this).blur();  }
       });
-      
+
       $(this).append(bpm_div);
       var play_div = $("<div id='play_div'>");
       play_div.append("<i id='load' class='material-icons'>play_circle_filled</i>");
@@ -1249,8 +1252,8 @@ $(document).ready(function(){
           if(sample==null){ 
             console.log("Sample with ID "+soundid+" is still loading."); 
           } else {
-            var sampleStartTimeInSec = start*spb;
-            var sampleDurationInSec = duration*spb;
+            var sampleStartTimeInSec = start*SPB;
+            var sampleDurationInSec = duration*SPB;
             var sampleEndTimeInSec = sampleStartTimeInSec + sampleDurationInSec;
             if(time_marker_in_sec >= sampleEndTimeInSec){
                //Marker has passed the sample
