@@ -105,7 +105,7 @@ function convertToComplex(inputSignal) {
 }
 
 // Find the frequency with the highest magnitude in the spectrum
-function findPeakFrequency(spectrum) {
+function findPeakFrequency(spectrum, sampleRate) {
     const N = spectrum.length;
     let maxMagnitude = 0;
     let maxIndex = 0;
@@ -225,7 +225,7 @@ const maxBinIndex = Math.round((maxFrequency / sampleRate) * numBins);
 const subsetSpectrum = spectrum.slice(minBinIndex, maxBinIndex);
 
 console.log("FFT result:", subsetSpectrum);
-const peakFrequency = findPeakFrequency(subsetSpectrum);
+const peakFrequency = findPeakFrequency(subsetSpectrum, sampleRate);
 console.log("Peak frequency:", peakFrequency, "Hz");
 
 
