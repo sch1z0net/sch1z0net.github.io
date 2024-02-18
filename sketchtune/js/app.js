@@ -1143,7 +1143,6 @@ $(document).ready(function(){
   const button_stop  = $("#stop");
   button_play.css("display","none");
   button_pause.css("display","none");
-  button_stop.css("display","none");
 
   let context;
   var is_playing = false;
@@ -1169,6 +1168,13 @@ $(document).ready(function(){
       });
 
       button_pause.on("click", function(){ 
+        button_pause.css("display","none");
+        button_play.css("display","inline-block");
+        is_playing = false;
+        stopAllSamples();
+      });
+
+      button_stop.on("click", function(){ 
         button_pause.css("display","none");
         button_play.css("display","inline-block");
         is_playing = false;
