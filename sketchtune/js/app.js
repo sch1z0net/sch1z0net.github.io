@@ -1218,6 +1218,7 @@ $(document).ready(function(){
       buffer: audioBuffer,
       playbackRate: GLOBAL_PLAYBACK_RATE,
     });
+    console.log(duration);
     sampleSource.connect(audioContext.destination);
     sampleSource.start(time, offset, duration);
 
@@ -1321,7 +1322,7 @@ $(document).ready(function(){
             var sampleDurationInSec = duration*SPB;
             var sampleEndTimeInSec = sampleStartTimeInSec + sampleDurationInSec;
 
-            console.log(start, duration, SPB, time_marker_in_sec, sampleStartTimeInSec);
+            //console.log(start, duration, SPB, time_marker_in_sec, sampleStartTimeInSec);
 
             if(time_marker_in_sec >= sampleEndTimeInSec){
                //Marker has passed the sample
