@@ -30,14 +30,16 @@
   var reinitPlayingTracks;
   var is_playing = false;
 
-  var BPM = 128;
-  var SPB = 60 / BPM;
-  var BPS = 1 / SPB;
+  var BPM = 128;           //60      120      240
+  var MPB = 1 / BPM;       //1/60    1/120    1/240
+  var SPB = 60 * MPB;      //1       0.5      0.25
+  var BPS = 1 / SPB;       //1       2        4
 
   function updateBPM(bpm){
     BPM = bpm;
-    SPB = 60 / BPM;
-    BPS = 1 / SPB;
+    var MPB = 1 / BPM;
+    var SPB = 60 * MPB;
+    var BPS = 1 / SPB;
     $("#bpm").val(BPM);
     resizeTimeBar(); 
   }
