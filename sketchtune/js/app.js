@@ -905,6 +905,10 @@ var colors = [
            $(this).val(bpm);
          }
       });
+      bpm_div.on('keypress', function(event) {
+          // Check if Enter key is pressed (key code 13)
+          if (event.which === 13) {  $(this).blur();  }
+      });
 
 
       $(this).append(bpm_div);
