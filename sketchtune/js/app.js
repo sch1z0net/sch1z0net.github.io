@@ -161,28 +161,18 @@ console.log("FFT result:", spectrum);
 
                 // Plot logarithmic number grid
                 ctx.fillStyle = 'black';
-                ctx.font = '8px Arial';
+                ctx.font = '10px Arial';
                 ctx.textAlign = 'center';
 
                 const maxFrequency = 10000; // Maximum frequency (10 kHz)
                 const minFrequency = 20; // Minimum frequency (20 Hz)
 
-                const decades = Math.log10(maxFrequency) - Math.log10(minFrequency); // Number of decades between min and max frequencies
-                const numLabelsPerDecade = 10; // Number of labels per decade
+                const fixedFrequencies = [10, 20, 30, 40, 50, 100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000, 10000];
 
-                for (let i = 0; i <= decades; i++) {
-                    const currentDecadeFrequency = minFrequency * Math.pow(10, i); // Frequency at the current decade
-                    const nextDecadeFrequency = minFrequency * Math.pow(10, i + 1); // Frequency at the next decade
-
-                    const numLabels = numLabelsPerDecade * (decades-i + 1); // Increase number of labels per decade
-
-                    const frequencyStep = (nextDecadeFrequency - currentDecadeFrequency) / numLabels; // Calculate frequency step
-
-                    for (let j = 0; j <= numLabels; j++) {
-                        const frequency = currentDecadeFrequency + j * frequencyStep;
-                        const x = (Math.log10(frequency) - Math.log10(minFrequency)) / Math.log10(maxFrequency / minFrequency) * width;
-                        ctx.fillText(frequency.toFixed(0), x, height - 5); // Display frequency
-                    }
+                for (let i = 0; i < fixedFrequencies.length; i++) {
+                    const frequency = fixedFrequencies[i];
+                    const x = (Math.log10(frequency) - Math.log10(minFrequency)) / Math.log10(maxFrequency / minFrequency) * width;
+                    ctx.fillText(frequency.toFixed(0), x, height - 5); // Display frequency
                 }
             }
 
