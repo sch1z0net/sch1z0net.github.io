@@ -1218,7 +1218,7 @@ $(document).ready(function(){
       buffer: audioBuffer,
       playbackRate: GLOBAL_PLAYBACK_RATE,
     });
-    console.log(duration);
+    console.log(duration, sampleSource.buffer.duration);
     sampleSource.connect(audioContext.destination);
     sampleSource.start(time, offset, duration);
 
