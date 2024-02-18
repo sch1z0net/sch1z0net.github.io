@@ -889,7 +889,7 @@ var colors = [
     connectedCallback() {
       $(this).addClass("unselectable");
       var bpm_div = $("<div id='bpm_div'>BPM</div>").prepend("<input id='bpm'>");
-      $("#bpm").on('input', function() {
+      $("#bpm").on('change', function() {
          var old_bpm = bpm;
          // Get the entered value
          var inputValue = $(this).val();
