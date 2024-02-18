@@ -926,6 +926,7 @@ var colors = [
           // Check if Enter key is pressed (key code 13)
           if (event.which === 13) {  $(this).blur();  }
       });
+      updateBPM(BPM);
 
       $(this).append(bpm_div);
       var play_div = $("<div id='play_div'>");
