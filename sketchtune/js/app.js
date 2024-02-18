@@ -122,6 +122,7 @@ console.log("FFT result:", spectrum);
                 ctx.stroke();
             }
 
+
             // Plot spectrum on canvas in a logarithmic scale
             function plotSpectrum(canvas, spectrum, sampleRate) {
                 const ctx = canvas.getContext('2d');
@@ -132,8 +133,10 @@ console.log("FFT result:", spectrum);
                 ctx.clearRect(0, 0, width, height);
                 ctx.beginPath();
 
+                const maxFrequency = 10000; // Maximum frequency (10 kHz)
+                const minFrequency = 20; // Minimum frequency (20 Hz)
                 // Calculate the number of bins corresponding to frequencies up to 10 kHz
-                const numBins = Math.min(spectrum.length, Math.ceil(10000 / sampleRate * spectrum.length));
+                const numBins = Math.ceil((maxFrequency - minFrequency) / sampleRate * spectrum.length);
 
                 // Plot the spectrum using a logarithmic scale
                 const logScaleFactor = Math.log10(numBins); // Scale factor for logarithmic scaling
@@ -164,10 +167,7 @@ console.log("FFT result:", spectrum);
                 ctx.font = '10px Arial';
                 ctx.textAlign = 'center';
 
-                const maxFrequency = 10000; // Maximum frequency (10 kHz)
-                const minFrequency = 20; // Minimum frequency (20 Hz)
-
-                const fixedFrequencies = [10, 20, 30, 40, 50, 100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000, 10000];
+                const fixedFrequencies = [20, 30, 40, 50, 100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000, 10000];
 
                 for (let i = 0; i < fixedFrequencies.length; i++) {
                     const frequency = fixedFrequencies[i];
