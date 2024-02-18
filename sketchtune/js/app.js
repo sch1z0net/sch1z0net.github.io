@@ -127,7 +127,7 @@ function findPeakFrequency(spectrum) {
 
 
 // Example parameters
-const durationInSeconds = 2; // Duration of the audio in seconds
+const durationInSeconds = 1; // Duration of the audio in seconds
 const sampleRate = 44100; // Sample rate (samples per second)
 //const frequency = 440; // Frequency of the sine wave in Hz
 const frequency = 500; // Frequency of the sine wave in Hz
