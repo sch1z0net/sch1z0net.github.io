@@ -59,18 +59,13 @@ function fft(input) {
     return output;
 }
 
+function convertToComplex(inputSignal) {
+    return inputSignal.map(value => ({ re: value, im: 0 }));
+}
+
 // Example usage
-const inputSignal = [
-    { re: 1, im: 0 },
-    { re: 2, im: 0 },
-    { re: 3, im: 0 },
-    { re: 4, im: 0 },
-    { re: 5, im: 0 },
-    { re: 6, im: 0 },
-    { re: 7, im: 0 },
-    { re: 8, im: 0 }
-];
-const spectrum = fft(inputSignal);
+const complexInput = convertToComplex(sineWaveBuffer);
+const spectrum = fft(complexInput);
 console.log("FFT result:", spectrum);
 
 
