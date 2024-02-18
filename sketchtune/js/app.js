@@ -128,26 +128,26 @@ function findPeakFrequency(spectrum) {
 
 
 
-           // Plot waveform on canvas
-            function plotWaveform(canvas, buffer) {
-                const ctx = canvas.getContext('2d');
+// Plot waveform on canvas
+function plotWaveform(canvas, buffer) {
+    const ctx = canvas.getContext('2d');
 
-                const width = canvas.width;
-                const height = canvas.height;
+    const width = canvas.width;
+    const height = canvas.height;
 
-                ctx.clearRect(0, 0, width, height);
-                ctx.beginPath();
-                ctx.moveTo(0, height / 2);
+    ctx.clearRect(0, 0, width, height);
+    ctx.beginPath();
+    ctx.moveTo(0, height / 2);
 
-                for (let i = 0; i < buffer.length; i++) {
-                    const x = (i / buffer.length) * width;
-                    const y = (1 - buffer[i]) * height / 2;
-                    ctx.lineTo(x, y);
-                }
+    for (let i = 0; i < buffer.length; i++) {
+        const x = (i / buffer.length) * width;
+        const y = (1 - buffer[i]) * height / 2;
+        ctx.lineTo(x, y);
+    }
 
-                ctx.strokeStyle = 'blue';
-                ctx.stroke();
-            }
+    ctx.strokeStyle = 'blue';
+    ctx.stroke();
+}
 
 
 // Plot spectrum on canvas in a logarithmic scale
