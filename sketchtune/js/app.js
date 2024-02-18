@@ -148,6 +148,8 @@ function plotWaveform(canvas, buffer) {
     ctx.stroke();
 }
 
+const maxFrequency = 10000; // Maximum frequency (10 kHz)
+const minFrequency = 20; // Minimum frequency (20 Hz)
 
 // Plot spectrum on canvas in a logarithmic scale
 function plotSpectrum(canvas, spectrum, sampleRate) {
@@ -217,8 +219,6 @@ var audiobuffer = sawtoothWaveBuffer;
 
 const spectrum = fft_audio_buffer(audiobuffer);
 const numBins = spectrum.length;
-const maxFrequency = 10000; // Maximum frequency (10 kHz)
-const minFrequency = 20; // Minimum frequency (20 Hz)
 const minBinIndex = Math.round((minFrequency / sampleRate) * numBins);
 const maxBinIndex = Math.round((maxFrequency / sampleRate) * numBins);
 // Extract the subset of the spectrum corresponding to frequencies between minFrequency and maxFrequency
