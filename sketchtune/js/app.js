@@ -69,7 +69,9 @@ function convertToComplex(inputSignal) {
 // Example parameters
 const durationInSeconds = 0.0091*100; // Duration of the audio in seconds
 const sampleRate = 44100; // Sample rate (samples per second)
-const frequency = 440*100; // Frequency of the sine wave in Hz
+//const frequency = 440; // Frequency of the sine wave in Hz
+const frequency = 5000; // Frequency of the sine wave in Hz
+//max is 10k
 
 // Generate sine wave buffer
 const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
