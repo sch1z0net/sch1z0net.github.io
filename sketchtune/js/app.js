@@ -26,20 +26,26 @@
 
   var startTimeInMS;
   var startOffsetInSec = 0;
-  var time_marker_in_sec;
   var reinitPlayingTracks;
   var is_playing = false;
+
+  var time_marker_in_sec;
+  var time_marker_in_beats;
 
   var BPM = 128;           //60      120      240
   var MPB = 1 / BPM;       //1/60    1/120    1/240
   var SPB = 60 * MPB;      //1       0.5      0.25
   var BPS = 1 / SPB;       //1       2        4
+  var WPS = BEAT_WIDTH * BPS;
+  var WPB = BEAT_WIDTH;
 
   function updateBPM(bpm){
     BPM = bpm;
-    var MPB = 1 / BPM;
-    var SPB = 60 * MPB;
-    var BPS = 1 / SPB;
+    MPB = 1 / BPM;
+    SPB = 60 * MPB;
+    BPS = 1 / SPB;
+    WPS = BEAT_WIDTH * BPS;
+    WPB = BEAT_WIDTH;
     $("#bpm").val(BPM);
     resizeTimeBar(); 
   }
@@ -53,7 +59,7 @@
   }
 
   function resizeTimeBar(){
-      var sec_length = BEAT_WIDTH * BPS;
+      var sec_length = WPS;
       var dsec_length = sec_length/10;
       $("time-bar-sec").css("width",sec_length);
       $("time-bar-dsec").css("width",dsec_length);
@@ -65,9 +71,10 @@
   });
 
   function updateTimeMarker(){
-      time_marker_in_sec = startOffsetInSec;
+      time_marker_in_sec   = startOffsetInSec;
       if(is_playing){ time_marker_in_sec += (performance.now() - startTimeInMS) / 1000; }
-      $("time-marker").css("margin-left",time_marker_in_sec*BEAT_WIDTH/SPB);
+      time_marker_in_beats = time_marker_in_sec * BPS;
+      $("time-marker").css("margin-left",time_marker_in_beats*WPB);
   }
 
   function setStartOffset(offset){
