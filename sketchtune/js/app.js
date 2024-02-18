@@ -52,13 +52,14 @@ function fft(input) {
     return output;
 }
 
-function fft_padded(input) {
+function fft_audio_buffer(input) {
     // Zero-padding to the next power of 2
     const N = nextPowerOf2(input.length);
     const paddedInput = new Array(N).fill(0);
     input.forEach((value, index) => paddedInput[index] = value);
+    const complexInput = convertToComplex(paddedInput);
 
-    fft(paddedInput);
+    fft(complexInput);
 }
 
 function convertToComplex(inputSignal) {
@@ -72,10 +73,7 @@ const frequency = 440; // Frequency of the sine wave in Hz
 
 // Generate sine wave buffer
 const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
-
-// Convert to complex numbers and perform FFT
-const complexInput = convertToComplex(sineWaveBuffer);
-const spectrum = fft_padded(complexInput);
+const spectrum = fft_audio_buffer(sineWaveBuffer);
 console.log("FFT result:", spectrum);
 
 
