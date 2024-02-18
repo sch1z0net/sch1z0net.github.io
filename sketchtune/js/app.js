@@ -37,6 +37,7 @@
   function updateBPM(bpm){
     BPM = bpm;
     SPB = 60 / BPM;
+    $("#bpm").val(BPM); 
   }
 
   function updateBeatWidth() {
@@ -914,14 +915,12 @@ var colors = [
                updateBPM(parseFloat(inputValue));
             }else if(newbpm < 60){ 
                newbpm = 60;
-               $(this).val(newbpm); 
                updateBPM(newbpm);
             }else{
                newbpm = 240;
-               $(this).val(newbpm); 
                updateBPM(newbpm);
             }
-         } else { $(this).val(BPM); } // Invalid format 
+         } else { updateBPM(BPM); } // Invalid format 
       });
       bpm_input.on('keypress', function(event) {
           // Check if Enter key is pressed (key code 13)
