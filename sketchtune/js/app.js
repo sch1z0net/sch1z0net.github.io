@@ -116,11 +116,22 @@ console.log("FFT result:", spectrum);
                 ctx.clearRect(0, 0, width, height);
                 ctx.beginPath();
 
+                // Find the maximum magnitude in the spectrum
+                let maxMagnitude = 0;
+                for (let i = 0; i < spectrum.length; i++) {
+                    const magnitude = Math.sqrt(spectrum[i].re * spectrum[i].re + spectrum[i].im * spectrum[i].im);
+                    if (magnitude > maxMagnitude) {
+                        maxMagnitude = magnitude;
+                    }
+                }
+
+                // Plot normalized spectrum
                 const binWidth = width / spectrum.length;
                 for (let i = 0; i < spectrum.length; i++) {
                     const magnitude = Math.sqrt(spectrum[i].re * spectrum[i].re + spectrum[i].im * spectrum[i].im);
+                    const normalizedMagnitude = magnitude / maxMagnitude;
                     const x = i * binWidth;
-                    const y = height - magnitude * height; // Invert Y-axis
+                    const y = height - normalizedMagnitude * height; // Invert Y-axis
                     ctx.moveTo(x, height);
                     ctx.lineTo(x, y);
                 }
@@ -128,13 +139,6 @@ console.log("FFT result:", spectrum);
                 ctx.strokeStyle = 'red';
                 ctx.stroke();
             }
-            // Plot waveform
-            const waveformCanvas = document.getElementById('waveformCanvas');
-            plotWaveform(waveformCanvas, sineWaveBuffer);
-            // Plot spectrum
-            const spectrumCanvas = document.getElementById('spectrumCanvas');
-            plotSpectrum(spectrumCanvas, spectrum);
-        });
 
 
 
