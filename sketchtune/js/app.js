@@ -226,6 +226,10 @@ console.log("Peak frequency:", peakFrequency, "Hz");
                 }
             }
 
+           
+
+
+
             // Plot waveform
             const waveformCanvas = document.getElementById('waveformCanvas');
             plotWaveform(waveformCanvas, sineWaveBuffer);
