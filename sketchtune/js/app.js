@@ -25,6 +25,7 @@
   var ROOT_PADDING;
 
   var startTimeInMS;
+  var startOffsetInSec;
   var time_marker_in_sec;
   var reinitPlayingTracks;
 
@@ -881,7 +882,7 @@ var colors = [
       play_div.append("<i id='load' class='material-icons'>play_circle_filled</i>");
       play_div.append("<i id='play' class='material-icons'>play_circle_filled</i>")
       play_div.append("<i id='pause' class='material-icons'>pause_circle_filled</i>");
-      play_div.append("<i id='stop' class='material-icons'>stop_circle_filled</i>");
+      play_div.append("<i id='stop' class='material-icons'>stop_circle/i>");
       $(this).append(play_div);
     }
   }
@@ -1163,7 +1164,7 @@ $(document).ready(function(){
         button_pause.css("display","inline-block");
         reinitPlayingTracks = true;
         // Record the start time
-        startTimeInMS = performance.now() - time_marker_in_sec/1000;
+        startTimeInMS = performance.now();
         requestAnimationFrame(renderloop);
       });
 
@@ -1172,6 +1173,8 @@ $(document).ready(function(){
         button_play.css("display","inline-block");
         is_playing = false;
         stopAllSamples();
+        startOffsetInSec = time_marker_in_sec;
+
       });
 
       button_stop.on("click", function(){ 
@@ -1180,6 +1183,7 @@ $(document).ready(function(){
         is_playing = false;
         stopAllSamples();
         $("time-marker").css("margin-left",0);
+        startOffsetInSec = 0;
       });
 
       button_play.click();
@@ -1236,7 +1240,7 @@ $(document).ready(function(){
 
 
   function renderloop(){
-       time_marker_in_sec = (performance.now() - startTimeInMS) / 1000;
+       time_marker_in_sec = startOffsetInSec + (performance.now() - startTimeInMS) / 1000;
        $("time-marker").css("margin-left",time_marker_in_sec*BEAT_WIDTH/spb); 
 
        if(reinitPlayingTracks == true){
