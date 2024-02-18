@@ -104,8 +104,32 @@ function convertToComplex(inputSignal) {
     return inputSignal.map(value => ({ re: value, im: 0 }));
 }
 
+
+
+// Find the frequency with the highest magnitude in the spectrum
+function findPeakFrequency(spectrum, sampleRate) {
+    const N = spectrum.length;
+    let maxMagnitude = 0;
+    let maxIndex = 0;
+
+    for (let i = 0; i < N / 2; i++) { // Only consider the positive frequencies
+        const magnitude = Math.sqrt(spectrum[i].re * spectrum[i].re + spectrum[i].im * spectrum[i].im);
+
+        if (magnitude > maxMagnitude) {
+            maxMagnitude = magnitude;
+            maxIndex = i;
+        }
+    }
+
+    // Calculate the corresponding frequency
+    const frequency = maxIndex * sampleRate / N;
+
+    return frequency;
+}
+
+
 // Example parameters
-const durationInSeconds = 0.0091*100; // Duration of the audio in seconds
+const durationInSeconds = 2; // Duration of the audio in seconds
 const sampleRate = 44100; // Sample rate (samples per second)
 //const frequency = 440; // Frequency of the sine wave in Hz
 const frequency = 500; // Frequency of the sine wave in Hz
@@ -116,7 +140,8 @@ const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, fre
 const sawtoothWaveBuffer = generateSawtoothWaveBuffer(durationInSeconds, sampleRate, frequency);
 const spectrum = fft_audio_buffer(sineWaveBuffer);
 console.log("FFT result:", spectrum);
-
+const peakFrequency = findPeakFrequency(spectrum, sampleRate);
+console.log("Peak frequency:", peakFrequency, "Hz");
 
 
 
