@@ -1188,7 +1188,7 @@ $(document).ready(function(){
         const sample = await getFile(audioCtx, sound.url);
         samplesMap[sound.id] = sample; // Store the sample in the map with soundid as the key
         ready_sounds.push(sound);
-        console.log("Sound "+sound.id+" ready.");
+        console.log("✔︎",soundid); 
         var lc = $('sound-element[data-soundid="' + sound.id + '"]').find('loading-circle');
         if (lc.length > 0) { lc.remove(); }
     }
@@ -1306,7 +1306,7 @@ $(document).ready(function(){
           var duration = $(this).attr("data-length");
           var sample = getSample(soundid);
           if(sample==null){ 
-            console.log("Sample with ID "+soundid+" is still loading."); 
+            console.log("⟲",soundid); 
           } else {
             var sampleStartTimeInSec = start*SPB;
             var sampleDurationInSec = duration*SPB;
