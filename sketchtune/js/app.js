@@ -33,7 +33,7 @@
   var time_marker_in_sec = 0;
   var time_marker_in_beats = 0;
 
-  var BPM = 120;           //60      120      240
+  var BPM = 128;           //60      120      240
   var MPB = 1 / BPM;       //1/60    1/120    1/240
   var SPB = 60 * MPB;      //1       0.5      0.25
   var BPS = 1 / SPB;       //1       2        4
@@ -54,7 +54,7 @@
     WPS = BEAT_WIDTH * BPS;
     WPB = BEAT_WIDTH;
 
-    GLOBAL_PLAYBACK_RATE = BPM / 120;
+    GLOBAL_PLAYBACK_RATE = BPM / 128;
 
     $("#bpm").val(BPM);
     resizeTimeBar();
