@@ -27,7 +27,7 @@
   var clockStartInMS;
   var startOffsetInSec = 0;
   var startOffsetInBeats = 0;
-  var reinitPlayingTracks;
+  var initScheduling;
   var is_playing = false;
 
   var time_marker_in_sec = 0;
@@ -39,6 +39,10 @@
   var BPS = 1 / SPB;       //1       2        4
   var WPS = BEAT_WIDTH * BPS;
   var WPB = BEAT_WIDTH;
+
+  function reScheduleSamples(){
+    initScheduling = true;
+  }
 
   function updateBPM(bpm){
     BPM = bpm;
@@ -54,6 +58,7 @@
     resetClock();
     setStartOffsetInBeats(time_marker_in_beats); 
     updateTimeMarker();
+    reScheduleSamples();
   }
 
   function updateBeatWidth() {
@@ -322,7 +327,7 @@ var colors = [
           this.style.width = (length * BEAT_WIDTH) + "px";
         });
 
-        reinitPlayingTracks = true;
+        reScheduleSamples();
      }
 
      if(activeTrack != null){
@@ -358,7 +363,7 @@ var colors = [
         setStartOffsetInSec(sec_from_start);
         updateTimeMarker();
 
-        reinitPlayingTracks = true;
+        reScheduleSamples();
      }
 
      activePattern = null;
@@ -684,7 +689,7 @@ var colors = [
                 $(this).append(newpat);
                 isDraggingSound = false;
 
-                reinitPlayingTracks = true;
+                reScheduleSamples();
              }
           });
 
@@ -1249,7 +1254,7 @@ $(document).ready(function(){
       button_play.on("click", function(){ 
         button_play.css("display","none");
         button_pause.css("display","inline-block");
-        reinitPlayingTracks = true;
+        reScheduleSamples();
         // Record the start time
         resetClock();
         requestAnimationFrame(renderloop);
@@ -1330,11 +1335,11 @@ $(document).ready(function(){
   function renderloop(){
         updateTimeMarker();
 
-       if(reinitPlayingTracks == true){
+       if(initScheduling == true){
           is_playing = true;
           stopAllSamples();
           schedule();
-          reinitPlayingTracks = false;
+          initScheduling = false;
        }
 
        if(!samplesSetupProcess && queue_sounds.length > 0){
