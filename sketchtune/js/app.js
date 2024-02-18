@@ -1169,8 +1169,7 @@ $(document).ready(function(){
       });
 
       button_pause.on("click", function(){ 
-        updateTimeMarker();
-        startOffsetInSec = (performance.now() - startTimeInMS) / 1000;
+        startOffsetInSec = startOffsetInSec + (performance.now() - startTimeInMS) / 1000;
         button_pause.css("display","none");
         button_play.css("display","inline-block");
         is_playing = false;
@@ -1178,12 +1177,12 @@ $(document).ready(function(){
       });
 
       button_stop.on("click", function(){ 
+        startOffsetInSec = 0;
         button_pause.css("display","none");
         button_play.css("display","inline-block");
         is_playing = false;
         stopAllSamples();
         $("time-marker").css("margin-left",0);
-        startOffsetInSec = 0;
       });
 
       button_play.click();
