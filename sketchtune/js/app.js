@@ -1169,7 +1169,7 @@ $(document).ready(function(){
       });
 
       button_pause.on("click", function(){ 
-        startOffsetInSec = time_marker_in_sec;
+        startOffsetInSec = (performance.now() - startTimeInMS) / 1000;
         button_pause.css("display","none");
         button_play.css("display","inline-block");
         is_playing = false;
