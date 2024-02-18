@@ -1526,6 +1526,8 @@ $(document).ready(function(){
   side_layout.append($("<top-window>"));
   side_layout.append($("<grid-window>"));
   side_layout.append($("<side-window>"));
+  $("#root").append('<canvas id="waveformCanvas" width="400" height="25%" style="display: inline-block;"></canvas>');
+  $("#root").append('<canvas id="spectrumCanvas" width="400" height="25%" style="display: inline-block;"></canvas>');
 
   $("beat-bar").scrollLeft(0);
   $("#root").bind('wheel', function(e) {
