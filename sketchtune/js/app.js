@@ -84,27 +84,59 @@ console.log("FFT result:", spectrum);
 
 
 
-$(document).ready(function() {
+        $(document).ready(function() {
             // Plot waveform on canvas
-            const canvas = document.getElementById('waveformCanvas');
-            const ctx = canvas.getContext('2d');
+            function plotWaveform(canvas, buffer) {
+                const ctx = canvas.getContext('2d');
 
-            const width = canvas.width;
-            const height = canvas.height;
+                const width = canvas.width;
+                const height = canvas.height;
 
-            ctx.clearRect(0, 0, width, height);
-            ctx.beginPath();
-            ctx.moveTo(0, height / 2);
+                ctx.clearRect(0, 0, width, height);
+                ctx.beginPath();
+                ctx.moveTo(0, height / 2);
 
-            for (let i = 0; i < sineWaveBuffer.length; i++) {
-                const x = (i / sineWaveBuffer.length) * width;
-                const y = (1 - sineWaveBuffer[i]) * height / 2;
-                ctx.lineTo(x, y);
+                for (let i = 0; i < buffer.length; i++) {
+                    const x = (i / buffer.length) * width;
+                    const y = (1 - buffer[i]) * height / 2;
+                    ctx.lineTo(x, y);
+                }
+
+                ctx.strokeStyle = 'blue';
+                ctx.stroke();
             }
 
-            ctx.strokeStyle = 'blue';
-            ctx.stroke();
-});
+            // Plot spectrum on canvas
+            function plotSpectrum(canvas, spectrum) {
+                const ctx = canvas.getContext('2d');
+
+                const width = canvas.width;
+                const height = canvas.height;
+
+                ctx.clearRect(0, 0, width, height);
+                ctx.beginPath();
+
+                const binWidth = width / spectrum.length;
+                for (let i = 0; i < spectrum.length; i++) {
+                    const magnitude = Math.sqrt(spectrum[i].re * spectrum[i].re + spectrum[i].im * spectrum[i].im);
+                    const x = i * binWidth;
+                    const y = height - magnitude * height; // Invert Y-axis
+                    ctx.moveTo(x, height);
+                    ctx.lineTo(x, y);
+                }
+
+                ctx.strokeStyle = 'red';
+                ctx.stroke();
+            }
+            // Plot waveform
+            const waveformCanvas = document.getElementById('waveformCanvas');
+            plotWaveform(waveformCanvas, sineWaveBuffer);
+            // Compute FFT
+            const spectrum = fft(sineWaveBuffer);
+            // Plot spectrum
+            const spectrumCanvas = document.getElementById('spectrumCanvas');
+            plotSpectrum(spectrumCanvas, spectrum);
+        });
 
 
 
