@@ -1,5 +1,6 @@
 html, body {
     min-height: 200px; /* Set your desired minimum height here */
+    font-family: "Varela", sans-serif;
 }
 
 body {
@@ -521,16 +522,18 @@ track-pattern-br {
 }
 
 #play_div {
-  position: absolute;
   background-color: rgba(120,120,120,1);
   border-radius: 5px;
   left: auto;
   right: auto;
+  height: 100%;
 }
 
 #bpm_div {
   background-color: rgba(120,120,120,1);
   border-radius: 5px;
+  height: 100%;
+  font-size: 20px;
 }
 
 #bpm {
