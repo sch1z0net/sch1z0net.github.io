@@ -25,7 +25,7 @@
   var ROOT_PADDING;
 
   var startTimeInMS;
-  var startOffsetInSec;
+  var startOffsetInSec = 0;
   var time_marker_in_sec;
   var reinitPlayingTracks;
 
