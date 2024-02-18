@@ -1239,8 +1239,10 @@ $(document).ready(function(){
 
 
   function renderloop(){
-       time_marker_in_sec = startOffsetInSec + (performance.now() - startTimeInMS) / 1000;
-       $("time-marker").css("margin-left",time_marker_in_sec*BEAT_WIDTH/spb); 
+       if(is_playing){
+         time_marker_in_sec = startOffsetInSec + (performance.now() - startTimeInMS) / 1000;
+         $("time-marker").css("margin-left",time_marker_in_sec*BEAT_WIDTH/spb);
+       } 
 
        if(reinitPlayingTracks == true){
           is_playing = true;
