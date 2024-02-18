@@ -1247,7 +1247,7 @@ $(document).ready(function(){
 
   function playSample(audioContext, audioBuffer, time, offset, duration) {
     
-    var resampledBuffer = timeStretchSample(audioBuffer);
+    var resampledBuffer = timeStretchSample(audioContext, audioBuffer);
 
     const sampleSource = new AudioBufferSourceNode(audioContext, {
       buffer: resampledBuffer,
