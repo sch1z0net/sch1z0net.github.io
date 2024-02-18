@@ -1169,6 +1169,7 @@ $(document).ready(function(){
       });
 
       button_pause.on("click", function(){ 
+        updateTimeMarker();
         startOffsetInSec = (performance.now() - startTimeInMS) / 1000;
         button_pause.css("display","none");
         button_play.css("display","inline-block");
@@ -1237,11 +1238,14 @@ $(document).ready(function(){
     });
   }
 
+  function updateTimeMarker(){
+      time_marker_in_sec = startOffsetInSec + (performance.now() - startTimeInMS) / 1000;
+      $("time-marker").css("margin-left",time_marker_in_sec*BEAT_WIDTH/spb);
+  }
 
   function renderloop(){
        if(is_playing){
-         time_marker_in_sec = startOffsetInSec + (performance.now() - startTimeInMS) / 1000;
-         $("time-marker").css("margin-left",time_marker_in_sec*BEAT_WIDTH/spb);
+         updateTimeMarker();
        } 
 
        if(reinitPlayingTracks == true){
