@@ -24,7 +24,7 @@
   var BEAT_WIDTH = parseInt($("#root").css("--beat-width"));
   var ROOT_PADDING;
 
-  var startTimeInMS;
+  var clockStartInMS;
   var startOffsetInSec = 0;
   var startOffsetInBeats = 0;
   var reinitPlayingTracks;
@@ -49,6 +49,8 @@
     WPB = BEAT_WIDTH;
     $("#bpm").val(BPM);
     resizeTimeBar();
+    setStartOffsetInBeats(startOffsetInBeats + elapsedBeats());
+    resetClock();
     updateTimeMarker();
   }
 
@@ -72,8 +74,12 @@
      updateRootPadding();
   });
 
+  function resetClock(){
+    clockStartInMS = performance.now();
+  }
+
   function elapsedSec(){
-    return (performance.now() - startTimeInMS) / 1000;
+    return (performance.now() - clockStartInMS) / 1000;
   }
 
   function elapsedBeats(){
@@ -91,7 +97,7 @@
   /*
   function updateTimeMarker(){
       time_marker_in_sec   = startOffsetInSec;
-      if(is_playing){ time_marker_in_sec += (performance.now() - startTimeInMS) / 1000; }
+      if(is_playing){ time_marker_in_sec += (performance.now() - clockStartInMS) / 1000; }
       time_marker_in_beats = time_marker_in_sec * BPS;
       $("time-marker").css("margin-left",time_marker_in_beats*WPB);
   }*/
@@ -345,8 +351,7 @@ var colors = [
         var beats_from_start = x / BEAT_WIDTH;
         var sec_from_start  = SPB*beats_from_start ;
 
-        startTimeInMS = performance.now();
-
+        resetClock();
         setStartOffset(sec_from_start);
         updateTimeMarker();
 
@@ -1243,7 +1248,7 @@ $(document).ready(function(){
         button_pause.css("display","inline-block");
         reinitPlayingTracks = true;
         // Record the start time
-        startTimeInMS = performance.now();
+        resetClock();
         requestAnimationFrame(renderloop);
       });
 
