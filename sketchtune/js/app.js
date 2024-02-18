@@ -30,8 +30,8 @@
   var reinitPlayingTracks;
   var is_playing = false;
 
-  var time_marker_in_sec;
-  var time_marker_in_beats;
+  var time_marker_in_sec = 0;
+  var time_marker_in_beats = 0;
 
   var BPM = 128;           //60      120      240
   var MPB = 1 / BPM;       //1/60    1/120    1/240
