@@ -328,25 +328,32 @@ var colors = [
   });
 
   $(document).on('keydown', function(event) {
-        // Check if the pressed key is the delete key
+      var isInputFocused = $('input:focus').length > 0;
+
+      if(activeTrack != null){ 
         if (event.key === "Backspace" || event.key === "Delete") {
-            if(activeTrack != null){ 
-              var id = $(activeTrack).attr("data-id");
-              $("#track_"+id).remove();
-              $(activeTrack).remove(); 
-            }
-
-            if(isDragging){ 
-              activePattern.remove(); 
-              $(".multiSelectedPattern").remove(); 
-            }
-
-            if($(".multiSelectedPattern").length > 0){
-              $(".multiSelectedPattern").remove();
-            }
-
-            event.preventDefault();
+          var id = $(activeTrack).attr("data-id");
+          $("#track_"+id).remove();
+          $(activeTrack).remove(); 
         }
+      }
+
+      if(isDragging){ 
+        if (event.key === "Backspace" || event.key === "Delete") {
+          activePattern.remove(); 
+          $(".multiSelectedPattern").remove(); 
+        }
+      }
+
+      if($(".multiSelectedPattern").length > 0){
+        if (event.key === "Backspace" || event.key === "Delete") {
+           $(".multiSelectedPattern").remove();
+        }
+      }
+      
+      if(!isInputFocused){
+         event.preventDefault();
+      }
   });
 
   var tracks_row_length = 0;
