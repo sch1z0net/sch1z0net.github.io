@@ -185,7 +185,7 @@ function plotSpectrum(canvas, spectrum, sampleRate) {
     // Plot the spectrum using a logarithmic scale
     for (let x = 0; x < width; x++) {
         const frequency = minFrequency * Math.pow(10, x / width * Math.log10(maxFrequency / minFrequency));
-        const binIndex = Math.round((frequency / maxFrequency) * (numBins - 1)); // Adjusted to zero-based indexing
+        const binIndex = Math.round((frequency - minFrequency) / (maxFrequency - minFrequency) * (numBins - 1));
         const magnitude = spectrum[binIndex]; // Get magnitude at bin index
 
         // Normalize magnitude for plotting
