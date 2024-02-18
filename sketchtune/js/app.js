@@ -84,8 +84,8 @@ function applyHanningWindow(inputSignal) {
 // Function to perform FFT on the input signal with windowing and zero-padding
 function fft_audio_buffer(inputSignal, sampleRate) {
     // Apply Hanning window to the input signal
-    //const windowedSignal = applyHanningWindow(inputSignal);
-    const windowedSignal = inputSignal;
+    const windowedSignal = applyHanningWindow(inputSignal);
+    //const windowedSignal = inputSignal;
 
     // Zero-padding to the next power of 2
     const N = nextPowerOf2(windowedSignal.length);
