@@ -1317,8 +1317,8 @@ $(document).ready(function(){
           if(sample==null){ 
             console.log("⟲ Load",soundid); 
           } else {
-            var sampleStartTimeInSec = start*SPB * GLOBAL_PLAYBACK_RATE;
-            var sampleDurationInSec = duration*SPB  / GLOBAL_PLAYBACK_RATE;
+            var sampleStartTimeInSec = start*SPB;
+            var sampleDurationInSec = duration*SPB;
             var sampleEndTimeInSec = sampleStartTimeInSec + sampleDurationInSec;
 
             if(time_marker_in_sec >= sampleEndTimeInSec){
