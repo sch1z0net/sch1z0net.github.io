@@ -69,15 +69,36 @@ function fft(input) {
     return output;
 }
 
-function fft_audio_buffer(input) {
+
+// Function to apply Hanning window to the input signal
+function applyHanningWindow(inputSignal) {
+    const windowedSignal = [];
+    const N = inputSignal.length;
+    for (let n = 0; n < N; n++) {
+        const w = 0.5 * (1 - Math.cos(2 * Math.PI * n / (N - 1))); // Hanning window formula
+        windowedSignal.push(inputSignal[n] * w);
+    }
+    return windowedSignal;
+}
+
+// Function to perform FFT on the input signal with windowing and zero-padding
+function fft_audio_buffer(inputSignal, sampleRate) {
+    // Apply Hanning window to the input signal
+    const windowedSignal = applyHanningWindow(inputSignal);
+
     // Zero-padding to the next power of 2
-    const N = nextPowerOf2(input.length);
+    const N = nextPowerOf2(windowedSignal.length);
     const paddedInput = new Array(N).fill(0);
-    input.forEach((value, index) => paddedInput[index] = value);
+    windowedSignal.forEach((value, index) => paddedInput[index] = value);
+
+    // Convert to complex numbers
     const complexInput = convertToComplex(paddedInput);
 
+    // Perform FFT
     return fft(complexInput);
 }
+
+
 
 function convertToComplex(inputSignal) {
     return inputSignal.map(value => ({ re: value, im: 0 }));
