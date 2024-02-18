@@ -1334,8 +1334,13 @@ $(document).ready(function(){
                var sample_play_start    = context.currentTime + waitSecUntilPlay;
                var sample_play_duration = sampleDurationInSec-offset;
 
-               console.log("►", soundid, "in", waitSecUntilPlay.toFixed(2), "seconds.", "for", sample_play_duration);
                playSample(context, getSample(soundid), sample_play_start, sample_play_offset, sample_play_duration);
+               console.log(
+                "►", soundid, 
+                "in",   waitSecUntilPlay.toFixed(2), "sec.",
+                "from", sample_play_offset.toFixed(2), "sec.",
+                "for",  sample_play_duration.toFixed(2), "sec.",
+               );
             }else{
                //Marker is on sample
                var waitSecUntilPlay = 0;
@@ -1345,8 +1350,13 @@ $(document).ready(function(){
                var sample_play_start    = context.currentTime + waitSecUntilPlay;
                var sample_play_duration = sampleDurationInSec-offset;
 
-               console.log("►", soundid, "from", sample_play_offset.toFixed(2), "seconds.", "for", sample_play_duration);
                playSample(context, getSample(soundid), sample_play_start, sample_play_offset, sample_play_duration);
+               console.log(
+                "►", soundid, 
+                "in",   waitSecUntilPlay.toFixed(2), "sec.",
+                "from", sample_play_offset.toFixed(2), "sec.",
+                "for",  sample_play_duration.toFixed(2), "sec.",
+               );
             }
              
           }
