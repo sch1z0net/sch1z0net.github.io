@@ -200,6 +200,25 @@ function plotSpectrum(canvas, spectrum, sampleRate) {
 
 
 
+function displaySpec(audiobuffer){
+   const spectrum = fft_audio_buffer(audiobuffer);
+   const numBins = spectrum.length;
+   const minBinIndex = Math.round((minFrequency / sampleRate) * numBins);
+   const maxBinIndex = Math.round((maxFrequency / sampleRate) * numBins);
+   // Extract the subset of the spectrum corresponding to frequencies between minFrequency and maxFrequency
+   const subsetSpectrum = spectrum.slice(minBinIndex, maxBinIndex);
+   //console.log("FFT result:", subsetSpectrum);
+   const peakFrequency = findPeakFrequency(subsetSpectrum, sampleRate);
+   console.log("Peak frequency:", peakFrequency, "Hz");
+   // Plot waveform
+   const waveformCanvas = document.getElementById('waveformCanvas');
+   plotWaveform(waveformCanvas, audiobuffer);
+   // Plot spectrum
+   const spectrumCanvas = document.getElementById('spectrumCanvas');
+   plotSpectrum(spectrumCanvas, subsetSpectrum, sampleRate);
+}
+
+
 
 $(document).ready(function(){
 
@@ -209,34 +228,13 @@ const sampleRate = 44100; // Sample rate (samples per second)
 //const frequency = 440; // Frequency of the sine wave in Hz
 const frequency = 500; // Frequency of the sine wave in Hz
 //max is 20k
-
 // Generate sine wave buffer
 const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
 const sawtoothWaveBuffer = generateSawtoothWaveBuffer(durationInSeconds, sampleRate, frequency);
 
-
 var audiobuffer = sawtoothWaveBuffer;
+//displaySpec(audiobuffer);
 
-const spectrum = fft_audio_buffer(audiobuffer);
-const numBins = spectrum.length;
-const minBinIndex = Math.round((minFrequency / sampleRate) * numBins);
-const maxBinIndex = Math.round((maxFrequency / sampleRate) * numBins);
-// Extract the subset of the spectrum corresponding to frequencies between minFrequency and maxFrequency
-const subsetSpectrum = spectrum.slice(minBinIndex, maxBinIndex);
-
-console.log("FFT result:", subsetSpectrum);
-const peakFrequency = findPeakFrequency(subsetSpectrum, sampleRate);
-console.log("Peak frequency:", peakFrequency, "Hz");
-
-
-// Plot waveform
-const waveformCanvas = document.getElementById('waveformCanvas');
-plotWaveform(waveformCanvas, audiobuffer);
-// Plot spectrum
-const spectrumCanvas = document.getElementById('spectrumCanvas');
-plotSpectrum(spectrumCanvas, subsetSpectrum, sampleRate);
-
-  
 });
 
 
@@ -335,28 +333,25 @@ plotSpectrum(spectrumCanvas, subsetSpectrum, sampleRate);
             }
             
             // Perform FFT (you need to implement FFT function)
-            const spectrum = FFT(frame);
+            //const spectrum = FFT(frame);
+            displaySpec(frame);
             
             // Modify spectrum phase and magnitude (time stretching)
             // You would typically interpolate between frames to change the phase and magnitude
             
             // Perform IFFT (you need to implement IFFT function)
-            const processedFrame = IFFT(spectrum);
+            //const processedFrame = IFFT(spectrum);
             
             // Overlap-add
-            for (let j = 0; j < processedFrame.length; j++) {
-                outputData[i * hopSize + j] += processedFrame[j];
-            }
+            //for (let j = 0; j < processedFrame.length; j++) {
+            //    outputData[i * hopSize + j] += processedFrame[j];
+            //}
         }
     }
-    
+    outputBuffer = inputBuffer;
+
     return outputBuffer;
   }
-
-
-
-
-
 
 
 
@@ -1526,7 +1521,7 @@ $(document).ready(function(){
   customElements.define('sound-browser', SoundBrowser);
   
   $("#root").append($("<sound-browser>"));
-  var side_layout = $("<div>").css("height","100%").css("width","85%").css("display","inline-block");
+  var side_layout = $("<div>").css("height","70%").css("width","85%").css("display","inline-block");
   $("#root").append(side_layout);
   side_layout.append($("<top-window>"));
   side_layout.append($("<grid-window>"));
