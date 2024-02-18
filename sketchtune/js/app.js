@@ -138,8 +138,16 @@ const frequency = 500; // Frequency of the sine wave in Hz
 const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
 const sawtoothWaveBuffer = generateSawtoothWaveBuffer(durationInSeconds, sampleRate, frequency);
 const spectrum = fft_audio_buffer(sineWaveBuffer);
-console.log("FFT result:", spectrum);
-const peakFrequency = findPeakFrequency(spectrum);
+const numBins = spectrum.length;
+const maxFrequency = 10000; // Maximum frequency (10 kHz)
+const minFrequency = 20; // Minimum frequency (20 Hz)
+const minBinIndex = Math.round((minFrequency / sampleRate) * numBins);
+const maxBinIndex = Math.round((maxFrequency / sampleRate) * numBins);
+// Extract the subset of the spectrum corresponding to frequencies between minFrequency and maxFrequency
+const subsetSpectrum = spectrum.slice(minBinIndex, maxBinIndex);
+
+console.log("FFT result:", subsetSpectrum);
+const peakFrequency = findPeakFrequency(subsetSpectrum);
 console.log("Peak frequency:", peakFrequency, "Hz");
 
 
@@ -179,8 +187,6 @@ function plotSpectrum(canvas, spectrum, sampleRate) {
     ctx.clearRect(0, 0, width, height);
     ctx.beginPath();
 
-    const maxFrequency = 10000; // Maximum frequency (10 kHz)
-    const minFrequency = 20; // Minimum frequency (20 Hz)
     const numBins = spectrum.length;
 
     // Plot the spectrum using a logarithmic scale
@@ -229,7 +235,7 @@ function plotSpectrum(canvas, spectrum, sampleRate) {
             plotWaveform(waveformCanvas, sineWaveBuffer);
             // Plot spectrum
             const spectrumCanvas = document.getElementById('spectrumCanvas');
-            plotSpectrum(spectrumCanvas, spectrum, sampleRate);
+            plotSpectrum(spectrumCanvas, subsetSpectrum, sampleRate);
         });
 
 
