@@ -1284,15 +1284,16 @@ $(document).ready(function(){
 
   var samplesSetupProcess = false;
   function setupSamplesInQueue(){
+      console.log("-----SETUP SAMPLES IN QUEUE-----");
       $(queue_sounds).each(function(){
          var sound = this;
          $('sound-element[data-id="' + sound.id + '"]').prepend("<loading-circle>");
+         console.log("⟲ Setup",sound.id); 
       });
 
       setupSamples(context).then((soundamt) => {
           samplesSetupProcess = false;
-          stopAllSamples();
-          schedule();
+          reScheduleSamples();
       });
   }
   
