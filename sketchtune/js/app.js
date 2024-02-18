@@ -2,7 +2,8 @@
   // SOUND PROCESSING
 
 
-  function generateSineWaveBuffer(durationInSeconds, sampleRate, frequency) {
+
+function generateSineWaveBuffer(durationInSeconds, sampleRate, frequency) {
     const numSamples = durationInSeconds * sampleRate;
     const buffer = new Float32Array(numSamples);
     const amplitude = 0.5; // Amplitude of the sine wave
@@ -13,19 +14,11 @@
     }
 
     return buffer;
-  }
+}
 
-  // Example parameters
-  const durationInSeconds = 1; // Duration of the audio in seconds
-  const sampleRate = 44100; // Sample rate (samples per second)
-  const frequency = 440; // Frequency of the sine wave in Hz
-
-  // Generate sine wave buffer
-  const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
-
-
-
-
+function nextPowerOf2(n) {
+    return Math.pow(2, Math.ceil(Math.log2(n)));
+}
 
 function fft(input) {
     const N = input.length;
@@ -59,13 +52,30 @@ function fft(input) {
     return output;
 }
 
+function fft_padded(input) {
+    // Zero-padding to the next power of 2
+    const N = nextPowerOf2(input.length);
+    const paddedInput = new Array(N).fill(0);
+    input.forEach((value, index) => paddedInput[index] = value);
+
+    fft(paddedInput);
+}
+
 function convertToComplex(inputSignal) {
     return inputSignal.map(value => ({ re: value, im: 0 }));
 }
 
-// Example usage
+// Example parameters
+const durationInSeconds = 1; // Duration of the audio in seconds
+const sampleRate = 44100; // Sample rate (samples per second)
+const frequency = 440; // Frequency of the sine wave in Hz
+
+// Generate sine wave buffer
+const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
+
+// Convert to complex numbers and perform FFT
 const complexInput = convertToComplex(sineWaveBuffer);
-const spectrum = fft(complexInput);
+const spectrum = fft_padded(complexInput);
 console.log("FFT result:", spectrum);
 
 
