@@ -304,7 +304,7 @@ var colors = [
         var beats_from_start = x / BEAT_WIDTH;
         var sec_from_start  = spb*beats_from_start ;
 
-        startTimeInMS = performance.now() - seconds*1000;
+        startTimeInMS = performance.now() - sec_from_start*1000;
 
         setStartOffset(sec_from_start);
         updateTimeMarker();
