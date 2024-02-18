@@ -127,35 +127,8 @@ function findPeakFrequency(spectrum) {
 }
 
 
-// Example parameters
-const durationInSeconds = 1; // Duration of the audio in seconds
-const sampleRate = 44100; // Sample rate (samples per second)
-//const frequency = 440; // Frequency of the sine wave in Hz
-const frequency = 500; // Frequency of the sine wave in Hz
-//max is 20k
 
-// Generate sine wave buffer
-const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
-const sawtoothWaveBuffer = generateSawtoothWaveBuffer(durationInSeconds, sampleRate, frequency);
-const spectrum = fft_audio_buffer(sineWaveBuffer);
-const numBins = spectrum.length;
-const maxFrequency = 10000; // Maximum frequency (10 kHz)
-const minFrequency = 20; // Minimum frequency (20 Hz)
-const minBinIndex = Math.round((minFrequency / sampleRate) * numBins);
-const maxBinIndex = Math.round((maxFrequency / sampleRate) * numBins);
-// Extract the subset of the spectrum corresponding to frequencies between minFrequency and maxFrequency
-const subsetSpectrum = spectrum.slice(minBinIndex, maxBinIndex);
-
-console.log("FFT result:", subsetSpectrum);
-const peakFrequency = findPeakFrequency(subsetSpectrum);
-console.log("Peak frequency:", peakFrequency, "Hz");
-
-
-
-
-
-        $(document).ready(function() {
-            // Plot waveform on canvas
+           // Plot waveform on canvas
             function plotWaveform(canvas, buffer) {
                 const ctx = canvas.getContext('2d');
 
@@ -226,17 +199,39 @@ function plotSpectrum(canvas, spectrum, sampleRate) {
 
 
 
-           
 
 
 
-            // Plot waveform
-            const waveformCanvas = document.getElementById('waveformCanvas');
-            plotWaveform(waveformCanvas, sineWaveBuffer);
-            // Plot spectrum
-            const spectrumCanvas = document.getElementById('spectrumCanvas');
-            plotSpectrum(spectrumCanvas, subsetSpectrum, sampleRate);
-        });
+// Example parameters
+const durationInSeconds = 1; // Duration of the audio in seconds
+const sampleRate = 44100; // Sample rate (samples per second)
+//const frequency = 440; // Frequency of the sine wave in Hz
+const frequency = 500; // Frequency of the sine wave in Hz
+//max is 20k
+
+// Generate sine wave buffer
+const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
+const sawtoothWaveBuffer = generateSawtoothWaveBuffer(durationInSeconds, sampleRate, frequency);
+const spectrum = fft_audio_buffer(sineWaveBuffer);
+const numBins = spectrum.length;
+const maxFrequency = 10000; // Maximum frequency (10 kHz)
+const minFrequency = 20; // Minimum frequency (20 Hz)
+const minBinIndex = Math.round((minFrequency / sampleRate) * numBins);
+const maxBinIndex = Math.round((maxFrequency / sampleRate) * numBins);
+// Extract the subset of the spectrum corresponding to frequencies between minFrequency and maxFrequency
+const subsetSpectrum = spectrum.slice(minBinIndex, maxBinIndex);
+
+console.log("FFT result:", subsetSpectrum);
+const peakFrequency = findPeakFrequency(subsetSpectrum);
+console.log("Peak frequency:", peakFrequency, "Hz");
+
+
+// Plot waveform
+const waveformCanvas = document.getElementById('waveformCanvas');
+plotWaveform(waveformCanvas, sawtoothWaveBuffer);
+// Plot spectrum
+const spectrumCanvas = document.getElementById('spectrumCanvas');
+plotSpectrum(spectrumCanvas, subsetSpectrum, sampleRate);
 
 
 
