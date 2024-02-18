@@ -169,21 +169,18 @@ console.log("FFT result:", spectrum);
 
                 const fixedFrequencies = [20, 30, 40, 50, 100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000, 10000];
 
-                const logMinFrequency = Math.log10(minFrequency);
-                const logMaxFrequency = Math.log10(maxFrequency);
-
                 for (let i = 0; i < fixedFrequencies.length; i++) {
                     const frequency = fixedFrequencies[i];
-                    const logFrequency = Math.log10(frequency);
-
-                    // Map the frequency to the corresponding bin index
-                    const binIndex = Math.floor((logFrequency - logMinFrequency) / (logMaxFrequency - logMinFrequency) * numBins);
-                    
-                    // Calculate the x-coordinate for the label
-                    const x = binIndex * binWidth;
-                    
+                    const x = (Math.log10(frequency) - Math.log10(minFrequency)) / Math.log10(maxFrequency / minFrequency) * width;
                     ctx.fillText(frequency.toFixed(0), x, height - 5); // Display frequency
+                    ctx.beginPath();
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, height);
+                    ctx.strokeStyle = 'gray';
+                    ctx.stroke();
                 }
+
+
             }
 
             // Plot waveform
