@@ -25,15 +25,19 @@
   const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
 
 
-
-  // Compute FFT on the sine wave buffer
-  const fft = new FFT(sineWaveBuffer.length, sampleRate);
-  fft.forward(sineWaveBuffer);
-
-  // Get the frequency spectrum
-  const frequencySpectrum = fft.spectrum;
-  console.log(frequencySpectrum);
-
+        // Example usage
+        const inputSignal = [
+            math.complex(1, 0),
+            math.complex(2, 0),
+            math.complex(3, 0),
+            math.complex(4, 0),
+            math.complex(5, 0),
+            math.complex(6, 0),
+            math.complex(7, 0),
+            math.complex(8, 0)
+        ];
+        const spectrum = math.fft(inputSignal);
+        console.log("FFT result:", spectrum);
 
 
 
