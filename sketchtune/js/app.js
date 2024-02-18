@@ -1299,6 +1299,7 @@ $(document).ready(function(){
   
 
   function schedule(){
+    console.log("----SCHEDULE----");
     $("track-pattern").each(function(){
         var soundid = $(this).attr("data-soundid");
         if(soundid != null){
@@ -1311,19 +1312,22 @@ $(document).ready(function(){
             var sampleStartTimeInSec = start*SPB;
             var sampleDurationInSec = duration*SPB;
             var sampleEndTimeInSec = sampleStartTimeInSec + sampleDurationInSec;
+
+            console.log("----SCHEDULE----");
+
             if(time_marker_in_sec >= sampleEndTimeInSec){
                //Marker has passed the sample
             }else if(time_marker_in_sec <= sampleStartTimeInSec){
                //Marker hasn't reached sample yet
                var waitUntilPlay = sampleStartTimeInSec - time_marker_in_sec;
-               console.log("Wait seconds until play:",waitUntilPlay);
+               console.log("►", soundid, "in", waitUntilPlay.toFixed(2), "seconds.");
                var offset = 0;
                playSample(context, getSample(soundid), context.currentTime + waitUntilPlay, offset, sampleDurationInSec-offset);
             }else{
                //Marker is on sample
                var waitUntilPlay = 0;
                var offset = time_marker_in_sec - sampleStartTimeInSec;
-               console.log("Play offset seconds:",offset);
+               console.log("►", soundid, "from", offset.toFixed(2), "seconds.");
                playSample(context, getSample(soundid), context.currentTime + waitUntilPlay, offset, sampleDurationInSec-offset);
             }
              
