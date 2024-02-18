@@ -104,12 +104,12 @@
   function setStartOffsetInSec(offset){
      startOffsetInSec = offset;
      startOffsetInBeats = startOffsetInSec*BPS;
-     console.log("Start from Beat ",startOffsetInBeats);
   }
 
   function setStartOffsetInBeats(offset){
      startOffsetInBeats = offset;
      startOffsetInSec = startOffsetInBeats*SPB;
+     console.log("Start from Beat ",startOffsetInBeats);
   }
 
 
