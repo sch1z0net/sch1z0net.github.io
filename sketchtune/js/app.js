@@ -1279,7 +1279,7 @@ $(document).ready(function(){
     
 
     const originalAudioBuffer = audioBuffer;
-    const stretchFactor = 2.0;
+    const stretchFactor = 1/GLOBAL_PLAYBACK_RATE;
     const grainSize = 0.02;
     const overlap = 0.5;
 
