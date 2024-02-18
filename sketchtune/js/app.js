@@ -1169,12 +1169,11 @@ $(document).ready(function(){
       });
 
       button_pause.on("click", function(){ 
+        startOffsetInSec = time_marker_in_sec;
         button_pause.css("display","none");
         button_play.css("display","inline-block");
         is_playing = false;
         stopAllSamples();
-        startOffsetInSec = time_marker_in_sec;
-
       });
 
       button_stop.on("click", function(){ 
