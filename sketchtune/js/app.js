@@ -53,7 +53,8 @@
     WPB = BEAT_WIDTH;
     $("#bpm").val(BPM);
     resizeTimeBar();
-    console.log("⚙︎",BPM,"at",(Math.floor(time_marker_in_beats/4)+1)+"."+(Math.floor(time_marker_in_beats%4)+1));
+    console.log("----------SETTINGS----------");
+    console.log("⚙︎BPM",BPM,"at",(Math.floor(time_marker_in_beats/4)+1)+"."+(Math.floor(time_marker_in_beats%4)+1));
     resetClock();
     setStartOffsetInBeats(time_marker_in_beats); 
     updateTimeMarker();
@@ -1297,7 +1298,7 @@ $(document).ready(function(){
   
 
   function schedule(){
-    console.log("----SCHEDULE----");
+    console.log("----------RESCHEDULE----------");
     $("track-pattern").each(function(){
         var soundid = $(this).attr("data-soundid");
         if(soundid != null){
@@ -1310,8 +1311,6 @@ $(document).ready(function(){
             var sampleStartTimeInSec = start*SPB;
             var sampleDurationInSec = duration*SPB;
             var sampleEndTimeInSec = sampleStartTimeInSec + sampleDurationInSec;
-
-            console.log("----SCHEDULE----");
 
             if(time_marker_in_sec >= sampleEndTimeInSec){
                //Marker has passed the sample
