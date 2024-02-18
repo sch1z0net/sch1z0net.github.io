@@ -1214,7 +1214,7 @@ $(document).ready(function(){
   let playingAudioNodes = [];
 
 
-  function timeStretchSample(audioBuffer){
+  function timeStretchSample(audioContext, audioBuffer){
     const originalDuration = audioBuffer.duration;
     const desiredDuration = 4; // Desired duration in seconds
 
