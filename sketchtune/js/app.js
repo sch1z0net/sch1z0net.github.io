@@ -52,6 +52,7 @@
     console.log("Update BPM to: ",BPM);
     console.log("at Beat: ",(Math.floor(time_marker_in_beats/4)+1)+"."+(Math.floor(time_marker_in_beats%4)+1));
     resetClock();
+    setStartOffsetInBeats(time_marker_in_beats); 
     updateTimeMarker();
   }
 
