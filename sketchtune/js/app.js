@@ -889,7 +889,7 @@ var colors = [
     connectedCallback() {
       $(this).addClass("unselectable");
       var bpm_div = $("<div id='bpm_div'>BPM</div>").prepend("<input id='bpm'>");
-      bpm_div.on('input', function() {
+      $("#bpm").on('input', function() {
          var old_bpm = bpm;
          // Get the entered value
          var inputValue = $(this).val();
@@ -905,7 +905,7 @@ var colors = [
            $(this).val(bpm);
          }
       });
-      bpm_div.on('keypress', function(event) {
+      $("#bpm").on('keypress', function(event) {
           // Check if Enter key is pressed (key code 13)
           if (event.which === 13) {  $(this).blur();  }
       });
