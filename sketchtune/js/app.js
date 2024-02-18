@@ -162,10 +162,10 @@ console.log("FFT result:", spectrum);
 
             // Plot waveform
             const waveformCanvas = document.getElementById('waveformCanvas');
-            plotWaveform(waveformCanvas, sineWaveBuffer, sampleRate);
+            plotWaveform(waveformCanvas, sineWaveBuffer);
             // Plot spectrum
             const spectrumCanvas = document.getElementById('spectrumCanvas');
-            plotSpectrum(spectrumCanvas, spectrum);
+            plotSpectrum(spectrumCanvas, spectrum, sampleRate);
         });
 
 
