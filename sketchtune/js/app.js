@@ -301,15 +301,13 @@ var colors = [
      // Reposition Time Marker
      if(isMouseDownOnTrackRow && !isSelectingPatterns){
         const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
-        $("time-marker").css("margin-left",x);
-        var beats = x / BEAT_WIDTH;
-        var seconds = spb*beats;
-        startTimeInMS = performance.now() - seconds*1000;
+        var beats_from_start = x / BEAT_WIDTH;
+        var sec_from_start  = spb*beats_from_start ;
+
+        setStartOffset(sec_from_start);
+        updateTimeMarker();
 
         reinitPlayingTracks = true;
-
-        setStartOffset(startOffsetInSec + (performance.now() - startTimeInMS) / 1000);
-        updateTimeMarker();
      }
 
      activePattern = null;
