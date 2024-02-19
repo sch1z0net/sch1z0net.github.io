@@ -172,8 +172,9 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     // Find the maximum magnitude in the smoothed frequency data
     const minMagnitude = Math.min(...smoothedData);
     const maxMagnitude = Math.max(...smoothedData);
-    var minDB = -scaleMagnitudeToDecibels(minMagnitude);
-    var maxDB = -scaleMagnitudeToDecibels(maxMagnitude);
+    var minDB = scaleMagnitudeToDecibels(minMagnitude);
+    var maxDB = scaleMagnitudeToDecibels(maxMagnitude);
+    console.log(minDB);
 
     // Plot the spectrum using a logarithmic scale
     const logScaleFactor = Math.log10(numBins); // Scale factor for logarithmic scaling
@@ -196,7 +197,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
 
       // SCALE IN DEZIBEL
       var dBValue = scaleMagnitudeToDecibels(normalizedMagnitude);
-      normalizedMagnitude = normalizeDecibels(dBValue, minDB, 0, 0, height);
+      normalizedMagnitude = normalizeDecibels(dBValue, -minDB, 0, 0, height);
 
       // Store the control point for Catmull-Rom spline
       const y = height - normalizedMagnitude; // Invert Y-axis
