@@ -1778,11 +1778,16 @@ function createAnalyzer(audioContext, audioSource) {
       if(context != null){
         context.close();
       }
+
       button_load.css("display","none");
       button_pause.css("display","inline-block");
       context = new AudioContext();
       setupSamplesInQueue();
-      createAnalyzer(context);
+
+      context.resume().then(() => {
+        console.log('AudioContext is now resumed');
+        createAnalyzer(context);
+      });
 
       button_play.on("click", function(){ 
         button_play.css("display","none");
