@@ -221,10 +221,11 @@ class AudioProcessor extends AudioWorkletProcessor {
   }
 
   ema_smoothingFrequencyData(){
+    var frequencyData = this.frequencyData;
     // Define a smoothing factor (alpha) for the exponential moving average
     const alpha = 0.2; // Adjust this value based on the desired smoothing effect
     // Initialize an array to store the smoothed frequency data
-    let smoothedFrequencyData = new Uint8Array(this.frequencyData.length);
+    let smoothedFrequencyData = new Uint8Array(frequencyData.length);
 
     // Perform exponential moving average
     for (let i = 0; i < frequencyData.length; i++) {
