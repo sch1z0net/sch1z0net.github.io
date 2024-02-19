@@ -36,8 +36,8 @@ function fft(input) {
 
 function ifft(input) {
     // Reverse the order of the complex input array (if needed)
-    //const reversedInput = input.slice().reverse();
-    const reversedInput = input.slice();
+    const reversedInput = input.slice().reverse();
+    //const reversedInput = input.slice();
 
     // Apply FFT to the reversed array
     const fftResult = fft(reversedInput);
