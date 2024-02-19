@@ -172,9 +172,8 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     // Find the maximum magnitude in the smoothed frequency data
     const minMagnitude = Math.min(...smoothedData);
     const maxMagnitude = Math.max(...smoothedData);
-    var minDB = scaleMagnitudeToDecibels(minMagnitude);
-    var maxDB = scaleMagnitudeToDecibels(maxMagnitude);
-    console.log(maxDB);
+    var minDB = -scaleMagnitudeToDecibels(minMagnitude);
+    var maxDB = -scaleMagnitudeToDecibels(maxMagnitude);
 
     // Plot the spectrum using a logarithmic scale
     const logScaleFactor = Math.log10(numBins); // Scale factor for logarithmic scaling
