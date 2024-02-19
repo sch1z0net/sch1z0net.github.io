@@ -173,6 +173,17 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
       // Store the control point for Catmull-Rom spline
       const y = height - normalizedMagnitude; // Invert Y-axis
       controlPoints.push({ x, y });
+
+      if (fillWithColor) {
+        // Fill the area under the curve with a gradient color
+        const gradient = ctx.createLinearGradient(0, 0, 0, height);
+        gradient.addColorStop(0, 'blue');
+        gradient.addColorStop(1, 'transparent');
+        ctx.fillStyle = gradient;
+        ctx.lineTo(x, height); // Line down to the bottom-right corner
+        ctx.closePath();
+        ctx.fill();
+      }
     }
 
     // Draw Catmull-Rom spline passing through control points
