@@ -139,19 +139,19 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     // Plot the spectrum using a logarithmic scale
     const logScaleFactor = Math.log10(numBins); // Scale factor for logarithmic scaling
     for (let x = 0; x < width; x++) {
-        const binIndex = Math.pow(10, x / width * logScaleFactor); // Calculate bin index using logarithmic scale
-        const lowerBinIndex = Math.floor(binIndex);
-        const upperBinIndex = Math.ceil(binIndex);
-        const fraction = binIndex - lowerBinIndex;
+      const binIndex = Math.pow(10, x / width * logScaleFactor); // Calculate bin index using logarithmic scale
+      const lowerBinIndex = Math.floor(binIndex);
+      const upperBinIndex = Math.ceil(binIndex);
+      const fraction = binIndex - lowerBinIndex;
 
-        // Interpolate between neighboring frequency bins
-        const magnitude = frequencyData[lowerBinIndex] * (1 - fraction) + frequencyData[upperBinIndex] * fraction;
+      // Interpolate between neighboring frequency bins
+      const magnitude = frequencyData[lowerBinIndex] * (1 - fraction) + frequencyData[upperBinIndex] * fraction;
 
-        // Normalize magnitude for plotting
-        const normalizedMagnitude = magnitude / 255; // Assuming frequencyData values are in the range [0, 255]
+      // Normalize magnitude for plotting (scale it to the range [0, 255])
+      const normalizedMagnitude = Math.round((magnitude / 255) * 255); // Scale to [0, 255] range
 
-        const y = height - normalizedMagnitude * height; // Invert Y-axis
-        ctx.lineTo(x, y);
+      const y = height - normalizedMagnitude * height / 255; // Invert Y-axis
+      ctx.lineTo(x, y);
     }
 
     ctx.strokeStyle = 'red';
