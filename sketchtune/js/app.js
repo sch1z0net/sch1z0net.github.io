@@ -257,7 +257,7 @@ function plotSpectrumLive(frequencyData, sampleRate) {
     ctx.font = '10px Arial';
     ctx.textAlign = 'center';
 
-    const fixedFrequencies = [20, 30, 40, 50, 100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000, 10000];
+    const fixedFrequencies = [20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 400, 500, 1000, 2000, 4000, 8000, 10000];
 
     for (let i = 0; i < fixedFrequencies.length; i++) {
         const frequency = fixedFrequencies[i];
@@ -267,6 +267,7 @@ function plotSpectrumLive(frequencyData, sampleRate) {
         ctx.moveTo(x, 0);
         ctx.lineTo(x, height);
         ctx.strokeStyle = 'gray';
+        if(frequency == 100 || frequency == 1000 || frequency == 10000){ ctx.strokeStyle = 'red'; }
         ctx.stroke();
     }
 }
