@@ -151,5 +151,5 @@ function convertToComplex(inputSignal) {
         }
     }
 
-    return outputData;
+    return outputBuffer;
   }
