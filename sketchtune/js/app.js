@@ -1786,7 +1786,7 @@ function createAnalyzer(audioContext, audioSource) {
 
       context.resume().then(() => {
         console.log('AudioContext is now resumed');
-        createAnalyzer(context);
+        createAnalyzer(context,context.destination);
       });
 
       button_play.on("click", function(){ 
