@@ -1511,8 +1511,10 @@ var colors = [
           draggedSoundElement = this;
 
           // Trigger Audio Context Creation if not initialized yet
-          triggeredAutomatically = true;
-          $("#load").click();
+          if(!triggeredAutomatically){
+            triggeredAutomatically = true;
+            $("#load").click();
+          }
         });
 
         $(this).prepend("<loading-circle>");
