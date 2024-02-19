@@ -1636,7 +1636,7 @@ $(document).ready(function(){
     //const resampledBuffer = phaseVocoder(audioContext, audioBuffer, stretchFactor);
     const resampledBuffer = audioBuffer;
     // Plot waveform
-    plotWaveform(waveformCanvas, resampledBuffer);
+    plotWaveform(resampledBuffer);
     //displaySpectrumRealTime(audioContext, audioBuffer);
 
     const sampleSource = new AudioBufferSourceNode(audioContext, {
