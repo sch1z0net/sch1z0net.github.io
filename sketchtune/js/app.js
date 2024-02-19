@@ -1508,6 +1508,9 @@ var colors = [
           event.stopPropagation();
           isDraggingSound = true;
           draggedSoundElement = this;
+
+          // Trigger Audio Context Creation if not initialized yet
+          $("#load").click();
         });
 
         $(this).prepend("<loading-circle>");
