@@ -128,7 +128,8 @@ function findPeakFrequency(spectrum, sampleRate) {
 
 
 // Plot waveform on canvas
-function plotWaveform(canvas, buffer) {
+function plotWaveform(buffer) {
+    const canvas = document.getElementById('waveformCanvas');
     const ctx = canvas.getContext('2d');
 
     const width = canvas.width;
@@ -152,7 +153,8 @@ const maxFrequency = 10000; // Maximum frequency (10 kHz)
 const minFrequency = 20; // Minimum frequency (20 Hz)
 
 // Plot spectrum on canvas in a logarithmic scale
-function plotSpectrum(canvas, spectrum, sampleRate) {
+function plotSpectrum(spectrum, sampleRate) {
+    const canvas = document.getElementById('spectrumCanvas');
     const ctx = canvas.getContext('2d');
 
     const width = canvas.width;
@@ -210,11 +212,7 @@ function displaySpec(audiobuffer, sampleRate){
    //console.log("FFT result:", subsetSpectrum);
    const peakFrequency = findPeakFrequency(subsetSpectrum, sampleRate);
    console.log("Peak frequency:", peakFrequency, "Hz");
-   // Plot waveform
-   const waveformCanvas = document.getElementById('waveformCanvas');
-   plotWaveform(waveformCanvas, audiobuffer);
    // Plot spectrum
-   const spectrumCanvas = document.getElementById('spectrumCanvas');
    plotSpectrum(spectrumCanvas, subsetSpectrum, sampleRate);
 }
 
@@ -301,6 +299,49 @@ var audiobuffer = sawtoothWaveBuffer;
     return resampledBuffer;
   }
   */
+
+
+  function displaySpectrumRealTime(audioContext, inputBuffer) {
+    const windowSize = 2048; // Size of the analysis window
+    const hopSize = Math.floor(windowSize / 4); // Hop size for overlap-add
+    const analysisWindow = new Float32Array(windowSize); // Analysis window
+
+    // Initialize analysis window with Hanning window function
+    for (let i = 0; i < windowSize; i++) {
+        analysisWindow[i] = 0.5 * (1 - Math.cos(2 * Math.PI * i / windowSize));
+    }
+
+    const numChannels = inputBuffer.numberOfChannels;
+    const numFrames = Math.ceil(inputDataLeft.length / hopSize);
+
+    // Process input buffer frame by frame
+    for (let i = 0; i < numFrames; i++) {
+        // Extract frame from both channels
+        const start = i * hopSize;
+        const end = Math.min(start + windowSize, inputDataLeft.length);
+        const frameLeft  = inputDataLeft.subarray(start, end);
+        const frameRight = inputDataRight.subarray(start, end);
+
+        // Combine channels by averaging
+        const frame = new Float32Array(frameLeft.length);
+        for (let j = 0; j < frame.length; j++) {
+            frame[j] = 0.5 * (frameLeft[j] + frameRight[j]);
+        }
+
+        // Apply window function
+        for (let j = 0; j < frame.length; j++) {
+            frame[j] *= analysisWindow[j];
+        }
+
+        // Perform FFT (you need to implement FFT function)
+        const spectrum = FFT(frame);
+
+        // Display spectrum (you need to implement display function)
+        displaySpectrum(spectrum, audioContext.sampleRate);
+    }
+  }
+
+
 
 
   // Function to perform phase vocoding
@@ -1592,7 +1633,11 @@ $(document).ready(function(){
     */
 
     const stretchFactor = 1/GLOBAL_PLAYBACK_RATE;
-    const resampledBuffer = phaseVocoder(audioContext, audioBuffer, stretchFactor);
+    //const resampledBuffer = phaseVocoder(audioContext, audioBuffer, stretchFactor);
+    const resampledBuffer = audioBuffer;
+    // Plot waveform
+    plotWaveform(waveformCanvas, resampledBuffer);
+    displaySpectrumRealTime(audioContext, audioBuffer);
 
     const sampleSource = new AudioBufferSourceNode(audioContext, {
       buffer: resampledBuffer,
