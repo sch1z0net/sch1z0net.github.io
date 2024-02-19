@@ -193,9 +193,7 @@ class AudioProcessor extends AudioWorkletProcessor {
   getByteFrequencyData(){
      return this.frequencyData;
   }
-
-
-
+}
 
 
 
