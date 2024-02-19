@@ -1511,6 +1511,7 @@ var colors = [
 
           // Trigger Audio Context Creation if not initialized yet
           $("#load").click();
+          $("#stop").click();
         });
 
         $(this).prepend("<loading-circle>");
