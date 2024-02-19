@@ -200,7 +200,7 @@ function plotSpectrum(canvas, spectrum, sampleRate) {
 
 
 
-function displaySpec(audiobuffer){
+function displaySpec(audiobuffer, sampleRate){
    const spectrum = fft_audio_buffer(audiobuffer);
    const numBins = spectrum.length;
    const minBinIndex = Math.round((minFrequency / sampleRate) * numBins);
@@ -334,7 +334,7 @@ var audiobuffer = sawtoothWaveBuffer;
             
             // Perform FFT (you need to implement FFT function)
             //const spectrum = FFT(frame);
-            displaySpec(frame);
+            displaySpec(frame, audioContext.sampleRate);
             
             // Modify spectrum phase and magnitude (time stretching)
             // You would typically interpolate between frames to change the phase and magnitude
