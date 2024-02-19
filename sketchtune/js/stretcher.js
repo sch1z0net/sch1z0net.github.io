@@ -35,24 +35,19 @@ function fft(input) {
 }
 
 function ifft(input) {
-    // Reverse the order of the complex input array (if needed)
-    const reversedInput = input.slice().reverse();
-    //const reversedInput = input.slice();
+    const N = input.length;
+    const pi = Math.PI;
 
-    // Apply FFT to the reversed array
-    const fftResult = fft(reversedInput);
+    // Take the complex conjugate of the input spectrum
+    const conjugateSpectrum = input.map(({ re, im }) => ({ re, im: -im }));
+
+    // Apply FFT to the conjugate spectrum
+    const fftResult = fft(conjugateSpectrum);
 
     // Take the complex conjugate of the FFT result
-    const conjugateResult = fftResult.map(({ re, im }) => ({ re, im: -im }));
+    const ifftResult = fftResult.map(({ re, im }) => ({ re: re / N, im: -im / N }));
 
-    // Perform FFT on the conjugate result
-    const fftConjugate = fft(conjugateResult);
-
-    // Take the complex conjugate of the final FFT result
-    const ifftResult = fftConjugate.map(({ re, im }) => ({ re, im: -im }));
-
-    // Scale the output by dividing by the length of the input array
-    return ifftResult.map(({ re, im }) => ({ re: re / input.length, im: im / input.length }));
+    return ifftResult;
 }
 
 
