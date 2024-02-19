@@ -314,16 +314,6 @@ var audiobuffer = sawtoothWaveBuffer;
 
 
 
-async function initAudioWorkletNode(context) {
-    await context.audioWorklet.addModule('./js/audio-processor.js');
-    const audioWorkletNode = new AudioWorkletNode(context, 'audio-processor');
-    // Connect the master gain node to the audio worklet node
-    masterGainNode.connect(audioWorkletNode);
-}
-
-
-
-
 
 
 
@@ -1894,6 +1884,12 @@ function createAnalyserNode(audioContext, audioSource) {
   var samples;
 
 
+  async function initAudioWorkletNode(context) {
+    await context.audioWorklet.addModule('./js/audio-processor.js');
+    const audioWorkletNode = new AudioWorkletNode(context, 'audio-processor');
+    // Connect the master gain node to the audio worklet node
+    masterGainNode.connect(audioWorkletNode);
+  }
 
 
 
