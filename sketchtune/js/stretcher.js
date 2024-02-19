@@ -99,7 +99,7 @@ function convertToAudioSignal(complex) {
   // Function to perform phase vocoding
   function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
 
-    const windowSize = 2048; // Size of the analysis window
+    const windowSize = 2048*4; // Size of the analysis window
     const hopSize = Math.floor(windowSize / 4); // Hop size for overlap-add   //512
 
 
