@@ -552,6 +552,9 @@ track-pattern-br {
   margin-right: 4px;
 }
 
-
+canvas {
+  height: 25%;
+  width: 50%;
+}
 
 
