@@ -207,7 +207,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     ctx.closePath(); // Close the path
 
     // Fill the area under the curve with the specified color
-    ctx.fillStyle = 'red';
+    ctx.fillStyle = 'white';
     ctx.fill();
 
 
