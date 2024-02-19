@@ -181,7 +181,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     ctx.closePath(); // Close the path
 
     // Fill the area under the curve with the specified color
-    ctx.fillStyle = 'red';
+    ctx.fillStyle = 'white';
     ctx.fill();
 
 
@@ -195,7 +195,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     // Draw the last segment using a straight line
     ctx.lineTo(controlPoints[controlPoints.length - 1].x, controlPoints[controlPoints.length - 1].y);
     
-    ctx.strokeStyle = 'white';
+    ctx.strokeStyle = 'red';
     ctx.stroke();
   }
 
