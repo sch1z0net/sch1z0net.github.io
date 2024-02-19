@@ -128,8 +128,8 @@ class AudioProcessor extends AudioWorkletProcessor {
     this.port.onmessage = this.handleMessage.bind(this);
     
     //this.fftSize = 512;
-    this.fftSize = 1024;
-    //this.fftSize = 2048;
+    //this.fftSize = 1024;
+    this.fftSize = 2048;
     //this.fftSize = 4096;
     //this.fftSize = 8192;
     this.lastProcessingTime = 0;
