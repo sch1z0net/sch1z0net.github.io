@@ -656,14 +656,6 @@ var colors = [
     // Append color palette and target to the body
     $("body").append(contextMenu.append(createColorPalette()));
 
-    $(document).on('mousedown', function(){
-        // Trigger Audio Context Creation if not initialized yet
-        if(!contextInitialized){
-          triggeredAutomatically = true;
-          $("#load").click();
-        }
-    });
-
     $(document).on("click", function (event) {
         if (event.button !== 2) {
             contextMenu.css("display", "none");
@@ -1931,6 +1923,14 @@ function createAnalyserNode(audioContext, audioSource) {
             button_play.click();
         }
       });
+  });
+
+  $(document).on('mousedown', function(){
+      // Trigger Audio Context Creation if not initialized yet
+      if(!contextInitialized){
+          triggeredAutomatically = true;
+          $("#load").click();
+      }
   });
 
   var samplesSetupProcess = false;
