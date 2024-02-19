@@ -4,11 +4,10 @@ class AudioProcessor extends AudioWorkletProcessor {
     const input = inputs[0]; // Get the input audio data
     const output = outputs[0]; // Get the output audio data
 
-    // Check if input has at least one channel
-    if (!input || !input[0]) {
-      // Handle the case of no input or no channels
-      console.error("AudioProcessor has no Input!");
-      return false; // Return false to indicate no processing was done
+    // Check if input data is null or empty
+    if (!input || input.length === 0) {
+      console.log("no audio to process but keep processor running");
+      return true; // Keep the processor alive without processing any audio data
     }
 
     // Extract audio samples from the input array
