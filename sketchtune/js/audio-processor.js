@@ -133,7 +133,7 @@ class AudioProcessor extends AudioWorkletProcessor {
     //this.fftSize = 4096;
     //this.fftSize = 8192;
     this.lastProcessingTime = 0;
-    this.processingInterval = 20; // Processing interval in milliseconds (adjust as needed)
+    this.processingInterval = 200; // Processing interval in milliseconds (adjust as needed)
     // Create an array to store the frequency data
     this.frequencyBinCount = this.fftSize / 2;
     this.frequencyData = new Uint8Array(this.frequencyBinCount).fill(0); // Only need half the FFT size due to Nyquist theorem
@@ -160,6 +160,14 @@ class AudioProcessor extends AudioWorkletProcessor {
       return true; // Keep the processor alive without processing any audio data
     }
 
+
+    // Throttle processing
+    const currentTime = this.currentTime;
+    if (currentTime - this.lastProcessingTime < this.processingInterval) {
+      return true; // Keep the processor alive without processing any audio data
+    }
+
+
     // Extract audio samples from the input array (assuming mono input)
     const monoChannel = input[0];
     const numSamples = monoChannel.length;
@@ -178,6 +186,9 @@ class AudioProcessor extends AudioWorkletProcessor {
       // Convert FFT data to frequency data
       this.convertToFrequencyData(fftData);
     }
+
+    // Update the last processing time
+    this.lastProcessingTime = currentTime;
 
     return true; // Keep the processor alive
   }
