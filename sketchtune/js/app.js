@@ -350,7 +350,7 @@ class AudioProcessor extends AudioWorkletProcessor {
 registerProcessor('audio-processor', AudioProcessor);
 
 
-async function initAudioWorkletNode() {
+async function initAudioWorkletNode(context) {
     await context.audioWorklet.addModule('audio-processor.js');
     const audioWorkletNode = new AudioWorkletNode(context, 'audio-processor');
     // Connect the master gain node to the audio worklet node
@@ -1959,7 +1959,7 @@ function createAnalyserNode(audioContext, audioSource) {
       masterGainNode = context.createGain();
       masterGainNode.connect(context.destination);
       //createAnalyzer(context,masterGainNode);
-      initAudioWorkletNode();
+      initAudioWorkletNode(context);
 
 
 
