@@ -1878,6 +1878,10 @@ function createAnalyserNode(audioContext, audioSource) {
 
   button_load.on("click", function(){
       button_load.css("display","none");
+      if(triggeredAutomatically){
+         button_play.css("display","inline-block");
+      }
+
       if(context != null){
         context.close();
       }
