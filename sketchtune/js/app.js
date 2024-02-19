@@ -1585,7 +1585,15 @@ $(document).ready(function(){
 
 
 
-
+async function createCustomAnalyser(context, audioNode) {
+  await context.audioWorklet.addModule('./js/audio-processor.js');
+  const audioProcessorNode = new AudioWorkletNode(context, 'audio-processor');
+  // Connect the master gain node to the audio processor node
+  audioNode.connect(audioProcessorNode);
+  // Create an instance of AudioProcessor
+  const audioProcessor = new AudioProcessor();
+  return audioProcessorNode;
+}
 
 
 
@@ -1618,7 +1626,7 @@ function createAnalyserNode(audioContext, audioSource) {
     // BUILT IN WEB API ANALYZER
     //const analyserNode = audioContext.createAnalyser();
     // CUSTOM FFT ANALYZER
-    const analyserNode = initAudioWorkletNode(audioContext, audioSource);
+    const analyserNode = createCustomAnalyser(audioContext, audioSource);
 
     analyserNode.fftSize = 2048; // Set FFT size for frequency analysis
 
@@ -1630,7 +1638,7 @@ function createAnalyserNode(audioContext, audioSource) {
 
     // Connect AnalyserNode to the audio source
     try {
-        //audioSource.connect(analyserNode);
+        audioSource.connect(analyserNode);
         console.log('AnalyserNode connected successfully.');
     } catch (error) {
         console.error('Error connecting AnalyserNode:', error);
@@ -1773,15 +1781,6 @@ function createAnalyserNode(audioContext, audioSource) {
 
   var init = false;
   var samples;
-
-
-  async function initAudioWorkletNode(context,audioNode) {
-    await context.audioWorklet.addModule('./js/audio-processor.js');
-    const audioWorkletNode = new AudioWorkletNode(context, 'audio-processor');
-    // Connect the master gain node to the audio worklet node
-    audioNode.connect(audioWorkletNode);
-    return audioWorkletNode;
-  }
 
 
 
