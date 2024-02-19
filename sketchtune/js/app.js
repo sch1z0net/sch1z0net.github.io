@@ -251,6 +251,24 @@ function plotSpectrumLive(frequencyData, sampleRate) {
 
     ctx.strokeStyle = 'red';
     ctx.stroke();
+
+    // Plot logarithmic number grid
+    ctx.fillStyle = 'black';
+    ctx.font = '10px Arial';
+    ctx.textAlign = 'center';
+
+    const fixedFrequencies = [20, 30, 40, 50, 100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000, 10000];
+
+    for (let i = 0; i < fixedFrequencies.length; i++) {
+        const frequency = fixedFrequencies[i];
+        const x = (Math.log10(frequency) - Math.log10(minFrequency)) / Math.log10(maxFrequency / minFrequency) * width;
+        ctx.fillText(frequency.toFixed(0), x, height - 5); // Display frequency
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.strokeStyle = 'gray';
+        ctx.stroke();
+    }
 }
 
 
