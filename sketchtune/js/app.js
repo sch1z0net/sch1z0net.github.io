@@ -499,6 +499,7 @@ var audiobuffer = sawtoothWaveBuffer;
   var BEAT_WIDTH = parseInt($("#root").css("--beat-width"));
   var ROOT_PADDING;
 
+  let contextInitialized = false;
   let triggeredAutomatically = false;
   let context;
 
@@ -657,7 +658,7 @@ var colors = [
 
     $(document).on('mousedown', function(){
         // Trigger Audio Context Creation if not initialized yet
-        if(!triggeredAutomatically){
+        if(!contextInitialized){
           triggeredAutomatically = true;
           $("#load").click();
         }
@@ -1873,7 +1874,8 @@ function createAnalyserNode(audioContext, audioSource) {
 
 
   button_load.on("click", function(event){
-      event.stopPropagation();
+      if(contextInitialized){ return; }
+
       button_load.css("display","none");
       if(triggeredAutomatically){
          button_play.css("display","inline-block");
