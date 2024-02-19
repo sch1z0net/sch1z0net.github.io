@@ -118,8 +118,6 @@ function displaySpec(audiobuffer, sampleRate){
 
 
 
-
-
 // audio-processor.js (AudioWorkletProcessor)
 class AudioProcessor extends AudioWorkletProcessor {
   constructor() {
@@ -185,6 +183,8 @@ class AudioProcessor extends AudioWorkletProcessor {
 
       // Convert FFT data to frequency data
       this.convertToFrequencyData(fftData);
+
+      this.ema_smoothingFrequencyData();
     }
 
     // Update the last processing time
@@ -218,6 +218,24 @@ class AudioProcessor extends AudioWorkletProcessor {
       // Calculate magnitude
       this.frequencyData[i] = Math.sqrt(re * re + im * im);
     }
+  }
+
+  ema_smoothingFrequencyData(){
+    // Define a smoothing factor (alpha) for the exponential moving average
+    const alpha = 0.2; // Adjust this value based on the desired smoothing effect
+    // Initialize an array to store the smoothed frequency data
+    let smoothedFrequencyData = new Uint8Array(this.frequencyData.length);
+
+    // Perform exponential moving average
+    for (let i = 0; i < frequencyData.length; i++) {
+        if (i === 0) {
+            smoothedFrequencyData[i] = frequencyData[i]; // Initialize the first value
+        } else {
+            // Apply exponential moving average formula: smoothed_value = alpha * current_value + (1 - alpha) * previous_smoothed_value
+            smoothedFrequencyData[i] = Math.round(alpha * frequencyData[i] + (1 - alpha) * smoothedFrequencyData[i - 1]);
+        }
+    }
+    this.frequencyData = smoothedFrequencyData;
   }
 
   getByteFrequencyData(){
