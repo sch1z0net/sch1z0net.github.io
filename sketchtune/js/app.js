@@ -1820,12 +1820,6 @@ function createAnalyserNode(audioContext, audioSource) {
       context = new AudioContext();
       setupSamplesInQueue();
 
-      context.resume().then(() => {
-        console.log('AudioContext is now resumed');
-        console.log(context);
-        createAnalyzer(context,context.destination);
-      });
-
       button_play.on("click", function(){ 
         button_play.css("display","none");
         button_pause.css("display","inline-block");
@@ -1855,7 +1849,11 @@ function createAnalyserNode(audioContext, audioSource) {
         updateTimeMarker();
       });
 
-      button_play.click();
+      context.resume().then(() => {
+        console.log('AudioContext is now resumed');
+        button_play.click();
+      });
+
   });
 
   var samplesSetupProcess = false;
@@ -1940,6 +1938,7 @@ function createAnalyserNode(audioContext, audioSource) {
           stopAllSamples();
           schedule();
           initScheduling = false;
+          createAnalyzer(context,context.destination);
        }
 
        if(!samplesSetupProcess && queue_sounds.length > 0){
