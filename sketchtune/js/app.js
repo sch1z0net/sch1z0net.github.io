@@ -655,7 +655,13 @@ var colors = [
     // Append color palette and target to the body
     $("body").append(contextMenu.append(createColorPalette()));
 
-
+    $(document).on('mousedown', function(){
+        // Trigger Audio Context Creation if not initialized yet
+        if(!triggeredAutomatically){
+          triggeredAutomatically = true;
+          $("#load").click();
+        }
+    });
 
     $(document).on("click", function (event) {
         if (event.button !== 2) {
@@ -1548,25 +1554,6 @@ var colors = [
 
     connectedCallback() {
       $(this).addClass("unselectable");
-
-      $(this).on('mousedown', function(){
-          // Trigger Audio Context Creation if not initialized yet
-          if(!triggeredAutomatically){
-            triggeredAutomatically = true;
-            $("#load").click();
-          }
-      });
-
-      $(this).on('dragenter', function(event) {
-    // Programmatically trigger a mousedown event
-    const mousedownEvent = new MouseEvent('mousedown', {
-        bubbles: true,
-        cancelable: true,
-        view: window
-    });
-    event.target.dispatchEvent(mousedownEvent);
-      });
-
 
       $(this).on('dragover', function(event) {
          event.preventDefault();
