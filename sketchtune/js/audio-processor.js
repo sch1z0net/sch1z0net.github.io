@@ -35,6 +35,10 @@ function fft(input) {
 }
 
 
+
+
+
+
 // Function to apply Hanning window to the input signal
 function applyHanningWindow(inputSignal) {
     const windowedSignal = [];
@@ -110,6 +114,21 @@ function displaySpec(audiobuffer, sampleRate){
    // Plot spectrum
    plotSpectrum(spectrumCanvas, subsetSpectrum, sampleRate);
 }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

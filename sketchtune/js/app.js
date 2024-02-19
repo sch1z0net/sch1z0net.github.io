@@ -334,6 +334,9 @@ var audiobuffer = sawtoothWaveBuffer;
   */
 
 
+
+
+
   function displaySpectrumRealTime(audioContext, inputBuffer) {
     const windowSize = 2048; // Size of the analysis window
     const hopSize = Math.floor(windowSize / 4); // Hop size for overlap-add
@@ -372,59 +375,6 @@ var audiobuffer = sawtoothWaveBuffer;
         // Display spectrum (you need to implement display function)
         displaySpectrum(spectrum, audioContext.sampleRate);
     }
-  }
-
-
-
-
-  // Function to perform phase vocoding
-  function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
-    const windowSize = 2048; // Size of the analysis window
-    const hopSize = Math.floor(windowSize / 4); // Hop size for overlap-add
-    const analysisWindow = new Float32Array(windowSize); // Analysis window
-    // Initialize analysis window with Hanning window function
-    for (let i = 0; i < windowSize; i++) {
-        analysisWindow[i] = 0.5 * (1 - Math.cos(2 * Math.PI * i / windowSize));
-    }
-    
-    const numChannels = inputBuffer.numberOfChannels;
-    const numFrames = Math.ceil(inputBuffer.length / hopSize);
-    const outputBuffer = audioContext.createBuffer(numChannels, numFrames * hopSize, audioContext.sampleRate);
-    
-    // Process inputBuffer frame by frame for each channel
-    for (let ch = 0; ch < numChannels; ch++) {
-        const inputData = inputBuffer.getChannelData(ch);
-        const outputData = outputBuffer.getChannelData(ch);
-        if(ch == 0){ displaySpec(inputData, audioContext.sampleRate); }
-        for (let i = 0; i < numFrames; i++) {
-            // Extract frame
-            const start = i * hopSize;
-            const end = Math.min(start + windowSize, inputData.length);
-            const frame = inputData.subarray(start, end);
-            
-            // Apply window function
-            for (let j = 0; j < frame.length; j++) {
-                frame[j] *= analysisWindow[j];
-            }
-            
-            // Perform FFT (you need to implement FFT function)
-            //const spectrum = FFT(frame);
-            //displaySpec(frame, audioContext.sampleRate);
-            
-            // Modify spectrum phase and magnitude (time stretching)
-            // You would typically interpolate between frames to change the phase and magnitude
-            
-            // Perform IFFT (you need to implement IFFT function)
-            //const processedFrame = IFFT(spectrum);
-            
-            // Overlap-add
-            //for (let j = 0; j < processedFrame.length; j++) {
-            //    outputData[i * hopSize + j] += processedFrame[j];
-            //}
-        }
-    }
-
-    return inputBuffer;
   }
 
 
@@ -1797,7 +1747,6 @@ async function createSpectrumTracker(audioContext, audioSource) {
   let playingAudioNodes = [];
 
   function playSample(audioContext, audioBuffer, time, offset, duration) {
-    
     // Calculate the resampling ratio
     //const originalDuration = audioBuffer.duration;
     //const resamplingRatio = desiredDuration / originalDuration;
@@ -1813,8 +1762,10 @@ async function createSpectrumTracker(audioContext, audioSource) {
     */
 
     const stretchFactor = 1/GLOBAL_PLAYBACK_RATE;
-    //const resampledBuffer = phaseVocoder(audioContext, audioBuffer, stretchFactor);
-    const resampledBuffer = audioBuffer;
+    var resampledBuffer = audioBuffer;
+    if(stretchFactor != 1){ resampledBuffer = phaseVocoder(audioContext, audioBuffer, stretchFactor); }
+    
+    //const resampledBuffer = audioBuffer;
     //displaySpectrumRealTime(audioContext, audioBuffer);
 
     const sampleSource = new AudioBufferSourceNode(audioContext, {
