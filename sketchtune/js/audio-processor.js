@@ -124,6 +124,9 @@ function displaySpec(audiobuffer, sampleRate){
 class AudioProcessor extends AudioWorkletProcessor {
   constructor() {
     super();
+
+    this.port.onmessage = this.handleMessage.bind(this);
+
     this.fftSize = 2048; // FFT size (you can adjust this)
     this.lastProcessingTime = 0;
     this.processingInterval = 100; // Processing interval in milliseconds (adjust as needed)
@@ -131,6 +134,17 @@ class AudioProcessor extends AudioWorkletProcessor {
     this.frequencyBinCount = this.fftSize / 2;
     this.frequencyData = new Uint8Array(this.frequencyBinCount).fill(0); // Only need half the FFT size due to Nyquist theorem
   }
+
+  // Inside AudioProcessor class
+  handleMessage(event) {
+    const { data } = event;
+    if (data.type === 'getFrequencyData') {
+      const frequencyData = this.getByteFrequencyData();
+      this.port.postMessage({ type: 'frequencyData', data: frequencyData });
+    }
+  }
+
+
 
   process(inputs, outputs, parameters) {
     const input = inputs[0]; // Get the input audio data

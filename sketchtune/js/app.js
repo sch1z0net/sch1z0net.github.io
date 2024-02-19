@@ -1643,6 +1643,20 @@ function createAnalyserNode(audioContext, audioSource) {
         return;
     }
 
+
+
+
+    analyserNode.port.onmessage = (event) => {
+       const { data } = event;
+       if (data.type === 'frequencyData') {
+            const frequencyData = data.data;
+            plotSpectrumLive(frequencyData, audioContext.sampleRate);
+       }
+    };
+
+
+
+
     // Function to get the frequency data from the AnalyserNode
     function getFrequencyData() {
         //const frequencyData = new Uint8Array(analyserNode.frequencyBinCount);
@@ -1655,8 +1669,9 @@ function createAnalyserNode(audioContext, audioSource) {
     let interval; // Declare interval variable outside
     function startInterval() {
         interval = setInterval(() => {
-            const frequencyData = getFrequencyData();
-            plotSpectrumLive(frequencyData, audioContext.sampleRate);
+            analyserNode.port.postMessage({ type: 'getFrequencyData' });
+            //const frequencyData = getFrequencyData();
+            //plotSpectrumLive(frequencyData, audioContext.sampleRate);
         }, 100);
     }
 
