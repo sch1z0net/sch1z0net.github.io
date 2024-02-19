@@ -1762,8 +1762,8 @@ async function createSpectrumTracker(audioContext, audioSource) {
     */
 
     const stretchFactor = 1/GLOBAL_PLAYBACK_RATE;
-    
-    const resampledBuffer;
+
+    var resampledBuffer;
     if(stretchFactor != 1){ 
       resampledBuffer = phaseVocoder(audioContext, audioBuffer, stretchFactor); 
     }else{
