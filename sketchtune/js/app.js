@@ -1863,18 +1863,20 @@ function createAnalyserNode(audioContext, audioSource) {
   var samples;
 
 
-
+  $(document).on('mousedown', function(){
+    // Check if the event originated from the #load button or its descendants
+    if (!$(event.target).closest('#load').length) {
+        // Trigger Audio Context Creation if not initialized yet
+        if (!contextInitialized) {
+            triggeredAutomatically = true;
+            $("#load").click();
+        }
+    }
+  });
 
   button_load.on("click", function(event){
-      console.log(contextInitialized, triggeredAutomatically);
-
       if(contextInitialized){ return; }
       contextInitialized = true;
-
-      button_load.css("display","none");
-      if(triggeredAutomatically){
-         button_play.css("display","inline-block");
-      }
 
       if(context != null){
         context.close();
@@ -1919,22 +1921,15 @@ function createAnalyserNode(audioContext, audioSource) {
 
       context.resume().then(() => {
         console.log('AudioContext is now resumed');
-        if(!triggeredAutomatically){
+
+        button_load.css("display","none");
+        if(triggeredAutomatically){
+            button_play.css("display","inline-block");
+        }else{
             button_pause.css("display","inline-block");
             button_play.click();
         }
       });
-  });
-
-  $(document).on('mousedown', function(){
-// Check if the event originated from the #load button or its descendants
-if (!$(event.target).closest('#load').length) {
-    // Trigger Audio Context Creation if not initialized yet
-    if (!contextInitialized) {
-        triggeredAutomatically = true;
-        $("#load").click();
-    }
-}
   });
 
   var samplesSetupProcess = false;
