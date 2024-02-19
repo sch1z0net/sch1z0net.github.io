@@ -132,42 +132,9 @@ function smoothFrequencyData(frequencyData) {
   return smoothedData;
 }
 
-
-function catmullRomSpline(points, tension = 0.5, numSegments = 100) {
-  const result = [];
-
-  // Ensure we have enough points for interpolation
-  if (points.length < 4) {
-    return result;
-  }
-
-  // Calculate segments
-  for (let i = 1; i < points.length - 2; i++) {
-    for (let t = 0; t <= numSegments; t++) {
-      const t1 = t / numSegments;
-      const t2 = t1 * t1;
-      const t3 = t2 * t1;
-
-      // Catmull-Rom spline matrix
-      const m0 = (-tension * t3 + 2 * tension * t2 - tension * t1) / 2;
-      const m1 = (3 * tension * t3 - 5 * tension * t2 + 2) / 2;
-      const m2 = (-3 * tension * t3 + 4 * tension * t2 + tension * t1) / 2;
-      const m3 = (tension * t3 - tension * t2) / 2;
-
-      // Calculate spline point
-      const px = 0.5 * (points[i - 1][0] * m0 + points[i][0] * m1 + points[i + 1][0] * m2 + points[i + 2][0] * m3);
-      const py = 0.5 * (points[i - 1][1] * m0 + points[i][1] * m1 + points[i + 1][1] * m2 + points[i + 2][1] * m3);
-
-      result.push([px, py]);
-    }
-  }
-
-  return result;
-}
-
-
+// Plot spectrum on canvas with smoothed and curved lines
 var fillWithColor = true;
-function plotSpectrumLive(frequencyData = null, sampleRate = null, fillWithColor = false) {
+function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   const canvas = document.getElementById('spectrumCanvas');
   const ctx = canvas.getContext('2d');
   const maxFrequency = 10000; // Maximum frequency (10 kHz)
@@ -181,55 +148,57 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null, fillWithColor
 
     const numBins = frequencyData.length;
 
+    // Apply simple smoothing by averaging neighboring frequency bins
+    const smoothedData = smoothFrequencyData(frequencyData);
+
+    // Find the maximum magnitude in the smoothed frequency data
+    const maxMagnitude = Math.max(...smoothedData);
+
     // Plot the spectrum using a logarithmic scale
     const logScaleFactor = Math.log10(numBins); // Scale factor for logarithmic scaling
+    const controlPoints = []; // Array to store control points for Catmull-Rom spline
 
-    const controlPoints = [];
-
-    // Generate control points along the spectrum curve
     for (let x = 0; x < width; x++) {
       const binIndex = Math.pow(10, x / width * logScaleFactor); // Calculate bin index using logarithmic scale
       const lowerBinIndex = Math.floor(binIndex);
       const upperBinIndex = Math.ceil(binIndex);
       const fraction = binIndex - lowerBinIndex;
 
-      // Interpolate between neighboring frequency bins
-      const magnitude = frequencyData[lowerBinIndex] * (1 - fraction) + frequencyData[upperBinIndex] * fraction;
+      // Interpolate between neighboring frequency bins using linear interpolation
+      const lowerMagnitude = smoothedData[lowerBinIndex];
+      const upperMagnitude = smoothedData[upperBinIndex];
+      const interpolatedMagnitude = lowerMagnitude * (1 - fraction) + upperMagnitude * fraction;
 
-      // Normalize magnitude for plotting
-      const normalizedMagnitude = magnitude / 255; // Assuming frequencyData values are in the range [0, 255]
+      // Normalize interpolated magnitude for plotting
+      const normalizedMagnitude = (interpolatedMagnitude / maxMagnitude) * height;
 
-      const y = height - normalizedMagnitude * height; // Invert Y-axis
+      // Store the control point for Catmull-Rom spline
+      const y = height - normalizedMagnitude; // Invert Y-axis
+      controlPoints.push({ x, y });
 
-      controlPoints.push([x, y]);
+      if (fillWithColor) {
+        // Draw a vertical line at the current frequency bin position
+        ctx.moveTo(x, height); // Move to the bottom
+        ctx.lineTo(x, y); // Line up to the magnitude
+        ctx.strokeStyle = 'white';
+        ctx.stroke();
+      }
     }
 
-    // Apply Catmull-Rom spline interpolation to smooth out the spectrum curve
-    const smoothedPoints = catmullRomSpline(controlPoints);
-
-    // Move to the starting point
-    ctx.moveTo(smoothedPoints[0][0], smoothedPoints[0][1]);
-
-    // Draw the smoothed curve
-    for (let i = 1; i < smoothedPoints.length; i++) {
-      ctx.lineTo(smoothedPoints[i][0], smoothedPoints[i][1]);
+    // Draw Catmull-Rom spline passing through control points
+    ctx.moveTo(controlPoints[0].x, controlPoints[0].y); // Start from the first control point
+    for (let i = 1; i < controlPoints.length - 2; i++) {
+      const xc = (controlPoints[i].x + controlPoints[i + 1].x) / 2; // Calculate x-coordinate of the middle point
+      const yc = (controlPoints[i].y + controlPoints[i + 1].y) / 2; // Calculate y-coordinate of the middle point
+      ctx.quadraticCurveTo(controlPoints[i].x, controlPoints[i].y, xc, yc); // Draw quadratic Bezier curve
     }
-
-    // Close the path
-    ctx.closePath();
-
-    // Fill the area under the curve with a gradient color if fillWithColor is true
-    if (fillWithColor) {
-      const gradient = ctx.createLinearGradient(0, 0, 0, height);
-      gradient.addColorStop(0, 'blue');
-      gradient.addColorStop(1, 'transparent');
-      ctx.fillStyle = gradient;
-      ctx.fill();
-    }
-
+    // Draw the last segment using a straight line
+    ctx.lineTo(controlPoints[controlPoints.length - 1].x, controlPoints[controlPoints.length - 1].y);
+    
     ctx.strokeStyle = 'red';
     ctx.stroke();
   }
+
 
 
   // Plot logarithmic number grid
