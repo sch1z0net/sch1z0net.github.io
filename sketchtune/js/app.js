@@ -1059,7 +1059,7 @@ var colors = [
           // Plot waveform
           var soundid = $(activePattern).attr('data-soundid');
           var audioBuffer = getSample(soundid);
-          if(audioBuffer != null){ plotWaveform(audioBuffer); console.log("plot",soundid);}
+          if(audioBuffer != null){ plotWaveform(audioBuffer);}
         });
 
         // Initialize width based on data-length attribute
@@ -1508,6 +1508,11 @@ var colors = [
           event.stopPropagation();
           isDraggingSound = true;
           draggedSoundElement = this;
+
+          // Plot waveform
+          var soundid = this.soundid;
+          var audioBuffer = getSample(soundid);
+          if(audioBuffer != null){ plotWaveform(audioBuffer);}
         });
 
         $(this).prepend("<loading-circle>");
