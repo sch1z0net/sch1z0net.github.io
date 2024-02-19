@@ -119,6 +119,24 @@ function plotSpectrum(spectrum, sampleRate) {
     }
 }
 
+
+
+
+function scaleMagnitudeToDecibels(magnitude) {
+    // Assuming magnitude values are in the range [0, 1]
+    // Convert magnitude to decibels using a reference value of 1
+    // dB = 20 * log10(magnitude)
+    return 20 * Math.log10(magnitude);
+}
+
+function normalizeDecibels(dBValue, minDB, maxDB, minHeight, maxHeight) {
+    // Normalize the dB value to fit within the height range
+    const normalizedValue = (dBValue - minDB) / (maxDB - minDB);
+    return minHeight + normalizedValue * (maxHeight - minHeight);
+}
+
+
+
 // Simple smoothing algorithm by averaging neighboring frequency bins
 function smoothFrequencyData(frequencyData) {
   const smoothedData = [];
@@ -170,7 +188,11 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
       const interpolatedMagnitude = lowerMagnitude * (1 - fraction) + upperMagnitude * fraction;
 
       // Normalize interpolated magnitude for plotting
-      const normalizedMagnitude = (interpolatedMagnitude / maxMagnitude) * height;
+      var normalizedMagnitude = (interpolatedMagnitude / maxMagnitude) * height;
+
+      // SCALE IN DEZIBEL
+      var dBValue = scaleMagnitudeToDecibels(magnitude);
+      normalizedMagnitude = normalizeDecibels(dBValue, -60, -10, 0, 1);
 
       // Store the control point for Catmull-Rom spline
       const y = height - normalizedMagnitude; // Invert Y-axis
@@ -181,7 +203,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     ctx.closePath(); // Close the path
 
     // Fill the area under the curve with the specified color
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = 'red';
     ctx.fill();
 
 

@@ -142,7 +142,7 @@ class AudioProcessor extends AudioWorkletProcessor {
     //this.prevSmoothedData = null;
 
     // Time-domain smoothing parameters
-    this.bufferSize = 5; // Number of frames to use for smoothing
+    this.bufferSize = 3; // Number of frames to use for smoothing
     this.spectrumBuffer = [];
     this.smoothedSpectrum = new Float32Array(this.frequencyBinCount).fill(0);
   }
