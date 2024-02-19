@@ -1197,7 +1197,6 @@ var colors = [
     connectedCallback() {
       $(this).addClass("unselectable");
       $(this).append($("<track-row-container>"));
-      $(this).append($("<track-row-empty>"));
       $(this).append($("<time-marker>"));
     }
   }
@@ -1268,6 +1267,7 @@ var colors = [
       $(this).addClass("unselectable");
       $(this).append($("<beat-bar-container>"));
       $(this).append($("<track-window>"));
+      $(this).append($("<track-row-empty>"));
       $(this).append($("<time-bar-container>"));
     }
   }
