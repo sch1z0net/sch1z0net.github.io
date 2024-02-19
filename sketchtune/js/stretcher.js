@@ -141,10 +141,6 @@ function convertToAudioSignal(complex) {
             // Modify spectrum phase and magnitude (time stretching)
             // You would typically interpolate between frames to change the phase and magnitude
             
-
-            // Perform IFFT (you need to implement IFFT function)
-            const processedFrame = ifft(spectrum).map(({ re }) => re);
-
             /*// Overlap-add with appropriate overlapping regions
             for (let j = 0; j < processedFrame.length; j++) {
                 outputData[start + j] += processedFrame[j];
