@@ -188,11 +188,11 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
       const interpolatedMagnitude = lowerMagnitude * (1 - fraction) + upperMagnitude * fraction;
 
       // Normalize interpolated magnitude for plotting
-      var normalizedMagnitude = (interpolatedMagnitude / maxMagnitude) * height;
+      var normalizedMagnitude = (interpolatedMagnitude / maxMagnitude);
 
       // SCALE IN DEZIBEL
       var dBValue = scaleMagnitudeToDecibels(normalizedMagnitude);
-      normalizedMagnitude = normalizeDecibels(dBValue, 60, 10, 0, 1);
+      normalizedMagnitude = normalizeDecibels(dBValue, -60, -10, 0, 1) * height;
 
       // Store the control point for Catmull-Rom spline
       const y = height - normalizedMagnitude; // Invert Y-axis
