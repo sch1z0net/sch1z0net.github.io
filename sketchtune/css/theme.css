@@ -224,7 +224,7 @@ time-bar-container {
   overflow-x: scroll;
   overscroll-behavior-x: none;
   overscroll-behavior-y: none; 
-  background-color: rgba(10, 10, 10, 0.5);   
+  background-color: rgba(10, 10, 10, 0.7);   
 }
 
 time-bar {
@@ -242,7 +242,7 @@ time-bar > div {
 time-bar-sec {
 	display: inline-block;
 	height: 100%;
-	border-left: 1px solid black;
+	border-left: 1px solid white;
 	box-sizing: border-box;
 }
 
@@ -258,7 +258,7 @@ time-bar-dsec {
 	display: inline-block;
 	height: 30%;
     vertical-align: top;	
-	border-left: 1px solid rgba(10,10,10,0.2);
+	border-left: 1px solid rgba(200,200,200,0.2);
 	box-sizing: border-box;
 }
 
