@@ -566,10 +566,12 @@ var audiobuffer = sawtoothWaveBuffer;
      startOffsetInSec = startOffsetInBeats*SPB;
   }
 
-   // Function to retrieve a sample by providing the soundid
-   function getSample(soundid) {
+
+  let samplesMap = {}; // Define a map to store samples with soundid as the key
+  // Function to retrieve a sample by providing the soundid
+  function getSample(soundid) {
       return samplesMap[soundid]; // Retrieve the sample from the map using soundid as the key
-   }
+  }
 
 
 
@@ -1639,9 +1641,6 @@ $(document).ready(function(){
     const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
     return audioBuffer;
   }
-
-
-  let samplesMap = {}; // Define a map to store samples with soundid as the key
 
   async function setupSamples(audioCtx) {
     while(queue_sounds.length > 0) {
