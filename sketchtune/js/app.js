@@ -1652,96 +1652,6 @@ $(document).ready(function(){
   
 
 
-
-  async function getFile(audioContext, filepath) {
-    const response = await fetch(filepath);
-    const arrayBuffer = await response.arrayBuffer();
-    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-    return audioBuffer;
-  }
-
-  async function setupSamples(audioCtx) {
-    while(queue_sounds.length > 0) {
-        var sound = queue_sounds.pop();
-        const sample = await getFile(audioCtx, sound.url);
-        samplesMap[sound.id] = sample; // Store the sample in the map with soundid as the key
-        ready_sounds.push(sound);
-        console.log("✔︎ Ready",sound.id); 
-        var lc = $('sound-element[data-soundid="' + sound.id + '"]').find('loading-circle');
-        if (lc.length > 0) { lc.remove(); }
-    }
-  }
-
-  // Array to store references to all playing audio nodes
-  let playingAudioNodes = [];
-
-  function playSample(audioContext, audioBuffer, time, offset, duration) {
-    
-    // Calculate the resampling ratio
-    //const originalDuration = audioBuffer.duration;
-    //const resamplingRatio = desiredDuration / originalDuration;
-    //var resampledBuffer = timeStretchSample(audioContext, audioBuffer, 1/GLOBAL_PLAYBACK_RATE);
-    
-    /*
-    const originalAudioBuffer = audioBuffer;
-    const stretchFactor = 1/GLOBAL_PLAYBACK_RATE;
-    const grainSize = 0.01;
-    const overlap = 0.5;
-
-    const resampledBuffer = granularSynthesis(originalAudioBuffer, stretchFactor, grainSize, overlap);
-    */
-
-    const stretchFactor = 1/GLOBAL_PLAYBACK_RATE;
-    //const resampledBuffer = phaseVocoder(audioContext, audioBuffer, stretchFactor);
-    const resampledBuffer = audioBuffer;
-    //displaySpectrumRealTime(audioContext, audioBuffer);
-
-    const sampleSource = new AudioBufferSourceNode(audioContext, {
-      buffer: resampledBuffer,
-      playbackRate: 1.0,
-    });
-    /*
-    const sampleSource = new AudioBufferSourceNode(audioContext, {
-      buffer: audioBuffer,
-      playbackRate: GLOBAL_PLAYBACK_RATE,
-    });*/
-
-    //console.log(duration, sampleSource.buffer.duration);
-    sampleSource.connect(audioContext.destination);
-    sampleSource.start(time, offset, duration);
-
-    // Add the source node to the list of playing audio nodes
-    playingAudioNodes.push(sampleSource);
-
-    return sampleSource;
-  }
-
-  // Function to stop all playing samples
-  function stopAllSamples() {
-    // Iterate over the list of playing audio nodes and stop each one
-    playingAudioNodes.forEach(source => {
-        source.stop();
-    });
-
-    // Clear the list of playing audio nodes
-    playingAudioNodes = [];
-  }
-
-
-
-  const button_load  = $("#load");
-  const button_play  = $("#play");
-  const button_pause = $("#pause");
-  const button_stop  = $("#stop");
-  button_play.css("display","none");
-  button_pause.css("display","none");
-
-  var init = false;
-  var samples;
-
-
-
-
 function createAnalyzer(audioContext, audioSource) {
     // Check if AudioContext is available
     if (!audioContext) {
@@ -1804,6 +1714,101 @@ function createAnalyserNode(audioContext, audioSource) {
         clearInterval(interval);
     }, 10000); // 10 seconds
 }
+
+
+
+
+
+
+  async function getFile(audioContext, filepath) {
+    const response = await fetch(filepath);
+    const arrayBuffer = await response.arrayBuffer();
+    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+    return audioBuffer;
+  }
+
+  async function setupSamples(audioCtx) {
+    while(queue_sounds.length > 0) {
+        var sound = queue_sounds.pop();
+        const sample = await getFile(audioCtx, sound.url);
+        samplesMap[sound.id] = sample; // Store the sample in the map with soundid as the key
+        ready_sounds.push(sound);
+        console.log("✔︎ Ready",sound.id); 
+        var lc = $('sound-element[data-soundid="' + sound.id + '"]').find('loading-circle');
+        if (lc.length > 0) { lc.remove(); }
+    }
+  }
+
+  // Array to store references to all playing audio nodes
+  let playingAudioNodes = [];
+
+  function playSample(audioContext, audioBuffer, time, offset, duration) {
+    
+    // Calculate the resampling ratio
+    //const originalDuration = audioBuffer.duration;
+    //const resamplingRatio = desiredDuration / originalDuration;
+    //var resampledBuffer = timeStretchSample(audioContext, audioBuffer, 1/GLOBAL_PLAYBACK_RATE);
+    
+    /*
+    const originalAudioBuffer = audioBuffer;
+    const stretchFactor = 1/GLOBAL_PLAYBACK_RATE;
+    const grainSize = 0.01;
+    const overlap = 0.5;
+
+    const resampledBuffer = granularSynthesis(originalAudioBuffer, stretchFactor, grainSize, overlap);
+    */
+
+    const stretchFactor = 1/GLOBAL_PLAYBACK_RATE;
+    //const resampledBuffer = phaseVocoder(audioContext, audioBuffer, stretchFactor);
+    const resampledBuffer = audioBuffer;
+    //displaySpectrumRealTime(audioContext, audioBuffer);
+
+    const sampleSource = new AudioBufferSourceNode(audioContext, {
+      buffer: resampledBuffer,
+      playbackRate: 1.0,
+    });
+    /*
+    const sampleSource = new AudioBufferSourceNode(audioContext, {
+      buffer: audioBuffer,
+      playbackRate: GLOBAL_PLAYBACK_RATE,
+    });*/
+
+    //console.log(duration, sampleSource.buffer.duration);
+    sampleSource.connect(audioContext.destination);
+    sampleSource.start(time, offset, duration);
+
+    createAnalyzer(audioContext,sampleSource);
+
+    // Add the source node to the list of playing audio nodes
+    playingAudioNodes.push(sampleSource);
+
+    return sampleSource;
+  }
+
+  // Function to stop all playing samples
+  function stopAllSamples() {
+    // Iterate over the list of playing audio nodes and stop each one
+    playingAudioNodes.forEach(source => {
+        source.stop();
+    });
+
+    // Clear the list of playing audio nodes
+    playingAudioNodes = [];
+  }
+
+
+
+  const button_load  = $("#load");
+  const button_play  = $("#play");
+  const button_pause = $("#pause");
+  const button_stop  = $("#stop");
+  button_play.css("display","none");
+  button_pause.css("display","none");
+
+  var init = false;
+  var samples;
+
+
 
 
 
@@ -1938,7 +1943,6 @@ function createAnalyserNode(audioContext, audioSource) {
           stopAllSamples();
           schedule();
           initScheduling = false;
-          createAnalyzer(context,context.destination);
        }
 
        if(!samplesSetupProcess && queue_sounds.length > 0){
