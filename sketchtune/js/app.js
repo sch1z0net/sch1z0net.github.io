@@ -1587,12 +1587,10 @@ $(document).ready(function(){
 
 async function createCustomAnalyser(context, audioNode) {
   await context.audioWorklet.addModule('./js/audio-processor.js');
-  const audioProcessorNode = new AudioWorkletNode(context, 'audio-processor');
+  const audioProcessor = new AudioWorkletNode(context, 'audio-processor');
   // Connect the master gain node to the audio processor node
   audioNode.connect(audioProcessorNode);
-  // Create an instance of AudioProcessor
-  const audioProcessor = new AudioProcessor();
-  return audioProcessorNode;
+  return audioProcessor;
 }
 
 
