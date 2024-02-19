@@ -31,7 +31,7 @@ function fft(input) {
         output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
     }
 
-    return scaledOutput;
+    return output;
 }
 
 function ifft(input) {
