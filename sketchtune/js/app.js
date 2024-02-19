@@ -217,8 +217,8 @@ function plotSpectrum(spectrum, sampleRate) {
 
 
 // Plot spectrum on canvas in a logarithmic scale
-function plotSpectrumLive(frequencyData, sampleRate) {
-  if(frequencyData != null){
+function plotSpectrumLive(frequencyData = null, sampleRate = null) {
+  if(frequencyData != null && sampleRate != null){
     const canvas = document.getElementById('spectrumCanvas');
     const ctx = canvas.getContext('2d');
 
@@ -1675,7 +1675,8 @@ $(document).ready(function(){
        $("time-bar-container").scrollLeft($("beat-bar").scrollLeft());
   });
 
-  
+  //Plot empty spectrum on initialization
+  plotSpectrumLive();
 
 
 
@@ -1690,9 +1691,6 @@ $(document).ready(function(){
 
 
 function createAnalyzer(audioContext, audioSource) {
-    //Plot empty spectrum on initialization
-    plotSpectrumLive(null, audioContext.sampleRate);
-
     // Check if AudioContext is available
     if (!audioContext) {
         console.error('AudioContext is not available.');
