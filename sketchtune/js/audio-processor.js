@@ -138,11 +138,11 @@ class AudioProcessor extends AudioWorkletProcessor {
     this.sampleBuffer = [];
 
     // Initialize variables for EMA smoothing
-    this.alpha = 0.6; // Smoothing factor (adjust as needed)
-    this.prevSmoothedData = null;
+    //this.alpha = 0.6; // Smoothing factor (adjust as needed)
+    //this.prevSmoothedData = null;
 
     // Time-domain smoothing parameters
-    this.bufferSize = 10; // Number of frames to use for smoothing
+    this.bufferSize = 5; // Number of frames to use for smoothing
     this.spectrumBuffer = [];
     this.smoothedSpectrum = new Float32Array(this.frequencyBinCount).fill(0);
   }
