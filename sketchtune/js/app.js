@@ -1558,8 +1558,10 @@ var colors = [
 
 
           // Trigger Audio Context Creation if not initialized yet
-          //triggeredAutomatically = true;
-          //$("#load").click();
+          if(!triggeredAutomatically){
+            triggeredAutomatically = true;
+            $("#load").click();
+          }
 
           
           var that = this;          
