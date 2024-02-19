@@ -154,7 +154,7 @@ class AudioProcessor extends AudioWorkletProcessor {
     }
 
     // Check if enough time has elapsed since the last processing
-    const currentTime = performance.now();
+    const currentTime = this.currentTime;
     if (currentTime - this.lastProcessingTime < this.processingInterval) {
       return true; // Skip processing
     }
