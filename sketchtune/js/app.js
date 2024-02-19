@@ -1652,6 +1652,17 @@ $(document).ready(function(){
   
 
 
+
+
+  // Create a master gain node
+  var masterGainNode;
+
+  // Function to connect a source node to the master gain node
+  function connectToMaster(node) {
+    node.connect(masterGainNode);
+  }
+
+
 function createAnalyzer(audioContext, audioSource) {
     // Check if AudioContext is available
     if (!audioContext) {
@@ -1774,7 +1785,8 @@ function createAnalyserNode(audioContext, audioSource) {
     });*/
 
     //console.log(duration, sampleSource.buffer.duration);
-    sampleSource.connect(audioContext.destination);
+    connectToMaster(sampleSource);
+    //sampleSource.connect(audioContext.destination);
     sampleSource.start(time, offset, duration);
 
     createAnalyzer(audioContext,sampleSource);
@@ -1811,10 +1823,6 @@ function createAnalyserNode(audioContext, audioSource) {
 
 
 
-
-
-
-
   button_load.on("click", function(){
       if(context != null){
         context.close();
@@ -1824,6 +1832,10 @@ function createAnalyserNode(audioContext, audioSource) {
       button_pause.css("display","inline-block");
       context = new AudioContext();
       setupSamplesInQueue();
+      // Create a master gain node
+      masterGainNode = context.createGain();
+      masterGainNode.connect(context.destination);
+
 
       button_play.on("click", function(){ 
         button_play.css("display","none");
