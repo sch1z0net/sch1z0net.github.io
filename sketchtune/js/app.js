@@ -127,8 +127,8 @@ function findPeakFrequency(spectrum, sampleRate) {
 
 
 
-// Plot waveform on canvas
-function plotWaveform(buffer) {
+// Plot mono waveform on canvas
+function plotMonoWaveform(audioBuffer) {
     const canvas = document.getElementById('waveformCanvas');
     const ctx = canvas.getContext('2d');
 
@@ -139,9 +139,23 @@ function plotWaveform(buffer) {
     ctx.beginPath();
     ctx.moveTo(0, height / 2);
 
-    for (let i = 0; i < buffer.length; i++) {
-        const x = (i / buffer.length) * width;
-        const y = (1 - buffer[i]) * height / 2;
+    const channels = audioBuffer.numberOfChannels;
+    const bufferLength = audioBuffer.length;
+    const monoBuffer = new Float32Array(bufferLength); // Create a new mono buffer
+
+    // Convert stereo buffer to mono by averaging left and right channels
+    for (let i = 0; i < bufferLength; i++) {
+        let sum = 0;
+        for (let ch = 0; ch < channels; ch++) {
+            sum += audioBuffer.getChannelData(ch)[i];
+        }
+        monoBuffer[i] = sum / channels;
+    }
+
+    // Plot the mono waveform
+    for (let i = 0; i < bufferLength; i++) {
+        const x = (i / bufferLength) * width;
+        const y = (1 - monoBuffer[i]) * height / 2;
         ctx.lineTo(x, y);
     }
 
