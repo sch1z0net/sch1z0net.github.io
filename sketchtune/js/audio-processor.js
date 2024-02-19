@@ -133,7 +133,7 @@ class AudioProcessor extends AudioWorkletProcessor {
     // Create an array to store the frequency data
     this.frequencyBinCount = this.fftSize / 2;
     this.frequencyData = new Uint8Array(this.frequencyBinCount).fill(0); // Only need half the FFT size due to Nyquist theorem
-    this.sampleBuffer;
+    this.sampleBuffer = [];
   }
 
   // Inside AudioProcessor class
