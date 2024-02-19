@@ -348,9 +348,8 @@ var audiobuffer = sawtoothWaveBuffer;
             //}
         }
     }
-    outputBuffer = inputBuffer;
 
-    return outputBuffer;
+    return inputBuffer;
   }
 
 
