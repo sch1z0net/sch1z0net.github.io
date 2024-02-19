@@ -13,8 +13,8 @@ class AudioProcessor extends AudioWorkletProcessor {
     // Extract audio samples from the input array
     const numChannels = input.length;
     const numSamples = input[0].length;
-    console.log('Number of channels:', numChannels);
-    console.log('Number of samples:', numSamples);
+
+    console.log('Processing Signal', {"Samples" : numSamples, "Channels" : numChannels});
 
     // Process each channel separately
     for (let ch = 0; ch < numChannels; ch++) {
