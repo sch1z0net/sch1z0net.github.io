@@ -193,7 +193,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
 
       // SCALE IN DEZIBEL
       var dBValue = scaleMagnitudeToDecibels(normalizedMagnitude);
-      normalizedMagnitude = normalizeDecibels(dBValue, -60, -10, 0, height);
+      normalizedMagnitude = normalizeDecibels(dBValue, -120, 0, 0, height);
 
       // Store the control point for Catmull-Rom spline
       const y = height - normalizedMagnitude; // Invert Y-axis
