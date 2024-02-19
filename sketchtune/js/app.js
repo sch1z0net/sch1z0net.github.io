@@ -1715,15 +1715,40 @@ function createAnalyserNode(audioContext, audioSource) {
     }
 
     // Use setInterval to continuously get the frequency data
-    const interval = setInterval(() => {
-        const frequencyData = getFrequencyData();
-        plotSpectrumLive(frequencyData, audioContext.sampleRate);
-    }, 100);
+    let interval; // Declare interval variable outside
+    function startInterval() {
+        interval = setInterval(() => {
+            const frequencyData = getFrequencyData();
+            plotSpectrumLive(frequencyData, audioContext.sampleRate);
+        }, 100);
+    }
 
-    // Stop getting frequency data after some time (for example, 10 seconds)
-    setTimeout(() => {
+    // Start the interval if the AudioContext is in a playing state
+    if (audioContext.state === 'running') {
+        startInterval();
+    }
+
+    // Function to stop the interval and perform cleanup
+    function stopInterval() {
         clearInterval(interval);
-    }, 10000); // 10 seconds
+    }
+
+    // Listen for state changes of the AudioContext
+    audioContext.onstatechange = function() {
+        if (audioContext.state === 'running') {
+            console.log('AudioContext is now in a playing state. Starting interval.');
+            startInterval();
+        } else {
+            console.log('AudioContext is not in a playing state. Stopping interval.');
+            stopInterval();
+        }
+    };
+
+    // Stop getting frequency data when the audio source ends
+    audioSource.onended = function() {
+        console.log('Audio source ended.');
+        stopInterval(); // Stop the interval
+    };
 }
 
 
