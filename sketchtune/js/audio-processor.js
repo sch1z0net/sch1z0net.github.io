@@ -49,8 +49,8 @@ function applyHanningWindow(inputSignal) {
 // Function to perform FFT on the input signal with windowing and zero-padding
 function prepare_and_fft(inputSignal, sampleRate) {
     // Apply Hanning window to the input signal
-    //const windowedSignal = applyHanningWindow(inputSignal);
-    const windowedSignal = inputSignal;
+    const windowedSignal = applyHanningWindow(inputSignal);
+    //const windowedSignal = inputSignal;
 
     // Zero-padding to the next power of 2
     const FFT_SIZE = nextPowerOf2(windowedSignal.length);
@@ -128,8 +128,8 @@ class AudioProcessor extends AudioWorkletProcessor {
     this.port.onmessage = this.handleMessage.bind(this);
 
     //this.fftSize = 2048;
-    //this.fftSize = 4096;
-    this.fftSize = 8192;
+    this.fftSize = 4096;
+    //this.fftSize = 8192;
     this.lastProcessingTime = 0;
     this.processingInterval = 100; // Processing interval in milliseconds (adjust as needed)
     // Create an array to store the frequency data
