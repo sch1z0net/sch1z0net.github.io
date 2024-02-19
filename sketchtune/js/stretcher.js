@@ -31,7 +31,7 @@ function fft(input) {
         output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
     }
 
-    return output;
+    return scaledOutput;
 }
 
 function ifft(input) {
@@ -54,8 +54,6 @@ function ifft(input) {
     // Scale the output by dividing by the length of the input array
     return ifftResult.map(({ re, im }) => ({ re: re / input.length, im: im / input.length }));
 }
-
-
 
 
 
@@ -117,8 +115,6 @@ function convertToComplex(inputSignal) {
     const numChannels = inputBuffer.numberOfChannels;
     const numFrames = Math.ceil(inputBuffer.length / hopSize);
     const outputBuffer = audioContext.createBuffer(numChannels, numFrames * hopSize, audioContext.sampleRate);
-    
-    console.log(numFrames, hopSize);
 
     // Process inputBuffer frame by frame for each channel
     for (let ch = 0; ch < numChannels; ch++) {
@@ -145,18 +141,20 @@ function convertToComplex(inputSignal) {
 
             // Perform IFFT (you need to implement IFFT function)
             const processedFrame = ifft(spectrum);
-            console.log(
+            /*console.log(
                 "input frame length",frame.length,
                 "spectrum length",spectrum.length,
                 "output frame length",processedFrame.length
-            );
-            
+            );*/
+
             // Overlap-add
             for (let j = 0; j < processedFrame.length; j++) {
                 outputData[i * hopSize + j] += processedFrame[j];
             }
         }
     }
+
+    console.log(inputBuffer, outputBuffer);
 
     return outputBuffer;
   }
