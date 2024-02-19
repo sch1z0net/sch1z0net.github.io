@@ -525,6 +525,12 @@ var audiobuffer = sawtoothWaveBuffer;
      startOffsetInSec = startOffsetInBeats*SPB;
   }
 
+   // Function to retrieve a sample by providing the soundid
+   function getSample(soundid) {
+      return samplesMap[soundid]; // Retrieve the sample from the map using soundid as the key
+   }
+
+
 
   /**** CONTEXT MENU ****/
     // Create context menu
@@ -1607,13 +1613,6 @@ $(document).ready(function(){
         if (lc.length > 0) { lc.remove(); }
     }
   }
-
-   // Function to retrieve a sample by providing the soundid
-   function getSample(soundid) {
-      return samplesMap[soundid]; // Retrieve the sample from the map using soundid as the key
-   }
-
-
 
   // Array to store references to all playing audio nodes
   let playingAudioNodes = [];
