@@ -972,7 +972,7 @@ var colors = [
           xOffsetOnPattern = x - activePattern_oldmargin;
 
           // Plot waveform
-          var soundid = activePattern.attr('data-soundid');
+          var soundid = $(activePattern).attr('data-soundid');
           if(soundid != null){ plotWaveform(getSample(soundid)); console.log("plot",soundid);}
         });
 
