@@ -119,9 +119,20 @@ function plotSpectrum(spectrum, sampleRate) {
     }
 }
 
+// Simple smoothing algorithm by averaging neighboring frequency bins
+function smoothFrequencyData(frequencyData) {
+  const smoothedData = [];
+  const numBins = frequencyData.length;
+  for (let i = 0; i < numBins; i++) {
+    const prevIndex = Math.max(0, i - 1);
+    const nextIndex = Math.min(numBins - 1, i + 1);
+    const average = (frequencyData[prevIndex] + frequencyData[i] + frequencyData[nextIndex]) / 3; // Simple averaging
+    smoothedData.push(average);
+  }
+  return smoothedData;
+}
 
-
-// Plot spectrum on canvas in a logarithmic scale
+// Plot spectrum on canvas with smoothed and curved lines
 function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   const canvas = document.getElementById('spectrumCanvas');
   const ctx = canvas.getContext('2d');
@@ -130,37 +141,40 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   const width = canvas.width;
   const height = canvas.height;
 
-  if(frequencyData != null && sampleRate != null){
+  if (frequencyData != null && sampleRate != null) {
     ctx.clearRect(0, 0, width, height);
     ctx.beginPath();
 
     const numBins = frequencyData.length;
 
-    // Find the maximum magnitude in the frequency data
-    const maxMagnitude = Math.max(...frequencyData);
+    // Apply simple smoothing by averaging neighboring frequency bins
+    const smoothedData = smoothFrequencyData(frequencyData);
+
+    // Find the maximum magnitude in the smoothed frequency data
+    const maxMagnitude = Math.max(...smoothedData);
 
     // Plot the spectrum using a logarithmic scale
     const logScaleFactor = Math.log10(numBins); // Scale factor for logarithmic scaling
+    ctx.moveTo(0, height); // Start from bottom-left corner
     for (let x = 0; x < width; x++) {
       const binIndex = Math.pow(10, x / width * logScaleFactor); // Calculate bin index using logarithmic scale
       const lowerBinIndex = Math.floor(binIndex);
       const upperBinIndex = Math.ceil(binIndex);
       const fraction = binIndex - lowerBinIndex;
 
-      // Interpolate between neighboring frequency bins
-      const magnitude = frequencyData[lowerBinIndex] * (1 - fraction) + frequencyData[upperBinIndex] * fraction;
+      // Interpolate between neighboring frequency bins using linear interpolation
+      const lowerMagnitude = smoothedData[lowerBinIndex];
+      const upperMagnitude = smoothedData[upperBinIndex];
+      const interpolatedMagnitude = lowerMagnitude * (1 - fraction) + upperMagnitude * fraction;
 
-      // Normalize magnitude for plotting
-      const normalizedMagnitude = (magnitude / maxMagnitude) * 255;
+      // Normalize interpolated magnitude for plotting
+      const normalizedMagnitude = (interpolatedMagnitude / maxMagnitude) * height;
 
-      // Invert normalizedMagnitude since canvas Y-axis is inverted
-      const invertedMagnitude = 255 - normalizedMagnitude;
-
-      // Scale to fit canvas height
-      const scaledMagnitude = (invertedMagnitude / 255) * height;
-
-      const y = scaledMagnitude; // Invert Y-axis
-      ctx.lineTo(x, y);
+      // Draw a cubic Bezier curve to the next point
+      const y = height - normalizedMagnitude; // Invert Y-axis
+      const ctrlPointX = x - width / 2; // Control point X-coordinate
+      const ctrlPointY = height / 2; // Control point Y-coordinate
+      ctx.bezierCurveTo(ctrlPointX, ctrlPointY, ctrlPointX, ctrlPointY, x, y);
     }
 
     ctx.strokeStyle = 'red';
@@ -186,7 +200,6 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
       ctx.stroke();
   }
 }
-
 
 
 $(document).ready(function(){
