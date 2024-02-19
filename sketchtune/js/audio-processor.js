@@ -181,8 +181,8 @@ class AudioProcessor extends AudioWorkletProcessor {
   performFFT(inputData) {
     // Perform the processing (FFT analysis) on the mono channel
     var spectrum = prepare_and_fft(inputData, this.sampleRate);
-    const numBins = spectrum.length;
-
+    
+    /*const numBins = spectrum.length;
     const maxFrequency = 10000; // Maximum frequency (10 kHz)
     const minFrequency = 20; // Minimum frequency (20 Hz)
     const minBinIndex = Math.round((minFrequency / sampleRate) * numBins);
@@ -190,9 +190,9 @@ class AudioProcessor extends AudioWorkletProcessor {
     // Extract the subset of the spectrum corresponding to frequencies between minFrequency and maxFrequency
     const subsetSpectrum = spectrum.slice(minBinIndex, maxBinIndex);
     const peakFrequency = findPeakFrequency(subsetSpectrum, sampleRate);
-    console.log("Peak frequency:", peakFrequency, "Hz");
+    console.log("Peak frequency:", peakFrequency, "Hz");*/
 
-    return subsetSpectrum;
+    return spectrum;
   }
 
   convertToFrequencyData(fftData) {
