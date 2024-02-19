@@ -202,6 +202,47 @@ function plotSpectrum(spectrum, sampleRate) {
 
 
 
+// Plot spectrum on canvas in a logarithmic scale
+function plotSpectrumLive(frequencyData, sampleRate) {
+    const canvas = document.getElementById('spectrumCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const width = canvas.width;
+    const height = canvas.height;
+
+    ctx.clearRect(0, 0, width, height);
+    ctx.beginPath();
+
+    const maxFrequency = 10000; // Maximum frequency (10 kHz)
+    const minFrequency = 20; // Minimum frequency (20 Hz)
+    const numBins = frequencyData.length;
+
+    // Plot the spectrum using a logarithmic scale
+    const logScaleFactor = Math.log10(numBins); // Scale factor for logarithmic scaling
+    for (let x = 0; x < width; x++) {
+        const binIndex = Math.pow(10, x / width * logScaleFactor); // Calculate bin index using logarithmic scale
+        const lowerBinIndex = Math.floor(binIndex);
+        const upperBinIndex = Math.ceil(binIndex);
+        const fraction = binIndex - lowerBinIndex;
+
+        // Interpolate between neighboring frequency bins
+        const magnitude = frequencyData[lowerBinIndex] * (1 - fraction) + frequencyData[upperBinIndex] * fraction;
+
+        // Normalize magnitude for plotting
+        const normalizedMagnitude = magnitude / 255; // Assuming frequencyData values are in the range [0, 255]
+
+        const y = height - normalizedMagnitude * height; // Invert Y-axis
+        ctx.lineTo(x, y);
+    }
+
+    ctx.strokeStyle = 'red';
+    ctx.stroke();
+}
+
+
+
+
+
 function displaySpec(audiobuffer, sampleRate){
    const spectrum = fft_audio_buffer(audiobuffer);
    const numBins = spectrum.length;
@@ -1702,7 +1743,7 @@ $(document).ready(function(){
     // Use setInterval to continuously get the frequency data
     const interval = setInterval(() => {
         const frequencyData = getFrequencyData();
-
+        plotSpectrumLive(frequencyData,audioContext.sampleRate);
     }, 100);
 
     // Stop getting frequency data after some time (for example, 10 seconds)
