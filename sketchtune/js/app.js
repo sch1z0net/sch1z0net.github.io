@@ -1585,7 +1585,7 @@ $(document).ready(function(){
 
 
 
-async function createCustomAnalyser(context, audioNode) {
+async function createAudioProcess(context, audioNode) {
   await context.audioWorklet.addModule('./js/audio-processor.js');
   const audioProcessor = new AudioWorkletNode(context, 'audio-processor');
   // Connect the master gain node to the audio processor node
@@ -1596,7 +1596,7 @@ async function createCustomAnalyser(context, audioNode) {
 
 
 
-function createAnalyzer(audioContext, audioSource) {
+function checkAndCreateSpectrumTracker(audioContext, audioSource) {
     // Check if AudioContext is available
     if (!audioContext) {
         console.error('AudioContext is not available.');
@@ -1608,25 +1608,25 @@ function createAnalyzer(audioContext, audioSource) {
         // Attempt to resume AudioContext
         audioContext.resume().then(() => {
             console.log('AudioContext resumed successfully.');
-            createAnalyserNode(audioContext, audioSource);
+            createSpectrumTracker(audioContext, audioSource);
         }).catch((error) => {
             console.error('Error resuming AudioContext:', error);
         });
     } else if (audioContext.state === 'running') {
         // AudioContext is already running, create AnalyserNode
-        createAnalyserNode(audioContext, audioSource);
+        createSpectrumTracker(audioContext, audioSource);
     } else {
         console.error('AudioContext is in an unsupported state:', audioContext.state);
     }
 }
 
-function createAnalyserNode(audioContext, audioSource) {
+function createSpectrumTracker(audioContext, audioSource) {
     // BUILT IN WEB API ANALYZER
     //const analyserNode = audioContext.createAnalyser();
     // CUSTOM FFT ANALYZER
-    const analyserNode = createCustomAnalyser(audioContext, audioSource);
+    const audioProcessor = createAudioProcessor(audioContext, audioSource);
 
-    analyserNode.fftSize = 2048; // Set FFT size for frequency analysis
+    audioProcessor.fftSize = 2048; // Set FFT size for frequency analysis
 
     // Check if audioSource is valid
     if (!audioSource) {
@@ -1646,7 +1646,7 @@ function createAnalyserNode(audioContext, audioSource) {
 
 
 
-    analyserNode.port.onmessage = (event) => {
+    audioProcessor.port.onmessage = (event) => {
        const { data } = event;
        if (data.type === 'frequencyData') {
             const frequencyData = data.data;
@@ -1656,7 +1656,7 @@ function createAnalyserNode(audioContext, audioSource) {
 
 
 
-
+    /*
     // Function to get the frequency data from the AnalyserNode
     function getFrequencyData() {
         //const frequencyData = new Uint8Array(analyserNode.frequencyBinCount);
@@ -1664,12 +1664,13 @@ function createAnalyserNode(audioContext, audioSource) {
         analyserNode.getByteFrequencyData();
         return frequencyData;
     }
+    */
 
     // Use setInterval to continuously get the frequency data
     let interval; // Declare interval variable outside
     function startInterval() {
         interval = setInterval(() => {
-            analyserNode.port.postMessage({ type: 'getFrequencyData' });
+            audioProcessor.port.postMessage({ type: 'getFrequencyData' });
             //const frequencyData = getFrequencyData();
             //plotSpectrumLive(frequencyData, audioContext.sampleRate);
         }, 100);
@@ -1822,7 +1823,7 @@ function createAnalyserNode(audioContext, audioSource) {
       // Create a master gain node
       masterGainNode = context.createGain();
       masterGainNode.connect(context.destination);
-      createAnalyzer(context,masterGainNode);
+      checkAndCreateSpectrumTracker(context,masterGainNode);
 
 
       button_play.on("click", function(){ 
