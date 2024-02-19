@@ -82,24 +82,15 @@ function prepare_and_fft(inputSignal) {
 }
 
 
-
-
-
-function convertToComplex(inputSignal) {
+  function convertToComplex(inputSignal) {
     return inputSignal.map(value => ({ re: value, im: 0 }));
-}
-
-function convertToAudioSignal(complex) {
-    return inputSignal.map(value => ({ re: value, im: 0 }));
-}
-
-
+  }
 
 
   // Function to perform phase vocoding
   function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
 
-    const windowSize = 2048*4; // Size of the analysis window
+    const windowSize = 2048*2; // Size of the analysis window
     const hopSize = Math.floor(windowSize / 4); // Hop size for overlap-add   //512
 
 
