@@ -1662,6 +1662,7 @@ function checkAndCreateSpectrumTracker(audioContext, audioSource) {
     }
 }
 
+var displayRefreshRate = 20;
 async function createSpectrumTracker(audioContext, audioSource) {
     // BUILT IN WEB API ANALYZER
     //const analyserNode = audioContext.createAnalyser();
@@ -1711,7 +1712,7 @@ async function createSpectrumTracker(audioContext, audioSource) {
             audioProcessor.port.postMessage({ type: 'getFrequencyData' });
             //const frequencyData = getFrequencyData();
             //plotSpectrumLive(frequencyData, audioContext.sampleRate);
-        }, 100);
+        }, displayRefreshRate);
     }
 
     // Start the interval if the AudioContext is in a playing state
