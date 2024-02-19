@@ -140,6 +140,11 @@ class AudioProcessor extends AudioWorkletProcessor {
     // Initialize variables for EMA smoothing
     this.alpha = 0.6; // Smoothing factor (adjust as needed)
     this.prevSmoothedData = null;
+
+    // Time-domain smoothing parameters
+    this.bufferSize = 10; // Number of frames to use for smoothing
+    this.spectrumBuffer = [];
+    this.smoothedSpectrum = new Float32Array(this.frequencyBinCount).fill(0);
   }
 
   // Inside AudioProcessor class
@@ -187,10 +192,12 @@ class AudioProcessor extends AudioWorkletProcessor {
 
       // Convert FFT data to frequency data
       this.convertToFrequencyData(fftData);
-    }
 
-    // Perform EMA smoothing on frequency data
-    this.frequencyData = this.smoothFrequencyData(this.frequencyData);
+      // Perform EMA smoothing on frequency data
+      //this.frequencyData = this.smoothFrequencyData(this.frequencyData);
+
+      this.updateSmoothedSpectrum();
+    }
 
     // Update the last processing time
     this.lastProcessingTime = currentTime;
@@ -240,8 +247,32 @@ class AudioProcessor extends AudioWorkletProcessor {
     return this.prevSmoothedData;
   }
 
-  getByteFrequencyData(){
-     return this.frequencyData;
+  updateSmoothedSpectrum() {
+        // Add the current spectrum frame to the buffer
+        this.spectrumBuffer.push([...this.frequencyData]);
+
+        // Remove the oldest spectrum frame if the buffer exceeds its size
+        if (this.spectrumBuffer.length > this.bufferSize) {
+            this.spectrumBuffer.shift();
+        }
+
+        // Calculate the average spectrum frame from the buffer
+        this.smoothedSpectrum.fill(0);
+        for (const spectrumFrame of this.spectrumBuffer) {
+            for (let i = 0; i < this.frequencyBinCount; i++) {
+                this.smoothedSpectrum[i] += spectrumFrame[i];
+            }
+        }
+        // Divide each bin by the number of frames to get the average
+        const numFrames = this.spectrumBuffer.length;
+        for (let i = 0; i < this.frequencyBinCount; i++) {
+            this.smoothedSpectrum[i] /= numFrames;
+        }
+  }
+
+  getByteFrequencyData() {
+      // Return the smoothed spectrum data
+      return this.smoothedSpectrum;
   }
 }
 

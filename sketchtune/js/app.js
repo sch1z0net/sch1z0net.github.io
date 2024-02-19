@@ -195,7 +195,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     // Draw the last segment using a straight line
     ctx.lineTo(controlPoints[controlPoints.length - 1].x, controlPoints[controlPoints.length - 1].y);
     
-    ctx.strokeStyle = 'red';
+    ctx.strokeStyle = 'blue';
     ctx.stroke();
   }
 
