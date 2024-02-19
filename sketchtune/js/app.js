@@ -1585,7 +1585,7 @@ $(document).ready(function(){
 
 
 
-async function createAudioProcess(context, audioNode) {
+async function createAudioProcessor(context, audioNode) {
   await context.audioWorklet.addModule('./js/audio-processor.js');
   const audioProcessor = new AudioWorkletNode(context, 'audio-processor');
   // Connect the master gain node to the audio processor node
