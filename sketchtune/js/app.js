@@ -1867,8 +1867,7 @@ function createAnalyserNode(audioContext, audioSource) {
 
   button_load.on("click", function(event){
       console.log(contextInitialized, triggeredAutomatically);
-      event.stopPropagation();
-      
+
       if(contextInitialized){ return; }
       contextInitialized = true;
 
@@ -1928,11 +1927,14 @@ function createAnalyserNode(audioContext, audioSource) {
   });
 
   $(document).on('mousedown', function(){
-      // Trigger Audio Context Creation if not initialized yet
-      if(!contextInitialized){
-          triggeredAutomatically = true;
-          $("#load").click();
-      }
+// Check if the event originated from the #load button or its descendants
+if (!$(event.target).closest('#load').length) {
+    // Trigger Audio Context Creation if not initialized yet
+    if (!contextInitialized) {
+        triggeredAutomatically = true;
+        $("#load").click();
+    }
+}
   });
 
   var samplesSetupProcess = false;
