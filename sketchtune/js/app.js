@@ -1772,6 +1772,9 @@ async function createSpectrumTracker(audioContext, audioSource) {
       buffer: resampledBuffer,
       playbackRate: 1.0,
     });
+
+    plotWaveform(resampledBuffer);
+
     /*
     const sampleSource = new AudioBufferSourceNode(audioContext, {
       buffer: audioBuffer,
