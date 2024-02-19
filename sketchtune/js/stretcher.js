@@ -150,8 +150,14 @@ function convertToAudioSignal(complex) {
                 outputData[start + j] += processedFrame[j];
             }*/
 
+
+            // Perform IFFT (you need to implement IFFT function)
+            const processedFrame = ifft(spectrum).map(({ re }) => re);
+
             // Assign the processed frame to the output buffer without overlap
-            outputData.set(processedFrame, start);
+            const availableSpace = outputData.length - start;
+            const frameLength = Math.min(processedFrame.length, availableSpace);
+            outputData.set(processedFrame.slice(0, frameLength), start);
         }
     }
 
