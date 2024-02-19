@@ -1630,7 +1630,7 @@ function createAnalyserNode(audioContext, audioSource) {
 
     // Connect AnalyserNode to the audio source
     try {
-        audioSource.connect(analyserNode);
+        //audioSource.connect(analyserNode);
         console.log('AnalyserNode connected successfully.');
     } catch (error) {
         console.error('Error connecting AnalyserNode:', error);
