@@ -1620,7 +1620,7 @@ function checkAndCreateSpectrumTracker(audioContext, audioSource) {
     }
 }
 
-function createSpectrumTracker(audioContext, audioSource) {
+async function createSpectrumTracker(audioContext, audioSource) {
     // BUILT IN WEB API ANALYZER
     //const analyserNode = audioContext.createAnalyser();
 
