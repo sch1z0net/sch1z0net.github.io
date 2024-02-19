@@ -222,11 +222,10 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   const ctx = canvas.getContext('2d');
   const maxFrequency = 10000; // Maximum frequency (10 kHz)
   const minFrequency = 20; // Minimum frequency (20 Hz)
+  const width = canvas.width;
+  const height = canvas.height;
 
   if(frequencyData != null && sampleRate != null){
-    const width = canvas.width;
-    const height = canvas.height;
-
     ctx.clearRect(0, 0, width, height);
     ctx.beginPath();
 
