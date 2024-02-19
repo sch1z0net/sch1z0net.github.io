@@ -136,6 +136,10 @@ class AudioProcessor extends AudioWorkletProcessor {
     this.frequencyBinCount = this.fftSize / 2;
     this.frequencyData = new Uint8Array(this.frequencyBinCount).fill(0); // Only need half the FFT size due to Nyquist theorem
     this.sampleBuffer = [];
+
+    // Initialize variables for EMA smoothing
+    this.alpha = 0.1; // Smoothing factor (adjust as needed)
+    this.prevSmoothedData = null;
   }
 
   // Inside AudioProcessor class
@@ -183,9 +187,10 @@ class AudioProcessor extends AudioWorkletProcessor {
 
       // Convert FFT data to frequency data
       this.convertToFrequencyData(fftData);
-
-      this.ema_smoothingFrequencyData();
     }
+
+    // Perform EMA smoothing on frequency data
+    this.frequencyData = this.smoothFrequencyData(this.frequencyData);
 
     // Update the last processing time
     this.lastProcessingTime = currentTime;
@@ -220,29 +225,32 @@ class AudioProcessor extends AudioWorkletProcessor {
     }
   }
 
-  ema_smoothingFrequencyData(){
-    var frequencyData = this.frequencyData;
-    // Define a smoothing factor (alpha) for the exponential moving average
-    const alpha = 0.2; // Adjust this value based on the desired smoothing effect
-    // Initialize an array to store the smoothed frequency data
-    let smoothedFrequencyData = new Uint8Array(frequencyData.length);
-
-    // Perform exponential moving average
-    for (let i = 0; i < frequencyData.length; i++) {
-        if (i === 0) {
-            smoothedFrequencyData[i] = frequencyData[i]; // Initialize the first value
-        } else {
-            // Apply exponential moving average formula: smoothed_value = alpha * current_value + (1 - alpha) * previous_smoothed_value
-            smoothedFrequencyData[i] = Math.round(alpha * frequencyData[i] + (1 - alpha) * smoothedFrequencyData[i - 1]);
-        }
+  smoothFrequencyData(data) {
+    if (!this.prevSmoothedData) {
+      // If no previous smoothed data, initialize with current data
+      this.prevSmoothedData = data.slice();
+      return data;
     }
-    this.frequencyData = smoothedFrequencyData;
+
+    // Apply EMA smoothing to each frequency bin
+    for (let i = 0; i < data.length; i++) {
+      this.prevSmoothedData[i] = this.alpha * data[i] + (1 - this.alpha) * this.prevSmoothedData[i];
+    }
+
+    return this.prevSmoothedData;
   }
 
   getByteFrequencyData(){
      return this.frequencyData;
   }
 }
+
+
+
+
+
+
+
 
 
 
