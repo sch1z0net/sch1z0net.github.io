@@ -1637,7 +1637,7 @@ $(document).ready(function(){
     const resampledBuffer = audioBuffer;
     // Plot waveform
     plotWaveform(waveformCanvas, resampledBuffer);
-    displaySpectrumRealTime(audioContext, audioBuffer);
+    //displaySpectrumRealTime(audioContext, audioBuffer);
 
     const sampleSource = new AudioBufferSourceNode(audioContext, {
       buffer: resampledBuffer,
