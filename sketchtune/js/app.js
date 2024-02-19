@@ -1875,14 +1875,13 @@ function createAnalyserNode(audioContext, audioSource) {
         context.close();
       }
 
-      button_load.css("display","none");
-      button_pause.css("display","inline-block");
       context = new AudioContext();
       setupSamplesInQueue();
       // Create a master gain node
       masterGainNode = context.createGain();
       masterGainNode.connect(context.destination);
       createAnalyzer(context,masterGainNode);
+
 
       button_play.on("click", function(){ 
         button_play.css("display","none");
@@ -1916,6 +1915,8 @@ function createAnalyserNode(audioContext, audioSource) {
       context.resume().then(() => {
         console.log('AudioContext is now resumed');
         if(!triggeredAutomatically){
+            button_load.css("display","none");
+            button_pause.css("display","inline-block");
             button_play.click();
         }
       });
