@@ -118,6 +118,8 @@ function convertToComplex(inputSignal) {
     const numFrames = Math.ceil(inputBuffer.length / hopSize);
     const outputBuffer = audioContext.createBuffer(numChannels, numFrames * hopSize, audioContext.sampleRate);
     
+    console.log(numFrames, hopSize);
+
     // Process inputBuffer frame by frame for each channel
     for (let ch = 0; ch < numChannels; ch++) {
         const inputData = inputBuffer.getChannelData(ch);

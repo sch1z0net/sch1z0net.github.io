@@ -182,7 +182,7 @@ class AudioProcessor extends AudioWorkletProcessor {
     const output = outputs[0]; // Get the output audio data
     // Check if input data is null or empty
     if (!input || input.length === 0) {
-      console.log("No audio to process, but keep processor running");
+      //console.log("No audio to process, but keep processor running");
       return true; // Keep the processor alive without processing any audio data
     }
 
