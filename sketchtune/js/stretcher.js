@@ -145,6 +145,7 @@ function convertToComplex(inputSignal) {
 
             // Perform IFFT (you need to implement IFFT function)
             const processedFrame = ifft(spectrum);
+            console.log("spectrum length:",spectrum.length,"processedFrame length:",processedFrame.length);
             
             // Overlap-add
             for (let j = 0; j < processedFrame.length; j++) {
