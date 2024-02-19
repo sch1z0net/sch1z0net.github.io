@@ -310,7 +310,7 @@ track-row-empty {
 track-row-empty > span {
   font-size: 10px;
   height: 10px;
-  padding: 10px;
+  color: rgba(0,0,0,0.2);
   border: 2px dashed rgba(0,0,0,0.2);
 }
 
