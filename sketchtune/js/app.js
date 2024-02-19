@@ -970,6 +970,10 @@ var colors = [
           activePattern_oldmargin = this.getBoundingClientRect().left + $("beat-bar").scrollLeft() - ROOT_PADDING;
           const x = event.clientX + $("beat-bar").scrollLeft() - ROOT_PADDING;
           xOffsetOnPattern = x - activePattern_oldmargin;
+
+          // Plot waveform
+          var soundid = activePattern.attr('data-soundid');
+          if(soundid != null){ plotWaveform(getSample(soundid)); console.log("plot",soundid);}
         });
 
         // Initialize width based on data-length attribute
@@ -1294,8 +1298,6 @@ var colors = [
 
     connectedCallback() {
       if (!this.initialized) {
-
-        
 
         $(this).addClass("unselectable");
         for(var i = 1; i<10; i++){
@@ -1635,8 +1637,6 @@ $(document).ready(function(){
     const stretchFactor = 1/GLOBAL_PLAYBACK_RATE;
     //const resampledBuffer = phaseVocoder(audioContext, audioBuffer, stretchFactor);
     const resampledBuffer = audioBuffer;
-    // Plot waveform
-    plotWaveform(resampledBuffer);
     //displaySpectrumRealTime(audioContext, audioBuffer);
 
     const sampleSource = new AudioBufferSourceNode(audioContext, {
@@ -1670,6 +1670,8 @@ $(document).ready(function(){
     playingAudioNodes = [];
   }
 
+
+
   const button_load  = $("#load");
   const button_play  = $("#play");
   const button_pause = $("#pause");
@@ -1681,6 +1683,39 @@ $(document).ready(function(){
   var init = false;
   var samples;
 
+
+
+
+  function createAnalyzer(audioContext){
+    // Create an AnalyserNode
+    const analyserNode = audioContext.createAnalyser();
+    analyserNode.fftSize = 2048; // Set FFT size for frequency analysis
+    // Connect the AnalyserNode to the output of the AudioContext
+    audioContext.destination.connect(analyserNode);
+
+    // Function to get the frequency data from the AnalyserNode
+    function getFrequencyData() {
+        const frequencyData = new Uint8Array(analyserNode.frequencyBinCount);
+        analyserNode.getByteFrequencyData(frequencyData);
+        return frequencyData;
+    }
+
+    // Use setInterval to continuously get the frequency data
+    const interval = setInterval(() => {
+        const frequencyData = getFrequencyData();
+
+    }, 100);
+
+    // Stop getting frequency data after some time (for example, 10 seconds)
+    setTimeout(() => {
+        clearInterval(interval);
+    }, 10000); // 10 seconds
+  }
+
+
+
+
+
   button_load.on("click", function(){
       if(context != null){
         context.close();
@@ -1689,6 +1724,7 @@ $(document).ready(function(){
       button_pause.css("display","inline-block");
       context = new AudioContext();
       setupSamplesInQueue();
+      createAnalyzer(context);
 
       button_play.on("click", function(){ 
         button_play.css("display","none");
