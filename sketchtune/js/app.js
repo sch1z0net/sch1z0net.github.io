@@ -1779,7 +1779,7 @@ $(document).ready(function(){
       button_pause.css("display","inline-block");
       context = new AudioContext();
       setupSamplesInQueue();
-      //createAnalyzer(context);
+      createAnalyzer(context);
 
       button_play.on("click", function(){ 
         button_play.css("display","none");
