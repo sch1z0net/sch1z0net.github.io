@@ -4,28 +4,25 @@ class AudioProcessor extends AudioWorkletProcessor {
     const input = inputs[0]; // Get the input audio data
     const output = outputs[0]; // Get the output audio data
 
-    // Extract audio samples from the input array
-    const leftChannel = input[0];
-    const rightChannel = input[1];
-
-    // Convert stereo to mono by averaging the samples from both channels
-    const numSamples = Math.min(leftChannel.length, rightChannel.length);
-    const monoSamples = new Float32Array(numSamples);
-    for (let i = 0; i < numSamples; i++) {
-      monoSamples[i] = (leftChannel[i] + rightChannel[i]) / 2;
+    // Check if input has at least one channel
+    if (!input || !input[0]) {
+      // Handle the case of no input or no channels
+      console.error("AudioProcessor has no Input!");
+      return false; // Return false to indicate no processing was done
     }
 
-    console.log(numSamples);
+    // Extract audio samples from the input array
+    const numChannels = input.length;
+    const numSamples = input[0].length;
+    console.log('Number of channels:', numChannels);
+    console.log('Number of samples:', numSamples);
 
-    /*
-    // Pass the mono audio data to the output
-    output.forEach(channel => {
-      for (let i = 0; i < numSamples; i++) {
-        channel[i] = monoSamples[i]; // Pass the mono samples through unchanged
-      }
-    });
-    */
+    // Process each channel separately
+    for (let ch = 0; ch < numChannels; ch++) {
+      const channelData = input[ch];
 
+      // Do processing for each channel here
+    }
 
     return true; // Keep the processor alive
   }
