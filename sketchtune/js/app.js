@@ -155,7 +155,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
 
     // Plot the spectrum using a logarithmic scale
     const logScaleFactor = Math.log10(numBins); // Scale factor for logarithmic scaling
-    ctx.moveTo(0, height); // Start from bottom-left corner
+    const controlPoints = []; // Array to store control points for Catmull-Rom spline
     for (let x = 0; x < width; x++) {
       const binIndex = Math.pow(10, x / width * logScaleFactor); // Calculate bin index using logarithmic scale
       const lowerBinIndex = Math.floor(binIndex);
@@ -170,16 +170,26 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
       // Normalize interpolated magnitude for plotting
       const normalizedMagnitude = (interpolatedMagnitude / maxMagnitude) * height;
 
-      // Draw a cubic Bezier curve to the next point
+      // Store the control point for Catmull-Rom spline
       const y = height - normalizedMagnitude; // Invert Y-axis
-      const ctrlPointX = x - width / 2; // Control point X-coordinate
-      const ctrlPointY = height / 2; // Control point Y-coordinate
-      ctx.bezierCurveTo(ctrlPointX, ctrlPointY, ctrlPointX, ctrlPointY, x, y);
+      controlPoints.push({ x, y });
     }
 
+    // Draw Catmull-Rom spline passing through control points
+    ctx.moveTo(controlPoints[0].x, controlPoints[0].y); // Start from the first control point
+    for (let i = 1; i < controlPoints.length - 2; i++) {
+      const xc = (controlPoints[i].x + controlPoints[i + 1].x) / 2; // Calculate x-coordinate of the middle point
+      const yc = (controlPoints[i].y + controlPoints[i + 1].y) / 2; // Calculate y-coordinate of the middle point
+      ctx.quadraticCurveTo(controlPoints[i].x, controlPoints[i].y, xc, yc); // Draw quadratic Bezier curve
+    }
+    // Draw the last segment using a straight line
+    ctx.lineTo(controlPoints[controlPoints.length - 1].x, controlPoints[controlPoints.length - 1].y);
+    
     ctx.strokeStyle = 'red';
     ctx.stroke();
   }
+
+
 
   // Plot logarithmic number grid
   ctx.fillStyle = 'white';
