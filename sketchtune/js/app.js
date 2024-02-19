@@ -1623,10 +1623,6 @@ function checkAndCreateSpectrumTracker(audioContext, audioSource) {
 function createSpectrumTracker(audioContext, audioSource) {
     // BUILT IN WEB API ANALYZER
     //const analyserNode = audioContext.createAnalyser();
-    // CUSTOM FFT ANALYZER
-    const audioProcessor = createAudioProcessor(audioContext, audioSource);
-
-    audioProcessor.fftSize = 2048; // Set FFT size for frequency analysis
 
     // Check if audioSource is valid
     if (!audioSource) {
@@ -1644,8 +1640,9 @@ function createSpectrumTracker(audioContext, audioSource) {
     }
 
 
-
-
+    // CUSTOM FFT ANALYZER
+    const audioProcessor = await createAudioProcessor(audioContext, audioSource);
+    audioProcessor.fftSize = 2048; // Set FFT size for frequency analysis
     audioProcessor.port.onmessage = (event) => {
        const { data } = event;
        if (data.type === 'frequencyData') {
@@ -1653,7 +1650,6 @@ function createSpectrumTracker(audioContext, audioSource) {
             plotSpectrumLive(frequencyData, audioContext.sampleRate);
        }
     };
-
 
 
     /*
