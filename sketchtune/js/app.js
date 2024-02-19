@@ -1746,7 +1746,23 @@ async function createSpectrumTracker(audioContext, audioSource) {
   // Array to store references to all playing audio nodes
   let playingAudioNodes = [];
 
-  function playSample(audioContext, audioBuffer, time, offset, duration) {
+function playSample(audioContext, audioBuffer, time, offset, duration) {
+    const stretchFactor = 1 / GLOBAL_PLAYBACK_RATE;
+    let resampledBuffer;
+
+    if (stretchFactor !== 1) {
+        // Make a copy of the original audioBuffer
+        const audioBufferCopy = audioContext.createBuffer(audioBuffer.numberOfChannels, audioBuffer.length, audioBuffer.sampleRate);
+        for (let ch = 0; ch < audioBuffer.numberOfChannels; ch++) {
+            audioBufferCopy.copyToChannel(audioBuffer.getChannelData(ch), ch);
+        }
+        
+        // Apply phase vocoder if stretchFactor is not 1
+        resampledBuffer = phaseVocoder(audioContext, audioBufferCopy, stretchFactor); 
+    } else {
+        resampledBuffer = audioBuffer;
+    }
+
     // Calculate the resampling ratio
     //const originalDuration = audioBuffer.duration;
     //const resamplingRatio = desiredDuration / originalDuration;
@@ -1760,15 +1776,6 @@ async function createSpectrumTracker(audioContext, audioSource) {
 
     const resampledBuffer = granularSynthesis(originalAudioBuffer, stretchFactor, grainSize, overlap);
     */
-
-    const stretchFactor = 1/GLOBAL_PLAYBACK_RATE;
-
-    var resampledBuffer;
-    if(stretchFactor != 1){ 
-      resampledBuffer = phaseVocoder(audioContext, audioBuffer, stretchFactor); 
-    }else{
-      resampledBuffer = audioBuffer;
-    }
     
     //const resampledBuffer = audioBuffer;
     //displaySpectrumRealTime(audioContext, audioBuffer);
