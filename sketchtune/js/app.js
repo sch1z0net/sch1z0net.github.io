@@ -157,7 +157,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     // Plot the spectrum using a logarithmic scale
     const logScaleFactor = Math.log10(numBins); // Scale factor for logarithmic scaling
     const controlPoints = []; // Array to store control points for Catmull-Rom spline
-
+    ctx.moveTo(0, height); // Start from the bottom-left corner
     for (let x = 0; x < width; x++) {
       const binIndex = Math.pow(10, x / width * logScaleFactor); // Calculate bin index using logarithmic scale
       const lowerBinIndex = Math.floor(binIndex);
@@ -175,15 +175,15 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
       // Store the control point for Catmull-Rom spline
       const y = height - normalizedMagnitude; // Invert Y-axis
       controlPoints.push({ x, y });
-
-      if (fillWithColor) {
-        // Draw a vertical line at the current frequency bin position
-        ctx.moveTo(x, height); // Move to the bottom
-        ctx.lineTo(x, y); // Line up to the magnitude
-        ctx.strokeStyle = 'white';
-        ctx.stroke();
-      }
+      ctx.lineTo(x, y); // Draw line to the magnitude point
     }
+    ctx.lineTo(width, height); // Line to the bottom-right corner
+    ctx.closePath(); // Close the path
+
+    // Fill the area under the curve with the specified color
+    ctx.fillStyle = fillColor;
+    ctx.fill();
+
 
     // Draw Catmull-Rom spline passing through control points
     ctx.moveTo(controlPoints[0].x, controlPoints[0].y); // Start from the first control point
