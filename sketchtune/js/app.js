@@ -133,6 +133,7 @@ function smoothFrequencyData(frequencyData) {
 }
 
 // Plot spectrum on canvas with smoothed and curved lines
+var fillWithColor = true;
 function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   const canvas = document.getElementById('spectrumCanvas');
   const ctx = canvas.getContext('2d');
