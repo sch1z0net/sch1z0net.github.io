@@ -57,9 +57,6 @@ function ifft(input) {
 
 
 
-
-
-
 // Function to apply Hanning window to the input signal
 function applyHanningWindow(inputSignal) {
     const windowedSignal = [];
@@ -91,7 +88,13 @@ function prepare_and_fft(inputSignal) {
 
 
 
+
+
 function convertToComplex(inputSignal) {
+    return inputSignal.map(value => ({ re: value, im: 0 }));
+}
+
+function convertToAudioSignal(complex) {
     return inputSignal.map(value => ({ re: value, im: 0 }));
 }
 
@@ -140,7 +143,8 @@ function convertToComplex(inputSignal) {
             
 
             // Perform IFFT (you need to implement IFFT function)
-            const processedFrame = ifft(spectrum);
+            const processedFrame = ifft(spectrum).map(({ re }) => re);
+
             /*console.log(
                 "input frame length",frame.length,
                 "spectrum length",spectrum.length,
