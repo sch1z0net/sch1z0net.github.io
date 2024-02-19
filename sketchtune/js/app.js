@@ -1553,6 +1553,12 @@ var colors = [
 
       $(this).on('drop', function(event) {
           event.preventDefault();
+
+
+          // Trigger Audio Context Creation if not initialized yet
+          //triggeredAutomatically = true;
+          //$("#load").click();
+
           
           var that = this;          
           const files = event.originalEvent.dataTransfer.files;
@@ -1871,6 +1877,7 @@ function createAnalyserNode(audioContext, audioSource) {
 
 
   button_load.on("click", function(){
+      button_load.css("display","none");
       if(context != null){
         context.close();
       }
@@ -1915,7 +1922,6 @@ function createAnalyserNode(audioContext, audioSource) {
       context.resume().then(() => {
         console.log('AudioContext is now resumed');
         if(!triggeredAutomatically){
-            button_load.css("display","none");
             button_pause.css("display","inline-block");
             button_play.click();
         }
