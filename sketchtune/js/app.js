@@ -254,7 +254,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   }
 
   // Plot logarithmic number grid
-  ctx.fillStyle = 'black';
+  ctx.fillStyle = 'white';
   ctx.font = '10px Arial';
   ctx.textAlign = 'center';
 
