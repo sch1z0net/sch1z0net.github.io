@@ -136,6 +136,9 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
 
     const numBins = frequencyData.length;
 
+    // Find the maximum magnitude in the frequency data
+    const maxMagnitude = Math.max(...frequencyData);
+
     // Plot the spectrum using a logarithmic scale
     const logScaleFactor = Math.log10(numBins); // Scale factor for logarithmic scaling
     for (let x = 0; x < width; x++) {
@@ -147,10 +150,16 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
       // Interpolate between neighboring frequency bins
       const magnitude = frequencyData[lowerBinIndex] * (1 - fraction) + frequencyData[upperBinIndex] * fraction;
 
-      // Normalize magnitude for plotting (scale it to the range [0, 255])
-      const normalizedMagnitude = Math.round((magnitude / 255) * 255); // Scale to [0, 255] range
+      // Normalize magnitude for plotting
+      const normalizedMagnitude = (magnitude / maxMagnitude) * 255;
 
-      const y = height - normalizedMagnitude * height / 255; // Invert Y-axis
+      // Invert normalizedMagnitude since canvas Y-axis is inverted
+      const invertedMagnitude = 255 - normalizedMagnitude;
+
+      // Scale to fit canvas height
+      const scaledMagnitude = (invertedMagnitude / 255) * height;
+
+      const y = scaledMagnitude; // Invert Y-axis
       ctx.lineTo(x, y);
     }
 
