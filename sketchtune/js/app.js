@@ -1884,11 +1884,11 @@ function createAnalyserNode(audioContext, audioSource) {
   var samples;
 
 
-  async function initAudioWorkletNode(context) {
+  async function initAudioWorkletNode(context,audioNode) {
     await context.audioWorklet.addModule('./js/audio-processor.js');
     const audioWorkletNode = new AudioWorkletNode(context, 'audio-processor');
     // Connect the master gain node to the audio worklet node
-    masterGainNode.connect(audioWorkletNode);
+    audioNode.connect(audioWorkletNode);
   }
 
 
@@ -1919,7 +1919,7 @@ function createAnalyserNode(audioContext, audioSource) {
       masterGainNode = context.createGain();
       masterGainNode.connect(context.destination);
       //createAnalyzer(context,masterGainNode);
-      initAudioWorkletNode(context);
+      initAudioWorkletNode(context,masterGainNode);
 
 
 
