@@ -499,6 +499,7 @@ var audiobuffer = sawtoothWaveBuffer;
   var BEAT_WIDTH = parseInt($("#root").css("--beat-width"));
   var ROOT_PADDING;
 
+  let triggeredAutomatically = false;
   let context;
 
   var clockStartInMS;
@@ -1510,8 +1511,8 @@ var colors = [
           draggedSoundElement = this;
 
           // Trigger Audio Context Creation if not initialized yet
+          triggeredAutomatically = true;
           $("#load").click();
-          $("#stop").click();
         });
 
         $(this).prepend("<loading-circle>");
@@ -1914,9 +1915,10 @@ function createAnalyserNode(audioContext, audioSource) {
 
       context.resume().then(() => {
         console.log('AudioContext is now resumed');
-        button_play.click();
+        if(!triggeredAutomatically){
+            button_play.click();
+        }
       });
-
   });
 
   var samplesSetupProcess = false;
