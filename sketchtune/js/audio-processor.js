@@ -149,9 +149,9 @@ class AudioProcessor extends AudioWorkletProcessor {
     this.sampleBuffer.push(...monoChannel);
 
     // Check if the buffer contains enough samples for processing
-    if (this.sampleBuffer.length >= this.bufferLength) {
+    if (this.sampleBuffer.length >= this.fftSize) {
       // Extract the required number of samples from the buffer
-      const samplesToProcess = this.sampleBuffer.splice(0, this.bufferLength);
+      const samplesToProcess = this.sampleBuffer.splice(0, this.fftSize);
 
       // Perform processing (e.g., FFT analysis) on the extracted samples
       const fftData = this.performFFT(samplesToProcess);
@@ -164,11 +164,12 @@ class AudioProcessor extends AudioWorkletProcessor {
   }
 
   performFFT(inputData) {
-    const maxFrequency = 10000; // Maximum frequency (10 kHz)
-    const minFrequency = 20; // Minimum frequency (20 Hz)
     // Perform the processing (FFT analysis) on the mono channel
     var spectrum = prepare_and_fft(inputData, this.sampleRate);
     const numBins = spectrum.length;
+
+    const maxFrequency = 10000; // Maximum frequency (10 kHz)
+    const minFrequency = 20; // Minimum frequency (20 Hz)
     const minBinIndex = Math.round((minFrequency / sampleRate) * numBins);
     const maxBinIndex = Math.round((maxFrequency / sampleRate) * numBins);
     // Extract the subset of the spectrum corresponding to frequencies between minFrequency and maxFrequency
