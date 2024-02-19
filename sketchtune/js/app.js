@@ -1874,6 +1874,7 @@ function createAnalyserNode(audioContext, audioSource) {
 
 
   button_load.on("click", function(event){
+      console.log(contextInitialized);
       if(contextInitialized){ return; }
       contextInitialized = true;
 
