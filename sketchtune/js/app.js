@@ -1833,7 +1833,7 @@ function createAnalyserNode(audioContext, audioSource) {
       // Create a master gain node
       masterGainNode = context.createGain();
       masterGainNode.connect(context.destination);
-      createAnalyzer(audioContext,masterGainNode);
+      createAnalyzer(context,masterGainNode);
 
       button_play.on("click", function(){ 
         button_play.css("display","none");
