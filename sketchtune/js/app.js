@@ -1789,8 +1789,6 @@ function createAnalyserNode(audioContext, audioSource) {
     //sampleSource.connect(audioContext.destination);
     sampleSource.start(time, offset, duration);
 
-    createAnalyzer(audioContext,sampleSource);
-
     // Add the source node to the list of playing audio nodes
     playingAudioNodes.push(sampleSource);
 
@@ -1835,7 +1833,7 @@ function createAnalyserNode(audioContext, audioSource) {
       // Create a master gain node
       masterGainNode = context.createGain();
       masterGainNode.connect(context.destination);
-
+      createAnalyzer(audioContext,masterGainNode);
 
       button_play.on("click", function(){ 
         button_play.css("display","none");
