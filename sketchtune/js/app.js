@@ -1743,26 +1743,48 @@ $(document).ready(function(){
 
 
 function createAnalyzer(audioContext, audioSource) {
-    // Check if the AudioContext is in the suspended state and attempt to resume it
+    // Check if AudioContext is available
+    if (!audioContext) {
+        console.error('AudioContext is not available.');
+        return;
+    }
+
+    // Check AudioContext state
     if (audioContext.state === 'suspended') {
+        // Attempt to resume AudioContext
         audioContext.resume().then(() => {
             console.log('AudioContext resumed successfully.');
-            createAnalyzerNode(audioContext, audioSource); // After the context is resumed, create the AnalyserNode
+            createAnalyserNode(audioContext, audioSource);
         }).catch((error) => {
             console.error('Error resuming AudioContext:', error);
         });
+    } else if (audioContext.state === 'running') {
+        // AudioContext is already running, create AnalyserNode
+        createAnalyserNode(audioContext, audioSource);
     } else {
-        createAnalyzerNode(audioContext, audioSource); // If the context is already running, create the AnalyserNode directly
+        console.error('AudioContext is in an unsupported state:', audioContext.state);
     }
 }
 
-function createAnalyzerNode(audioContext, audioSource) {
+function createAnalyserNode(audioContext, audioSource) {
     // Create an AnalyserNode
     const analyserNode = audioContext.createAnalyser();
     analyserNode.fftSize = 2048; // Set FFT size for frequency analysis
-    
-    // Connect the AnalyserNode to the audio source
-    audioSource.connect(analyserNode);
+
+    // Check if audioSource is valid
+    if (!audioSource) {
+        console.error('Audio source is not valid.');
+        return;
+    }
+
+    // Connect AnalyserNode to the audio source
+    try {
+        audioSource.connect(analyserNode);
+        console.log('AnalyserNode connected successfully.');
+    } catch (error) {
+        console.error('Error connecting AnalyserNode:', error);
+        return;
+    }
 
     // Function to get the frequency data from the AnalyserNode
     function getFrequencyData() {
@@ -1782,6 +1804,7 @@ function createAnalyzerNode(audioContext, audioSource) {
         clearInterval(interval);
     }, 10000); // 10 seconds
 }
+
 
 
 
