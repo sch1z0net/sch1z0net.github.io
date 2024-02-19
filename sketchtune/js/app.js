@@ -349,9 +349,8 @@ class AudioProcessor extends AudioWorkletProcessor {
 
 registerProcessor('audio-processor', AudioProcessor);
 
-
 async function initAudioWorkletNode(context) {
-    await context.audioWorklet.addModule('audio-processor.js');
+    await context.audioWorklet.addModule('app.js');
     const audioWorkletNode = new AudioWorkletNode(context, 'audio-processor');
     // Connect the master gain node to the audio worklet node
     masterGainNode.connect(audioWorkletNode);
