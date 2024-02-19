@@ -560,7 +560,6 @@ track-pattern-br {
 }
 
 canvas {
-  height: 25%;
   border-radius: 5px;
   border: 1px solid white;
   background-color: rgba(10, 10, 10, 0.2);
@@ -570,11 +569,14 @@ canvas {
 #waveformCanvas {
   width: 14.5%;
   margin-right: 0.5%;
-  height: 40px;
+  height: 30px;
+  margin-top: 10px;
 }
 
 #spectrumCanvas {
   width: 85%;
+  margin-top: -29%;
+  height: 29%;
 }
 
 
