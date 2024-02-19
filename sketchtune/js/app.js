@@ -570,6 +570,7 @@ var audiobuffer = sawtoothWaveBuffer;
   let samplesMap = {}; // Define a map to store samples with soundid as the key
   // Function to retrieve a sample by providing the soundid
   function getSample(soundid) {
+      if(soundid == null){ return null; }
       return samplesMap[soundid]; // Retrieve the sample from the map using soundid as the key
   }
 
@@ -1022,7 +1023,8 @@ var colors = [
 
           // Plot waveform
           var soundid = $(activePattern).attr('data-soundid');
-          if(soundid != null){ plotWaveform(getSample(soundid)); console.log("plot",soundid);}
+          var audioBuffer = getSample(soundid);
+          if(audioBuffer != null){ plotWaveform(audioBuffer); console.log("plot",soundid);}
         });
 
         // Initialize width based on data-length attribute
