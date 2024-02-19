@@ -128,7 +128,7 @@ function findPeakFrequency(spectrum, sampleRate) {
 
 
 // Plot mono waveform on canvas
-function plotMonoWaveform(audioBuffer) {
+function plotWaveform(audioBuffer) {
     const canvas = document.getElementById('waveformCanvas');
     const ctx = canvas.getContext('2d');
 
