@@ -311,7 +311,8 @@ track-row-empty > span {
   font-size: 10px;
   height: 10px;
   color: rgba(0,0,0,0.2);
-  border: 2px dashed rgba(0,0,0,0.2);
+  border: 1px dashed rgba(0,0,0,0.2);
+  padding: 2px;
 }
 
 track-title-container::-webkit-scrollbar {
@@ -561,6 +562,9 @@ track-pattern-br {
 canvas {
   height: 25%;
   width: 50%;
+  border-radius: 5px;
+  border: 1px solid white;
+  background-color: rgba(10, 10, 10, 0.2);
 }
 
 
