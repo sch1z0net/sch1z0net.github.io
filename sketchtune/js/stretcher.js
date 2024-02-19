@@ -145,16 +145,13 @@ function convertToAudioSignal(complex) {
             // Perform IFFT (you need to implement IFFT function)
             const processedFrame = ifft(spectrum).map(({ re }) => re);
 
-            /*console.log(
-                "input frame length",frame.length,
-                "spectrum length",spectrum.length,
-                "output frame length",processedFrame.length
-            );*/
-
-            // Overlap-add
+            /*// Overlap-add with appropriate overlapping regions
             for (let j = 0; j < processedFrame.length; j++) {
-                outputData[i * hopSize + j] += processedFrame[j];
-            }
+                outputData[start + j] += processedFrame[j];
+            }*/
+
+            // Assign the processed frame to the output buffer without overlap
+            outputData.set(processedFrame, start);
         }
     }
 
