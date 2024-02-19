@@ -480,6 +480,8 @@ var audiobuffer = sawtoothWaveBuffer;
   var BEAT_WIDTH = parseInt($("#root").css("--beat-width"));
   var ROOT_PADDING;
 
+  let context;
+
   var clockStartInMS;
   var startOffsetInSec = 0;
   var startOffsetInBeats = 0;
@@ -1734,7 +1736,6 @@ $(document).ready(function(){
   button_play.css("display","none");
   button_pause.css("display","none");
 
-  let context;
   var init = false;
   var samples;
 
