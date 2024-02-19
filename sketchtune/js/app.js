@@ -321,6 +321,7 @@ var audiobuffer = sawtoothWaveBuffer;
     for (let ch = 0; ch < numChannels; ch++) {
         const inputData = inputBuffer.getChannelData(ch);
         const outputData = outputBuffer.getChannelData(ch);
+        if(ch == 0){ displaySpec(inputData, audioContext.sampleRate); }
         for (let i = 0; i < numFrames; i++) {
             // Extract frame
             const start = i * hopSize;
@@ -334,7 +335,7 @@ var audiobuffer = sawtoothWaveBuffer;
             
             // Perform FFT (you need to implement FFT function)
             //const spectrum = FFT(frame);
-            displaySpec(frame, audioContext.sampleRate);
+            //displaySpec(frame, audioContext.sampleRate);
             
             // Modify spectrum phase and magnitude (time stretching)
             // You would typically interpolate between frames to change the phase and magnitude
