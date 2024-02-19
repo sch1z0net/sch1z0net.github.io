@@ -127,9 +127,11 @@ class AudioProcessor extends AudioWorkletProcessor {
 
     this.port.onmessage = this.handleMessage.bind(this);
 
-    this.fftSize = 2048; // FFT size (you can adjust this)
+    //this.fftSize = 2048;
+    //this.fftSize = 4096;
+    this.fftSize = 8192;
     this.lastProcessingTime = 0;
-    this.processingInterval = 100; // Processing interval in milliseconds (adjust as needed)
+    this.processingInterval = 50; // Processing interval in milliseconds (adjust as needed)
     // Create an array to store the frequency data
     this.frequencyBinCount = this.fftSize / 2;
     this.frequencyData = new Uint8Array(this.frequencyBinCount).fill(0); // Only need half the FFT size due to Nyquist theorem
