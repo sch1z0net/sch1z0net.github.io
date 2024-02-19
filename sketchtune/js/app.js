@@ -1743,8 +1743,20 @@ $(document).ready(function(){
 
 
 function createAnalyzer(audioContext, audioSource) {
-    console.log(audioContext);
+    // Check if the AudioContext is in the suspended state and attempt to resume it
+    if (audioContext.state === 'suspended') {
+        audioContext.resume().then(() => {
+            console.log('AudioContext resumed successfully.');
+            createAnalyzerNode(audioContext, audioSource); // After the context is resumed, create the AnalyserNode
+        }).catch((error) => {
+            console.error('Error resuming AudioContext:', error);
+        });
+    } else {
+        createAnalyzerNode(audioContext, audioSource); // If the context is already running, create the AnalyserNode directly
+    }
+}
 
+function createAnalyzerNode(audioContext, audioSource) {
     // Create an AnalyserNode
     const analyserNode = audioContext.createAnalyser();
     analyserNode.fftSize = 2048; // Set FFT size for frequency analysis
