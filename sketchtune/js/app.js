@@ -31,28 +31,6 @@ function generateSawtoothWaveBuffer(durationInSeconds, sampleRate, frequency) {
 }
 
 
-// Find the frequency with the highest magnitude in the spectrum
-function findPeakFrequency(spectrum, sampleRate) {
-    const N = spectrum.length;
-    let maxMagnitude = 0;
-    let maxIndex = 0;
-
-    for (let i = 0; i < N / 2; i++) { // Only consider the positive frequencies
-        const magnitude = Math.sqrt(spectrum[i].re * spectrum[i].re + spectrum[i].im * spectrum[i].im);
-
-        if (magnitude > maxMagnitude) {
-            maxMagnitude = magnitude;
-            maxIndex = i;
-        }
-    }
-
-    // Calculate the corresponding frequency
-    const frequency = maxIndex * sampleRate / N;
-
-    return frequency;
-}
-
-
 
 // Plot mono waveform on canvas
 function plotWaveform(audioBuffer) {
@@ -198,24 +176,6 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
       if(frequency == 100 || frequency == 1000 || frequency == 10000){ ctx.strokeStyle = 'red'; }
       ctx.stroke();
   }
-}
-
-
-
-
-
-function displaySpec(audiobuffer, sampleRate){
-   const spectrum = fft_audio_buffer(audiobuffer);
-   const numBins = spectrum.length;
-   const minBinIndex = Math.round((minFrequency / sampleRate) * numBins);
-   const maxBinIndex = Math.round((maxFrequency / sampleRate) * numBins);
-   // Extract the subset of the spectrum corresponding to frequencies between minFrequency and maxFrequency
-   const subsetSpectrum = spectrum.slice(minBinIndex, maxBinIndex);
-   //console.log("FFT result:", subsetSpectrum);
-   const peakFrequency = findPeakFrequency(subsetSpectrum, sampleRate);
-   console.log("Peak frequency:", peakFrequency, "Hz");
-   // Plot spectrum
-   plotSpectrum(spectrumCanvas, subsetSpectrum, sampleRate);
 }
 
 
