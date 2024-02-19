@@ -1822,6 +1822,7 @@ function createAnalyserNode(audioContext, audioSource) {
 
       context.resume().then(() => {
         console.log('AudioContext is now resumed');
+        console.log(context);
         createAnalyzer(context,context.destination);
       });
 
