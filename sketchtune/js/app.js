@@ -1762,17 +1762,13 @@ async function createSpectrumTracker(audioContext, audioSource) {
     */
 
     const stretchFactor = 1/GLOBAL_PLAYBACK_RATE;
-
-    const numChannels = originalBuffer.numberOfChannels;
-    const length = originalBuffer.length;
-    const sampleRate = originalBuffer.sampleRate;
-    var resampledBuffer = originalBuffer.context.createBuffer(numChannels, length, sampleRate);
-    // Copy the audio data from the original buffer to the cloned buffer
-    for (let channel = 0; channel < numChannels; channel++) {
-        resampledBuffer.copyToChannel(originalBuffer.getChannelData(channel), channel);
+    
+    const resampledBuffer;
+    if(stretchFactor != 1){ 
+      resampledBuffer = phaseVocoder(audioContext, audioBuffer, stretchFactor); 
+    }else{
+      resampledBuffer = audioBuffer;
     }
-
-    if(stretchFactor != 1){ resampledBuffer = phaseVocoder(audioContext, audioBuffer, stretchFactor); }
     
     //const resampledBuffer = audioBuffer;
     //displaySpectrumRealTime(audioContext, audioBuffer);
