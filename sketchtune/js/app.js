@@ -1741,12 +1741,15 @@ $(document).ready(function(){
 
 
 
-  function createAnalyzer(audioContext){
+function createAnalyzer(audioContext, audioSource) {
+    console.log(audioContext);
+
     // Create an AnalyserNode
     const analyserNode = audioContext.createAnalyser();
     analyserNode.fftSize = 2048; // Set FFT size for frequency analysis
-    // Connect the AnalyserNode to the output of the AudioContext
-    audioContext.destination.connect(analyserNode);
+    
+    // Connect the AnalyserNode to the audio source
+    audioSource.connect(analyserNode);
 
     // Function to get the frequency data from the AnalyserNode
     function getFrequencyData() {
@@ -1758,14 +1761,14 @@ $(document).ready(function(){
     // Use setInterval to continuously get the frequency data
     const interval = setInterval(() => {
         const frequencyData = getFrequencyData();
-        plotSpectrumLive(frequencyData,audioContext.sampleRate);
+        plotSpectrumLive(frequencyData, audioContext.sampleRate);
     }, 100);
 
     // Stop getting frequency data after some time (for example, 10 seconds)
     setTimeout(() => {
         clearInterval(interval);
     }, 10000); // 10 seconds
-  }
+}
 
 
 
