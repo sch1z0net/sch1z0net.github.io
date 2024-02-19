@@ -1549,20 +1549,20 @@ var colors = [
     connectedCallback() {
       $(this).addClass("unselectable");
 
+      $(this).on('mousedown', function(){
+          // Trigger Audio Context Creation if not initialized yet
+          if(!triggeredAutomatically){
+            triggeredAutomatically = true;
+            $("#load").click();
+          }
+      });
+
       $(this).on('dragover', function(event) {
          event.preventDefault();
       });
 
       $(this).on('drop', function(event) {
           event.preventDefault();
-
-
-          // Trigger Audio Context Creation if not initialized yet
-          if(!triggeredAutomatically){
-            triggeredAutomatically = true;
-            $("#load").click();
-          }
-
           
           var that = this;          
           const files = event.originalEvent.dataTransfer.files;
