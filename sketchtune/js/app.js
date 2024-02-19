@@ -1615,8 +1615,11 @@ function createAnalyzer(audioContext, audioSource) {
 }
 
 function createAnalyserNode(audioContext, audioSource) {
-    // Create an AnalyserNode
-    const analyserNode = audioContext.createAnalyser();
+    // BUILT IN WEB API ANALYZER
+    //const analyserNode = audioContext.createAnalyser();
+    // CUSTOM FFT ANALYZER
+    const analyserNode = initAudioWorkletNode(audioContext, audioSource);
+
     analyserNode.fftSize = 2048; // Set FFT size for frequency analysis
 
     // Check if audioSource is valid
@@ -1636,8 +1639,9 @@ function createAnalyserNode(audioContext, audioSource) {
 
     // Function to get the frequency data from the AnalyserNode
     function getFrequencyData() {
-        const frequencyData = new Uint8Array(analyserNode.frequencyBinCount);
-        analyserNode.getByteFrequencyData(frequencyData);
+        //const frequencyData = new Uint8Array(analyserNode.frequencyBinCount);
+        //analyserNode.getByteFrequencyData(frequencyData);
+        analyserNode.getByteFrequencyData();
         return frequencyData;
     }
 
@@ -1776,6 +1780,7 @@ function createAnalyserNode(audioContext, audioSource) {
     const audioWorkletNode = new AudioWorkletNode(context, 'audio-processor');
     // Connect the master gain node to the audio worklet node
     audioNode.connect(audioWorkletNode);
+    return audioWorkletNode;
   }
 
 
@@ -1805,10 +1810,7 @@ function createAnalyserNode(audioContext, audioSource) {
       // Create a master gain node
       masterGainNode = context.createGain();
       masterGainNode.connect(context.destination);
-      //createAnalyzer(context,masterGainNode);
-      initAudioWorkletNode(context,masterGainNode);
-
-
+      createAnalyzer(context,masterGainNode);
 
 
       button_play.on("click", function(){ 

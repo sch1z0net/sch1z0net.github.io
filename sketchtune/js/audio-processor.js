@@ -126,46 +126,48 @@ class AudioProcessor extends AudioWorkletProcessor {
     super();
     this.fftSize = 2048; // FFT size (you can adjust this)
     this.lastProcessingTime = 0;
-    this.processingInterval = 200; // Processing interval in milliseconds (adjust as needed)
+    this.processingInterval = 100; // Processing interval in milliseconds (adjust as needed)
+    // Create an array to store the frequency data
+    this.frequencyBinCount = this.fftSize / 2;
+    this.frequencyData = new Uint8Array(this.frequencyBinCount).fill(0); // Only need half the FFT size due to Nyquist theorem
   }
 
   process(inputs, outputs, parameters) {
     const input = inputs[0]; // Get the input audio data
     const output = outputs[0]; // Get the output audio data
-
     // Check if input data is null or empty
     if (!input || input.length === 0) {
       console.log("No audio to process, but keep processor running");
       return true; // Keep the processor alive without processing any audio data
     }
 
-    // Extract audio samples from the input array
-    const numChannels = input.length;
-    const numSamples = input[0].length;
+    // Extract audio samples from the input array (assuming mono input)
+    const monoChannel = input[0];
+    const numSamples = monoChannel.length;
 
-    // Mix the channels into a single mono channel
-    const monoChannel = new Float32Array(numSamples);
-    for (let i = 0; i < numSamples; i++) {
-      let sum = 0;
-      for (let ch = 0; ch < numChannels; ch++) {
-        sum += input[ch][i];
-      }
-      monoChannel[i] = sum / numChannels;
+    // Push samples into the buffer
+    this.sampleBuffer.push(...monoChannel);
+
+    // Check if the buffer contains enough samples for processing
+    if (this.sampleBuffer.length >= this.bufferLength) {
+      // Extract the required number of samples from the buffer
+      const samplesToProcess = this.sampleBuffer.splice(0, this.bufferLength);
+
+      // Perform processing (e.g., FFT analysis) on the extracted samples
+      const fftData = this.performFFT(samplesToProcess);
+
+      // Convert FFT data to frequency data
+      this.convertToFrequencyData(fftData);
     }
 
-    // Check if enough time has elapsed since the last processing
-    const currentTime = this.currentTime;
-    if (currentTime - this.lastProcessingTime < this.processingInterval) {
-      return true; // Skip processing
-    }
+    return true; // Keep the processor alive
+  }
 
-
-
-    
+  performFFT(inputData) {
     const maxFrequency = 10000; // Maximum frequency (10 kHz)
     const minFrequency = 20; // Minimum frequency (20 Hz)
     // Perform the processing (FFT analysis) on the mono channel
-    var spectrum = prepare_and_fft(monoChannel, this.sampleRate, this.fftSize);
+    var spectrum = prepare_and_fft(inputData, this.sampleRate);
     const numBins = spectrum.length;
     const minBinIndex = Math.round((minFrequency / sampleRate) * numBins);
     const maxBinIndex = Math.round((maxFrequency / sampleRate) * numBins);
@@ -174,15 +176,26 @@ class AudioProcessor extends AudioWorkletProcessor {
     const peakFrequency = findPeakFrequency(subsetSpectrum, sampleRate);
     console.log("Peak frequency:", peakFrequency, "Hz");
 
-
-
-
-
-    // Update the last processing time
-    this.lastProcessingTime = currentTime;
-
-    return true; // Keep the processor alive
+    return subsetSpectrum;
   }
-}
+
+  convertToFrequencyData(fftData) {
+    // Calculate magnitude spectrum from complex FFT data
+    for (let i = 0; i < this.frequencyData.length; i++) {
+      const re = fftData[i].re;
+      const im = fftData[i].im;
+      // Calculate magnitude
+      this.frequencyData[i] = Math.sqrt(re * re + im * im);
+    }
+  }
+
+  getByteFrequencyData(){
+     return this.frequencyData;
+  }
+
+
+
+
+
 
 registerProcessor('audio-processor', AudioProcessor);
