@@ -213,6 +213,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
 // Function to stretch spectrogram
 function stretchSpectrogram(spectrogram, stretchFactor) {
     const stretchedFrames = interpolateMagnitudes(spectrogram, stretchFactor);
+    console.log(stretchedFrames);
     const stretchedPhases = synchronizePhase(spectrogram, stretchFactor);
     const stretchedSpectrogram = stretchedFrames.map((frameMagnitude, index) => [frameMagnitude, stretchedPhases[index]]);
     return stretchedSpectrogram;
