@@ -452,6 +452,7 @@ function prepare_and_fft(inputSignal) {
     const FFT_SIZE = nextPowerOf2(windowedSignal.length);
     const paddedInput = new Float32Array(FFT_SIZE).fill(0);
     windowedSignal.forEach((value, index) => (paddedInput[index] = value));
+    console.log("Zero Padding of current Frame", paddedInput);
 
     // Perform FFT
     return fft(paddedInput);
@@ -515,6 +516,7 @@ function STFT(inputSignal, windowSize, hopSize) {
         // Apply window function to the current frame
         const frame = inputSignal.slice(startIdx, startIdx + windowSize);
         const windowedFrame = applyHanningWindow(frame);
+        console.log("Apply Hanning Window on current Frame", windowedFrame);
 
         // Compute FFT of the windowed frame
         const spectrum = computeFFT(windowedFrame);
@@ -552,7 +554,6 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
     console.log(inputSignal);
     // Apply STFT to input signal
     const spectrogram = STFT(inputSignal, windowSize, hopSize);
-    console.log(spectrogram);
     // Modify magnitude and phase components based on stretch factor
     const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
     // Apply inverse STFT to reconstruct processed signal
