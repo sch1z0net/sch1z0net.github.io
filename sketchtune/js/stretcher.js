@@ -534,15 +534,19 @@ function computeFFT(frame) {
 function computeInverseFFT(spectrum) {
     // Perform inverse FFT to obtain the time-domain frame (you can use your IFFT implementation here)
     // For simplicity, let's assume computeInverseFFT returns the time-domain frame
-
+    
     // Ensure the size of the spectrum array is a power of 2
     const paddedSize = nextPowerOf2(spectrum.length);
 
     // Pad both real and imaginary parts of the spectrum
-    const paddedSpectrum = new Float32Array(paddedSize * 2).fill(0);
-    for (let i = 0; i < spectrum.length; i++) {
-        paddedSpectrum[i * 2] = spectrum[i].re;
-        paddedSpectrum[i * 2 + 1] = spectrum[i].im;
+    const paddedSpectrum = [];
+    for (let i = 0; i < paddedSize; i++) {
+        if (i < spectrum.length) {
+            paddedSpectrum.push(spectrum[i]);
+        } else {
+            // Pad with zeros for both real and imaginary parts
+            paddedSpectrum.push({ re: 0, im: 0 });
+        }
     }
 
     // Now you can pass paddedSpectrum to the IFFT function
