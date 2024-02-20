@@ -1,3 +1,5 @@
+importScripts('./js/fft.js');
+
 // Function to perform Short-Time Fourier Transform (STFT)
 function STFT(inputSignal, windowSize, hopSize, startFrame, endFrame) {
     const spectrogram = [];
