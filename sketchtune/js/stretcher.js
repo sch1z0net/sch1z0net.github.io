@@ -281,14 +281,18 @@ function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitude
 
     for (let i = 0; i < numFrames; i++) {
         const originalFrameIndex = i / stretchFactor;
+        // Get the indices of the adjacent frames
         var frameIndex1 = Math.floor(originalFrameIndex);
         var frameIndex2 = Math.ceil(originalFrameIndex);
-        const fraction = originalFrameIndex - frameIndex1;
 
-        // Handle edge case where frameIndex2 exceeds the maximum index
+        // Handle edge cases where frameIndex2 exceeds the maximum index
         if (frameIndex2 >= numFrames) {
             frameIndex2 = numFrames - 1;
+            frameIndex1 = numFrames - 2;
         }
+
+        // Calculate the fraction between the two frames
+        const fraction = originalFrameIndex - frameIndex1;
 
         const currentInterpolatedMagnitudes = [];
 
@@ -313,14 +317,18 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
 
     for (let i = 0; i < numFrames; i++) {
         const originalFrameIndex = i / stretchFactor;
+        // Get the indices of the adjacent frames
         var frameIndex1 = Math.floor(originalFrameIndex);
         var frameIndex2 = Math.ceil(originalFrameIndex);
-        const fraction = originalFrameIndex - frameIndex1;
 
-        // Handle edge case where frameIndex2 exceeds the maximum index
+        // Handle edge cases where frameIndex2 exceeds the maximum index
         if (frameIndex2 >= numFrames) {
             frameIndex2 = numFrames - 1;
+            frameIndex1 = numFrames - 2;
         }
+
+        // Calculate the fraction between the two frames
+        const fraction = originalFrameIndex - frameIndex1;
 
         const currentSynchronizedPhases = [];
 
