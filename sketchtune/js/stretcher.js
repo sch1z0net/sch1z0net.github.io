@@ -265,6 +265,7 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
         stretchedSpectrogram.push(frameWithPairs);
     }
 
+    console.log(stretchedSpectrogram);
     return stretchedSpectrogram;
 }
 
