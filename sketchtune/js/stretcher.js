@@ -418,16 +418,17 @@ function fft(input) {
     const output = new Float32Array(N * 2);
     for (let k = 0; k < N; k++) {
         const exp = fftFactorLookup[N * 2][k];
-        const t_re = exp.re * oddFFT[k] - exp.im * oddFFT[k]; // Fixed indexing for oddFFT
-        const t_im = exp.re * oddFFT[k] + exp.im * oddFFT[k]; // Fixed indexing for oddFFT
-        output[k * 2] = evenFFT[k] + t_re; // Real part
-        output[k * 2 + 1] = evenFFT[k + N] + t_im; // Imaginary part
-        output[(k + N) * 2] = evenFFT[k] - t_re; // Real part
-        output[(k + N) * 2 + 1] = evenFFT[k + N] - t_im; // Imaginary part
+        const t_re = exp.re * oddFFT[k * 2] - exp.im * oddFFT[k * 2 + 1]; // Fixed indexing for oddFFT
+        const t_im = exp.re * oddFFT[k * 2 + 1] + exp.im * oddFFT[k * 2]; // Fixed indexing for oddFFT
+        output[k * 2] = evenFFT[k * 2] + t_re; // Real part
+        output[k * 2 + 1] = evenFFT[k * 2 + 1] + t_im; // Imaginary part
+        output[(k + N) * 2] = evenFFT[k * 2] - t_re; // Real part
+        output[(k + N) * 2 + 1] = evenFFT[k * 2 + 1] - t_im; // Imaginary part
     }
 
     return output;
 }
+
 
 function ifft(input) {
     const N = input.length / 2; // Divide by 2 because each complex number has two components
@@ -556,7 +557,6 @@ function ISTFT(spectrogram, windowSize, hopSize) {
 
 // Function to perform time stretching using phase vocoder
 function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
-    console.log(inputSignal);
     // Apply STFT to input signal
     const spectrogram = STFT(inputSignal, windowSize, hopSize);
     // Modify magnitude and phase components based on stretch factor
