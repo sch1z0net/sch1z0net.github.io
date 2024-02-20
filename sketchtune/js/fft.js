@@ -36,11 +36,6 @@ function generateFFTFactorLookup(maxSampleLength) {
     return fftFactorLookup;
 }
 
-const maxSampleLength = 60 * 44100; // 60 seconds at 44100 Hz sample rate
-const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
-
-console.log("PRECALCULATE FFT LOOKUP TABLE", fftFactorLookup);
-
 /******************** FORWARD *********************/
 
 // Modified FFT function to use precalculated FFT factors

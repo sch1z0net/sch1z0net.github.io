@@ -45,6 +45,13 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
 }*/
 
 
+
+// Precalculate FFT lookup table
+const maxSampleLength = 60 * 44100; // 60 seconds at 44100 Hz sample rate
+const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
+console.log("PRECALCULATED FFT LOOKUP TABLE", fftFactorLookup);
+
+
 // Function to perform Short-Time Fourier Transform (STFT) using Web Workers
 function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
     const numFrames = Math.floor((inputSignal.length - windowSize) / hopSize) + 1;
@@ -67,16 +74,19 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
 
         // Create worker and send the chunk of inputSignal
         const worker = new Worker('./js/stftWorker.js');
-        worker.postMessage({ inputSignal: chunk, windowSize, hopSize });
+        worker.postMessage({ inputSignal: chunk, windowSize, hopSize, fftFactorLookup });
 
         // Listen for messages from the worker
         worker.onmessage = function (e) {
+            console.log("Worker responding");
             const workerSpectrogram = e.data;
             spectrogram.push(...workerSpectrogram);
 
             // Close the worker after it completes its work
             worker.terminate();
         };
+
+
     }
 
     // Return a promise that resolves when all workers finish processing
@@ -373,6 +383,7 @@ async function processChannel(audioContext, inputData, outputBuffer, ch, stretch
     // Time-stretch the input data
     console.log("TimeStretching the Input Channel.")
     const processedSignal = await timeStretch(inputData, stretchFactor, windowSize, hopSize);
+    
     // Convert processedSignal to Float32Array if necessary
     const processedSignalFloat32 = new Float32Array(processedSignal);
     // Copy the processed signal to the output buffer
