@@ -25,11 +25,7 @@ function generateFFTFactorLookup(maxSampleLength) {
 const maxSampleLength = 60 * 44100; // 60 seconds at 44100 Hz sample rate
 const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
 
-console.log("PRECALCULATE FFT LOOKUP TABLE",fftFactorLookup);
-
-
-
-
+console.log("PRECALCULATE FFT LOOKUP TABLE", fftFactorLookup);
 
 // Modified FFT function to use precalculated FFT factors
 // input was zero padded before to a length N = PowerOf2
@@ -40,52 +36,46 @@ function fft(input) {
         return input;
     }
 
-    const even = [];
-    const odd = [];
+    const even = new Float32Array(N / 2);
+    const odd = new Float32Array(N / 2);
     for (let i = 0; i < N; i++) {
         if (i % 2 === 0) {
-            even.push(input[i]);
+            even[i / 2] = input[i];
         } else {
-            odd.push(input[i]);
+            odd[(i - 1) / 2] = input[i];
         }
     }
 
     const evenFFT = fft(even);
     const oddFFT = fft(odd);
 
-    const output = [];
+    const output = new Float32Array(N);
     for (let k = 0; k < N / 2; k++) {
-        //const theta = -2 * Math.PI * k / N;
-        //const exp = { re: Math.cos(theta), im: Math.sin(theta) };
         const exp = fftFactorLookup[N][k];
-        const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
-        output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
-        output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
+        const t_re = exp.re * oddFFT[k] - exp.im * oddFFT[k + N / 2];
+        const t_im = exp.re * oddFFT[k + N / 2] + exp.im * oddFFT[k];
+        output[k] = evenFFT[k] + t_re;
+        output[k + N / 2] = evenFFT[k] - t_re;
     }
 
     return output;
 }
-
 
 function ifft(input) {
     const N = input.length;
     const pi = Math.PI;
 
     // Take the complex conjugate of the input spectrum
-    const conjugateSpectrum = input.map(({ re, im }) => ({ re, im: -im }));
+    const conjugateSpectrum = input.map((value, index) => (index % 2 === 0 ? value : -value));
 
     // Apply FFT to the conjugate spectrum
     const fftResult = fft(conjugateSpectrum);
 
-    // Take the complex conjugate of the FFT result
-    const ifftResult = fftResult.map(({ re, im }) => ({ re: re / N, im: -im / N }));
+    // Take the complex conjugate of the FFT result and normalize
+    const ifftResult = fftResult.map((value) => value / N);
 
     return ifftResult;
 }
-
-
-
-
 
 // Function to perform FFT on the input signal with windowing and zero-padding
 function prepare_and_fft(inputSignal) {
@@ -95,57 +85,28 @@ function prepare_and_fft(inputSignal) {
 
     // Zero-padding to the next power of 2
     const FFT_SIZE = nextPowerOf2(windowedSignal.length);
-    const paddedInput = new Array(FFT_SIZE).fill(0);
-    windowedSignal.forEach((value, index) => paddedInput[index] = value);
-
-    // Convert to complex numbers
-    const complexInput = convertToComplex(paddedInput);
+    const paddedInput = new Float32Array(FFT_SIZE).fill(0);
+    windowedSignal.forEach((value, index) => (paddedInput[index] = value));
 
     // Perform FFT
-    return fft(complexInput);
+    return fft(paddedInput);
 }
 
+function FFT(inputSignal) {
+    return prepare_and_fft(inputSignal);
+}
 
-  function convertToComplex(inputSignal) {
-    return inputSignal.map(value => ({ re: value, im: 0 }));
-  }
-
-
-
-
-
-
-
-function FFT(inputSignal){
-   return prepare_and_fft(inputSignal);  
-} 
-
-function IFFT(spectrum){
-   return ifft(spectrum).map(({ re }) => re);
-} 
-
-
-
-
-
-/*// Function to apply windowing to a frame
-function applyWindow(frame, window) {
-    for (let i = 0; i < frame.length; i++) {
-        frame[i] *= window[i];
-    }
-    return frame;
-}*/
-
-
-
-// Function to apply windowing to a frame
-function applyWindow(frame) {
-    return applyHanningWindow(frame);
+function IFFT(spectrum) {
+    return ifft(spectrum);
 }
 
 // Function to apply Hanning window to the input signal
 function applyHanningWindow(frame) {
-    return frame.map((value, index) => value * 0.5 * (1 - Math.cos(2 * Math.PI * index / (frame.length - 1))));
+    const windowedFrame = new Float32Array(frame.length);
+    for (let i = 0; i < frame.length; i++) {
+        windowedFrame[i] = frame[i] * 0.5 * (1 - Math.cos(2 * Math.PI * i / (frame.length - 1)));
+    }
+    return windowedFrame;
 }
 
 // Function to compute FFT of a frame
@@ -160,19 +121,15 @@ function computeFFT(frame) {
 function computeInverseFFT(spectrum) {
     // Perform inverse FFT to obtain the time-domain frame (you can use your IFFT implementation here)
     // For simplicity, let's assume computeInverseFFT returns the time-domain frame
-    
+
     // Ensure the size of the spectrum array is a power of 2
     const paddedSize = nextPowerOf2(spectrum.length);
 
     // Pad both real and imaginary parts of the spectrum
-    const paddedSpectrum = [];
-    for (let i = 0; i < paddedSize; i++) {
-        if (i < spectrum.length) {
-            paddedSpectrum.push(spectrum[i]);
-        } else {
-            // Pad with zeros for both real and imaginary parts
-            paddedSpectrum.push({ re: 0, im: 0 });
-        }
+    const paddedSpectrum = new Float32Array(paddedSize * 2).fill(0);
+    for (let i = 0; i < spectrum.length; i++) {
+        paddedSpectrum[i * 2] = spectrum[i].re;
+        paddedSpectrum[i * 2 + 1] = spectrum[i].im;
     }
 
     // Now you can pass paddedSpectrum to the IFFT function
@@ -189,11 +146,11 @@ function STFT(inputSignal, windowSize, hopSize) {
     for (let i = 0; i < numFrames; i++) {
         // Calculate start index of current frame
         const startIdx = i * hopSize;
-        
+
         // Apply window function to the current frame
         const frame = inputSignal.slice(startIdx, startIdx + windowSize);
-        const windowedFrame = applyWindow(frame);
-        
+        const windowedFrame = applyHanningWindow(frame);
+
         // Compute FFT of the windowed frame
         const spectrum = computeFFT(windowedFrame);
 
@@ -208,7 +165,7 @@ function STFT(inputSignal, windowSize, hopSize) {
 function ISTFT(spectrogram, windowSize, hopSize) {
     const numFrames = spectrogram.length;
     const outputSignalLength = (numFrames - 1) * hopSize + windowSize;
-    const outputSignal = new Array(outputSignalLength).fill(0);
+    const outputSignal = new Float32Array(outputSignalLength).fill(0);
 
     // Iterate over each frame in the spectrogram
     for (let i = 0; i < numFrames; i++) {
@@ -225,19 +182,12 @@ function ISTFT(spectrogram, windowSize, hopSize) {
     return outputSignal;
 }
 
-
-
-
-
-
-
 // Function to perform time stretching using phase vocoder
 function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
     // Apply STFT to input signal
     const spectrogram = STFT(inputSignal, windowSize, hopSize);
     // Modify magnitude and phase components based on stretch factor
     const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
-    //const stretchedSpectrogram = spectrogram;
     // Apply inverse STFT to reconstruct processed signal
     const processedSignal = ISTFT(stretchedSpectrogram, windowSize, hopSize);
     return processedSignal;
@@ -250,18 +200,18 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
 
     interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitudes);
     synchronizePhase(spectrogram, stretchFactor, synchronizedPhases);
-    
+
     const stretchedSpectrogram = [];
     for (let i = 0; i < spectrogram.length; i++) {
         const frameWithMagnitudes = interpolatedMagnitudes[i];
         const frameWithPhases = synchronizedPhases[i];
         const frameWithPairs = [];
-        
+
         for (let j = 0; j < frameWithMagnitudes.length; j++) {
-           const pair = { re: frameWithMagnitudes[j], im: frameWithPhases[j] };
-           frameWithPairs.push(pair);
+            const pair = { re: frameWithMagnitudes[j], im: frameWithPhases[j] };
+            frameWithPairs.push(pair);
         }
-        
+
         stretchedSpectrogram.push(frameWithPairs);
     }
 
@@ -269,10 +219,6 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
 
     return stretchedSpectrogram;
 }
-
-
-
-
 
 // Function to interpolate magnitudes between frames in the entire spectrogram
 function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitudes) {
@@ -294,7 +240,7 @@ function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitude
         // Calculate the fraction between the two frames
         const fraction = originalFrameIndex - frameIndex1;
 
-        const currentInterpolatedMagnitudes = [];
+        const currentInterpolatedMagnitudes = new Float32Array(numBins);
 
         for (let j = 0; j < numBins; j++) {
             const magnitude1 = spectrogram[frameIndex1][j].re;
@@ -308,7 +254,6 @@ function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitude
 
     return spectrogram;
 }
-
 
 // Function to synchronize phase values between frames in the entire spectrogram
 function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
@@ -330,7 +275,7 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
         // Calculate the fraction between the two frames
         const fraction = originalFrameIndex - frameIndex1;
 
-        const currentSynchronizedPhases = [];
+        const currentSynchronizedPhases = new Float32Array(numBins);
 
         for (let j = 0; j < numBins; j++) {
             const phase1 = spectrogram[frameIndex1][j].im;
@@ -367,34 +312,6 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
 
 
 
-
-
-// Check if SIMD is supported
-if (typeof SIMD !== 'undefined') {
-    // Assume array1 and array2 are Float32Array or similar
-    const array1 = new Float32Array(1000);
-    const array2 = new Float32Array(1000);
-
-    // Vectorized addition using SIMD
-    const simdResult = SIMD.Float32x4.add(
-        SIMD.Float32x4.load(array1, 0),
-        SIMD.Float32x4.load(array2, 0)
-    );
-
-    // Store the result back into an array
-    const resultArray = new Float32Array(4);
-    SIMD.Float32x4.store(resultArray, 0, simdResult);
-
-    // Process remaining elements with scalar addition
-    for (let i = 4; i < array1.length; i++) {
-        resultArray[i] = array1[i] + array2[i];
-    }
-
-    console.log(resultArray);
-} else {
-    // Fallback to scalar addition if SIMD is not supported
-    console.log("SIMD is not supported.");
-}
 
 
 
