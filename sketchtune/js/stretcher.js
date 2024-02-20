@@ -359,7 +359,7 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
     for (let ch = 0; ch < numChannels; ch++) {
         const inputData = inputBuffer.getChannelData(ch);
         // Push the promise for processing this channel into the array
-        processingPromises.push(processChannel(audioContext, inputData, stretchFactor, windowSize, hopSize));
+        processingPromises.push(processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize));
     }
 
     // Wait for all promises to resolve
@@ -369,7 +369,7 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
     return outputBuffer;
 }
 
-async function processChannel(audioContext, inputData, stretchFactor, windowSize, hopSize) {
+async function processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize) {
     // Time-stretch the input data
     console.log("TimeStretching the Input Channel.")
     const processedSignal = await timeStretch(inputData, stretchFactor, windowSize, hopSize);
@@ -378,6 +378,7 @@ async function processChannel(audioContext, inputData, stretchFactor, windowSize
     // Copy the processed signal to the output buffer
     outputBuffer.copyToChannel(processedSignalFloat32, ch);
 }
+
 
 
 
