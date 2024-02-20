@@ -186,6 +186,109 @@ function computeInverseFFT(spectrum) {
 
 
 
+
+
+// Function to perform time stretching using phase vocoder
+function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
+    // Apply STFT to input signal
+    const spectrogram = STFT(inputSignal, windowSize, hopSize);
+    // Modify magnitude and phase components based on stretch factor
+    const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
+    // Apply inverse STFT to reconstruct processed signal
+    const processedSignal = ISTFT(stretchedSpectrogram, windowSize, hopSize);
+    return processedSignal;
+}
+
+// Function to stretch spectrogram
+function stretchSpectrogram(spectrogram, stretchFactor) {
+    const numFrames = spectrogram.length;
+    const numBins = spectrogram[0].length;
+
+    // Initialize stretched spectrogram
+    const stretchedSpectrogram = [];
+
+    // Loop through spectrogram frames
+    for (let i = 0; i < numFrames; i++) {
+        // Calculate new frame index based on stretch factor
+        const newIndex = Math.floor(i / stretchFactor);
+
+        // Interpolate or resample magnitude values
+        const stretchedFrame = interpolateMagnitudes(spectrogram[i], numBins, stretchFactor);
+
+        // Synchronize phase values
+        const stretchedPhase = synchronizePhase(spectrogram[i], numBins, stretchFactor);
+
+        // Combine magnitude and phase components
+        const stretchedFrameWithPhase = stretchedFrame.map((magnitude, j) => {
+            return { magnitude: magnitude, phase: stretchedPhase[j] };
+        });
+
+        // Store stretched frame in the stretched spectrogram
+        stretchedSpectrogram[newIndex] = stretchedFrameWithPhase;
+    }
+
+    return stretchedSpectrogram;
+}
+
+
+// Function to interpolate or resample magnitude values
+function interpolateMagnitudes(frame, numBins, stretchFactor) {
+    const newNumBins = Math.round(numBins / stretchFactor);
+    const interpolatedFrame = new Array(newNumBins).fill(0);
+
+    // Interpolate or resample magnitude values
+    for (let i = 0; i < newNumBins; i++) {
+        const originalIndex = i * stretchFactor;
+        const leftIndex = Math.floor(originalIndex);
+        const rightIndex = Math.ceil(originalIndex);
+
+        if (rightIndex >= numBins) {
+            interpolatedFrame[i] = frame[leftIndex];
+        } else {
+            const fraction = originalIndex - leftIndex;
+            interpolatedFrame[i] = (1 - fraction) * frame[leftIndex] + fraction * frame[rightIndex];
+        }
+    }
+
+    return interpolatedFrame;
+}
+
+// Function to synchronize phase values
+function synchronizePhase(frame, numBins, stretchFactor) {
+    const newNumBins = Math.round(numBins / stretchFactor);
+    const synchronizedPhase = new Array(newNumBins).fill(0);
+
+    // Synchronize phase values
+    for (let i = 0; i < newNumBins; i++) {
+        const originalIndex = i * stretchFactor;
+        const index = Math.floor(originalIndex);
+        synchronizedPhase[i] = frame[index];
+    }
+
+    return synchronizedPhase;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // Function to perform phase vocoding
   function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
 
@@ -201,13 +304,8 @@ function computeInverseFFT(spectrum) {
         const inputData = inputBuffer.getChannelData(ch);
         const outputData = outputBuffer.getChannelData(ch);
 
-        const spectrogram = STFT(inputData, windowSize, hopSize);
-        // Perform some processing on the spectrogram if needed
+        var reconstructedSignal = timeStretch(inputData, stretchFactor, windowSize, hopSize);
 
-        
-
-        // Reconstruct the output signal using inverse STFT
-        const reconstructedSignal = ISTFT(spectrogram, windowSize, hopSize);
         outputData.set( reconstructedSignal.slice(), 0);
     }
 
