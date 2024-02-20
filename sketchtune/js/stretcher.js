@@ -198,32 +198,17 @@ function ISTFT(spectrogram, windowSize, hopSize) {
 
 
 
-// Function to perform phase vocoding
-function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
-    const windowSize = 512 * 4; // Size of the analysis window
-    const hopSize = windowSize / 2; // 50% overlap
-
-    const numChannels = inputBuffer.numberOfChannels;
-    const inputLength = inputBuffer.length;
-    const outputLength = Math.ceil(inputLength * stretchFactor);
-    const outputBuffer = audioContext.createBuffer(numChannels, outputLength, audioContext.sampleRate);
-
-    // Process inputBuffer frame by frame for each channel
-    for (let ch = 0; ch < numChannels; ch++) {
-        const inputData = inputBuffer.getChannelData(ch);
-
-        // Time-stretch the input data
-        const processedSignal = timeStretch(inputData, stretchFactor, windowSize, hopSize);
-
-        // Copy the processed signal to the output buffer
-        outputBuffer.copyToChannel(processedSignal, ch);
-    }
-
-    console.log(inputBuffer, outputBuffer);
-
-    return outputBuffer;
+// Function to perform time stretching using phase vocoder
+function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
+    // Apply STFT to input signal
+    const spectrogram = STFT(inputSignal, windowSize, hopSize);
+    // Modify magnitude and phase components based on stretch factor
+    const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
+    //const stretchedSpectrogram = spectrogram;
+    // Apply inverse STFT to reconstruct processed signal
+    const processedSignal = ISTFT(stretchedSpectrogram, windowSize, hopSize);
+    return processedSignal;
 }
-
 
 // Function to stretch spectrogram
 function stretchSpectrogram(spectrogram, stretchFactor) {
@@ -319,11 +304,12 @@ function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
     // Process inputBuffer frame by frame for each channel
     for (let ch = 0; ch < numChannels; ch++) {
         const inputData = inputBuffer.getChannelData(ch);
-        const outputData = outputBuffer.getChannelData(ch);
 
-        var reconstructedSignal = timeStretch(inputData, stretchFactor, windowSize, hopSize);
+        // Time-stretch the input data
+        const processedSignal = timeStretch(inputData, stretchFactor, windowSize, hopSize);
 
-        outputData.set(reconstructedSignal.slice(), 0);
+        // Copy the processed signal to the output buffer
+        outputBuffer.copyToChannel(processedSignal, ch);
     }
 
     console.log(inputBuffer, outputBuffer);
