@@ -156,11 +156,21 @@ function computeInverseFFT(spectrum) {
     
     // Ensure the size of the spectrum array is a power of 2
     const paddedSize = nextPowerOf2(spectrum.length);
-    const paddedSpectrum = spectrum.concat(new Array(paddedSize - spectrum.length).fill(0));
-    // Now you can pass paddedSpectrum to the IFFT function
-    const frame = IFFT(paddedSpectrum);
 
-    return frame;
+    // Pad both real and imaginary parts of the spectrum
+    const paddedSpectrum = [];
+    for (let i = 0; i < paddedSize; i++) {
+        if (i < spectrum.length) {
+            paddedSpectrum.push(spectrum[i]);
+        } else {
+            // Pad with zeros for both real and imaginary parts
+            paddedSpectrum.push({ re: 0, im: 0 });
+        }
+    }
+
+    // Now you can pass paddedSpectrum to the IFFT function
+    const timeDomainSignal = IFFT(paddedSpectrum);
+    return timeDomainSignal;
 }
 
 // Function to perform inverse Short-Time Fourier Transform (ISTFT)
