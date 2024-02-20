@@ -1,540 +1,53 @@
-// function nextPowerOf2(n) {
-//     return Math.pow(2, Math.ceil(Math.log2(n)));
-// }
-
-// function precalculateFFTFactors(N) {
-//     const factors = [];
-//     for (let k = 0; k < N / 2; k++) {
-//         const theta = -2 * Math.PI * k / N;
-//         factors.push({ re: Math.cos(theta), im: Math.sin(theta) });
-//     }
-//     return factors;
-// }
-
-// function generateFFTFactorLookup(maxSampleLength) {
-//     const maxN = nextPowerOf2(maxSampleLength);
-//     const fftFactorLookup = {};
-
-//     for (let N = 2; N <= maxN; N *= 2) {
-//         fftFactorLookup[N] = precalculateFFTFactors(N);
-//     }
-
-//     return fftFactorLookup;
-// }
-
-// const maxSampleLength = 60 * 44100; // 60 seconds at 44100 Hz sample rate
-// const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
-
-// console.log("PRECALCULATE FFT LOOKUP TABLE",fftFactorLookup);
-
-
-
-
-
-// // Modified FFT function to use precalculated FFT factors
-// // input was zero padded before to a length N = PowerOf2
-// function fft(input) {
-//     const N = input.length;
-
-//     if (N <= 1) {
-//         return input;
-//     }
-
-//     const even = [];
-//     const odd = [];
-//     for (let i = 0; i < N; i++) {
-//         if (i % 2 === 0) {
-//             even.push(input[i]);
-//         } else {
-//             odd.push(input[i]);
-//         }
-//     }
-
-//     const evenFFT = fft(even);
-//     const oddFFT = fft(odd);
-
-//     const output = [];
-//     for (let k = 0; k < N / 2; k++) {
-//         //const theta = -2 * Math.PI * k / N;
-//         //const exp = { re: Math.cos(theta), im: Math.sin(theta) };
-//         const exp = fftFactorLookup[N][k];
-//         const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
-//         output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
-//         output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
-//     }
-
-//     return output;
-// }
-
-
-// function ifft(input) {
-//     const N = input.length;
-//     const pi = Math.PI;
-
-//     // Take the complex conjugate of the input spectrum
-//     const conjugateSpectrum = input.map(({ re, im }) => ({ re, im: -im }));
-
-//     // Apply FFT to the conjugate spectrum
-//     const fftResult = fft(conjugateSpectrum);
-
-//     // Take the complex conjugate of the FFT result
-//     const ifftResult = fftResult.map(({ re, im }) => ({ re: re / N, im: -im / N }));
-
-//     return ifftResult;
-// }
-
-
-
-
-
-// // Function to perform FFT on the input signal with windowing and zero-padding
-// function prepare_and_fft(inputSignal) {
-//     // Apply Hanning window to the input signal
-//     //const windowedSignal = applyHanningWindow(inputSignal);
-//     const windowedSignal = inputSignal;
-
-//     // Zero-padding to the next power of 2
-//     const FFT_SIZE = nextPowerOf2(windowedSignal.length);
-//     const paddedInput = new Array(FFT_SIZE).fill(0);
-//     windowedSignal.forEach((value, index) => paddedInput[index] = value);
-
-//     // Convert to complex numbers
-//     const complexInput = convertToComplex(paddedInput);
-
-//     // Perform FFT
-//     return fft(complexInput);
-// }
-
-
-//   function convertToComplex(inputSignal) {
-//     return inputSignal.map(value => ({ re: value, im: 0 }));
-//   }
-
-
-
-
-
-
-
-// function FFT(inputSignal){
-//    return prepare_and_fft(inputSignal);  
-// } 
-
-// function IFFT(spectrum){
-//    return ifft(spectrum).map(({ re }) => re);
-// } 
-
-
-
-
-
-// /*// Function to apply windowing to a frame
-// function applyWindow(frame, window) {
-//     for (let i = 0; i < frame.length; i++) {
-//         frame[i] *= window[i];
-//     }
-//     return frame;
-// }*/
-
-
-
-// // Function to apply windowing to a frame
-// function applyWindow(frame) {
-//     return applyHanningWindow(frame);
-// }
-
-// // Function to apply Hanning window to the input signal
-// function applyHanningWindow(frame) {
-//     return frame.map((value, index) => value * 0.5 * (1 - Math.cos(2 * Math.PI * index / (frame.length - 1))));
-// }
-
-// // Function to compute FFT of a frame
-// function computeFFT(frame) {
-//     // Perform FFT on the frame (you can use your FFT implementation here)
-//     // For simplicity, let's assume computeFFT returns the magnitude spectrum
-//     const spectrum = FFT(frame);
-//     return spectrum;
-// }
-
-// // Function to compute inverse FFT of a spectrum
-// function computeInverseFFT(spectrum) {
-//     // Perform inverse FFT to obtain the time-domain frame (you can use your IFFT implementation here)
-//     // For simplicity, let's assume computeInverseFFT returns the time-domain frame
-    
-//     // Ensure the size of the spectrum array is a power of 2
-//     const paddedSize = nextPowerOf2(spectrum.length);
-
-//     // Pad both real and imaginary parts of the spectrum
-//     const paddedSpectrum = [];
-//     for (let i = 0; i < paddedSize; i++) {
-//         if (i < spectrum.length) {
-//             paddedSpectrum.push(spectrum[i]);
-//         } else {
-//             // Pad with zeros for both real and imaginary parts
-//             paddedSpectrum.push({ re: 0, im: 0 });
-//         }
-//     }
-
-//     // Now you can pass paddedSpectrum to the IFFT function
-//     const timeDomainSignal = IFFT(paddedSpectrum);
-//     return timeDomainSignal;
-// }
-
-// // Function to perform Short-Time Fourier Transform (STFT)
-// function STFT(inputSignal, windowSize, hopSize) {
-//     const numFrames = Math.floor((inputSignal.length - windowSize) / hopSize) + 1;
-//     const spectrogram = [];
-
-//     // Iterate over each frame
-//     for (let i = 0; i < numFrames; i++) {
-//         // Calculate start index of current frame
-//         const startIdx = i * hopSize;
-        
-//         // Apply window function to the current frame
-//         const frame = inputSignal.slice(startIdx, startIdx + windowSize);
-//         const windowedFrame = applyWindow(frame);
-        
-//         // Compute FFT of the windowed frame
-//         const spectrum = computeFFT(windowedFrame);
-
-//         // Store the spectrum in the spectrogram
-//         spectrogram.push(spectrum);
-//     }
-
-//     return spectrogram;
-// }
-
-// // Function to perform inverse Short-Time Fourier Transform (ISTFT)
-// function ISTFT(spectrogram, windowSize, hopSize) {
-//     const numFrames = spectrogram.length;
-//     const outputSignalLength = (numFrames - 1) * hopSize + windowSize;
-//     const outputSignal = new Array(outputSignalLength).fill(0);
-
-//     // Iterate over each frame in the spectrogram
-//     for (let i = 0; i < numFrames; i++) {
-//         // Compute inverse FFT of the spectrum to obtain the frame in time domain
-//         const frame = computeInverseFFT(spectrogram[i]);
-
-//         // Apply overlap-add to reconstruct the output signal
-//         const startIdx = i * hopSize;
-//         for (let j = 0; j < windowSize; j++) {
-//             outputSignal[startIdx + j] += frame[j] * 0.5 * (1 - Math.cos(2 * Math.PI * j / (windowSize - 1)));
-//         }
-//     }
-
-//     return outputSignal;
-// }
-
-
-
-
-
-
-
-// // Function to perform time stretching using phase vocoder
-// function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
-//     // Apply STFT to input signal
-//     const spectrogram = STFT(inputSignal, windowSize, hopSize);
-//     // Modify magnitude and phase components based on stretch factor
-//     const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
-//     //const stretchedSpectrogram = spectrogram;
-//     // Apply inverse STFT to reconstruct processed signal
-//     const processedSignal = ISTFT(stretchedSpectrogram, windowSize, hopSize);
-//     return processedSignal;
-// }
-
-// // Function to stretch spectrogram
-// function stretchSpectrogram(spectrogram, stretchFactor) {
-//     const interpolatedMagnitudes = [];
-//     const synchronizedPhases = [];
-
-//     interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitudes);
-//     synchronizePhase(spectrogram, stretchFactor, synchronizedPhases);
-    
-//     const stretchedSpectrogram = [];
-//     for (let i = 0; i < spectrogram.length; i++) {
-//         const frameWithMagnitudes = interpolatedMagnitudes[i];
-//         const frameWithPhases = synchronizedPhases[i];
-//         const frameWithPairs = [];
-        
-//         for (let j = 0; j < frameWithMagnitudes.length; j++) {
-//            const pair = { re: frameWithMagnitudes[j], im: frameWithPhases[j] };
-//            frameWithPairs.push(pair);
-//         }
-        
-//         stretchedSpectrogram.push(frameWithPairs);
-//     }
-
-//     console.log(stretchedSpectrogram);
-
-//     return stretchedSpectrogram;
-// }
-
-
-
-
-
-// // Function to interpolate magnitudes between frames in the entire spectrogram
-// function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitudes) {
-//     const numFrames = spectrogram.length;
-//     const numBins = spectrogram[0].length;
-
-//     for (let i = 0; i < numFrames; i++) {
-//         const originalFrameIndex = i / stretchFactor;
-//         // Get the indices of the adjacent frames
-//         var frameIndex1 = Math.floor(originalFrameIndex);
-//         var frameIndex2 = Math.ceil(originalFrameIndex);
-
-//         // Handle edge cases where frameIndex2 exceeds the maximum index
-//         if (frameIndex2 >= numFrames) {
-//             frameIndex2 = numFrames - 1;
-//             frameIndex1 = numFrames - 2;
-//         }
-
-//         // Calculate the fraction between the two frames
-//         const fraction = originalFrameIndex - frameIndex1;
-
-//         const currentInterpolatedMagnitudes = [];
-
-//         for (let j = 0; j < numBins; j++) {
-//             const magnitude1 = spectrogram[frameIndex1][j].re;
-//             const magnitude2 = spectrogram[frameIndex2][j].re;
-//             currentInterpolatedMagnitudes[j] = (1 - fraction) * magnitude1 + fraction * magnitude2;
-//         }
-
-//         // Store the interpolated magnitudes in the spectrogram
-//         interpolatedMagnitudes[i] = currentInterpolatedMagnitudes.slice();
-//     }
-
-//     return spectrogram;
-// }
-
-
-// // Function to synchronize phase values between frames in the entire spectrogram
-// function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
-//     const numFrames = spectrogram.length;
-//     const numBins = spectrogram[0].length;
-
-//     for (let i = 0; i < numFrames; i++) {
-//         const originalFrameIndex = i / stretchFactor;
-//         // Get the indices of the adjacent frames
-//         var frameIndex1 = Math.floor(originalFrameIndex);
-//         var frameIndex2 = Math.ceil(originalFrameIndex);
-
-//         // Handle edge cases where frameIndex2 exceeds the maximum index
-//         if (frameIndex2 >= numFrames) {
-//             frameIndex2 = numFrames - 1;
-//             frameIndex1 = numFrames - 2;
-//         }
-
-//         // Calculate the fraction between the two frames
-//         const fraction = originalFrameIndex - frameIndex1;
-
-//         const currentSynchronizedPhases = [];
-
-//         for (let j = 0; j < numBins; j++) {
-//             const phase1 = spectrogram[frameIndex1][j].im;
-//             const phase2 = spectrogram[frameIndex2][j].im;
-//             let phaseDiff = phase2 - phase1;
-
-//             // Wrap phase difference to [-π, π] range
-//             if (phaseDiff > Math.PI) {
-//                 phaseDiff -= 2 * Math.PI;
-//             } else if (phaseDiff < -Math.PI) {
-//                 phaseDiff += 2 * Math.PI;
-//             }
-
-//             currentSynchronizedPhases[j] = phase1 + fraction * phaseDiff;
-//         }
-
-//         // Store the synchronized phases in the synchronizedPhases array
-//         synchronizedPhases[i] = currentSynchronizedPhases.slice();
-//     }
-
-//     // Update the spectrogram with the synchronized phases
-//     for (let i = 0; i < numFrames; i++) {
-//         for (let j = 0; j < numBins; j++) {
-//             spectrogram[i][j].im = synchronizedPhases[i][j];
-//         }
-//     }
-
-//     return spectrogram;
-// }
-
-
-function convertToComplex(inputSignal) {
-    return inputSignal.map(value => ({ re: value, im: 0 }));
-}
-
-function nextPowerOf2(n) {
-    return Math.pow(2, Math.ceil(Math.log2(n)));
-}
-
-function precalculateFFTFactors(N) {
-    const factors = [];
-    for (let k = 0; k < N / 2; k++) {
-        const theta = -2 * Math.PI * k / N;
-        factors.push({ re: Math.cos(theta), im: Math.sin(theta) });
-    }
-    return factors;
-}
-
-function generateFFTFactorLookup(maxSampleLength) {
-    const maxN = nextPowerOf2(maxSampleLength);
-    const fftFactorLookup = {};
-
-    for (let N = 2; N <= maxN; N *= 2) {
-        fftFactorLookup[N] = precalculateFFTFactors(N);
-    }
-
-    return fftFactorLookup;
-}
-
-const maxSampleLength = 60 * 44100; // 60 seconds at 44100 Hz sample rate
-const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
-
-console.log("PRECALCULATE FFT LOOKUP TABLE", fftFactorLookup);
-
-// Modified FFT function to use precalculated FFT factors
-// input was zero padded before to a length N = PowerOf2
-function fft(input) {
-    const N = input.length;
-
-    if (N <= 1) {
-        return input;
-    }
-
-    const even = [];
-    const odd = [];
-    for (let i = 0; i < N; i++) {
-        if (i % 2 === 0) {
-            even.push(input[i]);
-        } else {
-            odd.push(input[i]);
-        }
-    }
-
-    const evenFFT = fft(even);
-    const oddFFT = fft(odd);
-
-    const output = [];
-    for (let k = 0; k < N / 2; k++) {
-        //const theta = -2 * Math.PI * k / N;
-        //const exp = { re: Math.cos(theta), im: Math.sin(theta) };
-        const exp = fftFactorLookup[N][k];
-        const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
-        output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
-        output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
-    }
-
-    return output;
-}
-
-function ifft(input) {
-    const N = input.length;
-    const pi = Math.PI;
-
-    // Take the complex conjugate of the input spectrum
-    const conjugateSpectrum = input.map(({ re, im }) => ({ re, im: -im }));
-
-    // Apply FFT to the conjugate spectrum
-    const fftResult = fft(conjugateSpectrum);
-
-    // Take the complex conjugate of the FFT result
-    const ifftResult = fftResult.map(({ re, im }) => ({ re: re / N, im: -im / N }));
-
-    return ifftResult;
-}
-
-function prepare_and_fft(inputSignal) {
-    // Apply Hanning window to the input signal
-    //const windowedSignal = applyHanningWindow(inputSignal);
-    const windowedSignal = inputSignal;
-
-    // Zero-padding to the next power of 2
-    const FFT_SIZE = nextPowerOf2(windowedSignal.length);
-    const paddedInput = new Array(FFT_SIZE).fill({ re: 0, im: 0 });
-    windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
-
-    // Perform FFT
-    return fft(paddedInput);
-}
-
-
-function FFT(inputSignal) {
-    return prepare_and_fft(inputSignal);
-}
-
-function IFFT(spectrum){
-    return ifft(spectrum).map(({ re }) => re);
-} 
-
-// Function to apply Hanning window to the input signal
-function applyHanningWindow(frame) {
-    const windowedFrame = new Float32Array(frame.length);
-    for (let i = 0; i < frame.length; i++) {
-        windowedFrame[i] = frame[i] * 0.5 * (1 - Math.cos(2 * Math.PI * i / (frame.length - 1)));
-    }
-    return windowedFrame;
-}
-
-// Function to compute FFT of a frame
-function computeFFT(frame) {
-    // Perform FFT on the frame (you can use your FFT implementation here)
-    // For simplicity, let's assume computeFFT returns the magnitude spectrum
-    const spectrum = FFT(frame);
-    return spectrum;
-}
-
-// Function to compute inverse FFT of a spectrum
-function computeInverseFFT(spectrum) {
-    // Perform inverse FFT to obtain the time-domain frame (you can use your IFFT implementation here)
-    // For simplicity, let's assume computeInverseFFT returns the time-domain frame
-    
-    // Ensure the size of the spectrum array is a power of 2
-    const paddedSize = nextPowerOf2(spectrum.length);
-
-    // Pad both real and imaginary parts of the spectrum
-    const paddedSpectrum = [];
-    for (let i = 0; i < paddedSize; i++) {
-        if (i < spectrum.length) {
-            paddedSpectrum.push(spectrum[i]);
-        } else {
-            // Pad with zeros for both real and imaginary parts
-            paddedSpectrum.push({ re: 0, im: 0 });
-        }
-    }
-
-    // Now you can pass paddedSpectrum to the IFFT function
-    const timeDomainSignal = IFFT(paddedSpectrum);
-    return timeDomainSignal;
-}
-
-// Function to perform Short-Time Fourier Transform (STFT)
-function STFT(inputSignal, windowSize, hopSize) {
+// Function to perform Short-Time Fourier Transform (STFT) using Web Workers
+function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
     const numFrames = Math.floor((inputSignal.length - windowSize) / hopSize) + 1;
     const spectrogram = [];
 
-    // Iterate over each frame
-    for (let i = 0; i < numFrames; i++) {
-        // Calculate start index of current frame
-        const startIdx = i * hopSize;
+    // Create an array to hold promises for each worker
+    const workerPromises = [];
 
-        // Apply window function to the current frame
-        const frame = inputSignal.slice(startIdx, startIdx + windowSize);
-        const windowedFrame = applyHanningWindow(frame);
-        //console.log("Apply Hanning Window on current Frame", windowedFrame);
+    // Define the number of workers (you can adjust this based on performance testing)
+    const numWorkers = 4;
 
-        // Compute FFT of the windowed frame
-        const spectrum = computeFFT(windowedFrame);
-        //console.log("Compute FFT on current Frame", spectrum);
+    // Calculate frames per worker
+    const framesPerWorker = Math.ceil(numFrames / numWorkers);
 
-        // Store the spectrum in the spectrogram
-        spectrogram.push(spectrum);
+    // Create and run workers
+    for (let i = 0; i < numWorkers; i++) {
+        const startFrame = i * framesPerWorker;
+        const endFrame = Math.min(startFrame + framesPerWorker, numFrames);
+        const worker = new Worker('stftWorker.js');
+
+        // Message handler for each worker
+        worker.onmessage = function (e) {
+            const workerSpectrogram = e.data;
+            spectrogram.push(...workerSpectrogram);
+
+            // Close the worker after it completes its work
+            worker.terminate();
+        };
+
+        // Start the worker
+        worker.postMessage({
+            inputSignal: inputSignal,
+            windowSize: windowSize,
+            hopSize: hopSize,
+            startFrame: startFrame,
+            endFrame: endFrame
+        });
+
+        // Add promise to array
+        workerPromises.push(new Promise((resolve) => (worker.onmessage = resolve)));
     }
 
-    return spectrogram;
+    // Wait for all worker promises to resolve
+    return Promise.all(workerPromises).then(() => spectrogram);
 }
+
+
+
+
+
 
 // Function to perform inverse Short-Time Fourier Transform (ISTFT)
 function ISTFT(spectrogram, windowSize, hopSize) {
@@ -558,6 +71,32 @@ function ISTFT(spectrogram, windowSize, hopSize) {
     return outputSignal;
 }
 
+
+
+
+
+
+
+function timeStretch(inputSignal, stretchFactor, windowSize, hopSize){
+    STFTWithWebWorkers(inputSignal, windowSize, hopSize)
+    .then((spectrogram) => {
+        // Process the spectrogram
+        console.log(spectrogram);
+        
+        // Modify magnitude and phase components based on stretch factor
+        const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
+        // Apply inverse STFT to reconstruct processed signal
+        const processedSignal = ISTFT(stretchedSpectrogram, windowSize, hopSize);
+        return processedSignal;
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
+
+
+/*
 // Function to perform time stretching using phase vocoder
 function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
     // Apply STFT to input signal
@@ -570,6 +109,9 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
     //console.log(processedSignal);
     return processedSignal;
 }
+*/
+
+
 
 // Function to stretch spectrogram
 function stretchSpectrogram(spectrogram, stretchFactor) {
