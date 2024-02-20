@@ -397,8 +397,6 @@ console.log("PRECALCULATE FFT LOOKUP TABLE", fftFactorLookup);
 function fft(input) {
     const N = input.length;
 
-    console.log(input);
-
     if (N <= 1) {
         return input;
     }
@@ -424,6 +422,8 @@ function fft(input) {
         output[k] = evenFFT[k] + t_re;
         output[k + N / 2] = evenFFT[k] - t_re;
     }
+
+    console.log(output);
 
     return output;
 }
