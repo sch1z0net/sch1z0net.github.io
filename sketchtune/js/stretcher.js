@@ -308,13 +308,17 @@ function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
         // Time-stretch the input data
         const processedSignal = timeStretch(inputData, stretchFactor, windowSize, hopSize);
 
+        // Convert processedSignal to Float32Array if necessary
+        const processedSignalFloat32 = new Float32Array(processedSignal);
+
         // Copy the processed signal to the output buffer
-        outputBuffer.copyToChannel(processedSignal, ch);
+        outputBuffer.copyToChannel(processedSignalFloat32, ch);
     }
 
     console.log(inputBuffer, outputBuffer);
 
     return outputBuffer;
 }
+
 
 
