@@ -312,6 +312,8 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
         const frameIndex2 = Math.ceil(originalFrameIndex);
         const fraction = originalFrameIndex - frameIndex1;
 
+        const currentSynchronizedPhases = [];
+
         for (let j = 0; j < numBins; j++) {
             const phase1 = spectrogram[frameIndex1][j].im;
             const phase2 = spectrogram[frameIndex2][j].im;
@@ -324,17 +326,23 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
                 phaseDiff += 2 * Math.PI;
             }
 
-            synchronizedPhases[j] = phase1 + fraction * phaseDiff;
+            currentSynchronizedPhases[j] = phase1 + fraction * phaseDiff;
         }
 
-        // Store the synchronized phases in the spectrogram
+        // Store the synchronized phases in the synchronizedPhases array
+        synchronizedPhases[i] = currentSynchronizedPhases.slice();
+    }
+
+    // Update the spectrogram with the synchronized phases
+    for (let i = 0; i < numFrames; i++) {
         for (let j = 0; j < numBins; j++) {
-            spectrogram[i][j].im = synchronizedPhases[j];
+            spectrogram[i][j].im = synchronizedPhases[i][j];
         }
     }
 
     return spectrogram;
 }
+
 
 
 
