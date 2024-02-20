@@ -523,11 +523,11 @@ function STFT(inputSignal, windowSize, hopSize) {
         // Apply window function to the current frame
         const frame = inputSignal.slice(startIdx, startIdx + windowSize);
         const windowedFrame = applyHanningWindow(frame);
-        console.log("Apply Hanning Window on current Frame", windowedFrame);
+        //console.log("Apply Hanning Window on current Frame", windowedFrame);
 
         // Compute FFT of the windowed frame
         const spectrum = computeFFT(windowedFrame);
-        console.log("Compute FFT on current Frame", spectrum);
+        //console.log("Compute FFT on current Frame", spectrum);
 
         // Store the spectrum in the spectrogram
         spectrogram.push(spectrum);
@@ -563,8 +563,10 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
     const spectrogram = STFT(inputSignal, windowSize, hopSize);
     // Modify magnitude and phase components based on stretch factor
     const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
+    console.log(stretchedSpectrogram);
     // Apply inverse STFT to reconstruct processed signal
     const processedSignal = ISTFT(stretchedSpectrogram, windowSize, hopSize);
+    console.log(processedSignal);
     return processedSignal;
 }
 
