@@ -26,7 +26,8 @@ function STFT(inputSignalChunk, windowSize, hopSize) {
 
 // Listen for messages from the main thread
 onmessage = function (e) {
-    const { inputSignal, windowSize, hopSize } = e.data;
+    const { inputSignal, windowSize, hopSize, fftFactorLookup } = e.data;
+    // Use fftFactorLookup for computations
     STFT(inputSignal, windowSize, hopSize)
         .then((spectrogramChunk) => {
             // Send the result back to the main thread
