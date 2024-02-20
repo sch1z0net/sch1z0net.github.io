@@ -369,6 +369,33 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
 
 
 
+// Check if SIMD is supported
+if (typeof SIMD !== 'undefined') {
+    // Assume array1 and array2 are Float32Array or similar
+    const array1 = new Float32Array(1000);
+    const array2 = new Float32Array(1000);
+
+    // Vectorized addition using SIMD
+    const simdResult = SIMD.Float32x4.add(
+        SIMD.Float32x4.load(array1, 0),
+        SIMD.Float32x4.load(array2, 0)
+    );
+
+    // Store the result back into an array
+    const resultArray = new Float32Array(4);
+    SIMD.Float32x4.store(resultArray, 0, simdResult);
+
+    // Process remaining elements with scalar addition
+    for (let i = 4; i < array1.length; i++) {
+        resultArray[i] = array1[i] + array2[i];
+    }
+
+    console.log(resultArray);
+} else {
+    // Fallback to scalar addition if SIMD is not supported
+    console.log("SIMD is not supported.");
+}
+
 
 
 
