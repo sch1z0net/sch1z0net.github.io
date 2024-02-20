@@ -363,6 +363,19 @@ function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
 
     //const hopSize = windowSize / 2; // 50% overlap
     const hopSize = windowSize / 8; // 50% overlap
+    //Low Hop Size (High Overlap):
+    //Advantages:
+    //    Higher temporal resolution: Lower hop sizes result in more overlap between consecutive windows, 
+    //    providing better time resolution in the analysis.
+    //    Smoother spectral representation: Increased overlap can lead to smoother spectrograms, 
+    //    which may be desirable for certain applications such as audio synthesis or time-stretching.
+    //Disadvantages:
+    //    Increased computational complexity: More overlap means more computations per time step, 
+    //    which can increase the computational cost of the analysis.
+    //    Potential spectral leakage: Higher overlap can exacerbate spectral leakage effects, 
+    //    especially with certain window functions, potentially affecting frequency resolution.
+
+
 
     const numChannels = inputBuffer.numberOfChannels;
     const inputLength = inputBuffer.length;
