@@ -395,40 +395,53 @@ console.log("PRECALCULATE FFT LOOKUP TABLE", fftFactorLookup);
 // Modified FFT function to use precalculated FFT factors
 // input was zero padded before to a length N = PowerOf2
 function fft(input) {
-    const N = input.length / 2; // Divide by 2 because each complex number has two components
+    const N = input.length / 2; // Since each complex number has both re and im parts
+    const output = new Array(N * 2);
 
-    // Base case: If the length is less than or equal to 1, return the input
-    if (N <= 1) {
-        return input;
+    // Copy input into the output array as complex numbers
+    for (let i = 0; i < N; i++) {
+        output[2 * i] = input[2 * i];
+        output[2 * i + 1] = input[2 * i + 1];
     }
 
-    // Separate real and imaginary parts
-    const real = new Float32Array(N);
-    const imag = new Float32Array(N);
-    for (let i = 0; i < N * 2; i += 2) {
-        real[i / 2] = input[i];
-        imag[i / 2] = input[i + 1];
+    for (let size = 2; size <= N * 2; size *= 2) {
+        const exp = fftFactorLookup[N * 2][size / 2];
+        for (let j = 0; j < N * 2; j += size) {
+            for (let k = 0; k < size / 2; k++) {
+                const evenIndex = j + k;
+                const oddIndex = j + k + size / 2;
+                const t = {
+                    re: exp.re * output[oddIndex].re - exp.im * output[oddIndex].im,
+                    im: exp.re * output[oddIndex].im + exp.im * output[oddIndex].re
+                };
+                output[evenIndex] = {
+                    re: output[evenIndex].re + t.re,
+                    im: output[evenIndex].im + t.im
+                };
+                output[oddIndex] = {
+                    re: output[evenIndex].re - t.re,
+                    im: output[evenIndex].im - t.im
+                };
+            }
+        }
     }
 
-    // Recursively compute FFT for real and imaginary parts
-    const realFFT = fft(real);
-    const imagFFT = fft(imag);
-
-    // Perform butterfly operations
-    const output = new Float32Array(N * 2);
-    for (let k = 0; k < N; k++) {
-        const exp = fftFactorLookup[N * 2][k];
-        const t_re = exp.re * imagFFT[k] + exp.im * imagFFT[k]; // Fixed indexing for imagFFT
-        const t_im = exp.re * imagFFT[k] - exp.im * imagFFT[k]; // Fixed indexing for imagFFT
-        output[k * 2] = realFFT[k] + t_re; // Real part
-        output[k * 2 + 1] = realFFT[k + N] + t_im; // Imaginary part
-        output[(k + N) * 2] = realFFT[k] - t_re; // Real part
-        output[(k + N) * 2 + 1] = realFFT[k + N] - t_im; // Imaginary part
+    // Rearrange the output to be alternating re, im values
+    const rearrangedOutput = new Array(N * 2);
+    for (let i = 0; i < N; i++) {
+        rearrangedOutput[2 * i] = output[i].re;
+        rearrangedOutput[2 * i + 1] = output[i].im;
     }
 
-    return output;
+    return rearrangedOutput;
 }
 
+
+
+
+
+//re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im 
+//im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re
 
 
 //     const even = [];
