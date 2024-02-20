@@ -350,8 +350,10 @@ function synchronizeFramePhases(frame1, frame2, numBins, fraction) {
 
 
 
+// windowSize = 512, hopSize = windowSize / 4
+// Is pretty good for beats and if the signal is compressed, but the freqs will be quite wrong
 
-// Function to perform phase vocoding
+
 function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
     const windowSize = 512 * 1; // Size of the analysis window
     //For beats with a clear BPM, where the goal is to preserve rhythmic structure and transient characteristics, 
@@ -362,7 +364,7 @@ function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
 
 
     //const hopSize = windowSize / 2; // 50% overlap
-    const hopSize = windowSize / 8; // 50% overlap
+    const hopSize = windowSize / 4; // 25% overlap
     //Low Hop Size (High Overlap):
     //Advantages:
     //    Higher temporal resolution: Lower hop sizes result in more overlap between consecutive windows, 
