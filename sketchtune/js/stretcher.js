@@ -364,7 +364,8 @@ function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
 
 
     //const hopSize = windowSize / 2; // 50% overlap
-    const hopSize = windowSize / 4; // 25% overlap
+    //const hopSize = windowSize / 4; // 25% overlap
+    const hopSize = windowSize / 8; // 12.5% overlap
     //Low Hop Size (High Overlap):
     //Advantages:
     //    Higher temporal resolution: Lower hop sizes result in more overlap between consecutive windows, 
