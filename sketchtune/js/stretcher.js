@@ -181,6 +181,7 @@ function ISTFT(spectrogram, windowSize, hopSize) {
     for (let i = 0; i < numFrames; i++) {
         // Compute inverse FFT of the spectrum to obtain the frame in time domain
         const frame = computeInverseFFT(spectrogram[i]);
+        console.log(spectrogram[i], frame);
 
         // Apply overlap-add to reconstruct the output signal
         const startIdx = i * hopSize;
@@ -207,7 +208,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
     //const stretchedSpectrogram = spectrogram;
     // Apply inverse STFT to reconstruct processed signal
     const processedSignal = ISTFT(stretchedSpectrogram, windowSize, hopSize);
-    console.log("SPECT",stretchedSpectrogram,"PROC",processedSignal);
+    //console.log("SPECT",stretchedSpectrogram,"PROC",processedSignal);
     return processedSignal;
 }
 
