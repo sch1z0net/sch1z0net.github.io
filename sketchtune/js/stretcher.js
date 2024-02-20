@@ -205,7 +205,8 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
     // Apply STFT to input signal
     const spectrogram = STFT(inputSignal, windowSize, hopSize);
     // Modify magnitude and phase components based on stretch factor
-    const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
+    //const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
+    const stretchedSpectrogram = spectrogram;
     // Apply inverse STFT to reconstruct processed signal
     const processedSignal = ISTFT(stretchedSpectrogram, windowSize, hopSize);
     return processedSignal;
