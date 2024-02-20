@@ -1,5 +1,3 @@
-// Inside stftWorker.js
-
 // Function to perform Short-Time Fourier Transform (STFT)
 function STFT(inputSignal, windowSize, hopSize, startFrame, endFrame) {
     const spectrogram = [];
@@ -14,16 +12,6 @@ function STFT(inputSignal, windowSize, hopSize, startFrame, endFrame) {
 
     // Send the result back to the main thread
     postMessage(spectrogram);
-}
-
-// Function to apply Hanning window (replace with your implementation)
-function applyHanningWindow(frame) {
-    return frame; // Placeholder function
-}
-
-// Function to compute FFT (replace with your implementation)
-function computeFFT(frame) {
-    return frame; // Placeholder function
 }
 
 // Listen for messages from the main thread
