@@ -87,18 +87,118 @@ function prepare_and_fft(inputSignal) {
   }
 
 
+
+
+
+
+
+function FFT(inputSignal){
+   return prepare_and_fft(inputSignal);  
+} 
+
+function IFFT(spectrum){
+   return ifft(spectrum).map(({ re }) => re);
+} 
+
+
+
+
+
+
+
+
+
+
+
+// Function to perform Short-Time Fourier Transform (STFT)
+function STFT(inputSignal, windowSize, hopSize) {
+    const numFrames = Math.floor((inputSignal.length - windowSize) / hopSize) + 1;
+    const spectrogram = [];
+
+    // Iterate over each frame
+    for (let i = 0; i < numFrames; i++) {
+        // Calculate start index of current frame
+        const startIdx = i * hopSize;
+        
+        // Apply window function to the current frame
+        const frame = inputSignal.slice(startIdx, startIdx + windowSize);
+        const windowedFrame = applyWindow(frame);
+        
+        // Compute FFT of the windowed frame
+        const spectrum = computeFFT(windowedFrame);
+
+        // Store the spectrum in the spectrogram
+        spectrogram.push(spectrum);
+    }
+
+    return spectrogram;
+}
+
+// Function to apply windowing to a frame
+function applyWindow(frame) {
+    // Hanning window function
+    const windowedFrame = frame.map((value, index) => value * 0.5 * (1 - Math.cos(2 * Math.PI * index / (frame.length - 1))));
+    return windowedFrame;
+}
+
+// Function to compute FFT of a frame
+function computeFFT(frame) {
+    // Perform FFT on the frame (you can use your FFT implementation here)
+    // For simplicity, let's assume computeFFT returns the magnitude spectrum
+    const spectrum = FFT(frame);
+    return spectrum;
+}
+
+// Function to perform inverse Short-Time Fourier Transform (ISTFT)
+function ISTFT(spectrogram, windowSize, hopSize) {
+    const numFrames = spectrogram.length;
+    const outputSignalLength = (numFrames - 1) * hopSize + windowSize;
+    const outputSignal = new Array(outputSignalLength).fill(0);
+
+    // Iterate over each frame in the spectrogram
+    for (let i = 0; i < numFrames; i++) {
+        // Compute inverse FFT of the spectrum to obtain the frame in time domain
+        const frame = computeInverseFFT(spectrogram[i]);
+
+        // Apply overlap-add to reconstruct the output signal
+        const startIdx = i * hopSize;
+        for (let j = 0; j < windowSize; j++) {
+            outputSignal[startIdx + j] += frame[j] * 0.5 * (1 - Math.cos(2 * Math.PI * j / (windowSize - 1)));
+        }
+    }
+
+    return outputSignal;
+}
+
+// Function to compute inverse FFT of a spectrum
+function computeInverseFFT(spectrum) {
+    // Perform inverse FFT to obtain the time-domain frame (you can use your IFFT implementation here)
+    // For simplicity, let's assume computeInverseFFT returns the time-domain frame
+    const frame = IFFT(spectrum);
+    return frame;
+}
+
+
+
+
+
+
+
+
+
   // Function to perform phase vocoding
   function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
 
-    const windowSize = 2048*2; // Size of the analysis window
-    const hopSize = Math.floor(windowSize / 4); // Hop size for overlap-add   //512
+    const windowSize = 512; // Size of the analysis window
+    const hopSize = windowSize / 2; // 50% overlap
 
-
+    
+    /*
     const analysisWindow = new Float32Array(windowSize); // Analysis window
     // Initialize analysis window with Hanning window function
     for (let i = 0; i < windowSize; i++) {
         analysisWindow[i] = 0.5 * (1 - Math.cos(2 * Math.PI * i / windowSize));
-    }
+    }*/
 
     
     const numChannels = inputBuffer.numberOfChannels;
@@ -110,6 +210,12 @@ function prepare_and_fft(inputSignal) {
         const inputData = inputBuffer.getChannelData(ch);
         const outputData = outputBuffer.getChannelData(ch);
 
+        const spectrogram = STFT(inputData, windowSize, hopSize);
+        // Perform some processing on the spectrogram if needed
+        // Reconstruct the output signal using inverse STFT
+        const reconstructedSignal = ISTFT(spectrogram, windowSize, hopSize);
+        outputData.set( reconstructedSignal.slice(), 0);
+        /*
         for (let i = 0; i < numFrames; i++) {
             // Extract frame
             const start = i * hopSize;
@@ -127,10 +233,10 @@ function prepare_and_fft(inputSignal) {
             // Modify spectrum phase and magnitude (time stretching)
             // You would typically interpolate between frames to change the phase and magnitude
             
-            /*// Overlap-add with appropriate overlapping regions
-            for (let j = 0; j < processedFrame.length; j++) {
-                outputData[start + j] += processedFrame[j];
-            }*/
+            // Overlap-add with appropriate overlapping regions
+            //for (let j = 0; j < processedFrame.length; j++) {
+            //    outputData[start + j] += processedFrame[j];
+            //}
 
 
             // Perform IFFT (you need to implement IFFT function)
@@ -141,9 +247,12 @@ function prepare_and_fft(inputSignal) {
             const frameLength = Math.min(processedFrame.length, availableSpace);
             outputData.set(processedFrame.slice(0, frameLength), start);
         }
+        */
     }
 
     console.log(inputBuffer, outputBuffer);
 
     return outputBuffer;
   }
+
+  */
