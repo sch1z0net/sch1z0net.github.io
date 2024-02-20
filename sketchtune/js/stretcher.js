@@ -454,8 +454,8 @@ function prepare_and_fft(inputSignal) {
 
     // Zero-padding to the next power of 2
     const FFT_SIZE = nextPowerOf2(windowedSignal.length);
-    const paddedInput = new Float32Array(FFT_SIZE * 2).fill(0); // Double the size for complex numbers
-    windowedSignal.forEach((value, index) => (paddedInput[index * 2] = value)); // Store real parts
+    const paddedInput = new Float32Array(FFT_SIZE).fill(0);
+    windowedSignal.forEach((value, index) => (paddedInput[index] = value));
 
     // Convert to complex numbers
     const complexInput = convertToComplex(paddedInput);
