@@ -25,7 +25,9 @@ function generateFFTFactorLookup(maxSampleLength) {
 const maxSampleLength = 60 * 44100; // 60 seconds at 44100 Hz sample rate
 const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
 
-
+// Get the size of fftFactorLookup
+const sizeOfLookup = Object.keys(fftFactorLookup).length;
+console.log("PRECALCULATE FFT LOOKUP TABLE",sizeOfLookup,"entries");
 
 
 
