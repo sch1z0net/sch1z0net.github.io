@@ -1,3 +1,7 @@
+function nextPowerOf2(n) {
+    return Math.pow(2, Math.ceil(Math.log2(n)));
+}
+
 function precalculateFFTFactors(N) {
     const factors = [];
     for (let k = 0; k < N / 2; k++) {
@@ -7,17 +11,24 @@ function precalculateFFTFactors(N) {
     return factors;
 }
 
-function generateFFTFactorLookup(maxN) {
+function generateFFTFactorLookup(maxSampleLength) {
+    const maxN = nextPowerOf2(maxSampleLength);
     const fftFactorLookup = {};
+
     for (let N = 2; N <= maxN; N *= 2) {
         fftFactorLookup[N] = precalculateFFTFactors(N);
     }
+
     return fftFactorLookup;
 }
 
-// Usage
 const maxSampleLength = 60 * 44100; // 60 seconds at 44100 Hz sample rate
 const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
+
+
+
+
+
 
 
 // Modified FFT function to use precalculated FFT factors
