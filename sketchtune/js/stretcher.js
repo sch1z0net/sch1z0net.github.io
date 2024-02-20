@@ -1,7 +1,31 @@
-function nextPowerOf2(n) {
-    return Math.pow(2, Math.ceil(Math.log2(n)));
+function precalculateFFTFactors(N) {
+    const factors = [];
+    for (let k = 0; k < N / 2; k++) {
+        const theta = -2 * Math.PI * k / N;
+        factors.push({ re: Math.cos(theta), im: Math.sin(theta) });
+    }
+    return factors;
 }
 
+function generateFFTFactorLookup(maxN) {
+    const fftFactorLookup = {};
+    for (let N = 2; N <= maxN; N *= 2) {
+        fftFactorLookup[N] = precalculateFFTFactors(N);
+    }
+    return fftFactorLookup;
+}
+
+// Usage
+const maxSampleLength = 60 * 44100; // 60 seconds at 44100 Hz sample rate
+const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
+
+
+console.log(fftFactorLookup);
+
+
+
+
+// Modified FFT function to use precalculated FFT factors
 function fft(input) {
     const N = input.length;
 
@@ -25,7 +49,8 @@ function fft(input) {
     const output = [];
     for (let k = 0; k < N / 2; k++) {
         const theta = -2 * Math.PI * k / N;
-        const exp = { re: Math.cos(theta), im: Math.sin(theta) };
+        const exp = fftFactors[k];
+        //const exp = { re: Math.cos(theta), im: Math.sin(theta) };
         const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
         output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
         output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
@@ -33,6 +58,7 @@ function fft(input) {
 
     return output;
 }
+
 
 function ifft(input) {
     const N = input.length;
@@ -353,6 +379,9 @@ function synchronizeFramePhases(frame1, frame2, numBins, fraction) {
 // windowSize = 512, hopSize = windowSize / 4
 // Is pretty good for beats and if the signal is compressed, but the freqs will be quite wrong
 
+// FOR COMPRESSING: 
+// windowSize = 512*4, hopSize = windowSize / 8
+
 
 function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
     const windowSize = 512 * 4; // Size of the analysis window
@@ -398,6 +427,81 @@ function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
 
     return outputBuffer;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Function to perform sinusoidal spectral modeling for time stretching
+function timeStretchSpectralModeling(inputSignal, stretchFactor, windowSize, hopSize) {
+    // Perform STFT on the input signal
+    const spectrogram = STFT(inputSignal, windowSize, hopSize);
+    
+    // Extract peaks from the spectrogram
+    const peaks = extractPeaks(spectrogram);
+    
+    // Create sinusoidal tracks from the peaks
+    const tracks = createTracks(peaks);
+    
+    // Resynthesize the tracks at the desired time scale
+    const resynthesizedSignal = resynthesizeTracks(tracks, stretchFactor, hopSize);
+    
+    return resynthesizedSignal;
+}
+
+// Function to extract peaks from the spectrogram
+function extractPeaks(spectrogram) {
+    // Implement peak detection algorithm (e.g., finding local maxima)
+    // Return an array of peak frequencies and magnitudes
+    // For simplicity, we'll just return an empty array in this example
+    return [];
+}
+
+// Function to create sinusoidal tracks from the peaks
+function createTracks(peaks) {
+    // Implement track creation algorithm (e.g., connecting adjacent peaks)
+    // Return an array of sinusoidal tracks
+    // For simplicity, we'll just return an empty array in this example
+    return [];
+}
+
+// Function to resynthesize tracks at the desired time scale
+function resynthesizeTracks(tracks, stretchFactor, hopSize) {
+    // Implement track resynthesis algorithm (e.g., time-scaling and overlap-add)
+    // Return the resynthesized signal
+    // For simplicity, we'll just return an empty array in this example
+    return [];
+}
+
+// Example usage
+const inputSignal = []; // Your input audio signal
+const stretchFactor = 1.5; // Desired time stretch factor
+const windowSize = 512; // Size of the analysis window
+const hopSize = windowSize / 2; // 50% overlap
+
+const resynthesizedSignal = timeStretchSpectralModeling(inputSignal, stretchFactor, windowSize, hopSize);
+
 
 
 
