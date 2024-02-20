@@ -108,32 +108,6 @@ function IFFT(spectrum){
 
 
 
-
-
-// Function to perform Short-Time Fourier Transform (STFT)
-function STFT(inputSignal, windowSize, hopSize) {
-    const numFrames = Math.floor((inputSignal.length - windowSize) / hopSize) + 1;
-    const spectrogram = [];
-
-    // Iterate over each frame
-    for (let i = 0; i < numFrames; i++) {
-        // Calculate start index of current frame
-        const startIdx = i * hopSize;
-        
-        // Apply window function to the current frame
-        const frame = inputSignal.slice(startIdx, startIdx + windowSize);
-        const windowedFrame = applyWindow(frame);
-        
-        // Compute FFT of the windowed frame
-        const spectrum = computeFFT(windowedFrame);
-
-        // Store the spectrum in the spectrogram
-        spectrogram.push(spectrum);
-    }
-
-    return spectrogram;
-}
-
 // Function to apply windowing to a frame
 function applyWindow(frame) {
     // Hanning window function
@@ -171,6 +145,30 @@ function computeInverseFFT(spectrum) {
     // Now you can pass paddedSpectrum to the IFFT function
     const timeDomainSignal = IFFT(paddedSpectrum);
     return timeDomainSignal;
+}
+
+// Function to perform Short-Time Fourier Transform (STFT)
+function STFT(inputSignal, windowSize, hopSize) {
+    const numFrames = Math.floor((inputSignal.length - windowSize) / hopSize) + 1;
+    const spectrogram = [];
+
+    // Iterate over each frame
+    for (let i = 0; i < numFrames; i++) {
+        // Calculate start index of current frame
+        const startIdx = i * hopSize;
+        
+        // Apply window function to the current frame
+        const frame = inputSignal.slice(startIdx, startIdx + windowSize);
+        const windowedFrame = applyWindow(frame);
+        
+        // Compute FFT of the windowed frame
+        const spectrum = computeFFT(windowedFrame);
+
+        // Store the spectrum in the spectrogram
+        spectrogram.push(spectrum);
+    }
+
+    return spectrogram;
 }
 
 // Function to perform inverse Short-Time Fourier Transform (ISTFT)
@@ -221,15 +219,15 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
     const stretchedSpectrogram = [];
 
     // Loop through spectrogram frames
-    for (let i = 0; i < numFrames; i++) {
-        // Calculate new frame index based on stretch factor
-        const newIndex = Math.floor(i / stretchFactor);
+    for (let i = 0; i < numFrames * stretchFactor; i++) {
+        // Calculate original frame index
+        const originalIndex = Math.floor(i / stretchFactor);
 
         // Interpolate or resample magnitude values
-        const stretchedFrame = interpolateMagnitudes(spectrogram[i], numBins, stretchFactor);
+        const stretchedFrame = interpolateMagnitudes(spectrogram[originalIndex], numBins, stretchFactor);
 
         // Synchronize phase values
-        const stretchedPhase = synchronizePhase(spectrogram[i], numBins, stretchFactor);
+        const stretchedPhase = synchronizePhase(spectrogram[originalIndex], numBins, stretchFactor);
 
         // Combine magnitude and phase components
         const stretchedFrameWithPhase = stretchedFrame.map((magnitude, j) => {
@@ -237,11 +235,13 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
         });
 
         // Store stretched frame in the stretched spectrogram
-        stretchedSpectrogram[newIndex] = stretchedFrameWithPhase;
+        stretchedSpectrogram.push(stretchedFrameWithPhase);
     }
 
     return stretchedSpectrogram;
 }
+
+
 
 
 // Function to interpolate or resample magnitude values
