@@ -371,6 +371,7 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
 
 async function processChannel(audioContext, inputData, stretchFactor, windowSize, hopSize) {
     // Time-stretch the input data
+    console.log("TimeStretching the Input Channel.")
     const processedSignal = await timeStretch(inputData, stretchFactor, windowSize, hopSize);
     // Convert processedSignal to Float32Array if necessary
     const processedSignalFloat32 = new Float32Array(processedSignal);
