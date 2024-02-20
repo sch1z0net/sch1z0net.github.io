@@ -1,23 +1,23 @@
 importScripts('./fft.js');
 
 // Function to perform Short-Time Fourier Transform (STFT)
-function STFT(inputSignal, windowSize, hopSize, startFrame, endFrame) {
-    const spectrogram = [];
+function STFT(inputSignalChunk, windowSize, hopSize) {
+    const spectrogramChunk = [];
 
-    for (let i = startFrame; i < endFrame; i++) {
-        const startIdx = i * hopSize;
-        const frame = inputSignal.slice(startIdx, startIdx + windowSize);
+    // Process each frame in the chunk
+    for (let i = 0; i <= inputSignalChunk.length - windowSize; i += hopSize) {
+        const frame = inputSignalChunk.slice(i, i + windowSize);
         const windowedFrame = applyHanningWindow(frame);
         const spectrum = computeFFT(windowedFrame);
-        spectrogram.push(spectrum);
+        spectrogramChunk.push(spectrum);
     }
 
     // Send the result back to the main thread
-    postMessage(spectrogram);
+    postMessage(spectrogramChunk);
 }
 
 // Listen for messages from the main thread
 onmessage = function (e) {
-    const { inputSignal, windowSize, hopSize, startFrame, endFrame } = e.data;
-    STFT(inputSignal, windowSize, hopSize, startFrame, endFrame);
+    const { inputSignal, windowSize, hopSize } = e.data;
+    STFT(inputSignal, windowSize, hopSize);
 };
