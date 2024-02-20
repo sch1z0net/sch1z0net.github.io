@@ -402,32 +402,58 @@ function fft(input) {
         return input;
     }
 
-    // Separate even and odd-indexed elements
-    const even = new Float32Array(N);
-    const odd = new Float32Array(N);
+    // Separate real and imaginary parts
+    const real = new Float32Array(N);
+    const imag = new Float32Array(N);
     for (let i = 0; i < N * 2; i += 2) {
-        even[i / 2] = input[i];
-        odd[i / 2] = input[i + 1];
+        real[i / 2] = input[i];
+        imag[i / 2] = input[i + 1];
     }
 
-    // Recursively compute FFT for even and odd parts
-    const evenFFT = fft(even);
-    const oddFFT = fft(odd);
+    // Recursively compute FFT for real and imaginary parts
+    const realFFT = fft(real);
+    const imagFFT = fft(imag);
 
     // Perform butterfly operations
     const output = new Float32Array(N * 2);
     for (let k = 0; k < N; k++) {
         const exp = fftFactorLookup[N * 2][k];
-        const t_re = exp.re * oddFFT[k * 2] - exp.im * oddFFT[k * 2 + 1]; // Fixed indexing for oddFFT
-        const t_im = exp.re * oddFFT[k * 2 + 1] + exp.im * oddFFT[k * 2]; // Fixed indexing for oddFFT
-        output[k * 2] = evenFFT[k * 2] + t_re; // Real part
-        output[k * 2 + 1] = evenFFT[k * 2 + 1] + t_im; // Imaginary part
-        output[(k + N) * 2] = evenFFT[k * 2] - t_re; // Real part
-        output[(k + N) * 2 + 1] = evenFFT[k * 2 + 1] - t_im; // Imaginary part
+        const t_re = exp.re * imagFFT[k] + exp.im * imagFFT[k]; // Fixed indexing for imagFFT
+        const t_im = exp.re * imagFFT[k] - exp.im * imagFFT[k]; // Fixed indexing for imagFFT
+        output[k * 2] = realFFT[k] + t_re; // Real part
+        output[k * 2 + 1] = realFFT[k + N] + t_im; // Imaginary part
+        output[(k + N) * 2] = realFFT[k] - t_re; // Real part
+        output[(k + N) * 2 + 1] = realFFT[k + N] - t_im; // Imaginary part
     }
 
     return output;
 }
+
+
+
+//     const even = [];
+//     const odd = [];
+//     for (let i = 0; i < N; i++) {
+//         if (i % 2 === 0) {
+//             even.push(input[i]);
+//         } else {
+//             odd.push(input[i]);
+//         }
+//     }
+
+//     const evenFFT = fft(even);
+//     const oddFFT = fft(odd);
+
+//     const output = [];
+//     for (let k = 0; k < N / 2; k++) {
+//         const exp = fftFactorLookup[N][k];
+//         const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
+//         output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
+//         output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
+//     }
+
+
+
 
 
 function ifft(input) {
