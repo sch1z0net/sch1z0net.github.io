@@ -1746,6 +1746,33 @@ async function createSpectrumTracker(audioContext, audioSource) {
   // Array to store references to all playing audio nodes
   let playingAudioNodes = [];
 
+
+async function playSample(audioContext, audioBuffer, time, offset, duration) {
+    const stretchFactor = 1 / GLOBAL_PLAYBACK_RATE;
+    let resampledBuffer = audioBuffer;
+
+    if (stretchFactor !== 1) {
+        resampledBuffer = await phaseVocoder(audioContext, resampledBuffer, stretchFactor); 
+    }
+
+    const sampleSource = new AudioBufferSourceNode(audioContext, {
+        buffer: resampledBuffer,
+        playbackRate: 1.0,
+    });
+
+    connectToMaster(sampleSource);
+    sampleSource.start(time, offset, duration);
+
+    playingAudioNodes.push(sampleSource);
+
+    return sampleSource;
+}
+
+
+
+
+
+/*
 async function playSample(audioContext, audioBuffer, time, offset, duration) {
     const stretchFactor = 1 / GLOBAL_PLAYBACK_RATE;
     let resampledBuffer;
@@ -1763,35 +1790,12 @@ async function playSample(audioContext, audioBuffer, time, offset, duration) {
         resampledBuffer = audioBuffer;
     }
 
-    // Calculate the resampling ratio
-    //const originalDuration = audioBuffer.duration;
-    //const resamplingRatio = desiredDuration / originalDuration;
-    //var resampledBuffer = timeStretchSample(audioContext, audioBuffer, 1/GLOBAL_PLAYBACK_RATE);
-    
-    /*
-    const originalAudioBuffer = audioBuffer;
-    const stretchFactor = 1/GLOBAL_PLAYBACK_RATE;
-    const grainSize = 0.01;
-    const overlap = 0.5;
-
-    const resampledBuffer = granularSynthesis(originalAudioBuffer, stretchFactor, grainSize, overlap);
-    */
-    
-    //const resampledBuffer = audioBuffer;
-    //displaySpectrumRealTime(audioContext, audioBuffer);
-
     const sampleSource = new AudioBufferSourceNode(audioContext, {
       buffer: resampledBuffer,
       playbackRate: 1.0,
     });
 
     plotWaveform(resampledBuffer);
-
-    /*
-    const sampleSource = new AudioBufferSourceNode(audioContext, {
-      buffer: audioBuffer,
-      playbackRate: GLOBAL_PLAYBACK_RATE,
-    });*/
 
     //console.log(duration, sampleSource.buffer.duration);
     connectToMaster(sampleSource);
@@ -1802,7 +1806,7 @@ async function playSample(audioContext, audioBuffer, time, offset, duration) {
     playingAudioNodes.push(sampleSource);
 
     return sampleSource;
-  }
+  }*/
 
   // Function to stop all playing samples
   function stopAllSamples() {
