@@ -1758,7 +1758,7 @@ function playSample(audioContext, audioBuffer, time, offset, duration) {
         }
         
         // Apply phase vocoder if stretchFactor is not 1
-        resampledBuffer = phaseVocoder(audioContext, audioBufferCopy, stretchFactor); 
+        resampledBuffer = await phaseVocoder(audioContext, audioBufferCopy, stretchFactor); 
     } else {
         resampledBuffer = audioBuffer;
     }
