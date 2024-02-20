@@ -20,12 +20,8 @@ const maxSampleLength = 60 * 44100; // 60 seconds at 44100 Hz sample rate
 const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
 
 
-console.log(fftFactorLookup);
-
-
-
-
 // Modified FFT function to use precalculated FFT factors
+// input was zero padded before to a length N = PowerOf2
 function fft(input) {
     const N = input.length;
 
@@ -48,9 +44,9 @@ function fft(input) {
 
     const output = [];
     for (let k = 0; k < N / 2; k++) {
-        const theta = -2 * Math.PI * k / N;
-        const exp = fftFactors[k];
+        //const theta = -2 * Math.PI * k / N;
         //const exp = { re: Math.cos(theta), im: Math.sin(theta) };
+        const exp = fftFactorLookup[N][k];
         const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
         output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
         output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
