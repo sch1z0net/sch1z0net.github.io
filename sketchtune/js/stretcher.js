@@ -233,6 +233,11 @@ function interpolateMagnitudes(spectrogram, stretchFactor) {
         const frameIndex1 = Math.floor(originalFrameIndex);
         const frameIndex2 = Math.ceil(originalFrameIndex);
 
+        // Ensure frameIndex2 is within bounds
+        if (frameIndex2 >= numFrames) {
+            continue; // Skip this frame if frameIndex2 is out of bounds
+        }
+
         // Calculate the fraction between the two frames
         const fraction = originalFrameIndex - frameIndex1;
 
@@ -245,6 +250,7 @@ function interpolateMagnitudes(spectrogram, stretchFactor) {
 
     return stretchedSpectrogram;
 }
+
 
 // Function to interpolate magnitudes between frames
 function interpolateFrameMagnitudes(frame1, frame2, numBins, fraction) {
