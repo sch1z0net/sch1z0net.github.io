@@ -77,67 +77,6 @@ function ISTFT(spectrogram, windowSize, hopSize) {
 
 
 
-function timeStretch(inputSignal, stretchFactor, windowSize, hopSize){
-    STFTWithWebWorkers(inputSignal, windowSize, hopSize)
-    .then((spectrogram) => {
-        // Process the spectrogram
-        console.log(spectrogram);
-        
-        // Modify magnitude and phase components based on stretch factor
-        const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
-        // Apply inverse STFT to reconstruct processed signal
-        const processedSignal = ISTFT(stretchedSpectrogram, windowSize, hopSize);
-        return processedSignal;
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
-}
-
-
-
-/*
-// Function to perform time stretching using phase vocoder
-function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
-    // Apply STFT to input signal
-    const spectrogram = STFT(inputSignal, windowSize, hopSize);
-    // Modify magnitude and phase components based on stretch factor
-    const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
-    //console.log(stretchedSpectrogram);
-    // Apply inverse STFT to reconstruct processed signal
-    const processedSignal = ISTFT(stretchedSpectrogram, windowSize, hopSize);
-    //console.log(processedSignal);
-    return processedSignal;
-}
-*/
-
-
-
-// Function to stretch spectrogram
-function stretchSpectrogram(spectrogram, stretchFactor) {
-    const interpolatedMagnitudes = [];
-    const synchronizedPhases = [];
-
-    interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitudes);
-    synchronizePhase(spectrogram, stretchFactor, synchronizedPhases);
-
-    const stretchedSpectrogram = [];
-    for (let i = 0; i < spectrogram.length; i++) {
-        const frameWithMagnitudes = interpolatedMagnitudes[i];
-        const frameWithPhases = synchronizedPhases[i];
-        const frameWithPairs = [];
-
-        for (let j = 0; j < frameWithMagnitudes.length; j++) {
-            const pair = { re: frameWithMagnitudes[j], im: frameWithPhases[j] };
-            frameWithPairs.push(pair);
-        }
-
-        stretchedSpectrogram.push(frameWithPairs);
-    }
-
-    return stretchedSpectrogram;
-}
-
 // Function to interpolate magnitudes between frames in the entire spectrogram
 function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitudes) {
     const numFrames = spectrogram.length;
@@ -227,6 +166,30 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
 
 
 
+// Function to stretch spectrogram
+function stretchSpectrogram(spectrogram, stretchFactor) {
+    const interpolatedMagnitudes = [];
+    const synchronizedPhases = [];
+
+    interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitudes);
+    synchronizePhase(spectrogram, stretchFactor, synchronizedPhases);
+
+    const stretchedSpectrogram = [];
+    for (let i = 0; i < spectrogram.length; i++) {
+        const frameWithMagnitudes = interpolatedMagnitudes[i];
+        const frameWithPhases = synchronizedPhases[i];
+        const frameWithPairs = [];
+
+        for (let j = 0; j < frameWithMagnitudes.length; j++) {
+            const pair = { re: frameWithMagnitudes[j], im: frameWithPhases[j] };
+            frameWithPairs.push(pair);
+        }
+
+        stretchedSpectrogram.push(frameWithPairs);
+    }
+
+    return stretchedSpectrogram;
+}
 
 
 
@@ -235,6 +198,40 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
 
 
 
+
+function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
+    return STFTWithWebWorkers(inputSignal, windowSize, hopSize)
+        .then((spectrogram) => {
+            // Process the spectrogram
+            console.log(spectrogram);
+            // Modify magnitude and phase components based on stretch factor
+            const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
+            // Apply inverse STFT to reconstruct processed signal
+            const processedSignal = ISTFT(stretchedSpectrogram, windowSize, hopSize);
+            return processedSignal;
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            return null; // or handle the error appropriately
+        });
+}
+
+
+
+/*
+// Function to perform time stretching using phase vocoder
+function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
+    // Apply STFT to input signal
+    const spectrogram = STFT(inputSignal, windowSize, hopSize);
+    // Modify magnitude and phase components based on stretch factor
+    const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
+    //console.log(stretchedSpectrogram);
+    // Apply inverse STFT to reconstruct processed signal
+    const processedSignal = ISTFT(stretchedSpectrogram, windowSize, hopSize);
+    //console.log(processedSignal);
+    return processedSignal;
+}
+*/
 
 
 
@@ -246,7 +243,7 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
 // windowSize = 512*4, hopSize = windowSize / 8
 
 
-function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
+async function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
     const windowSize = 512 * 4; // Size of the analysis window
     //For beats with a clear BPM, where the goal is to preserve rhythmic structure and transient characteristics, 
     //it's often beneficial to prioritize temporal resolution over frequency resolution. 
@@ -281,7 +278,7 @@ function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
     for (let ch = 0; ch < numChannels; ch++) {
         const inputData = inputBuffer.getChannelData(ch);
         // Time-stretch the input data
-        const processedSignal = timeStretch(inputData, stretchFactor, windowSize, hopSize);
+        const processedSignal = await timeStretch(inputData, stretchFactor, windowSize, hopSize);
         // Convert processedSignal to Float32Array if necessary
         const processedSignalFloat32 = new Float32Array(processedSignal);
         // Copy the processed signal to the output buffer
