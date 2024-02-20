@@ -76,7 +76,7 @@ async function fft(input) {
     return output;
 }
 
-function prepare_and_fft(inputSignal) {
+async function prepare_and_fft(inputSignal) {
     // Apply Hanning window to the input signal
     const windowedSignal = inputSignal;
 
@@ -86,23 +86,27 @@ function prepare_and_fft(inputSignal) {
     windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
 
     // Perform FFT
-    return fft(paddedInput);
+    return await fft(paddedInput);
 }
 
-function FFT(inputSignal) {
-    return prepare_and_fft(inputSignal);
+async function FFT(inputSignal) {
+    return await prepare_and_fft(inputSignal);
 }
 
 // Function to compute FFT of a frame
-function computeFFT(frame) {
+async function computeFFT(frame) {
     // Perform FFT on the frame (you can use your FFT implementation here)
     // For simplicity, let's assume computeFFT returns the magnitude spectrum
-    const spectrum = FFT(frame);
+    const spectrum = await FFT(frame);
     return spectrum;
 }
 
+/******************** INVERSE *********************/
+
+
+
 // Function to compute inverse FFT of a spectrum
-function computeInverseFFT(spectrum) {
+async function computeInverseFFT(spectrum) {
     // Perform inverse FFT to obtain the time-domain frame (you can use your IFFT implementation here)
     // For simplicity, let's assume computeInverseFFT returns the time-domain frame
     
@@ -121,16 +125,10 @@ function computeInverseFFT(spectrum) {
     }
 
     // Now you can pass paddedSpectrum to the IFFT function
-    const timeDomainSignal = IFFT(paddedSpectrum);
+    const timeDomainSignal = await IFFT(paddedSpectrum);
     return timeDomainSignal;
 }
 
-// Function to compute inverse FFT of a spectrum
-function IFFT(spectrum){
-    return ifft(spectrum).map(({ re }) => re);
-} 
-
-// Modified ifft function to use precalculated FFT factors
 async function ifft(input) {
     const N = input.length;
     const pi = Math.PI;
@@ -145,4 +143,8 @@ async function ifft(input) {
     const ifftResult = fftResult.map(({ re, im }) => ({ re: re / N, im: -im / N }));
 
     return ifftResult;
+}
+
+async function IFFT(spectrum) {
+    return (await ifft(spectrum)).map(({ re }) => re);
 }
