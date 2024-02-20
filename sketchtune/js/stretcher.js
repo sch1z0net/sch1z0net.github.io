@@ -325,8 +325,8 @@ function synchronizeFramePhases(frame1, frame2, numBins, fraction) {
 
     // Synchronize phase values for each bin
     for (let j = 0; j < numBins; j++) {
-        const phase1 = frame1[j][1];
-        const phase2 = frame2[j][1];
+        const phase1 = frame1[j].im;
+        const phase2 = frame2[j].im;
 
         // Calculate the difference in phase
         let phaseDiff = phase2 - phase1;
