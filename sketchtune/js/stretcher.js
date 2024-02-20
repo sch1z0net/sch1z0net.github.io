@@ -17,15 +17,11 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
         const startFrame = i * framesPerWorker;
         const endFrame = Math.min(startFrame + framesPerWorker, numFrames);
         const worker = new Worker('./js/stftWorker.js');
-  
-        // Message handler for each worker
-        worker.onmessage = function (e) {
-            const workerSpectrogram = e.data;
-            spectrogram.push(...workerSpectrogram);
 
-            // Close the worker after it completes its work
-            worker.terminate();
-        };
+        // Create a promise that resolves with workerSpectrogram
+        const workerPromise = new Promise((resolve) => {
+            worker.onmessage = (e) => resolve(e.data);
+        });
 
         // Start the worker
         worker.postMessage({
@@ -37,11 +33,15 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
         });
 
         // Add promise to array
-        workerPromises.push(new Promise((resolve) => (worker.onmessage = resolve)));
+        workerPromises.push(workerPromise);
     }
 
     // Wait for all worker promises to resolve
-    return Promise.all(workerPromises).then(() => spectrogram);
+    return Promise.all(workerPromises).then((results) => {
+        // Combine spectrograms from all workers
+        const spectrogram = results.flat();
+        return spectrogram;
+    });
 }
 
 
