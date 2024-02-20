@@ -413,20 +413,44 @@ function fft(input) {
 
     const evenFFT = fft(even);
     const oddFFT = fft(odd);
+    console.log(evenFFT);
 
     const output = new Float32Array(N);
     for (let k = 0; k < N / 2; k++) {
         const exp = fftFactorLookup[N][k];
-        console.log("EXP",exp);
         const t_re = exp.re * oddFFT[k] - exp.im * oddFFT[k + N / 2];
         const t_im = exp.re * oddFFT[k + N / 2] + exp.im * oddFFT[k];
-        console.log("re",t_re,"im",t_im);
         output[k] = evenFFT[k] + t_re;
         output[k + N / 2] = evenFFT[k] - t_re;
     }
 
     return output;
 }
+
+//     const even = [];
+//     const odd = [];
+//     for (let i = 0; i < N; i++) {
+//         if (i % 2 === 0) {
+//             even.push(input[i]);
+//         } else {
+//             odd.push(input[i]);
+//         }
+//     }
+
+//     const evenFFT = fft(even);
+//     const oddFFT = fft(odd);
+
+//     const output = [];
+//     for (let k = 0; k < N / 2; k++) {
+//         //const theta = -2 * Math.PI * k / N;
+//         //const exp = { re: Math.cos(theta), im: Math.sin(theta) };
+//         const exp = fftFactorLookup[N][k];
+//         const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
+//         output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
+//         output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
+//     }
+
+
 
 function ifft(input) {
     const N = input.length;
