@@ -459,6 +459,7 @@ function prepare_and_fft(inputSignal) {
 
     // Convert to complex numbers
     const complexInput = convertToComplex(paddedInput);
+    console.log(complexInput);
 
     // Perform FFT
     return fft(complexInput);
