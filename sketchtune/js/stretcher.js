@@ -394,6 +394,13 @@ console.log("PRECALCULATE FFT LOOKUP TABLE", fftFactorLookup);
 
 // Modified FFT function to use precalculated FFT factors
 // input was zero padded before to a length N = PowerOf2
+// Define the functions for nextPowerOf2, precalculateFFTFactors, and generateFFTFactorLookup here...
+
+// Generate the FFT factor lookup table
+const maxSampleLength = 1000; // Adjust the maximum sample length as needed
+const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
+
+// Define the FFT function
 function fft(input) {
     const N = input.length / 2; // Since each complex number has both re and im parts
     const output = new Array(N * 2);
@@ -405,11 +412,11 @@ function fft(input) {
     }
 
     for (let size = 2; size <= N * 2; size *= 2) {
-        const exp = fftFactorLookup[N * 2][size / 2];
         for (let j = 0; j < N * 2; j += size) {
             for (let k = 0; k < size / 2; k++) {
                 const evenIndex = j + k;
                 const oddIndex = j + k + size / 2;
+                const exp = fftFactorLookup[N * 2][k];
                 const t = {
                     re: exp.re * output[oddIndex].re - exp.im * output[oddIndex].im,
                     im: exp.re * output[oddIndex].im + exp.im * output[oddIndex].re
@@ -435,6 +442,7 @@ function fft(input) {
 
     return rearrangedOutput;
 }
+
 
 
 
