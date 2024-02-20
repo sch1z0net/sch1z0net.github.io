@@ -465,9 +465,9 @@ function FFT(inputSignal) {
     return prepare_and_fft(inputSignal);
 }
 
-function IFFT(spectrum) {
-    return ifft(spectrum);
-}
+function IFFT(spectrum){
+    return ifft(spectrum).map(({ re }) => re);
+} 
 
 // Function to apply Hanning window to the input signal
 function applyHanningWindow(frame) {
@@ -546,7 +546,7 @@ function ISTFT(spectrogram, windowSize, hopSize) {
     for (let i = 0; i < numFrames; i++) {
         // Compute inverse FFT of the spectrum to obtain the frame in time domain
         const frame = computeInverseFFT(spectrogram[i]);
-        console.log(frame);
+        //console.log(frame);
        
         // Apply overlap-add to reconstruct the output signal
         const startIdx = i * hopSize;
