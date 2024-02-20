@@ -149,6 +149,20 @@ function computeFFT(frame) {
     return spectrum;
 }
 
+// Function to compute inverse FFT of a spectrum
+function computeInverseFFT(spectrum) {
+    // Perform inverse FFT to obtain the time-domain frame (you can use your IFFT implementation here)
+    // For simplicity, let's assume computeInverseFFT returns the time-domain frame
+    
+    // Ensure the size of the spectrum array is a power of 2
+    const paddedSize = nextPowerOf2(spectrum.length);
+    const paddedSpectrum = spectrum.concat(new Array(paddedSize - spectrum.length).fill(0));
+    // Now you can pass paddedSpectrum to the IFFT function
+    const frame = IFFT(paddedSpectrum);
+
+    return frame;
+}
+
 // Function to perform inverse Short-Time Fourier Transform (ISTFT)
 function ISTFT(spectrogram, windowSize, hopSize) {
     const numFrames = spectrogram.length;
@@ -169,18 +183,6 @@ function ISTFT(spectrogram, windowSize, hopSize) {
 
     return outputSignal;
 }
-
-// Function to compute inverse FFT of a spectrum
-function computeInverseFFT(spectrum) {
-    // Perform inverse FFT to obtain the time-domain frame (you can use your IFFT implementation here)
-    // For simplicity, let's assume computeInverseFFT returns the time-domain frame
-    const frame = IFFT(spectrum);
-    return frame;
-}
-
-
-
-
 
 
 
