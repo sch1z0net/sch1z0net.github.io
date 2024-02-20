@@ -395,10 +395,9 @@ console.log("PRECALCULATE FFT LOOKUP TABLE", fftFactorLookup);
 // Modified FFT function to use precalculated FFT factors
 // input was zero padded before to a length N = PowerOf2
 function fft(input) {
-    console.log(input);
-
     const N = input.length;
     if (N === 1) {
+        console.log(input);
         return input; // Base case: if the input array has only one element, return it
     } else {
         const even = [];
@@ -416,6 +415,7 @@ function fft(input) {
             const exp = fftFactorLookup[N][k];
             const tRe = exp.re * oddFFT[k * 2] - exp.im * oddFFT[k * 2 + 1];
             const tIm = exp.re * oddFFT[k * 2 + 1] + exp.im * oddFFT[k * 2];
+            console.log(input, k, N/2, exp);
             output[k * 2] = evenFFT[k * 2] + tRe;
             output[k * 2 + 1] = evenFFT[k * 2 + 1] + tIm;
             output[(k + N / 2) * 2] = evenFFT[k * 2] - tRe;
@@ -426,7 +426,7 @@ function fft(input) {
 }
 
 
-fft([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]); 
+fft([1,2,3,4]); 
 
 
 
