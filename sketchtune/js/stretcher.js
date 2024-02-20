@@ -397,10 +397,12 @@ console.log("PRECALCULATE FFT LOOKUP TABLE", fftFactorLookup);
 function fft(input) {
     const N = input.length;
 
+    // Base case: If the length is less than or equal to 1, return the input
     if (N <= 1) {
         return input;
     }
 
+    // Separate even and odd-indexed elements
     const even = new Float32Array(N / 2);
     const odd = new Float32Array(N / 2);
     for (let i = 0; i < N; i++) {
@@ -411,21 +413,25 @@ function fft(input) {
         }
     }
 
+    // Recursively compute FFT for even and odd parts
     const evenFFT = fft(even);
     const oddFFT = fft(odd);
-    console.log(evenFFT);
 
-    const output = new Float32Array(N);
+    // Perform butterfly operations
+    const output = new Float32Array(N * 2); // Double the size to accommodate real and imaginary parts
     for (let k = 0; k < N / 2; k++) {
         const exp = fftFactorLookup[N][k];
         const t_re = exp.re * oddFFT[k] - exp.im * oddFFT[k + N / 2];
         const t_im = exp.re * oddFFT[k + N / 2] + exp.im * oddFFT[k];
-        output[k] = evenFFT[k] + t_re;
-        output[k + N / 2] = evenFFT[k] - t_re;
+        output[k * 2] = evenFFT[k] + t_re; // Real part
+        output[k * 2 + 1] = evenFFT[k + N / 2] + t_im; // Imaginary part
+        output[(k + N / 2) * 2] = evenFFT[k] - t_re; // Real part
+        output[(k + N / 2) * 2 + 1] = evenFFT[k + N / 2] - t_im; // Imaginary part
     }
 
     return output;
 }
+
 
 //     const even = [];
 //     const odd = [];
