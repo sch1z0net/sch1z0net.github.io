@@ -394,13 +394,6 @@ console.log("PRECALCULATE FFT LOOKUP TABLE", fftFactorLookup);
 
 // Modified FFT function to use precalculated FFT factors
 // input was zero padded before to a length N = PowerOf2
-// Define the functions for nextPowerOf2, precalculateFFTFactors, and generateFFTFactorLookup here...
-
-// Generate the FFT factor lookup table
-const maxSampleLength = 1000; // Adjust the maximum sample length as needed
-const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
-
-// Define the FFT function
 function fft(input) {
     const N = input.length / 2; // Since each complex number has both re and im parts
     const output = new Array(N * 2);
@@ -442,38 +435,6 @@ function fft(input) {
 
     return rearrangedOutput;
 }
-
-
-
-
-
-
-//re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im 
-//im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re
-
-
-//     const even = [];
-//     const odd = [];
-//     for (let i = 0; i < N; i++) {
-//         if (i % 2 === 0) {
-//             even.push(input[i]);
-//         } else {
-//             odd.push(input[i]);
-//         }
-//     }
-
-//     const evenFFT = fft(even);
-//     const oddFFT = fft(odd);
-
-//     const output = [];
-//     for (let k = 0; k < N / 2; k++) {
-//         const exp = fftFactorLookup[N][k];
-//         const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
-//         output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
-//         output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
-//     }
-
-
 
 
 
