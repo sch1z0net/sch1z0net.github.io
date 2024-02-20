@@ -213,10 +213,10 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
 // Function to stretch spectrogram
 function stretchSpectrogram(spectrogram, stretchFactor) {
     const stretchedFrames = interpolateMagnitudes(spectrogram, stretchFactor);
-    console.log(spectrogram, stretchedFrames);
-
     const stretchedPhases = synchronizePhase(spectrogram, stretchFactor);
+    console.log(spectrogram, stretchedFrames, stretchedPhases);
     const stretchedSpectrogram = stretchedFrames.map((frameMagnitude, index) => [frameMagnitude, stretchedPhases[index]]);
+    console.log("STRETCHED SPECT",stretchedSpectrogram);
     return stretchedSpectrogram;
 }
 
@@ -244,7 +244,6 @@ function interpolateMagnitudes(spectrogram, stretchFactor) {
 
         // Calculate the fraction between the two frames
         const fraction = originalFrameIndex - frameIndex1;
-        console.log(originalFrameIndex, fraction);
 
         // Interpolate magnitudes between the adjacent frames
         const interpolatedFrame = interpolateFrameMagnitudes(spectrogram[frameIndex1], spectrogram[frameIndex2], numBins, fraction);
