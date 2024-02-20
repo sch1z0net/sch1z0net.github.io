@@ -230,8 +230,8 @@ function interpolateMagnitudes(spectrogram, stretchFactor) {
         const originalFrameIndex = i / stretchFactor;
         
         // Get the indices of the adjacent frames
-        const frameIndex1 = Math.floor(originalFrameIndex);
-        const frameIndex2 = Math.ceil(originalFrameIndex);
+        var frameIndex1 = Math.floor(originalFrameIndex);
+        var frameIndex2 = Math.ceil(originalFrameIndex);
 
         // Handle edge cases where frameIndex2 exceeds the maximum index
         if (frameIndex2 >= numFrames) {
