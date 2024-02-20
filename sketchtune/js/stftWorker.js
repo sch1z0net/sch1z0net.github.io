@@ -26,6 +26,8 @@ function STFT(inputSignalChunk, windowSize, hopSize, fftFactorLookup) {
 
 // Listen for messages from the main thread
 onmessage = function (e) {
+    console.log("Worker received message.")
+
     const { inputSignal, windowSize, hopSize, fftFactorLookup } = e.data;
     // Use fftFactorLookup for computations
     STFT(inputSignal, windowSize, hopSize, fftFactorLookup)
