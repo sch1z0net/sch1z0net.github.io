@@ -79,11 +79,10 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
         // Assuming dataBuffer is your large data buffer (e.g., ArrayBuffer)
         const message = {
            dataBuffer: chunk,
-           
         };
   
         // Send message to the worker with Transferable Object
-        worker.postMessage(message, [dataBuffer]);
+        worker.postMessage(message, [message.dataBuffer]);
 
 
 
