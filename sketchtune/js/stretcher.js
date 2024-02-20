@@ -362,6 +362,9 @@
 // }
 
 
+function convertToComplex(inputSignal) {
+    return inputSignal.map(value => ({ re: value, im: 0 }));
+}
 
 function nextPowerOf2(n) {
     return Math.pow(2, Math.ceil(Math.log2(n)));
@@ -426,42 +429,6 @@ function fft(input) {
 
     return output;
 }
-
-
-// function fft(input) {
-//     const N = input.length;
-
-//     if (N <= 1) {
-//         return input;
-//     }
-
-//     const even = [];
-//     const odd = [];
-//     for (let i = 0; i < N; i++) {
-//         if (i % 2 === 0) {
-//             even.push(input[i]);
-//         } else {
-//             odd.push(input[i]);
-//         }
-//     }
-
-//     const evenFFT = fft(even);
-//     const oddFFT = fft(odd);
-
-//     const output = [];
-//     for (let k = 0; k < N / 2; k++) {
-//         //const theta = -2 * Math.PI * k / N;
-//         //const exp = { re: Math.cos(theta), im: Math.sin(theta) };
-//         const exp = fftFactorLookup[N][k];
-//         const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
-//         output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
-//         output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
-//     }
-
-//     return output;
-// }
-
-
 
 
 function ifft(input) {
