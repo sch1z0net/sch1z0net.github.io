@@ -414,6 +414,7 @@ for (let size = 2; size <= N * 2; size *= 2) {
             const oddIm = output[oddIndex * 2 + 1];
             const tRe = exp.re * oddRe - exp.im * oddIm;
             const tIm = exp.re * oddIm + exp.im * oddRe;
+            console.log(exp,  oddRe,  oddIm);
             output[evenIndex * 2] += tRe;
             output[evenIndex * 2 + 1] += tIm;
             output[oddIndex * 2] = output[evenIndex * 2] - 2 * tRe;
