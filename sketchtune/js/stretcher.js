@@ -396,32 +396,38 @@ console.log("PRECALCULATE FFT LOOKUP TABLE", fftFactorLookup);
 // input was zero padded before to a length N = PowerOf2
 function fft(input) {
     const N = input.length;
-    if (N === 2) {
-        return input; // Base case: if the input array has only two elements, return it
-    } else {
-        const even = [];
-        const odd = [];
-        for (let i = 0; i < N - 1; i += 2) {
-            even.push(input[i]);    //0, 2, 4, 6 ....
-            odd.push(input[i + 1]); //1, 3, 5, 7 ....
-        }
-        
-        const evenFFT = fft(even); // Recursively compute FFT for the even-indexed elements
-        const oddFFT = fft(odd);   // Recursively compute FFT for the odd-indexed elements
 
-        const output = [];
-        for (let k = 0; k < N / 2; k++) {
-            const exp = fftFactorLookup[N][k];
-            const tRe = exp.re * oddFFT[k * 2] - exp.im * oddFFT[k * 2 + 1];
-            const tIm = exp.re * oddFFT[k * 2 + 1] + exp.im * oddFFT[k * 2];
-            output[k * 2] = evenFFT[k * 2] + tRe;
-            output[k * 2 + 1] = evenFFT[k * 2 + 1] + tIm;
-            output[(k + N / 2)] = evenFFT[k * 2] - tRe;
-            output[(k + N / 2) + 1] = evenFFT[k * 2 + 1] - tIm;
-        }
-        return output;
+    if (N <= 1) {
+        return input;
     }
+
+    const even = [];
+    const odd = [];
+    for (let i = 0; i < N; i++) {
+        if (i % 2 === 0) {
+            even.push(input[i]);
+        } else {
+            odd.push(input[i]);
+        }
+    }
+
+    const evenFFT = fft(even);
+    const oddFFT = fft(odd);
+
+    const output = [];
+    for (let k = 0; k < N / 2; k++) {
+        //const theta = -2 * Math.PI * k / N;
+        //const exp = { re: Math.cos(theta), im: Math.sin(theta) };
+        const exp = fftFactorLookup[N][k];
+        const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
+        output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
+        output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
+    }
+
+    return output;
 }
+
+
 
 
 
@@ -490,8 +496,11 @@ function prepare_and_fft(inputSignal) {
     const paddedInput = new Float32Array(FFT_SIZE * 2).fill(0); // Double the size for complex numbers
     windowedSignal.forEach((value, index) => (paddedInput[index * 2] = value)); // Store real parts
 
+    // Convert to complex numbers
+    const complexInput = convertToComplex(paddedInput);
+
     // Perform FFT
-    return fft(paddedInput);
+    return fft(complexInput);
 }
 
 
