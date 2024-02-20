@@ -1746,7 +1746,7 @@ async function createSpectrumTracker(audioContext, audioSource) {
   // Array to store references to all playing audio nodes
   let playingAudioNodes = [];
 
-function playSample(audioContext, audioBuffer, time, offset, duration) {
+async function playSample(audioContext, audioBuffer, time, offset, duration) {
     const stretchFactor = 1 / GLOBAL_PLAYBACK_RATE;
     let resampledBuffer;
 
