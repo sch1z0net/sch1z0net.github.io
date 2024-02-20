@@ -215,7 +215,19 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
     const stretchedFrames = interpolateMagnitudes(spectrogram, stretchFactor);
     const stretchedPhases = synchronizePhase(spectrogram, stretchFactor);
     console.log(spectrogram, stretchedFrames, stretchedPhases);
-    const stretchedSpectrogram = stretchedFrames.map((frameMagnitude, index) => [frameMagnitude, stretchedPhases[index]]);
+    
+    const stretchedSpectrogram = [];
+    for (let i = 0; i < stretchedFrames.length; i++) {
+        var frameWithMagnitudes = stretchedFrames[i];
+        var frameWithPhases = stretchedPhases[i];
+        var frameWithPairs = [];
+        for (let j = 0; j < frameWithMagnitudes.length; j++) {
+           var pair = [frameWithMagnitudes[j],frameWithPhases[j]];
+           frameWithPairs.push(pair);
+        }
+        stretchedSpectrogram.push(frameWithPairs);
+    }
+
     console.log("STRETCHED SPECT",stretchedSpectrogram);
     return stretchedSpectrogram;
 }
