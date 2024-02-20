@@ -415,7 +415,7 @@ function fft(input) {
             const exp = fftFactorLookup[N][k];
             const tRe = exp.re * oddFFT[k * 2] - exp.im * oddFFT[k * 2 + 1];
             const tIm = exp.re * oddFFT[k * 2 + 1] + exp.im * oddFFT[k * 2];
-            console.log(input, k, N/2, exp);
+            console.log(input, k, N/2, exp, oddFFT[k * 2], oddFFT[k * 2 + 1]);
             output[k * 2] = evenFFT[k * 2] + tRe;
             output[k * 2 + 1] = evenFFT[k * 2 + 1] + tIm;
             output[(k + N / 2) * 2] = evenFFT[k * 2] - tRe;
