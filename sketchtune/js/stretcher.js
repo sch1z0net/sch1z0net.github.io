@@ -401,7 +401,7 @@ function fft(input) {
     } else {
         const even = [];
         const odd = [];
-        for (let i = 0; i < N; i += 2) {
+        for (let i = 0; i < N - 1; i += 2) {
             even.push(input[i]);
             odd.push(input[i + 1]);
         }
