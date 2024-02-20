@@ -16,7 +16,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
     for (let i = 0; i < numWorkers; i++) {
         const startFrame = i * framesPerWorker;
         const endFrame = Math.min(startFrame + framesPerWorker, numFrames);
-        const worker = new Worker('stftWorker.js');
+        const worker = new Worker('./js/stftWorker.js');
 
         // Message handler for each worker
         worker.onmessage = function (e) {
