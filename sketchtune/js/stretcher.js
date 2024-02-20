@@ -17,7 +17,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
         const startFrame = i * framesPerWorker;
         const endFrame = Math.min(startFrame + framesPerWorker, numFrames);
         const worker = new Worker('./js/stftWorker.js');
-
+  
         // Message handler for each worker
         worker.onmessage = function (e) {
             const workerSpectrogram = e.data;
@@ -242,7 +242,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
 // FOR COMPRESSING: 
 // windowSize = 512*4, hopSize = windowSize / 8
 
-
+/*
 async function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
     const windowSize = 512 * 4; // Size of the analysis window
     //For beats with a clear BPM, where the goal is to preserve rhythmic structure and transient characteristics, 
@@ -288,10 +288,46 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
     return outputBuffer;
 }
 
+*/
 
 
 
 
+
+async function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
+    const windowSize = 512 * 4;
+    const hopSize = windowSize / 8;
+
+    const numChannels = inputBuffer.numberOfChannels;
+    const inputLength = inputBuffer.length;
+    const outputLength = Math.ceil(inputLength * stretchFactor);
+    const outputBuffer = audioContext.createBuffer(numChannels, outputLength, audioContext.sampleRate);
+
+    // Array to store promises for each channel processing
+    const processingPromises = [];
+
+    // Process inputBuffer frame by frame for each channel
+    for (let ch = 0; ch < numChannels; ch++) {
+        const inputData = inputBuffer.getChannelData(ch);
+        // Push the promise for processing this channel into the array
+        processingPromises.push(processChannel(audioContext, inputData, stretchFactor, windowSize, hopSize));
+    }
+
+    // Wait for all promises to resolve
+    await Promise.all(processingPromises);
+
+    // All channels processed, return the output buffer
+    return outputBuffer;
+}
+
+async function processChannel(audioContext, inputData, stretchFactor, windowSize, hopSize) {
+    // Time-stretch the input data
+    const processedSignal = await timeStretch(inputData, stretchFactor, windowSize, hopSize);
+    // Convert processedSignal to Float32Array if necessary
+    const processedSignalFloat32 = new Float32Array(processedSignal);
+    // Copy the processed signal to the output buffer
+    outputBuffer.copyToChannel(processedSignalFloat32, ch);
+}
 
 
 
