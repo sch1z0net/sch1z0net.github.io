@@ -419,7 +419,7 @@ function fft(input) {
                 im: Math.sin(-2 * Math.PI * k / N)
             };
             const tRe = exp.re * oddFFT[k * 2];
-            const tIm = exp.im * (oddFFT[k * 2 + 1] || 0); // Set imaginary part to 0 if undefined
+            const tIm = exp.im * (oddFFT[k * 2 + 1]);
             output[k * 2] = evenFFT[k * 2] + tRe;
             output[k * 2 + 1] = evenFFT[k * 2 + 1] + tIm;
             output[(k + N / 2) * 2] = evenFFT[k * 2] - tRe;
