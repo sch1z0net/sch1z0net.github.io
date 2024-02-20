@@ -291,29 +291,15 @@ function synchronizePhase(frame, numBins, stretchFactor) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // Function to perform phase vocoding
-  function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
-
-    const windowSize = 512*4; // Size of the analysis window
+// Function to perform phase vocoding
+function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
+    const windowSize = 512 * 4; // Size of the analysis window
     const hopSize = windowSize / 2; // 50% overlap
-    
+
     const numChannels = inputBuffer.numberOfChannels;
-    const numFrames = Math.ceil(inputBuffer.length / hopSize);
-    const outputBuffer = audioContext.createBuffer(numChannels, numFrames * hopSize, audioContext.sampleRate);
+    const inputLength = inputBuffer.length;
+    const outputLength = Math.ceil(inputLength * stretchFactor);
+    const outputBuffer = audioContext.createBuffer(numChannels, outputLength, audioContext.sampleRate);
 
     // Process inputBuffer frame by frame for each channel
     for (let ch = 0; ch < numChannels; ch++) {
@@ -322,12 +308,12 @@ function synchronizePhase(frame, numBins, stretchFactor) {
 
         var reconstructedSignal = timeStretch(inputData, stretchFactor, windowSize, hopSize);
 
-        outputData.set( reconstructedSignal.slice(), 0);
+        outputData.set(reconstructedSignal.slice(), 0);
     }
 
     console.log(inputBuffer, outputBuffer);
 
     return outputBuffer;
-  }
+}
 
 
