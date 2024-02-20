@@ -205,8 +205,8 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
     // Apply STFT to input signal
     const spectrogram = STFT(inputSignal, windowSize, hopSize);
     // Modify magnitude and phase components based on stretch factor
-    //const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
-    const stretchedSpectrogram = spectrogram;
+    const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
+    //const stretchedSpectrogram = spectrogram;
     // Apply inverse STFT to reconstruct processed signal
     const processedSignal = ISTFT(stretchedSpectrogram, windowSize, hopSize);
     return processedSignal;
@@ -256,15 +256,18 @@ function interpolateMagnitudes(frame, numBins, stretchFactor) {
         const rightIndex = Math.ceil(originalIndex);
 
         if (rightIndex >= numBins) {
+            // Handle boundary case when rightIndex exceeds numBins
             interpolatedFrame[i] = frame[leftIndex];
         } else {
             const fraction = originalIndex - leftIndex;
+            // Perform linear interpolation between neighboring bins
             interpolatedFrame[i] = (1 - fraction) * frame[leftIndex] + fraction * frame[rightIndex];
         }
     }
 
     return interpolatedFrame;
 }
+
 
 // Function to synchronize phase values
 function synchronizePhase(frame, numBins, stretchFactor) {
