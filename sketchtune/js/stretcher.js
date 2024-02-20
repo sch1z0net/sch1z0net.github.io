@@ -265,6 +265,8 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
         stretchedSpectrogram.push(frameWithPairs);
     }
 
+    console.log(stretchedSpectrogram);
+
     return stretchedSpectrogram;
 }
 
@@ -294,8 +296,6 @@ function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitude
         // Store the interpolated magnitudes in the spectrogram
         interpolatedMagnitudes[i] = currentInterpolatedMagnitudes.slice();
     }
-
-    console.log(spectrogram);
 
     return spectrogram;
 }
