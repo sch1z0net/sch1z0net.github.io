@@ -233,9 +233,10 @@ function interpolateMagnitudes(spectrogram, stretchFactor) {
         const frameIndex1 = Math.floor(originalFrameIndex);
         const frameIndex2 = Math.ceil(originalFrameIndex);
 
-        // Ensure frameIndex2 is within bounds
+        // Handle edge cases where frameIndex2 exceeds the maximum index
         if (frameIndex2 >= numFrames) {
-            continue; // Skip this frame if frameIndex2 is out of bounds
+            frameIndex2 = numFrames - 1;
+            frameIndex1 = numFrames - 2;
         }
 
         // Calculate the fraction between the two frames
