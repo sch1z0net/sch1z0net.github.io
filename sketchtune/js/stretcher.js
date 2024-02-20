@@ -215,6 +215,7 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
     const stretchedFrames = interpolateMagnitudes(spectrogram, stretchFactor);
     const stretchedPhases = synchronizePhase(spectrogram, stretchFactor);
     const stretchedSpectrogram = stretchedFrames.map((frameMagnitude, index) => [frameMagnitude, stretchedPhases[index]]);
+    return stretchedSpectrogram;
 }
 
 // Function to interpolate magnitudes between frames in the entire spectrogram
