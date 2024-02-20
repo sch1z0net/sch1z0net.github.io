@@ -207,6 +207,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
     //const stretchedSpectrogram = spectrogram;
     // Apply inverse STFT to reconstruct processed signal
     const processedSignal = ISTFT(stretchedSpectrogram, windowSize, hopSize);
+    console.log("SPECT",stretchedSpectrogram,"PROC",processedSignal);
     return processedSignal;
 }
 
@@ -214,7 +215,6 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
 function stretchSpectrogram(spectrogram, stretchFactor) {
     const stretchedFrames = interpolateMagnitudes(spectrogram, stretchFactor);
     const stretchedPhases = synchronizePhase(spectrogram, stretchFactor);
-    console.log(spectrogram, stretchedFrames, stretchedPhases);
     
     const stretchedSpectrogram = [];
     for (let i = 0; i < stretchedFrames.length; i++) {
@@ -228,7 +228,6 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
         stretchedSpectrogram.push(frameWithPairs);
     }
 
-    console.log("STRETCHED SPECT",stretchedSpectrogram);
     return stretchedSpectrogram;
 }
 
