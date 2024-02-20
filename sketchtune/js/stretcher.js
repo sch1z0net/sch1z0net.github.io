@@ -285,6 +285,11 @@ function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitude
         const frameIndex2 = Math.ceil(originalFrameIndex);
         const fraction = originalFrameIndex - frameIndex1;
 
+        // Handle edge case where frameIndex2 exceeds the maximum index
+        if (frameIndex2 >= numFrames) {
+            frameIndex2 = numFrames - 1;
+        }
+
         const currentInterpolatedMagnitudes = [];
 
         for (let j = 0; j < numBins; j++) {
@@ -311,6 +316,11 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
         const frameIndex1 = Math.floor(originalFrameIndex);
         const frameIndex2 = Math.ceil(originalFrameIndex);
         const fraction = originalFrameIndex - frameIndex1;
+
+        // Handle edge case where frameIndex2 exceeds the maximum index
+        if (frameIndex2 >= numFrames) {
+            frameIndex2 = numFrames - 1;
+        }
 
         const currentSynchronizedPhases = [];
 
@@ -342,6 +352,7 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
 
     return spectrogram;
 }
+
 
 
 
