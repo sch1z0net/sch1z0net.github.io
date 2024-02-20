@@ -430,19 +430,18 @@ function fft(input) {
     return output;
 }
 
-
 function ifft(input) {
-    const N = input.length / 2; // Divide by 2 because each complex number has two components
+    const N = input.length;
     const pi = Math.PI;
 
     // Take the complex conjugate of the input spectrum
-    const conjugateSpectrum = input.map((value, index) => (index % 2 === 0 ? value : -value));
+    const conjugateSpectrum = input.map(({ re, im }) => ({ re, im: -im }));
 
     // Apply FFT to the conjugate spectrum
     const fftResult = fft(conjugateSpectrum);
 
-    // Take the complex conjugate of the FFT result and normalize
-    const ifftResult = fftResult.map((value) => value / N);
+    // Take the complex conjugate of the FFT result
+    const ifftResult = fftResult.map(({ re, im }) => ({ re: re / N, im: -im / N }));
 
     return ifftResult;
 }
