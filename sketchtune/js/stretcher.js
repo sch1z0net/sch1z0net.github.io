@@ -354,7 +354,8 @@ function synchronizeFramePhases(frame1, frame2, numBins, fraction) {
 // Function to perform phase vocoding
 function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
     const windowSize = 512 * 1; // Size of the analysis window
-    const hopSize = windowSize / 2; // 50% overlap
+    //const hopSize = windowSize / 2; // 50% overlap
+    const hopSize = windowSize / 8; // 50% overlap
 
     const numChannels = inputBuffer.numberOfChannels;
     const inputLength = inputBuffer.length;
