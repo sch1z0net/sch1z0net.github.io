@@ -40,7 +40,7 @@ function generateFFTFactorLookup(maxSampleLength) {
 
 // Modified FFT function to use precalculated FFT factors
 // input was zero padded before to a length N = PowerOf2
-async function fft(input) {
+async function fft(input, fftFactorLookup) {
     const N = input.length;
 
     if (N <= 1) {
@@ -71,7 +71,7 @@ async function fft(input) {
     return output;
 }
 
-async function prepare_and_fft(inputSignal) {
+async function prepare_and_fft(inputSignal, fftFactorLookup) {
     // Apply Hanning window to the input signal
     const windowedSignal = inputSignal;
 
@@ -81,18 +81,18 @@ async function prepare_and_fft(inputSignal) {
     windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
 
     // Perform FFT
-    return await fft(paddedInput);
+    return await fft(paddedInput, fftFactorLookup);
 }
 
-async function FFT(inputSignal) {
-    return await prepare_and_fft(inputSignal);
+async function FFT(inputSignal, fftFactorLookup) {
+    return await prepare_and_fft(inputSignal, fftFactorLookup);
 }
 
 // Function to compute FFT of a frame
-async function computeFFT(frame) {
+async function computeFFT(frame,fftFactorLookup) {
     // Perform FFT on the frame (you can use your FFT implementation here)
     // For simplicity, let's assume computeFFT returns the magnitude spectrum
-    const spectrum = await FFT(frame);
+    const spectrum = await FFT(frame, fftFactorLookup);
     return spectrum;
 }
 
