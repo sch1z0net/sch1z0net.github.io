@@ -76,14 +76,10 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
         const worker = new Worker('./js/stftWorker.js');
         //worker.postMessage({ inputSignal: chunk, windowSize, hopSize, fftFactorLookup });
 
-        // Assuming dataBuffer is your large data buffer (e.g., ArrayBuffer)
-        const message = {
-           dataBuffer: chunk,
-        };
-  
-        // Send message to the worker with Transferable Object
-        worker.postMessage(message, [message.dataBuffer]);
-
+        // Convert chunk array to Float32Array (assuming it contains float values)
+        const float32Array = new Float32Array(chunk);
+        // Transfer ownership of the ArrayBuffer
+        worker.postMessage({ dataBuffer: float32Array.buffer }, [float32Array.buffer]);
 
 
         // Listen for messages from the worker
