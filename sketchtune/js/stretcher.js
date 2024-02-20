@@ -85,16 +85,7 @@ function ifft(input) {
 
 
 
-// Function to apply Hanning window to the input signal
-function applyHanningWindow(inputSignal) {
-    const windowedSignal = [];
-    const N = inputSignal.length;
-    for (let n = 0; n < N; n++) {
-        const w = 0.5 * (1 - Math.cos(2 * Math.PI * n / (N - 1))); // Hanning window formula
-        windowedSignal.push(inputSignal[n] * w);
-    }
-    return windowedSignal;
-}
+
 
 // Function to perform FFT on the input signal with windowing and zero-padding
 function prepare_and_fft(inputSignal) {
@@ -137,15 +128,24 @@ function IFFT(spectrum){
 
 
 
-
+/*// Function to apply windowing to a frame
+function applyWindow(frame, window) {
+    for (let i = 0; i < frame.length; i++) {
+        frame[i] *= window[i];
+    }
+    return frame;
+}*/
 
 
 
 // Function to apply windowing to a frame
 function applyWindow(frame) {
-    // Hanning window function
-    const windowedFrame = frame.map((value, index) => value * 0.5 * (1 - Math.cos(2 * Math.PI * index / (frame.length - 1))));
-    return windowedFrame;
+    return applyHanningWindow(frame);
+}
+
+// Function to apply Hanning window to the input signal
+function applyHanningWindow(frame) {
+    return frame.map((value, index) => value * 0.5 * (1 - Math.cos(2 * Math.PI * index / (frame.length - 1))));
 }
 
 // Function to compute FFT of a frame
@@ -245,136 +245,100 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
 
 // Function to stretch spectrogram
 function stretchSpectrogram(spectrogram, stretchFactor) {
-    const stretchedFrames = interpolateMagnitudes(spectrogram, stretchFactor);
-    const stretchedPhases = synchronizePhase(spectrogram, stretchFactor);
+    const interpolatedMagnitudes = [];
+    const synchronizedPhases = [];
+
+    interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitudes);
+    synchronizePhase(spectrogram, stretchFactor, synchronizedPhases);
     
     const stretchedSpectrogram = [];
-    for (let i = 0; i < stretchedFrames.length; i++) {
-        var frameWithMagnitudes = stretchedFrames[i];
-        var frameWithPhases = stretchedPhases[i];
-        var frameWithPairs = [];
+    for (let i = 0; i < spectrogram.length; i++) {
+        const frameWithMagnitudes = interpolatedMagnitudes[i];
+        const frameWithPhases = synchronizedPhases[i];
+        const frameWithPairs = [];
+        
         for (let j = 0; j < frameWithMagnitudes.length; j++) {
-           var pair = {re: frameWithMagnitudes[j], im: frameWithPhases[j]};
+           const pair = { re: frameWithMagnitudes[j], im: frameWithPhases[j] };
            frameWithPairs.push(pair);
         }
+        
         stretchedSpectrogram.push(frameWithPairs);
     }
 
     return stretchedSpectrogram;
 }
 
+
+
+
+
 // Function to interpolate magnitudes between frames in the entire spectrogram
-function interpolateMagnitudes(spectrogram, stretchFactor) {
+function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitudes) {
     const numFrames = spectrogram.length;
     const numBins = spectrogram[0].length;
-    const stretchedNumFrames = Math.floor(numFrames * stretchFactor);
-    const stretchedSpectrogram = [];
 
-    // Interpolate magnitudes for each frame in the stretched spectrogram
-    for (let i = 0; i < stretchedNumFrames; i++) {
-        // Calculate the frame index in the original spectrogram
+    for (let i = 0; i < numFrames; i++) {
         const originalFrameIndex = i / stretchFactor;
-        
-        // Get the indices of the adjacent frames
-        var frameIndex1 = Math.floor(originalFrameIndex);
-        var frameIndex2 = Math.ceil(originalFrameIndex);
-
-        // Handle edge cases where frameIndex2 exceeds the maximum index
-        if (frameIndex2 >= numFrames) {
-            frameIndex2 = numFrames - 1;
-            frameIndex1 = numFrames - 2;
-        }
-
-        // Calculate the fraction between the two frames
+        const frameIndex1 = Math.floor(originalFrameIndex);
+        const frameIndex2 = Math.ceil(originalFrameIndex);
         const fraction = originalFrameIndex - frameIndex1;
 
-        // Interpolate magnitudes between the adjacent frames
-        const interpolatedFrame = interpolateFrameMagnitudes(spectrogram[frameIndex1], spectrogram[frameIndex2], numBins, fraction);
+        for (let j = 0; j < numBins; j++) {
+            const magnitude1 = spectrogram[frameIndex1][j].re;
+            const magnitude2 = spectrogram[frameIndex2][j].re;
+            interpolatedMagnitudes[j] = (1 - fraction) * magnitude1 + fraction * magnitude2;
+        }
 
-        // Store the interpolated frame in the stretched spectrogram
-        stretchedSpectrogram.push(interpolatedFrame);
+        // Store the interpolated magnitudes in the spectrogram
+        spectrogram[i] = interpolatedMagnitudes.slice();
     }
 
-    return stretchedSpectrogram;
+    return spectrogram;
 }
-
-
-// Function to interpolate magnitudes between frames
-function interpolateFrameMagnitudes(frame1, frame2, numBins, fraction) {
-    const interpolatedMagnitudes = new Array(numBins).fill(0);
-    
-    // Interpolate magnitudes for each bin
-    for (let j = 0; j < numBins; j++) {
-        const magnitude1 = frame1[j].re;
-        const magnitude2 = frame2[j].re;
-        interpolatedMagnitudes[j] = (1 - fraction) * magnitude1 + fraction * magnitude2;
-    }
-
-    return interpolatedMagnitudes;
-}
-
-
 
 // Function to synchronize phase values between frames in the entire spectrogram
-function synchronizePhase(spectrogram, stretchFactor) {
+function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
     const numFrames = spectrogram.length;
     const numBins = spectrogram[0].length;
-    const stretchedNumFrames = Math.floor(numFrames * stretchFactor);
-    const stretchedPhases = [];
 
-    // Synchronize phase values for each frame in the stretched spectrogram
-    for (let i = 0; i < stretchedNumFrames; i++) {
-        // Calculate the frame index in the original spectrogram
+    for (let i = 0; i < numFrames; i++) {
         const originalFrameIndex = i / stretchFactor;
-
-        // Get the indices of the adjacent frames
-        var frameIndex1 = Math.floor(originalFrameIndex);
-        var frameIndex2 = Math.ceil(originalFrameIndex);
-
-        // Handle edge cases where frameIndex2 exceeds the maximum index
-        if (frameIndex2 >= numFrames) {
-            frameIndex2 = numFrames - 1;
-            frameIndex1 = numFrames - 2;
-        }
-
-        // Calculate the fraction between the two frames
+        const frameIndex1 = Math.floor(originalFrameIndex);
+        const frameIndex2 = Math.ceil(originalFrameIndex);
         const fraction = originalFrameIndex - frameIndex1;
 
-        // Synchronize phase values between the adjacent frames
-        const synchronizedPhase = synchronizeFramePhases(spectrogram[frameIndex1], spectrogram[frameIndex2], numBins, fraction);
+        for (let j = 0; j < numBins; j++) {
+            const phase1 = spectrogram[frameIndex1][j].im;
+            const phase2 = spectrogram[frameIndex2][j].im;
+            let phaseDiff = phase2 - phase1;
 
-        // Store the synchronized phase in the stretched phases array
-        stretchedPhases.push(synchronizedPhase);
-    }
+            // Wrap phase difference to [-π, π] range
+            if (phaseDiff > Math.PI) {
+                phaseDiff -= 2 * Math.PI;
+            } else if (phaseDiff < -Math.PI) {
+                phaseDiff += 2 * Math.PI;
+            }
 
-    return stretchedPhases;
-}
-
-// Function to synchronize phase values between frames
-function synchronizeFramePhases(frame1, frame2, numBins, fraction) {
-    const synchronizedPhase = [];
-
-    // Synchronize phase values for each bin
-    for (let j = 0; j < numBins; j++) {
-        const phase1 = frame1[j].im;
-        const phase2 = frame2[j].im;
-
-        // Calculate the difference in phase
-        let phaseDiff = phase2 - phase1;
-
-        // Wrap phase difference to [-π, π] range
-        if (phaseDiff > Math.PI) {
-            phaseDiff -= 2 * Math.PI;
-        } else if (phaseDiff < -Math.PI) {
-            phaseDiff += 2 * Math.PI;
+            synchronizedPhases[j] = phase1 + fraction * phaseDiff;
         }
 
-        // Interpolate phase values
-        synchronizedPhase.push(phase1 + fraction * phaseDiff);
+        // Store the synchronized phases in the spectrogram
+        for (let j = 0; j < numBins; j++) {
+            spectrogram[i][j].im = synchronizedPhases[j];
+        }
     }
 
-    return synchronizedPhase;
+    return spectrogram;
 }
+
+
+
+
+
+
+
+
+
 
 
 
