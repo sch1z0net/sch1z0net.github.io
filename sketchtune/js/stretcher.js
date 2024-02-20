@@ -417,13 +417,13 @@ function fft(input) {
     const output = new Float32Array(N);
     for (let k = 0; k < N / 2; k++) {
         const exp = fftFactorLookup[N][k];
+        console.log("EXP",exp);
         const t_re = exp.re * oddFFT[k] - exp.im * oddFFT[k + N / 2];
         const t_im = exp.re * oddFFT[k + N / 2] + exp.im * oddFFT[k];
+        console.log("re",t_re,"im",t_im);
         output[k] = evenFFT[k] + t_re;
         output[k + N / 2] = evenFFT[k] - t_re;
     }
-
-    console.log(output);
 
     return output;
 }
