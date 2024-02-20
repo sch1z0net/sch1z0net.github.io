@@ -428,11 +428,6 @@ function fft(input) {
 }
 
 
-
-
-
-fft([1,2,3,4]); 
-
 // function fft(input) {
 //     const N = input.length;
 
