@@ -262,8 +262,9 @@ function interpolateFrameMagnitudes(frame1, frame2, numBins, fraction) {
     
     // Interpolate magnitudes for each bin
     for (let j = 0; j < numBins; j++) {
-        const magnitude1 = frame1[j][0];
-        const magnitude2 = frame2[j][0];
+        const magnitude1 = frame1[j].re;
+        const magnitude2 = frame2[j].re;
+        console.log(magnitude1);
         interpolatedMagnitudes[j] = (1 - fraction) * magnitude1 + fraction * magnitude2;
     }
 
