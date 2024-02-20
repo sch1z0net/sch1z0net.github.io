@@ -426,6 +426,8 @@ function fft(input) {
         }
     }
 
+    console.log(output);
+
     // Rearrange the output to be alternating re, im values
     const rearrangedOutput = new Array(N * 2);
     for (let i = 0; i < N; i++) {
@@ -535,7 +537,7 @@ function STFT(inputSignal, windowSize, hopSize) {
 
         // Compute FFT of the windowed frame
         const spectrum = computeFFT(windowedFrame);
-        console.log("Compute FFT on current Frame", spectrum);
+        //console.log("Compute FFT on current Frame", spectrum);
 
         // Store the spectrum in the spectrogram
         spectrogram.push(spectrum);
