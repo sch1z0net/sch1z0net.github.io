@@ -1,4 +1,4 @@
-// Function to perform Short-Time Fourier Transform (STFT) using Web Workers
+/*// Function to perform Short-Time Fourier Transform (STFT) using Web Workers
 function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
     const numFrames = Math.floor((inputSignal.length - windowSize) / hopSize) + 1;
     const spectrogram = [];
@@ -42,7 +42,56 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
         const spectrogram = results.flat();
         return spectrogram;
     });
+}*/
+
+
+// Function to perform Short-Time Fourier Transform (STFT) using Web Workers
+function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
+    const numFrames = Math.floor((inputSignal.length - windowSize) / hopSize) + 1;
+    const spectrogram = [];
+
+    // Define the number of workers (you can adjust this based on performance testing)
+    const numWorkers = 4;
+
+    // Calculate frames per worker
+    const framesPerWorker = Math.ceil(numFrames / numWorkers);
+    console.log("Frames per Worker", framesPerWorker);
+
+    // Create and run workers
+    for (let i = 0; i < numWorkers; i++) {
+        const startFrame = i * framesPerWorker;
+        const endFrame = Math.min(startFrame + framesPerWorker, numFrames);
+
+        // Slice inputSignal array to create a smaller chunk for this worker
+        const chunk = inputSignal.slice(startFrame * hopSize, (endFrame - 1) * hopSize + windowSize);
+
+        // Create worker and send the chunk of inputSignal
+        const worker = new Worker('./js/stftWorker.js');
+        worker.postMessage({ inputSignal: chunk, windowSize, hopSize });
+
+        // Listen for messages from the worker
+        worker.onmessage = function (e) {
+            const workerSpectrogram = e.data;
+            spectrogram.push(...workerSpectrogram);
+
+            // Close the worker after it completes its work
+            worker.terminate();
+        };
+    }
+
+    // Return a promise that resolves when all workers finish processing
+    return new Promise((resolve) => {
+        const checkCompletion = () => {
+            if (spectrogram.length === numFrames) {
+                resolve(spectrogram);
+            } else {
+                setTimeout(checkCompletion, 100); // Check again after a short delay
+            }
+        };
+        checkCompletion(); // Start checking for completion
+    });
 }
+
 
 
 
