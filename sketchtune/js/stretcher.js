@@ -433,6 +433,8 @@ function fft(input) {
         rearrangedOutput[2 * i + 1] = output[i].im;
     }
 
+    console.log(rearrangedOutput);
+
     return rearrangedOutput;
 }
 
