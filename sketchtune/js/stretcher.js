@@ -223,7 +223,7 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
         var frameWithPhases = stretchedPhases[i];
         var frameWithPairs = [];
         for (let j = 0; j < frameWithMagnitudes.length; j++) {
-           var pair = [frameWithMagnitudes[j],frameWithPhases[j]];
+           var pair = {re: frameWithMagnitudes[j], im: frameWithPhases[j]};
            frameWithPairs.push(pair);
         }
         stretchedSpectrogram.push(frameWithPairs);
