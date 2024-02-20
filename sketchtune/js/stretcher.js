@@ -446,7 +446,6 @@ function ifft(input) {
     return ifftResult;
 }
 
-// Function to perform FFT on the input signal with windowing and zero-padding
 function prepare_and_fft(inputSignal) {
     // Apply Hanning window to the input signal
     //const windowedSignal = applyHanningWindow(inputSignal);
@@ -454,17 +453,12 @@ function prepare_and_fft(inputSignal) {
 
     // Zero-padding to the next power of 2
     const FFT_SIZE = nextPowerOf2(windowedSignal.length);
-    const paddedInput = new Float32Array(FFT_SIZE).fill(0);
-    windowedSignal.forEach((value, index) => (paddedInput[index] = value));
-
-    // Convert to complex numbers
-    const complexInput = convertToComplex(paddedInput);
-    console.log(complexInput);
+    const paddedInput = new Array(FFT_SIZE).fill({ re: 0, im: 0 });
+    windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
 
     // Perform FFT
-    return fft(complexInput);
+    return fft(paddedInput);
 }
-
 
 
 function FFT(inputSignal) {
