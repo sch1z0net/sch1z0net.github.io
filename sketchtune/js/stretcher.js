@@ -398,47 +398,35 @@ function fft(input) {
     const N = input.length / 2; // Since each complex number has both re and im parts
     const output = new Array(N * 2);
 
-    // Copy input into the output array as complex numbers
-    for (let i = 0; i < N; i++) {
-        output[2 * i] = input[2 * i];
-        output[2 * i + 1] = input[2 * i + 1];
-    }
+// Copy input into the output array as complex numbers
+for (let i = 0; i < N; i++) {
+    output[2 * i] = input[2 * i];
+    output[2 * i + 1] = input[2 * i + 1];
+}
 
-    for (let size = 2; size <= N * 2; size *= 2) {
-        for (let j = 0; j < N * 2; j += size) {
-            for (let k = 0; k < size / 2; k++) {
-                const evenIndex = j + k;
-                const oddIndex = j + k + size / 2;
-                const exp = fftFactorLookup[N * 2][k];
-                const t = {
-                    re: exp.re * output[oddIndex].re - exp.im * output[oddIndex].im,
-                    im: exp.re * output[oddIndex].im + exp.im * output[oddIndex].re
-                };
-                output[evenIndex] = {
-                    re: output[evenIndex].re + t.re,
-                    im: output[evenIndex].im + t.im
-                };
-                output[oddIndex] = {
-                    re: output[evenIndex].re - t.re,
-                    im: output[evenIndex].im - t.im
-                };
-            }
+for (let size = 2; size <= N * 2; size *= 2) {
+    for (let j = 0; j < N * 2; j += size) {
+        for (let k = 0; k < size / 2; k++) {
+            const evenIndex = j + k;
+            const oddIndex = j + k + size / 2;
+            const exp = fftFactorLookup[N * 2][k * 2];
+            const oddRe = output[oddIndex * 2];
+            const oddIm = output[oddIndex * 2 + 1];
+            const tRe = exp.re * oddRe - exp.im * oddIm;
+            const tIm = exp.re * oddIm + exp.im * oddRe;
+            output[evenIndex * 2] += tRe;
+            output[evenIndex * 2 + 1] += tIm;
+            output[oddIndex * 2] = output[evenIndex * 2] - 2 * tRe;
+            output[oddIndex * 2 + 1] = output[evenIndex * 2 + 1] - 2 * tIm;
         }
     }
-
-    console.log(output);
-
-    // Rearrange the output to be alternating re, im values
-    const rearrangedOutput = new Array(N * 2);
-    for (let i = 0; i < N; i++) {
-        rearrangedOutput[2 * i] = output[i].re;
-        rearrangedOutput[2 * i + 1] = output[i].im;
-    }
-
-    console.log(rearrangedOutput);
-
-    return rearrangedOutput;
 }
+
+return output;
+
+}
+
+
 
 
 
