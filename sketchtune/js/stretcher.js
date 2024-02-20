@@ -75,7 +75,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
         // Create worker and send the chunk of inputSignal
         const worker = new Worker('./js/stftWorker.js');
         //worker.postMessage({ inputSignal: chunk, windowSize, hopSize, fftFactorLookup });
-        worker.postMessage({ bla: "hello"});
+        worker.postMessage({ windowSize, hopSize, fftFactorLookup });
 
         // Listen for messages from the worker
         worker.onmessage = function (e) {
