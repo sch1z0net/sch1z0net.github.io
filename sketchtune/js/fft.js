@@ -41,31 +41,65 @@ const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
 
 console.log("PRECALCULATE FFT LOOKUP TABLE", fftFactorLookup);
 
+/******************** FORWARD *********************/
 
-
-
-
-/******************** INVERSE *********************/
-
-function ifft(input) {
+// Modified FFT function to use precalculated FFT factors
+// input was zero padded before to a length N = PowerOf2
+async function fft(input) {
     const N = input.length;
-    const pi = Math.PI;
 
-    // Take the complex conjugate of the input spectrum
-    const conjugateSpectrum = input.map(({ re, im }) => ({ re, im: -im }));
+    if (N <= 1) {
+        return input;
+    }
 
-    // Apply FFT to the conjugate spectrum
-    const fftResult = fft(conjugateSpectrum);
+    const even = [];
+    const odd = [];
+    for (let i = 0; i < N; i++) {
+        if (i % 2 === 0) {
+            even.push(input[i]);
+        } else {
+            odd.push(input[i]);
+        }
+    }
 
-    // Take the complex conjugate of the FFT result
-    const ifftResult = fftResult.map(({ re, im }) => ({ re: re / N, im: -im / N }));
+    const evenFFT = await fft(even);
+    const oddFFT = await fft(odd);
 
-    return ifftResult;
+    const output = [];
+    for (let k = 0; k < N / 2; k++) {
+        const exp = fftFactorLookup[N][k];
+        const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
+        output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
+        output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
+    }
+
+    return output;
 }
 
-function IFFT(spectrum){
-    return ifft(spectrum).map(({ re }) => re);
-} 
+function prepare_and_fft(inputSignal) {
+    // Apply Hanning window to the input signal
+    const windowedSignal = inputSignal;
+
+    // Zero-padding to the next power of 2
+    const FFT_SIZE = nextPowerOf2(windowedSignal.length);
+    const paddedInput = new Array(FFT_SIZE).fill({ re: 0, im: 0 });
+    windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
+
+    // Perform FFT
+    return fft(paddedInput);
+}
+
+function FFT(inputSignal) {
+    return prepare_and_fft(inputSignal);
+}
+
+// Function to compute FFT of a frame
+function computeFFT(frame) {
+    // Perform FFT on the frame (you can use your FFT implementation here)
+    // For simplicity, let's assume computeFFT returns the magnitude spectrum
+    const spectrum = FFT(frame);
+    return spectrum;
+}
 
 // Function to compute inverse FFT of a spectrum
 function computeInverseFFT(spectrum) {
@@ -91,70 +125,24 @@ function computeInverseFFT(spectrum) {
     return timeDomainSignal;
 }
 
+// Function to compute inverse FFT of a spectrum
+function IFFT(spectrum){
+    return ifft(spectrum).map(({ re }) => re);
+} 
 
-/******************** FORWARD *********************/
-
-
-
-// Modified FFT function to use precalculated FFT factors
-// input was zero padded before to a length N = PowerOf2
-function fft(input) {
+// Modified ifft function to use precalculated FFT factors
+async function ifft(input) {
     const N = input.length;
+    const pi = Math.PI;
 
-    if (N <= 1) {
-        return input;
-    }
+    // Take the complex conjugate of the input spectrum
+    const conjugateSpectrum = input.map(({ re, im }) => ({ re, im: -im }));
 
-    const even = [];
-    const odd = [];
-    for (let i = 0; i < N; i++) {
-        if (i % 2 === 0) {
-            even.push(input[i]);
-        } else {
-            odd.push(input[i]);
-        }
-    }
+    // Apply FFT to the conjugate spectrum
+    const fftResult = await fft(conjugateSpectrum);
 
-    const evenFFT = fft(even);
-    const oddFFT = fft(odd);
+    // Take the complex conjugate of the FFT result
+    const ifftResult = fftResult.map(({ re, im }) => ({ re: re / N, im: -im / N }));
 
-    const output = [];
-    for (let k = 0; k < N / 2; k++) {
-        //const theta = -2 * Math.PI * k / N;
-        //const exp = { re: Math.cos(theta), im: Math.sin(theta) };
-        const exp = fftFactorLookup[N][k];
-        const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
-        output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
-        output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
-    }
-
-    return output;
-}
-
-
-function prepare_and_fft(inputSignal) {
-    // Apply Hanning window to the input signal
-    //const windowedSignal = applyHanningWindow(inputSignal);
-    const windowedSignal = inputSignal;
-
-    // Zero-padding to the next power of 2
-    const FFT_SIZE = nextPowerOf2(windowedSignal.length);
-    const paddedInput = new Array(FFT_SIZE).fill({ re: 0, im: 0 });
-    windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
-
-    // Perform FFT
-    return fft(paddedInput);
-}
-
-
-function FFT(inputSignal) {
-    return prepare_and_fft(inputSignal);
-}
-
-// Function to compute FFT of a frame
-function computeFFT(frame) {
-    // Perform FFT on the frame (you can use your FFT implementation here)
-    // For simplicity, let's assume computeFFT returns the magnitude spectrum
-    const spectrum = FFT(frame);
-    return spectrum;
+    return ifftResult;
 }
