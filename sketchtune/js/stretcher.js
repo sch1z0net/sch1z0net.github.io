@@ -75,7 +75,18 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
         // Create worker and send the chunk of inputSignal
         const worker = new Worker('./js/stftWorker.js');
         //worker.postMessage({ inputSignal: chunk, windowSize, hopSize, fftFactorLookup });
-        worker.postMessage({ windowSize, hopSize });
+
+        // Assuming dataBuffer is your large data buffer (e.g., ArrayBuffer)
+        const message = {
+           dataBuffer: chunk,
+           
+        };
+  
+        // Send message to the worker with Transferable Object
+        worker.postMessage(message, [dataBuffer]);
+
+
+
         // Listen for messages from the worker
         worker.onmessage = function (e) {
             console.log("Worker responding");
