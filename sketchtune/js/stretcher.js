@@ -244,6 +244,7 @@ function interpolateMagnitudes(spectrogram, stretchFactor) {
 
         // Calculate the fraction between the two frames
         const fraction = originalFrameIndex - frameIndex1;
+        console.log(originalFrameIndex, fraction);
 
         // Interpolate magnitudes between the adjacent frames
         const interpolatedFrame = interpolateFrameMagnitudes(spectrogram[frameIndex1], spectrogram[frameIndex2], numBins, fraction);
@@ -264,7 +265,6 @@ function interpolateFrameMagnitudes(frame1, frame2, numBins, fraction) {
     for (let j = 0; j < numBins; j++) {
         const magnitude1 = frame1[j].re;
         const magnitude2 = frame2[j].re;
-        console.log(magnitude1);
         interpolatedMagnitudes[j] = (1 - fraction) * magnitude1 + fraction * magnitude2;
     }
 
