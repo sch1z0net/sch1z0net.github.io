@@ -265,7 +265,6 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
         stretchedSpectrogram.push(frameWithPairs);
     }
 
-    console.log(stretchedSpectrogram);
     return stretchedSpectrogram;
 }
 
@@ -284,18 +283,23 @@ function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitude
         const frameIndex2 = Math.ceil(originalFrameIndex);
         const fraction = originalFrameIndex - frameIndex1;
 
+        const currentInterpolatedMagnitudes = [];
+
         for (let j = 0; j < numBins; j++) {
             const magnitude1 = spectrogram[frameIndex1][j].re;
             const magnitude2 = spectrogram[frameIndex2][j].re;
-            interpolatedMagnitudes[j] = (1 - fraction) * magnitude1 + fraction * magnitude2;
+            currentInterpolatedMagnitudes[j] = (1 - fraction) * magnitude1 + fraction * magnitude2;
         }
 
         // Store the interpolated magnitudes in the spectrogram
-        spectrogram[i] = interpolatedMagnitudes.slice();
+        interpolatedMagnitudes[i] = currentInterpolatedMagnitudes.slice();
     }
+
+    console.log(spectrogram);
 
     return spectrogram;
 }
+
 
 // Function to synchronize phase values between frames in the entire spectrogram
 function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
