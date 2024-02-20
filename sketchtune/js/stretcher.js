@@ -409,16 +409,13 @@ function fft(input) {
         const evenFFT = fft(even); // Recursively compute FFT for the even-indexed elements
         const oddFFT = fft(odd);   // Recursively compute FFT for the odd-indexed elements
 
+        console.log(evenFFT,oddFFT);
+
         const output = [];
         for (let k = 0; k < N / 2; k++) {
-            /*const exp = {
-                re: Math.cos(-2 * Math.PI * k / N),
-                im: Math.sin(-2 * Math.PI * k / N)
-            };*/
             const exp = fftFactorLookup[N][k];
             const tRe = exp.re * oddFFT[k * 2] - exp.im * oddFFT[k * 2 + 1];
             const tIm = exp.re * oddFFT[k * 2 + 1] + exp.im * oddFFT[k * 2];
-            console.log(oddFFT[k * 2], oddFFT[k * 2 + 1]);
             output[k * 2] = evenFFT[k * 2] + tRe;
             output[k * 2 + 1] = evenFFT[k * 2 + 1] + tIm;
             output[(k + N / 2) * 2] = evenFFT[k * 2] - tRe;
