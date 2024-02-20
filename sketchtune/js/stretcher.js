@@ -189,17 +189,8 @@ function computeInverseFFT(spectrum) {
   // Function to perform phase vocoding
   function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
 
-    const windowSize = 512; // Size of the analysis window
+    const windowSize = 512*4; // Size of the analysis window
     const hopSize = windowSize / 2; // 50% overlap
-
-    
-    /*
-    const analysisWindow = new Float32Array(windowSize); // Analysis window
-    // Initialize analysis window with Hanning window function
-    for (let i = 0; i < windowSize; i++) {
-        analysisWindow[i] = 0.5 * (1 - Math.cos(2 * Math.PI * i / windowSize));
-    }*/
-
     
     const numChannels = inputBuffer.numberOfChannels;
     const numFrames = Math.ceil(inputBuffer.length / hopSize);
@@ -212,42 +203,12 @@ function computeInverseFFT(spectrum) {
 
         const spectrogram = STFT(inputData, windowSize, hopSize);
         // Perform some processing on the spectrogram if needed
+
+        
+
         // Reconstruct the output signal using inverse STFT
         const reconstructedSignal = ISTFT(spectrogram, windowSize, hopSize);
         outputData.set( reconstructedSignal.slice(), 0);
-        /*
-        for (let i = 0; i < numFrames; i++) {
-            // Extract frame
-            const start = i * hopSize;
-            const end = Math.min(start + windowSize, inputData.length);
-            const frame = inputData.subarray(start, end);
-            
-            // Apply window function
-            for (let j = 0; j < frame.length; j++) {
-                frame[j] *= analysisWindow[j];
-            }
-            
-            // Perform FFT (you need to implement FFT function)
-            const spectrum = prepare_and_fft(frame);
-            
-            // Modify spectrum phase and magnitude (time stretching)
-            // You would typically interpolate between frames to change the phase and magnitude
-            
-            // Overlap-add with appropriate overlapping regions
-            //for (let j = 0; j < processedFrame.length; j++) {
-            //    outputData[start + j] += processedFrame[j];
-            //}
-
-
-            // Perform IFFT (you need to implement IFFT function)
-            const processedFrame = ifft(spectrum).map(({ re }) => re);
-
-            // Assign the processed frame to the output buffer without overlap
-            const availableSpace = outputData.length - start;
-            const frameLength = Math.min(processedFrame.length, availableSpace);
-            outputData.set(processedFrame.slice(0, frameLength), start);
-        }
-        */
     }
 
     console.log(inputBuffer, outputBuffer);
