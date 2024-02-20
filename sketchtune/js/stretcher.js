@@ -395,6 +395,8 @@ console.log("PRECALCULATE FFT LOOKUP TABLE", fftFactorLookup);
 // Modified FFT function to use precalculated FFT factors
 // input was zero padded before to a length N = PowerOf2
 function fft(input) {
+    console.log(input);
+
     const N = input.length;
     if (N === 1) {
         return input; // Base case: if the input array has only one element, return it
@@ -402,14 +404,12 @@ function fft(input) {
         const even = [];
         const odd = [];
         for (let i = 0; i < N - 1; i += 2) {
-            even.push(input[i]);
-            odd.push(input[i + 1]);
+            even.push(input[i]);    //0, 2, 4, 6 ....
+            odd.push(input[i + 1]); //1, 3, 5, 7 ....
         }
-
+        
         const evenFFT = fft(even); // Recursively compute FFT for the even-indexed elements
         const oddFFT = fft(odd);   // Recursively compute FFT for the odd-indexed elements
-
-        console.log(evenFFT,oddFFT);
 
         const output = [];
         for (let k = 0; k < N / 2; k++) {
