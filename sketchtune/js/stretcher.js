@@ -397,6 +397,8 @@ console.log("PRECALCULATE FFT LOOKUP TABLE", fftFactorLookup);
 function fft(input) {
     const N = input.length;
 
+    console.log(input);
+
     if (N <= 1) {
         return input;
     }
@@ -520,7 +522,7 @@ function STFT(inputSignal, windowSize, hopSize) {
 
         // Compute FFT of the windowed frame
         const spectrum = computeFFT(windowedFrame);
-        console.log("Compute FFT on current Frame", spectrum);
+        //console.log("Compute FFT on current Frame", spectrum);
 
         // Store the spectrum in the spectrogram
         spectrogram.push(spectrum);
