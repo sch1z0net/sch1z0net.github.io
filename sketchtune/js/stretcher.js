@@ -78,8 +78,17 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
 
         // Convert chunk array to Float32Array (assuming it contains float values)
         const chunky = new Float32Array(chunk);
-        // Transfer ownership of the ArrayBuffer
-        worker.postMessage({ dataBuffer: chunky.buffer }, [chunky.buffer]);
+
+        // Construct the message object
+        const message = {
+            inputSignal: chunky.buffer, // Transfer ownership of the ArrayBuffer
+            windowSize: windowSize,
+            hopSize: hopSize,
+            fftFactorLookup: fftFactorLookup
+        };
+
+        // Send the message to the worker
+        worker.postMessage(message, [chunky.buffer]); // Transfer ownership of the ArrayBuffer
 
 
         // Listen for messages from the worker
