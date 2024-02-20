@@ -418,8 +418,8 @@ function fft(input) {
     const output = new Float32Array(N * 2);
     for (let k = 0; k < N; k++) {
         const exp = fftFactorLookup[N * 2][k];
-        const t_re = exp.re * oddFFT[k] - exp.im * oddFFT[k + N];
-        const t_im = exp.re * oddFFT[k + N] + exp.im * oddFFT[k];
+        const t_re = exp.re * oddFFT[k] - exp.im * oddFFT[k]; // Fixed indexing for oddFFT
+        const t_im = exp.re * oddFFT[k] + exp.im * oddFFT[k]; // Fixed indexing for oddFFT
         output[k * 2] = evenFFT[k] + t_re; // Real part
         output[k * 2 + 1] = evenFFT[k + N] + t_im; // Imaginary part
         output[(k + N) * 2] = evenFFT[k] - t_re; // Real part
@@ -429,34 +429,8 @@ function fft(input) {
     return output;
 }
 
-
-//     const even = [];
-//     const odd = [];
-//     for (let i = 0; i < N; i++) {
-//         if (i % 2 === 0) {
-//             even.push(input[i]);
-//         } else {
-//             odd.push(input[i]);
-//         }
-//     }
-
-//     const evenFFT = fft(even);
-//     const oddFFT = fft(odd);
-
-//     const output = [];
-//     for (let k = 0; k < N / 2; k++) {
-//         //const theta = -2 * Math.PI * k / N;
-//         //const exp = { re: Math.cos(theta), im: Math.sin(theta) };
-//         const exp = fftFactorLookup[N][k];
-//         const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
-//         output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
-//         output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
-//     }
-
-
-
 function ifft(input) {
-    const N = input.length;
+    const N = input.length / 2; // Divide by 2 because each complex number has two components
     const pi = Math.PI;
 
     // Take the complex conjugate of the input spectrum
@@ -485,6 +459,7 @@ function prepare_and_fft(inputSignal) {
     // Perform FFT
     return fft(paddedInput);
 }
+
 
 
 function FFT(inputSignal) {
@@ -549,7 +524,7 @@ function STFT(inputSignal, windowSize, hopSize) {
 
         // Compute FFT of the windowed frame
         const spectrum = computeFFT(windowedFrame);
-        //console.log("Compute FFT on current Frame", spectrum);
+        console.log("Compute FFT on current Frame", spectrum);
 
         // Store the spectrum in the spectrogram
         spectrogram.push(spectrum);
