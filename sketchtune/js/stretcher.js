@@ -395,37 +395,39 @@ console.log("PRECALCULATE FFT LOOKUP TABLE", fftFactorLookup);
 // Modified FFT function to use precalculated FFT factors
 // input was zero padded before to a length N = PowerOf2
 function fft(input) {
-    const N = input.length / 2; // Since each complex number has both re and im parts
-    const output = new Array(N * 2);
-
-// Copy input into the output array as complex numbers
-for (let i = 0; i < N; i++) {
-    output[2 * i] = input[2 * i];
-    output[2 * i + 1] = input[2 * i + 1];
-}
-
-for (let size = 2; size <= N * 2; size *= 2) {
-    for (let j = 0; j < N * 2; j += size) {
-        for (let k = 0; k < size / 2; k++) {
-            const evenIndex = j + k;
-            const oddIndex = j + k + size / 2;
-            const exp = fftFactorLookup[N * 2][k * 2];
-            const oddRe = output[oddIndex * 2];
-            const oddIm = output[oddIndex * 2 + 1];
-            const tRe = exp.re * oddRe - exp.im * oddIm;
-            const tIm = exp.re * oddIm + exp.im * oddRe;
-            console.log(exp,  oddRe,  oddIm);
-            output[evenIndex * 2] += tRe;
-            output[evenIndex * 2 + 1] += tIm;
-            output[oddIndex * 2] = output[evenIndex * 2] - 2 * tRe;
-            output[oddIndex * 2 + 1] = output[evenIndex * 2 + 1] - 2 * tIm;
+    const N = input.length;
+    if (N === 1) {
+        return input; // Base case: if the input array has only one element, return it
+    } else {
+        const even = [];
+        const odd = [];
+        for (let i = 0; i < N; i += 2) {
+            even.push(input[i]);
+            odd.push(input[i + 1]);
         }
+
+        const evenFFT = fft(even); // Recursively compute FFT for the even-indexed elements
+        const oddFFT = fft(odd);   // Recursively compute FFT for the odd-indexed elements
+
+        const output = [];
+        for (let k = 0; k < N / 2; k++) {
+            /*const exp = {
+                re: Math.cos(-2 * Math.PI * k / N),
+                im: Math.sin(-2 * Math.PI * k / N)
+            };*/
+            const exp = fftFactorLookup[N][k];
+            const tRe = exp.re * oddFFT[k * 2] - exp.im * oddFFT[k * 2 + 1];
+            const tIm = exp.re * oddFFT[k * 2 + 1] + exp.im * oddFFT[k * 2];
+            console.log(oddFFT[k * 2], oddFFT[k * 2 + 1]);
+            output[k * 2] = evenFFT[k * 2] + tRe;
+            output[k * 2 + 1] = evenFFT[k * 2 + 1] + tIm;
+            output[(k + N / 2) * 2] = evenFFT[k * 2] - tRe;
+            output[(k + N / 2) * 2 + 1] = evenFFT[k * 2 + 1] - tIm;
+        }
+        return output;
     }
 }
 
-return output;
-
-}
 
 
 
