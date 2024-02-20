@@ -353,7 +353,7 @@ function synchronizeFramePhases(frame1, frame2, numBins, fraction) {
 
 // Function to perform phase vocoding
 function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
-    const windowSize = 512 * 4; // Size of the analysis window
+    const windowSize = 512 * 8; // Size of the analysis window
     const hopSize = windowSize / 2; // 50% overlap
 
     const numChannels = inputBuffer.numberOfChannels;
@@ -364,13 +364,10 @@ function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
     // Process inputBuffer frame by frame for each channel
     for (let ch = 0; ch < numChannels; ch++) {
         const inputData = inputBuffer.getChannelData(ch);
-
         // Time-stretch the input data
         const processedSignal = timeStretch(inputData, stretchFactor, windowSize, hopSize);
-
         // Convert processedSignal to Float32Array if necessary
         const processedSignalFloat32 = new Float32Array(processedSignal);
-
         // Copy the processed signal to the output buffer
         outputBuffer.copyToChannel(processedSignalFloat32, ch);
     }
