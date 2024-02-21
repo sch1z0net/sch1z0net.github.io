@@ -142,7 +142,7 @@ function STFT(inputSignalChunk, windowSize, hopSize) {
         };
 
         // Define the batch size (adjust as needed)
-        const batchSize = 1000;
+        const batchSize = 20;
         console.log("Frames:",frames);
         console.log("STFT: Batch Size",batchSize);
 
@@ -156,7 +156,6 @@ function STFT(inputSignalChunk, windowSize, hopSize) {
         // Wait for all batch promises to resolve
         Promise.all(batchPromises)
             .then(() => {
-                //console.log(spectrogramChunk);
                 resolve(spectrogramChunk);
             })
             .catch((error) => {
@@ -174,7 +173,7 @@ function STFT(inputSignalChunk, windowSize, hopSize) {
 onmessage = function (e) {
     const { inputSignal, windowSize, hopSize, numFrames, workerID } = e.data;
 
-    console.log("WORKER",workerID,"received message.")
+    //sconsole.log("WORKER",workerID,"received message.")
     // Convert back
     const chunk = new Float32Array(inputSignal);
 
