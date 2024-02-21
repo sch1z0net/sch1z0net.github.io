@@ -424,7 +424,7 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
     // Calculate the elapsed time
     const elapsedTime = endTime - startTime;
     // Output the elapsed time
-    console.log(`Elapsed time: ${elapsedTime} milliseconds`);
+    console.log(`PhaseVocoder: Elapsed time: ${elapsedTime} milliseconds`);
 
 
     // All channels processed, return the output buffer

@@ -8,14 +8,13 @@ function STFT(inputSignalChunk, windowSize, hopSize, workerID) {
         // Process each frame in the chunk asynchronously
         const processFrames = async () => {
             try {
-                console.log("WORKER",workerID,"STFT on Chunk with length",inputSignalChunk.length);
+                //console.log("WORKER",workerID,"STFT on Chunk with length",inputSignalChunk.length);
                 for (let i = 0; i <= (inputSignalChunk.length - windowSize)/hopSize; i += 1) {
                     const frame = inputSignalChunk.slice(i*hopSize, i*hopSize + windowSize);
                     const windowedFrame = applyHanningWindow(frame);
                     //console.log("WORKER: process Frame",windowedFrame);
                     const spectrum = await computeFFT(windowedFrame); // Assuming computeFFT has an asynchronous version
-                    //console.log("WORKER",workerID,"computed FFT",spectrum);
-                    console.log("WORKER",workerID,"push Frame to Spectrum [",i,"/",(inputSignalChunk.length - windowSize)/hopSize,"]");
+                    //console.log("WORKER",workerID,"push Frame to Spectrum [",i,"/",(inputSignalChunk.length - windowSize)/hopSize,"]");
                     spectrogramChunk.push(spectrum);
                 }
                 //console.log("WORKER",workerID,"resolve Spectrogram Chunk");
@@ -33,7 +32,7 @@ function STFT(inputSignalChunk, windowSize, hopSize, workerID) {
 onmessage = function (e) {
     const { inputSignal, windowSize, hopSize, workerID } = e.data;
     
-    console.log("WORKER",workerID,"received message.")
+    //console.log("WORKER",workerID,"received message.")
     // Convert back
     const chunk = new Float32Array(inputSignal);
 
@@ -41,7 +40,7 @@ onmessage = function (e) {
     STFT(chunk, windowSize, hopSize, workerID)
         .then((spectrogramChunk) => {
             // Send the result back to the main thread
-            console.log("WORKER",workerID,"Spectrogram on Chunk ready");
+            //console.log("WORKER",workerID,"Spectrogram on Chunk ready");
             postMessage(spectrogramChunk);
         })
         .catch((error) => {

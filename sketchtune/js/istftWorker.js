@@ -8,7 +8,7 @@ function ISTFT(spectrogramChunk, windowSize, hopSize, workerID) {
         // Process each frame in the spectrogram chunk asynchronously
         const processFrames = async () => {
             try {
-                console.log("WORKER", workerID, "ISTFT on Spectrogram Chunk with length", spectrogramChunk.length);
+                //console.log("WORKER", workerID, "ISTFT on Spectrogram Chunk with length", spectrogramChunk.length);
                 for (let i = 0; i < spectrogramChunk.length; i++) {
                     // Compute inverse FFT of the spectrum to obtain the frame in time domain
                     const frame = await computeInverseFFT(spectrogramChunk[i]);
@@ -22,7 +22,7 @@ function ISTFT(spectrogramChunk, windowSize, hopSize, workerID) {
                         }
                     }
                 }
-                console.log("WORKER", workerID, "resolve Output Signal Chunk");
+                //console.log("WORKER", workerID, "resolve Output Signal Chunk");
                 resolve(outputSignalChunk);
             } catch (error) {
                 reject(error);
@@ -37,13 +37,13 @@ function ISTFT(spectrogramChunk, windowSize, hopSize, workerID) {
 onmessage = function (e) {
     const { spectrogramChunk, windowSize, hopSize, workerID } = e.data;
     
-    console.log("WORKER", workerID, "received message.")
+    //console.log("WORKER", workerID, "received message.")
     
     // Use fftFactorLookup for computations
     ISTFT(spectrogramChunk, windowSize, hopSize, workerID)
         .then((outputSignalChunk) => {
             // Send the result back to the main thread
-            console.log("WORKER", workerID, "Output Signal Chunk ready");
+            //console.log("WORKER", workerID, "Output Signal Chunk ready");
             postMessage(outputSignalChunk);
         })
         .catch((error) => {
