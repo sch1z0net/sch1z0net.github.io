@@ -59,7 +59,10 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
 }*/
 
 
-/*
+
+
+
+
 // Function to perform Short-Time Fourier Transform (STFT)
 function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
     return new Promise((resolve, reject) => {
@@ -97,7 +100,7 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
 
         processFrames();
     });
-}*/
+}
 
 
 
@@ -105,6 +108,9 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
 
 
 
+
+
+/*
 // Function to perform Short-Time Fourier Transform (STFT) with batch processing
 function STFT(inputSignalChunk, windowSize, hopSize) {
     return new Promise((resolve, reject) => {
@@ -163,7 +169,7 @@ function STFT(inputSignalChunk, windowSize, hopSize) {
             });
     });
 }
-
+*/
 
 
 
