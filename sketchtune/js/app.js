@@ -1572,6 +1572,8 @@ $(document).ready(function(){
   $("#root").append('<canvas id="waveformCanvas" width="1200" height="600" style="display: inline-block;"></canvas>');
   $("#root").append('<canvas id="spectrumCanvas" width="1200" height="600" style="display: inline-block;"></canvas>');
 
+  
+
   $("beat-bar").scrollLeft(0);
   $("#root").bind('wheel', function(e) {
        $("track-window").scrollTop(e.originalEvent.deltaY + $("track-window").scrollTop());
@@ -1581,6 +1583,12 @@ $(document).ready(function(){
        $("track-window").scrollLeft($("beat-bar").scrollLeft());
        $("time-bar-container").scrollLeft($("beat-bar").scrollLeft());
   });
+
+
+
+
+
+
 
   //Plot empty spectrum on initialization
   plotSpectrumLive();
@@ -1747,12 +1755,60 @@ async function createSpectrumTracker(audioContext, audioSource) {
   let playingAudioNodes = [];
 
 
+
+
+
+
+
+// Global variables to store window size and hop factor
+let windowSize = 512; // Default value
+let hopFactor = 2; // Default value
+
+$(document).ready(function(){
+  // Function to update global variables when select boxes change
+  function updateVariables() {
+    windowSize = parseInt($("#windowSizeSelect").val());
+    hopFactor = parseInt($("#hopFactorSelect").val());
+    // You can perform additional actions here if needed
+  }
+
+  // Create select boxes and append them to the DOM
+  const $windowSizeSelect = $("<select>").attr("id", "windowSizeSelect");
+  const $hopFactorSelect = $("<select>").attr("id", "hopFactorSelect");
+
+  
+
+  // Options for window size select box
+  [512, 1024, 2048].forEach(function(size) {
+    $windowSizeSelect.append($("<option>").attr("value", size).text(size));
+  });
+
+  // Options for hop factor select box
+  [2, 4, 8].forEach(function(factor) {
+    $hopFactorSelect.append($("<option>").attr("value", factor).text(factor));
+  });
+
+  // Append select boxes to the DOM
+  $("body")
+    .append($("<label>").attr("for", "windowSize").text("Window Size:"))
+    .append($windowSizeSelect)
+    .append("<br>")
+    .append($("<label>").attr("for", "hopFactor").text("Hop Factor:"))
+    .append($hopFactorSelect);
+
+  // Add event listener to select boxes
+  $("#windowSizeSelect, #hopFactorSelect").on("change", updateVariables);
+});
+
+
+
+
 async function playSample(audioContext, audioBuffer, time, offset, duration) {
     const stretchFactor = 1 / GLOBAL_PLAYBACK_RATE;
     let resampledBuffer = audioBuffer;
 
     if (stretchFactor !== 1) {
-        resampledBuffer = await phaseVocoder(audioContext, resampledBuffer, stretchFactor); 
+        resampledBuffer = await phaseVocoder(audioContext, resampledBuffer, stretchFactor, windowSize, hopFactor); 
     }
 
     const sampleSource = new AudioBufferSourceNode(audioContext, {

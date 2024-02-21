@@ -403,8 +403,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
 
 // FOR COMPRESSING: 
 // windowSize = 512*4, hopSize = windowSize / 8
-async function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
-    const windowSize = 512 * 2; // Size of the analysis window
+async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize=1024, hopFactor=4) {
     //For beats with a clear BPM, where the goal is to preserve rhythmic structure and transient characteristics, 
     //it's often beneficial to prioritize temporal resolution over frequency resolution. 
     //In this case, using a smaller window size in the Short-Time Fourier Transform (STFT) analysis would be more suitable. 
@@ -415,7 +414,7 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
     //const hopSize = windowSize / 2; // 50% overlap
     //const hopSize = windowSize / 4; // 25% overlap
     //const hopSize = windowSize / 8; // 12.5% overlap
-    const hopSize = windowSize / 8; // 12.5% overlap
+    const hopSize = windowSize / hopFactor; // 12.5% overlap
     //Low Hop Size (High Overlap):
     //Advantages:
     //    Higher temporal resolution: Lower hop sizes result in more overlap between consecutive windows, 
