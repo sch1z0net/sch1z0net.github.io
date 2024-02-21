@@ -37,9 +37,9 @@ function STFT(inputSignalChunk, windowSize, hopSize, workerID) {
             const endIdx2 =  (i + 1) * hopSize + windowSize
             
             // Prefetch the next frame
-            const nextFrame = inputSignalChunk.slice(startIdx2, endIdx2);
-            const nextWindowedFrame = applyHanningWindow(nextFrame);
-            const nextSpectrumPromise = computeFFT(nextWindowedFrame, i + 1, frames); // Prefetch
+            //const nextFrame = inputSignalChunk.slice(startIdx2, endIdx2);
+            //const nextWindowedFrame = applyHanningWindow(nextFrame);
+            //const nextSpectrumPromise = computeFFT(nextWindowedFrame, i + 1, frames); // Prefetch
             
             // Process the current frame
             const frame = inputSignalChunk.slice(startIdx, endIdx);
