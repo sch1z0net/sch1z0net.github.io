@@ -10,8 +10,58 @@ const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
 console.log("PRECALCULATED FFT LOOKUP TABLE", fftFactorLookup);
 
 
+
+
+
+
+
+
+
+
+function generateTestDataSignal(durationSeconds, sampleRate) {
+    const numSamples = durationSeconds * sampleRate;
+    const signal = new Float32Array(numSamples);
+
+    for (let i = 0; i < numSamples; i++) {
+        // Generate a simple sine wave with a frequency of 440 Hz (A4 note)
+        const t = i / sampleRate; // Time in seconds
+        signal[i] = Math.sin(2 * Math.PI * 440 * t);
+    }
+
+    return signal;
+}
+
+const durationSeconds = 1; // Length of the signal in seconds
+const sampleRate = 44100; // Sample rate in Hz
+const testDataSignal = generateTestDataSignal(durationSeconds, sampleRate);
+
+
+const windowSize = 512 * 4; // Size of the analysis window
+const hopSize = windowSize / 4; // 25% overlap
+function testSTFT(inputSignal, mode){
+    const startTime = performance.now();
+    const result = await STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode);
+    const endTime = performance.now();
+    const elapsedTime = endTime - startTime;
+    console.log(`Calculating the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);    
+}
+       
+
+
+testSTFT(testDataSignal, 0);
+testSTFT(testDataSignal, 1);
+testSTFT(testDataSignal, 2);
+
+
+
+
+
+
+
+
+
 // Function to perform Short-Time Fourier Transform (STFT) using Web Workers
-function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
+function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
     const numFrames = Math.floor((inputSignal.length - windowSize) / hopSize) + 1;
     const spectrogram = [];
 
@@ -47,7 +97,8 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
             windowSize: windowSize,
             hopSize: hopSize,
             numFrames: numFrames,
-            workerID: i
+            workerID: i,
+            mode: mode
             //fftFactorLookup: lookup.buffer // Transfer ownership of the ArrayBuffer
         };
 

@@ -7,7 +7,7 @@ importScripts('./fft.js');
 
 
 // Function to perform Short-Time Fourier Transform (STFT)
-function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
+function STFT_1(inputSignalChunk, windowSize, hopSize, numFrames) {
     return new Promise((resolve, reject) => {
         const frames = Math.floor((inputSignalChunk.length - windowSize) / hopSize) + 1;
         
@@ -36,9 +36,9 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
 
 /****** SOLUTION 2: CONCURRENCY ********/
 
-/*
+
 // Function to perform Short-Time Fourier Transform (STFT)
-function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
+function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames) {
     return new Promise((resolve, reject) => {
         var frames = (inputSignalChunk.length - windowSize)/hopSize;
         const spectrogramChunk = new Array(frames); // Preallocate memory
@@ -75,15 +75,15 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
         processFrames();
     });
 }
-*/
+
 
 
 /****** SOLUTION 3: BATCHING ********/
 
 
-/*
+
 // Function to perform Short-Time Fourier Transform (STFT) with batch processing
-function STFT(inputSignalChunk, windowSize, hopSize) {
+function STFT_3(inputSignalChunk, windowSize, hopSize) {
     return new Promise((resolve, reject) => {
         const frames = Math.floor((inputSignalChunk.length - windowSize) / hopSize) + 1;
         const spectrogramChunk = new Array(frames); // Preallocate memory
@@ -140,21 +140,26 @@ function STFT(inputSignalChunk, windowSize, hopSize) {
             });
     });
 }
-*/
 
 
+
+function STFT(chunk, windowSize, hopSize, numFrames, mode){
+    if(mode==0){ return STFT_1(chunk, windowSize, hopSize, numFrames); }
+    if(mode==1){ return STFT_2(chunk, windowSize, hopSize, numFrames); }
+    if(mode==2){ return STFT_3(chunk, windowSize, hopSize, numFrames); }
+}
 
 
 
 // Listen for messages from the main thread
 onmessage = function (e) {
-    const { inputSignal, windowSize, hopSize, numFrames, workerID } = e.data;
+    const { inputSignal, windowSize, hopSize, numFrames, workerID, mode } = e.data;
 
     //sconsole.log("WORKER",workerID,"received message.")
     // Convert back
     const chunk = new Float32Array(inputSignal);
 
-    STFT(chunk, windowSize, hopSize, numFrames)
+    STFT(chunk, windowSize, hopSize, numFrames, mode)
         .then((spectrogramChunk) => {
             // Send the result back to the main thread
             console.log("WORKER",workerID,"Spectrogram on Chunk ready");
