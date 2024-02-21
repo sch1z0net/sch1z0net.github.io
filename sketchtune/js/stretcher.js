@@ -357,7 +357,7 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
 
 
 // Function to apply time-domain smoothing to an audio signal
-function applyTimeDomainSmoothing(inputSignal, hopSize, smoothingWindowType) {
+function applyTimeDomainSmoothing(inputSignal, hopSize) {
     const smoothedSignal = [];
 
     // Create a Hanning window for smoothing
@@ -365,16 +365,23 @@ function applyTimeDomainSmoothing(inputSignal, hopSize, smoothingWindowType) {
 
     // Apply overlap-add with smoothing
     for (let i = 0; i < inputSignal.length; i++) {
-        const index = i % hopSize;
-        if (i < hopSize) {
-            smoothedSignal.push(inputSignal[i]);
-        } else {
-            smoothedSignal[i] += inputSignal[i] * smoothingWindow[index];
+        // Initialize the value at the current index in the smoothed signal
+        smoothedSignal[i] = 0;
+
+        // Apply overlap-add with smoothing and window
+        for (let j = 0; j < hopSize; j++) {
+            // Calculate the index in the input signal considering overlap
+            const index = i - j;
+            
+            // Ensure the index is within the bounds of the input signal
+            if (index >= 0 && index < inputSignal.length) {
+                smoothedSignal[i] += inputSignal[index] * smoothingWindow[j];
+            }
         }
     }
-    console.log(smoothedSignal);
     return smoothedSignal;
 }
+
 
 
 
@@ -406,7 +413,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothingW
             return result;
         })
         .then((processedSignal) => {
-            const smoothedSignal = applyTimeDomainSmoothing(processedSignal, hopSize, smoothingWindowType);
+            const smoothedSignal = applyTimeDomainSmoothing(processedSignal, hopSize);
             console.log("Smoothing finished");
             return smoothedSignal;
         })
