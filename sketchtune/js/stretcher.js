@@ -384,6 +384,10 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
     // Array to store promises for each channel processing
     const processingPromises = [];
 
+    
+    // Record the start time
+    const startTime = performance.now();
+
     // Process inputBuffer frame by frame for each channel
     for (let ch = 0; ch < numChannels; ch++) {
         const inputData = inputBuffer.getChannelData(ch);
@@ -393,6 +397,14 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
 
     // Wait for all promises to resolve
     await Promise.all(processingPromises);
+
+    // Record the end time
+    const endTime = performance.now();
+    // Calculate the elapsed time
+    const elapsedTime = endTime - startTime;
+    // Output the elapsed time
+    console.log(`Elapsed time: ${elapsedTime} milliseconds`);
+
 
     // All channels processed, return the output buffer
     return outputBuffer;
