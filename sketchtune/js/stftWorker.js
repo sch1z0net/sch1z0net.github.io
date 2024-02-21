@@ -142,7 +142,7 @@ function STFT(inputSignalChunk, windowSize, hopSize) {
         };
 
         // Define the batch size (adjust as needed)
-        const batchSize = 10;
+        const batchSize = 100;
 
         // Process batches of frames concurrently
         for (let i = 0; i < frames; i += batchSize) {
