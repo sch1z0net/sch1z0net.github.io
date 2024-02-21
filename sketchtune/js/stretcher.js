@@ -129,6 +129,9 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
 
 // Function to perform inverse Short-Time Fourier Transform (ISTFT)
 async function ISTFT(spectrogram, windowSize, hopSize) {
+    // Record the start time
+    const startTime = performance.now();
+
     const numFrames = spectrogram.length;
     const outputSignalLength = (numFrames - 1) * hopSize + windowSize;
     const outputSignal = new Float32Array(outputSignalLength).fill(0);
@@ -144,6 +147,14 @@ async function ISTFT(spectrogram, windowSize, hopSize) {
             outputSignal[startIdx + j] += frame[j] * 0.5 * (1 - Math.cos(2 * Math.PI * j / (windowSize - 1)));
         }
     }
+
+    // Record the end time
+    const endTime = performance.now();
+    // Calculate the elapsed time
+    const elapsedTime = endTime - startTime;
+    // Output the elapsed time
+    console.log(`ISTFT: Elapsed time: ${elapsedTime} milliseconds`);
+
     return outputSignal;
 }
 
