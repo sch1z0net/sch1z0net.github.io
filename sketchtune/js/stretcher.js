@@ -58,7 +58,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
     const spectrogram = [];
 
     // Define the number of workers (you can adjust this based on performance testing)
-    const numWorkers = 1;
+    const numWorkers = 8;
 
     // Calculate frames per worker
     const framesPerWorker = Math.ceil(numFrames / numWorkers);
