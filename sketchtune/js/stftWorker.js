@@ -71,7 +71,7 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames, workerID) {
         try {
             //var frames = (inputSignalChunk.length - windowSize) / hopSize ;
             var frameLastIndex = numFrames-1;
-            const spectrogramChunk = new Array(frameLastIndex); // Preallocate memory
+            const spectrogramChunk = new Array(numFrames); // Preallocate memory
             
             // Array to hold promises for each computation
             const computationPromises = [];
