@@ -37,6 +37,63 @@ function generateFFTFactorLookup(maxSampleLength) {
 }
 
 /******************** FORWARD *********************/
+// Bit reversal function
+function bitReverse(num, bits) {
+    let reversed = 0;
+    for (let i = 0; i < bits; i++) {
+        reversed = (reversed << 1) | (num & 1);
+        num >>= 1;
+    }
+    return reversed;
+}
+
+// In-place FFT algorithm
+async function fftInPlace(input, fftFactorLookup=null) {
+    const N = input.length;
+    const bits = Math.log2(N);
+
+    if (N <= 1) {
+        return input;
+    }
+
+    // Bit reversal permutation
+    for (let i = 0; i < N; i++) {
+        const j = bitReverse(i, bits);
+        if (j > i) {
+            const temp = input[j];
+            input[j] = input[i];
+            input[i] = temp;
+        }
+    }
+
+    // Perform FFT in-place
+    for (let len = 2; len <= N; len <<= 1) {
+        const angle = -2 * Math.PI / len;
+        for (let i = 0; i < N; i += len) {
+            for (let k = 0; k < len / 2; k++) {
+                const index = k + i;
+                const evenIndex = index;
+                const oddIndex = index + len / 2;
+
+                const exp = fftFactorLookup ? fftFactorLookup[N][k] : { re: Math.cos(k * angle), im: Math.sin(k * angle) };
+
+                const tRe = exp.re * input[oddIndex].re - exp.im * input[oddIndex].im;
+                const tIm = exp.re * input[oddIndex].im + exp.im * input[oddIndex].re;
+
+                input[oddIndex].re = input[evenIndex].re - tRe;
+                input[oddIndex].im = input[evenIndex].im - tIm;
+                input[evenIndex].re += tRe;
+                input[evenIndex].im += tIm;
+            }
+        }
+    }
+
+    return input;
+}
+
+
+
+
 
 // Modified FFT function to use precalculated FFT factors
 // input was zero padded before to a length N = PowerOf2
@@ -91,12 +148,12 @@ async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
 
     // Zero-padding to the next power of 2
     const FFT_SIZE = nextPowerOf2(windowedSignal.length);
-    console.log(FFT_SIZE);
     const paddedInput = new Array(FFT_SIZE).fill({ re: 0, im: 0 });
     windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
 
     // Perform FFT
-    return await fft(paddedInput, fftFactorLookup);
+    return await fftInPlace(paddedInput, fftFactorLookup);
+    //return await fft(paddedInput, fftFactorLookup);
 }
 
 async function FFT(inputSignal, fftFactorLookup=null) {
