@@ -178,7 +178,8 @@ async function fft(input, fftFactorLookup=null) {
 
 async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Apply Hanning window to the input signal
-    const windowedSignal = inputSignal;
+    //const windowedSignal = inputSignal;
+    const windowedSignal = applyHanningWindow(inputSignal); 
 
     // Zero-padding to the next power of 2
     const FFT_SIZE = nextPowerOf2(windowedSignal.length);
