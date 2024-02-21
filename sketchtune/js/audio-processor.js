@@ -25,26 +25,6 @@ function applyHanningWindow(frame) {
     return windowedFrame;
 }
 
-function precalculateFFTFactors(N) {
-    const factors = [];
-    for (let k = 0; k < N / 2; k++) {
-        const theta = -2 * Math.PI * k / N;
-        factors.push({ re: Math.cos(theta), im: Math.sin(theta) });
-    }
-    return factors;
-}
-
-function generateFFTFactorLookup(maxSampleLength) {
-    const maxN = nextPowerOf2(maxSampleLength);
-    const fftFactorLookup = {};
-
-    for (let N = 2; N <= maxN; N *= 2) {
-        fftFactorLookup[N] = precalculateFFTFactors(N);
-    }
-
-    return fftFactorLookup;
-}
-
 /******************** FORWARD *********************/
 // Cache object to store precalculated FFT factors
 const fftFactorCache = {};
@@ -83,7 +63,7 @@ function bitReverse(num, bits) {
     return reversed;
 }
 // Async function to perform FFT in-place
-async function fftInPlace(input, fftFactorLookup = null) {
+function fftInPlace(input, fftFactorLookup = null) {
     const N = input.length;
     const bits = Math.log2(N);
 
@@ -134,7 +114,7 @@ async function fftInPlace(input, fftFactorLookup = null) {
     return input;
 }
 
-async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
+function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Apply Hanning window to the input signal
     //const windowedSignal = inputSignal;
     const windowedSignal = applyHanningWindow(inputSignal); 
@@ -145,7 +125,7 @@ async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
 
     // Perform FFT
-    return await fftInPlace(paddedInput, fftFactorLookup);
+    return fftInPlace(paddedInput, fftFactorLookup);
     //return await fft(paddedInput, fftFactorLookup);
 }
 
