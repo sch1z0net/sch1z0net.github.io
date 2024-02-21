@@ -80,29 +80,35 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
         // Array to hold promises for each computation
         const computationPromises = [];
 
+        const processFrames = async () => {
+            try {
+                for (let i = 0; i <= frames; i++) {
+                    const startIdx = i * hopSize;
+                    const endIdx = startIdx + windowSize;
+                    const frame = inputSignalChunk.slice(startIdx, endIdx);
+                    const windowedFrame = applyHanningWindow(frame);
 
-            for (let i = 0; i <= frames; i++) {
-                const startIdx = i * hopSize;
-                const endIdx = startIdx + windowSize;
-                const frame = inputSignalChunk.slice(startIdx, endIdx);
-                const windowedFrame = applyHanningWindow(frame);
+                    // Create a promise for each computation
+                    const spectrumPromise = computeFFT(windowedFrame, i, frames);
+                    
+                    // Push the promise into the array
+                    computationPromises.push(spectrumPromise.then(spectrum => {
+                        spectrogramChunk[i] = spectrum; // Store the result
+                    }));
+                }
 
-                // Create a promise for each computation
-                const spectrumPromise = computeFFT(windowedFrame, i, frames);
-                
-                // Push the promise into the array
-                computationPromises.push(spectrumPromise.then(spectrum => {
-                    spectrogramChunk[i] = spectrum; // Store the result
-                }));
+                // Wait for all promises to resolve
+                await Promise.all(computationPromises);
+
+                //console.log(spectrogramChunk);
+                // Resolve with the spectrogram chunk
+                resolve(spectrogramChunk);
+            } catch (error) {
+                reject(error);
             }
+        };
 
-            // Wait for all promises to resolve
-            await Promise.all(computationPromises);
-
-            //console.log(spectrogramChunk);
-            // Resolve with the spectrogram chunk
-            resolve(spectrogramChunk);
-
+        processFrames();
         /*
         // Process each frame in the chunk asynchronously
         const processFrames = async () => {
