@@ -137,7 +137,7 @@ function ISTFT(spectrogram, windowSize, hopSize) {
     for (let i = 0; i < numFrames; i++) {
         // Compute inverse FFT of the spectrum to obtain the frame in time domain
         const frame = computeInverseFFT(spectrogram[i]);
-        //console.log(frame);
+        console.log(frame);
        
         // Apply overlap-add to reconstruct the output signal
         const startIdx = i * hopSize;
@@ -406,7 +406,7 @@ async function processChannel(audioContext, inputData, outputBuffer, ch, stretch
     
     // Convert processedSignal to Float32Array if necessary
     const processedSignalFloat32 = new Float32Array(processedSignal);
-    console.log(processedSignal,processedSignalFloat32);
+    //console.log(processedSignal,processedSignalFloat32);
 
     // Copy the processed signal to the output buffer
     outputBuffer.copyToChannel(processedSignalFloat32, ch);
