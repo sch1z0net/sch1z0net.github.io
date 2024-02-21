@@ -20,9 +20,9 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
 
     // Calculate frames per worker
     const framesPerWorker = Math.ceil(numFrames / numWorkers);
-    console.log("Input Signal Length",inputSignal.length);
-    console.log("Number of Frames", numFrames);
-    console.log("Frames per Worker", framesPerWorker);
+    //console.log("Input Signal Length",inputSignal.length);
+    //console.log("Number of Frames", numFrames);
+    //console.log("Frames per Worker", framesPerWorker);
 
     // Create and run workers
     for (let i = 0; i < numWorkers; i++) {
@@ -56,11 +56,10 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
 
         // Listen for messages from the worker
         worker.onmessage = function (e) {
-            console.log( "WORKER finished." )
+            //console.log( "WORKER finished." )
             const workerSpectrogram = e.data;
             spectrogram.push(...workerSpectrogram);
-        
-            console.log( spectrogram );
+
             // Close the worker after it completes its work
             worker.terminate();
         };
