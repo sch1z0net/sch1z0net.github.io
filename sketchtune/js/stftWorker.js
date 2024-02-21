@@ -71,8 +71,6 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames, workerID) {
 }*/
 
 
-importScripts('./fft.js');
-
 // Function to perform Short-Time Fourier Transform (STFT)
 function STFT(inputSignalChunk, windowSize, hopSize) {
     return new Promise((resolve, reject) => {
