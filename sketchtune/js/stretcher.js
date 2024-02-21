@@ -66,7 +66,7 @@ async function test(){
 }
 
 
-const durationSeconds = 20; // Length of the signal in seconds
+const durationSeconds = 4; // Length of the signal in seconds
 const sampleRate = 44100; // Sample rate in Hz
 const testDataSignal = generateTestDataSignal(durationSeconds, sampleRate);
 
