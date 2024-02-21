@@ -82,10 +82,10 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
 
         // Construct the message object
         const message = {
-            inputSignal: chunky.buffer, // Transfer ownership of the ArrayBuffer
+            inputSignal: chunky, // Transfer ownership of the ArrayBuffer
             windowSize: windowSize,
             hopSize: hopSize,
-            fftFactorLookup: lookup.buffer
+            fftFactorLookup: lookup
         };
 
         // Send the message to the worker

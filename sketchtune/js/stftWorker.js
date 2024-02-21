@@ -30,8 +30,13 @@ onmessage = function (e) {
     console.log("Worker received message.")
 
     const { inputSignal, windowSize, hopSize, fftFactorLookup } = e.data;
+    
+    // Convert back
+    const chunk = new Float32Array(inputSignal);
+    const lookup = new Float32Array(fftFactorLookup);
+
     // Use fftFactorLookup for computations
-    STFT(inputSignal, windowSize, hopSize, fftFactorLookup)
+    STFT(chunk, windowSize, hopSize, lookup)
         .then((spectrogramChunk) => {
             // Send the result back to the main thread
             console.log("Spectrogram on Chunk ready");
