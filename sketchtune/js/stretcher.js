@@ -20,12 +20,13 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
 
     // Calculate frames per worker
     const framesPerWorker = Math.ceil(numFrames / numWorkers);
-    console.log("Input Signal Length",inputSignal.length);
+    //console.log("Input Signal Length",inputSignal.length);
     //console.log("Number of Frames", numFrames);
     //console.log("Frames per Worker", framesPerWorker);
 
     // Create and run workers
     for (let i = 0; i < numWorkers; i++) {
+        console.log("CALL WORKER",i);
         const startFrame = i * framesPerWorker;
         const endFrame = Math.min(startFrame + framesPerWorker, numFrames);
 
@@ -286,7 +287,6 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
     console.log("TIMESTRETCH");
     return Promise.resolve()
         .then(async () => {
-            console.log("STFT");
             const startTime = performance.now();
             const result = await STFTWithWebWorkers(inputSignal, windowSize, hopSize);
             const endTime = performance.now();
