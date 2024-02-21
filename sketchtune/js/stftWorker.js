@@ -97,7 +97,7 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
 
         processFrames();
     });
-}
+}*/
 
 // Listen for messages from the main thread
 onmessage = function (e) {
@@ -117,4 +117,4 @@ onmessage = function (e) {
             console.log("WORKER",workerID,'Error:', error);
             // Optionally, handle the error and send back an error message to the main thread
         });
-};*/
+};
