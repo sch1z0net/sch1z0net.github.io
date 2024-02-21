@@ -105,7 +105,7 @@ async function fftWithCache(input) {
     }
 
     // Perform FFT calculation
-    const fftResult = await fftInPlace(input, fftFactorLookup);
+    const fftResult = await fftInPlace(input);
 
     // Cache the result for future use
     fftCache[cacheKey] = fftResult;
@@ -114,7 +114,7 @@ async function fftWithCache(input) {
 }
 
 
-
+/*
 // Modified FFT function to use precalculated FFT factors
 // input was zero padded before to a length N = PowerOf2
 async function fft(input, fftFactorLookup=null) {
@@ -161,6 +161,7 @@ async function fft(input, fftFactorLookup=null) {
 
     return output;
 }
+*/
 
 async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Apply Hanning window to the input signal
