@@ -108,7 +108,7 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
 // Function to perform Short-Time Fourier Transform (STFT) with batch processing
 function STFT(inputSignalChunk, windowSize, hopSize) {
     return new Promise((resolve, reject) => {
-        const frames = Math.floor((inputSignalChunk.length - windowSize) / hopSize);
+        const frames = Math.floor((inputSignalChunk.length - windowSize) / hopSize) + 1;
         const spectrogramChunk = new Array(frames); // Preallocate memory
 
         // Array to hold promises for each batch of computations
