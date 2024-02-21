@@ -494,7 +494,7 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
     return outputBuffer;
 }
 
-async function processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize) {
+async function processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor) {
     // Time-stretch the input data
     //console.log("TimeStretching the Input Channel", ch);
     const processedSignal = await timeStretch(inputData, stretchFactor, windowSize, hopSize, smoothFactor);
