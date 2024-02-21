@@ -94,7 +94,6 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
 
         // Listen for messages from the worker
         worker.onmessage = function (e) {
-            console.log("Worker responding");
             const workerSpectrogram = e.data;
             spectrogram.push(...workerSpectrogram);
 
@@ -109,6 +108,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
     return new Promise((resolve) => {
         const checkCompletion = () => {
             if (spectrogram.length === numFrames) {
+                console.log("Spectrogram completed.");
                 resolve(spectrogram);
             } else {
                 setTimeout(checkCompletion, 100); // Check again after a short delay
