@@ -55,9 +55,11 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
 
         // Listen for messages from the worker
         worker.onmessage = function (e) {
+            console.log( "WORKER finished." )
             const workerSpectrogram = e.data;
             spectrogram.push(...workerSpectrogram);
-
+        
+            console.log( spectrogram );
             // Close the worker after it completes its work
             worker.terminate();
         };
@@ -281,7 +283,6 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
 
 
 function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
-    console.log("TIMESTRETCH");
     return Promise.resolve()
         .then(async () => {
             const startTime = performance.now();
