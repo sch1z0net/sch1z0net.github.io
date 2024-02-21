@@ -1,5 +1,5 @@
 importScripts('./fft.js');
-
+/*
 // Function to perform Short-Time Fourier Transform (STFT)
 function STFT(inputSignalChunk, windowSize, hopSize, workerID) {
     return new Promise((resolve, reject) => {
@@ -27,7 +27,13 @@ function STFT(inputSignalChunk, windowSize, hopSize, workerID) {
 
         processFrames();*/
 
-        var frames = (inputSignalChunk.length - windowSize)/hopSize;
+        
+
+
+
+
+
+        /*var frames = (inputSignalChunk.length - windowSize)/hopSize;
         const spectrogramChunk = new Array(frames); // Preallocate memory
 
         for (let i = 0; i < frames; i++) {
@@ -56,7 +62,49 @@ function STFT(inputSignalChunk, windowSize, hopSize, workerID) {
         resolve(spectrogramChunk);
 
     });
+}*/
+
+
+
+function STFT(inputSignalChunk, windowSize, hopSize, workerID) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            var frames = (inputSignalChunk.length - windowSize) / hopSize;
+            const spectrogramChunk = new Array(frames); // Preallocate memory
+            
+            // Array to hold promises for each computation
+            const computationPromises = [];
+
+            for (let i = 0; i < frames; i++) {
+                const startIdx = i * hopSize;
+                const endIdx = startIdx + windowSize;
+                const frame = inputSignalChunk.slice(startIdx, endIdx);
+                const windowedFrame = applyHanningWindow(frame);
+
+                // Create a promise for each computation
+                const spectrumPromise = computeFFT(windowedFrame, i, frames);
+                
+                // Push the promise into the array
+                computationPromises.push(spectrumPromise.then(spectrum => {
+                    spectrogramChunk[i] = spectrum; // Store the result
+                }));
+            }
+
+            // Wait for all promises to resolve
+            await Promise.all(computationPromises);
+
+            // Resolve with the spectrogram chunk
+            resolve(spectrogramChunk);
+        } catch (error) {
+            reject(error);
+        }
+    });
 }
+
+
+
+
+
 
 // Listen for messages from the main thread
 onmessage = function (e) {
