@@ -26,17 +26,13 @@ function STFT(inputSignalChunk, windowSize, hopSize, fftFactorLookup) {
 }
 
 
+var lock; // Separate lock for synchronization
 
-// Synchronization variables
-var lock;
-
-// Listen for messages from the main thread
 onmessage = function (e) {
-    console.log("Worker received message.")
-
+    console.log("Worker received message.");
     const { inputSignal, windowSize, hopSize, sharedLookup } = e.data;
 
-    lock = new Int32Array(sharedLookup); // Create a lock
+    lock = new Int32Array(new SharedArrayBuffer(sharedLookup.byteLength));
 
     // Synchronize access to shared memory
     acquireLock();

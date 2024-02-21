@@ -53,10 +53,8 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
 
 // Main thread
 const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
-const sharedMemory = new SharedArrayBuffer(fftFactorLookup.length * Float32Array.BYTES_PER_ELEMENT);
-const sharedLookup = new Float32Array(sharedMemory);
-sharedLookup.set(fftFactorLookup);
-
+const sharedLookup = new SharedArrayBuffer(fftFactorLookup.length * Float32Array.BYTES_PER_ELEMENT);
+new Float32Array(sharedLookup).set(fftFactorLookup);
 
 // Function to perform Short-Time Fourier Transform (STFT) using Web Workers
 function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
@@ -93,7 +91,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
         };
 
         // Send the message to the worker
-        worker.postMessage(message, [chunky.buffer, sharedMemory]); // Transfer ownership of the ArrayBuffer
+        worker.postMessage(message, [chunky.buffer]); // Transfer ownership of the ArrayBuffer
 
 
         // Listen for messages from the worker
