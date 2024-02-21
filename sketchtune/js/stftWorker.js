@@ -119,9 +119,9 @@ function STFT_3(inputSignalChunk, windowSize, hopSize) {
         };
 
         // Define the batch size (adjust as needed)
-        console.log("Frames:",frames);
+        //console.log("Frames:",frames);
         const batchSize = Math.floor(frames/4);
-        console.log("STFT: Batch Size",batchSize);
+        //console.log("STFT: Batch Size",batchSize);
 
         // Process batches of frames concurrently
         for (let i = 0; i < frames; i += batchSize) {
