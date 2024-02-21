@@ -1,9 +1,9 @@
 importScripts('./fft.js');
-/*
+
 // Function to perform Short-Time Fourier Transform (STFT)
 function STFT(inputSignalChunk, windowSize, hopSize, workerID) {
     return new Promise((resolve, reject) => {
-        /*const spectrogramChunk = [];
+        const spectrogramChunk = [];
         
         // Process each frame in the chunk asynchronously
         const processFrames = async () => {
@@ -25,47 +25,12 @@ function STFT(inputSignalChunk, windowSize, hopSize, workerID) {
             }
         };
 
-        processFrames();*/
-
-        
-
+        processFrames();
+}
 
 
 
-
-        /*var frames = (inputSignalChunk.length - windowSize)/hopSize;
-        const spectrogramChunk = new Array(frames); // Preallocate memory
-
-        for (let i = 0; i < frames; i++) {
-            const startIdx = i * hopSize;
-            const endIdx = startIdx + windowSize;
-            const startIdx2 = (i + 1) * hopSize;
-            const endIdx2 =  (i + 1) * hopSize + windowSize
-            
-            // Prefetch the next frame
-            //const nextFrame = inputSignalChunk.slice(startIdx2, endIdx2);
-            //const nextWindowedFrame = applyHanningWindow(nextFrame);
-            //const nextSpectrumPromise = computeFFT(nextWindowedFrame, i + 1, frames); // Prefetch
-            
-            // Process the current frame
-            const frame = inputSignalChunk.slice(startIdx, endIdx);
-            const windowedFrame = applyHanningWindow(frame);
-            const spectrum = await computeFFT(windowedFrame, i, frames); // Assuming computeFFT has an asynchronous version
-            
-            // Store the result
-            spectrogramChunk[i] = spectrum;
-
-            // Wait for the prefetch to complete (optional)
-            //await nextSpectrumPromise;
-        }
-
-        resolve(spectrogramChunk);
-
-    });
-}*/
-
-
-
+/*
 function STFT(inputSignalChunk, windowSize, hopSize, numFrames, workerID) {
     return new Promise(async (resolve, reject) => {
         try {
@@ -83,7 +48,7 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames, workerID) {
                 const windowedFrame = applyHanningWindow(frame);
 
                 // Create a promise for each computation
-                const spectrumPromise = computeFFT(windowedFrame, i, frames-1);
+                const spectrumPromise = computeFFT(windowedFrame, i, frames);
                 
                 // Push the promise into the array
                 computationPromises.push(spectrumPromise.then(spectrum => {
@@ -124,4 +89,4 @@ onmessage = function (e) {
             console.log("WORKER",workerID,'Error:', error);
             // Optionally, handle the error and send back an error message to the main thread
         });
-};
+};*/
