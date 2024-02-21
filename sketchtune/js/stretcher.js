@@ -14,9 +14,9 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
 
     // Calculate frames per worker
     const framesPerWorker = Math.ceil(numFrames / numWorkers);
-    console.log("Input Signal Length",inputSignal.length);
-    console.log("Number of Frames", numFrames);
-    console.log("Frames per Worker", framesPerWorker);
+    //console.log("Input Signal Length",inputSignal.length);
+    //console.log("Number of Frames", numFrames);
+    //console.log("Frames per Worker", framesPerWorker);
 
     // Create and run workers
     for (let i = 0; i < numWorkers; i++) {
@@ -63,7 +63,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
     return new Promise((resolve) => {
         const checkCompletion = () => {
             if (spectrogram.length === numFrames) {
-                console.log("Spectrogram completed.");
+                //console.log("Spectrogram completed.");
                 resolve(spectrogram);
             } else {
                 setTimeout(checkCompletion, 100); // Check again after a short delay
@@ -86,8 +86,8 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize) {
 
     // Calculate frames per worker
     const framesPerWorker = Math.ceil(numFrames / numWorkers);
-    console.log("Number of Frames", numFrames);
-    console.log("Frames per Worker", framesPerWorker);
+    //console.log("Number of Frames", numFrames);
+    //console.log("Frames per Worker", framesPerWorker);
 
     // Create and run workers
     const processingPromises = [];
@@ -134,7 +134,7 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize) {
 
     // Return a promise that resolves when all workers finish processing
     return Promise.all(processingPromises).then(() => {
-        console.log("ISTFT completed.");
+        //console.log("ISTFT completed.");
         return outputSignal;
     });
 }
@@ -277,30 +277,27 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
 function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
     return Promise.resolve()
         .then(() => {
-            console.log("Calculating the Spectrogram");
             const startTime = performance.now();
             const result = STFTWithWebWorkers(inputSignal, windowSize, hopSize);
             const endTime = performance.now();
             const elapsedTime = endTime - startTime;
-            console.log(`Elapsed time: ${elapsedTime} milliseconds`);
+            console.log(`Calculating the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);
             return result;
         })
         .then(async (spectrogram) => {
-            console.log("Now Stretching the Spectrogram");
             const startTime = performance.now();
             const result = stretchSpectrogram(spectrogram, stretchFactor)
             const endTime = performance.now();
             const elapsedTime = endTime - startTime;
-            console.log(`Elapsed time: ${elapsedTime} milliseconds`);
+            console.log(`Now Stretching the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);
             return result;
         })
         .then((stretchedSpectrogram) => {
-            console.log("Now Reconstructing the Audio Signal");
             const startTime = performance.now();
             const result =  ISTFTWithWebWorkers(stretchedSpectrogram, windowSize, hopSize);
             const endTime = performance.now();
             const elapsedTime = endTime - startTime;
-            console.log(`Elapsed time: ${elapsedTime} milliseconds`);
+            console.log(`Now Reconstructing the Audio Signal: Elapsed time: ${elapsedTime} milliseconds`);
             return result;
         })
         .then((processedSignal) => {
