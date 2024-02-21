@@ -326,7 +326,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
 // FOR COMPRESSING: 
 // windowSize = 512*4, hopSize = windowSize / 8
 async function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
-    const windowSize = 512 * 4; // Size of the analysis window
+    const windowSize = 512 * 2; // Size of the analysis window
     //For beats with a clear BPM, where the goal is to preserve rhythmic structure and transient characteristics, 
     //it's often beneficial to prioritize temporal resolution over frequency resolution. 
     //In this case, using a smaller window size in the Short-Time Fourier Transform (STFT) analysis would be more suitable. 
