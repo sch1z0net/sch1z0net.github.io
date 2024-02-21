@@ -36,7 +36,8 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames, workerID) {
 function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
     return new Promise((resolve, reject) => {
         var frames = (inputSignalChunk.length - windowSize)/hopSize;
-
+        
+        const spectrogramChunk = [];
         // Process each frame in the chunk asynchronously
         const processFrames = async () => {
             try {
@@ -53,8 +54,7 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
             }
         };
 
-        processFrames();
-        
+        processFrames();     
     });
 }
 
