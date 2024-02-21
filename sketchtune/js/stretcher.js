@@ -71,6 +71,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
     // Return a promise that resolves when all workers finish processing
     return new Promise((resolve) => {
         const checkCompletion = () => {
+            console.log(spectrogram.length, numFrames);
             if (spectrogram.length === numFrames) {
                 //console.log("Spectrogram completed.");
                 resolve(spectrogram);

@@ -154,7 +154,7 @@ function STFT(inputSignalChunk, windowSize, hopSize) {
         // Wait for all batch promises to resolve
         Promise.all(batchPromises)
             .then(() => {
-                console.log(spectrogramChunk);
+                //console.log(spectrogramChunk);
                 resolve(spectrogramChunk);
             })
             .catch((error) => {
