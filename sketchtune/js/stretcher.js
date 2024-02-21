@@ -275,16 +275,33 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
 
 
 function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
-    // Perform STFT with Web Workers
-    return STFTWithWebWorkers(inputSignal, windowSize, hopSize)
+    return Promise.resolve()
+        .then(() => {
+            console.log("Calculating the Spectrogram");
+            const startTime = performance.now();
+            const result = STFTWithWebWorkers(inputSignal, windowSize, hopSize);
+            const endTime = performance.now();
+            const elapsedTime = endTime - startTime;
+            console.log(`Elapsed time: ${elapsedTime} milliseconds`);
+            return result;
+        })
         .then(async (spectrogram) => {
             console.log("Now Stretching the Spectrogram");
-            return stretchSpectrogram(spectrogram, stretchFactor);
+            const startTime = performance.now();
+            const result = stretchSpectrogram(spectrogram, stretchFactor)
+            const endTime = performance.now();
+            const elapsedTime = endTime - startTime;
+            console.log(`Elapsed time: ${elapsedTime} milliseconds`);
+            return result;
         })
         .then((stretchedSpectrogram) => {
             console.log("Now Reconstructing the Audio Signal");
-            // Apply inverse STFT to reconstruct processed signal
-            return ISTFTWithWebWorkers(stretchedSpectrogram, windowSize, hopSize);
+            const startTime = performance.now();
+            const result =  ISTFTWithWebWorkers(stretchedSpectrogram, windowSize, hopSize);
+            const endTime = performance.now();
+            const elapsedTime = endTime - startTime;
+            console.log(`Elapsed time: ${elapsedTime} milliseconds`);
+            return result;
         })
         .then((processedSignal) => {
             console.log("Reconstruction finished");
