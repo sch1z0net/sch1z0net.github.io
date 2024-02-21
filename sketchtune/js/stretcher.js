@@ -387,7 +387,7 @@ function applyTimeDomainSmoothing(inputSignal, hopSize) {
 
 
 
-function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothingWindowType) {
+function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFactor) {
     return Promise.resolve()
         .then(async () => {
             const startTime = performance.now();
@@ -414,7 +414,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothingW
             return result;
         })
         .then((processedSignal) => {
-            const smoothedSignal = applyTimeDomainSmoothing(processedSignal, hopSize*2);
+            const smoothedSignal = applyTimeDomainSmoothing(processedSignal, hopSize*smoothFactor);
             console.log("Smoothing finished");
             return smoothedSignal;
         })
@@ -434,7 +434,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothingW
 
 // FOR COMPRESSING: 
 // windowSize = 512*4, hopSize = windowSize / 8
-async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize=1024, hopFactor=4) {
+async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize=1024, hopFactor=4, smoothFactor=1) {
     //For beats with a clear BPM, where the goal is to preserve rhythmic structure and transient characteristics, 
     //it's often beneficial to prioritize temporal resolution over frequency resolution. 
     //In this case, using a smaller window size in the Short-Time Fourier Transform (STFT) analysis would be more suitable. 
@@ -476,7 +476,7 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
     for (let ch = 0; ch < numChannels; ch++) {
         const inputData = inputBuffer.getChannelData(ch);
         // Push the promise for processing this channel into the array
-        processingPromises.push(processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize));
+        processingPromises.push(processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor));
     }
 
     // Wait for all promises to resolve
@@ -497,7 +497,7 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
 async function processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize) {
     // Time-stretch the input data
     //console.log("TimeStretching the Input Channel", ch);
-    const processedSignal = await timeStretch(inputData, stretchFactor, windowSize, hopSize);
+    const processedSignal = await timeStretch(inputData, stretchFactor, windowSize, hopSize, smoothFactor);
     // Convert processedSignal to Float32Array if necessary
     const processedSignalFloat32 = new Float32Array(processedSignal);
     //console.log("Ready Processed Input Channel", ch);

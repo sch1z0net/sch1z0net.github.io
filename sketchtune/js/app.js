@@ -1763,19 +1763,21 @@ async function createSpectrumTracker(audioContext, audioSource) {
 // Global variables to store window size and hop factor
 let windowSize = 512; // Default value
 let hopFactor = 2; // Default value
+let smoothFactor = 1;
 
 $(document).ready(function(){
   // Function to update global variables when select boxes change
   function updateVariables() {
     windowSize = parseInt($("#windowSizeSelect").val());
     hopFactor = parseInt($("#hopFactorSelect").val());
+    smoothFactor = parseInt($("#smoothFactorSelect").val());
     // You can perform additional actions here if needed
   }
 
   // Create select boxes and append them to the DOM
   const $windowSizeSelect = $("<select>").attr("id", "windowSizeSelect");
   const $hopFactorSelect = $("<select>").attr("id", "hopFactorSelect");
-
+  const $smoothFactorSelect = $("<select>").attr("id", "smoothFactorSelect");
   
   // Options for window size select box
   [256, 512, 1024, 2048, 4096, 8192].forEach(function(size) {
@@ -1787,18 +1789,25 @@ $(document).ready(function(){
     $hopFactorSelect.append($("<option>").attr("value", factor).text(factor));
   });
 
+  [2, 4, 8, 16].forEach(function(factor) {
+    $smoothFactorSelect.append($("<option>").attr("value", factor).text(factor));
+  });
+
   // Append select boxes to the DOM
   var controls = $("<div id='controls'>")
     .append($("<label>").attr("for", "windowSize").text("Window Size:"))
     .append($windowSizeSelect)
     .append("<br>")
     .append($("<label>").attr("for", "hopFactor").text("Hop Factor:"))
-    .append($hopFactorSelect);
+    .append($hopFactorSelect)
+    .append("<br>")
+    .append($("<label>").attr("for", "smoothFactor").text("Smooth Factor:"))
+    .append($smoothFactorSelect);
 
   $('body').append(controls);
 
   // Add event listener to select boxes
-  $("#windowSizeSelect, #hopFactorSelect").on("change", updateVariables);
+  $("#windowSizeSelect, #hopFactorSelect, #smoothFactorSelect").on("change", updateVariables);
 });
 
 
@@ -1813,7 +1822,7 @@ async function playSample(audioContext, audioBuffer, time, offset, duration) {
     if (stretchFactor !== 1) {
         // 4096
         // 16
-        resampledBuffer = await phaseVocoder(audioContext, resampledBuffer, stretchFactor, windowSize, hopFactor); 
+        resampledBuffer = await phaseVocoder(audioContext, resampledBuffer, stretchFactor, windowSize, hopFactor, smoothFactor); 
     }
 
     const sampleSource = new AudioBufferSourceNode(audioContext, {
