@@ -275,7 +275,7 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
 
 
 
-function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
+async function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
     return STFTWithWebWorkers(inputSignal, windowSize, hopSize)
         .then((spectrogram) => {
             // Process the spectrogram
