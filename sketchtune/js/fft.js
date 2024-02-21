@@ -202,7 +202,7 @@ async function computeFFT(frame,frameID,frames,fftFactorLookup=null) {
     const spectrum = await FFT(frame, fftFactorLookup);
     const endTime = performance.now();
     const elapsedTime = endTime - startTime;
-    console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);
+    //console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);
     return spectrum;
 }
 
