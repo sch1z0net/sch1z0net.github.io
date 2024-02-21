@@ -37,6 +37,33 @@ function generateFFTFactorLookup(maxSampleLength) {
 }
 
 /******************** FORWARD *********************/
+// Cache object to store precalculated FFT factors
+const fftFactorCache = {};
+
+// Function to compute FFT factors with caching
+function computeFFTFactorsWithCache(N) {
+    // Check if FFT factors for this size are already cached
+    if (fftFactorCache[N]) {
+        return fftFactorCache[N];
+    }
+
+    // Calculate FFT factors
+    const factors = [];
+    for (let k = 0; k < N / 2; k++) {
+        const theta = -2 * Math.PI * k / N;
+        factors.push({ re: Math.cos(theta), im: Math.sin(theta) });
+    }
+
+    // Cache the factors for future use
+    fftFactorCache[N] = factors;
+
+    return factors;
+}
+
+
+
+
+
 // Bit reversal function
 function bitReverse(num, bits) {
     let reversed = 0;
@@ -46,14 +73,19 @@ function bitReverse(num, bits) {
     }
     return reversed;
 }
-
-// In-place FFT algorithm
-async function fftInPlace(input, fftFactorLookup=null) {
+// Async function to perform FFT in-place
+async function fftInPlace(input, fftFactorLookup = null) {
     const N = input.length;
     const bits = Math.log2(N);
 
     if (N <= 1) {
         return input;
+    }
+
+    // Check if FFT factors for this size are cached
+    let factors;
+    if (!fftFactorLookup) {
+        factors = computeFFTFactorsWithCache(N);
     }
 
     // Bit reversal permutation
@@ -75,7 +107,7 @@ async function fftInPlace(input, fftFactorLookup=null) {
                 const evenIndex = index;
                 const oddIndex = index + len / 2;
 
-                const exp = fftFactorLookup ? fftFactorLookup[N][k] : { re: Math.cos(k * angle), im: Math.sin(k * angle) };
+                const exp = fftFactorLookup ? fftFactorLookup[N][k] : factors[k];
 
                 const tRe = exp.re * input[oddIndex].re - exp.im * input[oddIndex].im;
                 const tIm = exp.re * input[oddIndex].im + exp.im * input[oddIndex].re;
@@ -91,27 +123,6 @@ async function fftInPlace(input, fftFactorLookup=null) {
     return input;
 }
 
-
-// Cache object to store precomputed FFT results
-const fftCache = {};
-
-// Function to perform FFT with caching
-async function fftWithCache(input) {
-    const cacheKey = JSON.stringify(input); // Generate cache key based on input
-
-    // Check if FFT result for this input is already cached
-    if (fftCache[cacheKey]) {
-        return fftCache[cacheKey];
-    }
-
-    // Perform FFT calculation
-    const fftResult = await fftInPlace(input);
-
-    // Cache the result for future use
-    fftCache[cacheKey] = fftResult;
-
-    return fftResult;
-}
 
 
 /*
@@ -173,8 +184,7 @@ async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
 
     // Perform FFT
-    return await fftWithCache(paddedInput);
-    //return await fftInPlace(paddedInput, fftFactorLookup);
+    return await fftInPlace(paddedInput, fftFactorLookup);
     //return await fft(paddedInput, fftFactorLookup);
 }
 
@@ -230,8 +240,7 @@ async function ifft(input) {
     const conjugateSpectrum = input.map(({ re, im }) => ({ re, im: -im }));
 
     // Apply FFT to the conjugate spectrum
-    const fftResult = await fftWithCache(conjugateSpectrum);
-    //const fftResult = await fftInPlace(conjugateSpectrum);
+    const fftResult = await fftInPlace(conjugateSpectrum);
     //const fftResult = await fft(conjugateSpectrum);
 
     // Take the complex conjugate of the FFT result
