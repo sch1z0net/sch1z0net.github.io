@@ -43,7 +43,7 @@ async function testSTFT(inputSignal, mode){
 }
 
 async function testAverage(testSignal, mode) {
-    const numIterations = 10;
+    const numIterations = 100;
     let totalTime = 0;
 
     for (let i = 0; i < numIterations; i++) {
@@ -52,11 +52,11 @@ async function testAverage(testSignal, mode) {
         const result = await testSTFT(testSignal, mode);
         const endTime = performance.now();
         const elapsedTime = endTime - startTime;
-        //console.log(`Iteration ${i + 1}: Elapsed time: ${elapsedTime} milliseconds`);
+        console.log(`Iteration ${i + 1}: Elapsed time: ${elapsedTime} milliseconds`);
         totalTime += elapsedTime;
     }
     const averageTime = totalTime / numIterations;
-    console.log(`Mode: ${mode}, Average time for ${numIterations} iterations: ${averageTime} milliseconds`);
+    console.log(`------- Mode: ${mode}, Average time for ${numIterations} iterations: ${averageTime} milliseconds`);
 }
 
 async function test(){
@@ -66,7 +66,7 @@ async function test(){
 }
 
 
-const durationSeconds = 4; // Length of the signal in seconds
+const durationSeconds = 3; // Length of the signal in seconds
 const sampleRate = 44100; // Sample rate in Hz
 const testDataSignal = generateTestDataSignal(durationSeconds, sampleRate);
 
