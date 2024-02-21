@@ -20,9 +20,9 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
 
     // Calculate frames per worker
     const framesPerWorker = Math.ceil(numFrames / numWorkers);
-    //console.log("Input Signal Length",inputSignal.length);
-    //console.log("Number of Frames", numFrames);
-    //console.log("Frames per Worker", framesPerWorker);
+    console.log("Input Signal Length",inputSignal.length);
+    console.log("Number of Frames", numFrames);
+    console.log("Frames per Worker", framesPerWorker);
 
     // Create and run workers
     for (let i = 0; i < numWorkers; i++) {
