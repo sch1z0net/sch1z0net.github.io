@@ -34,6 +34,7 @@ onmessage = function (e) {
     // Convert back
     const chunk = new Float32Array(inputSignal);
     const lookup = new Float32Array(fftFactorLookup);
+    console.log(lookup);
 
     // Use fftFactorLookup for computations
     STFT(chunk, windowSize, hopSize, lookup)
