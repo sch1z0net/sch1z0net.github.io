@@ -1,51 +1,3 @@
-/*// Function to perform Short-Time Fourier Transform (STFT) using Web Workers
-function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
-    const numFrames = Math.floor((inputSignal.length - windowSize) / hopSize) + 1;
-    const spectrogram = [];
-
-    // Create an array to hold promises for each worker
-    const workerPromises = [];
-
-    // Define the number of workers (you can adjust this based on performance testing)
-    const numWorkers = 4;
-
-    // Calculate frames per worker
-    const framesPerWorker = Math.ceil(numFrames / numWorkers);
-
-    // Create and run workers
-    for (let i = 0; i < numWorkers; i++) {
-        const startFrame = i * framesPerWorker;
-        const endFrame = Math.min(startFrame + framesPerWorker, numFrames);
-        const worker = new Worker('./js/stftWorker.js');
-
-        // Create a promise that resolves with workerSpectrogram
-        const workerPromise = new Promise((resolve) => {
-            worker.onmessage = (e) => resolve(e.data);
-        });
-
-        // Start the worker
-        worker.postMessage({
-            inputSignal: inputSignal,
-            windowSize: windowSize,
-            hopSize: hopSize,
-            startFrame: startFrame,
-            endFrame: endFrame
-        });
-
-        // Add promise to array
-        workerPromises.push(workerPromise);
-    }
-
-    // Wait for all worker promises to resolve
-    return Promise.all(workerPromises).then((results) => {
-        // Combine spectrograms from all workers
-        const spectrogram = results.flat();
-        return spectrogram;
-    });
-}*/
-
-
-
 // Precalculate FFT lookup table
 const maxSampleLength = 60 * 44100; // 60 seconds at 44100 Hz sample rate
 const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
@@ -124,39 +76,75 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
 
 
 
-
-
-
-// Function to perform inverse Short-Time Fourier Transform (ISTFT)
-async function ISTFT(spectrogram, windowSize, hopSize) {
-    // Record the start time
-    const startTime = performance.now();
-
+// Function to perform Inverse Short-Time Fourier Transform (ISTFT) using Web Workers
+function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize) {
     const numFrames = spectrogram.length;
-    const outputSignalLength = (numFrames - 1) * hopSize + windowSize;
-    const outputSignal = new Float32Array(outputSignalLength).fill(0);
+    const outputSignal = new Float32Array((numFrames - 1) * hopSize + windowSize);
 
-    // Iterate over each frame in the spectrogram
-    for (let i = 0; i < numFrames; i++) {
-        // Compute inverse FFT of the spectrum to obtain the frame in time domain
-        const frame = await computeInverseFFT(spectrogram[i]);
-       
-        // Apply overlap-add to reconstruct the output signal
-        const startIdx = i * hopSize;
-        for (let j = 0; j < windowSize; j++) {
-            outputSignal[startIdx + j] += frame[j] * 0.5 * (1 - Math.cos(2 * Math.PI * j / (windowSize - 1)));
-        }
+    // Define the number of workers (you can adjust this based on performance testing)
+    const numWorkers = 8;
+
+    // Calculate frames per worker
+    const framesPerWorker = Math.ceil(numFrames / numWorkers);
+    console.log("Number of Frames", numFrames);
+    console.log("Frames per Worker", framesPerWorker);
+
+    // Create and run workers
+    const processingPromises = [];
+    for (let i = 0; i < numWorkers; i++) {
+        const startFrame = i * framesPerWorker;
+        const endFrame = Math.min(startFrame + framesPerWorker, numFrames);
+
+        // Slice spectrogram array to create a smaller chunk for this worker
+        const chunk = spectrogram.slice(startFrame, endFrame);
+
+        // Create worker and send the chunk of spectrogram
+        const worker = new Worker('./js/istftWorker.js');
+
+        // Construct the message object
+        const message = {
+            spectrogramChunk: chunk,
+            windowSize: windowSize,
+            hopSize: hopSize,
+            workerID: i
+        };
+
+        // Send the message to the worker
+        worker.postMessage(message);
+
+        // Push the promise for processing this chunk into the array
+        processingPromises.push(new Promise((resolve, reject) => {
+            // Listen for messages from the worker
+            worker.onmessage = function (e) {
+                const outputSignalChunk = e.data;
+                // Copy the processed signal chunk to the output signal
+                const startIdx = startFrame * hopSize;
+                outputSignal.set(outputSignalChunk, startIdx);
+                // Close the worker after it completes its work
+                worker.terminate();
+                resolve(); // Resolve the promise
+            };
+            // Listen for errors from the worker
+            worker.onerror = function (error) {
+                console.error('Error in worker:', error);
+                reject(error); // Reject the promise
+            };
+        }));
     }
 
-    // Record the end time
-    const endTime = performance.now();
-    // Calculate the elapsed time
-    const elapsedTime = endTime - startTime;
-    // Output the elapsed time
-    console.log(`ISTFT: Elapsed time: ${elapsedTime} milliseconds`);
-
-    return outputSignal;
+    // Return a promise that resolves when all workers finish processing
+    return Promise.all(processingPromises).then(() => {
+        console.log("ISTFT completed.");
+        return outputSignal;
+    });
 }
+
+
+
+
+
+
+
 
 
 
@@ -287,17 +275,18 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
 
 
 function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
+    // Perform STFT with Web Workers
     return STFTWithWebWorkers(inputSignal, windowSize, hopSize)
-        .then(async (spectrogram) => { // Marking the callback function as async
-            // Process the spectrogram
-            //console.log("Resulting Spectrogram after STFT", spectrogram);
-            console.log("Now Stretch the Spectrogram");
-            // Modify magnitude and phase components based on stretch factor
-            const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
-            //console.log("Resulting Spectrogram after Stretching", stretchedSpectrogram);
-            console.log("Now Reconstruct the Audio Signal");
+        .then(async (spectrogram) => {
+            console.log("Now Stretching the Spectrogram");
+            return stretchSpectrogram(spectrogram, stretchFactor);
+        })
+        .then((stretchedSpectrogram) => {
+            console.log("Now Reconstructing the Audio Signal");
             // Apply inverse STFT to reconstruct processed signal
-            const processedSignal = await ISTFT(stretchedSpectrogram, windowSize, hopSize);
+            return ISTFTWithWebWorkers(stretchedSpectrogram, windowSize, hopSize);
+        })
+        .then((processedSignal) => {
             console.log("Reconstruction finished");
             return processedSignal;
         })
@@ -306,6 +295,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
             return null; // or handle the error appropriately
         });
 }
+
 
 
 
