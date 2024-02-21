@@ -40,7 +40,7 @@ function generateFFTFactorLookup(maxSampleLength) {
 
 // Modified FFT function to use precalculated FFT factors
 // input was zero padded before to a length N = PowerOf2
-async function fft(input, fftFactorLookup) {
+async function fft(input, fftFactorLookup=null) {
     const N = input.length;
 
     if (N <= 1) {
@@ -61,17 +61,30 @@ async function fft(input, fftFactorLookup) {
     const oddFFT = await fft(odd);
 
     const output = [];
-    for (let k = 0; k < N / 2; k++) {
-        const exp = fftFactorLookup[N][k];
-        const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
-        output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
-        output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
+    if(fftFactorLookup==null){ 
+        //Calculate FFT Factors directly
+        for (let k = 0; k < N / 2; k++) {
+          const theta = -2 * Math.PI * k / N;
+          const exp = { re: Math.cos(theta), im: Math.sin(theta) };
+          const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
+          output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
+          output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
+        }
+    }else{
+        //Use FFT Factor Lookup
+        for (let k = 0; k < N / 2; k++) {
+          const exp = fftFactorLookup[N][k];
+          const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
+          output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
+          output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
+        }
     }
+
 
     return output;
 }
 
-async function prepare_and_fft(inputSignal, fftFactorLookup) {
+async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Apply Hanning window to the input signal
     const windowedSignal = inputSignal;
 
@@ -84,12 +97,12 @@ async function prepare_and_fft(inputSignal, fftFactorLookup) {
     return await fft(paddedInput, fftFactorLookup);
 }
 
-async function FFT(inputSignal, fftFactorLookup) {
+async function FFT(inputSignal, fftFactorLookup=null) {
     return await prepare_and_fft(inputSignal, fftFactorLookup);
 }
 
 // Function to compute FFT of a frame
-async function computeFFT(frame,fftFactorLookup) {
+async function computeFFT(frame,fftFactorLookup=null) {
     // Perform FFT on the frame (you can use your FFT implementation here)
     // For simplicity, let's assume computeFFT returns the magnitude spectrum
     const spectrum = await FFT(frame, fftFactorLookup);

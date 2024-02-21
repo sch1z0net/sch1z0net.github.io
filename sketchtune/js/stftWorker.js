@@ -1,7 +1,7 @@
 importScripts('./fft.js');
 
 // Function to perform Short-Time Fourier Transform (STFT)
-function STFT(inputSignalChunk, windowSize, hopSize, fftFactorLookup) {
+function STFT(inputSignalChunk, windowSize, hopSize) {
     return new Promise((resolve, reject) => {
         const spectrogramChunk = [];
         
@@ -12,7 +12,7 @@ function STFT(inputSignalChunk, windowSize, hopSize, fftFactorLookup) {
                 for (let i = 0; i <= inputSignalChunk.length - windowSize; i += hopSize) {
                     const frame = inputSignalChunk.slice(i, i + windowSize);
                     const windowedFrame = applyHanningWindow(frame);
-                    const spectrum = await computeFFT(windowedFrame, fftFactorLookup); // Assuming computeFFT has an asynchronous version
+                    const spectrum = await computeFFT(windowedFrame); // Assuming computeFFT has an asynchronous version
                     spectrogramChunk.push(spectrum);
                 }
                 resolve(spectrogramChunk);
@@ -25,53 +25,26 @@ function STFT(inputSignalChunk, windowSize, hopSize, fftFactorLookup) {
     });
 }
 
-
-var lock; // Separate lock for synchronization
-
+// Listen for messages from the main thread
 onmessage = function (e) {
-    console.log("Worker received message.");
-    const { inputSignal, windowSize, hopSize, sharedLookup } = e.data;
+    console.log("Worker received message.")
 
-    lock = new Int32Array(new SharedArrayBuffer(sharedLookup.byteLength));
-
-    // Synchronize access to shared memory
-    acquireLock();
-
-    // Access sharedLookup directly in the worker
-    console.log(sharedLookup);
-
+    const { inputSignal, windowSize, hopSize/*, fftFactorLookup*/ } = e.data;
+    
     // Convert back
     const chunk = new Float32Array(inputSignal);
+    //const lookup = new Float32Array(fftFactorLookup);
+    //console.log(lookup);
 
     // Use fftFactorLookup for computations
-    STFT(chunk, windowSize, hopSize, lookup)
+    STFT(chunk, windowSize, hopSize)
         .then((spectrogramChunk) => {
             // Send the result back to the main thread
             console.log("Spectrogram on Chunk ready");
             postMessage(spectrogramChunk);
-            // Release the lock after accessing shared memory
-            releaseLock();
         })
         .catch((error) => {
             console.error('Error:', error);
             // Optionally, handle the error and send back an error message to the main thread
-            // Release the lock after encountering an error
-            releaseLock();
         });
 };
-
-// Function to acquire the lock
-function acquireLock() {
-    while (Atomics.compareExchange(lock, 0, 0, 1) !== 0) {
-        // Wait until the lock is acquired
-    }
-}
-
-// Function to release the lock
-function releaseLock() {
-    Atomics.store(lock, 0, 0); // Release the lock
-}
-
-
-
-

@@ -51,9 +51,6 @@ const maxSampleLength = 60 * 44100; // 60 seconds at 44100 Hz sample rate
 const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
 console.log("PRECALCULATED FFT LOOKUP TABLE", fftFactorLookup);
 
-// Main thread
-const sharedLookup = new SharedArrayBuffer(fftFactorLookup.length * Float32Array.BYTES_PER_ELEMENT);
-new Float32Array(sharedLookup).set(fftFactorLookup);
 
 // Function to perform Short-Time Fourier Transform (STFT) using Web Workers
 function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
@@ -77,20 +74,22 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
 
         // Create worker and send the chunk of inputSignal
         const worker = new Worker('./js/stftWorker.js');
+        //worker.postMessage({ inputSignal: chunk, windowSize, hopSize, fftFactorLookup });
 
         // Convert chunk array to Float32Array (assuming it contains float values)
         const chunky = new Float32Array(chunk);
+        //const lookup = new Float32Array(fftFactorLookup);
 
         // Construct the message object
         const message = {
             inputSignal: chunky.buffer, // Transfer ownership of the ArrayBuffer
             windowSize: windowSize,
             hopSize: hopSize,
-            sharedLookup,
+            //fftFactorLookup: lookup.buffer // Transfer ownership of the ArrayBuffer
         };
 
         // Send the message to the worker
-        worker.postMessage(message, [chunky.buffer]); // Transfer ownership of the ArrayBuffer
+        worker.postMessage(message, [chunky.buffer/*, lookup.buffer*/]); // Transfer ownership of the ArrayBuffer
 
 
         // Listen for messages from the worker
@@ -101,9 +100,9 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
             // Close the worker after it completes its work
             worker.terminate();
         };
+
+
     }
-
-
 
     // Return a promise that resolves when all workers finish processing
     return new Promise((resolve) => {
