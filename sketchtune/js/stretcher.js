@@ -356,32 +356,25 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
 
 
 
-// Function to apply time-domain smoothing after inverse FFT
+// Function to apply time-domain smoothing to an audio signal
 function applyTimeDomainSmoothing(inputSignal, hopSize, smoothingWindowType) {
     const smoothedSignal = [];
-    
-    // Create a window for smoothing
+
+    // Create a Hanning window for smoothing
     const smoothingWindow = createHanningWindow(hopSize, smoothingWindowType);
-    
+
     // Apply overlap-add with smoothing
     for (let i = 0; i < inputSignal.length; i++) {
-        const frame = inputSignal[i];
-        const signalLength = smoothedSignal.length;
-        
-        // Apply overlap-add with smoothing and window
-        for (let j = 0; j < frame.length; j++) {
-            const index = i * hopSize + j;
-            if (index < signalLength) {
-                smoothedSignal[index] += frame[j] * smoothingWindow[j];
-            } else {
-                smoothedSignal.push(frame[j] * smoothingWindow[j]);
-            }
+        const index = i % hopSize;
+        if (i < hopSize) {
+            smoothedSignal.push(inputSignal[i]);
+        } else {
+            smoothedSignal[i] += inputSignal[i] * smoothingWindow[index];
         }
     }
-    
+
     return smoothedSignal;
 }
-
 
 
 
