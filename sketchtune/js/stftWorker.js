@@ -26,6 +26,7 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames, workerID) {
         };
 
         processFrames();
+    }
 }
 
 
