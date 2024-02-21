@@ -84,7 +84,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
             inputSignal: chunky.buffer, // Transfer ownership of the ArrayBuffer
             windowSize: windowSize,
             hopSize: hopSize,
-            fftFactorLookup: fftFactorLookup
+            //fftFactorLookup: fftFactorLookup
         };
 
         // Send the message to the worker
