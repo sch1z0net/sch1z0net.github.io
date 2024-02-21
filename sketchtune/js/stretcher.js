@@ -31,11 +31,6 @@ function generateTestDataSignal(durationSeconds, sampleRate) {
     return signal;
 }
 
-const durationSeconds = 10; // Length of the signal in seconds
-const sampleRate = 44100; // Sample rate in Hz
-const testDataSignal = generateTestDataSignal(durationSeconds, sampleRate);
-
-
 const windowSize = 512 * 4; // Size of the analysis window
 const hopSize = windowSize / 4; // 25% overlap
 async function testSTFT(inputSignal, mode){
@@ -43,15 +38,38 @@ async function testSTFT(inputSignal, mode){
     const result = await STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode);
     const endTime = performance.now();
     const elapsedTime = endTime - startTime;
-    console.log(`Mode ${mode}, Calculating the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);    
+    //console.log(`Mode ${mode}, Calculating the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`); 
+    return elapsedTime;
 }
-       
+
+async function testAverage(testSignal) {
+    const numIterations = 10;
+    let totalTime = 0;
+
+    for (let i = 0; i < numIterations; i++) {
+        const startTime = performance.now();
+        // Call testSTFT and await its result
+        const result = await testSTFT(testSignal, mode);
+        const endTime = performance.now();
+        const elapsedTime = endTime - startTime;
+        //console.log(`Iteration ${i + 1}: Elapsed time: ${elapsedTime} milliseconds`);
+        totalTime += elapsedTime;
+    }
+    const averageTime = totalTime / numIterations;
+    console.log(`Mode: ${numIterations}, Average time for ${numIterations} iterations: ${averageTime} milliseconds`);
+}
 
 async function test(){
-    await testSTFT(testDataSignal, 0);
-    await testSTFT(testDataSignal, 1);
-    await testSTFT(testDataSignal, 2);
+    await testAverage(testDataSignal, 0);
+    await testAverage(testDataSignal, 1);
+    await testAverage(testDataSignal, 2);
 }
+
+
+const durationSeconds = 20; // Length of the signal in seconds
+const sampleRate = 44100; // Sample rate in Hz
+const testDataSignal = generateTestDataSignal(durationSeconds, sampleRate);
+
 
 test();
 
