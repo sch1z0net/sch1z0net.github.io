@@ -72,10 +72,38 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames, workerID) {
 
 
 // Function to perform Short-Time Fourier Transform (STFT)
-function STFT(inputSignalChunk, windowSize, hopSize) {
+function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
     return new Promise((resolve, reject) => {
-        const spectrogramChunk = [];
+        var frames = inputSignalChunk.length - windowSize;
+        const spectrogramChunk = new Array(frames); // Preallocate memory
 
+        // Array to hold promises for each computation
+        const computationPromises = [];
+
+
+            for (let i = 0; i <= frames; i++) {
+                const startIdx = i * hopSize;
+                const endIdx = startIdx + windowSize;
+                const frame = inputSignalChunk.slice(startIdx, endIdx);
+                const windowedFrame = applyHanningWindow(frame);
+
+                // Create a promise for each computation
+                const spectrumPromise = computeFFT(windowedFrame, i, frames);
+                
+                // Push the promise into the array
+                computationPromises.push(spectrumPromise.then(spectrum => {
+                    spectrogramChunk[i] = spectrum; // Store the result
+                }));
+            }
+
+            // Wait for all promises to resolve
+            await Promise.all(computationPromises);
+
+            //console.log(spectrogramChunk);
+            // Resolve with the spectrogram chunk
+            resolve(spectrogramChunk);
+
+        /*
         // Process each frame in the chunk asynchronously
         const processFrames = async () => {
             try {
@@ -93,6 +121,7 @@ function STFT(inputSignalChunk, windowSize, hopSize) {
         };
 
         processFrames();
+        */
     });
 }
 
@@ -104,7 +133,7 @@ onmessage = function (e) {
     // Convert back
     const chunk = new Float32Array(inputSignal);
 
-    STFT(chunk, windowSize, hopSize)
+    STFT(chunk, windowSize, hopSize, numFrames)
         .then((spectrogramChunk) => {
             // Send the result back to the main thread
             console.log("WORKER",workerID,"Spectrogram on Chunk ready");

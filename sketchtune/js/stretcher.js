@@ -284,7 +284,6 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
 
 
 function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
-    console.log("TIMESTRETCH");
     return Promise.resolve()
         .then(async () => {
             const startTime = performance.now();
