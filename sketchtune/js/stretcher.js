@@ -279,10 +279,10 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
     return STFTWithWebWorkers(inputSignal, windowSize, hopSize)
         .then(async (spectrogram) => { // Marking the callback function as async
             // Process the spectrogram
-            console.log("Resulting Spectrogram after STFT", spectrogram);
+            //console.log("Resulting Spectrogram after STFT", spectrogram);
             // Modify magnitude and phase components based on stretch factor
             const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
-            console.log("Resulting Spectrogram after Stretching", stretchedSpectrogram);
+            //console.log("Resulting Spectrogram after Stretching", stretchedSpectrogram);
             // Apply inverse STFT to reconstruct processed signal
             const processedSignal = await ISTFT(stretchedSpectrogram, windowSize, hopSize);
             return processedSignal;
@@ -405,7 +405,6 @@ async function processChannel(audioContext, inputData, outputBuffer, ch, stretch
     
     // Convert processedSignal to Float32Array if necessary
     const processedSignalFloat32 = new Float32Array(processedSignal);
-    console.log(processedSignal, processedSignalFloat32);
 
     // Copy the processed signal to the output buffer
     outputBuffer.copyToChannel(processedSignalFloat32, ch);
