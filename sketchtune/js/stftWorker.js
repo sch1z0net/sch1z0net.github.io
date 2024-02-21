@@ -1,7 +1,7 @@
 importScripts('./fft.js');
 
 // Function to perform Short-Time Fourier Transform (STFT)
-function STFT(inputSignalChunk, windowSize, hopSize, workerID) {
+function STFT(inputSignalChunk, windowSize, hopSize, numFrames, workerID) {
     return new Promise((resolve, reject) => {
         const spectrogramChunk = [];
         
