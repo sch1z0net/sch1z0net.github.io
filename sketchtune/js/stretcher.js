@@ -1,6 +1,7 @@
-const NUM_WORKERS = 4;
+const NUM_WORKERS = 2;
 const maxWorkers = navigator.hardwareConcurrency || 1; // Fallback to 1 if hardwareConcurrency is not available
 console.log("Maximum number of workers:", maxWorkers);
+console.log("Current workers:", NUM_WORKERS);
 
 
 // Precalculate FFT lookup table
