@@ -16,8 +16,6 @@ const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
 
 
 
-
-
 function generateTestDataSignal(durationSeconds, sampleRate) {
     const numSamples = durationSeconds * sampleRate;
     const signal = new Float32Array(numSamples);
@@ -31,8 +29,6 @@ function generateTestDataSignal(durationSeconds, sampleRate) {
     return signal;
 }
 
-const windowSize = 512 * 4; // Size of the analysis window
-const hopSize = windowSize / 4; // 25% overlap
 async function testSTFT(inputSignal, mode){
     const startTime = performance.now();
     const result = await STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode);
@@ -68,13 +64,17 @@ async function test(){
 }
 
 
+/*
+const windowSize = 512 * 4; // Size of the analysis window
+const hopSize = windowSize / 4; // 25% overlap
+
 const durationSeconds = 3; // Length of the signal in seconds
 const sampleRate = 44100; // Sample rate in Hz
 const testDataSignal = generateTestDataSignal(durationSeconds, sampleRate);
 
 
 test();
-
+*/
 
 
 
@@ -362,7 +362,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
     return Promise.resolve()
         .then(async () => {
             const startTime = performance.now();
-            const result = await STFTWithWebWorkers(inputSignal, windowSize, hopSize);
+            const result = await STFTWithWebWorkers(inputSignal, windowSize, hopSize, 1);
             const endTime = performance.now();
             const elapsedTime = endTime - startTime;
             console.log(`Calculating the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);
