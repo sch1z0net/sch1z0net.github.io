@@ -276,9 +276,9 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
 
 function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
     return Promise.resolve()
-        .then(() => {
+        .then(async () => {
             const startTime = performance.now();
-            const result = STFTWithWebWorkers(inputSignal, windowSize, hopSize);
+            const result = await STFTWithWebWorkers(inputSignal, windowSize, hopSize);
             const endTime = performance.now();
             const elapsedTime = endTime - startTime;
             console.log(`Calculating the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);
@@ -286,15 +286,15 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
         })
         .then(async (spectrogram) => {
             const startTime = performance.now();
-            const result = stretchSpectrogram(spectrogram, stretchFactor)
+            const result = await stretchSpectrogram(spectrogram, stretchFactor)
             const endTime = performance.now();
             const elapsedTime = endTime - startTime;
             console.log(`Now Stretching the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);
             return result;
         })
-        .then((stretchedSpectrogram) => {
+        .then(async (stretchedSpectrogram) => {
             const startTime = performance.now();
-            const result =  ISTFTWithWebWorkers(stretchedSpectrogram, windowSize, hopSize);
+            const result =  await ISTFTWithWebWorkers(stretchedSpectrogram, windowSize, hopSize);
             const endTime = performance.now();
             const elapsedTime = endTime - startTime;
             console.log(`Now Reconstructing the Audio Signal: Elapsed time: ${elapsedTime} milliseconds`);
