@@ -92,6 +92,26 @@ async function fftInPlace(input, fftFactorLookup=null) {
 }
 
 
+// Cache object to store precomputed FFT results
+const fftCache = {};
+
+// Function to perform FFT with caching
+async function fftWithCache(input) {
+    const cacheKey = JSON.stringify(input); // Generate cache key based on input
+
+    // Check if FFT result for this input is already cached
+    if (fftCache[cacheKey]) {
+        return fftCache[cacheKey];
+    }
+
+    // Perform FFT calculation
+    const fftResult = await fftInPlace(input, fftFactorLookup);
+
+    // Cache the result for future use
+    fftCache[cacheKey] = fftResult;
+
+    return fftResult;
+}
 
 
 
@@ -152,7 +172,8 @@ async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
 
     // Perform FFT
-    return await fftInPlace(paddedInput, fftFactorLookup);
+    return await fftWithCache(paddedInput);
+    //return await fftInPlace(paddedInput, fftFactorLookup);
     //return await fft(paddedInput, fftFactorLookup);
 }
 
@@ -208,7 +229,8 @@ async function ifft(input) {
     const conjugateSpectrum = input.map(({ re, im }) => ({ re, im: -im }));
 
     // Apply FFT to the conjugate spectrum
-    const fftResult = await fftInPlace(conjugateSpectrum);
+    const fftResult = await fftWithCache(conjugateSpectrum);
+    //const fftResult = await fftInPlace(conjugateSpectrum);
     //const fftResult = await fft(conjugateSpectrum);
 
     // Take the complex conjugate of the FFT result
