@@ -47,12 +47,11 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
 
 
 // Precalculate FFT lookup table
-//const maxSampleLength = 60 * 44100; // 60 seconds at 44100 Hz sample rate
-//const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
-//console.log("PRECALCULATED FFT LOOKUP TABLE", fftFactorLookup);
+const maxSampleLength = 60 * 44100; // 60 seconds at 44100 Hz sample rate
+const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
+console.log("PRECALCULATED FFT LOOKUP TABLE", fftFactorLookup);
 
 // Main thread
-const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
 const sharedLookup = new SharedArrayBuffer(fftFactorLookup.length * Float32Array.BYTES_PER_ELEMENT);
 new Float32Array(sharedLookup).set(fftFactorLookup);
 
