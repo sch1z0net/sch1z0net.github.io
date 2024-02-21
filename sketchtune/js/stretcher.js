@@ -287,6 +287,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
             console.log("Now Reconstruct the Audio Signal");
             // Apply inverse STFT to reconstruct processed signal
             const processedSignal = await ISTFT(stretchedSpectrogram, windowSize, hopSize);
+            console.log("Reconstruction finished");
             return processedSignal;
         })
         .catch((error) => {
