@@ -371,7 +371,7 @@ function applyTimeDomainSmoothing(inputSignal, hopSize) {
         // Apply overlap-add with smoothing and window
         for (let j = 0; j < hopSize; j++) {
             // Calculate the index in the input signal considering overlap
-            const index = i - j * hopSize; // Adjusted index calculation
+            const index = i - j; // Adjusted index calculation
             
             // Ensure the index is within the bounds of the input signal
             if (index >= 0 && index < inputSignal.length) {
