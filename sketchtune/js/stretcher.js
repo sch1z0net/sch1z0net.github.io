@@ -47,10 +47,14 @@ async function testSTFT(inputSignal, mode){
 }
        
 
+async function test(){
+    await testSTFT(testDataSignal, 0);
+    await testSTFT(testDataSignal, 1);
+    await testSTFT(testDataSignal, 2);
+}
 
-testSTFT(testDataSignal, 0);
-testSTFT(testDataSignal, 1);
-testSTFT(testDataSignal, 2);
+test();
+
 
 
 
