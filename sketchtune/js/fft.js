@@ -86,6 +86,8 @@ async function fftInPlace(input, fftFactorLookup = null) {
     let factors;
     if (!fftFactorLookup) {
         factors = computeFFTFactorsWithCache(N);
+    }else{
+        factors = fftFactorLookup[N];
     }
 
     // Bit reversal permutation
@@ -107,7 +109,7 @@ async function fftInPlace(input, fftFactorLookup = null) {
                 const evenIndex = index;
                 const oddIndex = index + len / 2;
 
-                const exp = fftFactorLookup ? fftFactorLookup[N][k] : factors[k];
+                const exp = factors[k];
 
                 const tRe = exp.re * input[oddIndex].re - exp.im * input[oddIndex].im;
                 const tIm = exp.re * input[oddIndex].im + exp.im * input[oddIndex].re;
