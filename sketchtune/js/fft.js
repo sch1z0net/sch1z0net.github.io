@@ -41,6 +41,7 @@ function generateFFTFactorLookup(maxSampleLength) {
 // Modified FFT function to use precalculated FFT factors
 // input was zero padded before to a length N = PowerOf2
 async function fft(input, fftFactorLookup=null) {
+
     const N = input.length;
 
     if (N <= 1) {
@@ -105,7 +106,11 @@ async function FFT(inputSignal, fftFactorLookup=null) {
 async function computeFFT(frame,fftFactorLookup=null) {
     // Perform FFT on the frame (you can use your FFT implementation here)
     // For simplicity, let's assume computeFFT returns the magnitude spectrum
+    const startTime = performance.now();
     const spectrum = await FFT(frame, fftFactorLookup);
+    const endTime = performance.now();
+    const elapsedTime = endTime - startTime;
+    console.log(`FFT: Elapsed time: ${elapsedTime} milliseconds`);
     return spectrum;
 }
 

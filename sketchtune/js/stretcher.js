@@ -320,31 +320,11 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
 
 
 
-/*
-// Function to perform time stretching using phase vocoder
-function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
-    // Apply STFT to input signal
-    const spectrogram = STFT(inputSignal, windowSize, hopSize);
-    // Modify magnitude and phase components based on stretch factor
-    const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
-    //console.log(stretchedSpectrogram);
-    // Apply inverse STFT to reconstruct processed signal
-    const processedSignal = ISTFT(stretchedSpectrogram, windowSize, hopSize);
-    //console.log(processedSignal);
-    return processedSignal;
-}
-*/
-
-
-
-
 // windowSize = 512, hopSize = windowSize / 4
 // Is pretty good for beats and if the signal is compressed, but the freqs will be quite wrong
 
 // FOR COMPRESSING: 
 // windowSize = 512*4, hopSize = windowSize / 8
-
-/*
 async function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
     const windowSize = 512 * 4; // Size of the analysis window
     //For beats with a clear BPM, where the goal is to preserve rhythmic structure and transient characteristics, 
@@ -370,35 +350,6 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
     //    especially with certain window functions, potentially affecting frequency resolution.
 
 
-
-    const numChannels = inputBuffer.numberOfChannels;
-    const inputLength = inputBuffer.length;
-    const outputLength = Math.ceil(inputLength * stretchFactor);
-    const outputBuffer = audioContext.createBuffer(numChannels, outputLength, audioContext.sampleRate);
-
-    // Process inputBuffer frame by frame for each channel
-    for (let ch = 0; ch < numChannels; ch++) {
-        const inputData = inputBuffer.getChannelData(ch);
-        // Time-stretch the input data
-        const processedSignal = await timeStretch(inputData, stretchFactor, windowSize, hopSize);
-        // Convert processedSignal to Float32Array if necessary
-        const processedSignalFloat32 = new Float32Array(processedSignal);
-        // Copy the processed signal to the output buffer
-        outputBuffer.copyToChannel(processedSignalFloat32, ch);
-    }
-
-    return outputBuffer;
-}
-
-*/
-
-
-
-
-
-async function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
-    const windowSize = 512 * 4;
-    const hopSize = windowSize / 8;
 
     const numChannels = inputBuffer.numberOfChannels;
     const inputLength = inputBuffer.length;
