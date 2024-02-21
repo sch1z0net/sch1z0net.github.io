@@ -1,13 +1,13 @@
 const NUM_WORKERS = 4;
 const maxWorkers = navigator.hardwareConcurrency || 1; // Fallback to 1 if hardwareConcurrency is not available
-console.log("Maximum number of workers:", maxWorkers);
-console.log("Current workers:", NUM_WORKERS);
+//console.log("Maximum number of workers:", maxWorkers);
+//console.log("Current workers:", NUM_WORKERS);
 
 
 // Precalculate FFT lookup table
 const maxSampleLength = 60 * 44100; // 60 seconds at 44100 Hz sample rate
 const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
-console.log("PRECALCULATED FFT LOOKUP TABLE", fftFactorLookup);
+//console.log("PRECALCULATED FFT LOOKUP TABLE", fftFactorLookup);
 
 
 
