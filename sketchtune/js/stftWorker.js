@@ -8,7 +8,7 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames, workerID) {
         // Process each frame in the chunk asynchronously
         const processFrames = async () => {
             try {
-                //console.log("WORKER",workerID,"STFT on Chunk with length",inputSignalChunk.length);
+                console.log("WORKER",workerID,"STFT on Chunk with length",inputSignalChunk.length);
                 var frames = (inputSignalChunk.length - windowSize)/hopSize;
                 for (let i = 0; i <= frames; i += 1) {
                     const frame = inputSignalChunk.slice(i*hopSize, i*hopSize + windowSize);
@@ -75,7 +75,7 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames, workerID) {
 onmessage = function (e) {
     const { inputSignal, windowSize, hopSize, numFrames, workerID } = e.data;
     
-    //console.log("WORKER",workerID,"received message.")
+    console.log("WORKER",workerID,"received message.")
     // Convert back
     const chunk = new Float32Array(inputSignal);
 
