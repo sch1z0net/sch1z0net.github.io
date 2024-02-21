@@ -25,12 +25,22 @@ function STFT(inputSignalChunk, windowSize, hopSize, fftFactorLookup) {
     });
 }
 
+
+
+// Synchronization variables
+var lock;
+
 // Listen for messages from the main thread
 onmessage = function (e) {
     console.log("Worker received message.")
 
     const { inputSignal, windowSize, hopSize, sharedLookup } = e.data;
-    
+
+    lock = new Int32Array(sharedLookup); // Create a lock
+
+    // Synchronize access to shared memory
+    acquireLock();
+
     // Access sharedLookup directly in the worker
     console.log(sharedLookup);
 
@@ -43,9 +53,29 @@ onmessage = function (e) {
             // Send the result back to the main thread
             console.log("Spectrogram on Chunk ready");
             postMessage(spectrogramChunk);
+            // Release the lock after accessing shared memory
+            releaseLock();
         })
         .catch((error) => {
             console.error('Error:', error);
             // Optionally, handle the error and send back an error message to the main thread
+            // Release the lock after encountering an error
+            releaseLock();
         });
 };
+
+// Function to acquire the lock
+function acquireLock() {
+    while (Atomics.compareExchange(lock, 0, 0, 1) !== 0) {
+        // Wait until the lock is acquired
+    }
+}
+
+// Function to release the lock
+function releaseLock() {
+    Atomics.store(lock, 0, 0); // Release the lock
+}
+
+
+
+
