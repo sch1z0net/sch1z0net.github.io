@@ -1789,7 +1789,7 @@ $(document).ready(function(){
     $hopFactorSelect.append($("<option>").attr("value", factor).text(factor));
   });
 
-  [2, 4, 8, 16].forEach(function(factor) {
+  [2, 4, 8, 16, 32].forEach(function(factor) {
     $smoothFactorSelect.append($("<option>").attr("value", factor).text(factor));
   });
 

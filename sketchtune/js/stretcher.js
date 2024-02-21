@@ -414,7 +414,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
             return result;
         })
         .then((processedSignal) => {
-            const smoothedSignal = applyTimeDomainSmoothing(processedSignal, hopSize*smoothFactor);
+            const smoothedSignal = applyTimeDomainSmoothing(processedSignal, hopSize*smoothFactor/32);
             console.log("Smoothing finished");
             return smoothedSignal;
         })
