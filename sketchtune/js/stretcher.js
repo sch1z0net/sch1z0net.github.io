@@ -26,7 +26,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
 
     // Create and run workers
     for (let i = 0; i < numWorkers; i++) {
-        console.log("CALL WORKER",i);
+        //console.log("CALL WORKER",i);
         const startFrame = i * framesPerWorker;
         const endFrame = Math.min(startFrame + framesPerWorker, numFrames);
 
