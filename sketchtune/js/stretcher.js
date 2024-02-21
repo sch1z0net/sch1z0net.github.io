@@ -38,12 +38,12 @@ const testDataSignal = generateTestDataSignal(durationSeconds, sampleRate);
 
 const windowSize = 512 * 4; // Size of the analysis window
 const hopSize = windowSize / 4; // 25% overlap
-function testSTFT(inputSignal, mode){
+async function testSTFT(inputSignal, mode){
     const startTime = performance.now();
     const result = await STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode);
     const endTime = performance.now();
     const elapsedTime = endTime - startTime;
-    console.log(`Calculating the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);    
+    console.log(`Mode ${mode}, Calculating the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);    
 }
        
 
