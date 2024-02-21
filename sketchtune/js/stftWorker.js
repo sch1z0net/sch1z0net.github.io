@@ -8,16 +8,16 @@ function STFT(inputSignalChunk, windowSize, hopSize) {
         // Process each frame in the chunk asynchronously
         const processFrames = async () => {
             try {
-                console.log("WORKER: STFT on Chunk with length",inputSignalChunk.length);
+                console.log("WORKER",workerID,"STFT on Chunk with length",inputSignalChunk.length);
                 for (let i = 0; i <= inputSignalChunk.length - windowSize; i += hopSize) {
                     const frame = inputSignalChunk.slice(i, i + windowSize);
                     const windowedFrame = applyHanningWindow(frame);
                     //console.log("WORKER: process Frame");
                     const spectrum = await computeFFT(windowedFrame); // Assuming computeFFT has an asynchronous version
-                    console.log("WORKER: push to Spectrum [",frame,"/",(inputSignalChunk.length - windowSize)/hopSize,"]");
+                    console.log("WORKER",workerID,"push to Spectrum [",i,"/",(inputSignalChunk.length - windowSize)/hopSize,"]");
                     spectrogramChunk.push(spectrum);
                 }
-                console.log("WORKER: resolve Spectrogram Chunk");
+                console.log("WORKER",workerID,"resolve Spectrogram Chunk");
                 resolve(spectrogramChunk);
             } catch (error) {
                 reject(error);
@@ -30,10 +30,9 @@ function STFT(inputSignalChunk, windowSize, hopSize) {
 
 // Listen for messages from the main thread
 onmessage = function (e) {
-    console.log("WORKER: received message.")
-
-    const { inputSignal, windowSize, hopSize/*, fftFactorLookup*/ } = e.data;
+    const { inputSignal, windowSize, hopSize, workerID } = e.data;
     
+    console.log("WORKER",workerID,"received message.")
     // Convert back
     const chunk = new Float32Array(inputSignal);
 
