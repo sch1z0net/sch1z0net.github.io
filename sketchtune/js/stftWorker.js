@@ -107,7 +107,7 @@ function STFT(inputSignalChunk, windowSize, hopSize, numframes, workerID) {
 
 // Listen for messages from the main thread
 onmessage = function (e) {
-    const { inputSignal, windowSize, hopSize, workerID } = e.data;
+    const { inputSignal, windowSize, hopSize, numframes, workerID } = e.data;
     
     //console.log("WORKER",workerID,"received message.")
     // Convert back
