@@ -69,7 +69,8 @@ function STFT(inputSignalChunk, windowSize, hopSize, workerID) {
 function STFT(inputSignalChunk, windowSize, hopSize, workerID) {
     return new Promise(async (resolve, reject) => {
         try {
-            var frames = (inputSignalChunk.length - windowSize) / hopSize;
+            //var frames = (inputSignalChunk.length - windowSize) / hopSize ;
+            var frames = Math.floor((inputSignalChunk.length - windowSize) / hopSize) + 1;
             const spectrogramChunk = new Array(frames); // Preallocate memory
             
             // Array to hold promises for each computation
@@ -101,9 +102,6 @@ function STFT(inputSignalChunk, windowSize, hopSize, workerID) {
         }
     });
 }
-
-
-
 
 
 
