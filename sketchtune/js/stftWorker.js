@@ -14,7 +14,7 @@ function STFT(inputSignalChunk, windowSize, hopSize, workerID) {
                     const windowedFrame = applyHanningWindow(frame);
                     //console.log("WORKER: process Frame");
                     const spectrum = await computeFFT(windowedFrame); // Assuming computeFFT has an asynchronous version
-                    console.log("WORKER",workerID,"push to Spectrum [",i,"/",(inputSignalChunk.length - windowSize)/hopSize,"]");
+                    console.log("WORKER",workerID,"push to Spectrum [",i,"/",(inputSignalChunk.length - windowSize),"]");
                     spectrogramChunk.push(spectrum);
                 }
                 console.log("WORKER",workerID,"resolve Spectrogram Chunk");
