@@ -7,6 +7,15 @@ function nextPowerOf2(n) {
 }
 
 /******************** UTILS *********************/
+// Function to create a Hanning window
+function createHanningWindow(windowLength) {
+    const window = new Float32Array(windowLength);
+    for (let i = 0; i < windowLength; i++) {
+        window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * i / (windowLength - 1)));
+    }
+    return window;
+}
+
 // Function to apply Hanning window to the input signal
 function applyHanningWindow(frame) {
     const windowedFrame = new Float32Array(frame.length);

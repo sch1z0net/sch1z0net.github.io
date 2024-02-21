@@ -356,9 +356,37 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
 
 
 
+// Function to apply time-domain smoothing after inverse FFT
+function applyTimeDomainSmoothing(inputSignal, hopSize, smoothingWindowType) {
+    const smoothedSignal = [];
+    
+    // Create a window for smoothing
+    const smoothingWindow = createHanningWindow(hopSize, smoothingWindowType);
+    
+    // Apply overlap-add with smoothing
+    for (let i = 0; i < inputSignal.length; i++) {
+        const frame = inputSignal[i];
+        const signalLength = smoothedSignal.length;
+        
+        // Apply overlap-add with smoothing and window
+        for (let j = 0; j < frame.length; j++) {
+            const index = i * hopSize + j;
+            if (index < signalLength) {
+                smoothedSignal[index] += frame[j] * smoothingWindow[j];
+            } else {
+                smoothedSignal.push(frame[j] * smoothingWindow[j]);
+            }
+        }
+    }
+    
+    return smoothedSignal;
+}
 
 
-function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
+
+
+
+function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothingWindowType) {
     return Promise.resolve()
         .then(async () => {
             const startTime = performance.now();
@@ -385,14 +413,16 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
             return result;
         })
         .then((processedSignal) => {
-            //console.log("Reconstruction finished");
-            return processedSignal;
+            const smoothedSignal = applyTimeDomainSmoothing(processedSignal, hopSize, smoothingWindowType);
+            console.log("Smoothing finished");
+            return smoothedSignal;
         })
         .catch((error) => {
             console.error('Error:', error);
             return null; // or handle the error appropriately
         });
 }
+
 
 
 
