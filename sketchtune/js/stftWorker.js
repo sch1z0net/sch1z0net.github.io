@@ -51,8 +51,9 @@ function STFT(inputSignalChunk, windowSize, hopSize, workerID) {
 
             // Wait for the prefetch to complete (optional)
             //await nextSpectrumPromise;
-            resolve(spectrogramChunk);
         }
+
+        resolve(spectrogramChunk);
 
     });
 }
