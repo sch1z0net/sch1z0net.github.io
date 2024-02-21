@@ -371,7 +371,7 @@ function applyTimeDomainSmoothing(inputSignal, hopSize) {
         // Apply overlap-add with smoothing and window
         for (let j = 0; j < hopSize; j++) {
             // Calculate the index in the input signal considering overlap
-            const index = i - j;
+            const index = i - j * hopSize; // Adjusted index calculation
             
             // Ensure the index is within the bounds of the input signal
             if (index >= 0 && index < inputSignal.length) {
@@ -381,6 +381,7 @@ function applyTimeDomainSmoothing(inputSignal, hopSize) {
     }
     return smoothedSignal;
 }
+
 
 
 
@@ -413,7 +414,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothingW
             return result;
         })
         .then((processedSignal) => {
-            const smoothedSignal = applyTimeDomainSmoothing(processedSignal, hopSize);
+            const smoothedSignal = applyTimeDomainSmoothing(processedSignal, hopSize*2);
             console.log("Smoothing finished");
             return smoothedSignal;
         })
