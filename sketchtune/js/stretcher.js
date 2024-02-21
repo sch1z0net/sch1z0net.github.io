@@ -1,3 +1,7 @@
+const NUM_WORKERS = 16;
+
+
+
 // Precalculate FFT lookup table
 const maxSampleLength = 60 * 44100; // 60 seconds at 44100 Hz sample rate
 const fftFactorLookup = generateFFTFactorLookup(maxSampleLength);
@@ -10,7 +14,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
     const spectrogram = [];
 
     // Define the number of workers (you can adjust this based on performance testing)
-    const numWorkers = 8;
+    const numWorkers = NUM_WORKERS;
 
     // Calculate frames per worker
     const framesPerWorker = Math.ceil(numFrames / numWorkers);
@@ -82,7 +86,7 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize) {
     const outputSignal = new Float32Array((numFrames - 1) * hopSize + windowSize);
 
     // Define the number of workers (you can adjust this based on performance testing)
-    const numWorkers = 8;
+    const numWorkers = NUM_WORKERS;
 
     // Calculate frames per worker
     const framesPerWorker = Math.ceil(numFrames / numWorkers);
