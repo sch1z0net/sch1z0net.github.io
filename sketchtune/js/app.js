@@ -1777,14 +1777,13 @@ $(document).ready(function(){
   const $hopFactorSelect = $("<select>").attr("id", "hopFactorSelect");
 
   
-
   // Options for window size select box
-  [256, 512, 1024, 2048, 4096].forEach(function(size) {
+  [256, 512, 1024, 2048, 4096, 8192].forEach(function(size) {
     $windowSizeSelect.append($("<option>").attr("value", size).text(size));
   });
 
   // Options for hop factor select box
-  [2, 4, 8, 16].forEach(function(factor) {
+  [2, 4, 8, 16, 32].forEach(function(factor) {
     $hopFactorSelect.append($("<option>").attr("value", factor).text(factor));
   });
 
@@ -1805,11 +1804,15 @@ $(document).ready(function(){
 
 
 
+
+
 async function playSample(audioContext, audioBuffer, time, offset, duration) {
     const stretchFactor = 1 / GLOBAL_PLAYBACK_RATE;
     let resampledBuffer = audioBuffer;
 
     if (stretchFactor !== 1) {
+        // 4096
+        // 16
         resampledBuffer = await phaseVocoder(audioContext, resampledBuffer, stretchFactor, windowSize, hopFactor); 
     }
 
