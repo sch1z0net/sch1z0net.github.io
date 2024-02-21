@@ -52,7 +52,7 @@ async function testAverage(testSignal, mode) {
         const result = await testSTFT(testSignal, mode);
         const endTime = performance.now();
         const elapsedTime = endTime - startTime;
-        console.log(`Iteration ${i + 1}: Elapsed time: ${elapsedTime} milliseconds`);
+        //console.log(`Iteration ${i + 1}: Elapsed time: ${elapsedTime} milliseconds`);
         totalTime += elapsedTime;
     }
     const averageTime = totalTime / numIterations;
