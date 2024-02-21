@@ -43,7 +43,7 @@ async function testSTFT(inputSignal, mode){
 }
 
 async function testAverage(testSignal, mode) {
-    const numIterations = 100;
+    const numIterations = 10;
     let totalTime = 0;
 
     for (let i = 0; i < numIterations; i++) {
@@ -60,9 +60,11 @@ async function testAverage(testSignal, mode) {
 }
 
 async function test(){
-    await testAverage(testDataSignal, 0);
-    await testAverage(testDataSignal, 1);
-    await testAverage(testDataSignal, 2);
+    for(let i = 0; i < 10; i++){
+        await testAverage(testDataSignal, 0);
+        await testAverage(testDataSignal, 1);
+        await testAverage(testDataSignal, 2);
+    }
 }
 
 
