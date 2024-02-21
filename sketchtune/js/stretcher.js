@@ -283,8 +283,10 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
 
 
 function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
+    console.log("TIMESTRETCH");
     return Promise.resolve()
         .then(async () => {
+            console.log("STFT");
             const startTime = performance.now();
             const result = await STFTWithWebWorkers(inputSignal, windowSize, hopSize);
             const endTime = performance.now();
