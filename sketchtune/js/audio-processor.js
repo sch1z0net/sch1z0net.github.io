@@ -1,134 +1,153 @@
+function convertToComplex(inputSignal) {
+    return inputSignal.map(value => ({ re: value, im: 0 }));
+}
 
-/*
 function nextPowerOf2(n) {
     return Math.pow(2, Math.ceil(Math.log2(n)));
 }
 
-function fft(input) {
+/******************** UTILS *********************/
+// Function to create a Hanning window
+function createHanningWindow(windowLength) {
+    const window = new Float32Array(windowLength);
+    for (let i = 0; i < windowLength; i++) {
+        window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * i / (windowLength - 1)));
+    }
+    return window;
+}
+
+// Function to apply Hanning window to the input signal
+function applyHanningWindow(frame) {
+    const windowedFrame = new Float32Array(frame.length);
+    for (let i = 0; i < frame.length; i++) {
+        windowedFrame[i] = frame[i] * 0.5 * (1 - Math.cos(2 * Math.PI * i / (frame.length - 1)));
+    }
+    return windowedFrame;
+}
+
+function precalculateFFTFactors(N) {
+    const factors = [];
+    for (let k = 0; k < N / 2; k++) {
+        const theta = -2 * Math.PI * k / N;
+        factors.push({ re: Math.cos(theta), im: Math.sin(theta) });
+    }
+    return factors;
+}
+
+function generateFFTFactorLookup(maxSampleLength) {
+    const maxN = nextPowerOf2(maxSampleLength);
+    const fftFactorLookup = {};
+
+    for (let N = 2; N <= maxN; N *= 2) {
+        fftFactorLookup[N] = precalculateFFTFactors(N);
+    }
+
+    return fftFactorLookup;
+}
+
+/******************** FORWARD *********************/
+// Cache object to store precalculated FFT factors
+const fftFactorCache = {};
+
+// Function to compute FFT factors with caching
+function computeFFTFactorsWithCache(N) {
+    // Check if FFT factors for this size are already cached
+    if (fftFactorCache[N]) {
+        return fftFactorCache[N];
+    }
+
+    // Calculate FFT factors
+    const factors = [];
+    for (let k = 0; k < N / 2; k++) {
+        const theta = -2 * Math.PI * k / N;
+        factors.push({ re: Math.cos(theta), im: Math.sin(theta) });
+    }
+
+    // Cache the factors for future use
+    fftFactorCache[N] = factors;
+
+    return factors;
+}
+
+
+
+
+
+// Bit reversal function
+function bitReverse(num, bits) {
+    let reversed = 0;
+    for (let i = 0; i < bits; i++) {
+        reversed = (reversed << 1) | (num & 1);
+        num >>= 1;
+    }
+    return reversed;
+}
+// Async function to perform FFT in-place
+async function fftInPlace(input, fftFactorLookup = null) {
     const N = input.length;
+    const bits = Math.log2(N);
 
     if (N <= 1) {
         return input;
     }
 
-    const even = [];
-    const odd = [];
+    // Check if FFT factors for this size are cached
+    let factors;
+    if (!fftFactorLookup) {
+        factors = computeFFTFactorsWithCache(N);
+    }else{
+        factors = fftFactorLookup[N];
+    }
+
+    // Bit reversal permutation
     for (let i = 0; i < N; i++) {
-        if (i % 2 === 0) {
-            even.push(input[i]);
-        } else {
-            odd.push(input[i]);
+        const j = bitReverse(i, bits);
+        if (j > i) {
+            const temp = input[j];
+            input[j] = input[i];
+            input[i] = temp;
         }
     }
 
-    const evenFFT = fft(even);
-    const oddFFT = fft(odd);
+    // Perform FFT in-place
+    for (let len = 2; len <= N; len <<= 1) {
+        const angle = -2 * Math.PI / len;
+        for (let i = 0; i < N; i += len) {
+            for (let k = 0; k < len / 2; k++) {
+                const index = k + i;
+                const evenIndex = index;
+                const oddIndex = index + len / 2;
 
-    const output = [];
-    for (let k = 0; k < N / 2; k++) {
-        const theta = -2 * Math.PI * k / N;
-        const exp = { re: Math.cos(theta), im: Math.sin(theta) };
-        const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
-        output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
-        output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
+                const exp = factors[k];
+
+                const tRe = exp.re * input[oddIndex].re - exp.im * input[oddIndex].im;
+                const tIm = exp.re * input[oddIndex].im + exp.im * input[oddIndex].re;
+
+                input[oddIndex].re = input[evenIndex].re - tRe;
+                input[oddIndex].im = input[evenIndex].im - tIm;
+                input[evenIndex].re += tRe;
+                input[evenIndex].im += tIm;
+            }
+        }
     }
 
-    return output;
+    return input;
 }
 
-
-
-
-
-
-// Function to apply Hanning window to the input signal
-function applyHanningWindow(inputSignal) {
-    const windowedSignal = [];
-    const N = inputSignal.length;
-    for (let n = 0; n < N; n++) {
-        const w = 0.5 * (1 - Math.cos(2 * Math.PI * n / (N - 1))); // Hanning window formula
-        windowedSignal.push(inputSignal[n] * w);
-    }
-    return windowedSignal;
-}
-
-// Function to perform FFT on the input signal with windowing and zero-padding
-function prepare_and_fft(inputSignal, sampleRate) {
+async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Apply Hanning window to the input signal
-    const windowedSignal = applyHanningWindow(inputSignal);
     //const windowedSignal = inputSignal;
+    const windowedSignal = applyHanningWindow(inputSignal); 
 
     // Zero-padding to the next power of 2
     const FFT_SIZE = nextPowerOf2(windowedSignal.length);
-    const paddedInput = new Array(FFT_SIZE).fill(0);
-    windowedSignal.forEach((value, index) => paddedInput[index] = value);
-
-    // Convert to complex numbers
-    const complexInput = convertToComplex(paddedInput);
+    const paddedInput = new Array(FFT_SIZE).fill({ re: 0, im: 0 });
+    windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
 
     // Perform FFT
-    return fft(complexInput);
+    return await fftInPlace(paddedInput, fftFactorLookup);
+    //return await fft(paddedInput, fftFactorLookup);
 }
-
-
-
-function convertToComplex(inputSignal) {
-    return inputSignal.map(value => ({ re: value, im: 0 }));
-}
-
-
-// Find the frequency with the highest magnitude in the spectrum
-function findPeakFrequency(spectrum, sampleRate) {
-    const N = spectrum.length;
-    let maxMagnitude = 0;
-    let maxIndex = 0;
-
-    for (let i = 0; i < N / 2; i++) { // Only consider the positive frequencies
-        const magnitude = Math.sqrt(spectrum[i].re * spectrum[i].re + spectrum[i].im * spectrum[i].im);
-
-        if (magnitude > maxMagnitude) {
-            maxMagnitude = magnitude;
-            maxIndex = i;
-        }
-    }
-
-    // Calculate the corresponding frequency
-    const frequency = maxIndex * sampleRate / N;
-
-    return frequency;
-}
-*/
-
-/*
-function displaySpec(audiobuffer, sampleRate){
-   const spectrum = fft_audio_buffer(audiobuffer);
-   const numBins = spectrum.length;
-   const minBinIndex = Math.round((minFrequency / sampleRate) * numBins);
-   const maxBinIndex = Math.round((maxFrequency / sampleRate) * numBins);
-   // Extract the subset of the spectrum corresponding to frequencies between minFrequency and maxFrequency
-   const subsetSpectrum = spectrum.slice(minBinIndex, maxBinIndex);
-   //console.log("FFT result:", subsetSpectrum);
-   const peakFrequency = findPeakFrequency(subsetSpectrum, sampleRate);
-   console.log("Peak frequency:", peakFrequency, "Hz");
-   // Plot spectrum
-   plotSpectrum(spectrumCanvas, subsetSpectrum, sampleRate);
-}*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
