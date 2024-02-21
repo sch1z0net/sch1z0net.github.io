@@ -74,7 +74,7 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames, workerID) {
 // Function to perform Short-Time Fourier Transform (STFT)
 function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
     return new Promise((resolve, reject) => {
-        var frames = inputSignalChunk.length - windowSize;
+        var frames = (inputSignalChunk.length - windowSize)/hopSize;
         const spectrogramChunk = new Array(frames); // Preallocate memory
 
         // Array to hold promises for each computation
