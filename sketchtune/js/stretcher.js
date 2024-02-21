@@ -284,6 +284,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
             // Modify magnitude and phase components based on stretch factor
             const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
             //console.log("Resulting Spectrogram after Stretching", stretchedSpectrogram);
+            console.log("Now Reconstruct the Audio Signal");
             // Apply inverse STFT to reconstruct processed signal
             const processedSignal = await ISTFT(stretchedSpectrogram, windowSize, hopSize);
             return processedSignal;
