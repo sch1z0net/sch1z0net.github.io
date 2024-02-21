@@ -32,7 +32,7 @@ function STFT(inputSignalChunk, windowSize, hopSize, workerID) {
 onmessage = function (e) {
     const { inputSignal, windowSize, hopSize, workerID } = e.data;
     
-    console.log("WORKER",workerID,"received message.")
+    console.log("WORKER",workerID,"received message.",inputSignal, windowSize, hopSize, workerID)
     // Convert back
     const chunk = new Float32Array(inputSignal);
 
