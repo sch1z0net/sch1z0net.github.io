@@ -4,10 +4,11 @@ importScripts('./fft.js');
 function STFT(inputSignalChunk, windowSize, hopSize, fftFactorLookup) {
     return new Promise((resolve, reject) => {
         const spectrogramChunk = [];
-
+        
         // Process each frame in the chunk asynchronously
         const processFrames = async () => {
             try {
+                console.log("STFT on Chunk with length",inputSignalChunk.length);
                 for (let i = 0; i <= inputSignalChunk.length - windowSize; i += hopSize) {
                     const frame = inputSignalChunk.slice(i, i + windowSize);
                     const windowedFrame = applyHanningWindow(frame);
@@ -33,6 +34,7 @@ onmessage = function (e) {
     STFT(inputSignal, windowSize, hopSize, fftFactorLookup)
         .then((spectrogramChunk) => {
             // Send the result back to the main thread
+            console.log("Spectrogram on Chunk ready");
             postMessage(spectrogramChunk);
         })
         .catch((error) => {
