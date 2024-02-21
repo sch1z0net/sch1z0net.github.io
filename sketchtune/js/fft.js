@@ -103,14 +103,14 @@ async function FFT(inputSignal, fftFactorLookup=null) {
 }
 
 // Function to compute FFT of a frame
-async function computeFFT(frame,fftFactorLookup=null) {
+async function computeFFT(frame,frameID,frames,fftFactorLookup=null) {
     // Perform FFT on the frame (you can use your FFT implementation here)
     // For simplicity, let's assume computeFFT returns the magnitude spectrum
     const startTime = performance.now();
     const spectrum = await FFT(frame, fftFactorLookup);
     const endTime = performance.now();
     const elapsedTime = endTime - startTime;
-    console.log(`FFT: Elapsed time: ${elapsedTime} milliseconds`);
+    console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);
     return spectrum;
 }
 

@@ -9,11 +9,12 @@ function STFT(inputSignalChunk, windowSize, hopSize, workerID) {
         const processFrames = async () => {
             try {
                 //console.log("WORKER",workerID,"STFT on Chunk with length",inputSignalChunk.length);
-                for (let i = 0; i <= (inputSignalChunk.length - windowSize)/hopSize; i += 1) {
+                var frames = (inputSignalChunk.length - windowSize)/hopSize;
+                for (let i = 0; i <= frames; i += 1) {
                     const frame = inputSignalChunk.slice(i*hopSize, i*hopSize + windowSize);
                     const windowedFrame = applyHanningWindow(frame);
                     //console.log("WORKER: process Frame",windowedFrame);
-                    const spectrum = await computeFFT(windowedFrame); // Assuming computeFFT has an asynchronous version
+                    const spectrum = await computeFFT(windowedFrame, i, frames); // Assuming computeFFT has an asynchronous version
                     //console.log("WORKER",workerID,"push Frame to Spectrum [",i,"/",(inputSignalChunk.length - windowSize)/hopSize,"]");
                     spectrogramChunk.push(spectrum);
                 }
