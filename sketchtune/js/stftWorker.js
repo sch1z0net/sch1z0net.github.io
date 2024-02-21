@@ -8,13 +8,16 @@ function STFT(inputSignalChunk, windowSize, hopSize) {
         // Process each frame in the chunk asynchronously
         const processFrames = async () => {
             try {
-                console.log("STFT on Chunk with length",inputSignalChunk.length);
+                console.log("WORKER: STFT on Chunk with length",inputSignalChunk.length);
                 for (let i = 0; i <= inputSignalChunk.length - windowSize; i += hopSize) {
                     const frame = inputSignalChunk.slice(i, i + windowSize);
                     const windowedFrame = applyHanningWindow(frame);
+                    console.log("WORKER: process Frame");
                     const spectrum = await computeFFT(windowedFrame); // Assuming computeFFT has an asynchronous version
+                    console.log("WORKER: push to Spectrum");
                     spectrogramChunk.push(spectrum);
                 }
+                console.log("WORKER: resolve Spectrogram Chunk");
                 resolve(spectrogramChunk);
             } catch (error) {
                 reject(error);
@@ -27,24 +30,22 @@ function STFT(inputSignalChunk, windowSize, hopSize) {
 
 // Listen for messages from the main thread
 onmessage = function (e) {
-    console.log("Worker received message.")
+    console.log("WORKER: received message.")
 
     const { inputSignal, windowSize, hopSize/*, fftFactorLookup*/ } = e.data;
     
     // Convert back
     const chunk = new Float32Array(inputSignal);
-    //const lookup = new Float32Array(fftFactorLookup);
-    //console.log(lookup);
 
     // Use fftFactorLookup for computations
     STFT(chunk, windowSize, hopSize)
         .then((spectrogramChunk) => {
             // Send the result back to the main thread
-            console.log("Spectrogram on Chunk ready");
+            console.log("WORKER: Spectrogram on Chunk ready");
             postMessage(spectrogramChunk);
         })
         .catch((error) => {
-            console.error('Error:', error);
+            console.error('WORKER: Error:', error);
             // Optionally, handle the error and send back an error message to the main thread
         });
 };
