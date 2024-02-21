@@ -1,6 +1,3 @@
-importScripts('./fft.js');
-
-
 
 /*
 function nextPowerOf2(n) {
