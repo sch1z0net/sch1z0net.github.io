@@ -1789,12 +1789,14 @@ $(document).ready(function(){
   });
 
   // Append select boxes to the DOM
-  $("body")
+  var controls = $("<div id='controls'>")
     .append($("<label>").attr("for", "windowSize").text("Window Size:"))
     .append($windowSizeSelect)
     .append("<br>")
     .append($("<label>").attr("for", "hopFactor").text("Hop Factor:"))
     .append($hopFactorSelect);
+
+  $('body').append(controls);
 
   // Add event listener to select boxes
   $("#windowSizeSelect, #hopFactorSelect").on("change", updateVariables);
