@@ -1779,12 +1779,12 @@ $(document).ready(function(){
   
 
   // Options for window size select box
-  [512, 1024, 2048].forEach(function(size) {
+  [256, 512, 1024, 2048, 4096].forEach(function(size) {
     $windowSizeSelect.append($("<option>").attr("value", size).text(size));
   });
 
   // Options for hop factor select box
-  [2, 4, 8].forEach(function(factor) {
+  [2, 4, 8, 16].forEach(function(factor) {
     $hopFactorSelect.append($("<option>").attr("value", factor).text(factor));
   });
 
