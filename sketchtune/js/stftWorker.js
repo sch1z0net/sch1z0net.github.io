@@ -162,7 +162,7 @@ onmessage = function (e) {
     STFT(chunk, windowSize, hopSize, numFrames, mode)
         .then((spectrogramChunk) => {
             // Send the result back to the main thread
-            console.log("WORKER",workerID,"Spectrogram on Chunk ready");
+            //console.log("WORKER",workerID,"Spectrogram on Chunk ready");
             postMessage(spectrogramChunk);
         })
         .catch((error) => {
