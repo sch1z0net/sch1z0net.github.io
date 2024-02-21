@@ -91,6 +91,7 @@ async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
 
     // Zero-padding to the next power of 2
     const FFT_SIZE = nextPowerOf2(windowedSignal.length);
+    console.log(FFT_SIZE);
     const paddedInput = new Array(FFT_SIZE).fill({ re: 0, im: 0 });
     windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
 
