@@ -64,7 +64,7 @@ async function test(){
 }
 
 
-/*
+
 const windowSize = 512 * 4; // Size of the analysis window
 const hopSize = windowSize / 4; // 25% overlap
 
@@ -74,7 +74,7 @@ const testDataSignal = generateTestDataSignal(durationSeconds, sampleRate);
 
 
 test();
-*/
+
 
 
 
