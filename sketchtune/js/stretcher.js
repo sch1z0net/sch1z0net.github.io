@@ -31,7 +31,7 @@ function generateTestDataSignal(durationSeconds, sampleRate) {
     return signal;
 }
 
-const durationSeconds = 1; // Length of the signal in seconds
+const durationSeconds = 10; // Length of the signal in seconds
 const sampleRate = 44100; // Sample rate in Hz
 const testDataSignal = generateTestDataSignal(durationSeconds, sampleRate);
 
