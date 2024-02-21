@@ -310,7 +310,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
             return result;
         })
         .then((processedSignal) => {
-            console.log("Reconstruction finished");
+            //console.log("Reconstruction finished");
             return processedSignal;
         })
         .catch((error) => {
@@ -390,11 +390,11 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
 
 async function processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize) {
     // Time-stretch the input data
-    console.log("TimeStretching the Input Channel", ch);
+    //console.log("TimeStretching the Input Channel", ch);
     const processedSignal = await timeStretch(inputData, stretchFactor, windowSize, hopSize);
     // Convert processedSignal to Float32Array if necessary
     const processedSignalFloat32 = new Float32Array(processedSignal);
-    console.log("Ready Processed Input Channel", ch);
+    //console.log("Ready Processed Input Channel", ch);
 
     // Copy the processed signal to the output buffer
     outputBuffer.copyToChannel(processedSignalFloat32, ch);
