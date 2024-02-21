@@ -361,7 +361,7 @@ function applyTimeDomainSmoothing(inputSignal, hopSize, smoothingWindowType) {
     const smoothedSignal = [];
 
     // Create a Hanning window for smoothing
-    const smoothingWindow = createHanningWindow(hopSize, smoothingWindowType);
+    const smoothingWindow = createHanningWindow(hopSize);
 
     // Apply overlap-add with smoothing
     for (let i = 0; i < inputSignal.length; i++) {
@@ -372,7 +372,7 @@ function applyTimeDomainSmoothing(inputSignal, hopSize, smoothingWindowType) {
             smoothedSignal[i] += inputSignal[i] * smoothingWindow[index];
         }
     }
-
+    console.log(smoothedSignal);
     return smoothedSignal;
 }
 
