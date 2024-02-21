@@ -66,11 +66,11 @@ function STFT(inputSignalChunk, windowSize, hopSize, workerID) {
 
 
 
-function STFT(inputSignalChunk, windowSize, hopSize, numframes, workerID) {
+function STFT(inputSignalChunk, windowSize, hopSize, numFrames, workerID) {
     return new Promise(async (resolve, reject) => {
         try {
             //var frames = (inputSignalChunk.length - windowSize) / hopSize ;
-            var frames = numframes;
+            var frames = numFrames;
             const spectrogramChunk = new Array(frames); // Preallocate memory
             
             // Array to hold promises for each computation
@@ -107,14 +107,14 @@ function STFT(inputSignalChunk, windowSize, hopSize, numframes, workerID) {
 
 // Listen for messages from the main thread
 onmessage = function (e) {
-    const { inputSignal, windowSize, hopSize, numframes, workerID } = e.data;
+    const { inputSignal, windowSize, hopSize, numFrames, workerID } = e.data;
     
     //console.log("WORKER",workerID,"received message.")
     // Convert back
     const chunk = new Float32Array(inputSignal);
 
     // Use fftFactorLookup for computations
-    STFT(chunk, windowSize, hopSize, numframes, workerID)
+    STFT(chunk, windowSize, hopSize, numFrames, workerID)
         .then((spectrogramChunk) => {
             // Send the result back to the main thread
             console.log("WORKER",workerID,"Spectrogram on Chunk ready");
