@@ -405,6 +405,8 @@ async function processChannel(audioContext, inputData, outputBuffer, ch, stretch
     
     // Convert processedSignal to Float32Array if necessary
     const processedSignalFloat32 = new Float32Array(processedSignal);
+    console.log(processedSignal,processedSignalFloat32);
+
     // Copy the processed signal to the output buffer
     outputBuffer.copyToChannel(processedSignalFloat32, ch);
 }
