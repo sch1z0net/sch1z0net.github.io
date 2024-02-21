@@ -275,9 +275,9 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
 
 
 
-async function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
+function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
     return STFTWithWebWorkers(inputSignal, windowSize, hopSize)
-        .then((spectrogram) => {
+        .then(async (spectrogram) => { // Marking the callback function as async
             // Process the spectrogram
             console.log("Resulting Spectrogram after STFT", spectrogram);
             // Modify magnitude and phase components based on stretch factor
@@ -292,6 +292,7 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
             return null; // or handle the error appropriately
         });
 }
+
 
 
 
@@ -400,7 +401,7 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor) {
 async function processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize) {
     // Time-stretch the input data
     console.log("TimeStretching the Input Channel.")
-    const processedSignal = await timeStretch(inputData, stretchFactor, windowSize, hopSize);
+    const processedSignal = timeStretch(inputData, stretchFactor, windowSize, hopSize);
     
     // Convert processedSignal to Float32Array if necessary
     const processedSignalFloat32 = new Float32Array(processedSignal);
