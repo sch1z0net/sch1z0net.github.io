@@ -93,6 +93,7 @@ function STFT(inputSignalChunk, windowSize, hopSize, workerID) {
             // Wait for all promises to resolve
             await Promise.all(computationPromises);
 
+            console.log(spectrogramChunk);
             // Resolve with the spectrogram chunk
             resolve(spectrogramChunk);
         } catch (error) {
