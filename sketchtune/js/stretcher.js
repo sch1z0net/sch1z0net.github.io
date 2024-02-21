@@ -280,6 +280,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
         .then(async (spectrogram) => { // Marking the callback function as async
             // Process the spectrogram
             //console.log("Resulting Spectrogram after STFT", spectrogram);
+            console.log("Now Stretch the Spectrogram").
             // Modify magnitude and phase components based on stretch factor
             const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
             //console.log("Resulting Spectrogram after Stretching", stretchedSpectrogram);
