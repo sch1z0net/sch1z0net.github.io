@@ -31,7 +31,7 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames, workerID) {
 }
 */
 
-
+/*
 // Function to perform Short-Time Fourier Transform (STFT)
 function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
     return new Promise((resolve, reject) => {
@@ -56,7 +56,7 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
 
         processFrames();     
     });
-}
+}*/
 
 
 /*
@@ -98,6 +98,74 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
         processFrames();
     });
 }*/
+
+
+
+
+
+
+
+// Function to perform Short-Time Fourier Transform (STFT) with batch processing
+function STFT(inputSignalChunk, windowSize, hopSize) {
+    return new Promise((resolve, reject) => {
+        const frames = Math.floor((inputSignalChunk.length - windowSize) / hopSize);
+        const spectrogramChunk = new Array(frames); // Preallocate memory
+
+        // Array to hold promises for each batch of computations
+        const batchPromises = [];
+
+        const processBatch = async (startFrame, endFrame) => {
+            try {
+                // Process each frame in the batch concurrently
+                const batchComputationPromises = [];
+                for (let i = startFrame; i < endFrame; i++) {
+                    const startIdx = i * hopSize;
+                    const endIdx = startIdx + windowSize;
+                    const frame = inputSignalChunk.slice(startIdx, endIdx);
+                    const windowedFrame = applyHanningWindow(frame);
+
+                    // Create a promise for each computation
+                    const spectrumPromise = computeFFT(windowedFrame, i, frames);
+                    batchComputationPromises.push(spectrumPromise);
+                }
+
+                // Wait for all promises in the batch to resolve
+                const batchResults = await Promise.all(batchComputationPromises);
+
+                // Store the results in the spectrogram chunk
+                for (let i = startFrame; i < endFrame; i++) {
+                    spectrogramChunk[i] = batchResults[i - startFrame];
+                }
+            } catch (error) {
+                reject(error);
+            }
+        };
+
+        // Define the batch size (adjust as needed)
+        const batchSize = 10;
+
+        // Process batches of frames concurrently
+        for (let i = 0; i < frames; i += batchSize) {
+            const startFrame = i;
+            const endFrame = Math.min(i + batchSize, frames);
+            batchPromises.push(processBatch(startFrame, endFrame));
+        }
+
+        // Wait for all batch promises to resolve
+        Promise.all(batchPromises)
+            .then(() => {
+                resolve(spectrogramChunk);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+}
+
+
+
+
+
 
 // Listen for messages from the main thread
 onmessage = function (e) {
