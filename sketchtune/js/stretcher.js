@@ -128,7 +128,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize) {
 
 
 // Function to perform inverse Short-Time Fourier Transform (ISTFT)
-function ISTFT(spectrogram, windowSize, hopSize) {
+async function ISTFT(spectrogram, windowSize, hopSize) {
     const numFrames = spectrogram.length;
     const outputSignalLength = (numFrames - 1) * hopSize + windowSize;
     const outputSignal = new Float32Array(outputSignalLength).fill(0);
@@ -284,7 +284,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize) {
             const stretchedSpectrogram = stretchSpectrogram(spectrogram, stretchFactor);
             console.log("Resulting Spectrogram after Stretching", stretchedSpectrogram);
             // Apply inverse STFT to reconstruct processed signal
-            const processedSignal = ISTFT(stretchedSpectrogram, windowSize, hopSize);
+            const processedSignal = await ISTFT(stretchedSpectrogram, windowSize, hopSize);
             return processedSignal;
         })
         .catch((error) => {
