@@ -1,7 +1,7 @@
 importScripts('./fft.js');
 
 // Function to perform Short-Time Fourier Transform (STFT)
-function STFT(inputSignalChunk, windowSize, hopSize, fftFactorLookup) {
+function STFT(inputSignalChunk, windowSize, hopSize) {
     return new Promise((resolve, reject) => {
         const spectrogramChunk = [];
         
@@ -12,7 +12,7 @@ function STFT(inputSignalChunk, windowSize, hopSize, fftFactorLookup) {
                 for (let i = 0; i <= inputSignalChunk.length - windowSize; i += hopSize) {
                     const frame = inputSignalChunk.slice(i, i + windowSize);
                     const windowedFrame = applyHanningWindow(frame);
-                    const spectrum = await computeFFT(windowedFrame, fftFactorLookup); // Assuming computeFFT has an asynchronous version
+                    const spectrum = await computeFFT(windowedFrame); // Assuming computeFFT has an asynchronous version
                     spectrogramChunk.push(spectrum);
                 }
                 resolve(spectrogramChunk);
@@ -29,15 +29,13 @@ function STFT(inputSignalChunk, windowSize, hopSize, fftFactorLookup) {
 onmessage = function (e) {
     console.log("Worker received message.")
 
-    const { inputSignal, windowSize, hopSize, fftFactorLookup } = e.data;
+    const { inputSignal, windowSize, hopSize } = e.data;
     
     // Convert back
     const chunk = new Float32Array(inputSignal);
-    const lookup = new Float32Array(fftFactorLookup);
-    console.log(lookup);
 
     // Use fftFactorLookup for computations
-    STFT(chunk, windowSize, hopSize, lookup)
+    STFT(chunk, windowSize, hopSize)
         .then((spectrogramChunk) => {
             // Send the result back to the main thread
             console.log("Spectrogram on Chunk ready");
