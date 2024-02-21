@@ -1,37 +1,11 @@
 importScripts('./fft.js');
 
-/*
-// Function to perform Short-Time Fourier Transform (STFT)
-function STFT(inputSignalChunk, windowSize, hopSize, numFrames, workerID) {
-    return new Promise((resolve, reject) => {
-        const spectrogramChunk = [];
-        
-        // Process each frame in the chunk asynchronously
-        const processFrames = async () => {
-            try {
-                console.log("WORKER",workerID,"STFT on Chunk with length",inputSignalChunk.length);
-                var frames = (inputSignalChunk.length - windowSize)/hopSize;
-                for (let i = 0; i <= frames; i += 1) {
-                    const frame = inputSignalChunk.slice(i*hopSize, i*hopSize + windowSize);
-                    const windowedFrame = applyHanningWindow(frame);
-                    //console.log("WORKER: process Frame",windowedFrame);
-                    const spectrum = await computeFFT(windowedFrame, i, frames); // Assuming computeFFT has an asynchronous version
-                    //console.log("WORKER",workerID,"push Frame to Spectrum [",i,"/",(inputSignalChunk.length - windowSize)/hopSize,"]");
-                    spectrogramChunk.push(spectrum);
-                }
-                //console.log("WORKER",workerID,"resolve Spectrogram Chunk");
-                resolve(spectrogramChunk);
-            } catch (error) {
-                reject(error);
-            }
-        };
 
-        processFrames();
-    }
-}
-*/
 
-/*
+
+/****** SOLUTION 1: SEQUENCE ********/
+
+
 // Function to perform Short-Time Fourier Transform (STFT)
 function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
     return new Promise((resolve, reject) => {
@@ -56,13 +30,13 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
 
         processFrames();     
     });
-}*/
+}
 
 
 
+/****** SOLUTION 2: CONCURRENCY ********/
 
-
-
+/*
 // Function to perform Short-Time Fourier Transform (STFT)
 function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
     return new Promise((resolve, reject) => {
@@ -101,13 +75,10 @@ function STFT(inputSignalChunk, windowSize, hopSize, numFrames) {
         processFrames();
     });
 }
+*/
 
 
-
-
-
-
-
+/****** SOLUTION 3: BATCHING ********/
 
 
 /*
