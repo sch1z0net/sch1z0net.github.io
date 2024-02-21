@@ -1,3 +1,8 @@
+importScripts('./fft.js');
+
+
+
+/*
 function nextPowerOf2(n) {
     return Math.pow(2, Math.ceil(Math.log2(n)));
 }
@@ -75,9 +80,6 @@ function convertToComplex(inputSignal) {
 }
 
 
-
-
-
 // Find the frequency with the highest magnitude in the spectrum
 function findPeakFrequency(spectrum, sampleRate) {
     const N = spectrum.length;
@@ -98,7 +100,7 @@ function findPeakFrequency(spectrum, sampleRate) {
 
     return frequency;
 }
-
+*/
 
 /*
 function displaySpec(audiobuffer, sampleRate){
@@ -226,7 +228,7 @@ class AudioProcessor extends AudioWorkletProcessor {
 
   performFFT(inputData) {
     // Perform the processing (FFT analysis) on the mono channel
-    var spectrum = prepare_and_fft(inputData, this.sampleRate);
+    var spectrum = prepare_and_fft(inputData);
     
     /*const numBins = spectrum.length;
     const maxFrequency = 10000; // Maximum frequency (10 kHz)
