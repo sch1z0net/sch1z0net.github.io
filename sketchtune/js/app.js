@@ -73,59 +73,6 @@ function plotWaveform(audioBuffer) {
 }
 
 
-
-/*
-// Plot spectrum on canvas in a logarithmic scale
-function plotSpectrum(spectrum, sampleRate) {
-    const canvas = document.getElementById('spectrumCanvas');
-    const ctx = canvas.getContext('2d');
-
-    const width = canvas.width;
-    const height = canvas.height;
-
-    ctx.clearRect(0, 0, width, height);
-    ctx.beginPath();
-
-    const numBins = spectrum.length;
-
-    // Plot the spectrum using a logarithmic scale
-    for (let x = 0; x < width; x++) {
-        const frequency = minFrequency * Math.pow(10, x / width * Math.log10(maxFrequency / minFrequency));
-        const binIndex = Math.round((frequency - minFrequency) / (maxFrequency - minFrequency) * (numBins - 1));
-        const magnitude = Math.sqrt(spectrum[binIndex].re * spectrum[binIndex].re + spectrum[binIndex].im * spectrum[binIndex].im);
-
-        // Normalize magnitude for plotting
-        const normalizedMagnitude = magnitude / Math.sqrt(numBins);
-
-        const y = height - normalizedMagnitude * height; // Invert Y-axis
-        ctx.lineTo(x, y);
-    }
-
-    ctx.strokeStyle = 'red';
-    ctx.stroke();
-
-    // Plot logarithmic number grid
-    ctx.fillStyle = 'black';
-    ctx.font = '10px Arial';
-    ctx.textAlign = 'center';
-
-    const fixedFrequencies = [20, 30, 40, 50, 100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000, 10000];
-
-    for (let i = 0; i < fixedFrequencies.length; i++) {
-        const frequency = fixedFrequencies[i];
-        const x = (Math.log10(frequency) - Math.log10(minFrequency)) / Math.log10(maxFrequency / minFrequency) * width;
-        ctx.fillText(frequency.toFixed(0), x, height - 5); // Display frequency
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, height);
-        ctx.strokeStyle = 'gray';
-        ctx.stroke();
-    }
-}
-*/
-
-
-
 function scaleMagnitudeToDecibels(magnitude) {
     // Assuming magnitude values are in the range [0, 1]
     // Convert magnitude to decibels using a reference value of 1
@@ -156,6 +103,40 @@ function smoothFrequencyData(frequencyData) {
 
 // Plot spectrum on canvas with smoothed and curved lines
 var fillWithColor = true;
+
+function plotSpectrumLive(frequencyData = null, sampleRate = null) {
+  const canvas = document.getElementById('spectrumCanvas');
+  const ctx = canvas.getContext('2d');
+  const width = canvas.width;
+  const height = canvas.height;
+
+  if (frequencyData != null && sampleRate != null) {
+    ctx.clearRect(0, 0, width, height);
+    ctx.beginPath();
+
+    const numBins = frequencyData.length;
+
+    // Calculate the maximum frequency based on the sample rate and FFT size
+    const maxFrequency = sampleRate / 2; // Nyquist frequency
+    const binWidth = maxFrequency / numBins;
+
+    // Plot the spectrum using a linear scale
+    ctx.moveTo(0, height); // Start from the bottom-left corner
+    for (let i = 0; i < numBins; i++) {
+      const frequency = i * binWidth;
+      const magnitude = frequencyData[i];
+
+      // Normalize magnitude for plotting
+      const normalizedMagnitude = (magnitude / maxMagnitude) * height;
+      
+      // Plot magnitude
+      const x = (frequency / maxFrequency) * width;
+      const y = height - normalizedMagnitude;
+      ctx.lineTo(x, y);
+    }
+
+
+/*
 function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   const canvas = document.getElementById('spectrumCanvas');
   const ctx = canvas.getContext('2d');
@@ -206,7 +187,9 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
       const y = height - normalizedMagnitude; // Invert Y-axis
       controlPoints.push({ x, y });
       ctx.lineTo(x, y); // Draw line to the magnitude point
-    }
+    }*/
+
+
     ctx.lineTo(width, height); // Line to the bottom-right corner
     ctx.closePath(); // Close the path
 
@@ -228,6 +211,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     ctx.strokeStyle = 'red';
     ctx.stroke();
   }
+
 
 
 
