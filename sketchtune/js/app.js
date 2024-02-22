@@ -1891,6 +1891,7 @@ const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, fre
 const sawtoothWaveBuffer = generateSawtoothWaveBuffer(durationInSeconds, sampleRate, frequency);
 var audiobuffer = sineWaveBuffer;
 
+plotWaveform(audiobuffer);
 
 const windowedInput = applyWindow(audiobuffer, 'hanning'); // Change windowType to 'hamming' or 'blackman' for different window functions
 const paddedInput = padArray(windowedInput);
