@@ -191,9 +191,9 @@ function fftReal(input) {
     const result = [];
     for (let k = 0; k < N / 2; k++) {
         const angle = -2 * Math.PI * k / N;
+        const evenPart = { real: evenFFT[k].real, imag: evenFFT[k].imag };
         const oddPart = { real: oddFFT[k].real * Math.cos(angle) - oddFFT[k].imag * Math.sin(angle), 
                           imag: oddFFT[k].real * Math.sin(angle) + oddFFT[k].imag * Math.cos(angle) };
-        const evenPart = { real: evenFFT[k].real, imag: evenFFT[k].imag };
         const twiddle = { real: Math.cos(angle), imag: Math.sin(angle) };
         
         // Combine the results of even and odd parts...
