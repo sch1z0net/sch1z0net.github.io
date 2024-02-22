@@ -484,8 +484,9 @@ function drawImageDataOnCanvas(imageData, canvasId) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw the image data onto the canvas
-    ctx.putImageData(imageData, 0, 0);
+    ctx.drawImage(imageData, 0, 0); // Corrected to use drawImage instead of putImageData
 }
+
 
 
 
