@@ -33,6 +33,7 @@ function generateSawtoothWaveBuffer(durationInSeconds, sampleRate, frequency) {
 
 // Plot mono waveform on canvas
 function plotWaveformMono(audioBuffer) {
+    const bufferLength = audioBuffer.length;
     const canvas = document.getElementById('waveformCanvas');
     const ctx = canvas.getContext('2d');
 
