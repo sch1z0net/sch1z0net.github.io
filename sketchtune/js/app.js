@@ -248,22 +248,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
 }
 
 
-$(document).ready(function(){
 
-// Example parameters
-const durationInSeconds = 1; // Duration of the audio in seconds
-const sampleRate = 44100; // Sample rate (samples per second)
-//const frequency = 440; // Frequency of the sine wave in Hz
-const frequency = 500; // Frequency of the sine wave in Hz
-//max is 20k
-// Generate sine wave buffer
-const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
-const sawtoothWaveBuffer = generateSawtoothWaveBuffer(durationInSeconds, sampleRate, frequency);
-
-var audiobuffer = sineWaveBuffer;
-plotSpectrum(audiobuffer, sampleRate);
-
-});
 
 
 
@@ -1891,13 +1876,32 @@ function getWindow(windowType, N) {
 }
 
 
-const durationSeconds = 0.5; // Length of the signal in seconds
-const sampleRate = 44100; // Sample rate in Hz
-const testDataSignal = generateTestDataSignal(durationSeconds, sampleRate);
-const windowedInput = applyWindow(testDataSignal, 'hanning'); // Change windowType to 'hamming' or 'blackman' for different window functions
+
+
+$(document).ready(function(){
+
+// Example parameters
+const durationInSeconds = 1; // Duration of the audio in seconds
+const sampleRate = 44100; // Sample rate (samples per second)
+//const frequency = 440; // Frequency of the sine wave in Hz
+const frequency = 500; // Frequency of the sine wave in Hz
+//max is 20k
+// Generate sine wave buffer
+const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
+const sawtoothWaveBuffer = generateSawtoothWaveBuffer(durationInSeconds, sampleRate, frequency);
+var audiobuffer = sineWaveBuffer;
+
+
+const windowedInput = applyWindow(audiobuffer, 'hanning'); // Change windowType to 'hamming' or 'blackman' for different window functions
 const paddedInput = padArray(windowedInput);
 const result = fftReal(paddedInput);
 const magnitudes = result.map(complex => Math.sqrt(complex.real ** 2 + complex.imag ** 2));
+
+
+plotSpectrum(audiobuffer);
+
+});
+
 
 //plotSpectrumLive(magnitudes, sampleRate);
 
