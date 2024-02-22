@@ -1889,7 +1889,7 @@ function getWindow(windowType, N) {
 $(document).ready(function(){
 
 // Example parameters
-const durationInSeconds = 0.004; // Duration of the audio in seconds
+const durationInSeconds = 4.0; // Duration of the audio in seconds
 const sampleRate = 44100; // Sample rate (samples per second)
 //const frequency = 440; // Frequency of the sine wave in Hz
 const frequency = 500; // Frequency of the sine wave in Hz
