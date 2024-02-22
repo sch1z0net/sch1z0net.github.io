@@ -522,9 +522,11 @@ function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
     const numFrames = spectrogram.length;
     const numBins = spectrogram[0].length;
+    console.log("NUM BINS",numBins);
+    const height = 20000;
 
     // Create a new ImageData object with the same dimensions as the spectrogram
-    const imageData = new ImageData(numFrames, numBins);
+    const imageData = new ImageData(numFrames, height);
 
     // Define the frequency range covered by the spectrogram (adjust these values as needed)
     const minFrequency = 20; // Minimum frequency in Hz
@@ -534,10 +536,9 @@ function spectrogramToImageData(spectrogram) {
     const frequencySpacing = Math.log(maxFrequency / minFrequency) / (numBins - 1);
 
     // Convert spectrogram data to heatmap image data with logarithmic scaling
-    for (let y = 0; y < numBins; y++) {
+    for (let y = 0; y < height; y++) {
         // Calculate the frequency corresponding to this y position using logarithmic scaling
         const f = Math.round(minFrequency * Math.exp(frequencySpacing * y));
-        console.log(f);
 
         // Iterate over frames to determine the intensity value for this y position
         for (let x = 0; x < numFrames; x++) {
@@ -545,7 +546,7 @@ function spectrogramToImageData(spectrogram) {
             const intensity = Math.round(spectrogram[x][f] * 255);
 
             // Calculate the index in the image data array
-            const index = ((numBins - y - 1) * numFrames + x) * 4; // Reversed y-axis
+            const index = ((height - y - 1) * numFrames + x) * 4; // Reversed y-axis
 
             // Set the pixel color in the image data array
             imageData.data[index] = intensity;     // Red channel
