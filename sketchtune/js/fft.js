@@ -170,6 +170,10 @@ function fftReal(input) {
     // Split the input into even and odd parts
     const even = [];
     const odd = [];
+    for (let i = 0; i < N; i += 2) {
+        even.push(input[i]);
+        odd.push(input[i + 1] || 0); // Pad with zero if odd length
+    }
 
     // Recursively calculate FFT for even and odd parts
     const evenFFT = fftReal(even);
