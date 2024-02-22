@@ -260,8 +260,8 @@ const frequency = 500; // Frequency of the sine wave in Hz
 const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
 const sawtoothWaveBuffer = generateSawtoothWaveBuffer(durationInSeconds, sampleRate, frequency);
 
-var audiobuffer = sawtoothWaveBuffer;
-//displaySpec(audiobuffer);
+var audiobuffer = sineWaveBuffer;
+displaySpec(audiobuffer);
 
 });
 
@@ -1899,7 +1899,7 @@ const paddedInput = padArray(windowedInput);
 const result = fftReal(paddedInput);
 const magnitudes = result.map(complex => Math.sqrt(complex.real ** 2 + complex.imag ** 2));
 
-plotSpectrumLive(magnitudes, sampleRate);
+//plotSpectrumLive(magnitudes, sampleRate);
 
 //const indexOfMaxMagnitude = magnitudes.indexOf(Math.max(...magnitudes));
 //console.log("Index with highest magnitude:", indexOfMaxMagnitude);
