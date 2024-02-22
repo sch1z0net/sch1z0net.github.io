@@ -441,7 +441,7 @@ function normalizeSpectrogram(spectrogram) {
 
 
 
-
+/*
 // Convert spectrogram data to image data
 function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
@@ -471,7 +471,7 @@ function spectrogramToImageData(spectrogram) {
     }
 
     return imageData;
-}
+}*/
 
 
 
@@ -517,19 +517,20 @@ function spectrogramToImageData(spectrogram) {
 
 
 
-/*
+
 function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
     const numFrames = spectrogram.length;
     const numBins = spectrogram[0].length; //512
-    const height = 600*8;
+    const height = numBins;
+    
 
     // Create a new ImageData object with the same dimensions as the spectrogram
     const imageData = new ImageData(numFrames, height);
 
     // Define the frequency range covered by the spectrogram (adjust these values as needed)
     const minFrequency = 20; // Minimum frequency in Hz
-    const maxFrequency = 512; // Maximum frequency in Hz
+    const maxFrequency = 1024; // Maximum frequency in Hz
 
     // Calculate the frequency spacing (logarithmically spaced)
     //const frequencySpacing = Math.log(maxFrequency / minFrequency) / (numBins - 1);
@@ -560,7 +561,7 @@ function spectrogramToImageData(spectrogram) {
 
     return imageData;
 }
-*/
+
 
 
 
