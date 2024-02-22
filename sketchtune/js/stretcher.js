@@ -529,7 +529,7 @@ function spectrogramToImageData(spectrogram) {
 
     // Define the frequency range covered by the spectrogram (adjust these values as needed)
     const minFrequency = 20; // Minimum frequency in Hz
-    const maxFrequency = 2000; // Maximum frequency in Hz
+    const maxFrequency = 1000; // Maximum frequency in Hz
 
     // Calculate the frequency spacing (logarithmically spaced)
     //const frequencySpacing = Math.log(maxFrequency / minFrequency) / (numBins - 1);
