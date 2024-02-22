@@ -31,9 +31,8 @@ function generateSawtoothWaveBuffer(durationInSeconds, sampleRate, frequency) {
 }
 
 
-
 // Plot mono waveform on canvas
-function plotWaveform(audioBuffer) {
+function plotWaveformMono(audioBuffer) {
     const canvas = document.getElementById('waveformCanvas');
     const ctx = canvas.getContext('2d');
 
@@ -44,6 +43,18 @@ function plotWaveform(audioBuffer) {
     ctx.beginPath();
     ctx.moveTo(0, height / 2);
 
+    // Plot the mono waveform
+    for (let i = 0; i < bufferLength; i++) {
+        const x = (i / bufferLength) * width;
+        const y = (1 - monoBuffer[i]) * height / 2;
+        ctx.lineTo(x, y);
+    }
+
+    ctx.strokeStyle = 'blue';
+    ctx.stroke();
+}
+
+function plotWaveform(audioBuffer) {
     const channels = audioBuffer.numberOfChannels;
     const bufferLength = audioBuffer.length;
     const monoBuffer = new Float32Array(bufferLength); // Create a new mono buffer
@@ -56,17 +67,11 @@ function plotWaveform(audioBuffer) {
         }
         monoBuffer[i] = sum / channels;
     }
-
-    // Plot the mono waveform
-    for (let i = 0; i < bufferLength; i++) {
-        const x = (i / bufferLength) * width;
-        const y = (1 - monoBuffer[i]) * height / 2;
-        ctx.lineTo(x, y);
-    }
-
-    ctx.strokeStyle = 'blue';
-    ctx.stroke();
+    
+    plotWaveformMono(monoBuffer);
 }
+
+
 
 const maxFrequency = 10000; // Maximum frequency (10 kHz)
 const minFrequency = 20; // Minimum frequency (20 Hz)
@@ -1891,8 +1896,7 @@ const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, fre
 const sawtoothWaveBuffer = generateSawtoothWaveBuffer(durationInSeconds, sampleRate, frequency);
 var audiobuffer = sineWaveBuffer;
 
-console.log(audiobuffer);
-plotWaveform(audiobuffer);
+plotWaveformMono(audiobuffer);
 
 const windowedInput = applyWindow(audiobuffer, 'hanning'); // Change windowType to 'hamming' or 'blackman' for different window functions
 const paddedInput = padArray(windowedInput);
