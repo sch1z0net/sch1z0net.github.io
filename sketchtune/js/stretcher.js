@@ -452,8 +452,8 @@ function spectrogramToImageData(spectrogram) {
     const imageData = new ImageData(numBins, numFrames);
 
     // Convert spectrogram data to grayscale image data
-    for (let i = 0; i < numFrames; i++) {
-        for (let j = 0; j < numBins; j++) {
+    for (let j = 0; j < numBins; j++) {
+        for (let i = 0; i < numFrames; i++) {
             // Calculate the index in the image data array
             const index = (i * numBins + j) * 4; // Each pixel has 4 values (RGBA)
 
@@ -471,6 +471,7 @@ function spectrogramToImageData(spectrogram) {
     return imageData;
 }
 
+
 // Draw image data on canvas
 function drawImageDataOnCanvas(imageData, canvasId) {
     const canvas = document.getElementById(canvasId);
@@ -484,9 +485,8 @@ function drawImageDataOnCanvas(imageData, canvasId) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw the image data onto the canvas
-    ctx.drawImage(imageData, 0, 0); // Corrected to use drawImage instead of putImageData
+    ctx.putImageData(imageData, 0, 0);
 }
-
 
 
 
