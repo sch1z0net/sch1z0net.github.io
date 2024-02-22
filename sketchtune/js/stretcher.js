@@ -533,6 +533,7 @@ function spectrogramToImageData(spectrogram) {
 
     // Calculate the frequency spacing (logarithmically spaced)
     //const frequencySpacing = Math.log(maxFrequency / minFrequency) / (numBins - 1);
+    // Calculate the frequency spacing (linearly spaced)
     const frequencySpacing = (maxFrequency / minFrequency) / (height - 1);
 
     // Convert spectrogram data to heatmap image data with logarithmic scaling
