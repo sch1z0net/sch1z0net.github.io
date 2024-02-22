@@ -460,11 +460,7 @@ function spectrogramToImageData(spectrogram) {
             //const index = ((numBins - j - 1) * numFrames + i) * 4; // Reverse
 
             // Convert magnitude/intensity to grayscale value (0-255)
-            if(true){
-                const intensity = Math.round(spectrogram[i][j] * 255);
-            }else{
-                const intensity = 0;
-            }
+            const intensity = Math.round(spectrogram[i][j] * 255);
 
             // Set the same value for R, G, and B channels (grayscale)
             imageData.data[index] = intensity;     // Red channel
