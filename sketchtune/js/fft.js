@@ -148,21 +148,17 @@ async function fftInPlaceReal(input, fftFactorLookup = null) {
 function fftReal(input) {
     const N = input.length;
 
-    // Base case of recursion: if input has only one element, return it as complex number
-    if (N === 1) {
-        return [{ real: input[0], imag: 0 }];
-    }
+    // Check if N is a power of 2, if not, pad the input array with zeros
+    const paddedLength = Math.pow(2, Math.ceil(Math.log2(N)));
+    const paddedInput = new Array(paddedLength).fill(0);
+    input.forEach((value, index) => paddedInput[index] = value);
 
-    // Split the input into even and odd parts
+    // Split the padded input into even and odd parts
     const even = [];
     const odd = [];
-    for (let i = 0; i < N; i += 2) {
-        even.push(input[i]);
-        if (i + 1 < N) {
-            odd.push(input[i + 1]);
-        } else {
-            odd.push(0); // Pad with zero if odd length
-        }
+    for (let i = 0; i < paddedLength; i += 2) {
+        even.push(paddedInput[i]);
+        odd.push(paddedInput[i + 1]);
     }
 
     // Recursively calculate FFT for even and odd parts
@@ -171,33 +167,25 @@ function fftReal(input) {
 
     // Combine the results of even and odd parts
     const result = [];
-    for (let k = 0; k < N / 2; k++) {
-        const angle = -2 * Math.PI * k / N;
-        const oddPart = { real: oddFFT[k].real * Math.cos(angle), imag: oddFFT[k].real * Math.sin(angle) };
-        const evenPart = { real: evenFFT[k].real, imag: evenFFT[k].imag };
+    for (let k = 0; k < paddedLength / 2; k++) {
+        const angle = -2 * Math.PI * k / paddedLength;
         const twiddle = { real: Math.cos(angle), imag: Math.sin(angle) };
-        result[k] = {
-            real: evenFFT[k].real + oddPart.real,
-            imag: evenFFT[k].imag + oddPart.imag
-        };
-        result[k + N / 2] = {
-            real: evenPart.real - oddPart.real,
-            imag: evenPart.imag - oddPart.imag
-        };
-        // Apply twiddle factor
         const temp = {
-            real: result[k + N / 2].real * twiddle.real - result[k + N / 2].imag * twiddle.imag,
-            imag: result[k + N / 2].real * twiddle.imag + result[k + N / 2].imag * twiddle.real
+            real: twiddle.real * oddFFT[k].real - twiddle.imag * oddFFT[k].imag,
+            imag: twiddle.real * oddFFT[k].imag + twiddle.imag * oddFFT[k].real
         };
-        result[k + N / 2] = {
-            real: temp.real,
-            imag: temp.imag
+        result[k] = {
+            real: evenFFT[k].real + temp.real,
+            imag: evenFFT[k].imag + temp.imag
+        };
+        result[k + paddedLength / 2] = {
+            real: evenFFT[k].real - temp.real,
+            imag: evenFFT[k].imag - temp.imag
         };
     }
 
     return result;
 }
-
 
 
 
