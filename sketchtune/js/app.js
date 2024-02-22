@@ -1891,7 +1891,7 @@ function getWindow(windowType, N) {
 }
 
 
-const durationSeconds = 0.05; // Length of the signal in seconds
+const durationSeconds = 0.5; // Length of the signal in seconds
 const sampleRate = 44100; // Sample rate in Hz
 const testDataSignal = generateTestDataSignal(durationSeconds, sampleRate);
 const windowedInput = applyWindow(testDataSignal, 'hanning'); // Change windowType to 'hamming' or 'blackman' for different window functions
