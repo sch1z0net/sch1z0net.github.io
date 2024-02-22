@@ -94,9 +94,9 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
 
     // Calculate frames per worker
     const framesPerWorker = Math.ceil(numFrames / numWorkers);
-    //console.log("Input Signal Length",inputSignal.length);
-    //console.log("Number of Frames", numFrames);
-    //console.log("Frames per Worker", framesPerWorker);
+    console.log("Input Signal Length",inputSignal.length);
+    console.log("Number of Frames", numFrames);
+    console.log("Frames per Worker", framesPerWorker);
 
     // Create and run workers
     for (let i = 0; i < numWorkers; i++) {
@@ -680,7 +680,7 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
     //A smaller window size allows for better time localization, 
     //capturing the transient features and rhythmic nuances of the beats more accurately.
 
-
+    //const hopSize = windowSize / 1; // 100% overlap
     //const hopSize = windowSize / 2; // 50% overlap
     //const hopSize = windowSize / 4; // 25% overlap
     //const hopSize = windowSize / 8; // 12.5% overlap

@@ -1785,7 +1785,7 @@ $(document).ready(function(){
   });
 
   // Options for hop factor select box
-  [2, 4, 8, 16, 32].forEach(function(factor) {
+  [1, 2, 4, 8, 16, 32].forEach(function(factor) {
     $hopFactorSelect.append($("<option>").attr("value", factor).text(factor));
   });
 
