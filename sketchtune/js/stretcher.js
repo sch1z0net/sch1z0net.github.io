@@ -422,7 +422,7 @@ function normalizeSpectrogram(spectrogram) {
                 const value = spectrogram[i][j];
                 const magnitude = Math.sqrt(value.re * value.re + value.im * value.im);
                 //const normalizedMagnitude = (magnitude - minMagnitude) / magnitudeRange;
-                const normalizedMagnitude = (magnitude * 100);
+                const normalizedMagnitude = (magnitude * 10);
                 row.push(normalizedMagnitude);
             }
             normalizedSpectrogram.push(row);
