@@ -1903,19 +1903,18 @@ var audiobuffer = sineWaveBuffer;
 
 plotWaveformMono(audiobuffer);
 
-const windowedInput = applyWindow(audiobuffer, 'hanning'); // Change windowType to 'hamming' or 'blackman' for different window functions
+//const windowedInput = applyWindow(audiobuffer, 'hanning'); // Change windowType to 'hamming' or 'blackman' for different window functions
+const windowedInput = audiobuffer;
 const paddedInput = padArray(windowedInput);
 var result = fftReal(paddedInput);
 const magnitudes = result.map(complex => Math.sqrt(complex.real ** 2 + complex.imag ** 2));
 plotSpectrumLive(magnitudes, sampleRate);
 
-var padded = [1,1,1,1];
-result = fftReal(padded);
-console.log(result);
-padded = [-1,1,-1,1];
-result = fftReal(padded);
-console.log(result);
+var padded;;
 padded = [1,2,3,4];
+result = fftReal(padded);
+console.log(result);
+padded = [0,-1,0,1,0,-1,0,1];
 result = fftReal(padded);
 console.log(result);
 
