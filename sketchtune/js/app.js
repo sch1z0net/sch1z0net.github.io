@@ -1910,8 +1910,21 @@ var result = fftReal(paddedInput);
 const magnitudes = result.map(complex => Math.sqrt(complex.real ** 2 + complex.imag ** 2));
 plotSpectrumLive(magnitudes, sampleRate);
 
+//const indexOfMaxMagnitude = magnitudes.indexOf(Math.max(...magnitudes));
+//console.log("Index with highest magnitude:", indexOfMaxMagnitude);
+
+// Find index with the maximum magnitude
 const indexOfMaxMagnitude = magnitudes.indexOf(Math.max(...magnitudes));
-console.log("Index with highest magnitude:", indexOfMaxMagnitude);
+
+// Convert index to frequency (in Hz)
+const peakFrequency = indexOfMaxMagnitude * sampleRate / paddedInput.length;
+
+console.log("Peak frequency:", peakFrequency, "Hz");
+
+
+
+
+
 
 //result = fftReal([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]);
 //console.log(result);
