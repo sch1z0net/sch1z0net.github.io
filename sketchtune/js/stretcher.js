@@ -614,8 +614,9 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
             console.log(`Now Stretching the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);
 
             // Normalize Spectrogram
-            const normalizedSpectrogram = normalizeSpectrogram(spectrogram);
-            console.log(normalizedSpectrogram);
+            const normalizedSpectrogram = spectrogram;
+            //const normalizedSpectrogram = normalizeSpectrogram(spectrogram);
+            //console.log(normalizedSpectrogram);
             // Convert spectrogram data to image data
             const imageData = spectrogramToImageData(normalizedSpectrogram);
             // Draw image data on canvas
