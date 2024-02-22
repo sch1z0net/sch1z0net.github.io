@@ -144,22 +144,23 @@ async function fftInPlaceReal(input, fftFactorLookup = null) {
 
 
 
+
+// Function to pad the input array with zeros to make its length a power of 2
+function padArray(input) {
+    const N = input.length;
+    const paddedLength = Math.pow(2, Math.ceil(Math.log2(N)));
+    const paddedInput = new Array(paddedLength).fill(0);
+    input.forEach((value, index) => paddedInput[index] = value);
+    return paddedInput;
+}
+
 // Calculate the FFT of real-valued input data and return complex numbers as output
 function fftReal(input) {
     const N = input.length;
 
-    // Check if N is a power of 2, if not, pad the input array with zeros
-    const paddedLength = Math.pow(2, Math.ceil(Math.log2(N)));
-    const paddedInput = new Array(paddedLength).fill(0);
-    input.forEach((value, index) => paddedInput[index] = value);
-
-    // Split the padded input into even and odd parts
+    // Split the input into even and odd parts
     const even = [];
     const odd = [];
-    for (let i = 0; i < paddedLength; i += 2) {
-        even.push(paddedInput[i]);
-        odd.push(paddedInput[i + 1]);
-    }
 
     // Recursively calculate FFT for even and odd parts
     const evenFFT = fftReal(even);
@@ -167,25 +168,37 @@ function fftReal(input) {
 
     // Combine the results of even and odd parts
     const result = [];
-    for (let k = 0; k < paddedLength / 2; k++) {
-        const angle = -2 * Math.PI * k / paddedLength;
+    for (let k = 0; k < N / 2; k++) {
+        const angle = -2 * Math.PI * k / N;
+        const oddPart = { real: oddFFT[k].real * Math.cos(angle), imag: oddFFT[k].real * Math.sin(angle) };
+        const evenPart = { real: evenFFT[k].real, imag: evenFFT[k].imag };
         const twiddle = { real: Math.cos(angle), imag: Math.sin(angle) };
-        const temp = {
-            real: twiddle.real * oddFFT[k].real - twiddle.imag * oddFFT[k].imag,
-            imag: twiddle.real * oddFFT[k].imag + twiddle.imag * oddFFT[k].real
-        };
         result[k] = {
-            real: evenFFT[k].real + temp.real,
-            imag: evenFFT[k].imag + temp.imag
+            real: evenFFT[k].real + oddPart.real,
+            imag: evenFFT[k].imag + oddPart.imag
         };
-        result[k + paddedLength / 2] = {
-            real: evenFFT[k].real - temp.real,
-            imag: evenFFT[k].imag - temp.imag
+        result[k + N / 2] = {
+            real: evenPart.real - oddPart.real,
+            imag: evenPart.imag - oddPart.imag
+        };
+        // Apply twiddle factor
+        const temp = {
+            real: result[k + N / 2].real * twiddle.real - result[k + N / 2].imag * twiddle.imag,
+            imag: result[k + N / 2].real * twiddle.imag + result[k + N / 2].imag * twiddle.real
+        };
+        result[k + N / 2] = {
+            real: temp.real,
+            imag: temp.imag
         };
     }
 
     return result;
 }
+
+
+
+
+
 
 
 

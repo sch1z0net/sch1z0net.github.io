@@ -81,8 +81,10 @@ test();
 const durationSeconds = 3; // Length of the signal in seconds
 const sampleRate = 44100; // Sample rate in Hz
 const testDataSignal = generateTestDataSignal(durationSeconds, sampleRate);
-const result = fftReal(testDataSignal);
+const paddedInput = padArray(testDataSignal);
+const result = fftReal(paddedInput);
 console.log(result);
+
 
 
 
