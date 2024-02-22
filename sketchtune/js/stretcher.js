@@ -421,8 +421,8 @@ function normalizeSpectrogram(spectrogram) {
             for (let j = 0; j < numCols; j++) {
                 const value = spectrogram[i][j];
                 const magnitude = Math.sqrt(value.re * value.re + value.im * value.im);
-                //const normalizedMagnitude = (magnitude - minMagnitude) / magnitudeRange;
-                const normalizedMagnitude = (magnitude * 10);
+                const normalizedMagnitude = (magnitude - minMagnitude) / magnitudeRange;
+                //const normalizedMagnitude = (magnitude * 10);
                 row.push(normalizedMagnitude);
             }
             normalizedSpectrogram.push(row);
