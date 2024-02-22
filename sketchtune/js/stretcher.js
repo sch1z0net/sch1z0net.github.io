@@ -522,7 +522,7 @@ function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
     const numFrames = spectrogram.length;
     const numBins = spectrogram[0].length; //512
-    const height = 600;
+    const height = 600*8;
 
     // Create a new ImageData object with the same dimensions as the spectrogram
     const imageData = new ImageData(numFrames, height);
