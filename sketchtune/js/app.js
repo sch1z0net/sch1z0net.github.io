@@ -1898,7 +1898,7 @@ const result = fftReal(paddedInput);
 const magnitudes = result.map(complex => Math.sqrt(complex.real ** 2 + complex.imag ** 2));
 
 
-plotSpectrum(audiobuffer);
+plotSpectrum(magnitudes);
 
 });
 
