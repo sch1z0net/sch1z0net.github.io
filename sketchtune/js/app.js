@@ -261,7 +261,7 @@ const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, fre
 const sawtoothWaveBuffer = generateSawtoothWaveBuffer(durationInSeconds, sampleRate, frequency);
 
 var audiobuffer = sineWaveBuffer;
-displaySpectrum(audiobuffer);
+plotSpectrum(audiobuffer, sampleRate);
 
 });
 
@@ -336,7 +336,7 @@ displaySpectrum(audiobuffer);
 
 
 
-
+/*
   function displaySpectrumRealTime(audioContext, inputBuffer) {
     const windowSize = 2048; // Size of the analysis window
     const hopSize = Math.floor(windowSize / 4); // Hop size for overlap-add
@@ -376,7 +376,7 @@ displaySpectrum(audiobuffer);
         displaySpectrum(spectrum, audioContext.sampleRate);
     }
   }
-
+*/
 
 
 
