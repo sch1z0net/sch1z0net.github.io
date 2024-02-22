@@ -74,9 +74,7 @@ function plotWaveform(audioBuffer) {
 
 
 
-const maxFrequency = 10000; // Maximum frequency (10 kHz)
-const minFrequency = 20; // Minimum frequency (20 Hz)
-
+/*
 // Plot spectrum on canvas in a logarithmic scale
 function plotSpectrum(spectrum, sampleRate) {
     const canvas = document.getElementById('spectrumCanvas');
@@ -124,7 +122,7 @@ function plotSpectrum(spectrum, sampleRate) {
         ctx.stroke();
     }
 }
-
+*/
 
 
 
@@ -1910,21 +1908,15 @@ var result = fftReal(paddedInput);
 const magnitudes = result.map(complex => Math.sqrt(complex.real ** 2 + complex.imag ** 2));
 plotSpectrumLive(magnitudes, sampleRate);
 
-var padded;;
-padded = [1,2,3,4];
-result = fftReal(padded);
-console.log(result);
-padded = [0,-1,0,1,0,-1,0,1];
-result = fftReal(padded);
-console.log(result);
+const indexOfMaxMagnitude = magnitudes.indexOf(Math.max(...magnitudes));
+console.log("Index with highest magnitude:", indexOfMaxMagnitude);
 
 });
 
 
 //plotSpectrumLive(magnitudes, sampleRate);
 
-//const indexOfMaxMagnitude = magnitudes.indexOf(Math.max(...magnitudes));
-//console.log("Index with highest magnitude:", indexOfMaxMagnitude);
+
 
 
 
