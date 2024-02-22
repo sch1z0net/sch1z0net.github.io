@@ -1897,7 +1897,7 @@ const testDataSignal = generateTestDataSignal(durationSeconds, sampleRate);
 const windowedInput = applyWindow(testDataSignal, 'hanning'); // Change windowType to 'hamming' or 'blackman' for different window functions
 const paddedInput = padArray(windowedInput);
 const result = fftReal(paddedInput);
-const magnitudes = magnitudeArray(result);
+const magnitudes = result.map(complex => Math.sqrt(complex.real ** 2 + complex.imag ** 2));
 
 plotSpectrumLive(magnitudes, sampleRate);
 
