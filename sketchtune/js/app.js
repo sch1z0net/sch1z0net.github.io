@@ -1902,7 +1902,7 @@ plotWaveformMono(audiobuffer);
 //const windowedInput = applyWindow(audiobuffer, 'hanning'); // Change windowType to 'hamming' or 'blackman' for different window functions
 //const paddedInput = padArray(windowedInput);
 var padded = [1,1,1,1,1,1,1,1];
-const result = fftReal(padded);
+var result = fftReal(padded);
 console.log(result);
 padded = [-1,1,-1,1,-1,1,-1,1];
 result = fftReal(padded);
