@@ -145,7 +145,7 @@ async function fftInPlaceReal(input, fftFactorLookup = null) {
 
 
 // Calculate the FFT of real-valued input data and return complex numbers as output
-function fft(input) {
+function fftReal(input) {
     const N = input.length;
 
     // Base case of recursion: if input has only one element, return it as complex number
@@ -193,12 +193,6 @@ function fft(input) {
 
     return result;
 }
-
-// Example usage
-const input = [1, 2, 3, 4, 5, 6, 7, 8];
-const result = fft(input);
-console.log(result);
-
 
 
 

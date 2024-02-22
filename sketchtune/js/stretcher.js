@@ -63,7 +63,6 @@ async function test(){
     }
 }
 
-
 /*
 const windowSize = 512 * 4; // Size of the analysis window
 const hopSize = windowSize / 4; // 25% overlap
@@ -75,6 +74,20 @@ const testDataSignal = generateTestDataSignal(durationSeconds, sampleRate);
 
 test();
 */
+
+
+
+
+const durationSeconds = 3; // Length of the signal in seconds
+const sampleRate = 44100; // Sample rate in Hz
+const testDataSignal = generateTestDataSignal(durationSeconds, sampleRate);
+const result = fftReal(testDataSignal);
+console.log(result);
+
+
+
+
+
 
 
 
