@@ -82,6 +82,66 @@ function bitReverse(num, bits) {
     }
     return reversed;
 }
+
+
+async function fftInPlaceReal(input, fftFactorLookup = null) {
+    const N = input.length;
+    const bits = Math.log2(N);
+
+    if (N <= 1) {
+        return input;
+    }
+
+    // Check if FFT factors for this size are cached
+    let factors;
+    if (!fftFactorLookup) {
+        factors = computeFFTFactorsWithCache(N);
+    } else {
+        factors = fftFactorLookup[N];
+    }
+
+    // Bit reversal permutation
+    for (let i = 0; i < N; i++) {
+        const j = bitReverse(i, bits);
+        if (j > i) {
+            const temp = input[j];
+            input[j] = input[i];
+            input[i] = temp;
+        }
+    }
+
+    // Perform FFT in-place
+    for (let len = 2; len <= N; len <<= 1) {
+        const halfLen = len / 2;
+        for (let i = 0; i < N; i += len) {
+            for (let k = 0; k < halfLen; k++) {
+                const index = k + i;
+                const evenIndex = index;
+                const oddIndex = index + halfLen;
+
+                const exp = factors[k];
+
+                // Perform butterfly operations
+                const tRe = exp.re * input[oddIndex];
+                const tIm = exp.im * input[oddIndex];
+
+                input[oddIndex] = input[evenIndex] - tRe;
+                input[evenIndex] += tRe;
+
+                // For odd indices, imaginary part is zero, so no need to update
+                if (oddIndex < N) {
+                    input[oddIndex] = input[evenIndex] - tIm;
+                    input[evenIndex] += tIm;
+                }
+            }
+        }
+    }
+
+    return input;
+}
+
+
+
 // Async function to perform FFT in-place
 async function fftInPlace(input, fftFactorLookup = null) {
     const N = input.length;
@@ -142,10 +202,12 @@ async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Zero-padding to the next power of 2
     const FFT_SIZE = nextPowerOf2(windowedSignal.length);
     const paddedInput = new Array(FFT_SIZE).fill({ re: 0, im: 0 });
-    windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
+    //windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
+    windowedSignal.forEach((value, index) => (paddedInput[index] = value));
 
     // Perform FFT
-    return await fftInPlace(paddedInput, fftFactorLookup);
+    return await fftInPlaceReal(paddedInput, fftFactorLookup);
+    //return await fftInPlace(paddedInput, fftFactorLookup);
     //return await fft(paddedInput, fftFactorLookup);
 }
 
