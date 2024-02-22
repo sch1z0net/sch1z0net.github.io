@@ -621,12 +621,6 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
             return result;
         })
         .then(async (spectrogram) => {
-            const startTime = performance.now();
-            const result = await stretchSpectrogram(spectrogram, stretchFactor)
-            const endTime = performance.now();
-            const elapsedTime = endTime - startTime;
-            console.log(`Now Stretching the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);
-
             // Normalize Spectrogram
             const normalizedSpectrogram = normalizeSpectrogram(spectrogram);
             //console.log(normalizedSpectrogram);
@@ -634,6 +628,13 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
             const imageData = spectrogramToImageData(normalizedSpectrogram);
             // Draw image data on canvas
             drawImageDataOnCanvas(imageData, "spectrogramA");
+
+
+            const startTime = performance.now();
+            const result = await stretchSpectrogram(spectrogram, stretchFactor)
+            const endTime = performance.now();
+            const elapsedTime = endTime - startTime;
+            console.log(`Now Stretching the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);
 
             return result;
         })
