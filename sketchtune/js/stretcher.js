@@ -389,6 +389,45 @@ function applyTimeDomainSmoothing(inputSignal, hopSize) {
 
 
 
+function normalizeSpectrogram(spectrogram) {
+    const numRows = spectrogram.length;
+    const numCols = spectrogram[0].length;
+
+    // Find the minimum and maximum values in the spectrogram
+    let min = Number.POSITIVE_INFINITY;
+    let max = Number.NEGATIVE_INFINITY;
+
+    for (let i = 0; i < numRows; i++) {
+        for (let j = 0; j < numCols; j++) {
+            const value = spectrogram[i][j];
+            if (value < min) {
+                min = value;
+            }
+            if (value > max) {
+                max = value;
+            }
+        }
+    }
+
+    // Calculate the range
+    const range = max - min;
+
+    // Normalize the spectrogram to the range [0, 1]
+    const normalizedSpectrogram = [];
+    for (let i = 0; i < numRows; i++) {
+        const row = [];
+        for (let j = 0; j < numCols; j++) {
+            const normalizedValue = (spectrogram[i][j] - min) / range;
+            row.push(normalizedValue);
+        }
+        normalizedSpectrogram.push(row);
+    }
+
+    return normalizedSpectrogram;
+}
+
+
+
 // Convert spectrogram data to image data
 function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
@@ -459,8 +498,10 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
             const elapsedTime = endTime - startTime;
             console.log(`Now Stretching the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);
 
+            // Normalize Spectrogram
+            const normalizedSpectrogram = normalizeSpectrogram(spectrogram);
             // Convert spectrogram data to image data
-            const imageData = spectrogramToImageData(spectrogram);
+            const imageData = spectrogramToImageData(normalizedSpectrogram);
             // Draw image data on canvas
             drawImageDataOnCanvas(imageData, "spectrogramA");
 

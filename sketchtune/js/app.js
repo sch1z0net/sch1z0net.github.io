@@ -1799,10 +1799,10 @@ $(document).ready(function(){
     .append($("<label>").attr("for", "windowSize").text("Window Size"))
     .append("<br>")
     .append($hopFactorSelect)
-    .append($("<label>").attr("for", "hopFactor").text("Hop Factor:"))
+    .append($("<label>").attr("for", "hopFactor").text("Hop Factor"))
     .append("<br>")
     .append($smoothFactorSelect)
-    .append($("<label>").attr("for", "smoothFactor").text("Smooth Factor:"));
+    .append($("<label>").attr("for", "smoothFactor").text("Smooth Factor"));
 
   $('body').append(controls);
 
