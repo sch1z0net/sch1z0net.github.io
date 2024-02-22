@@ -451,31 +451,25 @@ function spectrogramToImageData(spectrogram) {
     // Create a new ImageData object with the same dimensions as the spectrogram
     const imageData = new ImageData(numFrames, numBins);
 
-    // Convert spectrogram data to heatmap image data
+    // Convert spectrogram data to grayscale image data
     for (let i = 0; i < numFrames; i++) {
         for (let j = 0; j < numBins; j++) {
             // Calculate the index in the image data array
             const index = (j * numFrames + (numFrames - i - 1)) * 4; // Reversed y-axis
 
-            // Calculate intensity from spectrogram value
-            const intensity = spectrogram[i][j];
+            // Convert magnitude/intensity to grayscale value (0-255)
+            const intensity = Math.round(spectrogram[i][j] * 255);
 
-            // Map intensity to RGB values for heatmap (yellow to red)
-            const red = Math.max(255 - intensity * 255, 0); // Red decreases as intensity increases
-            const green = 255; // Green remains constant
-            const blue = 0; // Blue remains constant
-
-            // Set RGB values to image data
-            imageData.data[index] = red;       // Red channel
-            imageData.data[index + 1] = green; // Green channel
-            imageData.data[index + 2] = blue;  // Blue channel
-            imageData.data[index + 3] = 255;   // Alpha channel (fully opaque)
+            // Set the same value for R, G, and B channels (grayscale)
+            imageData.data[index] = intensity;     // Red channel
+            imageData.data[index + 1] = intensity; // Green channel
+            imageData.data[index + 2] = intensity; // Blue channel
+            imageData.data[index + 3] = 255;       // Alpha channel (fully opaque)
         }
     }
 
     return imageData;
 }
-
 
 
 
