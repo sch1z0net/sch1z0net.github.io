@@ -206,7 +206,11 @@ async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     windowedSignal.forEach((value, index) => (paddedInput[index] = value));
 
     // Perform FFT
-    return await fftInPlaceReal(paddedInput, fftFactorLookup);
+    var spectrumReal = await fftInPlaceReal(paddedInput, fftFactorLookup);
+    // Map real-only spectrum to complex numbers
+    const spectrumComplex = spectrumReal.map(value => ({ re: value, im: 0 }));
+    return spectrumComplex;
+
     //return await fftInPlace(paddedInput, fftFactorLookup);
     //return await fft(paddedInput, fftFactorLookup);
 }
