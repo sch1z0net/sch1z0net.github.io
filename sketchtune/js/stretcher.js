@@ -393,38 +393,52 @@ function normalizeSpectrogram(spectrogram) {
     const numRows = spectrogram.length;
     const numCols = spectrogram[0].length;
 
-    // Find the minimum and maximum values in the spectrogram
-    let min = Number.POSITIVE_INFINITY;
-    let max = Number.NEGATIVE_INFINITY;
+    // Find the minimum and maximum magnitude values in the spectrogram
+    let minMagnitude = Number.POSITIVE_INFINITY;
+    let maxMagnitude = Number.NEGATIVE_INFINITY;
 
     for (let i = 0; i < numRows; i++) {
         for (let j = 0; j < numCols; j++) {
             const value = spectrogram[i][j];
-            if (value < min) {
-                min = value;
+            const magnitude = Math.sqrt(value.re * value.re + value.im * value.im);
+            if (magnitude < minMagnitude) {
+                minMagnitude = magnitude;
             }
-            if (value > max) {
-                max = value;
+            if (magnitude > maxMagnitude) {
+                maxMagnitude = magnitude;
             }
         }
     }
 
-    // Calculate the range
-    const range = max - min;
+    // Calculate the range of magnitudes
+    const magnitudeRange = maxMagnitude - minMagnitude;
 
-    // Normalize the spectrogram to the range [0, 1]
+    // Normalize the magnitudes to the range [0, 1]
     const normalizedSpectrogram = [];
-    for (let i = 0; i < numRows; i++) {
-        const row = [];
-        for (let j = 0; j < numCols; j++) {
-            const normalizedValue = (spectrogram[i][j] - min) / range;
-            row.push(normalizedValue);
+    if (magnitudeRange !== 0) {
+        for (let i = 0; i < numRows; i++) {
+            const row = [];
+            for (let j = 0; j < numCols; j++) {
+                const value = spectrogram[i][j];
+                const magnitude = Math.sqrt(value.re * value.re + value.im * value.im);
+                const normalizedMagnitude = (magnitude - minMagnitude) / magnitudeRange;
+                row.push(normalizedMagnitude);
+            }
+            normalizedSpectrogram.push(row);
         }
-        normalizedSpectrogram.push(row);
+    } else {
+        // If all magnitudes are identical, set all normalized values to 0 or 1
+        const constantValue = spectrogram[0][0].re === 0 && spectrogram[0][0].im === 0 ? 0 : 1;
+        for (let i = 0; i < numRows; i++) {
+            const row = new Array(numCols).fill(constantValue);
+            normalizedSpectrogram.push(row);
+        }
     }
 
     return normalizedSpectrogram;
 }
+
+
 
 
 
