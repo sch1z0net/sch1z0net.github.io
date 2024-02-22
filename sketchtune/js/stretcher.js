@@ -537,6 +537,7 @@ function spectrogramToImageData(spectrogram) {
     for (let y = 0; y < numBins; y++) {
         // Calculate the frequency corresponding to this y position using logarithmic scaling
         const f = Math.round(minFrequency * Math.exp(frequencySpacing * y));
+        console.log(f);
 
         // Iterate over frames to determine the intensity value for this y position
         for (let x = 0; x < numFrames; x++) {
