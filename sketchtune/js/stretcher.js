@@ -441,7 +441,7 @@ function normalizeSpectrogram(spectrogram) {
 
 
 
-
+/*
 // Convert spectrogram data to image data
 function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
@@ -471,7 +471,47 @@ function spectrogramToImageData(spectrogram) {
     }
 
     return imageData;
+}*/
+
+
+function spectrogramToImageData(spectrogram) {
+    // Assume spectrogram is a 2D array of magnitudes or intensities
+    const numFrames = spectrogram.length;
+    const numBins = spectrogram[0].length;
+
+    // Create a new ImageData object with the same dimensions as the spectrogram
+    const imageData = new ImageData(numFrames, numBins);
+
+    // Define the frequency range covered by the spectrogram (adjust these values as needed)
+    const minFrequency = 20; // Minimum frequency in Hz
+    const maxFrequency = 20000; // Maximum frequency in Hz
+
+    // Calculate the frequency spacing (logarithmically spaced)
+    const frequencySpacing = Math.log(maxFrequency / minFrequency) / (numBins - 1);
+
+    // Convert spectrogram data to heatmap image data with logarithmic scaling
+    for (let i = 0; i < numFrames; i++) {
+        for (let j = 0; j < numBins; j++) {
+            // Calculate the frequency corresponding to this bin using logarithmic scaling
+            const frequency = minFrequency * Math.exp(frequencySpacing * j);
+
+            // Calculate the index in the image data array
+            const index = ((numBins - j - 1) * numFrames + i) * 4; // Reversed y-axis
+
+            // Convert magnitude/intensity to grayscale value (0-255)
+            const intensity = Math.round(spectrogram[i][j] * 255);
+
+            // Set the same value for R, G, and B channels (grayscale)
+            imageData.data[index] = intensity;     // Red channel
+            imageData.data[index + 1] = intensity; // Green channel
+            imageData.data[index + 2] = intensity; // Blue channel
+            imageData.data[index + 3] = 255;       // Alpha channel (fully opaque)
+        }
+    }
+
+    return imageData;
 }
+
 
 
 
