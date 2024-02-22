@@ -1901,7 +1901,7 @@ plotWaveformMono(audiobuffer);
 
 //const windowedInput = applyWindow(audiobuffer, 'hanning'); // Change windowType to 'hamming' or 'blackman' for different window functions
 //const paddedInput = padArray(windowedInput);
-audiobuffer = [1,1,1,1];
+var paddedInput = [1,1,1,1];
 const result = fftReal(paddedInput);
 console.log(result);
 const magnitudes = result.map(complex => Math.sqrt(complex.real ** 2 + complex.imag ** 2));
