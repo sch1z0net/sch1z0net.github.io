@@ -441,7 +441,7 @@ function normalizeSpectrogram(spectrogram) {
 
 
 
-/*
+
 // Convert spectrogram data to image data
 function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
@@ -471,7 +471,7 @@ function spectrogramToImageData(spectrogram) {
     }
 
     return imageData;
-}*/
+}
 
 
 
@@ -517,16 +517,17 @@ function spectrogramToImageData(spectrogram) {
 
 
 
-
+/*
 function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
     const numFrames = spectrogram.length;
     const numBins = spectrogram[0].length; //512
     const height = numBins;
+    const width  = numFrames;
     
 
     // Create a new ImageData object with the same dimensions as the spectrogram
-    const imageData = new ImageData(numFrames, height);
+    const imageData = new ImageData(width, height);
 
     // Define the frequency range covered by the spectrogram (adjust these values as needed)
     const minFrequency = 20; // Minimum frequency in Hz
@@ -544,12 +545,12 @@ function spectrogramToImageData(spectrogram) {
         const f = Math.round(minFrequency * (frequencySpacing * y));
 
         // Iterate over frames to determine the intensity value for this y position
-        for (let x = 0; x < numFrames; x++) {
+        for (let x = 0; x < width; x++) {
             // Calculate the intensity value for this spectrogram bin
             const intensity = Math.round(spectrogram[x][f] * 255);
 
             // Calculate the index in the image data array
-            const index = ((height - y - 1) * numFrames + x) * 4; // Reversed y-axis
+            const index = (((height - 1) - y) * width + x) * 4; // Reversed y-axis
 
             // Set the pixel color in the image data array
             imageData.data[index] = intensity;     // Red channel
@@ -561,7 +562,7 @@ function spectrogramToImageData(spectrogram) {
 
     return imageData;
 }
-
+*/
 
 
 
