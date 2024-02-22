@@ -261,7 +261,7 @@ const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, fre
 const sawtoothWaveBuffer = generateSawtoothWaveBuffer(durationInSeconds, sampleRate, frequency);
 
 var audiobuffer = sineWaveBuffer;
-displaySpec(audiobuffer);
+displaySpectrum(audiobuffer);
 
 });
 
