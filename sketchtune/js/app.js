@@ -1907,6 +1907,9 @@ console.log(result);
 var padded = [-1,1,-1,1,-1,1,-1,1];
 result = fftReal(padded);
 console.log(result);
+var padded = [1,2,3,4];
+result = fftReal(padded);
+console.log(result);
 const magnitudes = result.map(complex => Math.sqrt(complex.real ** 2 + complex.imag ** 2));
 
 plotSpectrumLive(magnitudes, sampleRate);
