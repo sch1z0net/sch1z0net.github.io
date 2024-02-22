@@ -154,51 +154,69 @@ function padArray(input) {
     return paddedInput;
 }
 
-// Calculate the FFT of real-valued input data and return complex numbers as output
-function fftReal(input) {
-    const N = input.length;
 
-    if(N != nextPowerOf2(N)){
-        console.error("FFT FRAME must have power of 2");
+
+
+
+
+
+
+
+// Function to calculate the FFT of real-valued input data and return complex numbers as output
+let fftReal = function(input, n) {
+    if (n === 1) {
+        return input;
+    } else {
+        let p_odd = [];
+        let p_even = [];
+        let p_out_even = [];
+        let p_out_odd = [];
+
+        for (let i = 0; i < input.length; i++) {
+            if (i % 2 === 0) {
+                if (typeof input[i] === 'number') {
+                    p_even.push({ real: input[i], imag: 0 });
+                } else {
+                    p_even.push(input[i]);
+                }
+            } else {
+                if (typeof input[i] === 'number') {
+                    p_odd.push({ real: input[i], imag: 0 });
+                } else {
+                    p_odd.push(input[i]);
+                }
+            }
+        }
+        p_out_even = fftReal(p_even, n / 2);
+        p_out_odd = fftReal(p_odd, n / 2);
+
+        let p_out = [];
+        let k = n / 2;
+        for (let i = 0; i < k; i++) {
+            let angle = -2 * Math.PI * i / n;
+            let twiddleReal = Math.cos(angle);
+            let twiddleImag = Math.sin(angle);
+
+            let evenReal = p_out_even[i].real;
+            let evenImag = p_out_even[i].imag;
+            let oddReal = p_out_odd[i].real;
+            let oddImag = p_out_odd[i].imag;
+
+            p_out[i] = {
+                real: evenReal + twiddleReal * oddReal - twiddleImag * oddImag,
+                imag: evenImag + twiddleReal * oddImag + twiddleImag * oddReal
+            };
+
+            p_out[i + k] = {
+                real: evenReal - (twiddleReal * oddReal - twiddleImag * oddImag),
+                imag: evenImag - (twiddleReal * oddImag + twiddleImag * oddReal)
+            };
+        }
+
+        return p_out;
     }
-
-    // Base case of recursion: if input has only one element, return it as complex number
-    if (N === 1) {
-        return [{ real: input[0], imag: 0 }];
-    }
-
-    // Split the input into even and odd parts
-    const even = [];
-    const odd = [];
-    for (let i = 0; i < N; i += 2) {
-        even.push(input[i]);
-        odd.push(input[i + 1] || 0); // Pad with zero if odd length
-    }
-
-    // Recursively calculate FFT for even and odd parts
-    const evenFFT = fftReal(even);
-    const oddFFT = fftReal(odd);
-
-    // Combine the results of even and odd parts
-    const result = [];
-    for (let k = 0; k < N / 2; k++) {
-        const angle = -2 * Math.PI * k / N;
-        const oddPart = { real: oddFFT[k].real * Math.cos(angle), imag: oddFFT[k].real * Math.sin(angle) };
-        const evenPart = { real: evenFFT[k].real, imag: evenFFT[k].imag };
-        const twiddle = { real: Math.cos(angle), imag: Math.sin(angle) };
-        result[k] = {
-            real: evenPart.real + oddPart.real * twiddle.real - oddPart.imag * twiddle.imag,
-            imag: evenPart.imag + oddPart.imag * twiddle.real + oddPart.real * twiddle.imag
-        };
-        result[k + N / 2] = {
-            real: evenPart.real - (oddPart.real * twiddle.real - oddPart.imag * twiddle.imag),
-            imag: evenPart.imag - (oddPart.imag * twiddle.real + oddPart.real * twiddle.imag)
-        };
-    }
-
-
-    return result;
 }
+
 
 
 
