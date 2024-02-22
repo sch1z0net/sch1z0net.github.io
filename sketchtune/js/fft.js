@@ -83,7 +83,7 @@ function bitReverse(num, bits) {
     return reversed;
 }
 
-
+/*
 async function fftInPlaceReal(input, fftFactorLookup = null) {
     const N = input.length;
     const bits = Math.log2(N);
@@ -138,7 +138,72 @@ async function fftInPlaceReal(input, fftFactorLookup = null) {
     }
 
     return input;
+}*/
+
+
+
+
+
+// Calculate the FFT of real-valued input data and return complex numbers as output
+function fft(input) {
+    const N = input.length;
+
+    // Base case of recursion: if input has only one element, return it as complex number
+    if (N === 1) {
+        return [{ real: input[0], imag: 0 }];
+    }
+
+    // Split the input into even and odd parts
+    const even = [];
+    const odd = [];
+    for (let i = 0; i < N; i += 2) {
+        even.push(input[i]);
+        odd.push(input[i + 1]);
+    }
+
+    // Recursively calculate FFT for even and odd parts
+    const evenFFT = fft(even);
+    const oddFFT = fft(odd);
+
+    // Combine the results of even and odd parts
+    const result = [];
+    for (let k = 0; k < N / 2; k++) {
+        const angle = -2 * Math.PI * k / N;
+        const oddPart = { real: oddFFT[k].real * Math.cos(angle), imag: oddFFT[k].real * Math.sin(angle) };
+        const evenPart = { real: evenFFT[k].real, imag: evenFFT[k].imag };
+        const twiddle = { real: Math.cos(angle), imag: Math.sin(angle) };
+        result[k] = {
+            real: evenFFT[k].real + oddPart.real,
+            imag: evenFFT[k].imag + oddPart.imag
+        };
+        result[k + N / 2] = {
+            real: evenPart.real - oddPart.real,
+            imag: evenPart.imag - oddPart.imag
+        };
+        // Apply twiddle factor
+        const temp = {
+            real: result[k + N / 2].real * twiddle.real - result[k + N / 2].imag * twiddle.imag,
+            imag: result[k + N / 2].real * twiddle.imag + result[k + N / 2].imag * twiddle.real
+        };
+        result[k + N / 2] = {
+            real: temp.real,
+            imag: temp.imag
+        };
+    }
+
+    return result;
 }
+
+// Example usage
+const input = [1, 2, 3, 4, 5, 6, 7, 8];
+const result = fft(input);
+console.log(result);
+
+
+
+
+
+
 
 
 
