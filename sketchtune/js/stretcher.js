@@ -544,7 +544,7 @@ function spectrogramToImageData(spectrogram) {
             const intensity = Math.round(spectrogram[x][f] * 255);
 
             // Calculate the index in the image data array
-            const index = ((numBins - j - 1) * numFrames + i) * 4; // Reversed y-axis
+            const index = ((numBins - y - 1) * numFrames + x) * 4; // Reversed y-axis
 
             // Set the pixel color in the image data array
             imageData.data[index] = intensity;     // Red channel
