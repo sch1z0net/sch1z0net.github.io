@@ -1889,10 +1889,10 @@ function getWindow(windowType, N) {
 $(document).ready(function(){
 
 // Example parameters
-const durationInSeconds = 0.0929; // Duration of the audio in seconds
+const durationInSeconds = 2.0; // Duration of the audio in seconds
 const sampleRate = 44100; // Sample rate (samples per second)
 //const frequency = 440; // Frequency of the sine wave in Hz
-const frequency = 500; // Frequency of the sine wave in Hz
+const frequency = 450; // Frequency of the sine wave in Hz
 //max is 20k
 // Generate sine wave buffer
 const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
