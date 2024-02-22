@@ -84,7 +84,9 @@ const testDataSignal = generateTestDataSignal(durationSeconds, sampleRate);
 const paddedInput = padArray(testDataSignal);
 const result = fftReal(paddedInput);
 const magnitudes = result.map(complex => Math.sqrt(complex.real ** 2 + complex.imag ** 2));
-console.log(magnitudes);
+
+const indexOfMaxMagnitude = magnitudes.indexOf(Math.max(...magnitudes));
+console.log("Index with highest magnitude:", indexOfMaxMagnitude);
 
 
 
