@@ -448,10 +448,11 @@ function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
     const numFrames = spectrogram.length;
     const numBins = spectrogram[0].length;
-
+    console.log("NUM BINS",numBins);
+    
     // Create a new ImageData object with the same dimensions as the spectrogram
     const imageData = new ImageData(numFrames, numBins);
-
+    
     // Convert spectrogram data to grayscale image data
     for (let i = 0; i < numFrames; i++) {
         for (let j = 0; j < numBins; j++) {
