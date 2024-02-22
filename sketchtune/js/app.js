@@ -1795,14 +1795,14 @@ $(document).ready(function(){
 
   // Append select boxes to the DOM
   var controls = $("<div id='controls'>")
-    .append($("<label>").attr("for", "windowSize").text("Window Size:"))
     .append($windowSizeSelect)
+    .append($("<label>").attr("for", "windowSize").text("Window Size"))
     .append("<br>")
-    .append($("<label>").attr("for", "hopFactor").text("Hop Factor:"))
     .append($hopFactorSelect)
+    .append($("<label>").attr("for", "hopFactor").text("Hop Factor:"))
     .append("<br>")
-    .append($("<label>").attr("for", "smoothFactor").text("Smooth Factor:"))
-    .append($smoothFactorSelect);
+    .append($smoothFactorSelect)
+    .append($("<label>").attr("for", "smoothFactor").text("Smooth Factor:"));
 
   $('body').append(controls);
 

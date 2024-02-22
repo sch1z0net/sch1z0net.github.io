@@ -595,5 +595,12 @@ canvas {
 #controls {
    position: absolute;
    z-index:2000;
+   background-color: rgba(10, 10, 10, 0.8);
+   font-size: 10px;
+   color: white;
+}
+
+#controls > select {
+  width: 100px;
 }
 
