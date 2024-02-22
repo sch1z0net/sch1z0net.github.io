@@ -162,6 +162,11 @@ function fftReal(input) {
         console.error("FFT FRAME must have power of 2");
     }
 
+    // Base case of recursion: if input has only one element, return it as complex number
+    if (N === 1) {
+        return [{ real: input[0], imag: 0 }];
+    }
+
     // Split the input into even and odd parts
     const even = [];
     const odd = [];
