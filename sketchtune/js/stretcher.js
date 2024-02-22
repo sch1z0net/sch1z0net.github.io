@@ -536,12 +536,12 @@ function spectrogramToImageData(spectrogram) {
     // Convert spectrogram data to heatmap image data with logarithmic scaling
     for (let y = 0; y < numBins; y++) {
         // Calculate the frequency corresponding to this y position using logarithmic scaling
-        const frequency = minFrequency * Math.exp(frequencySpacing * y);
+        const f = minFrequency * Math.exp(frequencySpacing * y);
 
         // Iterate over frames to determine the intensity value for this y position
         for (let x = 0; x < numFrames; x++) {
             // Calculate the intensity value for this spectrogram bin
-            const intensity = Math.round(spectrogram[x][y] * 255);
+            const intensity = Math.round(spectrogram[x][f] * 255);
 
             // Set the pixel color in the image data array
             const index = (y * numFrames + x) * 4; // Calculate the index in the image data array
