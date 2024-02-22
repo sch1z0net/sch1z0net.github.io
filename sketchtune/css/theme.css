@@ -588,7 +588,7 @@ canvas {
   height: 400px;
   background-color: rgba(10, 10, 10, 0.8);
   position: absolute;
-  right:400px;
+  right:0px;
 }
 
 
