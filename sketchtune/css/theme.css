@@ -581,6 +581,17 @@ canvas {
 }
 
 
+
+
+#spectrogramA {
+  width: 400px;
+  height: 400px;
+  background-color: rgba(10, 10, 10, 0.8);
+  position: absolute;
+  right:400px;
+}
+
+
 #controls {
    position: absolute;
    z-index:2000;

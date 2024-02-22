@@ -387,6 +387,61 @@ function applyTimeDomainSmoothing(inputSignal, hopSize) {
 
 
 
+
+
+// Convert spectrogram data to image data
+function spectrogramToImageData(spectrogram) {
+    // Assume spectrogram is a 2D array of magnitudes or intensities
+    const numFrames = spectrogram.length;
+    const numBins = spectrogram[0].length;
+
+    // Create a new ImageData object with the same dimensions as the spectrogram
+    const imageData = new ImageData(numBins, numFrames);
+
+    // Convert spectrogram data to grayscale image data
+    for (let i = 0; i < numFrames; i++) {
+        for (let j = 0; j < numBins; j++) {
+            // Calculate the index in the image data array
+            const index = (i * numBins + j) * 4; // Each pixel has 4 values (RGBA)
+
+            // Convert magnitude/intensity to grayscale value (0-255)
+            const intensity = Math.round(spectrogram[i][j] * 255);
+
+            // Set the same value for R, G, and B channels (grayscale)
+            imageData.data[index] = intensity;     // Red channel
+            imageData.data[index + 1] = intensity; // Green channel
+            imageData.data[index + 2] = intensity; // Blue channel
+            imageData.data[index + 3] = 255;       // Alpha channel (fully opaque)
+        }
+    }
+
+    return imageData;
+}
+
+// Draw image data on canvas
+function drawImageDataOnCanvas(imageData, canvasId) {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext('2d');
+
+    // Set canvas dimensions to match the image data dimensions
+    canvas.width = imageData.width;
+    canvas.height = imageData.height;
+
+    // Clear canvas before drawing
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw the image data onto the canvas
+    ctx.putImageData(imageData, 0, 0);
+}
+
+
+
+
+
+
+
+
+
 function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFactor) {
     return Promise.resolve()
         .then(async () => {
@@ -403,6 +458,12 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
             const endTime = performance.now();
             const elapsedTime = endTime - startTime;
             console.log(`Now Stretching the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);
+
+            // Convert spectrogram data to image data
+            const imageData = spectrogramToImageData(spectrogram);
+            // Draw image data on canvas
+            drawImageDataOnCanvas(imageData, "spectrogramA");
+
             return result;
         })
         .then(async (stretchedSpectrogram) => {
@@ -413,16 +474,23 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
             console.log(`Now Reconstructing the Audio Signal: Elapsed time: ${elapsedTime} milliseconds`);
             return result;
         })
-        .then((processedSignal) => {
+        /*.then((processedSignal) => {
             const smoothedSignal = applyTimeDomainSmoothing(processedSignal, hopSize*smoothFactor/32);
             console.log("Smoothing finished");
             return smoothedSignal;
-        })
+        })*/
         .catch((error) => {
             console.error('Error:', error);
             return null; // or handle the error appropriately
         });
 }
+
+
+
+
+
+
+
 
 
 
