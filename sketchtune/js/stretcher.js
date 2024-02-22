@@ -474,6 +474,8 @@ function spectrogramToImageData(spectrogram) {
 }*/
 
 
+
+/*
 function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
     const numFrames = spectrogram.length;
@@ -495,11 +497,8 @@ function spectrogramToImageData(spectrogram) {
             // Calculate the frequency corresponding to this bin using logarithmic scaling
             const frequency = minFrequency * Math.exp(frequencySpacing * j);
 
-            // Map frequency to the pixel position on the y-axis (logarithmically scaled)
-            const pixelPosition = Math.round((Math.log(frequency) - Math.log(minFrequency)) / frequencySpacing);
-
             // Calculate the index in the image data array
-            const index = (pixelPosition * numFrames + i) * 4;
+            const index = ((numBins - j - 1) * numFrames + i) * 4; // Reversed y-axis
 
             // Convert magnitude/intensity to grayscale value (0-255)
             const intensity = Math.round(spectrogram[i][j] * 255);
@@ -514,6 +513,52 @@ function spectrogramToImageData(spectrogram) {
 
     return imageData;
 }
+*/
+
+
+
+
+function spectrogramToImageData(spectrogram) {
+    // Assume spectrogram is a 2D array of magnitudes or intensities
+    const numFrames = spectrogram.length;
+    const numBins = spectrogram[0].length;
+
+    // Create a new ImageData object with the same dimensions as the spectrogram
+    const imageData = new ImageData(numFrames, numBins);
+
+    // Define the frequency range covered by the spectrogram (adjust these values as needed)
+    const minFrequency = 20; // Minimum frequency in Hz
+    const maxFrequency = 20000; // Maximum frequency in Hz
+
+    // Calculate the frequency spacing (logarithmically spaced)
+    const frequencySpacing = Math.log(maxFrequency / minFrequency) / (numBins - 1);
+
+    // Convert spectrogram data to heatmap image data with logarithmic scaling
+    for (let y = 0; y < numBins; y++) {
+        // Calculate the frequency corresponding to this y position using logarithmic scaling
+        const frequency = minFrequency * Math.exp(frequencySpacing * y);
+
+        // Iterate over frames to determine the intensity value for this y position
+        for (let x = 0; x < numFrames; x++) {
+            // Calculate the intensity value for this spectrogram bin
+            const intensity = Math.round(spectrogram[x][y] * 255);
+
+            // Set the pixel color in the image data array
+            const index = (y * numFrames + x) * 4; // Calculate the index in the image data array
+            imageData.data[index] = intensity;     // Red channel
+            imageData.data[index + 1] = intensity; // Green channel
+            imageData.data[index + 2] = intensity; // Blue channel
+            imageData.data[index + 3] = 255;       // Alpha channel (fully opaque)
+        }
+    }
+
+    return imageData;
+}
+
+
+
+
+
 
 
 
