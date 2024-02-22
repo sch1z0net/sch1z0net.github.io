@@ -1908,8 +1908,8 @@ var result = fftReal(paddedInput);
 const magnitudes = result.map(complex => Math.sqrt(complex.real ** 2 + complex.imag ** 2));
 plotSpectrumLive(magnitudes, sampleRate);
 
-//const indexOfMaxMagnitude = magnitudes.indexOf(Math.max(...magnitudes));
-//console.log("Index with highest magnitude:", indexOfMaxMagnitude);
+const indexOfMaxMagnitude = magnitudes.indexOf(Math.max(...magnitudes));
+console.log("Index with highest magnitude:", indexOfMaxMagnitude);
 
 //result = fftReal([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]);
 //console.log(result);
