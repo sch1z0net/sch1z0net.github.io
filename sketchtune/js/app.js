@@ -101,42 +101,10 @@ function smoothFrequencyData(frequencyData) {
   return smoothedData;
 }
 
+
+
 // Plot spectrum on canvas with smoothed and curved lines
 var fillWithColor = true;
-
-function plotSpectrumLive(frequencyData = null, sampleRate = null) {
-  const canvas = document.getElementById('spectrumCanvas');
-  const ctx = canvas.getContext('2d');
-  const width = canvas.width;
-  const height = canvas.height;
-
-  if (frequencyData != null && sampleRate != null) {
-    ctx.clearRect(0, 0, width, height);
-    ctx.beginPath();
-
-    const numBins = frequencyData.length;
-
-    // Calculate the maximum frequency based on the sample rate and FFT size
-    const maxFrequency = sampleRate / 2; // Nyquist frequency
-    const binWidth = maxFrequency / numBins;
-
-    // Plot the spectrum using a linear scale
-    ctx.moveTo(0, height); // Start from the bottom-left corner
-    for (let i = 0; i < numBins; i++) {
-      const frequency = i * binWidth;
-      const magnitude = frequencyData[i];
-
-      // Normalize magnitude for plotting
-      const normalizedMagnitude = (magnitude / maxMagnitude) * height;
-      
-      // Plot magnitude
-      const x = (frequency / maxFrequency) * width;
-      const y = height - normalizedMagnitude;
-      ctx.lineTo(x, y);
-    }
-
-
-/*
 function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   const canvas = document.getElementById('spectrumCanvas');
   const ctx = canvas.getContext('2d');
@@ -160,12 +128,21 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     var minDB = scaleMagnitudeToDecibels(minMagnitude);
     var maxDB = scaleMagnitudeToDecibels(maxMagnitude);
 
+
+
+    // Calculate the maximum frequency based on the sample rate and FFT size
+    const maxFrequency = sampleRate / 2; // Nyquist frequency
+    const binWidth = maxFrequency / numBins;
+
     // Plot the spectrum using a logarithmic scale
-    const logScaleFactor = Math.log10(numBins); // Scale factor for logarithmic scaling
-    const controlPoints = []; // Array to store control points for Catmull-Rom spline
+    const logMinFrequency = Math.log10(minFrequency);
+    const logMaxFrequency = Math.log10(maxFrequency);
+    const logScaleFactor = logMaxFrequency - logMinFrequency; // Scale factor for logarithmic scaling
+
     ctx.moveTo(0, height); // Start from the bottom-left corner
     for (let x = 0; x < width; x++) {
-      const binIndex = Math.pow(10, x / width * logScaleFactor); // Calculate bin index using logarithmic scale
+      const logFrequency = logMinFrequency + (x / width) * logScaleFactor; // Calculate frequency using logarithmic scale
+      const binIndex = Math.pow(10, logFrequency / logMaxFrequency) * numBins; // Calculate bin index using logarithmic scale
       const lowerBinIndex = Math.floor(binIndex);
       const upperBinIndex = Math.ceil(binIndex);
       const fraction = binIndex - lowerBinIndex;
@@ -179,15 +156,15 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
       var normalizedMagnitude = (interpolatedMagnitude / maxMagnitude);
       //if(normalizedMagnitude<0 || normalizedMagnitude>1){ console.error("wrong range"); }
 
-      // SCALE IN DEZIBEL
+      // SCALE IN DECIBEL
       var dBValue = scaleMagnitudeToDecibels(normalizedMagnitude);
-      normalizedMagnitude = normalizeDecibels(dBValue, -40, 0, 0, 1)*height;
+      normalizedMagnitude = normalizeDecibels(dBValue, -40, 0, 0, 1) * height;
 
       // Store the control point for Catmull-Rom spline
       const y = height - normalizedMagnitude; // Invert Y-axis
       controlPoints.push({ x, y });
       ctx.lineTo(x, y); // Draw line to the magnitude point
-    }*/
+    }
 
 
     ctx.lineTo(width, height); // Line to the bottom-right corner
