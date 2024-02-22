@@ -422,6 +422,7 @@ function normalizeSpectrogram(spectrogram) {
         }
         normalizedSpectrogram.push(row);
     }
+    console.log(normalizedSpectrogram);
 
     return normalizedSpectrogram;
 }
