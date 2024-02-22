@@ -455,7 +455,9 @@ function spectrogramToImageData(spectrogram) {
     for (let i = 0; i < numFrames; i++) {
         for (let j = 0; j < numBins; j++) {
             // Calculate the index in the image data array
-            const index = (j * numFrames + (numFrames - i - 1)) * 4; // Reversed y-axis
+            //const index = (j * numFrames + i) * 4; // Flipping the axes
+            //const index = (j * numFrames + (numFrames - i - 1)) * 4;
+            const index = ((numBins - j - 1) * numFrames + i) * 4; // Reverse
 
             // Convert magnitude/intensity to grayscale value (0-255)
             const intensity = Math.round(spectrogram[i][j] * 255);
