@@ -495,8 +495,11 @@ function spectrogramToImageData(spectrogram) {
             // Calculate the frequency corresponding to this bin using logarithmic scaling
             const frequency = minFrequency * Math.exp(frequencySpacing * j);
 
+            // Map frequency to the pixel position on the y-axis (logarithmically scaled)
+            const pixelPosition = Math.round((Math.log(frequency) - Math.log(minFrequency)) / frequencySpacing);
+
             // Calculate the index in the image data array
-            const index = ((numBins - j - 1) * numFrames + i) * 4; // Reversed y-axis
+            const index = (pixelPosition * numFrames + i) * 4;
 
             // Convert magnitude/intensity to grayscale value (0-255)
             const intensity = Math.round(spectrogram[i][j] * 255);
@@ -511,6 +514,7 @@ function spectrogramToImageData(spectrogram) {
 
     return imageData;
 }
+
 
 
 
