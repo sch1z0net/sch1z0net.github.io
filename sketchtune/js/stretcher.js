@@ -78,19 +78,6 @@ test();
 
 
 
-const durationSeconds = 0.05; // Length of the signal in seconds
-const sampleRate = 44100; // Sample rate in Hz
-const testDataSignal = generateTestDataSignal(durationSeconds, sampleRate);
-const paddedInput = padArray(testDataSignal);
-const result = fftReal(paddedInput);
-const magnitudes = result.map(complex => Math.sqrt(complex.real ** 2 + complex.imag ** 2));
-
-const indexOfMaxMagnitude = magnitudes.indexOf(Math.max(...magnitudes));
-console.log("Index with highest magnitude:", indexOfMaxMagnitude);
-
-
-
-
 
 
 
