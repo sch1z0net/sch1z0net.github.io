@@ -521,8 +521,7 @@ function spectrogramToImageData(spectrogram) {
 function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
     const numFrames = spectrogram.length;
-    const numBins = spectrogram[0].length;
-    console.log("NUM BINS",numBins);
+    const numBins = spectrogram[0].length; //512
     const height = 600;
 
     // Create a new ImageData object with the same dimensions as the spectrogram
@@ -533,12 +532,14 @@ function spectrogramToImageData(spectrogram) {
     const maxFrequency = 20000; // Maximum frequency in Hz
 
     // Calculate the frequency spacing (logarithmically spaced)
-    const frequencySpacing = Math.log(maxFrequency / minFrequency) / (numBins - 1);
+    //const frequencySpacing = Math.log(maxFrequency / minFrequency) / (numBins - 1);
+    const frequencySpacing = (maxFrequency / minFrequency) / (height - 1);
 
     // Convert spectrogram data to heatmap image data with logarithmic scaling
     for (let y = 0; y < height; y++) {
         // Calculate the frequency corresponding to this y position using logarithmic scaling
-        const f = Math.round(minFrequency * Math.exp(frequencySpacing * y));
+        //const f = Math.round(minFrequency * Math.exp(frequencySpacing * y));
+        const f = Math.round(minFrequency * (frequencySpacing * y));
 
         // Iterate over frames to determine the intensity value for this y position
         for (let x = 0; x < numFrames; x++) {
