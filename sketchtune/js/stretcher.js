@@ -422,7 +422,6 @@ function normalizeSpectrogram(spectrogram) {
         }
         normalizedSpectrogram.push(row);
     }
-    console.log(normalizedSpectrogram);
 
     return normalizedSpectrogram;
 }
@@ -501,6 +500,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
 
             // Normalize Spectrogram
             const normalizedSpectrogram = normalizeSpectrogram(spectrogram);
+            console.log(normalizedSpectrogram);
             // Convert spectrogram data to image data
             const imageData = spectrogramToImageData(normalizedSpectrogram);
             // Draw image data on canvas
