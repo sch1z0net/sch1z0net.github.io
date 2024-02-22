@@ -416,7 +416,7 @@ function normalizeSpectrogram(spectrogram) {
     // Normalize the magnitudes to the range [0, 1]
     const normalizedSpectrogram = [];
     if (magnitudeRange !== 0) {
-        for (let i = 0; i < numRows/2; i++) {
+        for (let i = 0; i < numRows; i++) {
             const row = [];
             for (let j = 0; j < numCols; j++) {
                 const value = spectrogram[i][j];
@@ -447,7 +447,7 @@ function normalizeSpectrogram(spectrogram) {
 function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
     const numFrames = spectrogram.length;
-    const numBins = spectrogram[0].length;
+    const numBins = spectrogram[0].length / 2;
     console.log("NUM BINS",numBins);
     
     // Create a new ImageData object with the same dimensions as the spectrogram
