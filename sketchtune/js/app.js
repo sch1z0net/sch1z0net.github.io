@@ -1889,7 +1889,7 @@ function getWindow(windowType, N) {
 $(document).ready(function(){
 
 // Example parameters
-const durationInSeconds = 1.0; // Duration of the audio in seconds
+const durationInSeconds = 4.0; // Duration of the audio in seconds
 const sampleRate = 44100; // Sample rate (samples per second)
 //const frequency = 440; // Frequency of the sine wave in Hz
 const frequency = 500; // Frequency of the sine wave in Hz
@@ -1911,8 +1911,8 @@ plotSpectrumLive(magnitudes, sampleRate);
 //const indexOfMaxMagnitude = magnitudes.indexOf(Math.max(...magnitudes));
 //console.log("Index with highest magnitude:", indexOfMaxMagnitude);
 
-result = fftReal([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]);
-console.log(result);
+//result = fftReal([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]);
+//console.log(result);
 
 });
 
