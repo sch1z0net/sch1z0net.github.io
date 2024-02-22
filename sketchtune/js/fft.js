@@ -134,61 +134,10 @@ async function fftInPlace(input, fftFactorLookup = null) {
     return input;
 }
 
-
-
-/*
-// Modified FFT function to use precalculated FFT factors
-// input was zero padded before to a length N = PowerOf2
-async function fft(input, fftFactorLookup=null) {
-
-    const N = input.length;
-
-    if (N <= 1) {
-        return input;
-    }
-
-    const even = [];
-    const odd = [];
-    for (let i = 0; i < N; i++) {
-        if (i % 2 === 0) {
-            even.push(input[i]);
-        } else {
-            odd.push(input[i]);
-        }
-    }
-
-    const evenFFT = await fft(even);
-    const oddFFT = await fft(odd);
-
-    const output = [];
-    if(fftFactorLookup==null){ 
-        //Calculate FFT Factors directly
-        for (let k = 0; k < N / 2; k++) {
-          const theta = -2 * Math.PI * k / N;
-          const exp = { re: Math.cos(theta), im: Math.sin(theta) };
-          const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
-          output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
-          output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
-        }
-    }else{
-        //Use FFT Factor Lookup
-        for (let k = 0; k < N / 2; k++) {
-          const exp = fftFactorLookup[N][k];
-          const t = { re: exp.re * oddFFT[k].re - exp.im * oddFFT[k].im, im: exp.re * oddFFT[k].im + exp.im * oddFFT[k].re };
-          output[k] = { re: evenFFT[k].re + t.re, im: evenFFT[k].im + t.im };
-          output[k + N / 2] = { re: evenFFT[k].re - t.re, im: evenFFT[k].im - t.im };
-        }
-    }
-
-
-    return output;
-}
-*/
-
 async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Apply Hanning window to the input signal
-    //const windowedSignal = inputSignal;
-    const windowedSignal = applyHanningWindow(inputSignal); 
+    const windowedSignal = inputSignal;
+    //const windowedSignal = applyHanningWindow(inputSignal); 
 
     // Zero-padding to the next power of 2
     const FFT_SIZE = nextPowerOf2(windowedSignal.length);
