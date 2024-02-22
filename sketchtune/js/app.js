@@ -139,6 +139,8 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     const logMaxFrequency = Math.log10(maxFrequency);
     const logScaleFactor = logMaxFrequency - logMinFrequency; // Scale factor for logarithmic scaling
 
+    const controlPoints = []; // Array to store control points for Catmull-Rom spline
+
     ctx.moveTo(0, height); // Start from the bottom-left corner
     for (let x = 0; x < width; x++) {
       const logFrequency = logMinFrequency + (x / width) * logScaleFactor; // Calculate frequency using logarithmic scale
