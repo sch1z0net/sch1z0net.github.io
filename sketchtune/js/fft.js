@@ -162,8 +162,8 @@ function fftReal(input) {
     }
 
     // Recursively calculate FFT for even and odd parts
-    const evenFFT = fft(even);
-    const oddFFT = fft(odd);
+    const evenFFT = fftReal(even);
+    const oddFFT = fftReal(odd);
 
     // Combine the results of even and odd parts
     const result = [];
