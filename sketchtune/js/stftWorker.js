@@ -54,6 +54,7 @@ function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames) {
                     const frame = inputSignalChunk.slice(startIdx, endIdx);
                     const windowedFrame = applyHanningWindow(frame);
 
+                    console.log("FRAME",frame.length, "WFRAME",windowedFrame.length);
                     // Create a promise for each computation
                     const spectrumPromise = computeFFT(windowedFrame, i, frames);
                     
