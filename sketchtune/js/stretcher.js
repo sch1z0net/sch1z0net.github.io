@@ -449,7 +449,7 @@ function spectrogramToImageData(spectrogram) {
     const numBins = spectrogram[0].length;
 
     // Create a new ImageData object with the same dimensions as the spectrogram
-    const imageData = new ImageData(numBins, numFrames);
+    const imageData = new ImageData(numFrames, numBins);
 
     // Convert spectrogram data to grayscale image data
     for (let i = 0; i < numFrames; i++) {
