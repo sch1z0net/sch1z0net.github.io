@@ -416,7 +416,7 @@ function normalizeSpectrogram(spectrogram) {
     // Normalize the magnitudes to the range [0, 1]
     const normalizedSpectrogram = [];
     if (magnitudeRange !== 0) {
-        for (let i = 0; i < numRows; i++) {
+        for (let i = 0; i < numRows/2; i++) {
             const row = [];
             for (let j = 0; j < numCols; j++) {
                 const value = spectrogram[i][j];
