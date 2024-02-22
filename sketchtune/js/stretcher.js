@@ -523,7 +523,7 @@ function spectrogramToImageData(spectrogram) {
     const numFrames = spectrogram.length;
     const numBins = spectrogram[0].length;
     console.log("NUM BINS",numBins);
-    const height = 1000;
+    const height = 600;
 
     // Create a new ImageData object with the same dimensions as the spectrogram
     const imageData = new ImageData(numFrames, height);
