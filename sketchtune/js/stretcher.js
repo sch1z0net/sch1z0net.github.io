@@ -441,7 +441,7 @@ function normalizeSpectrogram(spectrogram) {
 
 
 
-/*
+
 // Convert spectrogram data to image data
 function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
@@ -471,7 +471,7 @@ function spectrogramToImageData(spectrogram) {
     }
 
     return imageData;
-}*/
+}
 
 
 
@@ -517,7 +517,7 @@ function spectrogramToImageData(spectrogram) {
 
 
 
-
+/*
 function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
     const numFrames = spectrogram.length;
@@ -560,7 +560,7 @@ function spectrogramToImageData(spectrogram) {
 
     return imageData;
 }
-
+*/
 
 
 
