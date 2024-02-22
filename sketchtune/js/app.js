@@ -47,7 +47,7 @@ function plotWaveformMono(audioBuffer) {
     // Plot the mono waveform
     for (let i = 0; i < bufferLength; i++) {
         const x = (i / bufferLength) * width;
-        const y = (1 - monoBuffer[i]) * height / 2;
+        const y = (1 - audioBuffer[i]) * height / 2;
         ctx.lineTo(x, y);
     }
 
