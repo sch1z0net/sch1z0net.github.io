@@ -1840,12 +1840,64 @@ async function playSample(audioContext, audioBuffer, time, offset, duration) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Function to apply windowing to the input signal
+function applyWindow(input, windowType) {
+    const N = input.length;
+    const window = getWindow(windowType, N);
+    const windowedSignal = [];
+    for (let i = 0; i < N; i++) {
+        windowedSignal.push(input[i] * window[i]);
+    }
+    return windowedSignal;
+}
+
+// Function to generate window function
+function getWindow(windowType, N) {
+    const window = [];
+    for (let n = 0; n < N; n++) {
+        switch (windowType) {
+            case 'hanning':
+                window.push(0.5 * (1 - Math.cos(2 * Math.PI * n / (N - 1))));
+                break;
+            case 'hamming':
+                window.push(0.54 - 0.46 * Math.cos(2 * Math.PI * n / (N - 1)));
+                break;
+            case 'blackman':
+                window.push(0.42 - 0.5 * Math.cos(2 * Math.PI * n / (N - 1)) + 0.08 * Math.cos(4 * Math.PI * n / (N - 1)));
+                break;
+            default:
+                window.push(1); // Default to rectangular window
+                break;
+        }
+    }
+    return window;
+}
+
+
 const durationSeconds = 0.05; // Length of the signal in seconds
 const sampleRate = 44100; // Sample rate in Hz
 const testDataSignal = generateTestDataSignal(durationSeconds, sampleRate);
-const paddedInput = padArray(testDataSignal);
+const windowedInput = applyWindow(testDataSignal, 'hanning'); // Change windowType to 'hamming' or 'blackman' for different window functions
+const paddedInput = padArray(windowedInput);
 const result = fftReal(paddedInput);
-const magnitudes = result.map(complex => Math.sqrt(complex.real ** 2 + complex.imag ** 2));
+const magnitudes = magnitudeArray(result);
 
 plotSpectrumLive(magnitudes, sampleRate);
 
