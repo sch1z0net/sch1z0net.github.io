@@ -187,23 +187,15 @@ function fftReal(input) {
         const evenPart = { real: evenFFT[k].real, imag: evenFFT[k].imag };
         const twiddle = { real: Math.cos(angle), imag: Math.sin(angle) };
         result[k] = {
-            real: evenFFT[k].real + oddPart.real,
-            imag: evenFFT[k].imag + oddPart.imag
+            real: evenPart.real + oddPart.real * twiddle.real - oddPart.imag * twiddle.imag,
+            imag: evenPart.imag + oddPart.imag * twiddle.real + oddPart.real * twiddle.imag
         };
         result[k + N / 2] = {
-            real: evenPart.real - oddPart.real,
-            imag: evenPart.imag - oddPart.imag
-        };
-        // Apply twiddle factor
-        const temp = {
-            real: result[k + N / 2].real * twiddle.real - result[k + N / 2].imag * twiddle.imag,
-            imag: result[k + N / 2].real * twiddle.imag + result[k + N / 2].imag * twiddle.real
-        };
-        result[k + N / 2] = {
-            real: temp.real,
-            imag: temp.imag
+            real: evenPart.real - (oddPart.real * twiddle.real - oddPart.imag * twiddle.imag),
+            imag: evenPart.imag - (oddPart.imag * twiddle.real + oddPart.real * twiddle.imag)
         };
     }
+
 
     return result;
 }
