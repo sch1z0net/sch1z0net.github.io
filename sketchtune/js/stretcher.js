@@ -452,10 +452,10 @@ function spectrogramToImageData(spectrogram) {
     const imageData = new ImageData(numBins, numFrames);
 
     // Convert spectrogram data to grayscale image data
-    for (let j = 0; j < numBins; j++) {
-        for (let i = 0; i < numFrames; i++) {
+    for (let i = 0; i < numFrames; i++) {
+        for (let j = 0; j < numBins; j++) {
             // Calculate the index in the image data array
-            const index = (i * numBins + j) * 4; // Each pixel has 4 values (RGBA)
+            const index = (j * numFrames + i) * 4; // Flipping the axes
 
             // Convert magnitude/intensity to grayscale value (0-255)
             const intensity = Math.round(spectrogram[i][j] * 255);
