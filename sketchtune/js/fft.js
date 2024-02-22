@@ -191,22 +191,18 @@ function fftReal(input) {
     const result = [];
     for (let k = 0; k < N / 2; k++) {
         const angle = -2 * Math.PI * k / N;
+        const twiddleReal = Math.cos(angle);
+        const twiddleImag = Math.sin(angle);
+
         const evenPart = { real: evenFFT[k].real, imag: evenFFT[k].imag };
-        const oddPart = { real: oddFFT[k].real * Math.cos(angle) - oddFFT[k].imag * Math.sin(angle), 
-                          imag: oddFFT[k].real * Math.sin(angle) + oddFFT[k].imag * Math.cos(angle) };
-        const twiddle = { real: Math.cos(angle), imag: Math.sin(angle) };
-        
+        const oddPart = {
+            real: oddFFT[k].real * twiddleReal - oddFFT[k].imag * twiddleImag,
+            imag: oddFFT[k].real * twiddleImag + oddFFT[k].imag * twiddleReal
+        };
+
         // Combine the results of even and odd parts...
-        result[k] = {
-            real: evenPart.real + (twiddle.real * oddPart.real - twiddle.imag * oddPart.imag),
-            imag: evenPart.imag + (twiddle.real * oddPart.imag + twiddle.imag * oddPart.real)
-        };
-
-        result[k + N / 2] = {
-            real: evenPart.real - (twiddle.real * oddPart.real - twiddle.imag * oddPart.imag),
-            imag: evenPart.imag - (twiddle.real * oddPart.imag + twiddle.imag * oddPart.real)
-        };
-
+        result[k] = {         real: evenPart.real + oddPart.real, imag: evenPart.imag + oddPart.imag };
+        result[k + N / 2] = { real: evenPart.real - oddPart.real, imag: evenPart.imag - oddPart.imag };
     }
 
 
