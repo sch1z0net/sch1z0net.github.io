@@ -589,6 +589,7 @@ canvas {
   background-color: rgba(10, 10, 10, 0.8);
   position: absolute;
   right:0px;
+  z-index: 2000;
 }
 
 
