@@ -421,7 +421,8 @@ function normalizeSpectrogram(spectrogram) {
             for (let j = 0; j < numCols; j++) {
                 const value = spectrogram[i][j];
                 const magnitude = Math.sqrt(value.re * value.re + value.im * value.im);
-                const normalizedMagnitude = (magnitude - minMagnitude) / magnitudeRange;
+                //const normalizedMagnitude = (magnitude - minMagnitude) / magnitudeRange;
+                const normalizedMagnitude = (magnitude * 100);
                 row.push(normalizedMagnitude);
             }
             normalizedSpectrogram.push(row);
@@ -614,8 +615,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
             console.log(`Now Stretching the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);
 
             // Normalize Spectrogram
-            const normalizedSpectrogram = spectrogram;
-            //const normalizedSpectrogram = normalizeSpectrogram(spectrogram);
+            const normalizedSpectrogram = normalizeSpectrogram(spectrogram);
             //console.log(normalizedSpectrogram);
             // Convert spectrogram data to image data
             const imageData = spectrogramToImageData(normalizedSpectrogram);
