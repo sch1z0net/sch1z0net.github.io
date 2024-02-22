@@ -158,6 +158,10 @@ function padArray(input) {
 function fftReal(input) {
     const N = input.length;
 
+    if(N != nextPowerOf2(N)){
+        console.error("FFT FRAME must have power of 2");
+    }
+
     // Split the input into even and odd parts
     const even = [];
     const odd = [];
