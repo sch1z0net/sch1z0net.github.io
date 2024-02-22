@@ -201,18 +201,18 @@ async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
 
     // Zero-padding to the next power of 2
     const FFT_SIZE = nextPowerOf2(windowedSignal.length);
-    //const paddedInput = new Array(FFT_SIZE).fill({ re: 0, im: 0 });
-    const paddedInput = new Array(FFT_SIZE).fill(0);
-    //windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
-    windowedSignal.forEach((value, index) => (paddedInput[index] = value));
+    const paddedInput = new Array(FFT_SIZE).fill({ re: 0, im: 0 });
+    //const paddedInput = new Array(FFT_SIZE).fill(0);
+    windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
+    //windowedSignal.forEach((value, index) => (paddedInput[index] = value));
 
     // Perform FFT
-    var spectrumReal = await fftInPlaceReal(paddedInput, fftFactorLookup);
+    //var spectrumReal = await fftInPlaceReal(paddedInput, fftFactorLookup);
     // Map real-only spectrum to complex numbers
-    const spectrumComplex = spectrumReal.map(value => ({ re: value, im: 0 }));
-    return spectrumComplex;
+    //const spectrumComplex = spectrumReal.map(value => ({ re: value, im: 0 }));
+    //return spectrumComplex;
 
-    //return await fftInPlace(paddedInput, fftFactorLookup);
+    return await fftInPlace(paddedInput, fftFactorLookup);
     //return await fft(paddedInput, fftFactorLookup);
 }
 
