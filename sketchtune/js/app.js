@@ -118,6 +118,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   var maxFrequency;
   var minFrequency;
 
+  if(sampleRate == null){ range_mode = 2; }
   if(range_mode == 0){ maxFrequency = sampleRate;      minFrequency = 0;  }
   if(range_mode == 1){ maxFrequency = sampleRate / 2;  minFrequency = 20; }
   if(range_mode == 2){ maxFrequency = 10000;           minFrequency = 20; }
@@ -205,13 +206,13 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   }
   
   /*********** FREQ LABELS AND LINES **********/
-    // Plot logarithmic number grid
-    ctx.fillStyle = 'white';
-    ctx.font = '10px Arial';
-    ctx.textAlign = 'center';
+  // Plot logarithmic number grid
+  ctx.fillStyle = 'white';
+  ctx.font = '10px Arial';
+  ctx.textAlign = 'center';
 
-    const fixedFrequencies = [20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 400, 500, 1000, 2000, 4000, 8000, 10000];
-    for (let i = 0; i < fixedFrequencies.length; i++) {
+  const fixedFrequencies = [20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 400, 500, 1000, 2000, 4000, 8000, 10000];
+  for (let i = 0; i < fixedFrequencies.length; i++) {
       const frequency = fixedFrequencies[i];
       const logFrequency = Math.log10(frequency);
       var x;
@@ -226,7 +227,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
         ctx.strokeStyle = 'red';
       }
       ctx.stroke();
-    }
+  }
 }
 
 
