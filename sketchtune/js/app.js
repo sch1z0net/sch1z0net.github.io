@@ -1617,13 +1617,6 @@ $(document).ready(function(){
 async function createAudioProcessor(context, audioNode) {
   await context.audioWorklet.addModule('./js/audio-processor.js');
   const audioProcessor = new AudioWorkletNode(context, 'audio-processor');
-
-  // Create a MessageChannel for communication
-  const { port } = new MessageChannel();
-  port.postMessage({ ms: performance.now() });
-  // Handle messages from the audio worklet node if necessary
-  // port.onmessage = (event) => {  };
-  // Connect the master gain node to the audio processor node
   audioNode.connect(audioProcessor);
   return audioProcessor;
 }
@@ -1702,7 +1695,9 @@ async function createSpectrumTracker(audioContext, audioSource) {
     let interval; // Declare interval variable outside
     function startInterval() {
         interval = setInterval(() => {
-            audioProcessor.port.postMessage({ type: 'getFrequencyData' });
+            audioProcessor.port.postMessage({ 
+              type: 'getFrequencyData' 
+            });
             //const frequencyData = getFrequencyData();
             //plotSpectrumLive(frequencyData, audioContext.sampleRate);
         }, displayRefreshRate);
