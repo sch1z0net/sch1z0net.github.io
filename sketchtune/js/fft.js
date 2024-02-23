@@ -312,7 +312,7 @@ function fftRealInPlace(input) {
 
 
 
-
+/*
 // Async function to perform FFT in-place
 async function fftComplexInPlace(input, fftFactorLookup = null) {
     const N = input.length;
@@ -357,7 +357,66 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
     }
 
     return output;
+}*/
+
+
+async function fftComplexInPlace(input, fftFactorLookup = null) {
+    const N = input.length;
+    const bits = Math.log2(N);
+
+    if (N !== nextPowerOf2(N)) {
+        console.error("FFT FRAME must have power of 2");
+        return;
+    }
+
+    // Perform bit reversal
+    const output = new Array(N);
+    for (let i = 0; i < N; i++) {
+       const reversedIndex = bitReverse(i, bits);
+       output[reversedIndex] = input[i];
+    }
+
+    if (N <= 1) {
+        return input;
+    }
+
+    // Recursively calculate FFT
+    for (let size = 2; size <= N; size *= 2) {
+        const halfSize = size / 2;
+        for (let i = 0; i < N; i += size) {
+            // Get FFT factors with caching
+            const factors = computeFFTFactorsWithCache(size);
+            for (let j = 0; j < halfSize; j++) {
+                const evenIndex = i + j;
+                const oddIndex = i + j + halfSize;
+                const evenPartRe = output[evenIndex].re;
+                const evenPartIm = output[evenIndex].im;
+                const oddPartRe = output[oddIndex].re;
+                const oddPartIm = output[oddIndex].im;
+
+                const twiddleRe = factors[j].re;
+                const twiddleIm = factors[j].im;
+
+                // Multiply by twiddle factors
+                const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
+                const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
+
+                // Combine results of even and odd parts in place
+                output[evenIndex].re = evenPartRe + twiddledOddRe;
+                output[evenIndex].im = evenPartIm + twiddledOddIm;
+                output[oddIndex].re = evenPartRe - twiddledOddRe;
+                output[oddIndex].im = evenPartIm - twiddledOddIm;
+            }
+        }
+    }
+
+    return output;
 }
+
+
+
+
+
 
 async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Apply Hanning window to the input signal
