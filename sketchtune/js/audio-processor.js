@@ -247,6 +247,16 @@ class AudioProcessor extends AudioWorkletProcessor {
     this.smoothedSpectrum = new Float32Array(this.frequencyBinCount).fill(0);
   }
 
+
+  // Receive the MessagePort from the main thread
+  self.onmessage = (event) => {
+    const { port } = event.data;
+    port.onmessage = (event) => {
+      this.currentTime= event.data.ms;
+    };
+  };
+
+
   // Inside AudioProcessor class
   handleMessage(event) {
     const { data } = event;
@@ -255,7 +265,6 @@ class AudioProcessor extends AudioWorkletProcessor {
       this.port.postMessage({ type: 'frequencyData', data: frequencyData });
     }
   }
-
 
 
 process(inputs, outputs, parameters) {
@@ -268,12 +277,12 @@ process(inputs, outputs, parameters) {
     }
 
     // Throttle processing
-    const t = currentTime*1000;
+    const t = this.currentTime;
     if (t - this.lastProcessingTime < this.processingInterval) {
         return true; // Keep the processor alive without processing any audio data
     }
 
-    const performanceStart = currentTime*1000;
+    const performanceStart = this.currentTime;
     // Convert multichannel input to mono
     const numChannels = input.length;
     const numSamples = input[0].length;
@@ -303,7 +312,7 @@ process(inputs, outputs, parameters) {
     }
 
 
-    const performanceEnd = currentTime*1000;
+    const performanceEnd = this.currentTime;
     // Estimate processing time (in milliseconds)
     const estimatedProcessingTime = performanceEnd - performanceStart; // Measure this empirically
     // Set a target processing interval (in milliseconds)
