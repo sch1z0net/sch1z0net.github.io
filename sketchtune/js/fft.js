@@ -140,7 +140,7 @@ function fftReal(input) {
 
 
 
-function fftRealInPlace(input) {
+async function fftRealInPlace(input) {
     const N = input.length;
 
     if(N != nextPowerOf2(N)){
