@@ -122,10 +122,19 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     const numBins = frequencyData.length;
     const binWidth = sampleRate / numBins;
 
-    // Apply simple smoothing by averaging neighboring frequency bins
-    //const smoothedData = smoothFrequencyData(frequencyData);
-    const smoothedData = frequencyData;
- 
+
+
+  // Define the range of frequencies you want to plot
+  const startIndex = Math.floor(minFrequency / binWidth);
+  const endIndex = Math.ceil(maxFrequency / binWidth);
+  // Ensure that endIndex doesn't exceed the length of frequencyData
+  const endIndexValid = Math.min(endIndex, frequencyData.length);
+  // Subarray the frequencyData to include only the frequencies within the defined range
+  const subFrequencyData = frequencyData.slice(startIndex, endIndexValid);
+  // Apply simple smoothing by averaging neighboring frequency bins
+  const smoothedData = smoothFrequencyData(subFrequencyData);
+
+
     // Find the maximum magnitude in the smoothed frequency data
     const minMagnitude = Math.min(...smoothedData);
     const maxMagnitude = Math.max(...smoothedData);
