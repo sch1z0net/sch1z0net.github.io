@@ -357,7 +357,6 @@ process(inputs, outputs, parameters) {
   performFFT(inputData) {
     // Perform the processing (FFT analysis) on the mono channel
     var spectrum = prepare_and_fft(inputData);
-    console.log(spectrum);
     return spectrum;
   }
 

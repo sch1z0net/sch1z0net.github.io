@@ -127,11 +127,10 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
             numFrames: numFrames,
             workerID: i,
             mode: mode
-            //fftFactorLookup: lookup.buffer // Transfer ownership of the ArrayBuffer
         };
 
         // Send the message to the worker
-        worker.postMessage(message, [chunky.buffer/*, lookup.buffer*/]); // Transfer ownership of the ArrayBuffer
+        worker.postMessage(message, [chunky.buffer]); // Transfer ownership of the ArrayBuffer
 
 
         // Listen for messages from the worker
