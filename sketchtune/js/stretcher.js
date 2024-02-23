@@ -618,11 +618,11 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
     return Promise.resolve()
         .then(async () => {
             const startTime = performance.now();
-            const result = await STFTWithWebWorkers(inputSignal, windowSize, hopSize, 1);
+            const spectrogram = await STFTWithWebWorkers(inputSignal, windowSize, hopSize, 1);
             const endTime = performance.now();
             const elapsedTime = endTime - startTime;
             console.log(`Calculating the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);
-            return result;
+            return spectrogram;
         })
         .then(async (spectrogram) => {
             // Normalize Spectrogram
