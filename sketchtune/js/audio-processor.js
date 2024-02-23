@@ -283,8 +283,8 @@ class AudioProcessor extends AudioWorkletProcessor {
     var MAX_FFT_SIZE = 8192;
 
     // Create an array to store the frequency data
-    this.frequencyBinCount = MAX_FFT_SIZE / 2;
-    this.frequencyData = new Uint8Array(this.frequencyBinCount).fill(0); // Only need half the FFT size due to Nyquist theorem
+    this.frequencyBinCount = MAX_FFT_SIZE / 2; // Only need half the FFT size due to Nyquist theorem
+    this.frequencyData = new Uint8Array(this.frequencyBinCount).fill(0); 
     this.sampleBuffer = [];
 
     // Initialize variables for EMA smoothing

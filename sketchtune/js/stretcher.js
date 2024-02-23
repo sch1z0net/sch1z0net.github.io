@@ -461,14 +461,14 @@ function normalizeSpectrogram(spectrogram) {
 function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
     const numFrames = spectrogram.length;
-    const numBins = spectrogram[0].length;
-    console.log("NUM BINS",numBins);
+    const numBins = spectrogram[0].length / 2;  // Only need half the FFT size due to Nyquist theorem
     
     // Create a new ImageData object with the same dimensions as the spectrogram
     const imageData = new ImageData(numFrames, numBins);
     
     // Convert spectrogram data to grayscale image data
     for (let i = 0; i < numFrames; i++) {
+        var spectrum = spectrogram[i];
         for (let j = 0; j < numBins; j++) {
             // Calculate the index in the image data array
             //const index = (j * numFrames + i) * 4; // Flipping the axes
@@ -476,7 +476,7 @@ function spectrogramToImageData(spectrogram) {
             const index = ((numBins - j - 1) * numFrames + i) * 4; // Reverse
 
             // Convert magnitude/intensity to grayscale value (0-255)
-            const intensity = Math.round(spectrogram[i][j] * 255);
+            const intensity = Math.round(spectrum[j] * 255);
 
             // Set the same value for R, G, and B channels (grayscale)
             imageData.data[index] = intensity;     // Red channel
