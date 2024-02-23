@@ -584,7 +584,7 @@ canvas {
 
 
 #spectrogramA {
-  width: 400px;
+  width: 800px;
   height: 400px;
   background-color: rgba(10, 10, 10, 0.8);
   position: absolute;

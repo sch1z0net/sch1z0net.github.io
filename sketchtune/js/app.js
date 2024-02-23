@@ -1577,7 +1577,7 @@ $(document).ready(function(){
   side_layout.append($("<side-window>"));
   $("#root").append('<canvas id="waveformCanvas" width="1200" height="600" style="display: inline-block;"></canvas>');
   $("#root").append('<canvas id="spectrumCanvas" width="1200" height="600" style="display: inline-block;"></canvas>');
-  $("body").append('<canvas id="spectrogramA" width="1200" height="600" style="display: inline-block;"></canvas>');
+  $("body").append('<canvas id="spectrogramA" width="4000" height="2000" style="display: inline-block;"></canvas>');
   
 
   $("beat-bar").scrollLeft(0);
