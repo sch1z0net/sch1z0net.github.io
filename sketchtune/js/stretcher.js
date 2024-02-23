@@ -494,6 +494,18 @@ function spectrogramToImageData(spectrogram) {
     return imageData;
 }*/
 
+
+// Define color map array with colors from black to white through a gradient of blue, violet, red, orange, yellow, and white
+const colorMap = [
+        [0, 0, 0],       // Black
+        [0, 0, 255],     // Blue
+        [138, 43, 226],  // Violet
+        [255, 0, 0],     // Red
+        [255, 165, 0],   // Orange
+        [255, 255, 0],   // Yellow
+        [255, 255, 255]  // White
+];
+
 // Convert spectrogram data to image data
 function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
@@ -509,7 +521,7 @@ function spectrogramToImageData(spectrogram) {
     const logMinFreq = Math.log(minFreq + 1); // Logarithm of the minimum frequency (avoiding log(0))
     const logMaxFreq = Math.log(maxFreq + 1); // Logarithm of the maximum frequency (avoiding log(0))
 
-    var h = 3000;
+    var h = 2000;
     // Convert spectrogram data to grayscale image data
     for (let i = 0; i < numFrames; i++) {
         var spectrum = spectrogram[i];
@@ -525,14 +537,29 @@ function spectrogramToImageData(spectrogram) {
             // Calculate the index in the image data array
             const index = ((numBins - binIndex - 1) * numFrames + i) * 4; // Reverse
 
+
+
+            // Interpolate color based on the normalized magnitude
+            const colorIndex = Math.round(value * (colorMap.length - 1));
+            const color = colorMap[colorIndex];
+
+            // Set the color channels of the pixel
+            imageData.data[index] = color[0];     // Red channel
+            imageData.data[index + 1] = color[1]; // Green channel
+            imageData.data[index + 2] = color[2]; // Blue channel
+            imageData.data[index + 3] = 255;      // Alpha channel (fully opaque)
+
+
+
+            /*
             // Convert magnitude/intensity to grayscale value (0-255)
             const intensity = Math.round(value * 255);
-
             // Set the same value for R, G, and B channels (grayscale)
             imageData.data[index] = intensity;     // Red channel
             imageData.data[index + 1] = intensity; // Green channel
             imageData.data[index + 2] = intensity; // Blue channel
             imageData.data[index + 3] = 255;       // Alpha channel (fully opaque)
+            */
         }
     }
 
