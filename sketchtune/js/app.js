@@ -97,6 +97,7 @@ function smoothFrequencyData(frequencyData) {
     const nextIndex = Math.min(numBins - 1, i + 1);
     const average = (frequencyData[prevIndex] + frequencyData[i] + frequencyData[nextIndex]) / 3; // Simple averaging
     smoothedData.push(average);
+    console.log(i,average);
   }
   return smoothedData;
 }
@@ -128,7 +129,6 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     // Find the maximum magnitude in the smoothed frequency data
     const minMagnitude = Math.min(...smoothedData);
     const maxMagnitude = Math.max(...smoothedData);
-    console.log(smoothedData);
 
     // Plot the spectrum using a logarithmic scale
     const logMinFrequency = Math.log10(minFrequency);
