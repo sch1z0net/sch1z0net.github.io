@@ -1794,7 +1794,7 @@ $(document).ready(function(){
   const $smoothingModeSelect = $("<select>").attr("id", "smoothingModeSelect").val(smoothing_mode);
   const $liveSpectrumFFTsizeSelect       = $("<select>").attr("id", "lsFFTsizeSelect").val(liveSpectrumFFTsize);
   const $liveSpectrumSmoothingSizeSelect = $("<select>").attr("id", "lsSmoothingSizeSelect").val(liveSpectrumSmoothingSize);
-  const $liveSpectrumRefreshRateSelect   = $("<select>").attr("id", "lsRefreshRateSelect").val($displayRefreshRate);
+  const $liveSpectrumRefreshRateSelect   = $("<select>").attr("id", "lsRefreshRateSelect").val(displayRefreshRate);
 
   // Options for window size select box
   [256, 512, 1024, 2048, 4096, 8192].forEach(function(size) {
