@@ -643,10 +643,10 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
         .then(async (spectrogram) => {
             // Normalize Spectrogram
             const normalizedDBSpectrogram = normalizeSpectrogramToDB(spectrogram);
-            const normalizedSpectrogram = normalizeSpectrogram(normalizedDBSpectrogram);
+            //const normalizedSpectrogram = normalizeSpectrogram(normalizedDBSpectrogram);
             //console.log(normalizedSpectrogram);
             // Convert spectrogram data to image data
-            const imageData = spectrogramToImageData(normalizedSpectrogram);
+            const imageData = spectrogramToImageData(normalizedDBSpectrogram);
             // Draw image data on canvas
             drawImageDataOnCanvas(imageData, "spectrogramA");
 
