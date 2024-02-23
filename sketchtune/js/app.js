@@ -115,13 +115,13 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
 
   const minFrequency = 20; // Minimum frequency (20 Hz)
   const maxFrequency = sampleRate / 2; // Nyquist frequency
-  const binWidth = maxFrequency / numBins;
 
   if (frequencyData != null && sampleRate != null) {
     ctx.clearRect(0, 0, width, height);
     ctx.beginPath();
 
     const numBins = frequencyData.length;
+    const binWidth = maxFrequency / numBins;
 
     // Apply simple smoothing by averaging neighboring frequency bins
     const smoothedData = smoothFrequencyData(frequencyData);
