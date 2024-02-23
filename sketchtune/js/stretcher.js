@@ -447,19 +447,29 @@ function normalizeSpectrogram(spectrogram) {
 
 function normalizeSpectrogramToDB(spectrogram) {
     const normalizedSpectrogram = [];
-    const maxPower = Math.max(...spectrogram.map(bin => Math.abs(bin.re * bin.re + bin.im * bin.im)));
-    const minDB = -20; // Set a minimum value for dB to avoid infinity or negative infinity
-    
-    for (const bin of spectrogram) {
-        const power = Math.abs(bin.re * bin.re + bin.im * bin.im);
-        const dB = 10 * Math.log10(power / maxPower);
-        // Clip dB values to minDB to avoid infinity or negative infinity
-        const clippedDB = Math.max(dB, minDB);
-        normalizedSpectrogram.push(clippedDB);
+
+    // Iterate over each frame in the spectrogram
+    for (const frame of spectrogram) {
+        const framePower = frame.map(bin => Math.abs(bin.re * bin.re + bin.im * bin.im));
+        const maxPower = Math.max(...framePower);
+        const minDB = -20; // Set a minimum value for dB to avoid infinity or negative infinity
+        const frameDB = [];
+
+        // Convert power to dB for each bin in the frame
+        for (const power of framePower) {
+            const dB = 10 * Math.log10(power / maxPower);
+            // Clip dB values to minDB to avoid infinity or negative infinity
+            const clippedDB = Math.max(dB, minDB);
+            frameDB.push(clippedDB);
+        }
+
+        // Add the dB values for the frame to the normalized spectrogram
+        normalizedSpectrogram.push(frameDB);
     }
 
     return normalizedSpectrogram;
 }
+
 
 
 
