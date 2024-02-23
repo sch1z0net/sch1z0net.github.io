@@ -60,6 +60,7 @@ function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames) {
                     
                     // Push the promise into the array
                     computationPromises.push(spectrumPromise.then(spectrum => {
+                        console.log("SPECTROGRAM CHUNK",i);
                         spectrogramChunk[i] = spectrum; // Store the result
                     }));
                 }
