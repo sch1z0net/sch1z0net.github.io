@@ -25,6 +25,26 @@ function applyHanningWindow(frame) {
     return windowedFrame;
 }
 
+function precalculateFFTFactors(N) {
+    const factors = [];
+    for (let k = 0; k < N / 2; k++) {
+        const theta = -2 * Math.PI * k / N;
+        factors.push({ re: Math.cos(theta), im: Math.sin(theta) });
+    }
+    return factors;
+}
+
+function generateFFTFactorLookup(maxSampleLength) {
+    const maxN = nextPowerOf2(maxSampleLength);
+    const fftFactorLookup = {};
+
+    for (let N = 2; N <= maxN; N *= 2) {
+        fftFactorLookup[N] = precalculateFFTFactors(N);
+    }
+
+    return fftFactorLookup;
+}
+
 /******************** FORWARD *********************/
 // Cache object to store precalculated FFT factors
 const fftFactorCache = {};
@@ -51,8 +71,6 @@ function computeFFTFactorsWithCache(N) {
 
 
 
-
-
 // Bit reversal function
 function bitReverse(num, bits) {
     let reversed = 0;
@@ -62,8 +80,69 @@ function bitReverse(num, bits) {
     }
     return reversed;
 }
+
+// Function to pad the input array with zeros to make its length a power of 2
+function padArray(input) {
+    const N = input.length;
+    const paddedLength = Math.pow(2, Math.ceil(Math.log2(N)));
+    const paddedInput = new Array(paddedLength).fill(0);
+    input.forEach((value, index) => paddedInput[index] = value);
+    return paddedInput;
+}
+
+
+// Calculate the FFT of real-valued input data and return complex numbers as output
+function fftReal(input) {
+    const N = input.length;
+
+    if(N != nextPowerOf2(N)){
+        console.error("FFT FRAME must have power of 2");
+    }
+
+    // Base case of recursion: if input has only one element, return it as complex number
+    if (N === 1) {
+        return [{ real: input[0], imag: 0 }];
+    }
+
+    // Split the input into even and odd parts
+    const even = [];
+    const odd = [];
+    for (let i = 0; i < N; i += 2) {
+        even.push(input[i]);
+        odd.push(input[i + 1]);
+    }
+
+    // Recursively calculate FFT for even and odd parts
+    const evenFFT = fftReal(even);
+    const oddFFT = fftReal(odd);
+
+    // Combine the results of even and odd parts
+    const result = [];
+    for (let k = 0; k < N / 2; k++) {
+        const angle = -2 * Math.PI * k / N;
+        const twiddleReal = Math.cos(angle);
+        const twiddleImag = Math.sin(angle);
+
+        const evenPart = { real: evenFFT[k].real, imag: evenFFT[k].imag };
+        const oddPart = {
+            real: oddFFT[k].real * twiddleReal - oddFFT[k].imag * twiddleImag,
+            imag: oddFFT[k].real * twiddleImag + oddFFT[k].imag * twiddleReal
+        };
+
+        // Combine the results of even and odd parts...
+        result[k] = {         real: evenPart.real + oddPart.real, imag: evenPart.imag + oddPart.imag };
+        result[k + N / 2] = { real: evenPart.real - oddPart.real, imag: evenPart.imag - oddPart.imag };
+    }
+
+
+    return result;
+}
+
+
+
+
 // Async function to perform FFT in-place
-function fftInPlace(input, fftFactorLookup = null) {
+async function fftInPlace(input, fftFactorLookup = null) {
     const N = input.length;
     const bits = Math.log2(N);
 
@@ -114,23 +193,27 @@ function fftInPlace(input, fftFactorLookup = null) {
     return input;
 }
 
-function prepare_and_fft(inputSignal, fftFactorLookup=null) {
+async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Apply Hanning window to the input signal
-    //const windowedSignal = inputSignal;
-    const windowedSignal = applyHanningWindow(inputSignal); 
+    const windowedSignal = inputSignal;
+    //const windowedSignal = applyHanningWindow(inputSignal); 
 
     // Zero-padding to the next power of 2
     const FFT_SIZE = nextPowerOf2(windowedSignal.length);
     const paddedInput = new Array(FFT_SIZE).fill({ re: 0, im: 0 });
+    //const paddedInput = new Array(FFT_SIZE).fill(0);
     windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
+    //windowedSignal.forEach((value, index) => (paddedInput[index] = value));
 
     // Perform FFT
-    return fftInPlace(paddedInput, fftFactorLookup);
+    //var spectrumReal = await fftInPlaceReal(paddedInput, fftFactorLookup);
+    // Map real-only spectrum to complex numbers
+    //const spectrumComplex = spectrumReal.map(value => ({ re: value, im: 0 }));
+    //return spectrumComplex;
+
+    return await fftInPlace(paddedInput, fftFactorLookup);
     //return await fft(paddedInput, fftFactorLookup);
 }
-
-
-
 
 
 
