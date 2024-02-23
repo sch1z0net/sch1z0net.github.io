@@ -1648,6 +1648,7 @@ function checkAndCreateSpectrumTracker(audioContext, audioSource) {
     }
 }
 
+//var displayRefreshRate = 20;
 var displayRefreshRate = 20;
 async function createSpectrumTracker(audioContext, audioSource) {
     // BUILT IN WEB API ANALYZER
