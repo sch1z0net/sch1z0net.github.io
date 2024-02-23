@@ -251,6 +251,7 @@ class AudioProcessor extends AudioWorkletProcessor {
   handleMessage(event) {
     const { data } = event;
     this.time = data.time;
+    console.log(data.time);
     if (data.type === 'getFrequencyData') {
       const frequencyData = this.getByteFrequencyData();
       this.port.postMessage({ type: 'frequencyData', data: frequencyData });
@@ -316,7 +317,7 @@ process(inputs, outputs, parameters) {
     // Update the last processing time
     this.lastProcessingTime = t;
     return true; // Keep the processor alive
-}
+  }
 
 
   performFFT(inputData) {
