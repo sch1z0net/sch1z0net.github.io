@@ -109,9 +109,6 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   const canvas = document.getElementById('spectrumCanvas');
   const ctx = canvas.getContext('2d');
 
-  const width = canvas.width;
-  const height = canvas.height;
-
   const maxFrequency = sampleRate / 2; // Nyquist frequency
   const minFrequency = 20; // Minimum frequency (20 Hz)
   const width = canvas.width;
