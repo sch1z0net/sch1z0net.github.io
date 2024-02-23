@@ -1786,15 +1786,15 @@ $(document).ready(function(){
   }
 
   // Create select boxes and append them to the DOM
-  const $windowSizeSelect    = $("<select>").attr("id", "windowSizeSelect");
-  const $hopFactorSelect     = $("<select>").attr("id", "hopFactorSelect");
-  const $smoothFactorSelect  = $("<select>").attr("id", "smoothFactorSelect");
-  const $rangeModeSelect     = $("<select>").attr("id", "rangeModeSelect");
-  const $scaleModeSelect     = $("<select>").attr("id", "scaleModeSelect");
-  const $smoothingModeSelect = $("<select>").attr("id", "smoothingModeSelect"); 
-  const $liveSpectrumFFTsizeSelect       = $("<select>").attr("id", "lsFFTsizeSelect");
-  const $liveSpectrumSmoothingSizeSelect = $("<select>").attr("id", "lsSmoothingSizeSelect"); 
-  const $liveSpectrumRefreshRateSelect   = $("<select>").attr("id", "lsRefreshRateSelect"); 
+  const $windowSizeSelect    = $("<select>").attr("id", "windowSizeSelect").val(windowSize);
+  const $hopFactorSelect     = $("<select>").attr("id", "hopFactorSelect").val(hopFactor);
+  const $smoothFactorSelect  = $("<select>").attr("id", "smoothFactorSelect").val(smoothFactor);
+  const $rangeModeSelect     = $("<select>").attr("id", "rangeModeSelect").val(range_mode);
+  const $scaleModeSelect     = $("<select>").attr("id", "scaleModeSelect").val(scale_mode);
+  const $smoothingModeSelect = $("<select>").attr("id", "smoothingModeSelect").val(smoothing_mode);
+  const $liveSpectrumFFTsizeSelect       = $("<select>").attr("id", "lsFFTsizeSelect").val(liveSpectrumFFTsize);
+  const $liveSpectrumSmoothingSizeSelect = $("<select>").attr("id", "lsSmoothingSizeSelect").val(liveSpectrumSmoothingSize);
+  const $liveSpectrumRefreshRateSelect   = $("<select>").attr("id", "lsRefreshRateSelect").val($displayRefreshRate);
 
   // Options for window size select box
   [256, 512, 1024, 2048, 4096, 8192].forEach(function(size) {
