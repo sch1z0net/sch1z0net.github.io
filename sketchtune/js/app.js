@@ -161,7 +161,6 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
       // Interpolate between neighboring frequency bins using linear interpolation
       const lowerMagnitude = smoothedData[lowerBinIndex];
       const upperMagnitude = smoothedData[upperBinIndex];
-      //console.log(x, lowerBinIndex, upperBinIndex, lowerMagnitude / maxMagnitude,upperMagnitude / maxMagnitude);
       const interpolatedMagnitude = lowerMagnitude * (1 - fraction) + upperMagnitude * fraction;
 
       interpolatedMagnitudes.push(interpolatedMagnitude);
@@ -209,8 +208,8 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     for (let i = 0; i < fixedFrequencies.length; i++) {
       const frequency = fixedFrequencies[i];
       const logFrequency = Math.log10(frequency);
-      //const x = (logFrequency - logMinFrequency) / logScaleFactor * width;
-      const x = (frequency - minFrequency) / linScaleFactor * width;
+      const x = (logFrequency - logMinFrequency) / logScaleFactor * width;
+      //const x = (frequency - minFrequency) / linScaleFactor * width;
       ctx.fillText(frequency.toFixed(0), x, height - 5); // Display frequency
       ctx.beginPath();
       ctx.moveTo(x, 0);
