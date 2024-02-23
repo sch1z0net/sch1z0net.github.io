@@ -130,10 +130,6 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     //const smoothedData = smoothFrequencyData(frequencyData);
     const smoothedData = frequencyData;
 
-    // Find the maximum magnitude in the smoothed frequency data
-    const minMagnitude = Math.min(...smoothedData);
-    const maxMagnitude = Math.max(...smoothedData);
-
     // Plot the spectrum using a logarithmic scale
     const logMinFrequency = Math.log10(minFrequency);
     const logMaxFrequency = Math.log10(maxFrequency);
@@ -143,7 +139,11 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     const controlPoints = []; // Array to store control points for Catmull-Rom spline
 
     ctx.moveTo(0, height); // Start from the bottom-left corner
+
+    // Calculate all interpolated magnitudes
+    const interpolatedMagnitudes = [];
     for (let x = 0; x < width; x++) {
+      // Calculate interpolated magnitude for the current x-coordinate
       //const logFrequency = logMinFrequency + (x / width) * logScaleFactor; // Calculate frequency using logarithmic scale
       //const frequency = Math.pow(10, logFrequency); // Calculate frequency from log frequency
       const frequency = minFrequency + (x / width) * linScaleFactor;
@@ -161,13 +161,20 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
       //console.log(x, lowerBinIndex, upperBinIndex, lowerMagnitude / maxMagnitude,upperMagnitude / maxMagnitude);
       const interpolatedMagnitude = lowerMagnitude * (1 - fraction) + upperMagnitude * fraction;
 
-      // Normalize interpolated magnitude for plotting
-      const normalizedMagnitude = (interpolatedMagnitude / maxMagnitude) * height;
+      interpolatedMagnitudes.push(interpolatedMagnitude);
+    }
 
-      // Store the control point for Catmull-Rom spline
-      const y = height - normalizedMagnitude; // Invert Y-axis
-      controlPoints.push({ x, y });
-      ctx.lineTo(x, y); // Draw line to the magnitude point
+    // Find the maximum magnitude among the interpolated magnitudes
+    const maxInterpolatedMagnitude = Math.max(...interpolatedMagnitudes);
+
+    // Normalize each interpolated magnitude based on the maximum magnitude
+    for (let i = 0; i < interpolatedMagnitudes.length; i++) {
+        const normalizedMagnitude = (interpolatedMagnitudes[i] / maxInterpolatedMagnitude) * height;
+
+        // Store the control point for Catmull-Rom spline
+        const y = height - normalizedMagnitude; // Invert Y-axis
+        controlPoints.push({ x, y });
+        ctx.lineTo(x, y); // Draw line to the magnitude point
     }
 
     ctx.lineTo(width, height); // Line to the bottom-right corner
