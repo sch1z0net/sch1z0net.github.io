@@ -215,17 +215,22 @@ function fftRealInPlace(input) {
 // Async function to perform FFT in-place
 async function fftComplexInPlace(input, fftFactorLookup = null) {
     const N = input.length;
-    const bits = Math.log2(N);
 
-    if (N <= 1) {
-        return input;
+    if(N != nextPowerOf2(N)){
+        console.error("FFT FRAME must have power of 2");
+        return;
     }
 
     // Perform bit reversal
+    const bits = Math.log2(N);
     const output = new Array(N);
     for (let i = 0; i < N; i++) {
        const reversedIndex = bitReverse(i, bits);
        output[reversedIndex] = input[i];
+    }
+
+    if (N <= 1) {
+        return input;
     }
 
     // Recursively calculate FFT
