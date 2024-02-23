@@ -231,7 +231,7 @@ class AudioProcessor extends AudioWorkletProcessor {
     this.fftSize = 2048;
     //this.fftSize = 4096;
     //this.fftSize = 8192;
-    this.lastProcessingTime = 0;
+    this.lastProcessingTime = this.currentTime;
     this.processingInterval = 100; // Processing interval in milliseconds (adjust as needed)
     // Create an array to store the frequency data
     this.frequencyBinCount = this.fftSize / 2;
@@ -270,6 +270,7 @@ process(inputs, outputs, parameters) {
 
     // Throttle processing
     const currentTime = this.currentTime;
+    console.log(currentTime);
     if (currentTime - this.lastProcessingTime < this.processingInterval) {
         return true; // Keep the processor alive without processing any audio data
     }
