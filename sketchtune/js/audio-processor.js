@@ -220,9 +220,8 @@ function prepare_and_fft(inputSignal, fftFactorLookup=null) {
 
 // audio-processor.js (AudioWorkletProcessor)
 class AudioProcessor extends AudioWorkletProcessor {
-  constructor(options) {
-    super(options);
-    this.currentTime = options.processorOptions.currentTime;
+  constructor() {
+    super();
 
     this.port.onmessage = this.handleMessage.bind(this);
     
@@ -231,7 +230,7 @@ class AudioProcessor extends AudioWorkletProcessor {
     this.fftSize = 2048;
     //this.fftSize = 4096;
     //this.fftSize = 8192;
-    this.lastProcessingTime = this.currentTime;
+    this.lastProcessingTime = 0;
     this.processingInterval = 100; // Processing interval in milliseconds (adjust as needed)
     // Create an array to store the frequency data
     this.frequencyBinCount = this.fftSize / 2;
@@ -269,13 +268,12 @@ process(inputs, outputs, parameters) {
     }
 
     // Throttle processing
-    const currentTime = this.currentTime;
-    console.log(currentTime);
-    if (currentTime - this.lastProcessingTime < this.processingInterval) {
+    const t = currentTime;
+    if (t - this.lastProcessingTime < this.processingInterval) {
         return true; // Keep the processor alive without processing any audio data
     }
 
-    const performanceStart = this.currentTime;
+    const performanceStart = currentTime;
     // Convert multichannel input to mono
     const numChannels = input.length;
     const numSamples = input[0].length;
@@ -305,7 +303,7 @@ process(inputs, outputs, parameters) {
     }
 
 
-    const performanceEnd = this.currentTime;
+    const performanceEnd = currentTime;
     // Estimate processing time (in milliseconds)
     const estimatedProcessingTime = performanceEnd - performanceStart; // Measure this empirically
     // Set a target processing interval (in milliseconds)
@@ -315,7 +313,7 @@ process(inputs, outputs, parameters) {
     console.log(performanceStart, performanceEnd, estimatedProcessingTime);
 
     // Update the last processing time
-    this.lastProcessingTime = currentTime;
+    this.lastProcessingTime = t;
     return true; // Keep the processor alive
 }
 
