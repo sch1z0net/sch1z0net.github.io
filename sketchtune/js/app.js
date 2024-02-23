@@ -1871,7 +1871,7 @@ $(document).ready(function(){
   $('body').append(controls);
 
   // Add event listener to select boxes
-  $("#windowSizeSelect, #hopFactorSelect, #smoothFactorSelect, #rangeModeSelect, #scaleModeSelect, #smoothingModeSelect").on("change", updateVariables);
+  $("#windowSizeSelect, #hopFactorSelect, #smoothFactorSelect, #rangeModeSelect, #scaleModeSelect, #smoothingModeSelect, #liveSpectrumFFTsize, #liveSpectrumSmoothingSize, #liveSpectrumRefreshRate").on("change", updateVariables);
 });
 
 
