@@ -203,7 +203,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
         //ctx.lineTo(x, y); // Draw line to the magnitude point
     }*/
 
-    const numInterpolatedPoints = 1000; // Adjust this value for the desired smoothness
+    const numInterpolatedPoints = 4000; // Adjust this value for the desired smoothness
     for (let i = 0; i < numInterpolatedPoints; i++) {
         const xFraction = i / (numInterpolatedPoints - 1); // Fractional value between 0 and 1
         const x = xFraction * width; // Map fractional value to canvas width
