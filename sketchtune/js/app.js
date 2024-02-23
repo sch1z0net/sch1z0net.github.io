@@ -168,8 +168,8 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     const maxInterpolatedMagnitude = Math.max(...interpolatedMagnitudes);
 
     // Normalize each interpolated magnitude based on the maximum magnitude
-    for (let i = 0; i < interpolatedMagnitudes.length; i++) {
-        const normalizedMagnitude = (interpolatedMagnitudes[i] / maxInterpolatedMagnitude) * height;
+    for (let x = 0; x < width; x++) {
+        const normalizedMagnitude = (interpolatedMagnitudes[x] / maxInterpolatedMagnitude) * height;
 
         // Store the control point for Catmull-Rom spline
         const y = height - normalizedMagnitude; // Invert Y-axis
