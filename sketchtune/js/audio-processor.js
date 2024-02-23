@@ -270,11 +270,11 @@ process(inputs, outputs, parameters) {
 
     // Throttle processing
     const t = this.time;
-    if (t - this.lastProcessingTime < this.processingInterval) {
+    if (this.time - this.lastProcessingTime < this.processingInterval) {
         return true; // Keep the processor alive without processing any audio data
     }
 
-    const performanceStart = currentTime*1000;
+    const performanceStart = this.time;
     // Convert multichannel input to mono
     const numChannels = input.length;
     const numSamples = input[0].length;
