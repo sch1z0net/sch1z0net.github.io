@@ -171,7 +171,6 @@ async function fftRealInPlace(input) {
             for (let j = 0; j < halfSize; j++) {
                 const evenIndex = i + j;
                 const oddIndex = i + j + halfSize;
-                console.log(evenIndex, oddIndex);
                 const evenPart = output[evenIndex];
                 const oddPart = {
                     re: output[oddIndex].re * factors[j].re - output[oddIndex].im * factors[j].im,
