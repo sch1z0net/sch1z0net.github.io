@@ -99,7 +99,8 @@ function smoothFrequencyData(frequencyData) {
     const nextIndex = Math.min(numBins - 1, i + 1);
     const average = (frequencyData[prevIndex] + frequencyData[i] + frequencyData[nextIndex]) / 3; // Simple averaging
     smoothedData.push(average);
-    if(frequencyData[i] > max){ max = frequencyData[i]; console.log(i,frequencyData[i],average); }
+    //if(frequencyData[i] > max){ max = frequencyData[i]; console.log(i,frequencyData[i],average); }
+    if(average > max){ max = average; console.log(i,average,frequencyData[prevIndex],frequencyData[i],frequencyData[nextIndex]); }
   }
   return smoothedData;
 }
