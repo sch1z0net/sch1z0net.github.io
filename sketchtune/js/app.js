@@ -180,15 +180,15 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
         // Store the control point for Catmull-Rom spline
         const y = height - normalizedMagnitude; // Invert Y-axis
         controlPoints.push({ x, y });
-        ctx.lineTo(x, y); // Draw line to the magnitude point
+        //ctx.lineTo(x, y); // Draw line to the magnitude point
     }
 
-    ctx.lineTo(width, height); // Line to the bottom-right corner
-    ctx.closePath(); // Close the path
+    //ctx.lineTo(width, height); // Line to the bottom-right corner
+    //ctx.closePath(); // Close the path
 
     // Fill the area under the curve with the specified color
-    ctx.fillStyle = 'white';
-    ctx.fill();
+    //ctx.fillStyle = 'white';
+    //ctx.fill();
 
     // Draw Catmull-Rom spline passing through control points
     ctx.moveTo(controlPoints[0].x, controlPoints[0].y); // Start from the first control point
