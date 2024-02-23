@@ -117,19 +117,9 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   var maxFrequency;
   var minFrequency = 0; // Minimum frequency (20 Hz)
 
-  if(mode == 0){
-      maxFrequency = sampleRate;
-      minFrequency = 0;
-  }
-  if(mode == 1){
-      maxFrequency = sampleRate / 2 // Nyquist frequency
-      minFrequency = 20; // Minimum frequency (20 Hz)
-  }
-  if(mode == 2){
-      maxFrequency = 10000;
-      minFrequency = 20; // Minimum frequency (20 Hz)
-  }
-
+  if(mode == 0){ maxFrequency = sampleRate;      minFrequency = 0;  }
+  if(mode == 1){ maxFrequency = sampleRate / 2;  minFrequency = 20; }
+  if(mode == 2){ maxFrequency = 10000;           minFrequency = 20; }
 
   if (frequencyData != null && sampleRate != null) {
     ctx.clearRect(0, 0, width, height);
@@ -140,6 +130,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
 
     // Apply simple smoothing by averaging neighboring frequency bins
     const smoothedData = smoothFrequencyData(frequencyData);
+    // Bypass smoothing
     //const smoothedData = frequencyData;
 
     // Plot the spectrum using a logarithmic scale
@@ -156,9 +147,9 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     const interpolatedMagnitudes = [];
     for (let x = 0; x < width; x++) {
       // Calculate interpolated magnitude for the current x-coordinate
-      //const logFrequency = logMinFrequency + (x / width) * logScaleFactor; // Calculate frequency using logarithmic scale
-      //const frequency = Math.pow(10, logFrequency); // Calculate frequency from log frequency
-      const frequency = minFrequency + (x / width) * linScaleFactor;
+      const logFrequency = logMinFrequency + (x / width) * logScaleFactor; // Calculate frequency using logarithmic scale
+      const frequency = Math.pow(10, logFrequency); // Calculate frequency from log frequency
+      //const frequency = minFrequency + (x / width) * linScaleFactor;
 
       //const binIndex = (frequency - minFrequency) / (maxFrequency - minFrequency) * (numBins - 1); // Calculate bin index based on frequency
       const binIndex = frequency / binWidth;
