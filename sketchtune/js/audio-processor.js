@@ -293,6 +293,7 @@ process(inputs, outputs, parameters) {
     if (this.sampleBuffer.length >= this.fftSize) {
         // Extract the required number of samples from the buffer
         const samplesToProcess = this.sampleBuffer.splice(0, this.fftSize);
+        console.log(samplesToProcess);
         // Perform processing (e.g., FFT analysis) on the extracted samples
         const fftData = this.performFFT(samplesToProcess);
         // Convert FFT data to frequency data
