@@ -107,7 +107,8 @@ function smoothFrequencyData(frequencyData) {
 // Plot spectrum on canvas with smoothed and curved lines
 var fillWithColor = true;
 function plotSpectrumLive(frequencyData = null, sampleRate = null) {
-  var mode = 2; //Linear and Full Freq Range
+  var range_mode = 2; //Relevant Freqs
+  var scale_mode = 1; //Log
 
   const canvas = document.getElementById('spectrumCanvas');
   const ctx = canvas.getContext('2d');
@@ -117,9 +118,9 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   var maxFrequency;
   var minFrequency = 0; // Minimum frequency (20 Hz)
 
-  if(mode == 0){ maxFrequency = sampleRate;      minFrequency = 0;  }
-  if(mode == 1){ maxFrequency = sampleRate / 2;  minFrequency = 20; }
-  if(mode == 2){ maxFrequency = 10000;           minFrequency = 20; }
+  if(range_mode == 0){ maxFrequency = sampleRate;      minFrequency = 0;  }
+  if(range_mode == 1){ maxFrequency = sampleRate / 2;  minFrequency = 20; }
+  if(range_mode == 2){ maxFrequency = 10000;           minFrequency = 20; }
 
   if (frequencyData != null && sampleRate != null) {
     ctx.clearRect(0, 0, width, height);
@@ -148,10 +149,10 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     for (let x = 0; x < width; x++) {
       // Calculate interpolated magnitude for the current x-coordinate
       const logFrequency = logMinFrequency + (x / width) * logScaleFactor; // Calculate frequency using logarithmic scale
-      const frequency = Math.pow(10, logFrequency); // Calculate frequency from log frequency
-      //const frequency = minFrequency + (x / width) * linScaleFactor;
+      var frequency;
+      if(scale_mode == 0){ frequency = minFrequency + (x / width) * linScaleFactor; }
+      if(scale_mode == 1){ frequency = Math.pow(10, logFrequency);                  }
 
-      //const binIndex = (frequency - minFrequency) / (maxFrequency - minFrequency) * (numBins - 1); // Calculate bin index based on frequency
       const binIndex = frequency / binWidth;
 
       const lowerBinIndex = Math.floor(binIndex);
@@ -208,8 +209,9 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     for (let i = 0; i < fixedFrequencies.length; i++) {
       const frequency = fixedFrequencies[i];
       const logFrequency = Math.log10(frequency);
-      const x = (logFrequency - logMinFrequency) / logScaleFactor * width;
-      //const x = (frequency - minFrequency) / linScaleFactor * width;
+      var x;
+      if(scale_mode == 0){ x = (frequency - minFrequency) / linScaleFactor * width;       }
+      if(scale_mode == 1){ x = (logFrequency - logMinFrequency) / logScaleFactor * width; }
       ctx.fillText(frequency.toFixed(0), x, height - 5); // Display frequency
       ctx.beginPath();
       ctx.moveTo(x, 0);
@@ -1864,12 +1866,12 @@ $(document).ready(function(){
 const durationInSeconds = 2.0; // Duration of the audio in seconds
 const sampleRate = 44100; // Sample rate (samples per second)
 //const frequency = 440; // Frequency of the sine wave in Hz
-const frequency = 4000; // Frequency of the sine wave in Hz
+const frequency = 200; // Frequency of the sine wave in Hz
 //max is 20k
 // Generate sine wave buffer
 const sineWaveBuffer = generateSineWaveBuffer(durationInSeconds, sampleRate, frequency);
 const sawtoothWaveBuffer = generateSawtoothWaveBuffer(durationInSeconds, sampleRate, frequency);
-var audiobuffer = sineWaveBuffer;
+var audiobuffer = sawtoothWaveBuffer;
 
 plotWaveformMono(audiobuffer);
 
