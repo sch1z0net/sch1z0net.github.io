@@ -118,7 +118,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   var maxFrequency;
   var minFrequency;
 
-  if(range_mode == 0){ maxFrequency = sampleRate;      minFrequency = 0;  }
+  if(range_mode == 0){ maxFrequency = sampleRate;      minFrequency = 10;  }
   if(range_mode == 1){ maxFrequency = sampleRate / 2;  minFrequency = 20; }
   if(range_mode == 2){ maxFrequency = 10000;           minFrequency = 20; }
   if(sampleRate == null){ maxFrequency = 10000; }
