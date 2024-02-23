@@ -128,6 +128,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     // Find the maximum magnitude in the smoothed frequency data
     const minMagnitude = Math.min(...smoothedData);
     const maxMagnitude = Math.max(...smoothedData);
+    console.log(maxMagnitude);
 
     // Plot the spectrum using a logarithmic scale
     const logMinFrequency = Math.log10(minFrequency);
@@ -153,7 +154,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
       // Interpolate between neighboring frequency bins using linear interpolation
       const lowerMagnitude = smoothedData[lowerBinIndex];
       const upperMagnitude = smoothedData[upperBinIndex];
-      console.log(x, lowerBinIndex, upperBinIndex, lowerMagnitude / maxMagnitude,upperMagnitude / maxMagnitude);
+      //console.log(x, lowerBinIndex, upperBinIndex, lowerMagnitude / maxMagnitude,upperMagnitude / maxMagnitude);
       const interpolatedMagnitude = lowerMagnitude * (1 - fraction) + upperMagnitude * fraction;
 
       // Normalize interpolated magnitude for plotting
