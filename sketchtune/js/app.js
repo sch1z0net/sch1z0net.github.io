@@ -108,7 +108,9 @@ var fillWithColor = true;
 function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   const canvas = document.getElementById('spectrumCanvas');
   const ctx = canvas.getContext('2d');
-  const maxFrequency = 10000; // Maximum frequency (10 kHz)
+  // Calculate the maximum frequency based on the sample rate and FFT size
+  const maxFrequency = sampleRate / 2; // Nyquist frequency
+  const binWidth = maxFrequency / numBins;
   const minFrequency = 20; // Minimum frequency (20 Hz)
   const width = canvas.width;
   const height = canvas.height;
@@ -129,11 +131,6 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     var maxDB = scaleMagnitudeToDecibels(maxMagnitude);
 
 
-
-    // Calculate the maximum frequency based on the sample rate and FFT size
-    const maxFrequency = sampleRate / 2; // Nyquist frequency
-    const binWidth = maxFrequency / numBins;
-
     // Plot the spectrum using a logarithmic scale
     const logMinFrequency = Math.log10(minFrequency);
     const logMaxFrequency = Math.log10(maxFrequency);
@@ -144,7 +141,8 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     ctx.moveTo(0, height); // Start from the bottom-left corner
     for (let x = 0; x < width; x++) {
       const logFrequency = logMinFrequency + (x / width) * logScaleFactor; // Calculate frequency using logarithmic scale
-      const binIndex = Math.pow(10, logFrequency / logMaxFrequency) * numBins; // Calculate bin index using logarithmic scale
+      const frequency = Math.pow(10, logFrequency); // Calculate frequency from log frequency
+      const binIndex = (frequency / maxFrequency) * numBins; // Calculate bin index based on frequency
       const lowerBinIndex = Math.floor(binIndex);
       const upperBinIndex = Math.ceil(binIndex);
       const fraction = binIndex - lowerBinIndex;
