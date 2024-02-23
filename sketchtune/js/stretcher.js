@@ -391,54 +391,6 @@ function applyTimeDomainSmoothing(inputSignal, hopSize) {
 
 
 
-function scaleToLogSpectrogram(spectrogram) {
-    const numFrames = spectrogram.length;
-    const numBins = spectrogram[0].length;
-    const logSpectrogram = [];
-
-    // Define the minimum and maximum frequency indices (or bins)
-    const minFreqIndex = 0;  // Index of the lowest frequency bin
-    const maxFreqIndex = numBins - 1;  // Index of the highest frequency bin
-
-    // Define the minimum and maximum frequency values
-    const minFreq = 20;  // Minimum frequency in Hz
-    const maxFreq = 20000;  // Maximum frequency in Hz
-
-    // Calculate the frequency range (in Hz) covered by the spectrogram
-    const freqRange = maxFreq - minFreq;
-
-    // Calculate the logarithmic frequency increment per bin
-    const logFreqIncrement = Math.log10(maxFreq / minFreq) / numBins;
-
-    // Iterate through each frame in the spectrogram
-    for (let i = 0; i < numFrames; i++) {
-        const logFrame = [];
-        
-        // Iterate through each bin in the spectrogram
-        for (let j = 0; j < numBins; j++) {
-            // Calculate the frequency of the current bin using a logarithmic scale
-            const freq = minFreq * Math.pow(10, j * logFreqIncrement);
-
-            // Map the frequency value to a corresponding index on a linear scale
-            const linearFreqIndex = Math.round((freq - minFreq) / freqRange * (maxFreqIndex - minFreqIndex)) + minFreqIndex;
-
-            // Retrieve the magnitude value from the original spectrogram using the linear frequency index
-            const magnitude = spectrogram[i][linearFreqIndex];
-
-            // Add the magnitude value to the log-scaled frame
-            logFrame.push(magnitude);
-        }
-        
-        // Add the log-scaled frame to the log-spectrogram
-        logSpectrogram.push(logFrame);
-    }
-
-    return logSpectrogram;
-}
-
-
-
-
 function normalizeDBspectrogram(spectrogram) {
     const numFrames = spectrogram.length;
     const numBins   = spectrogram[0].length;
@@ -509,7 +461,7 @@ function normalizeSpectrogramToDB(spectrogram, dBmin=-20) {
 }
 
 
-
+/*
 // Convert spectrogram data to image data
 function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
@@ -530,6 +482,51 @@ function spectrogramToImageData(spectrogram) {
 
             // Convert magnitude/intensity to grayscale value (0-255)
             const intensity = Math.round(spectrum[j] * 255);
+
+            // Set the same value for R, G, and B channels (grayscale)
+            imageData.data[index] = intensity;     // Red channel
+            imageData.data[index + 1] = intensity; // Green channel
+            imageData.data[index + 2] = intensity; // Blue channel
+            imageData.data[index + 3] = 255;       // Alpha channel (fully opaque)
+        }
+    }
+
+    return imageData;
+}*/
+
+// Convert spectrogram data to image data
+function spectrogramToImageData(spectrogram) {
+    // Assume spectrogram is a 2D array of magnitudes or intensities
+    const numFrames = spectrogram.length;
+    const numBins = spectrogram[0].length / 2;  // Only need half the FFT size due to Nyquist theorem
+    
+    // Create a new ImageData object with the same dimensions as the spectrogram
+    const imageData = new ImageData(numFrames, numBins);
+    
+    // Calculate the frequency range corresponding to each bin on a logarithmic scale
+    const minFreq = 0; // Minimum frequency
+    const maxFreq = 22050; // Maximum frequency (assuming audio sampled at 44100 Hz)
+    const logMinFreq = Math.log(minFreq + 1); // Logarithm of the minimum frequency (avoiding log(0))
+    const logMaxFreq = Math.log(maxFreq + 1); // Logarithm of the maximum frequency (avoiding log(0))
+
+    var h = 2000;
+    // Convert spectrogram data to grayscale image data
+    for (let i = 0; i < numFrames; i++) {
+        var spectrum = spectrogram[i];
+        for (let y = 0; y < h; y++) {
+            // Calculate the frequency corresponding to the current row (on a logarithmic scale)
+            const logFreq = logMinFreq + (logMaxFreq - logMinFreq) * (y / h);
+            const freq = Math.exp(logFreq) - 1; // Convert back to linear scale
+            // Find the closest bin index in the spectrogram for the current frequency
+            const binIndex = Math.round((numBins - 1) * (freq - minFreq) / (maxFreq - minFreq));
+            // Get the value from the spectrogram for the closest bin index
+            var value = spectrum[binIndex];
+
+            // Calculate the index in the image data array
+            const index = ((numBins - binIndex - 1) * numFrames + i) * 4; // Reverse
+
+            // Convert magnitude/intensity to grayscale value (0-255)
+            const intensity = Math.round(value * 255);
 
             // Set the same value for R, G, and B channels (grayscale)
             imageData.data[index] = intensity;     // Red channel
@@ -677,8 +674,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
         })
         .then(async (spectrogram) => {
             // Normalize Spectrogram
-            const logSpectrogram = scaleToLogSpectrogram(spectrogram);
-            const normalizedDBSpectrogram = normalizeSpectrogramToDB(logSpectrogram,-80);
+            const normalizedDBSpectrogram = normalizeSpectrogramToDB(spectrogram,-80);
             const normalizedSpectrogram = normalizeDBspectrogram(normalizedDBSpectrogram);
             //console.log(normalizedSpectrogram);
             // Convert spectrogram data to image data
