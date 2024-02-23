@@ -139,7 +139,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     for (let x = 0; x < width; x++) {
       const logFrequency = logMinFrequency + (x / width) * logScaleFactor; // Calculate frequency using logarithmic scale
       const frequency = Math.pow(10, logFrequency); // Calculate frequency from log frequency
-      const binIndex = (frequency - minFrequency) / (maxFrequency - minFrequency) * (numBins - 1); // Calculate bin index based on frequency
+      const binIndex = frequency / maxFrequency * (numBins - 1); // Calculate bin index based on frequency
       const lowerBinIndex = Math.floor(binIndex);
       const upperBinIndex = Math.ceil(binIndex);
       const fraction = binIndex - lowerBinIndex;
