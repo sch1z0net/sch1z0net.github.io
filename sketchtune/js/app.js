@@ -107,14 +107,29 @@ function smoothFrequencyData(frequencyData) {
 // Plot spectrum on canvas with smoothed and curved lines
 var fillWithColor = true;
 function plotSpectrumLive(frequencyData = null, sampleRate = null) {
+  var mode = 2; //Linear and Full Freq Range
+
   const canvas = document.getElementById('spectrumCanvas');
   const ctx = canvas.getContext('2d');
-
-  //const maxFrequency = sampleRate / 2; // Nyquist frequency
-  const maxFrequency = sampleRate;
-  const minFrequency = 0; // Minimum frequency (20 Hz)
   const width = canvas.width;
   const height = canvas.height;
+
+  var maxFrequency;
+  var minFrequency = 0; // Minimum frequency (20 Hz)
+
+  if(mode == 0){
+      maxFrequency = sampleRate;
+      minFrequency = 0;
+  }
+  if(mode == 1){
+      maxFrequency = sampleRate / 2 // Nyquist frequency
+      minFrequency = 20; // Minimum frequency (20 Hz)
+  }
+  if(mode == 2){
+      maxFrequency = 10000;
+      minFrequency = 20; // Minimum frequency (20 Hz)
+  }
+
 
   if (frequencyData != null && sampleRate != null) {
     ctx.clearRect(0, 0, width, height);
