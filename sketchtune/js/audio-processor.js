@@ -230,7 +230,7 @@ class AudioProcessor extends AudioWorkletProcessor {
     //this.fftSize = 2048;
     //this.fftSize = 4096;
     this.fftSize = 8192;
-    
+
     // Create an array to store the frequency data
     this.frequencyBinCount = this.fftSize / 2;
     this.frequencyData = new Uint8Array(this.frequencyBinCount).fill(0); // Only need half the FFT size due to Nyquist theorem
@@ -249,6 +249,8 @@ class AudioProcessor extends AudioWorkletProcessor {
   // Inside AudioProcessor class
   handleMessage(event) {
     const { data } = event;
+    this.fftSize = data.fftSize;
+    this.bufferSize = data.smoothingSize;
     if (data.type === 'getFrequencyData') {
       const frequencyData = this.getByteFrequencyData();
       this.port.postMessage({ type: 'frequencyData', data: frequencyData });

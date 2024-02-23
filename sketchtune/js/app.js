@@ -1648,7 +1648,8 @@ function checkAndCreateSpectrumTracker(audioContext, audioSource) {
     }
 }
 
-//var displayRefreshRate = 20;
+var liveSpectrumFFTsize = 2048;
+var liveSpectrumSmoothingSize = 3;
 var displayRefreshRate = 20;
 async function createSpectrumTracker(audioContext, audioSource) {
     // BUILT IN WEB API ANALYZER
@@ -1672,7 +1673,6 @@ async function createSpectrumTracker(audioContext, audioSource) {
 
     // CUSTOM FFT ANALYZER
     const audioProcessor = await createAudioProcessor(audioContext, audioSource);
-    //audioProcessor.fftSize = 2048; // Set FFT size for frequency analysis
     audioProcessor.port.onmessage = (event) => {
        const { data } = event;
        if (data.type === 'frequencyData') {
@@ -1697,7 +1697,9 @@ async function createSpectrumTracker(audioContext, audioSource) {
     function startInterval() {
         interval = setInterval(() => {
             audioProcessor.port.postMessage({ 
-              type: 'getFrequencyData'
+              type: 'getFrequencyData';
+              fftSize: liveSpectrumFFTsize,
+              smoothingSize: liveSpectrumSmoothingSize
             });
             //const frequencyData = getFrequencyData();
             //plotSpectrumLive(frequencyData, audioContext.sampleRate);
@@ -1778,6 +1780,8 @@ $(document).ready(function(){
     range_mode     = parseInt($("#rangeModeSelect").val());
     scale_mode     = parseInt($("#scaleModeSelect").val()); 
     smoothing_mode = parseInt($("#smoothingModeSelect").val());  
+    liveSpectrumFFTsize        = parseInt($("#lsFFTsizeSelect").val()); 
+    liveSpectrumSmoothingSize  = parseInt($("#lsSmoothingSizeSelect").val());  
   }
 
   // Create select boxes and append them to the DOM
@@ -1787,6 +1791,8 @@ $(document).ready(function(){
   const $rangeModeSelect     = $("<select>").attr("id", "rangeModeSelect");
   const $scaleModeSelect     = $("<select>").attr("id", "scaleModeSelect");
   const $smoothingModeSelect = $("<select>").attr("id", "smoothingModeSelect"); 
+  const $liveSpectrumFFTsizeSelect       = $("<select>").attr("id", "liveSpectrumFFTsize");
+  const $liveSpectrumSmoothingSizeSelect = $("<select>").attr("id", "liveSpectrumSmoothingSize"); 
 
   // Options for window size select box
   [256, 512, 1024, 2048, 4096, 8192].forEach(function(size) {
@@ -1814,6 +1820,14 @@ $(document).ready(function(){
     $smoothingModeSelect.append($("<option>").attr("value", mode).text(mode));
   });
 
+  [256, 512, 1024, 2048, 4096, 8192].forEach(function(size) {
+    $liveSpectrumFFTsizeSelect.append($("<option>").attr("value", size).text(size));
+  });
+
+  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].forEach(function(size) {
+    $liveSpectrumSmoothingSizeSelect.append($("<option>").attr("value", size).text(size));
+  });
+
   // Append select boxes to the DOM
   var controls = $("<div id='controls'>")
     .append("<span>STRETCHING PARAMS<span>")
@@ -1836,7 +1850,14 @@ $(document).ready(function(){
     .append($("<label>").attr("for", "scale_mode").text("Scale Mode"))
     .append("<br>")
     .append($smoothingModeSelect)
-    .append($("<label>").attr("for", "smoothing_mode").text("Smoothing Mode"));
+    .append($("<label>").attr("for", "smoothing_mode").text("Smoothing Mode"))
+    .append("<br>")
+    .append($liveSpectrumFFTsizeSelect)
+    .append($("<label>").attr("for", "liveSpectrumFFTsize").text("FFT Size"))
+    .append("<br>")
+    .append($liveSpectrumSmoothingSizeSelect)
+    .append($("<label>").attr("for", "liveSpectrumSmoothingSize").text("Smoothing Size"));
+
 
   $('body').append(controls);
 
