@@ -198,6 +198,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
       }
       ctx.stroke();
     }
+  }
 }
 
 
