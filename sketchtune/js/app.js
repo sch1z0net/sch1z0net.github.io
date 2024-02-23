@@ -112,9 +112,10 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   const width = canvas.width;
   const height = canvas.height;
 
-
-  const minFrequency = 20; // Minimum frequency (20 Hz)
   const maxFrequency = sampleRate / 2; // Nyquist frequency
+  const minFrequency = 20; // Minimum frequency (20 Hz)
+  const width = canvas.width;
+  const height = canvas.height;
 
   if (frequencyData != null && sampleRate != null) {
     ctx.clearRect(0, 0, width, height);
@@ -129,9 +130,6 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     // Find the maximum magnitude in the smoothed frequency data
     const minMagnitude = Math.min(...smoothedData);
     const maxMagnitude = Math.max(...smoothedData);
-    var minDB = scaleMagnitudeToDecibels(minMagnitude);
-    var maxDB = scaleMagnitudeToDecibels(maxMagnitude);
-
 
     // Plot the spectrum using a logarithmic scale
     const logMinFrequency = Math.log10(minFrequency);
@@ -155,12 +153,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
       const interpolatedMagnitude = lowerMagnitude * (1 - fraction) + upperMagnitude * fraction;
 
       // Normalize interpolated magnitude for plotting
-      var normalizedMagnitude = (interpolatedMagnitude / maxMagnitude);
-      //if(normalizedMagnitude<0 || normalizedMagnitude>1){ console.error("wrong range"); }
-
-      // SCALE IN DECIBEL
-      var dBValue = scaleMagnitudeToDecibels(normalizedMagnitude);
-      normalizedMagnitude = normalizeDecibels(dBValue, -40, 0, 0, 1) * height;
+      const normalizedMagnitude = (interpolatedMagnitude / maxMagnitude) * height;
 
       // Store the control point for Catmull-Rom spline
       const y = height - normalizedMagnitude; // Invert Y-axis
@@ -168,14 +161,12 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
       ctx.lineTo(x, y); // Draw line to the magnitude point
     }
 
-
     ctx.lineTo(width, height); // Line to the bottom-right corner
     ctx.closePath(); // Close the path
 
     // Fill the area under the curve with the specified color
     ctx.fillStyle = 'white';
     ctx.fill();
-
 
     // Draw Catmull-Rom spline passing through control points
     ctx.moveTo(controlPoints[0].x, controlPoints[0].y); // Start from the first control point
@@ -189,29 +180,27 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     
     ctx.strokeStyle = 'red';
     ctx.stroke();
-  }
 
+    // Plot logarithmic number grid
+    ctx.fillStyle = 'white';
+    ctx.font = '10px Arial';
+    ctx.textAlign = 'center';
 
-
-
-  // Plot logarithmic number grid
-  ctx.fillStyle = 'white';
-  ctx.font = '10px Arial';
-  ctx.textAlign = 'center';
-
-  const fixedFrequencies = [20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 400, 500, 1000, 2000, 4000, 8000, 10000];
-
-  for (let i = 0; i < fixedFrequencies.length; i++) {
+    const fixedFrequencies = [20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 400, 500, 1000, 2000, 4000, 8000, 10000];
+    for (let i = 0; i < fixedFrequencies.length; i++) {
       const frequency = fixedFrequencies[i];
-      const x = (Math.log10(frequency) - Math.log10(minFrequency)) / Math.log10(maxFrequency / minFrequency) * width;
+      const logFrequency = Math.log10(frequency);
+      const x = (logFrequency - logMinFrequency) / logScaleFactor * width;
       ctx.fillText(frequency.toFixed(0), x, height - 5); // Display frequency
       ctx.beginPath();
       ctx.moveTo(x, 0);
       ctx.lineTo(x, height);
       ctx.strokeStyle = 'gray';
-      if(frequency == 100 || frequency == 1000 || frequency == 10000){ ctx.strokeStyle = 'red'; }
+      if (frequency === 100 || frequency === 1000 || frequency === 10000) {
+        ctx.strokeStyle = 'red';
+      }
       ctx.stroke();
-  }
+    }
 }
 
 
