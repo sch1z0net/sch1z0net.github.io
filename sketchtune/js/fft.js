@@ -81,6 +81,7 @@ function bitReverse(num, bits) {
     return reversed;
 }
 
+/*
 function testBitReverse(N){
     console.log("BIT REVERSE TEST FOR",N);
     const bits = Math.log2(N);
@@ -89,9 +90,10 @@ function testBitReverse(N){
        console.log(reversedIndex);
     }
 }
-testBitReverse(4);
-testBitReverse(8);
-testBitReverse(16);
+//testBitReverse(4);
+//testBitReverse(8);
+//testBitReverse(16);
+*/
 
 
 /*
@@ -161,6 +163,9 @@ function fftReal(input) {
     return result;
 }
 
+
+console.log(fftRealInPlace([1,2,3,4]));
+console.log(fftRealInPlace([1,2,3,4,5,6,7,8]));
 
 
 async function fftRealInPlace(input) {
