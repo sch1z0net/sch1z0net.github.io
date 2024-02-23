@@ -136,7 +136,7 @@ function fftReal(input) {
     return result;
 }
 
-
+/*
 function fftRealInPlace(input) {
     const N = input.length;
 
@@ -181,6 +181,59 @@ function fftRealInPlace(input) {
     }
 
     return output;
+}*/
+
+
+function fftRealInPlace(input) {
+    const N = input.length;
+    const bits = Math.log2(N);
+
+    if (N !== nextPowerOf2(N)) {
+        console.error("FFT FRAME must have power of 2");
+        return;
+    }
+
+    // Perform bit reversal in place
+    for (let i = 0; i < N; i++) {
+        const reversedIndex = bitReverse(i, bits);
+        if (reversedIndex > i) {
+            // Swap elements if necessary
+            const temp = input[i];
+            input[i] = input[reversedIndex];
+            input[reversedIndex] = temp;
+        }
+    }
+
+
+    // Recursively calculate FFT
+    for (let size = 2; size <= N; size *= 2) {
+        const halfSize = size / 2;
+        // Precompute FFT factors
+        const factors = computeFFTFactorsWithCache(halfSize);
+        for (let i = 0; i < N; i += size) {
+            for (let j = 0; j < halfSize; j++) {
+                const evenIndex = i + j;
+                const oddIndex = i + j + halfSize;
+                const evenPart = input[evenIndex];
+                const oddPart = {
+                    re: input[oddIndex].re * factors[j].re - input[oddIndex].im * factors[j].im,
+                    im: input[oddIndex].re * factors[j].im + input[oddIndex].im * factors[j].re
+                };
+
+                // Combine results of even and odd parts in place
+                input[evenIndex] = {
+                    re: evenPart.re + oddPart.re,
+                    im: evenPart.im + oddPart.im
+                };
+                input[oddIndex] = {
+                    re: evenPart.re - oddPart.re,
+                    im: evenPart.im - oddPart.im
+                };
+            }
+        }
+    }
+
+    return input;
 }
 
 
