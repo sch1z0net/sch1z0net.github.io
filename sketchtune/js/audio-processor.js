@@ -273,7 +273,7 @@ process(inputs, outputs, parameters) {
         return true; // Keep the processor alive without processing any audio data
     }
 
-    const performanceStart = currentTime;
+    const performanceStart = currentTime*1000;
     // Convert multichannel input to mono
     const numChannels = input.length;
     const numSamples = input[0].length;
@@ -303,7 +303,7 @@ process(inputs, outputs, parameters) {
     }
 
 
-    const performanceEnd = currentTime;
+    const performanceEnd = currentTime*1000;
     // Estimate processing time (in milliseconds)
     const estimatedProcessingTime = performanceEnd - performanceStart; // Measure this empirically
     // Set a target processing interval (in milliseconds)
