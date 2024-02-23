@@ -132,14 +132,19 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     const logMinFrequency = Math.log10(minFrequency);
     const logMaxFrequency = Math.log10(maxFrequency);
     const logScaleFactor = logMaxFrequency - logMinFrequency; // Scale factor for logarithmic scaling
+    const linScaleFactor = maxFrequency - minFrequency; // Scale factor for logarithmic scaling
 
     const controlPoints = []; // Array to store control points for Catmull-Rom spline
 
     ctx.moveTo(0, height); // Start from the bottom-left corner
     for (let x = 0; x < width; x++) {
-      const logFrequency = logMinFrequency + (x / width) * logScaleFactor; // Calculate frequency using logarithmic scale
-      const frequency = Math.pow(10, logFrequency); // Calculate frequency from log frequency
-      const binIndex = frequency / maxFrequency * (numBins - 1); // Calculate bin index based on frequency
+      //const logFrequency = logMinFrequency + (x / width) * logScaleFactor; // Calculate frequency using logarithmic scale
+      //const frequency = Math.pow(10, logFrequency); // Calculate frequency from log frequency
+      const frequency = minFrequency + (x / width) * linScaleFactor;
+
+      //const binIndex = (frequency - minFrequency) / (maxFrequency - minFrequency) * (numBins - 1); // Calculate bin index based on frequency
+      const binIndex = frequency / binWidth;
+
       const lowerBinIndex = Math.floor(binIndex);
       const upperBinIndex = Math.ceil(binIndex);
       const fraction = binIndex - lowerBinIndex;
