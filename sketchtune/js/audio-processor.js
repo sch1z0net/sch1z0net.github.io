@@ -286,16 +286,16 @@ class AudioProcessor extends AudioWorkletProcessor {
     if (this.sampleBuffer.length >= this.fftSize) {
       // Extract the required number of samples from the buffer
       const samplesToProcess = this.sampleBuffer.splice(0, this.fftSize);
-
+      
       // Perform processing (e.g., FFT analysis) on the extracted samples
       const fftData = this.performFFT(samplesToProcess);
-
+      
       // Convert FFT data to frequency data
       this.convertToFrequencyData(fftData);
-
+      
       // Perform EMA smoothing on frequency data
       //this.frequencyData = this.smoothFrequencyData(this.frequencyData);
-
+      
       this.updateSmoothedSpectrum();
     }
 
@@ -308,7 +308,8 @@ class AudioProcessor extends AudioWorkletProcessor {
   performFFT(inputData) {
     // Perform the processing (FFT analysis) on the mono channel
     var spectrum = prepare_and_fft(inputData);
-    
+    console.log(spectrum);
+
     /*const numBins = spectrum.length;
     const maxFrequency = 10000; // Maximum frequency (10 kHz)
     const minFrequency = 20; // Minimum frequency (20 Hz)
