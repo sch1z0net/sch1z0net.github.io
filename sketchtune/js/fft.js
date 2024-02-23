@@ -372,5 +372,6 @@ async function ifft(input) {
 }
 
 async function IFFT(spectrum) {
-    return (await ifft(spectrum)).map(({ re }) => re);
+    return ifft(spectrum);
+    //return (await ifft(spectrum)).map(({ re }) => re);
 }
