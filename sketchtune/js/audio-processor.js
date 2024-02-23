@@ -317,7 +317,7 @@ process(inputs, outputs, parameters) {
 
   convertToFrequencyData(fftData) {
     // Calculate magnitude spectrum from complex FFT data
-    for (let i = 0; i < this.frequencyData.length; i++) {
+    for (let i = 0; i < this.fftSize; i++) {
       const re = fftData[i].re;
       const im = fftData[i].im;
       // Calculate magnitude
