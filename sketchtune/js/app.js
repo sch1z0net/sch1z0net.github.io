@@ -122,6 +122,12 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   if(range_mode == 1){ maxFrequency = sampleRate / 2;  minFrequency = 20; }
   if(range_mode == 2){ maxFrequency = 10000;           minFrequency = 20; }
 
+  // Plot the spectrum using a logarithmic scale
+  const logMinFrequency = Math.log10(minFrequency);
+  const logMaxFrequency = Math.log10(maxFrequency);
+  const logScaleFactor = logMaxFrequency - logMinFrequency; // Scale factor for logarithmic scaling
+  // OR: Plot the spectrum using a linear scale
+  const linScaleFactor = maxFrequency - minFrequency; // Scale factor for logarithmic scaling
 
   /*********** SPECTRUM PLOT **********/
   if (frequencyData != null && sampleRate != null) {
@@ -135,12 +141,6 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     const smoothedData = smoothFrequencyData(frequencyData);
     // Bypass smoothing
     //const smoothedData = frequencyData;
-
-    // Plot the spectrum using a logarithmic scale
-    const logMinFrequency = Math.log10(minFrequency);
-    const logMaxFrequency = Math.log10(maxFrequency);
-    const logScaleFactor = logMaxFrequency - logMinFrequency; // Scale factor for logarithmic scaling
-    const linScaleFactor = maxFrequency - minFrequency; // Scale factor for logarithmic scaling
 
     const controlPoints = []; // Array to store control points for Catmull-Rom spline
 
