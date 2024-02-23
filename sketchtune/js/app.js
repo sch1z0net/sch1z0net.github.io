@@ -1830,7 +1830,7 @@ $(document).ready(function(){
     $liveSpectrumSmoothingSizeSelect.append($("<option>").attr("value", size).text(size));
   });
 
-  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].forEach(function(rate) {
+  [20, 40, 60, 80, 100].forEach(function(rate) {
     $liveSpectrumRefreshRateSelect.append($("<option>").attr("value", rate).text(rate));
   });
 
