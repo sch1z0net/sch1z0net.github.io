@@ -103,6 +103,26 @@ function smoothFrequencyData(frequencyData) {
 }
 
 
+function interpolateMagnitude(xFraction, interpolatedMagnitudes) {
+    // Find the indices of the neighboring control points
+    const lowerIndex = Math.floor(xFraction * (interpolatedMagnitudes.length - 1));
+    const upperIndex = Math.ceil(xFraction * (interpolatedMagnitudes.length - 1));
+
+    // Get the magnitudes of the neighboring control points
+    const lowerMagnitude = interpolatedMagnitudes[lowerIndex];
+    const upperMagnitude = interpolatedMagnitudes[upperIndex];
+
+    // Calculate the fraction between the neighboring control points
+    const fraction = (xFraction * (interpolatedMagnitudes.length - 1)) - lowerIndex;
+
+    // Interpolate between the neighboring magnitudes using linear interpolation
+    return lowerMagnitude * (1 - fraction) + upperMagnitude * fraction;
+}
+
+
+
+
+
 
 // Plot spectrum on canvas with smoothed and curved lines
 let range_mode = 0;
@@ -173,7 +193,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     // Find the maximum magnitude among the interpolated magnitudes
     const maxInterpolatedMagnitude = Math.max(...interpolatedMagnitudes);
 
-    // Normalize each interpolated magnitude based on the maximum magnitude
+    /*// Normalize each interpolated magnitude based on the maximum magnitude
     for (let x = 0; x < width; x++) {
         const normalizedMagnitude = (interpolatedMagnitudes[x] / maxInterpolatedMagnitude) * height;
 
@@ -181,7 +201,24 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
         const y = height - normalizedMagnitude; // Invert Y-axis
         controlPoints.push({ x, y });
         //ctx.lineTo(x, y); // Draw line to the magnitude point
+    }*/
+
+    const numInterpolatedPoints = 1000; // Adjust this value for the desired smoothness
+    for (let i = 0; i < numInterpolatedPoints; i++) {
+        const xFraction = i / (numInterpolatedPoints - 1); // Fractional value between 0 and 1
+        const x = xFraction * width; // Map fractional value to canvas width
+
+        // Interpolate the magnitude at the fractional x position
+        const normalizedMagnitude = interpolateMagnitude(xFraction, interpolatedMagnitudes); // Calculate interpolated magnitude at the fractional x position
+
+        // Store the control point for Catmull-Rom spline
+        const y = height - (normalizedMagnitude / maxInterpolatedMagnitude) * height; // Normalize and invert Y-axis
+        controlPoints.push({ x, y });
     }
+
+
+
+
 
     //ctx.lineTo(width, height); // Line to the bottom-right corner
     //ctx.closePath(); // Close the path
