@@ -258,52 +258,55 @@ class AudioProcessor extends AudioWorkletProcessor {
 
 
 
-  process(inputs, outputs, parameters) {
+process(inputs, outputs, parameters) {
     const input = inputs[0]; // Get the input audio data
     const output = outputs[0]; // Get the output audio data
     // Check if input data is null or empty
     if (!input || input.length === 0) {
-      //console.log("No audio to process, but keep processor running");
-      return true; // Keep the processor alive without processing any audio data
+        //console.log("No audio to process, but keep processor running");
+        return true; // Keep the processor alive without processing any audio data
     }
-
 
     // Throttle processing
     const currentTime = this.currentTime;
     if (currentTime - this.lastProcessingTime < this.processingInterval) {
-      return true; // Keep the processor alive without processing any audio data
+        return true; // Keep the processor alive without processing any audio data
     }
 
-
-    // Extract audio samples from the input array (assuming mono input)
-    const monoChannel = input[0];
-    const numSamples = monoChannel.length;
+    // Convert multichannel input to mono
+    const numChannels = input.length;
+    const numSamples = input[0].length;
+    const monoChannel = new Float32Array(numSamples);
+    for (let i = 0; i < numSamples; i++) {
+        let sum = 0;
+        for (let j = 0; j < numChannels; j++) {
+            sum += input[j][i];
+        }
+        monoChannel[i] = sum / numChannels;
+    }
 
     // Push samples into the buffer
     this.sampleBuffer.push(...monoChannel);
 
     // Check if the buffer contains enough samples for processing
     if (this.sampleBuffer.length >= this.fftSize) {
-      // Extract the required number of samples from the buffer
-      const samplesToProcess = this.sampleBuffer.splice(0, this.fftSize);
-      
-      // Perform processing (e.g., FFT analysis) on the extracted samples
-      const fftData = this.performFFT(samplesToProcess);
-      
-      // Convert FFT data to frequency data
-      this.convertToFrequencyData(fftData);
-      
-      // Perform EMA smoothing on frequency data
-      //this.frequencyData = this.smoothFrequencyData(this.frequencyData);
-      
-      this.updateSmoothedSpectrum();
+        // Extract the required number of samples from the buffer
+        const samplesToProcess = this.sampleBuffer.splice(0, this.fftSize);
+        // Perform processing (e.g., FFT analysis) on the extracted samples
+        const fftData = this.performFFT(samplesToProcess);
+        // Convert FFT data to frequency data
+        this.convertToFrequencyData(fftData);
+        // Perform EMA smoothing on frequency data
+        //this.frequencyData = this.smoothFrequencyData(this.frequencyData);
+        this.updateSmoothedSpectrum();
     }
 
     // Update the last processing time
     this.lastProcessingTime = currentTime;
 
     return true; // Keep the processor alive
-  }
+}
+
 
   performFFT(inputData) {
     // Perform the processing (FFT analysis) on the mono channel
