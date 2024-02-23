@@ -153,7 +153,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
       // Interpolate between neighboring frequency bins using linear interpolation
       const lowerMagnitude = smoothedData[lowerBinIndex];
       const upperMagnitude = smoothedData[upperBinIndex];
-      console.log(lowerMagnitude / maxMagnitude,upperMagnitude / maxMagnitude);
+      console.log(x, lowerBinIndex, upperBinIndex, lowerMagnitude / maxMagnitude,upperMagnitude / maxMagnitude);
       const interpolatedMagnitude = lowerMagnitude * (1 - fraction) + upperMagnitude * fraction;
 
       // Normalize interpolated magnitude for plotting
