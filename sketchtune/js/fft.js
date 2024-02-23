@@ -327,8 +327,27 @@ async function computeFFT(frame,frameID,frames,fftFactorLookup=null) {
 }
 
 /******************** INVERSE *********************/
+async function ifft(input) {
+    const N = input.length;
+    const pi = Math.PI;
 
+    // Take the complex conjugate of the input spectrum
+    const conjugateSpectrum = input.map(({ re, im }) => ({ re, im: -im }));
 
+    // Apply FFT to the conjugate spectrum
+    const fftResult = await fftComplexInPlace(conjugateSpectrum);
+    //const fftResult = await fft(conjugateSpectrum);
+
+    // Take the complex conjugate of the FFT result
+    const ifftResult = fftResult.map(({ re, im }) => ({ re: re / N, im: -im / N }));
+
+    return ifftResult;
+}
+
+async function IFFT(spectrum) {
+    return ifft(spectrum);
+    //return (await ifft(spectrum)).map(({ re }) => re);
+}
 
 // Function to compute inverse FFT of a spectrum
 async function computeInverseFFT(spectrum) {
@@ -352,26 +371,4 @@ async function computeInverseFFT(spectrum) {
     // Now you can pass paddedSpectrum to the IFFT function
     const timeDomainSignal = await IFFT(paddedSpectrum);
     return timeDomainSignal;
-}
-
-async function ifft(input) {
-    const N = input.length;
-    const pi = Math.PI;
-
-    // Take the complex conjugate of the input spectrum
-    const conjugateSpectrum = input.map(({ re, im }) => ({ re, im: -im }));
-
-    // Apply FFT to the conjugate spectrum
-    const fftResult = await fftComplexInPlace(conjugateSpectrum);
-    //const fftResult = await fft(conjugateSpectrum);
-
-    // Take the complex conjugate of the FFT result
-    const ifftResult = fftResult.map(({ re, im }) => ({ re: re / N, im: -im / N }));
-
-    return ifftResult;
-}
-
-async function IFFT(spectrum) {
-    return ifft(spectrum);
-    //return (await ifft(spectrum)).map(({ re }) => re);
 }
