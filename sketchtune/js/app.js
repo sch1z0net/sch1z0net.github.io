@@ -1697,7 +1697,7 @@ async function createSpectrumTracker(audioContext, audioSource) {
     function startInterval() {
         interval = setInterval(() => {
             audioProcessor.port.postMessage({ 
-              type: 'getFrequencyData';
+              type: 'getFrequencyData',
               fftSize: liveSpectrumFFTsize,
               smoothingSize: liveSpectrumSmoothingSize
             });
