@@ -305,9 +305,9 @@ class AudioProcessor extends AudioWorkletProcessor {
     return true; // Keep the processor alive
   }
 
-  performFFT(inputData) {
+  async performFFT(inputData) {
     // Perform the processing (FFT analysis) on the mono channel
-    var spectrum = prepare_and_fft(inputData);
+    var spectrum = await prepare_and_fft(inputData);
     console.log(spectrum);
 
     /*const numBins = spectrum.length;
