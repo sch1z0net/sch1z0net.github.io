@@ -1783,7 +1783,6 @@ $(document).ready(function(){
     liveSpectrumFFTsize        = parseInt($("#lsFFTsizeSelect").val()); 
     liveSpectrumSmoothingSize  = parseInt($("#lsSmoothingSizeSelect").val()); 
     liveSpectrumRefreshRate    = parseInt($("#lsRefreshRateSelect").val());  
-    console.log(liveSpectrumFFTsize,liveSpectrumSmoothingSize,liveSpectrumRefreshRate); 
   }
 
   // Create select boxes and append them to the DOM
