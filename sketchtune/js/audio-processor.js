@@ -202,8 +202,8 @@ async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     const FFT_SIZE = nextPowerOf2(windowedSignal.length);
     const paddedInput = new Array(FFT_SIZE).fill({ re: 0, im: 0 });
     //const paddedInput = new Array(FFT_SIZE).fill(0);
-    windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
-    //windowedSignal.forEach((value, index) => (paddedInput[index] = value));
+    //windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
+    windowedSignal.forEach((value, index) => (paddedInput[index] = value));
 
     // Perform FFT
     //var spectrumReal = await fftInPlaceReal(paddedInput, fftFactorLookup);
