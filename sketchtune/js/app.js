@@ -1616,7 +1616,7 @@ $(document).ready(function(){
 async function createAudioProcessor(context, audioNode) {
   await context.audioWorklet.addModule('./js/audio-processor.js');
   // Pass the currentTime to the AudioProcessor constructor
-  const audioWorkletNode = new AudioWorkletNode(context, 'audio-processor', {
+  const audioProcessor = new AudioWorkletNode(context, 'audio-processor', {
      processorOptions: { currentTime: context.currentTime }
   });
 
