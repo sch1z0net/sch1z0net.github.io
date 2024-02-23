@@ -211,7 +211,7 @@ async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     //const spectrumComplex = spectrumReal.map(value => ({ re: value, im: 0 }));
     //return spectrumComplex;
 
-    return await fftInPlace(paddedInput, fftFactorLookup);
+    return await fftReal(paddedInput);
     //return await fft(paddedInput, fftFactorLookup);
 }
 
