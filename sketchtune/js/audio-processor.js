@@ -140,16 +140,37 @@ function fftReal(input) {
 
 
 
+// Function to compute FFT factors with caching
+function computeFFTFactorsWithCache(N) {
+    // Check if FFT factors for this size are already cached
+    if (fftFactorCache[N]) {
+        return fftFactorCache[N];
+    }
+
+    // Calculate FFT factors
+    const factors = [];
+    for (let k = 0; k < N / 2; k++) {
+        const theta = -2 * Math.PI * k / N;
+        factors.push({ re: Math.cos(theta), im: Math.sin(theta) });
+    }
+
+    // Cache the factors for future use
+    fftFactorCache[N] = factors;
+
+    return factors;
+}
+
+
 function fftRealInPlace(input) {
     const N = input.length;
-    const bits = Math.log2(N);
 
-    if (N !== Math.pow(2, bits)) {
+    if(N != nextPowerOf2(N)){
         console.error("FFT FRAME must have power of 2");
         return;
     }
 
     // Perform bit reversal
+    const bits = Math.log2(N);
     const output = new Array(N);
     for (let i = 0; i < N; i++) {
         output[bitReverse(i, bits)] = input[i];
@@ -160,19 +181,20 @@ function fftRealInPlace(input) {
         return [{ re: output[0], im: 0 }];
     }
 
+    // Get FFT factors with caching
+    const factors = computeFFTFactorsWithCache(N);
+
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
         const halfSize = size / 2;
-        const angleStep = -2 * Math.PI / size;
         for (let i = 0; i < N; i += size) {
-            let angle = 0;
-            for (let j = i; j < i + halfSize; j++) {
-                const evenIndex = j;
-                const oddIndex = j + halfSize;
+            for (let j = 0; j < halfSize; j++) {
+                const evenIndex = i + j;
+                const oddIndex = i + j + halfSize;
                 const evenPart = output[evenIndex];
                 const oddPart = {
-                    re: output[oddIndex].re * Math.cos(angle) - output[oddIndex].im * Math.sin(angle),
-                    im: output[oddIndex].re * Math.sin(angle) + output[oddIndex].im * Math.cos(angle)
+                    re: output[oddIndex].re * factors[j].re - output[oddIndex].im * factors[j].im,
+                    im: output[oddIndex].re * factors[j].im + output[oddIndex].im * factors[j].re
                 };
 
                 // Combine results of even and odd parts
@@ -184,13 +206,13 @@ function fftRealInPlace(input) {
                     re: evenPart.re - oddPart.re,
                     im: evenPart.im - oddPart.im
                 };
-                angle += angleStep;
             }
         }
     }
 
     return output;
 }
+
 
 
 
