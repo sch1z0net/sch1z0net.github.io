@@ -509,7 +509,7 @@ function spectrogramToImageData(spectrogram) {
     const logMinFreq = Math.log(minFreq + 1); // Logarithm of the minimum frequency (avoiding log(0))
     const logMaxFreq = Math.log(maxFreq + 1); // Logarithm of the maximum frequency (avoiding log(0))
 
-    var h = 2000;
+    var h = 3000;
     // Convert spectrogram data to grayscale image data
     for (let i = 0; i < numFrames; i++) {
         var spectrum = spectrogram[i];
