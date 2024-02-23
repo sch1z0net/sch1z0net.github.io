@@ -117,7 +117,6 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
 
         // Convert chunk array to Float32Array (assuming it contains float values)
         const chunky = new Float32Array(chunk);
-        //const lookup = new Float32Array(fftFactorLookup);
 
         // Construct the message object
         const message = {

@@ -139,59 +139,58 @@ function fftReal(input) {
 }
 
 
-
-
-// Async function to perform FFT in-place
-async function fftInPlace(input, fftFactorLookup = null) {
+function fftRealInPlace(input) {
     const N = input.length;
+
+    if(N != nextPowerOf2(N)){
+        console.error("FFT FRAME must have power of 2");
+        return;
+    }
+
+    // Perform bit reversal
     const bits = Math.log2(N);
-
-    if (N <= 1) {
-        return input;
-    }
-
-    // Check if FFT factors for this size are cached
-    let factors;
-    if (!fftFactorLookup) {
-        factors = computeFFTFactorsWithCache(N);
-    }else{
-        factors = fftFactorLookup[N];
-    }
-
-    // Bit reversal permutation
+    const output = new Array(N);
     for (let i = 0; i < N; i++) {
-        const j = bitReverse(i, bits);
-        if (j > i) {
-            const temp = input[j];
-            input[j] = input[i];
-            input[i] = temp;
-        }
+       const reversedIndex = bitReverse(i, bits);
+       output[reversedIndex] = { re: input[i], im: 0 };
     }
 
-    // Perform FFT in-place
-    for (let len = 2; len <= N; len <<= 1) {
-        const angle = -2 * Math.PI / len;
-        for (let i = 0; i < N; i += len) {
-            for (let k = 0; k < len / 2; k++) {
-                const index = k + i;
-                const evenIndex = index;
-                const oddIndex = index + len / 2;
+    // Base case of recursion: if input has only one element, return it as complex number
+    if (N === 1) {
+        return [{ re: output[0], im: 0 }];
+    }
 
-                const exp = factors[k];
+    // Get FFT factors with caching
+    const factors = computeFFTFactorsWithCache(N);
 
-                const tRe = exp.re * input[oddIndex].re - exp.im * input[oddIndex].im;
-                const tIm = exp.re * input[oddIndex].im + exp.im * input[oddIndex].re;
+    // Recursively calculate FFT
+    for (let size = 2; size <= N; size *= 2) {
+        const halfSize = size / 2;
+        for (let i = 0; i < N; i += size) {
+            for (let j = 0; j < halfSize; j++) {
+                const evenIndex = i + j;
+                const oddIndex = i + j + halfSize;
+                const evenPart = output[evenIndex];
+                const oddPart = {
+                    re: output[oddIndex].re * factors[j].re - output[oddIndex].im * factors[j].im,
+                    im: output[oddIndex].re * factors[j].im + output[oddIndex].im * factors[j].re
+                };
 
-                input[oddIndex].re = input[evenIndex].re - tRe;
-                input[oddIndex].im = input[evenIndex].im - tIm;
-                input[evenIndex].re += tRe;
-                input[evenIndex].im += tIm;
+                // Combine results of even and odd parts
+                output[evenIndex] = {  re: evenPart.re + oddPart.re, im: evenPart.im + oddPart.im  };
+                output[oddIndex]  = {  re: evenPart.re - oddPart.re, im: evenPart.im - oddPart.im  };
             }
         }
     }
 
-    return input;
+    return output;
 }
+
+
+
+
+
+
 
 async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Apply Hanning window to the input signal
@@ -200,10 +199,11 @@ async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
 
     // Zero-padding to the next power of 2
     const FFT_SIZE = nextPowerOf2(windowedSignal.length);
-    const paddedInput = new Array(FFT_SIZE).fill({ re: 0, im: 0 });
-    //const paddedInput = new Array(FFT_SIZE).fill(0);
-    windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
-    //windowedSignal.forEach((value, index) => (paddedInput[index] = value));
+    //const paddedInput = new Array(FFT_SIZE).fill({ re: 0, im: 0 });
+    //windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
+    
+    const paddedInput = new Array(FFT_SIZE).fill(0);
+    windowedSignal.forEach((value, index) => (paddedInput[index] = value));
 
     // Perform FFT
     //var spectrumReal = await fftInPlaceReal(paddedInput, fftFactorLookup);
@@ -211,7 +211,8 @@ async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     //const spectrumComplex = spectrumReal.map(value => ({ re: value, im: 0 }));
     //return spectrumComplex;
 
-    return await fftInPlace(paddedInput, fftFactorLookup);
+    return await fftRealInPlace(paddedInput);
+    //return await fftInPlace(paddedInput, fftFactorLookup);
     //return await fft(paddedInput, fftFactorLookup);
 }
 
