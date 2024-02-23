@@ -58,7 +58,7 @@ function computeFFTFactorsWithCache(N) {
 
     // Calculate FFT factors
     const factors = [];
-    for (let k = 0; k < N; k++) {
+    for (let k = 0; k < N / 2; k++) {
         const theta = -2 * Math.PI * k / N;
         factors.push({ re: Math.cos(theta), im: Math.sin(theta) });
     }
@@ -68,7 +68,6 @@ function computeFFTFactorsWithCache(N) {
 
     return factors;
 }
-
 
 
 
@@ -172,6 +171,7 @@ async function fftRealInPlace(input) {
             for (let j = 0; j < halfSize; j++) {
                 const evenIndex = i + j;
                 const oddIndex = i + j + halfSize;
+                console.log(evenIndex, oddIndex);
                 const evenPart = output[evenIndex];
                 const oddPart = {
                     re: output[oddIndex].re * factors[j].re - output[oddIndex].im * factors[j].im,
