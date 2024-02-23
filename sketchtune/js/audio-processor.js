@@ -296,8 +296,10 @@ process(inputs, outputs, parameters) {
         console.log(samplesToProcess);
         // Perform processing (e.g., FFT analysis) on the extracted samples
         const fftData = this.performFFT(samplesToProcess);
+        console.log("FFT",fftData);
         // Convert FFT data to frequency data
         this.convertToFrequencyData(fftData);
+        console.log("this.frequencyData",this.frequencyData);
         // Perform EMA smoothing on frequency data
         //this.frequencyData = this.smoothFrequencyData(this.frequencyData);
         this.updateSmoothedSpectrum();
