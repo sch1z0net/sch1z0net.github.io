@@ -221,15 +221,6 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
         return input;
     }
 
-    // Check if FFT factors for this size are cached
-    let factors;
-    if (!fftFactorLookup) {
-        factors = computeFFTFactorsWithCache(N);
-    }else{
-        factors = fftFactorLookup[N];
-    }
-
-
     // Perform bit reversal
     const output = new Array(N);
     for (let i = 0; i < N; i++) {
@@ -259,31 +250,7 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
         }
     }
 
-
-    /*
-    // Perform FFT in-place
-    for (let len = 2; len <= N; len <<= 1) {
-        const angle = -2 * Math.PI / len;
-        for (let i = 0; i < N; i += len) {
-            for (let k = 0; k < len / 2; k++) {
-                const index = k + i;
-                const evenIndex = index;
-                const oddIndex = index + len / 2;
-
-                const exp = factors[k];
-
-                const tRe = exp.re * input[oddIndex].re - exp.im * input[oddIndex].im;
-                const tIm = exp.re * input[oddIndex].im + exp.im * input[oddIndex].re;
-
-                input[oddIndex].re = input[evenIndex].re - tRe;
-                input[oddIndex].im = input[evenIndex].im - tIm;
-                input[evenIndex].re += tRe;
-                input[evenIndex].im += tIm;
-            }
-        }
-    }*/
-
-    return input;
+    return output;
 }
 
 async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
