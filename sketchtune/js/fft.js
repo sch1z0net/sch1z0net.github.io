@@ -50,7 +50,7 @@ function generateFFTFactorLookup(maxSampleLength) {
 const fftFactorCache = {};
 
 // Function to compute FFT factors with caching
-/*function computeFFTFactorsWithCache(N) {
+function computeFFTFactorsWithCache(N) {
     // Check if FFT factors for this size are already cached
     if (fftFactorCache[N]) {
         return fftFactorCache[N];
@@ -67,28 +67,7 @@ const fftFactorCache = {};
     fftFactorCache[N] = factors;
 
     return factors;
-}*/
-
-function computeFFTFactorsWithCache(N) {
-    // Check if FFT factors for this size are already cached
-    if (fftFactorCache[N]) {
-        return fftFactorCache[N];
-    }
-
-    // Calculate FFT factors
-    const factors = [];
-    for (let k = 0; k < N / 2; k++) {
-        var krev = bitReverse(k, Math.log2(N));
-        const theta = -2 * Math.PI * krev / N; // Apply bit reversal here
-        factors.push({ re: Math.cos(theta), im: Math.sin(theta) });
-    }
-
-    // Cache the factors for future use
-    fftFactorCache[N] = factors;
-
-    return factors;
 }
-
 
 
 
@@ -210,12 +189,11 @@ function fftRealInPlace(input) {
         return [{ re: output[0], im: 0 }];
     }
 
-    // Get FFT factors with caching
-    const factors = computeFFTFactorsWithCache(N);
-
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
         const halfSize = size / 2;
+        // Get FFT factors with caching
+        const factors = computeFFTFactorsWithCache(size);
         for (let i = 0; i < N; i += size) {
             for (let j = 0; j < halfSize; j++) {
                 const evenIndex = i + j;
