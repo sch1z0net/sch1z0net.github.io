@@ -108,14 +108,15 @@ var fillWithColor = true;
 function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   const canvas = document.getElementById('spectrumCanvas');
   const ctx = canvas.getContext('2d');
-  // Calculate the maximum frequency based on the sample rate and FFT size
-  const maxFrequency = sampleRate / 2; // Nyquist frequency
-  const binWidth = maxFrequency / numBins;
-  const minFrequency = 20; // Minimum frequency (20 Hz)
+
   const width = canvas.width;
   const height = canvas.height;
 
   if (frequencyData != null && sampleRate != null) {
+    const minFrequency = 20; // Minimum frequency (20 Hz)
+    const maxFrequency = sampleRate / 2; // Nyquist frequency
+    const binWidth = maxFrequency / numBins;
+
     ctx.clearRect(0, 0, width, height);
     ctx.beginPath();
 
