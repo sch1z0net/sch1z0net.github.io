@@ -70,7 +70,6 @@ function computeFFTFactorsWithCache(N) {
 }
 
 
-
 // Bit reversal function
 function bitReverse(num, bits) {
     let reversed = 0;
@@ -139,26 +138,6 @@ function fftReal(input) {
 }
 
 
-
-// Function to compute FFT factors with caching
-function computeFFTFactorsWithCache(N) {
-    // Check if FFT factors for this size are already cached
-    if (fftFactorCache[N]) {
-        return fftFactorCache[N];
-    }
-
-    // Calculate FFT factors
-    const factors = [];
-    for (let k = 0; k < N / 2; k++) {
-        const theta = -2 * Math.PI * k / N;
-        factors.push({ re: Math.cos(theta), im: Math.sin(theta) });
-    }
-
-    // Cache the factors for future use
-    fftFactorCache[N] = factors;
-
-    return factors;
-}
 
 
 function fftRealInPlace(input) {
