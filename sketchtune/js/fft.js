@@ -213,7 +213,7 @@ function fftRealInPlace(input) {
 
 
 // Async function to perform FFT in-place
-async function fftInPlace(input, fftFactorLookup = null) {
+async function fftComplexInPlace(input, fftFactorLookup = null) {
     const N = input.length;
     const bits = Math.log2(N);
 
@@ -229,16 +229,38 @@ async function fftInPlace(input, fftFactorLookup = null) {
         factors = fftFactorLookup[N];
     }
 
-    // Bit reversal permutation
+
+    // Perform bit reversal
+    const output = new Array(N);
     for (let i = 0; i < N; i++) {
-        const j = bitReverse(i, bits);
-        if (j > i) {
-            const temp = input[j];
-            input[j] = input[i];
-            input[i] = temp;
+       const reversedIndex = bitReverse(i, bits);
+       output[reversedIndex] = input[i];
+    }
+
+    // Recursively calculate FFT
+    for (let size = 2; size <= N; size *= 2) {
+        const halfSize = size / 2;
+        // Get FFT factors with caching
+        const factors = computeFFTFactorsWithCache(size);
+        for (let i = 0; i < N; i += size) {
+            for (let j = 0; j < halfSize; j++) {
+                const evenIndex = i + j;
+                const oddIndex = i + j + halfSize;
+                const evenPart = output[evenIndex];
+                const oddPart = {
+                    re: output[oddIndex].re * factors[j].re - output[oddIndex].im * factors[j].im,
+                    im: output[oddIndex].re * factors[j].im + output[oddIndex].im * factors[j].re
+                };
+
+                // Combine results of even and odd parts
+                output[evenIndex] = {  re: evenPart.re + oddPart.re, im: evenPart.im + oddPart.im  };
+                output[oddIndex]  = {  re: evenPart.re - oddPart.re, im: evenPart.im - oddPart.im  };
+            }
         }
     }
 
+
+    /*
     // Perform FFT in-place
     for (let len = 2; len <= N; len <<= 1) {
         const angle = -2 * Math.PI / len;
@@ -259,7 +281,7 @@ async function fftInPlace(input, fftFactorLookup = null) {
                 input[evenIndex].im += tIm;
             }
         }
-    }
+    }*/
 
     return input;
 }
@@ -340,7 +362,7 @@ async function ifft(input) {
     const conjugateSpectrum = input.map(({ re, im }) => ({ re, im: -im }));
 
     // Apply FFT to the conjugate spectrum
-    const fftResult = await fftInPlace(conjugateSpectrum);
+    const fftResult = await fftComplexInPlace(conjugateSpectrum);
     //const fftResult = await fft(conjugateSpectrum);
 
     // Take the complex conjugate of the FFT result

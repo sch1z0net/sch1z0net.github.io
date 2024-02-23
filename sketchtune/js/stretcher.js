@@ -461,38 +461,6 @@ function normalizeSpectrogramToDB(spectrogram, dBmin=-20) {
 }
 
 
-/*
-// Convert spectrogram data to image data
-function spectrogramToImageData(spectrogram) {
-    // Assume spectrogram is a 2D array of magnitudes or intensities
-    const numFrames = spectrogram.length;
-    const numBins = spectrogram[0].length / 2;  // Only need half the FFT size due to Nyquist theorem
-    
-    // Create a new ImageData object with the same dimensions as the spectrogram
-    const imageData = new ImageData(numFrames, numBins);
-    
-    // Convert spectrogram data to grayscale image data
-    for (let i = 0; i < numFrames; i++) {
-        var spectrum = spectrogram[i];
-        for (let j = 0; j < numBins; j++) {
-            // Calculate the index in the image data array
-            //const index = (j * numFrames + i) * 4; // Flipping the axes
-            //const index = (j * numFrames + (numFrames - i - 1)) * 4;
-            const index = ((numBins - j - 1) * numFrames + i) * 4; // Reverse
-
-            // Convert magnitude/intensity to grayscale value (0-255)
-            const intensity = Math.round(spectrum[j] * 255);
-
-            // Set the same value for R, G, and B channels (grayscale)
-            imageData.data[index] = intensity;     // Red channel
-            imageData.data[index + 1] = intensity; // Green channel
-            imageData.data[index + 2] = intensity; // Blue channel
-            imageData.data[index + 3] = 255;       // Alpha channel (fully opaque)
-        }
-    }
-
-    return imageData;
-}*/
 
 
 // Define color map array with colors from black to white through a gradient of blue, violet, red, orange, yellow, and white
@@ -708,7 +676,6 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
             const imageData = spectrogramToImageData(normalizedSpectrogram);
             // Draw image data on canvas
             drawImageDataOnCanvas(imageData, "spectrogramA");
-
 
             const startTime = performance.now();
             const result = await stretchSpectrogram(spectrogram, stretchFactor)
