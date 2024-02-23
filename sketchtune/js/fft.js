@@ -58,7 +58,7 @@ function computeFFTFactorsWithCache(N) {
 
     // Calculate FFT factors
     const factors = [];
-    for (let k = 0; k < N / 2; k++) {
+    for (let k = 0; k < N; k++) {
         const theta = -2 * Math.PI * k / N;
         factors.push({ re: Math.cos(theta), im: Math.sin(theta) });
     }
@@ -68,6 +68,7 @@ function computeFFTFactorsWithCache(N) {
 
     return factors;
 }
+
 
 
 
@@ -140,9 +141,6 @@ function fftReal(input) {
 
 
 
-
-
-/*
 async function fftRealInPlace(input) {
     const N = input.length;
 
@@ -188,59 +186,7 @@ async function fftRealInPlace(input) {
     }
 
     return output;
-}*/
-
-async function fftRealInPlace(input) {
-    const N = input.length;
-
-    if (N != nextPowerOf2(N)) {
-        console.error("FFT FRAME must have power of 2");
-        return;
-    }
-
-    // Perform bit reversal
-    const bits = Math.log2(N);
-    const output = new Array(N);
-    for (let i = 0; i < N; i++) {
-        const reversedIndex = bitReverse(i, bits);
-        output[reversedIndex] = { re: input[i], im: 0 };
-    }
-
-    // Perform FFT
-    for (let size = 2; size <= N; size *= 2) {
-        const halfSize = size / 2;
-        for (let i = 0; i < N; i += size) {
-            for (let j = 0; j < halfSize; j++) {
-                const evenIndex = i + j;
-                const oddIndex = i + j + halfSize;
-
-                const angle = -2 * Math.PI * j / size;
-                const twiddleFactor = { re: Math.cos(angle), im: Math.sin(angle) };
-
-                // Multiply odd part by twiddle factor
-                const oddPartReal = output[oddIndex].re * twiddleFactor.re - output[oddIndex].im * twiddleFactor.im;
-                const oddPartImag = output[oddIndex].re * twiddleFactor.im + output[oddIndex].im * twiddleFactor.re;
-
-                // Butterfly operation
-                output[evenIndex] = {
-                    re: output[evenIndex].re + oddPartReal,
-                    im: output[evenIndex].im + oddPartImag
-                };
-
-                output[oddIndex] = {
-                    re: output[evenIndex].re - oddPartReal,
-                    im: output[evenIndex].im - oddPartImag
-                };
-            }
-        }
-    }
-
-    return output;
 }
-
-
-
-
 
 
 
