@@ -139,6 +139,7 @@ function fftReal(input) {
 }
 
 
+
 function fftRealInPlace(input) {
     const N = input.length;
 
@@ -188,9 +189,57 @@ function fftRealInPlace(input) {
 
 
 
+// Async function to perform FFT in-place
+async function fftInPlace(input, fftFactorLookup = null) {
+    const N = input.length;
+    const bits = Math.log2(N);
 
+    if (N <= 1) {
+        return input;
+    }
 
+    // Check if FFT factors for this size are cached
+    let factors;
+    if (!fftFactorLookup) {
+        factors = computeFFTFactorsWithCache(N);
+    }else{
+        factors = fftFactorLookup[N];
+    }
 
+    // Bit reversal permutation
+    for (let i = 0; i < N; i++) {
+        const j = bitReverse(i, bits);
+        if (j > i) {
+            const temp = input[j];
+            input[j] = input[i];
+            input[i] = temp;
+        }
+    }
+
+    // Perform FFT in-place
+    for (let len = 2; len <= N; len <<= 1) {
+        const angle = -2 * Math.PI / len;
+        for (let i = 0; i < N; i += len) {
+            for (let k = 0; k < len / 2; k++) {
+                const index = k + i;
+                const evenIndex = index;
+                const oddIndex = index + len / 2;
+
+                const exp = factors[k];
+
+                const tRe = exp.re * input[oddIndex].re - exp.im * input[oddIndex].im;
+                const tIm = exp.re * input[oddIndex].im + exp.im * input[oddIndex].re;
+
+                input[oddIndex].re = input[evenIndex].re - tRe;
+                input[oddIndex].im = input[evenIndex].im - tIm;
+                input[evenIndex].re += tRe;
+                input[evenIndex].im += tIm;
+            }
+        }
+    }
+
+    return input;
+}
 
 async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Apply Hanning window to the input signal
@@ -201,7 +250,7 @@ async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     const FFT_SIZE = nextPowerOf2(windowedSignal.length);
     //const paddedInput = new Array(FFT_SIZE).fill({ re: 0, im: 0 });
     //windowedSignal.forEach((value, index) => (paddedInput[index] = { re: value, im: 0 }));
-    
+
     const paddedInput = new Array(FFT_SIZE).fill(0);
     windowedSignal.forEach((value, index) => (paddedInput[index] = value));
 
