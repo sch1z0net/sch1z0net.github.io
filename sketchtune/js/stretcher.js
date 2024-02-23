@@ -412,6 +412,8 @@ function normalizeSpectrogram(spectrogram) {
         }
     }
 
+    console.log("MIN",minMagnitude,"MAX",maxMagnitude);
+
     // Calculate the range of magnitudes
     const magnitudeRange = maxMagnitude - minMagnitude;
 
@@ -438,15 +440,16 @@ function normalizeSpectrogram(spectrogram) {
         }
     }
 
-        for (let j = 0; j < numCols; j++) {
-            var avrg = 0;
-            for (let i = 0; i < numRows; i++) {
-                const value = normalizedSpectrogram[i][j];
-                avrg += value;
-            }
-            avrg /= numRows;
+    /*
+    for (let j = 0; j < numCols; j++) {
+        var avrg = 0;
+        for (let i = 0; i < numRows; i++) {
+            const value = normalizedSpectrogram[i][j];
+            avrg += value;
         }
-
+        avrg /= numRows;
+    }
+    */
 
 
     return normalizedSpectrogram;
