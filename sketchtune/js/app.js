@@ -107,9 +107,6 @@ function smoothFrequencyData(frequencyData) {
 // Plot spectrum on canvas with smoothed and curved lines
 var fillWithColor = true;
 function plotSpectrumLive(frequencyData = null, sampleRate = null) {
-  var range_mode = 0; //Relevant Freqs
-  var scale_mode = 1; //Log
-
   const canvas = document.getElementById('spectrumCanvas');
   const ctx = canvas.getContext('2d');
   const width = canvas.width;
@@ -1727,6 +1724,8 @@ async function createSpectrumTracker(audioContext, audioSource) {
 let windowSize = 512; // Default value
 let hopFactor = 2; // Default value
 let smoothFactor = 1;
+let range_mode = 0;
+var scale_mode = 1;
 
 $(document).ready(function(){
   // Function to update global variables when select boxes change
@@ -1734,14 +1733,17 @@ $(document).ready(function(){
     windowSize = parseInt($("#windowSizeSelect").val());
     hopFactor = parseInt($("#hopFactorSelect").val());
     smoothFactor = parseInt($("#smoothFactorSelect").val());
-    // You can perform additional actions here if needed
+    range_mode = parseInt($("#rangeModeSelect").val());
+    scale_mode = parseInt($("#scaleModeSelect").val());  
   }
 
   // Create select boxes and append them to the DOM
   const $windowSizeSelect = $("<select>").attr("id", "windowSizeSelect");
   const $hopFactorSelect = $("<select>").attr("id", "hopFactorSelect");
   const $smoothFactorSelect = $("<select>").attr("id", "smoothFactorSelect");
-  
+  const $rangeModeSelect = $("<select>").attr("id", "rangeModeSelect");
+  const $scaleModeSelect = $("<select>").attr("id", "scaleModeSelect");
+
   // Options for window size select box
   [256, 512, 1024, 2048, 4096, 8192].forEach(function(size) {
     $windowSizeSelect.append($("<option>").attr("value", size).text(size));
@@ -1756,8 +1758,18 @@ $(document).ready(function(){
     $smoothFactorSelect.append($("<option>").attr("value", factor).text(factor));
   });
 
+  [0, 1, 2].forEach(function(mode) {
+    $rangeModeSelect.append($("<option>").attr("value", mode).text(mode));
+  });
+
+  [0, 1].forEach(function(mode) {
+    $scaleModeSelect.append($("<option>").attr("value", mode).text(mode));
+  });
+
   // Append select boxes to the DOM
   var controls = $("<div id='controls'>")
+    .append("<span>STRETCHING PARAMS<span>")
+    .append("<br>")
     .append($windowSizeSelect)
     .append($("<label>").attr("for", "windowSize").text("Window Size"))
     .append("<br>")
@@ -1765,12 +1777,21 @@ $(document).ready(function(){
     .append($("<label>").attr("for", "hopFactor").text("Hop Factor"))
     .append("<br>")
     .append($smoothFactorSelect)
-    .append($("<label>").attr("for", "smoothFactor").text("Smooth Factor"));
+    .append($("<label>").attr("for", "smoothFactor").text("Smooth Factor"))
+    .append("<br>")
+    .append("<span>LIVE SPECTRUM ANALYZER<span>")
+    .append("<br>")
+    .append($rangeModeSelect)
+    .append($("<label>").attr("for", "range_mode").text("Range Mode"))
+    .append("<br>")
+    .append($scaleModeSelect)
+    .append($("<label>").attr("for", "scale_mode").text("Scale Mode"))
+
 
   $('body').append(controls);
 
   // Add event listener to select boxes
-  $("#windowSizeSelect, #hopFactorSelect, #smoothFactorSelect").on("change", updateVariables);
+  $("#windowSizeSelect, #hopFactorSelect, #smoothFactorSelect, #rangeModeSelect, #scaleModeSelect").on("change", updateVariables);
 });
 
 
