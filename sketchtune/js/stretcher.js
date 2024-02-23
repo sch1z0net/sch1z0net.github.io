@@ -435,14 +435,14 @@ function normalizeDBspectrogram(spectrogram) {
 
 
 // Returns dB in form of negative values up to 0 (max)
-function normalizeSpectrogramToDB(spectrogram) {
+function normalizeSpectrogramToDB(spectrogram, dBmin=-20) {
     const normalizedSpectrogram = [];
 
     // Iterate over each frame in the spectrogram
     for (const frame of spectrogram) {
         const framePower = frame.map(bin => Math.abs(bin.re * bin.re + bin.im * bin.im));
         const maxPower = Math.max(...framePower);
-        const minDB = -20; // Set a minimum value for dB to avoid infinity or negative infinity
+        const minDB = dBmin; // Set a minimum value for dB to avoid infinity or negative infinity
         const frameDB = [];
 
         // Convert power to dB for each bin in the frame
@@ -629,7 +629,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
         })
         .then(async (spectrogram) => {
             // Normalize Spectrogram
-            const normalizedDBSpectrogram = normalizeSpectrogramToDB(spectrogram);
+            const normalizedDBSpectrogram = normalizeSpectrogramToDB(spectrogram,-80);
             const normalizedSpectrogram = normalizeDBspectrogram(normalizedDBSpectrogram);
             //console.log(normalizedSpectrogram);
             // Convert spectrogram data to image data
