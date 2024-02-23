@@ -104,12 +104,12 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
 
     // Create and run workers
     for (let i = 0; i < numWorkers; i++) {
-        //console.log("CALL WORKER",i);
         const startFrame = i * framesPerWorker;
         const endFrame = Math.min(startFrame + framesPerWorker, numFrames);
 
         // Slice inputSignal array to create a smaller chunk for this worker
         const chunk = inputSignal.slice(startFrame * hopSize, (endFrame - 1) * hopSize + windowSize);
+        console.log("CALL WORKER",i,"Chunk from",startFrame * hopSize,"to",(endFrame - 1) * hopSize + windowSize);
 
         // Create worker and send the chunk of inputSignal
         const worker = new Worker('./js/stftWorker.js');
