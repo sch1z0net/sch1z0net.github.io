@@ -391,6 +391,54 @@ function applyTimeDomainSmoothing(inputSignal, hopSize) {
 
 
 
+function scaleToLogSpectrogram(spectrogram) {
+    const numFrames = spectrogram.length;
+    const numBins = spectrogram[0].length;
+    const logSpectrogram = [];
+
+    // Define the minimum and maximum frequency indices (or bins)
+    const minFreqIndex = 0;  // Index of the lowest frequency bin
+    const maxFreqIndex = numBins - 1;  // Index of the highest frequency bin
+
+    // Define the minimum and maximum frequency values
+    const minFreq = 20;  // Minimum frequency in Hz
+    const maxFreq = 20000;  // Maximum frequency in Hz
+
+    // Calculate the frequency range (in Hz) covered by the spectrogram
+    const freqRange = maxFreq - minFreq;
+
+    // Calculate the logarithmic frequency increment per bin
+    const logFreqIncrement = Math.log10(maxFreq / minFreq) / numBins;
+
+    // Iterate through each frame in the spectrogram
+    for (let i = 0; i < numFrames; i++) {
+        const logFrame = [];
+        
+        // Iterate through each bin in the spectrogram
+        for (let j = 0; j < numBins; j++) {
+            // Calculate the frequency of the current bin using a logarithmic scale
+            const freq = minFreq * Math.pow(10, j * logFreqIncrement);
+
+            // Map the frequency value to a corresponding index on a linear scale
+            const linearFreqIndex = Math.round((freq - minFreq) / freqRange * (maxFreqIndex - minFreqIndex)) + minFreqIndex;
+
+            // Retrieve the magnitude value from the original spectrogram using the linear frequency index
+            const magnitude = spectrogram[i][linearFreqIndex];
+
+            // Add the magnitude value to the log-scaled frame
+            logFrame.push(magnitude);
+        }
+        
+        // Add the log-scaled frame to the log-spectrogram
+        logSpectrogram.push(logFrame);
+    }
+
+    return logSpectrogram;
+}
+
+
+
+
 function normalizeDBspectrogram(spectrogram) {
     const numFrames = spectrogram.length;
     const numBins   = spectrogram[0].length;
@@ -629,7 +677,8 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
         })
         .then(async (spectrogram) => {
             // Normalize Spectrogram
-            const normalizedDBSpectrogram = normalizeSpectrogramToDB(spectrogram,-80);
+            const logSpectrogram = scaleToLogSpectrogram(spectrogram);
+            const normalizedDBSpectrogram = normalizeSpectrogramToDB(logSpectrogram,-80);
             const normalizedSpectrogram = normalizeDBspectrogram(normalizedDBSpectrogram);
             //console.log(normalizedSpectrogram);
             // Convert spectrogram data to image data
