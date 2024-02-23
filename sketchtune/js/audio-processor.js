@@ -268,8 +268,7 @@ process(inputs, outputs, parameters) {
     }
 
     // Throttle processing
-    const t = currentTime;
-    console.log(t);
+    const t = currentTime*1000;
     if (t - this.lastProcessingTime < this.processingInterval) {
         return true; // Keep the processor alive without processing any audio data
     }
