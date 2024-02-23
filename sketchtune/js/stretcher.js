@@ -391,52 +391,41 @@ function applyTimeDomainSmoothing(inputSignal, hopSize) {
 
 
 
-function normalizeSpectrogram(spectrogram) {
-    const numRows = spectrogram.length;
-    const numCols = spectrogram[0].length;
+function normalizeDBspectrogram(spectrogram) {
+    const numFrames = spectrogram.length;
+    const numBins   = spectrogram[0].length;
 
     // Find the minimum and maximum magnitude values in the spectrogram
-    let minMagnitude = Number.POSITIVE_INFINITY;
-    let maxMagnitude = Number.NEGATIVE_INFINITY;
+    let minDB = Number.POSITIVE_INFINITY;
+    let maxDB = Number.NEGATIVE_INFINITY;
 
-    for (let i = 0; i < numRows; i++) {
-        for (let j = 0; j < numCols; j++) {
-            const value = spectrogram[i][j];
-            const magnitude = Math.sqrt(value.re * value.re + value.im * value.im);
-            if (magnitude < minMagnitude) {
-                minMagnitude = magnitude;
-            }
-            if (magnitude > maxMagnitude) {
-                maxMagnitude = magnitude;
-            }
+    for (let i = 0; i < numFrames; i++) {
+        for (let j = 0; j < numBins; j++) {
+            const dB = spectrogram[i][j];
+            if (dB < minDB) {  minDB = dB;  }
+            if (dB > maxDB) {  maxDB = dB;  }
         }
     }
 
-    //console.log("MIN",minMagnitude,"MAX",maxMagnitude);
-
     // Calculate the range of magnitudes
-    const magnitudeRange = maxMagnitude - minMagnitude;
+    const range = maxDB - minDB;
 
     // Normalize the magnitudes to the range [0, 1]
     const normalizedSpectrogram = [];
-    if (magnitudeRange !== 0) {
-        for (let i = 0; i < numRows; i++) {
-            const row = [];
-            for (let j = 0; j < numCols; j++) {
+    if (range !== 0) {
+        for (let i = 0; i < numFrames; i++) {
+            const spectrum = [];
+            for (let j = 0; j < numBins; j++) {
                 const value = spectrogram[i][j];
-                const magnitude = Math.sqrt(value.re * value.re + value.im * value.im);
-                const normalizedMagnitude = (magnitude - minMagnitude) / magnitudeRange;
-                //const normalizedMagnitude = (magnitude * 2);
-                row.push(normalizedMagnitude);
+                const normalized = (value - minDB) / range;
+                spectrum.push(normalized);
             }
-            normalizedSpectrogram.push(row);
+            normalizedSpectrogram.push(spectrum);
         }
     } else {
-        // If all magnitudes are identical, set all normalized values to 0 or 1
-        const constantValue = spectrogram[0][0].re === 0 && spectrogram[0][0].im === 0 ? 0 : 1;
-        for (let i = 0; i < numRows; i++) {
-            const row = new Array(numCols).fill(constantValue);
-            normalizedSpectrogram.push(row);
+        for (let i = 0; i < numFrames; i++) {
+            const spectrum = new Array(numBins).fill(0);
+            normalizedSpectrogram.push(spectrum);
         }
     }
 
@@ -445,6 +434,7 @@ function normalizeSpectrogram(spectrogram) {
 }
 
 
+// Returns dB in form of negative values up to 0 (max)
 function normalizeSpectrogramToDB(spectrogram) {
     const normalizedSpectrogram = [];
 
@@ -466,13 +456,9 @@ function normalizeSpectrogramToDB(spectrogram) {
         // Add the dB values for the frame to the normalized spectrogram
         normalizedSpectrogram.push(frameDB);
     }
-    console.log(normalizedSpectrogram);
 
     return normalizedSpectrogram;
 }
-
-
-
 
 
 
@@ -644,7 +630,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
         .then(async (spectrogram) => {
             // Normalize Spectrogram
             const normalizedDBSpectrogram = normalizeSpectrogramToDB(spectrogram);
-            //const normalizedSpectrogram = normalizeSpectrogram(normalizedDBSpectrogram);
+            const normalizedSpectrogram = normalizeDBspectrogram(normalizedDBSpectrogram);
             //console.log(normalizedSpectrogram);
             // Convert spectrogram data to image data
             const imageData = spectrogramToImageData(normalizedDBSpectrogram);
