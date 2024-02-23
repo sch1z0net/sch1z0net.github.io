@@ -1786,15 +1786,15 @@ $(document).ready(function(){
   }
 
   // Create select boxes and append them to the DOM
-  const $windowSizeSelect    = $("<select>").attr("id", "windowSizeSelect").val(windowSize);
-  const $hopFactorSelect     = $("<select>").attr("id", "hopFactorSelect").val(hopFactor);
-  const $smoothFactorSelect  = $("<select>").attr("id", "smoothFactorSelect").val(smoothFactor);
-  const $rangeModeSelect     = $("<select>").attr("id", "rangeModeSelect").val(range_mode);
-  const $scaleModeSelect     = $("<select>").attr("id", "scaleModeSelect").val(scale_mode);
-  const $smoothingModeSelect = $("<select>").attr("id", "smoothingModeSelect").val(smoothing_mode);
-  const $liveSpectrumFFTsizeSelect       = $("<select>").attr("id", "lsFFTsizeSelect").val(liveSpectrumFFTsize);
-  const $liveSpectrumSmoothingSizeSelect = $("<select>").attr("id", "lsSmoothingSizeSelect").val(liveSpectrumSmoothingSize);
-  const $liveSpectrumRefreshRateSelect   = $("<select>").attr("id", "lsRefreshRateSelect").val(displayRefreshRate);
+  const $windowSizeSelect    = $("<select>").attr("id", "windowSizeSelect");
+  const $hopFactorSelect     = $("<select>").attr("id", "hopFactorSelect");
+  const $smoothFactorSelect  = $("<select>").attr("id", "smoothFactorSelect");
+  const $rangeModeSelect     = $("<select>").attr("id", "rangeModeSelect");
+  const $scaleModeSelect     = $("<select>").attr("id", "scaleModeSelect");
+  const $smoothingModeSelect = $("<select>").attr("id", "smoothingModeSelect");
+  const $liveSpectrumFFTsizeSelect       = $("<select>").attr("id", "lsFFTsizeSelect");
+  const $liveSpectrumSmoothingSizeSelect = $("<select>").attr("id", "lsSmoothingSizeSelect");
+  const $liveSpectrumRefreshRateSelect   = $("<select>").attr("id", "lsRefreshRateSelect");
 
   // Options for window size select box
   [256, 512, 1024, 2048, 4096, 8192].forEach(function(size) {
@@ -1838,33 +1838,33 @@ $(document).ready(function(){
   var controls = $("<div id='controls'>")
     .append("<span>STRETCHING PARAMS<span>")
     .append("<br>")
-    .append($windowSizeSelect)
+    .append($windowSizeSelect.val(windowSize))
     .append($("<label>").attr("for", "windowSize").text("Window Size"))
     .append("<br>")
-    .append($hopFactorSelect)
+    .append($hopFactorSelect.val(hopFactor))
     .append($("<label>").attr("for", "hopFactor").text("Hop Factor"))
     .append("<br>")
-    .append($smoothFactorSelect)
+    .append($smoothFactorSelect.val(smoothFactor))
     .append($("<label>").attr("for", "smoothFactor").text("Smooth Factor"))
     .append("<br>")
     .append("<span>LIVE SPECTRUM ANALYZER<span>")
     .append("<br>")
-    .append($rangeModeSelect)
+    .append($rangeModeSelect.val(range_mode))
     .append($("<label>").attr("for", "range_mode").text("Range Mode"))
     .append("<br>")
-    .append($scaleModeSelect)
+    .append($scaleModeSelect.val(scale_mode))
     .append($("<label>").attr("for", "scale_mode").text("Scale Mode"))
     .append("<br>")
-    .append($smoothingModeSelect)
+    .append($smoothingModeSelect.val(smoothing_mode))
     .append($("<label>").attr("for", "smoothing_mode").text("Smoothing Mode"))
     .append("<br>")
-    .append($liveSpectrumFFTsizeSelect)
+    .append($liveSpectrumFFTsizeSelect.val(liveSpectrumFFTsize))
     .append($("<label>").attr("for", "liveSpectrumFFTsize").text("FFT Size"))
     .append("<br>")
-    .append($liveSpectrumSmoothingSizeSelect)
+    .append($liveSpectrumSmoothingSizeSelect.val(liveSpectrumSmoothingSize))
     .append($("<label>").attr("for", "liveSpectrumSmoothingSize").text("Smoothing Size"))
     .append("<br>")
-    .append($liveSpectrumRefreshRateSelect)
+    .append($liveSpectrumRefreshRateSelect.val(displayRefreshRate))
     .append($("<label>").attr("for", "liveSpectrumRefreshRate").text("Display Refresh Rate"));
 
 
