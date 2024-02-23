@@ -220,8 +220,9 @@ function prepare_and_fft(inputSignal, fftFactorLookup=null) {
 
 // audio-processor.js (AudioWorkletProcessor)
 class AudioProcessor extends AudioWorkletProcessor {
-  constructor() {
-    super();
+  constructor(options) {
+    super(options);
+    this.currentTime = options.currentTime;
 
     this.port.onmessage = this.handleMessage.bind(this);
     
