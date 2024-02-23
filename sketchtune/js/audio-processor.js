@@ -220,8 +220,9 @@ function prepare_and_fft(inputSignal, fftFactorLookup=null) {
 
 // audio-processor.js (AudioWorkletProcessor)
 class AudioProcessor extends AudioWorkletProcessor {
-  constructor() {
-    super();
+  constructor(options) {
+    super(options);
+    this.currentTime = options.processorOptions.currentTime;
 
     this.port.onmessage = this.handleMessage.bind(this);
     
@@ -268,12 +269,12 @@ process(inputs, outputs, parameters) {
     }
 
     // Throttle processing
-    const currentTime = this.context.currentTime;
+    const currentTime = this.currentTime;
     if (currentTime - this.lastProcessingTime < this.processingInterval) {
         return true; // Keep the processor alive without processing any audio data
     }
 
-    const performanceStart = this.context.currentTime;
+    const performanceStart = this.currentTime;
     // Convert multichannel input to mono
     const numChannels = input.length;
     const numSamples = input[0].length;
@@ -303,7 +304,7 @@ process(inputs, outputs, parameters) {
     }
 
 
-    const performanceEnd = this.context.currentTime;
+    const performanceEnd = this.currentTime;
     // Estimate processing time (in milliseconds)
     const estimatedProcessingTime = performanceEnd - performanceStart; // Measure this empirically
     // Set a target processing interval (in milliseconds)
