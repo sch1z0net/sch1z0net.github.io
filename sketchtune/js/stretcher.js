@@ -445,7 +445,6 @@ function normalizeSpectrogram(spectrogram) {
                 avrg += value;
             }
             avrg /= numRows;
-            console.log(j, avrg);
         }
 
 
