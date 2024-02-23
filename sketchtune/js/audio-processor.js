@@ -310,7 +310,7 @@ process(inputs, outputs, parameters) {
     const targetInterval = estimatedProcessingTime + 5; // Add a small buffer
     // Set the processing interval
     this.processingInterval = targetInterval;
-    console.log(targetInterval);
+    console.log(estimatedProcessingTime);
 
     // Update the last processing time
     this.lastProcessingTime = currentTime;
