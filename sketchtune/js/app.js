@@ -110,8 +110,8 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   const ctx = canvas.getContext('2d');
 
   //const maxFrequency = sampleRate / 2; // Nyquist frequency
-  const maxFrequency = sampleRate;
-  const minFrequency = 0; // Minimum frequency (20 Hz)
+  const maxFrequency = 10000;
+  const minFrequency = 20; // Minimum frequency (20 Hz)
   const width = canvas.width;
   const height = canvas.height;
 
@@ -120,7 +120,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     ctx.beginPath();
 
     const numBins = frequencyData.length;
-    const binWidth = sampleRate / numBins;
+    const binWidth = maxFrequency / numBins;
 
     // Apply simple smoothing by averaging neighboring frequency bins
     const smoothedData = smoothFrequencyData(frequencyData);
