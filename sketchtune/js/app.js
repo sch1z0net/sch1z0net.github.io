@@ -107,6 +107,7 @@ function smoothFrequencyData(frequencyData) {
 // Plot spectrum on canvas with smoothed and curved lines
 let range_mode = 0;
 let scale_mode = 0;
+let smoothing_mode = 0;
 
 var fillWithColor = true;
 function plotSpectrumLive(frequencyData = null, sampleRate = null) {
@@ -138,10 +139,9 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     const numBins = frequencyData.length;
     const binWidth = sampleRate / numBins;
 
-    // Apply simple smoothing by averaging neighboring frequency bins
-    const smoothedData = smoothFrequencyData(frequencyData);
-    // Bypass smoothing
-    //const smoothedData = frequencyData;
+    var smoothedData;
+    if(smoothing_mode == 0){ smoothedData = frequencyData; } // Bypass smoothing
+    if(smoothing_mode == 1){ smoothedData = smoothFrequencyData(frequencyData); } // Simple smoothing by averaging neighboring frequency bins
 
     const controlPoints = []; // Array to store control points for Catmull-Rom spline
 
@@ -1731,19 +1731,21 @@ let smoothFactor = 1;
 $(document).ready(function(){
   // Function to update global variables when select boxes change
   function updateVariables() {
-    windowSize = parseInt($("#windowSizeSelect").val());
-    hopFactor = parseInt($("#hopFactorSelect").val());
-    smoothFactor = parseInt($("#smoothFactorSelect").val());
-    range_mode = parseInt($("#rangeModeSelect").val());
-    scale_mode = parseInt($("#scaleModeSelect").val());  
+    windowSize     = parseInt($("#windowSizeSelect").val());
+    hopFactor      = parseInt($("#hopFactorSelect").val());
+    smoothFactor   = parseInt($("#smoothFactorSelect").val());
+    range_mode     = parseInt($("#rangeModeSelect").val());
+    scale_mode     = parseInt($("#scaleModeSelect").val()); 
+    smoothing_mode = parseInt($("#smoothingModeSelect").val());  
   }
 
   // Create select boxes and append them to the DOM
-  const $windowSizeSelect = $("<select>").attr("id", "windowSizeSelect");
-  const $hopFactorSelect = $("<select>").attr("id", "hopFactorSelect");
-  const $smoothFactorSelect = $("<select>").attr("id", "smoothFactorSelect");
-  const $rangeModeSelect = $("<select>").attr("id", "rangeModeSelect");
-  const $scaleModeSelect = $("<select>").attr("id", "scaleModeSelect");
+  const $windowSizeSelect    = $("<select>").attr("id", "windowSizeSelect");
+  const $hopFactorSelect     = $("<select>").attr("id", "hopFactorSelect");
+  const $smoothFactorSelect  = $("<select>").attr("id", "smoothFactorSelect");
+  const $rangeModeSelect     = $("<select>").attr("id", "rangeModeSelect");
+  const $scaleModeSelect     = $("<select>").attr("id", "scaleModeSelect");
+  const $smoothingModeSelect = $("<select>").attr("id", "smoothingModeSelect"); 
 
   // Options for window size select box
   [256, 512, 1024, 2048, 4096, 8192].forEach(function(size) {
@@ -1767,6 +1769,10 @@ $(document).ready(function(){
     $scaleModeSelect.append($("<option>").attr("value", mode).text(mode));
   });
 
+  [0, 1].forEach(function(mode) {
+    $smoothingModeSelect.append($("<option>").attr("value", mode).text(mode));
+  });
+
   // Append select boxes to the DOM
   var controls = $("<div id='controls'>")
     .append("<span>STRETCHING PARAMS<span>")
@@ -1787,12 +1793,14 @@ $(document).ready(function(){
     .append("<br>")
     .append($scaleModeSelect)
     .append($("<label>").attr("for", "scale_mode").text("Scale Mode"))
-
+    .append("<br>")
+    .append($smoothingModeSelect)
+    .append($("<label>").attr("for", "smoothing_mode").text("Smoothing Mode"));
 
   $('body').append(controls);
 
   // Add event listener to select boxes
-  $("#windowSizeSelect, #hopFactorSelect, #smoothFactorSelect, #rangeModeSelect, #scaleModeSelect").on("change", updateVariables);
+  $("#windowSizeSelect, #hopFactorSelect, #smoothFactorSelect, #rangeModeSelect, #scaleModeSelect, #smoothingModeSelect").on("change", updateVariables);
 });
 
 
