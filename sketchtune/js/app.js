@@ -123,8 +123,9 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     const binWidth = sampleRate / numBins;
 
     // Apply simple smoothing by averaging neighboring frequency bins
-    const smoothedData = smoothFrequencyData(frequencyData);
-
+    //const smoothedData = smoothFrequencyData(frequencyData);
+    const smoothedData = frequencyData;
+ 
     // Find the maximum magnitude in the smoothed frequency data
     const minMagnitude = Math.min(...smoothedData);
     const maxMagnitude = Math.max(...smoothedData);
