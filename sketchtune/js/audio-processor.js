@@ -227,9 +227,9 @@ class AudioProcessor extends AudioWorkletProcessor {
     
     //this.fftSize = 512;
     //this.fftSize = 1024;
-    this.fftSize = 2048;
+    //this.fftSize = 2048;
     //this.fftSize = 4096;
-    //this.fftSize = 8192;
+    this.fftSize = 8192;
     this.lastProcessingTime = 0;
     this.processingInterval = 100; // Processing interval in milliseconds (adjust as needed)
     // Create an array to store the frequency data

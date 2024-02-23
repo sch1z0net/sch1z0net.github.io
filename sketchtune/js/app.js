@@ -193,7 +193,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     // Find the maximum magnitude among the interpolated magnitudes
     const maxInterpolatedMagnitude = Math.max(...interpolatedMagnitudes);
 
-    /*// Normalize each interpolated magnitude based on the maximum magnitude
+    // Normalize each interpolated magnitude based on the maximum magnitude
     for (let x = 0; x < width; x++) {
         const normalizedMagnitude = (interpolatedMagnitudes[x] / maxInterpolatedMagnitude) * height;
 
@@ -201,8 +201,9 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
         const y = height - normalizedMagnitude; // Invert Y-axis
         controlPoints.push({ x, y });
         //ctx.lineTo(x, y); // Draw line to the magnitude point
-    }*/
+    }
 
+/*
     const numInterpolatedPoints = 4000; // Adjust this value for the desired smoothness
     for (let i = 0; i < numInterpolatedPoints; i++) {
         const xFraction = i / (numInterpolatedPoints - 1); // Fractional value between 0 and 1
@@ -215,7 +216,7 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
         const y = height - (normalizedMagnitude / maxInterpolatedMagnitude) * height; // Normalize and invert Y-axis
         controlPoints.push({ x, y });
     }
-
+*/
 
 
 
