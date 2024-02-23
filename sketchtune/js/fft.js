@@ -303,8 +303,9 @@ async function ifft(input) {
     const N = input.length;
     const pi = Math.PI;
 
+    console.log(input);
     // Take the complex conjugate of the input spectrum
-    const conjugateSpectrum = input.map(({ re, im }) => ({ re, im: -im }));
+    const conjugateSpectrum = input.map(({ re, im }) => ({ re: re, im: -im }));
 
     // Apply FFT to the conjugate spectrum
     const fftResult = await fftComplexInPlace(conjugateSpectrum);
@@ -312,6 +313,7 @@ async function ifft(input) {
 
     // Take the complex conjugate of the FFT result
     const ifftResult = fftResult.map(({ re, im }) => ({ re: re / N, im: -im / N }));
+    console.log(ifftResult);
 
     return ifftResult;
 }
