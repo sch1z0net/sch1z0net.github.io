@@ -1781,7 +1781,8 @@ $(document).ready(function(){
     scale_mode     = parseInt($("#scaleModeSelect").val()); 
     smoothing_mode = parseInt($("#smoothingModeSelect").val());  
     liveSpectrumFFTsize        = parseInt($("#lsFFTsizeSelect").val()); 
-    liveSpectrumSmoothingSize  = parseInt($("#lsSmoothingSizeSelect").val());  
+    liveSpectrumSmoothingSize  = parseInt($("#lsSmoothingSizeSelect").val()); 
+    liveSpectrumRefreshRate    = parseInt($("#lsRefreshRateSelect").val());   
   }
 
   // Create select boxes and append them to the DOM
@@ -1793,6 +1794,7 @@ $(document).ready(function(){
   const $smoothingModeSelect = $("<select>").attr("id", "smoothingModeSelect"); 
   const $liveSpectrumFFTsizeSelect       = $("<select>").attr("id", "liveSpectrumFFTsize");
   const $liveSpectrumSmoothingSizeSelect = $("<select>").attr("id", "liveSpectrumSmoothingSize"); 
+  const $liveSpectrumRefreshRateSelect   = $("<select>").attr("id", "liveSpectrumRefreshRate"); 
 
   // Options for window size select box
   [256, 512, 1024, 2048, 4096, 8192].forEach(function(size) {
@@ -1828,6 +1830,10 @@ $(document).ready(function(){
     $liveSpectrumSmoothingSizeSelect.append($("<option>").attr("value", size).text(size));
   });
 
+  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].forEach(function(rate) {
+    $liveSpectrumRefreshRateSelect.append($("<option>").attr("value", rate).text(rate));
+  });
+
   // Append select boxes to the DOM
   var controls = $("<div id='controls'>")
     .append("<span>STRETCHING PARAMS<span>")
@@ -1856,7 +1862,10 @@ $(document).ready(function(){
     .append($("<label>").attr("for", "liveSpectrumFFTsize").text("FFT Size"))
     .append("<br>")
     .append($liveSpectrumSmoothingSizeSelect)
-    .append($("<label>").attr("for", "liveSpectrumSmoothingSize").text("Smoothing Size"));
+    .append($("<label>").attr("for", "liveSpectrumSmoothingSize").text("Smoothing Size"))
+    .append("<br>")
+    .append($liveSpectrumRefreshRateSelect)
+    .append($("<label>").attr("for", "liveSpectrumRefreshRate").text("Display Refresh Rate"));
 
 
   $('body').append(controls);
