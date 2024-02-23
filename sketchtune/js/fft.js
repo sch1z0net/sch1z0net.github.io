@@ -183,7 +183,7 @@ function fftRealInPlace(input) {
     return output;
 }*/
 
-
+/*
 function fftRealInPlace(input) {
     const N = input.length;
     const bits = Math.log2(N);
@@ -234,7 +234,83 @@ function fftRealInPlace(input) {
     }
 
     return input;
+}*/
+
+
+function fftRealInPlace(input) {
+    const N = input.length;
+    const bits = Math.log2(N);
+
+    if (N !== nextPowerOf2(N)) {
+        console.error("FFT FRAME must have power of 2");
+        return;
+    }
+
+    // Convert real and imaginary parts to Float32Array for better memory usage
+    const floatInput = new Float32Array(N * 2);
+    for (let i = 0; i < N; i++) {
+        floatInput[i * 2] = input[i].re;
+        floatInput[i * 2 + 1] = input[i].im;
+    }
+
+    // Perform bit reversal in place
+    for (let i = 0; i < N; i++) {
+        const reversedIndex = bitReverse(i, bits);
+        if (reversedIndex > i) {
+            // Swap elements if necessary
+            const tempRe = floatInput[i * 2];
+            const tempIm = floatInput[i * 2 + 1];
+            floatInput[i * 2] = floatInput[reversedIndex * 2];
+            floatInput[i * 2 + 1] = floatInput[reversedIndex * 2 + 1];
+            floatInput[reversedIndex * 2] = tempRe;
+            floatInput[reversedIndex * 2 + 1] = tempIm;
+        }
+    }
+
+    // Precompute FFT factors
+    const factors = computeFFTFactorsWithCache(N);
+
+    // Recursively calculate FFT
+    for (let size = 2; size <= N; size *= 2) {
+        const halfSize = size / 2;
+        for (let i = 0; i < N; i += size) {
+            for (let j = 0; j < halfSize; j++) {
+                const evenIndex = i + j;
+                const oddIndex = i + j + halfSize;
+                const evenPartRe = floatInput[evenIndex * 2];
+                const evenPartIm = floatInput[evenIndex * 2 + 1];
+                const oddPartRe = floatInput[oddIndex * 2];
+                const oddPartIm = floatInput[oddIndex * 2 + 1];
+
+                const twiddleRe = factors[j].re;
+                const twiddleIm = factors[j].im;
+
+                // Multiply by twiddle factors
+                const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
+                const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
+
+                // Combine results of even and odd parts in place
+                floatInput[evenIndex * 2] = evenPartRe + twiddledOddRe;
+                floatInput[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+                floatInput[oddIndex * 2] = evenPartRe - twiddledOddRe;
+                floatInput[oddIndex * 2 + 1] = evenPartIm - twiddledOddIm;
+            }
+        }
+    }
+
+    // Convert the result back to an array of complex numbers
+    const output = [];
+    for (let i = 0; i < N; i++) {
+        output.push({ re: floatInput[i * 2], im: floatInput[i * 2 + 1] });
+    }
+
+    return output;
 }
+
+
+
+
+
 
 
 
