@@ -116,12 +116,14 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   const height = canvas.height;
 
   var maxFrequency;
-  var minFrequency = 0; // Minimum frequency (20 Hz)
+  var minFrequency;
 
   if(range_mode == 0){ maxFrequency = sampleRate;      minFrequency = 0;  }
   if(range_mode == 1){ maxFrequency = sampleRate / 2;  minFrequency = 20; }
   if(range_mode == 2){ maxFrequency = 10000;           minFrequency = 20; }
 
+
+  /*********** SPECTRUM PLOT **********/
   if (frequencyData != null && sampleRate != null) {
     ctx.clearRect(0, 0, width, height);
     ctx.beginPath();
@@ -200,6 +202,9 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     ctx.strokeStyle = 'red';
     ctx.stroke();
 
+  }
+  
+  /*********** FREQ LABELS AND LINES **********/
     // Plot logarithmic number grid
     ctx.fillStyle = 'white';
     ctx.font = '10px Arial';
@@ -222,7 +227,6 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
       }
       ctx.stroke();
     }
-  }
 }
 
 
@@ -1546,10 +1550,6 @@ $(document).ready(function(){
        $("track-window").scrollLeft($("beat-bar").scrollLeft());
        $("time-bar-container").scrollLeft($("beat-bar").scrollLeft());
   });
-
-
-
-
 
 
 
