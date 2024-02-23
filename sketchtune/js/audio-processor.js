@@ -70,6 +70,7 @@ function computeFFTFactorsWithCache(N) {
 }
 
 
+
 // Bit reversal function
 function bitReverse(num, bits) {
     let reversed = 0;
@@ -138,8 +139,6 @@ function fftReal(input) {
 }
 
 
-
-
 function fftRealInPlace(input) {
     const N = input.length;
 
@@ -161,12 +160,11 @@ function fftRealInPlace(input) {
         return [{ re: output[0], im: 0 }];
     }
 
-    // Get FFT factors with caching
-    const factors = computeFFTFactorsWithCache(N);
-
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
         const halfSize = size / 2;
+        // Get FFT factors with caching
+        const factors = computeFFTFactorsWithCache(size);
         for (let i = 0; i < N; i += size) {
             for (let j = 0; j < halfSize; j++) {
                 const evenIndex = i + j;
@@ -186,8 +184,6 @@ function fftRealInPlace(input) {
 
     return output;
 }
-
-
 
 
 
