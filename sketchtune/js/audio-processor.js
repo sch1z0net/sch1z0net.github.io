@@ -101,7 +101,7 @@ function fftReal(input) {
 
     // Base case of recursion: if input has only one element, return it as complex number
     if (N === 1) {
-        return [{ real: input[0], imag: 0 }];
+        return [{ re: input[0], im: 0 }];
     }
 
     // Split the input into even and odd parts
@@ -123,15 +123,15 @@ function fftReal(input) {
         const twiddleReal = Math.cos(angle);
         const twiddleImag = Math.sin(angle);
 
-        const evenPart = { real: evenFFT[k].real, imag: evenFFT[k].imag };
+        const evenPart = { re: evenFFT[k].re, im: evenFFT[k].im };
         const oddPart = {
-            real: oddFFT[k].real * twiddleReal - oddFFT[k].imag * twiddleImag,
-            imag: oddFFT[k].real * twiddleImag + oddFFT[k].imag * twiddleReal
+            re: oddFFT[k].re * twiddleReal - oddFFT[k].im * twiddleImag,
+            im: oddFFT[k].re * twiddleImag + oddFFT[k].im * twiddleReal
         };
 
         // Combine the results of even and odd parts...
-        result[k] = {         real: evenPart.real + oddPart.real, imag: evenPart.imag + oddPart.imag };
-        result[k + N / 2] = { real: evenPart.real - oddPart.real, imag: evenPart.imag - oddPart.imag };
+        result[k] = {         re: evenPart.re + oddPart.re, im: evenPart.im + oddPart.im };
+        result[k + N / 2] = { re: evenPart.re - oddPart.re, im: evenPart.im - oddPart.im };
     }
 
 

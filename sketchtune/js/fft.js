@@ -71,8 +71,6 @@ function computeFFTFactorsWithCache(N) {
 
 
 
-
-
 // Bit reversal function
 function bitReverse(num, bits) {
     let reversed = 0;
@@ -83,68 +81,6 @@ function bitReverse(num, bits) {
     return reversed;
 }
 
-/*
-async function fftInPlaceReal(input, fftFactorLookup = null) {
-    const N = input.length;
-    const bits = Math.log2(N);
-
-    if (N <= 1) {
-        return input;
-    }
-
-    // Check if FFT factors for this size are cached
-    let factors;
-    if (!fftFactorLookup) {
-        factors = computeFFTFactorsWithCache(N);
-    } else {
-        factors = fftFactorLookup[N];
-    }
-
-    // Bit reversal permutation
-    for (let i = 0; i < N; i++) {
-        const j = bitReverse(i, bits);
-        if (j > i) {
-            const temp = input[j];
-            input[j] = input[i];
-            input[i] = temp;
-        }
-    }
-
-    // Perform FFT in-place
-    for (let len = 2; len <= N; len <<= 1) {
-        const halfLen = len / 2;
-        for (let i = 0; i < N; i += len) {
-            for (let k = 0; k < halfLen; k++) {
-                const index = k + i;
-                const evenIndex = index;
-                const oddIndex = index + halfLen;
-
-                const exp = factors[k];
-
-                // Perform butterfly operations
-                const tRe = exp.re * input[oddIndex];
-                const tIm = exp.im * input[oddIndex];
-
-                input[oddIndex] = input[evenIndex] - tRe;
-                input[evenIndex] += tRe;
-
-                // For odd indices, imaginary part is zero, so no need to update
-                if (oddIndex < N) {
-                    input[oddIndex] = input[evenIndex] - tIm;
-                    input[evenIndex] += tIm;
-                }
-            }
-        }
-    }
-
-    return input;
-}*/
-
-
-
-
-
-
 // Function to pad the input array with zeros to make its length a power of 2
 function padArray(input) {
     const N = input.length;
@@ -153,13 +89,6 @@ function padArray(input) {
     input.forEach((value, index) => paddedInput[index] = value);
     return paddedInput;
 }
-
-
-
-
-
-
-
 
 
 // Calculate the FFT of real-valued input data and return complex numbers as output
@@ -172,7 +101,7 @@ function fftReal(input) {
 
     // Base case of recursion: if input has only one element, return it as complex number
     if (N === 1) {
-        return [{ real: input[0], imag: 0 }];
+        return [{ re: input[0], im: 0 }];
     }
 
     // Split the input into even and odd parts
@@ -194,50 +123,20 @@ function fftReal(input) {
         const twiddleReal = Math.cos(angle);
         const twiddleImag = Math.sin(angle);
 
-        const evenPart = { real: evenFFT[k].real, imag: evenFFT[k].imag };
+        const evenPart = { re: evenFFT[k].re, im: evenFFT[k].im };
         const oddPart = {
-            real: oddFFT[k].real * twiddleReal - oddFFT[k].imag * twiddleImag,
-            imag: oddFFT[k].real * twiddleImag + oddFFT[k].imag * twiddleReal
+            re: oddFFT[k].re * twiddleReal - oddFFT[k].im * twiddleImag,
+            im: oddFFT[k].re * twiddleImag + oddFFT[k].im * twiddleReal
         };
 
         // Combine the results of even and odd parts...
-        result[k] = {         real: evenPart.real + oddPart.real, imag: evenPart.imag + oddPart.imag };
-        result[k + N / 2] = { real: evenPart.real - oddPart.real, imag: evenPart.imag - oddPart.imag };
+        result[k] = {         re: evenPart.re + oddPart.re, im: evenPart.im + oddPart.im };
+        result[k + N / 2] = { re: evenPart.re - oddPart.re, im: evenPart.im - oddPart.im };
     }
 
 
     return result;
 }
-
-
-/*
-        for (let k = 0; k < n / 2; i++) {
-            let angle = -2 * Math.PI * k / n;
-            let twiddleReal = Math.cos(angle);
-            let twiddleImag = Math.sin(angle);
-
-            let evenReal = p_out_even[k].real;
-            let evenImag = p_out_even[k].imag;
-            let oddReal = p_out_odd[k].real;
-            let oddImag = p_out_odd[k].imag;
-
-            p_out[k] = {
-                real: evenReal + twiddleReal * oddReal - twiddleImag * oddImag,
-                imag: evenImag + twiddleReal * oddImag + twiddleImag * oddReal
-            };
-
-            p_out[k + n/2] = {
-                real: evenReal - (twiddleReal * oddReal - twiddleImag * oddImag),
-                imag: evenImag - (twiddleReal * oddImag + twiddleImag * oddReal)
-            };
-        }
-*/
-
-
-
-
-
-
 
 
 

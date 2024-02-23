@@ -1783,8 +1783,6 @@ async function playSample(audioContext, audioBuffer, time, offset, duration) {
     let resampledBuffer = audioBuffer;
 
     if (stretchFactor !== 1) {
-        // 4096
-        // 16
         resampledBuffer = await phaseVocoder(audioContext, resampledBuffer, stretchFactor, windowSize, hopFactor, smoothFactor); 
     }
 
@@ -1801,7 +1799,41 @@ async function playSample(audioContext, audioBuffer, time, offset, duration) {
     return sampleSource;
 }
 
+/*
+async function playSample(audioContext, audioBuffer, time, offset, duration) {
+    const stretchFactor = 1 / GLOBAL_PLAYBACK_RATE;
+    let resampledBuffer;
 
+    if (stretchFactor !== 1) {
+        // Make a copy of the original audioBuffer
+        const audioBufferCopy = audioContext.createBuffer(audioBuffer.numberOfChannels, audioBuffer.length, audioBuffer.sampleRate);
+        for (let ch = 0; ch < audioBuffer.numberOfChannels; ch++) {
+            audioBufferCopy.copyToChannel(audioBuffer.getChannelData(ch), ch);
+        }
+        
+        // Apply phase vocoder if stretchFactor is not 1
+        resampledBuffer = await phaseVocoder(audioContext, audioBufferCopy, stretchFactor); 
+    } else {
+        resampledBuffer = audioBuffer;
+    }
+
+    const sampleSource = new AudioBufferSourceNode(audioContext, {
+      buffer: resampledBuffer,
+      playbackRate: 1.0,
+    });
+
+    plotWaveform(resampledBuffer);
+
+    //console.log(duration, sampleSource.buffer.duration);
+    connectToMaster(sampleSource);
+    //sampleSource.connect(audioContext.destination);
+    sampleSource.start(time, offset, duration);
+
+    // Add the source node to the list of playing audio nodes
+    playingAudioNodes.push(sampleSource);
+
+    return sampleSource;
+  }*/
 
 
 
@@ -1894,62 +1926,9 @@ const peakFrequency = indexOfMaxMagnitude * sampleRate / paddedInput.length;
 
 console.log("Peak frequency:", peakFrequency, "Hz");
 
-
-
-
-
-
-//result = fftReal([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]);
-//console.log(result);
-
 });
 
 
-//plotSpectrumLive(magnitudes, sampleRate);
-
-
-
-
-
-
-
-
-
-/*
-async function playSample(audioContext, audioBuffer, time, offset, duration) {
-    const stretchFactor = 1 / GLOBAL_PLAYBACK_RATE;
-    let resampledBuffer;
-
-    if (stretchFactor !== 1) {
-        // Make a copy of the original audioBuffer
-        const audioBufferCopy = audioContext.createBuffer(audioBuffer.numberOfChannels, audioBuffer.length, audioBuffer.sampleRate);
-        for (let ch = 0; ch < audioBuffer.numberOfChannels; ch++) {
-            audioBufferCopy.copyToChannel(audioBuffer.getChannelData(ch), ch);
-        }
-        
-        // Apply phase vocoder if stretchFactor is not 1
-        resampledBuffer = await phaseVocoder(audioContext, audioBufferCopy, stretchFactor); 
-    } else {
-        resampledBuffer = audioBuffer;
-    }
-
-    const sampleSource = new AudioBufferSourceNode(audioContext, {
-      buffer: resampledBuffer,
-      playbackRate: 1.0,
-    });
-
-    plotWaveform(resampledBuffer);
-
-    //console.log(duration, sampleSource.buffer.duration);
-    connectToMaster(sampleSource);
-    //sampleSource.connect(audioContext.destination);
-    sampleSource.start(time, offset, duration);
-
-    // Add the source node to the list of playing audio nodes
-    playingAudioNodes.push(sampleSource);
-
-    return sampleSource;
-  }*/
 
   // Function to stop all playing samples
   function stopAllSamples() {
