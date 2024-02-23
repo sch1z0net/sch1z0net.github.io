@@ -92,14 +92,14 @@ function normalizeDecibels(dBValue, minDB, maxDB, minHeight, maxHeight) {
 function smoothFrequencyData(frequencyData) {
   const smoothedData = [];
   const numBins = frequencyData.length;
+  console.log(numBins);
   var max = 0;
   for (let i = 0; i < numBins; i++) {
-    if(frequencyData[i] > max){ max = frequencyData[i]; console.log(i,frequencyData[i]); }
-
     const prevIndex = Math.max(0, i - 1);
     const nextIndex = Math.min(numBins - 1, i + 1);
     const average = (frequencyData[prevIndex] + frequencyData[i] + frequencyData[nextIndex]) / 3; // Simple averaging
     smoothedData.push(average);
+    if(frequencyData[i] > max){ max = frequencyData[i]; console.log(i,frequencyData[i],average); }
   }
   return smoothedData;
 }
