@@ -125,8 +125,8 @@ function interpolateMagnitude(xFraction, interpolatedMagnitudes) {
 
 
 // Plot spectrum on canvas with smoothed and curved lines
-let range_mode = 1;
-let scale_mode = 2;
+let range_mode = 2;
+let scale_mode = 1;
 let smoothing_mode = 1;
 
 var fillWithColor = true;
