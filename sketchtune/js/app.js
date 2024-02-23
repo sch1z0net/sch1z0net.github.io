@@ -92,15 +92,12 @@ function normalizeDecibels(dBValue, minDB, maxDB, minHeight, maxHeight) {
 function smoothFrequencyData(frequencyData) {
   const smoothedData = [];
   const numBins = frequencyData.length;
-  console.log(numBins);
   var max = 0;
   for (let i = 0; i < numBins; i++) {
     const prevIndex = Math.max(0, i - 1);
     const nextIndex = Math.min(numBins - 1, i + 1);
     const average = (frequencyData[prevIndex] + frequencyData[i] + frequencyData[nextIndex]) / 3; // Simple averaging
     smoothedData.push(average);
-    //if(frequencyData[i] > max){ max = frequencyData[i]; console.log(i,frequencyData[i],average); }
-    if(average > max){ max = average; console.log(i,average,frequencyData[prevIndex],frequencyData[i],frequencyData[nextIndex]); }
   }
   return smoothedData;
 }
@@ -127,8 +124,8 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
     const binWidth = sampleRate / numBins;
 
     // Apply simple smoothing by averaging neighboring frequency bins
-    //const smoothedData = smoothFrequencyData(frequencyData);
-    const smoothedData = frequencyData;
+    const smoothedData = smoothFrequencyData(frequencyData);
+    //const smoothedData = frequencyData;
 
     // Plot the spectrum using a logarithmic scale
     const logMinFrequency = Math.log10(minFrequency);
@@ -1874,7 +1871,6 @@ plotWaveformMono(audiobuffer);
 //const windowedInput = applyWindow(audiobuffer, 'hanning'); // Change windowType to 'hamming' or 'blackman' for different window functions
 const windowedInput = audiobuffer;
 const paddedInput = padArray(windowedInput);
-console.log(paddedInput.length);
 var result = fftReal(paddedInput);
 
 const magnitudes = result.map(complex => Math.sqrt(complex.real ** 2 + complex.imag ** 2));
