@@ -267,12 +267,11 @@ function fftRealInPlace(input) {
         }
     }
 
-    // Precompute FFT factors
-    const factors = computeFFTFactorsWithCache(N);
-
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
         const halfSize = size / 2;
+        // Precompute FFT factors
+        const factors = computeFFTFactorsWithCache(size);
         for (let i = 0; i < N; i += size) {
             for (let j = 0; j < halfSize; j++) {
                 const evenIndex = i + j;
