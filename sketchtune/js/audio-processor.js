@@ -193,7 +193,7 @@ async function fftInPlace(input, fftFactorLookup = null) {
     return input;
 }
 
-async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
+function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Apply Hanning window to the input signal
     const windowedSignal = inputSignal;
     //const windowedSignal = applyHanningWindow(inputSignal); 
@@ -211,7 +211,7 @@ async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     //const spectrumComplex = spectrumReal.map(value => ({ re: value, im: 0 }));
     //return spectrumComplex;
 
-    return await fftReal(paddedInput);
+    return fftReal(paddedInput);
     //return await fft(paddedInput, fftFactorLookup);
 }
 
@@ -305,9 +305,9 @@ class AudioProcessor extends AudioWorkletProcessor {
     return true; // Keep the processor alive
   }
 
-  async performFFT(inputData) {
+  performFFT(inputData) {
     // Perform the processing (FFT analysis) on the mono channel
-    var spectrum = await prepare_and_fft(inputData);
+    var spectrum = prepare_and_fft(inputData);
     console.log(spectrum);
 
     /*const numBins = spectrum.length;
