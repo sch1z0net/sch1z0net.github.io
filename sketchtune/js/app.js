@@ -1883,7 +1883,8 @@ async function playSample(audioContext, audioBuffer, time, offset, duration) {
     const stretchFactor = 1 / GLOBAL_PLAYBACK_RATE;
     let resampledBuffer = audioBuffer;
 
-    if (stretchFactor !== 1) {
+    //if (stretchFactor !== 1) {
+    if (true) {
         resampledBuffer = await phaseVocoder(audioContext, resampledBuffer, stretchFactor, windowSize, hopFactor, smoothFactor); 
     }
 

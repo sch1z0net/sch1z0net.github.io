@@ -461,7 +461,7 @@ function normalizeSpectrogram(spectrogram) {
 function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
     const numFrames = spectrogram.length;
-    const numBins = spectrogram[0].length;  // Only need half the FFT size due to Nyquist theorem
+    const numBins = spectrogram[0].length / 2;  // Only need half the FFT size due to Nyquist theorem
     
     // Create a new ImageData object with the same dimensions as the spectrogram
     const imageData = new ImageData(numFrames, numBins);
