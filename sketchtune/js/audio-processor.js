@@ -152,7 +152,8 @@ function fftRealInPlace(input) {
     const bits = Math.log2(N);
     const output = new Array(N);
     for (let i = 0; i < N; i++) {
-        output[bitReverse(i, bits)] = input[i];
+       const reversedIndex = bitReverse(i, bits);
+       output[reversedIndex] = { re: input[i], im: 0 };
     }
 
     // Base case of recursion: if input has only one element, return it as complex number
