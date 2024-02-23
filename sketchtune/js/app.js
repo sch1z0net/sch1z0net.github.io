@@ -1632,7 +1632,7 @@ async function createSpectrumTracker(audioContext, audioSource) {
 
     // CUSTOM FFT ANALYZER
     const audioProcessor = await createAudioProcessor(audioContext, audioSource);
-    audioProcessor.fftSize = 2048; // Set FFT size for frequency analysis
+    //audioProcessor.fftSize = 2048; // Set FFT size for frequency analysis
     audioProcessor.port.onmessage = (event) => {
        const { data } = event;
        if (data.type === 'frequencyData') {
@@ -1891,7 +1891,7 @@ function getWindow(windowType, N) {
 
 
 
-
+/*
 $(document).ready(function(){
 
 // Example parameters
@@ -1927,7 +1927,7 @@ const peakFrequency = indexOfMaxMagnitude * sampleRate / paddedInput.length;
 console.log("Peak frequency:", peakFrequency, "Hz");
 
 });
-
+*/
 
 
   // Function to stop all playing samples

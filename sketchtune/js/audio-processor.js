@@ -231,7 +231,7 @@ class AudioProcessor extends AudioWorkletProcessor {
     //this.fftSize = 4096;
     //this.fftSize = 8192;
     this.lastProcessingTime = 0;
-    this.processingInterval = 260; // Processing interval in milliseconds (adjust as needed)
+    this.processingInterval = 160; // Processing interval in milliseconds (adjust as needed)
     // Create an array to store the frequency data
     this.frequencyBinCount = this.fftSize / 2;
     this.frequencyData = new Uint8Array(this.frequencyBinCount).fill(0); // Only need half the FFT size due to Nyquist theorem
@@ -308,18 +308,6 @@ class AudioProcessor extends AudioWorkletProcessor {
   performFFT(inputData) {
     // Perform the processing (FFT analysis) on the mono channel
     var spectrum = prepare_and_fft(inputData);
-    console.log(spectrum);
-
-    /*const numBins = spectrum.length;
-    const maxFrequency = 10000; // Maximum frequency (10 kHz)
-    const minFrequency = 20; // Minimum frequency (20 Hz)
-    const minBinIndex = Math.round((minFrequency / sampleRate) * numBins);
-    const maxBinIndex = Math.round((maxFrequency / sampleRate) * numBins);
-    // Extract the subset of the spectrum corresponding to frequencies between minFrequency and maxFrequency
-    const subsetSpectrum = spectrum.slice(minBinIndex, maxBinIndex);
-    const peakFrequency = findPeakFrequency(subsetSpectrum, sampleRate);
-    console.log("Peak frequency:", peakFrequency, "Hz");*/
-
     return spectrum;
   }
 
