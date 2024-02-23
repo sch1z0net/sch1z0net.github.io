@@ -1617,7 +1617,7 @@ async function createAudioProcessor(context, audioNode) {
   await context.audioWorklet.addModule('./js/audio-processor.js');
   // Pass the currentTime to the AudioProcessor constructor
   const audioWorkletNode = new AudioWorkletNode(context, 'audio-processor', {
-     processorOptions: { currentTime: audioContext.currentTime }
+     processorOptions: { currentTime: context.currentTime }
   });
 
   // Connect the master gain node to the audio processor node
