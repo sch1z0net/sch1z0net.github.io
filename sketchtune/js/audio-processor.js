@@ -177,14 +177,8 @@ function fftRealInPlace(input) {
                 };
 
                 // Combine results of even and odd parts
-                output[evenIndex] = {
-                    re: evenPart.re + oddPart.re,
-                    im: evenPart.im + oddPart.im
-                };
-                output[oddIndex] = {
-                    re: evenPart.re - oddPart.re,
-                    im: evenPart.im - oddPart.im
-                };
+                output[evenIndex] = {  re: evenPart.re + oddPart.re, im: evenPart.im + oddPart.im  };
+                output[oddIndex]  = {  re: evenPart.re - oddPart.re, im: evenPart.im - oddPart.im  };
             }
         }
     }
@@ -362,6 +356,7 @@ process(inputs, outputs, parameters) {
   performFFT(inputData) {
     // Perform the processing (FFT analysis) on the mono channel
     var spectrum = prepare_and_fft(inputData);
+    console.log(spectrum);
     return spectrum;
   }
 
