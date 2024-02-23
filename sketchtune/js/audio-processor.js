@@ -250,6 +250,8 @@ class AudioProcessor extends AudioWorkletProcessor {
   handleMessage(event) {
     const { data } = event;
     this.fftSize = data.fftSize;
+    this.frequencyBinCount = this.fftSize / 2;
+    
     this.bufferSize = data.smoothingSize;
     if (data.type === 'getFrequencyData') {
       const frequencyData = this.getByteFrequencyData();
