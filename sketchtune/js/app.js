@@ -118,10 +118,10 @@ function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   var maxFrequency;
   var minFrequency;
 
-  if(sampleRate == null){ range_mode = 2; }
   if(range_mode == 0){ maxFrequency = sampleRate;      minFrequency = 0;  }
   if(range_mode == 1){ maxFrequency = sampleRate / 2;  minFrequency = 20; }
   if(range_mode == 2){ maxFrequency = 10000;           minFrequency = 20; }
+  if(sampleRate == null){ maxFrequency = 10000; }
 
   // Plot the spectrum using a logarithmic scale
   const logMinFrequency = Math.log10(minFrequency);
