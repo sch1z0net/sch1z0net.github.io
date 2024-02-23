@@ -230,8 +230,8 @@ class AudioProcessor extends AudioWorkletProcessor {
     this.fftSize = 2048;
     //this.fftSize = 4096;
     //this.fftSize = 8192;
-    this.lastProcessingTime = 0;
-    this.processingInterval = 100; // Processing interval in milliseconds (adjust as needed)
+    //this.lastProcessingTime = 0;
+    //this.processingInterval = 100; // Processing interval in milliseconds (adjust as needed)
     // Create an array to store the frequency data
     this.frequencyBinCount = this.fftSize / 2;
     this.frequencyData = new Uint8Array(this.frequencyBinCount).fill(0); // Only need half the FFT size due to Nyquist theorem
@@ -250,8 +250,6 @@ class AudioProcessor extends AudioWorkletProcessor {
   // Inside AudioProcessor class
   handleMessage(event) {
     const { data } = event;
-    this.time = data.time;
-    console.log(data.time);
     if (data.type === 'getFrequencyData') {
       const frequencyData = this.getByteFrequencyData();
       this.port.postMessage({ type: 'frequencyData', data: frequencyData });
@@ -269,13 +267,12 @@ process(inputs, outputs, parameters) {
         return true; // Keep the processor alive without processing any audio data
     }
 
-    // Throttle processing
+    /*// Throttle processing
     const t = this.time;
     if (this.time - this.lastProcessingTime < this.processingInterval) {
         return true; // Keep the processor alive without processing any audio data
-    }
+    }*/
 
-    const performanceStart = this.time;
     // Convert multichannel input to mono
     const numChannels = input.length;
     const numSamples = input[0].length;
@@ -304,18 +301,6 @@ process(inputs, outputs, parameters) {
         this.updateSmoothedSpectrum();
     }
 
-
-    const performanceEnd = this.time;
-    // Estimate processing time (in milliseconds)
-    const estimatedProcessingTime = performanceEnd - performanceStart; // Measure this empirically
-    // Set a target processing interval (in milliseconds)
-    const targetInterval = estimatedProcessingTime + 5; // Add a small buffer
-    // Set the processing interval
-    this.processingInterval = targetInterval;
-    console.log(performanceStart, performanceEnd, estimatedProcessingTime);
-
-    // Update the last processing time
-    this.lastProcessingTime = t;
     return true; // Keep the processor alive
   }
 
