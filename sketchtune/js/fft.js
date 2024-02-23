@@ -214,7 +214,7 @@ async function fftRealInPlace(input) {
                 const evenIndex = i + j;
                 const oddIndex = i + j + halfSize;
 
-                const angle = -2 * Math.PI * j / N;
+                const angle = -2 * Math.PI * j / size;
                 const twiddleFactor = { re: Math.cos(angle), im: Math.sin(angle) };
 
                 // Multiply odd part by twiddle factor
