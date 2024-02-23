@@ -412,7 +412,7 @@ function normalizeSpectrogram(spectrogram) {
         }
     }
 
-    console.log("MIN",minMagnitude,"MAX",maxMagnitude);
+    //console.log("MIN",minMagnitude,"MAX",maxMagnitude);
 
     // Calculate the range of magnitudes
     const magnitudeRange = maxMagnitude - minMagnitude;
@@ -440,17 +440,23 @@ function normalizeSpectrogram(spectrogram) {
         }
     }
 
-    /*
-    for (let j = 0; j < numCols; j++) {
-        var avrg = 0;
-        for (let i = 0; i < numRows; i++) {
-            const value = normalizedSpectrogram[i][j];
-            avrg += value;
-        }
-        avrg /= numRows;
-    }
-    */
 
+    return normalizedSpectrogram;
+}
+
+
+function normalizeSpectrogramToDB(spectrogram) {
+    const normalizedSpectrogram = [];
+    const maxPower = Math.max(...spectrogram.map(bin => Math.abs(bin.re * bin.re + bin.im * bin.im)));
+    const minDB = -20; // Set a minimum value for dB to avoid infinity or negative infinity
+    
+    for (const bin of spectrogram) {
+        const power = Math.abs(bin.re * bin.re + bin.im * bin.im);
+        const dB = 10 * Math.log10(power / maxPower);
+        // Clip dB values to minDB to avoid infinity or negative infinity
+        const clippedDB = Math.max(dB, minDB);
+        normalizedSpectrogram.push(clippedDB);
+    }
 
     return normalizedSpectrogram;
 }
@@ -626,7 +632,8 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
         })
         .then(async (spectrogram) => {
             // Normalize Spectrogram
-            const normalizedSpectrogram = normalizeSpectrogram(spectrogram);
+            const normalizedDBSpectrogram = normalizeSpectrogramToDB(spectrogram);
+            const normalizedSpectrogram = normalizeSpectrogram(normalizedDBSpectrogram);
             //console.log(normalizedSpectrogram);
             // Convert spectrogram data to image data
             const imageData = spectrogramToImageData(normalizedSpectrogram);
