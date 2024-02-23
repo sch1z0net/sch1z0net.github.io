@@ -303,7 +303,6 @@ async function ifft(input) {
     const N = input.length;
     const pi = Math.PI;
 
-    console.log(input);
     // Take the complex conjugate of the input spectrum
     const conjugateSpectrum = input.map(({ re, im }) => ({ re: re, im: -im }));
 
@@ -313,14 +312,13 @@ async function ifft(input) {
 
     // Take the complex conjugate of the FFT result
     const ifftResult = fftResult.map(({ re, im }) => ({ re: re / N, im: -im / N }));
-    console.log(ifftResult);
 
     return ifftResult;
 }
 
 async function IFFT(spectrum) {
-    return ifft(spectrum);
-    //return (await ifft(spectrum)).map(({ re }) => re);
+    //return ifft(spectrum);
+    return (await ifft(spectrum)).map(({ re }) => re);
 }
 
 // Function to compute inverse FFT of a spectrum
