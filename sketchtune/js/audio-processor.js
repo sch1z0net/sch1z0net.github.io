@@ -227,9 +227,9 @@ class AudioProcessor extends AudioWorkletProcessor {
     
     //this.fftSize = 512;
     //this.fftSize = 1024;
-    //this.fftSize = 2048;
+    this.fftSize = 2048;
     //this.fftSize = 4096;
-    this.fftSize = 8192;
+    //this.fftSize = 8192;
     this.lastProcessingTime = 0;
     this.processingInterval = 100; // Processing interval in milliseconds (adjust as needed)
     // Create an array to store the frequency data
@@ -273,6 +273,7 @@ process(inputs, outputs, parameters) {
         return true; // Keep the processor alive without processing any audio data
     }
 
+    const performanceStart = this.currentTime;
     // Convert multichannel input to mono
     const numChannels = input.length;
     const numSamples = input[0].length;
@@ -301,9 +302,18 @@ process(inputs, outputs, parameters) {
         this.updateSmoothedSpectrum();
     }
 
+
+    const performanceEnd = this.currentTime;
+    // Estimate processing time (in milliseconds)
+    const estimatedProcessingTime = performanceEnd - performanceStart; // Measure this empirically
+    // Set a target processing interval (in milliseconds)
+    const targetInterval = estimatedProcessingTime + 5; // Add a small buffer
+    // Set the processing interval
+    this.processingInterval = targetInterval;
+    console.log(targetInterval);
+
     // Update the last processing time
     this.lastProcessingTime = currentTime;
-
     return true; // Keep the processor alive
 }
 
