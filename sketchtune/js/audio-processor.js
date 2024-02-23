@@ -140,7 +140,64 @@ function fftReal(input) {
 
 
 
+function fftRealInPlace(input) {
+    const N = input.length;
+    const bits = Math.log2(N);
 
+    if (N !== Math.pow(2, bits)) {
+        console.error("FFT FRAME must have power of 2");
+        return;
+    }
+
+    // Perform bit reversal
+    const output = new Array(N);
+    for (let i = 0; i < N; i++) {
+        output[bitReverse(i, bits)] = input[i];
+    }
+
+    // Base case of recursion: if input has only one element, return it as complex number
+    if (N === 1) {
+        return [{ re: output[0], im: 0 }];
+    }
+
+    // Recursively calculate FFT
+    for (let size = 2; size <= N; size *= 2) {
+        const halfSize = size / 2;
+        const angleStep = -2 * Math.PI / size;
+        for (let i = 0; i < N; i += size) {
+            let angle = 0;
+            for (let j = i; j < i + halfSize; j++) {
+                const evenIndex = j;
+                const oddIndex = j + halfSize;
+                const evenPart = output[evenIndex];
+                const oddPart = {
+                    re: output[oddIndex].re * Math.cos(angle) - output[oddIndex].im * Math.sin(angle),
+                    im: output[oddIndex].re * Math.sin(angle) + output[oddIndex].im * Math.cos(angle)
+                };
+
+                // Combine results of even and odd parts
+                output[evenIndex] = {
+                    re: evenPart.re + oddPart.re,
+                    im: evenPart.im + oddPart.im
+                };
+                output[oddIndex] = {
+                    re: evenPart.re - oddPart.re,
+                    im: evenPart.im - oddPart.im
+                };
+                angle += angleStep;
+            }
+        }
+    }
+
+    return output;
+}
+
+
+
+
+
+
+/*
 // Async function to perform FFT in-place
 async function fftInPlace(input, fftFactorLookup = null) {
     const N = input.length;
@@ -191,7 +248,10 @@ async function fftInPlace(input, fftFactorLookup = null) {
     }
 
     return input;
-}
+}*/
+
+
+
 
 function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Apply Hanning window to the input signal
@@ -210,9 +270,8 @@ function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Map real-only spectrum to complex numbers
     //const spectrumComplex = spectrumReal.map(value => ({ re: value, im: 0 }));
     //return spectrumComplex;
-
-    return fftReal(paddedInput);
-    //return await fft(paddedInput, fftFactorLookup);
+    return fftRealInPlace(paddedInput);
+    //return fftReal(paddedInput);
 }
 
 
@@ -225,14 +284,10 @@ class AudioProcessor extends AudioWorkletProcessor {
 
     this.port.onmessage = this.handleMessage.bind(this);
     
-    //this.fftSize = 512;
-    //this.fftSize = 1024;
-    //this.fftSize = 2048;
-    //this.fftSize = 4096;
-    this.fftSize = 8192;
+    var MAX_FFT_SIZE = 8192;
 
     // Create an array to store the frequency data
-    this.frequencyBinCount = this.fftSize / 2;
+    this.frequencyBinCount = MAX_FFT_SIZE / 2;
     this.frequencyData = new Uint8Array(this.frequencyBinCount).fill(0); // Only need half the FFT size due to Nyquist theorem
     this.sampleBuffer = [];
 
@@ -240,6 +295,7 @@ class AudioProcessor extends AudioWorkletProcessor {
     //this.alpha = 0.6; // Smoothing factor (adjust as needed)
     //this.prevSmoothedData = null;
 
+    this.fftSize = 2048;
     // Time-domain smoothing parameters
     this.bufferSize = 3; // Number of frames to use for smoothing
     this.spectrumBuffer = [];
@@ -268,11 +324,7 @@ process(inputs, outputs, parameters) {
         return true; // Keep the processor alive without processing any audio data
     }
 
-    /*// Throttle processing
-    const t = this.time;
-    if (this.time - this.lastProcessingTime < this.processingInterval) {
-        return true; // Keep the processor alive without processing any audio data
-    }*/
+    // ADD? Throttle processing
 
     // Convert multichannel input to mono
     const numChannels = input.length;
