@@ -164,10 +164,6 @@ function fftReal(input) {
 }
 
 
-console.log(fftRealInPlace([1,2,3,4]));
-console.log(fftRealInPlace([1,2,3,4,5,6,7,8]));
-
-
 function fftRealInPlace(input) {
     const N = input.length;
 
