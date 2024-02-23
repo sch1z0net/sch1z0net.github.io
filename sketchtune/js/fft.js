@@ -72,10 +72,19 @@ function computeFFTFactorsWithCache(N) {
 
 
 // Bit reversal function
-function bitReverse(num, bits) {
+/*function bitReverse(num, bits) {
     let reversed = 0;
     for (let i = 0; i < bits; i++) {
         reversed = (reversed << 1) | (num & 1);
+        num >>= 1;
+    }
+    return reversed;
+}*/
+
+function bitReverse(num, bits) {
+    let reversed = 0;
+    for (let i = 0; i < bits; i++) {
+        reversed |= (num & 1) << (bits - 1 - i);
         num >>= 1;
     }
     return reversed;
@@ -152,9 +161,8 @@ async function fftRealInPlace(input) {
     const bits = Math.log2(N);
     const output = new Array(N);
     for (let i = 0; i < N; i++) {
-       output[i] = { re: input[i], im: 0 };
-       //const reversedIndex = bitReverse(i, bits);
-       //output[reversedIndex] = { re: input[i], im: 0 };
+       const reversedIndex = bitReverse(i, bits);
+       output[reversedIndex] = { re: input[i], im: 0 };
     }
 
     // Base case of recursion: if input has only one element, return it as complex number
