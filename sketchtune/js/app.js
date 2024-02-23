@@ -105,6 +105,9 @@ function smoothFrequencyData(frequencyData) {
 
 
 // Plot spectrum on canvas with smoothed and curved lines
+let range_mode = 0;
+let scale_mode = 0;
+
 var fillWithColor = true;
 function plotSpectrumLive(frequencyData = null, sampleRate = null) {
   const canvas = document.getElementById('spectrumCanvas');
@@ -1724,9 +1727,6 @@ async function createSpectrumTracker(audioContext, audioSource) {
 let windowSize = 512; // Default value
 let hopFactor = 2; // Default value
 let smoothFactor = 1;
-let range_mode = 0;
-var scale_mode = 1;
-
 $(document).ready(function(){
   // Function to update global variables when select boxes change
   function updateVariables() {
