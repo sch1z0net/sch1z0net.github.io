@@ -169,11 +169,10 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
 
                 // Now you can use the finalSpectrogram array
             }
+
+            // Close the worker after it completes its work
+            worker.terminate();
         };
-
-        // Close the worker after it completes its work
-        worker.terminate();
-
     }
 
     // Return a promise that resolves when all workers finish processing
