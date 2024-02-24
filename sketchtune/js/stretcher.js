@@ -273,9 +273,10 @@ function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitude
     const numFrames = spectrogram.length;
     const numBins = spectrogram[0].length;
 
-    for (let i = 0; i < numFrames; i++) {
-        const originalFrameIndex = i / stretchFactor;
-        if(originalFrameIndex >= numFrames){ return; }
+    
+    let originalFrameIndex = 0;
+    for (let i = 0; originalFrameIndex < numFrames; i++) {
+        originalFrameIndex = i / stretchFactor;
         // Get the indices of the adjacent frames
         var frameIndex1 = Math.floor(originalFrameIndex);
         var frameIndex2 = Math.ceil(originalFrameIndex);
@@ -308,9 +309,9 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
     const numFrames = spectrogram.length;
     const numBins = spectrogram[0].length;
 
-    for (let i = 0; i < numFrames; i++) {
-        const originalFrameIndex = i / stretchFactor;
-        if(originalFrameIndex >= numFrames){ return; }
+    let originalFrameIndex = 0;
+    for (let i = 0; originalFrameIndex < numFrames; i++) {
+        originalFrameIndex = i / stretchFactor;
         // Get the indices of the adjacent frames
         var frameIndex1 = Math.floor(originalFrameIndex);
         var frameIndex2 = Math.ceil(originalFrameIndex);
