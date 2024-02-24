@@ -469,19 +469,16 @@ async function ifft(input) {
         conjugateSpectrum[i * 2] = input[i * 2]; // Copy real part
         conjugateSpectrum[i * 2 + 1] = -input[i * 2 + 1]; // Negate imaginary part
     }
-    console.log("CONJ",conjugateSpectrum);
+
     // Apply FFT to the conjugate spectrum
     const fftResult = await fftComplexInPlace(conjugateSpectrum);
 
-    console.log("fftResult ",fftResult)
     // Take the complex conjugate of the FFT result and scale by 1/N
     const ifftResult = new Float32Array(N * 2);
     for (let i = 0; i < N; i++) {
         ifftResult[i * 2] = fftResult[i * 2] / N; // Scale real part
         ifftResult[i * 2 + 1] = -fftResult[i * 2 + 1] / N; // Scale and negate imaginary part
     }
-
-    console.log(ifftResult);
 
     return ifftResult;
 }
