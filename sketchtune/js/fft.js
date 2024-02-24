@@ -246,11 +246,11 @@ function fftRealInPlace(input) {
         return;
     }
 
-    // Convert real and imaginary parts to Float32Array for better memory usage
+    // Convert real values to Float32Array for better memory usage
     const floatInput = new Float32Array(N * 2);
     for (let i = 0; i < N; i++) {
-        floatInput[i * 2] = input[i].re;
-        floatInput[i * 2 + 1] = input[i].im;
+        floatInput[i * 2] = input[i];
+        floatInput[i * 2 + 1] = 0; // Imaginary part is initialized to 0
     }
 
     // Perform bit reversal in place
@@ -283,7 +283,6 @@ function fftRealInPlace(input) {
 
                 const twiddleRe = factors[j].re;
                 const twiddleIm = factors[j].im;
-                console.log(twiddleRe, twiddleIm);
 
                 // Multiply by twiddle factors
                 const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
@@ -306,6 +305,7 @@ function fftRealInPlace(input) {
 
     return output;
 }
+
 
 
 
