@@ -357,12 +357,24 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
 }
 
 
+function deepCopySpectrogram(preSpectrogram) {
+    const spectrogramCopy = [];
+    for (let i = 0; i < preSpectrogram.length; i++) {
+        const frameCopy = [];
+        for (let j = 0; j < preSpectrogram[i].length; j++) {
+            frameCopy.push(preSpectrogram[i][j]);
+        }
+        spectrogramCopy.push(frameCopy);
+    }
+    return spectrogramCopy;
+}
 
 
 // Function to stretch spectrogram
 function stretchSpectrogram(preSpectrogram, stretchFactor) {
     // Make a deep copy of the preSpectrogram for modification
-    const spectrogramCopy = preSpectrogram.map(frame => [...frame]);
+    //const spectrogramCopy = preSpectrogram.map(frame => [...frame]);
+    const spectrogramCopy = deepCopySpectrogram(preSpectrogram);
 
     const interpolatedMagnitudes = [];
     const synchronizedPhases = [];
