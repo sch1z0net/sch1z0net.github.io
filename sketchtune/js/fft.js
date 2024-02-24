@@ -372,7 +372,7 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
     return output;
 }*/
 
-async function fftComplexInPlace(input, fftFactorLookup = null) {
+function fftComplexInPlace(input, fftFactorLookup = null) {
     const N = input.length / 2;
     const bits = Math.log2(N);
 
@@ -465,6 +465,7 @@ async function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
     const spectrum = FFT(frame, fftFactorLookup);
     const endTime = performance.now();
     const elapsedTime = endTime - startTime;
+    console.log(spectrum);
     console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);
 
     // Convert the Float32Array spectrum back to a complex array
