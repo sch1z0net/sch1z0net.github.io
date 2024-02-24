@@ -498,6 +498,7 @@ function spectrogramToImageData(spectrogram) {
     const maxFreq = 22050; // Maximum frequency (assuming audio sampled at 44100 Hz)
     const logMinFreq = Math.log(minFreq + 1); // Logarithm of the minimum frequency (avoiding log(0))
     const logMaxFreq = Math.log(maxFreq + 1); // Logarithm of the maximum frequency (avoiding log(0))
+    const melMaxFreq = linearToMelody(maxFreq);
 
     // Convert spectrogram data to grayscale image data
     for (let i = 0; i < numFrames; i++) {
@@ -506,8 +507,8 @@ function spectrogramToImageData(spectrogram) {
             // Calculate the frequency corresponding to the current row (on a logarithmic scale)
             //const logFreq = logMinFreq + (logMaxFreq - logMinFreq) * (y / h);
             
-            const freq = melodyToLinear(20000 * (y / h));
-            console.log(20000 * (y / h), freq);
+            const freq = melodyToLinear(melMaxFreq * (y / h));
+            console.log(melMaxFreq * (y / h), freq);
             //const freq = Math.exp(logFreq) - 1; // Convert back to linear scale
             // Find the closest bin index in the spectrogram for the current frequency
             const binIndex = Math.round((numBins - 1) * (freq - minFreq) / (maxFreq - minFreq));
