@@ -481,7 +481,8 @@ function spectrogramToImageData(spectrogram) {
     const numBins = spectrogram[0].length / 2;  // Only need half the FFT size due to Nyquist theorem
     
     // Create a new ImageData object with the same dimensions as the spectrogram
-    const imageData = new ImageData(numFrames, numBins);
+    var h = 8000;
+    const imageData = new ImageData(numFrames, h);
     
     // Calculate the frequency range corresponding to each bin on a logarithmic scale
     const minFreq = 0; // Minimum frequency
@@ -489,7 +490,6 @@ function spectrogramToImageData(spectrogram) {
     const logMinFreq = Math.log(minFreq + 1); // Logarithm of the minimum frequency (avoiding log(0))
     const logMaxFreq = Math.log(maxFreq + 1); // Logarithm of the maximum frequency (avoiding log(0))
 
-    var h = 12000;
     // Convert spectrogram data to grayscale image data
     for (let i = 0; i < numFrames; i++) {
         var spectrum = spectrogram[i];
