@@ -44,7 +44,7 @@ onmessage = function (e) {
         .then((outputSignalChunk) => {
             // Send the result back to the main thread
             //console.log("WORKER", workerID, "Output Signal Chunk ready");
-            postMessage(outputSignalChunk);
+            postMessage({id:workerID, chunk:outputSignalChunk});
         })
         .catch((error) => {
             console.log("WORKER", workerID, 'Error:', error);

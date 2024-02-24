@@ -232,10 +232,10 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize) {
         processingPromises.push(new Promise((resolve, reject) => {
             // Listen for messages from the worker
             worker.onmessage = function (e) {
-                const outputSignalChunk = e.data;
+                const {id, chunk} = e.data;
                 // Copy the processed signal chunk to the output signal
-                const startIdx = startFrame * hopSize;
-                outputSignal.set(outputSignalChunk, startIdx);
+                const startIdx = id * framesPerWorker * hopSize;
+                outputSignal.set(chunk, startIdx);
                 // Close the worker after it completes its work
                 worker.terminate();
                 resolve(); // Resolve the promise
