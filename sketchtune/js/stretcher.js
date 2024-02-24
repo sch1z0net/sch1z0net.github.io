@@ -519,7 +519,7 @@ function spectrogramToImageData(spectrogram) {
     const numBins = spectrogram[0].length / 2;  // Only need half the FFT size due to Nyquist theorem
     
     // Create a new ImageData object with the same dimensions as the spectrogram
-    var h = 4000; //16000;
+    var h = 2000; //16000;
     const imageData = new ImageData(numFrames, h);
     
     // Calculate the frequency range corresponding to each bin on a logarithmic scale
