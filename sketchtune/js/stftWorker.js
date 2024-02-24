@@ -81,8 +81,8 @@ function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames) {
                 for (let i = 0; i <= frames; i++) {
                     const startIdx = i * hopSize;
                     const endIdx = startIdx + windowSize;
-                    const frame = inputSignalChunk.slice(startIdx, endIdx);
-                    const windowedFrame = applyHanningWindow(frame);
+                    let frame = inputSignalChunk.slice(startIdx, endIdx);
+                    let windowedFrame = applyHanningWindow(frame);
 
                     // Create a promise for each computation
                     const spectrumPromise = computeFFT(windowedFrame, i, frames);
