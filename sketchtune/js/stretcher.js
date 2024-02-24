@@ -666,8 +666,8 @@ function spectrogramToImageData(spectrogram) {
 
             const ci1 = Math.floor(val * (colorMap.length - 1));
             const ci2 = Math.ceil(val * (colorMap.length - 1));
-            const color1 = colorMap[c1];
-            const color2 = colorMap[c2];
+            const color1 = colorMap[ci1];
+            const color2 = colorMap[ci2];
             const val1 = ci1 / (colorMap.length - 1);
             const val2 = ci2 / (colorMap.length - 1);
             const fraction = (val-val1)/(val2-val1);
