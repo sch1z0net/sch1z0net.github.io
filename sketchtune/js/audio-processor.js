@@ -328,13 +328,13 @@ function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     inputSignal.forEach((value, index) => paddedInput[index] = value); // Store real part in even indices
 
     // Perform FFT
-    return await fftRealInPlace(paddedInput);
+    return fftRealInPlace(paddedInput);
 }
 
 
 
 function FFT(inputSignal, fftFactorLookup=null) {
-    return await prepare_and_fft(inputSignal, fftFactorLookup);
+    return prepare_and_fft(inputSignal, fftFactorLookup);
 }
 
 
@@ -342,7 +342,7 @@ function FFT(inputSignal, fftFactorLookup=null) {
 function computeFFT(frame, fftFactorLookup=null) {
     // Perform FFT on the frame (you can use your FFT implementation here)
     // For simplicity, let's assume computeFFT returns the magnitude spectrum
-    const spectrum = await FFT(frame, fftFactorLookup);
+    const spectrum = FFT(frame, fftFactorLookup);
     
     // Convert the Float32Array spectrum back to a complex array
     const complexSpectrum = [];
