@@ -481,6 +481,7 @@ function normalizeSpectrogramToDB(spectrogram, dBmin = -20) {
         if (maxPower === 0) {
             // Handle the case where maxPower is 0
             // For example, you can set all dB values to a default value
+            alert(framePower.length);
             frameDB.fill(dBmin, 0, framePower.length);
         } else {
             // Convert power to dB for each bin in the frame
