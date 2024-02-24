@@ -362,7 +362,7 @@ function deepCopySpectrogram(preSpectrogram) {
     for (let i = 0; i < preSpectrogram.length; i++) {
         const frameCopy = [];
         for (let j = 0; j < preSpectrogram[i].length; j++) {
-            frameCopy.push(preSpectrogram[i][j]);
+            frameCopy.push({...preSpectrogram[i][j]});
         }
         spectrogramCopy.push(frameCopy);
     }
