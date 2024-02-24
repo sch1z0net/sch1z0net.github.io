@@ -373,8 +373,11 @@ function stretchSpectrogram(preSpectrogram, stretchFactor) {
     interpolateMagnitudes(spectrogramCopy, stretchFactor, interpolatedMagnitudes);
     synchronizePhase(spectrogramCopy, stretchFactor, synchronizedPhases);
 
+    if(interpolatedMagnitudes.length != synchronizedPhases.length){ throw Error("Spectograms don't match after stretching"); }
+    var stretchedSpecLength = interpolatedMagnitudes.length;
+
     const stretchedSpectrogram = [];
-    for (let i = 0; i < interpolatedMagnitudes.length; i++) {
+    for (let i = 0; i < stretchedSpecLength; i++) {
         const frameWithMagnitudes = interpolatedMagnitudes[i];
         const frameWithPhases = synchronizedPhases[i];
         const frameWithPairs = [];
