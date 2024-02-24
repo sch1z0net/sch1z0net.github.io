@@ -87,7 +87,6 @@ test();
 
 
 
-
 // Function to perform Short-Time Fourier Transform (STFT) using Web Workers
 function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
     const numFrames = Math.floor((inputSignal.length - windowSize) / hopSize) + 1;
@@ -131,7 +130,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
         // Send the message to the worker
         worker.postMessage(message, [chunky.buffer]); // Transfer ownership of the ArrayBuffer
 
-
+/*
         // Listen for messages from the worker
         worker.onmessage = function (e) {
             //console.log( "WORKER finished." )
@@ -141,7 +140,38 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
             // Close the worker after it completes its work
             worker.terminate();
         };
+        */
 
+        // Initialize a counter for finished workers
+        let numFinishedWorkers = 0;
+
+        // Listen for messages from the worker
+        worker.onmessage = function (e) {
+            const workerSpectrogram = e.data;
+            spectrogram.push(workerSpectrogram);
+
+            // Increment the counter for finished workers
+            numFinishedWorkers++;
+
+            // Check if all workers have finished processing
+            if (numFinishedWorkers === numWorkers) {
+                // All workers have finished processing
+
+                // Sort the spectrogram data based on the start frame index
+                spectrogram.sort((a, b) => a.startFrame - b.startFrame);
+
+                // Combine spectrogram data into the final spectrogram array
+                const finalSpectrogram = [];
+                for (const { data } of spectrogram) {
+                    finalSpectrogram.push(...data);
+                }
+
+                // Now you can use the finalSpectrogram array
+            }
+        };
+
+        // Close the worker after it completes its work
+        worker.terminate();
 
     }
 
