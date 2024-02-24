@@ -469,7 +469,6 @@ async function ifft(input) {
         conjugateSpectrum[i * 2] = input[i * 2]; // Copy real part
         conjugateSpectrum[i * 2 + 1] = -input[i * 2 + 1]; // Negate imaginary part
     }
-
     console.log("CONJ",conjugateSpectrum);
     // Apply FFT to the conjugate spectrum
     const fftResult = await fftComplexInPlace(conjugateSpectrum);
