@@ -933,11 +933,12 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
     for (let ch = 0; ch < numChannels; ch++) {
         const inputData = inputBuffer.getChannelData(ch);
         // Push the promise for processing this channel into the array
-        processingPromises.push(processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor));
+        //processingPromises.push(processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor));
+        await processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor);
     }
 
     // Wait for all promises to resolve
-    await Promise.all(processingPromises);
+    //await Promise.all(processingPromises);
 
     // Record the end time
     const endTime = performance.now();
