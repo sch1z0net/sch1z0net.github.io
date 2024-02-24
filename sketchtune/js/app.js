@@ -1882,22 +1882,11 @@ $(document).ready(function(){
 async function playSample(audioContext, audioBuffer, time, offset, duration) {
     const stretchFactor = 1 / GLOBAL_PLAYBACK_RATE;
 
-    // Create a new AudioBuffer with the same properties as the original one
-    const resampledBuffer = audioContext.createBuffer(
-       audioBuffer.numberOfChannels,
-       audioBuffer.length,
-       audioBuffer.sampleRate
-    );
-
-    // Copy the data from the original buffer to the new one
-    for (let channel = 0; channel < audioBuffer.numberOfChannels; channel++) {
-       const channelData = audioBuffer.getChannelData(channel);
-       resampledBuffer.copyToChannel(channelData.slice(), channel);
-    }
+    let resampledBuffer;
 
     //if (stretchFactor !== 1) {
     if (true) {
-        resampledBuffer = await phaseVocoder(audioContext, resampledBuffer, stretchFactor, windowSize, hopFactor, smoothFactor); 
+        resampledBuffer = await phaseVocoder(audioContext, audioBuffer, stretchFactor, windowSize, hopFactor, smoothFactor); 
     }
 
     const sampleSource = new AudioBufferSourceNode(audioContext, {

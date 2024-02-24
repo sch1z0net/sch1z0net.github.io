@@ -845,9 +845,22 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
     //    especially with certain window functions, potentially affecting frequency resolution.
 
 
+    // Create a new AudioBuffer with the same properties as the original one
+    const copyBuffer = audioContext.createBuffer(
+       inputBuffer.numberOfChannels,
+       inputBuffer.length,
+       inputBuffer.sampleRate
+    );
 
-    const numChannels = inputBuffer.numberOfChannels;
-    const inputLength = inputBuffer.length;
+    // Copy the data from the original buffer to the new one
+    for (let channel = 0; channel < inputBuffer.numberOfChannels; channel++) {
+       const channelData = inputBuffer.getChannelData(channel);
+       copyBuffer.copyToChannel(channelData.slice(), channel);
+    }
+
+
+    const numChannels = copyBuffer.numberOfChannels;
+    const inputLength = copyBuffer.length;
     const outputLength = Math.ceil(inputLength * stretchFactor);
     const outputBuffer = audioContext.createBuffer(numChannels, outputLength, audioContext.sampleRate);
 
@@ -863,7 +876,7 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
     // Process inputBuffer frame by frame for each channel
     for (let ch = 0; ch < numChannels; ch++) {
         const startTimeCH = performance.now();
-        const inputData = inputBuffer.getChannelData(ch);
+        const inputData = copyBuffer.getChannelData(ch);
         // Push the promise for processing this channel into the array
         //processingPromises.push(processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor));
         let spectrogram = await processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor);
