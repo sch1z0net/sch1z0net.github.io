@@ -658,19 +658,19 @@ function spectrogramToImageData(spectrogram) {
             // Find the closest bin index in the spectrogram for the current frequency
             const binIndex = Math.round((numBins - 1) * (freq - minFreq) / (maxFreq - minFreq));
             // Get the value from the spectrogram for the closest bin index
-            var value = spectrum[binIndex];
+            var val = spectrum[binIndex];
 
             // Calculate the index in the image data array
             //const index = ((numBins - binIndex - 1) * numFrames + i) * 4; // Reverse
             const index = ((h - y - 1) * numFrames + i) * 4; // Reverse
 
-            const colorIndex = Math.round(value * (colorMap.length - 1));
-
-            const color1 = colorMap[Math.floor(colorIndex)];
-            const color2 = colorMap[Math.ceil(colorIndex)];
-
-            // Interpolate between the two closest colors based on the fractional part of colorIndex
-            const fraction = colorIndex % 1;
+            const ci1 = Math.floor(val * (colorMap.length - 1));
+            const ci2 = Math.ceil(val * (colorMap.length - 1));
+            const color1 = colorMap[c1];
+            const color2 = colorMap[c2];
+            const val1 = ci1 / (colorMap.length - 1);
+            const val2 = ci2 / (colorMap.length - 1);
+            const fraction = (val-val1)/(val2-val1);
             const interpolatedColor = interpolateColor(color1, color2, fraction);
 
             // Convert interpolated HSL color to RGB
