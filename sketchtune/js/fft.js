@@ -239,7 +239,7 @@ function fftRealInPlace(input) {
     return input;
 }*/
 
-
+/*
 function fftRealInPlace(input) {
     const N = input.length;
     const bits = Math.log2(N);
@@ -301,10 +301,72 @@ function fftRealInPlace(input) {
 
     // Return the output
     return complexInput;
+}*/
+
+
+
+function fftRealInPlace(input) {
+    const N = input.length;
+    const bits = Math.log2(N);
+
+    if (N !== nextPowerOf2(N)) {
+        console.error("FFT FRAME must have power of 2");
+        return;
+    }
+
+    // Perform bit reversal in place, treating the input as real-valued
+    for (let i = 0; i < N; i++) {
+        const reversedIndex = bitReverse(i, bits);
+        if (reversedIndex > i) {
+            // Swap elements if necessary
+            const temp = input[i];
+            input[i] = input[reversedIndex];
+            input[reversedIndex] = temp;
+        }
+    }
+
+    // Convert the real-valued input to a complex-valued Float32Array
+    const complexInput = new Float32Array(N * 2);
+    for (let i = 0; i < N; i++) {
+        complexInput[i * 2] = input[i];
+        complexInput[i * 2 + 1] = 0; // Imaginary part is set to 0
+    }
+
+    // Recursively calculate FFT
+    for (let size = 2; size <= N; size *= 2) {
+        const halfSize = size / 2;
+        for (let i = 0; i < N; i += size) {
+            for (let j = 0; j < halfSize; j++) {
+                const evenIndex = i + j;
+                const oddIndex = i + j + halfSize;
+
+                // Get real and imaginary parts of even and odd elements
+                const evenRe = complexInput[evenIndex * 2];
+                const evenIm = complexInput[evenIndex * 2 + 1];
+                const oddRe = complexInput[oddIndex * 2];
+                const oddIm = complexInput[oddIndex * 2 + 1];
+
+                // Calculate twiddle factors directly
+                const theta = -2 * Math.PI * j / size;
+                const twiddleRe = Math.cos(theta);
+                const twiddleIm = Math.sin(theta);
+
+                // Perform complex multiplication
+                const twiddledOddRe = oddRe * twiddleRe - oddIm * twiddleIm;
+                const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
+
+                // Update even and odd elements with new values
+                complexInput[evenIndex * 2]     = evenRe + twiddledOddRe;
+                complexInput[evenIndex * 2 + 1] = evenIm + twiddledOddIm;
+                complexInput[oddIndex * 2]      = evenRe - twiddledOddRe;
+                complexInput[oddIndex * 2 + 1]  = evenIm - twiddledOddIm;
+            }
+        }
+    }
+
+    // Return the output
+    return complexInput;
 }
-
-
-
 
 
 
