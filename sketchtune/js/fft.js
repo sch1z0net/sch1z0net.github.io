@@ -358,7 +358,7 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
 }*/
 
 async function fftComplexInPlace(input, fftFactorLookup = null) {
-    const N = input.length;
+    const N = input.length / 2;
     const bits = Math.log2(N);
 
     if (N !== nextPowerOf2(N)) {
@@ -367,7 +367,7 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
     }
 
     // Perform bit reversal
-    const output = new Float32Array(N);
+    const output = new Float32Array(N * 2);
     for (let i = 0; i < N; i++) {
         const reversedIndex = bitReverse(i, bits);
         output[reversedIndex * 2] = input[i * 2]; // Copy real part
