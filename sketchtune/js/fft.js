@@ -441,7 +441,7 @@ async function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
     const spectrum = await FFT(frame, fftFactorLookup);
     const endTime = performance.now();
     const elapsedTime = endTime - startTime;
-    console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);
+    //console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);
 
     // Convert the Float32Array spectrum back to a complex array
     const complexSpectrum = [];
@@ -451,7 +451,7 @@ async function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
 
     const endTime2 = performance.now();
     const elapsedTime2 = endTime2 - startTime;
-    console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time 2: ${elapsedTime2} milliseconds`);
+    //console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time 2: ${elapsedTime2} milliseconds`);
 
     return complexSpectrum;
 }

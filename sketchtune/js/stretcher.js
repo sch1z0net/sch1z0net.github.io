@@ -670,8 +670,9 @@ function spectrogramToImageData(spectrogram) {
             const color2 = colorMap[ci2];
             const val1 = ci1 / (colorMap.length - 1);
             const val2 = ci2 / (colorMap.length - 1);
-            //const fraction = (val-val1)/(val2-val1);
-            const fraction = 0;
+            const fraction = (val-val1)/(val2-val1);
+            console.log(fraction);
+            //const fraction = 0;
             const interpolatedColor = interpolateColor(color1, color2, fraction);
 
             // Convert interpolated HSL color to RGB
