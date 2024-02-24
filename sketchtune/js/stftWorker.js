@@ -46,6 +46,7 @@ function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames) {
         // Array to hold promises for each computation
         const computationPromises = [];
 
+/*
         const processFrames = async () => {
             try {
                 for (let i = 0; i <= frames; i++) {
@@ -56,7 +57,7 @@ function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames) {
 
                     //console.log("FRAME",frame.length, "WFRAME",windowedFrame.length);
                     // Create a promise for each computation
-                    const spectrumPromise = computeFFT(windowedFrame, i, frames);
+                    const spectrumPromise = await computeFFT(windowedFrame, i, frames);
                     
                     // Push the promise into the array
                     computationPromises.push(spectrumPromise.then(spectrum => {
@@ -71,6 +72,35 @@ function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames) {
                 resolve(spectrogramChunk);
             } catch (error) {
                 reject(error);
+            }
+        };
+*/
+
+        const processFrames = async () => {
+            try {
+                for (let i = 0; i <= frames; i++) {
+                    const startIdx = i * hopSize;
+                    const endIdx = startIdx + windowSize;
+                    const frame = inputSignalChunk.slice(startIdx, endIdx);
+                    const windowedFrame = applyHanningWindow(frame);
+
+                    // Create a promise for each computation
+                    const spectrumPromise = computeFFT(windowedFrame, i, frames);
+
+                    // Await the spectrum computation
+                    const spectrum = await spectrumPromise;
+
+                    // Store the result in the spectrogram chunk
+                    spectrogramChunk[i] = spectrum;
+
+                    // Clear memory by reusing variables
+                    frame = null;
+                    windowedFrame = null;
+                }
+
+                return spectrogramChunk;
+            } catch (error) {
+                throw error;
             }
         };
 
