@@ -465,7 +465,7 @@ async function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
     //console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time 2: ${elapsedTime2} milliseconds`);
 
     return complexSpectrum;
-}g8gs
+}
 
 
 
