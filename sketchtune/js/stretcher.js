@@ -767,17 +767,19 @@ function plotSpectrogram(spectrogramA,spectrogramB){
     const startTimeD = performance.now();
     
     try{
-    // SPECTROGRAM A
-    const normalizedDBSpectrogramA = normalizeSpectrogramToDB(spectrogramA, -80);
-    const normalizedSpectrogramA = normalizeDBspectrogram(normalizedDBSpectrogramA);
-    const imageDataA = spectrogramToImageData(normalizedSpectrogramA);
-    // SPECTROGRAM B
-    const normalizedDBSpectrogramB = normalizeSpectrogramToDB(spectrogramB, -80);
-    const normalizedSpectrogramB = normalizeDBspectrogram(normalizedDBSpectrogramB);
-    const imageDataB = spectrogramToImageData(normalizedSpectrogramB);
+        // SPECTROGRAM A
+        const normalizedDBSpectrogramA = normalizeSpectrogramToDB(spectrogramA, -80);
+        const normalizedSpectrogramA = normalizeDBspectrogram(normalizedDBSpectrogramA);
+        console.log(normalizedSpectrogramA);
+        const imageDataA = spectrogramToImageData(normalizedSpectrogramA);
+        console.log(imageDataA);
+        // SPECTROGRAM B
+        const normalizedDBSpectrogramB = normalizeSpectrogramToDB(spectrogramB, -80);
+        const normalizedSpectrogramB = normalizeDBspectrogram(normalizedDBSpectrogramB);
+        const imageDataB = spectrogramToImageData(normalizedSpectrogramB);
 
-    drawImageDataOnCanvas(imageDataA, "spectrogramA");
-    drawImageDataOnCanvas(imageDataB, "spectrogramB");
+        drawImageDataOnCanvas(imageDataA, "spectrogramA");
+        drawImageDataOnCanvas(imageDataB, "spectrogramB");
     }catch(e){
         console.error(e);
     }
