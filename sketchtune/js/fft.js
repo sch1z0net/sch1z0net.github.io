@@ -51,7 +51,7 @@ const fftFactorCache = {};
 
 // Pre-calculate FFT factors for a given size and cache them for future use
 function precalculateFFTFactors(N) {
-    const factors = new Float32Array(N * 2); // Double the size for both real and imaginary parts
+    const factors = new Float32Array(N); // Double the size for both real and imaginary parts
     for (let k = 0; k < N / 2; k++) {
         const theta = -2 * Math.PI * k / N;
         factors[k * 2] = Math.cos(theta); // Real part
@@ -357,7 +357,6 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
     return output;
 }*/
 
-
 async function fftComplexInPlace(input, fftFactorLookup = null) {
     const N = input.length;
     const bits = Math.log2(N);
@@ -368,14 +367,15 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
     }
 
     // Perform bit reversal
-    const output = new Array(N);
+    const output = new Float32Array(N);
     for (let i = 0; i < N; i++) {
-       const reversedIndex = bitReverse(i, bits);
-       output[reversedIndex] = input[i];
+        const reversedIndex = bitReverse(i, bits);
+        output[reversedIndex * 2] = input[i * 2]; // Copy real part
+        output[reversedIndex * 2 + 1] = input[i * 2 + 1]; // Copy imaginary part
     }
 
     if (N <= 1) {
-        return input;
+        return output;
     }
 
     // Recursively calculate FFT
@@ -387,29 +387,31 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
             for (let j = 0; j < halfSize; j++) {
                 const evenIndex = i + j;
                 const oddIndex = i + j + halfSize;
-                const evenPartRe = output[evenIndex].re;
-                const evenPartIm = output[evenIndex].im;
-                const oddPartRe = output[oddIndex].re;
-                const oddPartIm = output[oddIndex].im;
+                const evenPartRe = output[evenIndex * 2];
+                const evenPartIm = output[evenIndex * 2 + 1];
+                const oddPartRe = output[oddIndex * 2];
+                const oddPartIm = output[oddIndex * 2 + 1];
 
-                const twiddleRe = factors[j].re;
-                const twiddleIm = factors[j].im;
+                const twiddleRe = factors[j * 2];
+                const twiddleIm = factors[j * 2 + 1];
 
                 // Multiply by twiddle factors
                 const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
                 const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
 
                 // Combine results of even and odd parts in place
-                output[evenIndex].re = evenPartRe + twiddledOddRe;
-                output[evenIndex].im = evenPartIm + twiddledOddIm;
-                output[oddIndex].re = evenPartRe - twiddledOddRe;
-                output[oddIndex].im = evenPartIm - twiddledOddIm;
+                output[evenIndex * 2] = evenPartRe + twiddledOddRe;
+                output[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+                output[oddIndex * 2] = evenPartRe - twiddledOddRe;
+                output[oddIndex * 2 + 1] = evenPartIm - twiddledOddIm;
             }
         }
     }
 
     return output;
 }
+
+
 
 
 async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
@@ -461,22 +463,29 @@ async function ifft(input) {
     const pi = Math.PI;
 
     // Take the complex conjugate of the input spectrum
-    const conjugateSpectrum = input.map(({ re, im }) => ({ re: re, im: -im }));
+    const conjugateSpectrum = new Float32Array(N);
+    for (let i = 0; i < N; i++) {
+        conjugateSpectrum[i * 2] = input[i * 2]; // Copy real part
+        conjugateSpectrum[i * 2 + 1] = -input[i * 2 + 1]; // Negate imaginary part
+    }
 
     // Apply FFT to the conjugate spectrum
     const fftResult = await fftComplexInPlace(conjugateSpectrum);
-    //const fftResult = await fft(conjugateSpectrum);
 
-    // Take the complex conjugate of the FFT result
-    const ifftResult = fftResult.map(({ re, im }) => ({ re: re / N, im: -im / N }));
+    // Take the complex conjugate of the FFT result and scale by 1/N
+    const ifftResult = new Float32Array(N);
+    for (let i = 0; i < N; i++) {
+        ifftResult[i * 2] = fftResult[i * 2] / N; // Scale real part
+        ifftResult[i * 2 + 1] = -fftResult[i * 2 + 1] / N; // Scale and negate imaginary part
+    }
 
     return ifftResult;
 }
 
 async function IFFT(spectrum) {
-    //return ifft(spectrum);
-    return (await ifft(spectrum)).map(({ re }) => re);
+    return (await ifft(spectrum));
 }
+
 
 // Function to compute inverse FFT of a spectrum
 async function computeInverseFFT(spectrum) {
@@ -487,17 +496,21 @@ async function computeInverseFFT(spectrum) {
     const paddedSize = nextPowerOf2(spectrum.length);
 
     // Pad both real and imaginary parts of the spectrum
-    const paddedSpectrum = [];
-    for (let i = 0; i < paddedSize; i++) {
-        if (i < spectrum.length) {
-            paddedSpectrum.push(spectrum[i]);
-        } else {
-            // Pad with zeros for both real and imaginary parts
-            paddedSpectrum.push({ re: 0, im: 0 });
-        }
+    const paddedSpectrum = new Float32Array(paddedSize * 2).fill(0);
+    for (let i = 0; i < spectrum.length; i++) {
+        paddedSpectrum[i * 2] = spectrum[i].re; // Copy real part
+        paddedSpectrum[i * 2 + 1] = spectrum[i].im; // Copy imaginary part
     }
 
     // Now you can pass paddedSpectrum to the IFFT function
     const timeDomainSignal = await IFFT(paddedSpectrum);
-    return timeDomainSignal;
+
+    // Extract only the real parts of the time-domain signal
+    const audioSignal = new Float32Array(timeDomainSignal.length / 2);
+    for (let i = 0; i < audioSignal.length; i++) {
+        audioSignal[i] = timeDomainSignal[i * 2];
+    }
+
+    return audioSignal;
 }
+
