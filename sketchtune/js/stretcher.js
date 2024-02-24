@@ -134,7 +134,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
         // Send the message to the worker
         worker.postMessage(message, [chunky.buffer]); // Transfer ownership of the ArrayBuffer
 
-/*
+        /*
         // Listen for messages from the worker
         worker.onmessage = function (e) {
             //console.log( "WORKER finished." )
@@ -871,6 +871,7 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
         console.log(`PhaseVocoder: CH ${ch} Elapsed time: ${elapsedTimeCH} milliseconds`);
     }
 
+    console.log(inputLength, spectrogramA.length);
     plotSpectrogram(spectrogramA, spectrogramB);
 
     // Wait for all promises to resolve
