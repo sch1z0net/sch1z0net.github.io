@@ -766,6 +766,7 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoo
 function plotSpectrogram(spectrogramA,spectrogramB){
     const startTimeD = performance.now();
     
+    try{
     // SPECTROGRAM A
     const normalizedDBSpectrogramA = normalizeSpectrogramToDB(spectrogramA, -80);
     const normalizedSpectrogramA = normalizeDBspectrogram(normalizedDBSpectrogramA);
@@ -777,6 +778,9 @@ function plotSpectrogram(spectrogramA,spectrogramB){
 
     drawImageDataOnCanvas(imageDataA, "spectrogramA");
     drawImageDataOnCanvas(imageDataB, "spectrogramB");
+    }catch(e){
+        console.error(e);
+    }
 
     const endTimeD = performance.now();
     console.log(`Plotting the Spectrogram: Elapsed time: ${endTimeD - startTimeD} milliseconds`);    
