@@ -344,7 +344,7 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
         synchronizedPhases[i] = currentSynchronizedPhases.slice();
     }
 
-/*
+
     // Update the spectrogram with the synchronized phases
     for (let i = 0; i < numFrames; i++) {
         for (let j = 0; j < numBins; j++) {
@@ -353,7 +353,7 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
     }
 
     return spectrogram;
-*/
+
 }
 
 
