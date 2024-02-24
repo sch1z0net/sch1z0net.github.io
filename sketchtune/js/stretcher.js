@@ -300,7 +300,7 @@ function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitude
         interpolatedMagnitudes[i] = currentInterpolatedMagnitudes.slice();
     }
 
-    return spectrogram;
+    //return spectrogram;
 }
 
 // Function to synchronize phase values between frames in the entire spectrogram
@@ -344,6 +344,7 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
         synchronizedPhases[i] = currentSynchronizedPhases.slice();
     }
 
+/*
     // Update the spectrogram with the synchronized phases
     for (let i = 0; i < numFrames; i++) {
         for (let j = 0; j < numBins; j++) {
@@ -352,6 +353,7 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
     }
 
     return spectrogram;
+*/
 }
 
 
@@ -365,8 +367,8 @@ function stretchSpectrogram(preSpectrogram, stretchFactor) {
     const interpolatedMagnitudes = [];
     const synchronizedPhases = [];
 
-    interpolateMagnitudes(spectrogramCopy, 1, interpolatedMagnitudes);
-    synchronizePhase(spectrogramCopy, 1, synchronizedPhases);
+    interpolateMagnitudes(spectrogramCopy, stretchFactor, interpolatedMagnitudes);
+    synchronizePhase(spectrogramCopy, stretchFactor, synchronizedPhases);
 
     const stretchedSpectrogram = [];
     for (let i = 0; i < spectrogramCopy.length; i++) {
