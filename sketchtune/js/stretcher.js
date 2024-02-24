@@ -163,8 +163,8 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
                 console.log(receivedChunks);
 
                 // Combine receivedChunks data into the final spectrogram array
-                for (const { data } of receivedChunks) {
-                    finalSpectrogram.push(...data);
+                for (const { id, chunk } of receivedChunks) {
+                    finalSpectrogram.push(...chunk);
                 }
 
                 // Now you can use the finalSpectrogram array
