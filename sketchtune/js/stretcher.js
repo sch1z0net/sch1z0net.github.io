@@ -664,7 +664,7 @@ function spectrogramToImageData(spectrogram) {
             //const index = ((numBins - binIndex - 1) * numFrames + i) * 4; // Reverse
             const index = ((h - y - 1) * numFrames + i) * 4; // Reverse
 
-            var interpolatedColor;
+            var rgbColor;
             if(val != 0 && val != 1){
               const ci1 = Math.floor(val * (colorMap.length - 1));
               const ci2 = Math.ceil(val * (colorMap.length - 1));
@@ -673,13 +673,12 @@ function spectrogramToImageData(spectrogram) {
               const val1 = ci1 / (colorMap.length - 1);
               const val2 = ci2 / (colorMap.length - 1);
               const fraction = (val-val1)/(val2-val1);
-              interpolatedColor = interpolateColor(color1, color2, fraction);
+              const interpolatedColor = interpolateColor(color1, color2, fraction);
+              // Convert interpolated HSL color to RGB
+              rgbColor = hslToRgb(interpolatedColor[0], interpolatedColor[1], interpolatedColor[2]);
             }else{
-              interpolatedColor = val * (colorMap.length - 1);
+              rgbColor = colorMap[val * (colorMap.length - 1)];
             }
-
-            // Convert interpolated HSL color to RGB
-            const rgbColor = hslToRgb(interpolatedColor[0], interpolatedColor[1], interpolatedColor[2]);
 
             imageData.data[index] = rgbColor[0];     // Red channel
             imageData.data[index + 1] = rgbColor[1]; // Green channel
