@@ -674,7 +674,7 @@ function spectrogramToImageData(spectrogram) {
               const val2 = ci2 / (colorMap.length - 1);
               const fraction = (val-val1)/(val2-val1);
               interpolatedColor = interpolateColor(color1, color2, fraction);
-            else{
+            }else{
               interpolatedColor = val * (colorMap.length - 1);
             }
 
