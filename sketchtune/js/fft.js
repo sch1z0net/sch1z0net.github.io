@@ -458,7 +458,7 @@ function FFT(inputSignal, fftFactorLookup=null) {
 }
 
 // Function to compute FFT of a frame
-function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
+async function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
     // Perform FFT on the frame (you can use your FFT implementation here)
     // For simplicity, let's assume computeFFT returns the magnitude spectrum
     const startTime = performance.now();
@@ -532,7 +532,7 @@ function IFFT(spectrum) {
 
 
 // Function to compute inverse FFT of a spectrum
-function computeInverseFFT(spectrum) {
+async function computeInverseFFT(spectrum) {
     // Ensure the size of the spectrum array is a power of 2
     const paddedSize = nextPowerOf2(spectrum.length);
 
