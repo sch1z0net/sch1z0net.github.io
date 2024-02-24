@@ -531,7 +531,8 @@ function spectrogramToImageData(spectrogram) {
     const melMaxFreq = linearToMelody(maxFreq);
 
     // Convert spectrogram data to grayscale image data
-    for (let i = 0; i < w; i++) {
+    for (let x = 0; x < w; x++) {
+        var i = (x/(w-1))*(numFrames-1);
         var spectrum = spectrogram[i];
         for (let y = 0; y < h; y++) {
             // Calculate the frequency corresponding to the current row (on a logarithmic scale)
