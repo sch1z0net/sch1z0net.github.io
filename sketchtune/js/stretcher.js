@@ -475,13 +475,12 @@ const colorMap = [
 ];
 
 function linearToMelody(frequency) {
-    return (1 / Math.log(2)) * (Math.log(1 + (frequency / 1000))) * 1000;
+    return 2595 * Math.log10(1 + frequency / 700);
 }
 
 function melodyToLinear(melody) {
-    return (Math.exp(melody / 1000 / (1 / Math.log(2))) - 1) * 1000;
+    return 700 * (Math.pow(10, melody / 2595) - 1);
 }
-
 
 // Convert spectrogram data to image data
 function spectrogramToImageData(spectrogram) {
