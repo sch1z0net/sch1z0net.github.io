@@ -275,6 +275,7 @@ function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitude
 
     for (let i = 0; i < numFrames; i++) {
         const originalFrameIndex = i / stretchFactor;
+        if(originalFrameIndex >= numFrames){ return; }
         // Get the indices of the adjacent frames
         var frameIndex1 = Math.floor(originalFrameIndex);
         var frameIndex2 = Math.ceil(originalFrameIndex);
@@ -297,7 +298,8 @@ function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitude
         }
 
         // Store the interpolated magnitudes in the spectrogram
-        interpolatedMagnitudes[i] = currentInterpolatedMagnitudes.slice();
+        //interpolatedMagnitudes[i] = currentInterpolatedMagnitudes.slice();
+        interpolatedMagnitudes.push(currentInterpolatedMagnitudes.slice());
     }
 }
 
@@ -308,6 +310,7 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
 
     for (let i = 0; i < numFrames; i++) {
         const originalFrameIndex = i / stretchFactor;
+        if(originalFrameIndex >= numFrames){ return; }
         // Get the indices of the adjacent frames
         var frameIndex1 = Math.floor(originalFrameIndex);
         var frameIndex2 = Math.ceil(originalFrameIndex);
@@ -339,7 +342,8 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
         }
 
         // Store the synchronized phases in the synchronizedPhases array
-        synchronizedPhases[i] = currentSynchronizedPhases.slice();
+        //synchronizedPhases[i] = currentSynchronizedPhases.slice();
+        synchronizedPhases.push(currentSynchronizedPhases.slice());
     }
 }
 
