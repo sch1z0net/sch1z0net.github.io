@@ -344,12 +344,13 @@ async function computeFFT(frame, fftFactorLookup=null) {
     // For simplicity, let's assume computeFFT returns the magnitude spectrum
     const spectrum = await FFT(frame, fftFactorLookup);
     
-    console.log(spectrum);
     // Convert the Float32Array spectrum back to a complex array
     const complexSpectrum = [];
     for (let i = 0; i < spectrum.length; i += 2) {
         complexSpectrum.push({ re: spectrum[i], im: spectrum[i + 1] });
     }
+
+    console.log(complexSpectrum);
 
     return complexSpectrum;
 }
