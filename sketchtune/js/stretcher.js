@@ -533,7 +533,9 @@ function spectrogramToImageData(spectrogram) {
     // Convert spectrogram data to grayscale image data
     for (let x = 0; x < w; x++) {
         var i = Math.floor((x/(w-1))*(numFrames-1));
+        if(i<0 || i>spectrogram.length-1){ console.error(i," in wrong range"); }
         var spectrum = spectrogram[i];
+        if(spectrum == null){ console.error("no spectrum"); }
         for (let y = 0; y < h; y++) {
             // Calculate the frequency corresponding to the current row (on a logarithmic scale)
             //const logFreq = logMinFreq + (logMaxFreq - logMinFreq) * (y / h);
@@ -545,6 +547,7 @@ function spectrogramToImageData(spectrogram) {
             const binIndex = Math.round((w - 1) * (freq - minFreq) / (maxFreq - minFreq));
             // Get the value from the spectrogram for the closest bin index
             var val = spectrum[binIndex];
+            if(val<0 || val>1){ console.error(val, "in wrong intensity range"); }
 
             // Calculate the index in the image data array
             //const index = ((numBins - binIndex - 1) * numFrames + i) * 4; // Reverse
