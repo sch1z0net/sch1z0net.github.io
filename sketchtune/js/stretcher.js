@@ -362,11 +362,14 @@ function stretchSpectrogram(spectrogram, stretchFactor) {
     const interpolatedMagnitudes = [];
     const synchronizedPhases = [];
 
-    interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitudes);
-    synchronizePhase(spectrogram, stretchFactor, synchronizedPhases);
+    // Make copy of the spectrogram for modification
+    const spectrogramCopy = spectrogram.map(frame => [...frame]);
+    
+    interpolateMagnitudes(spectrogramCopy, stretchFactor, interpolatedMagnitudes);
+    synchronizePhase(spectrogramCopy, stretchFactor, synchronizedPhases);
 
     const stretchedSpectrogram = [];
-    for (let i = 0; i < spectrogram.length; i++) {
+    for (let i = 0; i < spectrogramCopy.length; i++) {
         const frameWithMagnitudes = interpolatedMagnitudes[i];
         const frameWithPhases = synchronizedPhases[i];
         const frameWithPairs = [];
@@ -756,8 +759,6 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoo
         const preSpectrogram = await STFTWithWebWorkers(inputSignal, windowSize, hopSize, 1);
         const endTime1 = performance.now();
         console.log(`CH ${ch}: Calculating the Spectrogram: Elapsed time: ${endTime1 - startTime1} milliseconds`);
-
-        console.log(preSpectrogram.length);
 
         const startTime2 = performance.now();
         const postSpectrogram = await stretchSpectrogram(preSpectrogram, stretchFactor);
