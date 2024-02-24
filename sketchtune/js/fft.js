@@ -273,19 +273,25 @@ function fftRealInPlace(input) {
             for (let j = 0; j < halfSize; j++) {
                 const evenIndex = i + j;
                 const oddIndex = i + j + halfSize;
-                const evenPart = complexInput[evenIndex];
-                const oddPart = complexInput[oddIndex];
+
+                // Get real and imaginary parts of even and odd elements
+                const evenRe = complexInput[evenIndex * 2];
+                const evenIm = complexInput[evenIndex * 2 + 1];
+                const oddRe = complexInput[oddIndex * 2];
+                const oddIm = complexInput[oddIndex * 2 + 1];
 
                 const twiddleRe = factors[j].re;
                 const twiddleIm = factors[j].im;
 
-                // Multiply by twiddle factors
-                const twiddledOddRe = oddPart * twiddleRe;
-                const twiddledOddIm = oddPart * twiddleIm;
+                // Perform complex multiplication
+                const twiddledOddRe = oddRe * twiddleRe - oddIm * twiddleIm;
+                const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
 
-                // Combine results of even and odd parts in place
-                complexInput[evenIndex] = evenPart + twiddledOddRe;
-                complexInput[oddIndex] = evenPart - twiddledOddRe;
+                // Update even and odd elements with new values
+                complexInput[evenIndex * 2] = evenRe + twiddledOddRe;
+                complexInput[evenIndex * 2 + 1] = evenIm + twiddledOddIm;
+                complexInput[oddIndex * 2] = evenRe - twiddledOddRe;
+                complexInput[oddIndex * 2 + 1] = evenIm - twiddledOddIm;
             }
         }
     }
