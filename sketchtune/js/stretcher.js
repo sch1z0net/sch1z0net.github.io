@@ -459,7 +459,7 @@ function normalizeDBspectrogram(spectrogram) {
         }
     }
 
-    console.log(spectrogram, normalizedSpectrogram);
+    //console.log(spectrogram, normalizedSpectrogram);
 
 
     return normalizedSpectrogram;
@@ -488,6 +488,8 @@ function normalizeSpectrogramToDB(spectrogram, dBmin=-20) {
         // Add the dB values for the frame to the normalized spectrogram
         normalizedSpectrogram.push(frameDB);
     }
+
+    console.log(spectrogram, normalizedSpectrogram);
 
     return normalizedSpectrogram;
 }
