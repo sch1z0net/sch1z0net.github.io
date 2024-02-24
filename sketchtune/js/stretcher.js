@@ -548,7 +548,7 @@ function spectrogramToImageData(spectrogram) {
 
             // Calculate the index in the image data array
             //const index = ((numBins - binIndex - 1) * numFrames + i) * 4; // Reverse
-            const index = ((h - y - 1) * w + i) * 4; // Reverse
+            const index = ((h - y - 1) * w + x) * 4; // Reverse
 
             var rgbColor;
             if(val != 0 && val != 1){
