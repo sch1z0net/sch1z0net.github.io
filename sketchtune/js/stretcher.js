@@ -178,7 +178,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
     return new Promise((resolve) => {
         const checkCompletion = () => {
             if(numFinishedWorkers === numWorkers) {
-                console.log("Spectrogram completed.");
+                //console.log("Spectrogram completed.");
                 if (finalSpectrogram.length != numFrames) { console.error("Spectrogram not as long as expected"); }
                 resolve(finalSpectrogram);
             } else {
