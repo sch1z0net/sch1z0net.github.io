@@ -757,6 +757,8 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoo
         const endTime1 = performance.now();
         console.log(`CH ${ch}: Calculating the Spectrogram: Elapsed time: ${endTime1 - startTime1} milliseconds`);
 
+        console.log(preSpectrogram.length);
+
         const startTime2 = performance.now();
         const postSpectrogram = await stretchSpectrogram(preSpectrogram, stretchFactor);
         const endTime2 = performance.now();
@@ -871,7 +873,6 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
         console.log(`PhaseVocoder: CH ${ch} Elapsed time: ${elapsedTimeCH} milliseconds`);
     }
 
-    console.log(inputLength, spectrogramA.length);
     plotSpectrogram(spectrogramA, spectrogramB);
 
     // Wait for all promises to resolve
@@ -895,7 +896,7 @@ async function processChannel(audioContext, inputData, outputBuffer, ch, stretch
 
     const {processedSignal, preSpectrogram, postSpectrogram} = await timeStretch(inputData, stretchFactor, windowSize, hopSize, smoothFactor, ch);
     const processedSignalFloat32 = new Float32Array(processedSignal);  // Convert processedSignal to Float32Array if necessary
-
+    
     const endTimeCH = performance.now();
     const elapsedTimeCH = endTimeCH - startTimeCH;
     console.log(`TimeStretch: CH ${ch} Elapsed time: ${elapsedTimeCH} milliseconds`);
