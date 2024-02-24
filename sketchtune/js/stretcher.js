@@ -498,8 +498,6 @@ function normalizeSpectrogramToDB(spectrogram, dBmin = -20) {
         normalizedSpectrogram.push(frameDB);
     }
 
-    console.log(spectrogram, normalizedSpectrogram);
-
     return normalizedSpectrogram;
 }
 
@@ -533,8 +531,8 @@ function spectrogramToImageData(spectrogram) {
     const numBins = spectrogram[0].length / 2;  // Only need half the FFT size due to Nyquist theorem
     
     // Create a new ImageData object with the same dimensions as the spectrogram
-    var h = 500; //16000;
-    var w = Math.min(1000,numFrames);
+    var h = 1000; //16000;
+    var w = Math.min(4000,numFrames);
     //var w = numFrames;
     const imageData = new ImageData(w, h);
     
@@ -550,7 +548,6 @@ function spectrogramToImageData(spectrogram) {
         var i = Math.floor((x/(w-1))*(numFrames-1));
         if(i<0 || i>spectrogram.length-1){ console.error(i," in wrong range"); }
         var spectrum = spectrogram[i];
-        console.log(spectrum);
         if(spectrum == null){ console.error("no spectrum"); }
         for (let y = 0; y < h; y++) {
             // Calculate the frequency corresponding to the current row (on a logarithmic scale)
