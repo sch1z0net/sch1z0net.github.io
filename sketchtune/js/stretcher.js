@@ -489,7 +489,7 @@ function spectrogramToImageData(spectrogram) {
     const logMinFreq = Math.log(minFreq + 1); // Logarithm of the minimum frequency (avoiding log(0))
     const logMaxFreq = Math.log(maxFreq + 1); // Logarithm of the maximum frequency (avoiding log(0))
 
-    var h = 2000;
+    var h = 12000;
     // Convert spectrogram data to grayscale image data
     for (let i = 0; i < numFrames; i++) {
         var spectrum = spectrogram[i];
@@ -505,7 +505,6 @@ function spectrogramToImageData(spectrogram) {
             // Calculate the index in the image data array
             //const index = ((numBins - binIndex - 1) * numFrames + i) * 4; // Reverse
             const index = ((h - y - 1) * numFrames + i) * 4; // Reverse
-
 
             // Interpolate color based on the normalized magnitude
             const colorIndex = Math.round(value * (colorMap.length - 1));
