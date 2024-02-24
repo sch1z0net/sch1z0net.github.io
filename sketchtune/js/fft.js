@@ -303,6 +303,11 @@ function fftRealInPlace(input) {
                 const twiddledOddRe = oddRe * twiddleRe - oddIm * twiddleIm;
                 const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
 
+                if(Number.isNaN(oddRe)){ console.error("oddRe is NaN"); }
+                if(Number.isNaN(oddIm)){ console.error("oddIm is NaN"); }
+                if(Number.isNaN(twiddleRe)){ console.error("twiddleRe is NaN"); }
+                if(Number.isNaN(twiddleIm)){ console.error("twiddleIm is NaN"); }
+
                 // Update even and odd elements with new values
                 complexInput[evenIndex * 2]     = evenRe + twiddledOddRe;
                 complexInput[evenIndex * 2 + 1] = evenIm + twiddledOddIm;
