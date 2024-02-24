@@ -250,6 +250,8 @@ function fftRealInPlace(input) {
         return;
     }
 
+    const startTime = performance.now();
+
     // Perform bit reversal in place, treating the input as real-valued
     for (let i = 0; i < N; i++) {
         const reversedIndex = bitReverse(i, bits);
@@ -261,12 +263,21 @@ function fftRealInPlace(input) {
         }
     }
 
+    const endTime1 = performance.now();
+    const elapsedTime1 = endTime1 - startTime;
+    console.log(`FFT - Bit Reversal: Elapsed time: ${elapsedTime1} milliseconds`);
+
+
     // Convert the real-valued input to a complex-valued Float32Array
     const complexInput = new Float32Array(N * 2);
     for (let i = 0; i < N; i++) {
         complexInput[i * 2] = input[i];
         complexInput[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
+
+    const endTime3 = performance.now();
+    const elapsedTime3 = endTime3 - startTime;
+    console.log(`FFT - Real To Complex: Elapsed time: ${elapsedTime3} milliseconds`);
 
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
@@ -300,8 +311,12 @@ function fftRealInPlace(input) {
                 complexInput[oddIndex * 2 + 1]  = evenIm - twiddledOddIm;
             }
         }
-
     }
+
+    const endTime2 = performance.now();
+    const elapsedTime2 = endTime2 - startTime;
+    console.log(`FFT: Elapsed time: ${elapsedTime2} milliseconds`);
+
 
     // Return the output
     return complexInput;
@@ -367,8 +382,6 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
         return;
     }
 
-    const startTime = performance.now();
-
     // Perform bit reversal
     const output = new Float32Array(N * 2);
     for (let i = 0; i < N; i++) {
@@ -376,10 +389,6 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
         output[reversedIndex * 2] = input[i * 2]; // Copy real part
         output[reversedIndex * 2 + 1] = input[i * 2 + 1]; // Copy imaginary part
     }
-
-    const endTime1 = performance.now();
-    const elapsedTime1 = endTime1 - startTime;
-    console.log(`FFT - Bit Reversal: Elapsed time: ${elapsedTime1} milliseconds`);
 
     if (N <= 1) {
         return output;
@@ -414,10 +423,6 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
             }
         }
     }
-
-    const endTime2 = performance.now();
-    const elapsedTime2 = endTime2 - startTime;
-    console.log(`FFT: Elapsed time: ${elapsedTime2} milliseconds`);
 
     return output;
 }
