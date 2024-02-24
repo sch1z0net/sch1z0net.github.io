@@ -268,11 +268,10 @@ function fftRealInPlace(input) {
         complexInput[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
 
-    const factors = computeFFTFactorsWithCache(N);
-
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
         const halfSize = size / 2;
+        const factors = computeFFTFactorsWithCache(size);
         // Precompute FFT factors
         //const factors = computeFFTFactorsWithCache(size);
         for (let i = 0; i < N; i += size) {
@@ -368,6 +367,8 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
         return;
     }
 
+    const startTime = performance.now();
+
     // Perform bit reversal
     const output = new Float32Array(N * 2);
     for (let i = 0; i < N; i++) {
@@ -375,6 +376,10 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
         output[reversedIndex * 2] = input[i * 2]; // Copy real part
         output[reversedIndex * 2 + 1] = input[i * 2 + 1]; // Copy imaginary part
     }
+
+    const endTime1 = performance.now();
+    const elapsedTime1 = endTime1 - startTime;
+    console.log(`FFT - Bit Reversal: Elapsed time: ${elapsedTime1} milliseconds`);
 
     if (N <= 1) {
         return output;
@@ -410,6 +415,10 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
         }
     }
 
+    const endTime2 = performance.now();
+    const elapsedTime2 = endTime2 - startTime;
+    console.log(`FFT: Elapsed time: ${elapsedTime2} milliseconds`);
+
     return output;
 }
 
@@ -443,7 +452,7 @@ async function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
     const spectrum = await FFT(frame, fftFactorLookup);
     const endTime = performance.now();
     const elapsedTime = endTime - startTime;
-    console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);
+    //console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);
 
     // Convert the Float32Array spectrum back to a complex array
     const complexSpectrum = [];
@@ -453,10 +462,10 @@ async function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
 
     const endTime2 = performance.now();
     const elapsedTime2 = endTime2 - startTime;
-    console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time 2: ${elapsedTime2} milliseconds`);
+    //console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time 2: ${elapsedTime2} milliseconds`);
 
     return complexSpectrum;
-}
+}g8gs
 
 
 
