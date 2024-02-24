@@ -11,7 +11,7 @@ function ISTFT(spectrogramChunk, windowSize, hopSize, workerID) {
                 //console.log("WORKER", workerID, "ISTFT on Spectrogram Chunk with length", spectrogramChunk.length);
                 for (let i = 0; i < spectrogramChunk.length; i++) {
                     // Compute inverse FFT of the spectrum to obtain the frame in time domain
-                    const frame = computeInverseFFT(spectrogramChunk[i]);
+                    const frame = await computeInverseFFT(spectrogramChunk[i]);
                     // Apply overlap-add to reconstruct the output signal
                     const startIdx = i * hopSize;
                     for (let j = 0; j < windowSize; j++) {
