@@ -299,8 +299,6 @@ function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitude
         // Store the interpolated magnitudes in the spectrogram
         interpolatedMagnitudes[i] = currentInterpolatedMagnitudes.slice();
     }
-
-    //return spectrogram;
 }
 
 // Function to synchronize phase values between frames in the entire spectrogram
@@ -343,17 +341,6 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
         // Store the synchronized phases in the synchronizedPhases array
         synchronizedPhases[i] = currentSynchronizedPhases.slice();
     }
-
-
-    // Update the spectrogram with the synchronized phases
-    for (let i = 0; i < numFrames; i++) {
-        for (let j = 0; j < numBins; j++) {
-            spectrogram[i][j].im = synchronizedPhases[i][j];
-        }
-    }
-
-    //return spectrogram;
-
 }
 
 
@@ -373,7 +360,7 @@ function deepCopySpectrogram(preSpectrogram) {
 // Function to stretch spectrogram
 function stretchSpectrogram(preSpectrogram, stretchFactor) {
     // Make a deep copy of the preSpectrogram for modification
-    //const spectrogramCopy = preSpectrogram.map(frame => [...frame]);
+    //const spectrogramCopy = preSpectrogram.map(frame => [...frame]); //!!!! NOT CREATING A DEEP COPY
     const spectrogramCopy = deepCopySpectrogram(preSpectrogram);
 
     const interpolatedMagnitudes = [];
@@ -931,7 +918,7 @@ async function processChannel(audioContext, inputData, outputBuffer, ch, stretch
     // Copy the processed signal to the output buffer
     outputBuffer.copyToChannel(processedSignalFloat32, ch);
 
-    return preSpectrogram;
+    return postSpectrogram;
 }
 
 
