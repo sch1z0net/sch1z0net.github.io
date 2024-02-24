@@ -868,8 +868,8 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
 
     const numChannels = copyBuffer.numberOfChannels;
     const inputLength = copyBuffer.length;
-    const outputLength = Math.ceil(inputLength * stretchFactor);
-    const outputBuffer = audioContext.createBuffer(numChannels, outputLength, audioContext.sampleRate);
+    const resampledLength = Math.ceil(inputLength * stretchFactor);
+    const resampledBuffer = audioContext.createBuffer(numChannels, resampledLength, audioContext.sampleRate);
 
     // Array to store promises for each channel processing
     const processingPromises = [];
@@ -891,7 +891,7 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
         // PARALLEL 
         // Push the promise for processing this channel into the array
         processingPromises.push(
-            processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor)
+            processChannel(audioContext, inputData, resampledBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor)
             .then(spectrogram => {
                 if (ch === 0) { spectrogramA = spectrogram; }
                 if (ch === 1) { spectrogramB = spectrogram; }
@@ -914,7 +914,7 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
     console.log(`PhaseVocoder: Elapsed time: ${elapsedTime} milliseconds`);
 
     // All channels processed, return the output buffer
-    return {outputBuffer, spectrogramA, spectrogramB};
+    return {resampledBuffer, spectrogramA, spectrogramB};
 }
 
 async function processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor) {
