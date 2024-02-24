@@ -152,6 +152,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
 
             // Increment the counter for finished workers
             numFinishedWorkers++;
+            console.log(numFinishedWorkers);
 
             // Check if all workers have finished processing
             if (numFinishedWorkers === numWorkers) {
