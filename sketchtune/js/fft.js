@@ -246,7 +246,7 @@ function fftRealInPlace(input) {
         return;
     }
 
-    // Perform bit reversal in place
+    // Perform bit reversal in place, treating the input as real-valued
     for (let i = 0; i < N; i++) {
         const reversedIndex = bitReverse(i, bits);
         if (reversedIndex > i) {
@@ -255,6 +255,13 @@ function fftRealInPlace(input) {
             input[i] = input[reversedIndex];
             input[reversedIndex] = temp;
         }
+    }
+
+    // Convert the real-valued input to a complex-valued Float32Array
+    const complexInput = new Float32Array(N * 2);
+    for (let i = 0; i < N; i++) {
+        complexInput[i * 2] = input[i];
+        complexInput[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
 
     // Recursively calculate FFT
@@ -266,8 +273,8 @@ function fftRealInPlace(input) {
             for (let j = 0; j < halfSize; j++) {
                 const evenIndex = i + j;
                 const oddIndex = i + j + halfSize;
-                const evenPart = input[evenIndex];
-                const oddPart = input[oddIndex];
+                const evenPart = complexInput[evenIndex];
+                const oddPart = complexInput[oddIndex];
 
                 const twiddleRe = factors[j].re;
                 const twiddleIm = factors[j].im;
@@ -277,14 +284,14 @@ function fftRealInPlace(input) {
                 const twiddledOddIm = oddPart * twiddleIm;
 
                 // Combine results of even and odd parts in place
-                input[evenIndex] = evenPart + twiddledOddRe;
-                input[oddIndex] = evenPart - twiddledOddRe;
+                complexInput[evenIndex] = evenPart + twiddledOddRe;
+                complexInput[oddIndex] = evenPart - twiddledOddRe;
             }
         }
     }
 
     // Return the output
-    return input;
+    return complexInput;
 }
 
 
@@ -405,11 +412,12 @@ async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Zero-padding to the next power of 2
     const FFT_SIZE = nextPowerOf2(inputSignal.length);
     const paddedInput = new Float32Array(FFT_SIZE).fill(0);
-    inputSignal.forEach((value, index) => paddedInput[index] = value);
+    inputSignal.forEach((value, index) => paddedInput[index] = value); // Store real part in even indices
 
     // Perform FFT
     return await fftRealInPlace(paddedInput);
 }
+
 
 
 async function FFT(inputSignal, fftFactorLookup=null) {
