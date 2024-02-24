@@ -519,8 +519,8 @@ function spectrogramToImageData(spectrogram) {
     const numBins = spectrogram[0].length / 2;  // Only need half the FFT size due to Nyquist theorem
     
     // Create a new ImageData object with the same dimensions as the spectrogram
-    var h = 2000; //16000;
-    var w = Math.min(2000,numFrames);
+    var h = 1000; //16000;
+    var w = Math.min(4000,numFrames);
     const imageData = new ImageData(w, h);
     
     // Calculate the frequency range corresponding to each bin on a logarithmic scale
@@ -542,7 +542,7 @@ function spectrogramToImageData(spectrogram) {
             //console.log(melMaxFreq * (y / h), freq);
             //const freq = Math.exp(logFreq) - 1; // Convert back to linear scale
             // Find the closest bin index in the spectrogram for the current frequency
-            const binIndex = Math.round((numBins - 1) * (freq - minFreq) / (maxFreq - minFreq));
+            const binIndex = Math.round((w - 1) * (freq - minFreq) / (maxFreq - minFreq));
             // Get the value from the spectrogram for the closest bin index
             var val = spectrum[binIndex];
 
