@@ -737,25 +737,17 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoo
         const endTime1 = performance.now();
         console.log(`CH ${ch}: Calculating the Spectrogram: Elapsed time: ${endTime1 - startTime1} milliseconds`);
 
-        const startTimeD = performance.now();
-        const normalizedDBSpectrogram = normalizeSpectrogramToDB(spectrogram, -80);
-        const normalizedSpectrogram = normalizeDBspectrogram(normalizedDBSpectrogram);
-        const imageData = spectrogramToImageData(normalizedSpectrogram);
-        drawImageDataOnCanvas(imageData, "spectrogramA");
-        const endTimeD = performance.now();
-        console.log(`CH ${ch}: Plotting the Spectrogram: Elapsed time: ${endTimeD - startTimeD} milliseconds`);
-
         const startTime2 = performance.now();
         const stretchedSpectrogram = await stretchSpectrogram(spectrogram, stretchFactor);
         const endTime2 = performance.now();
         console.log(`CH ${ch}: Now Stretching the Spectrogram: Elapsed time: ${endTime2 - startTime2} milliseconds`);
 
         const startTime3 = performance.now();
-        const result = await ISTFTWithWebWorkers(stretchedSpectrogram, windowSize, hopSize);
+        const processedSignal = await ISTFTWithWebWorkers(stretchedSpectrogram, windowSize, hopSize);
         const endTime3 = performance.now();
         console.log(`CH ${ch}: Now Reconstructing the Audio Signal: Elapsed time: ${endTime3 - startTime3} milliseconds`);
 
-        return result;
+        return {processedSignal, spectrogram};
     } catch (error) {
         console.error('Error:', error);
         return null;
@@ -767,6 +759,28 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoo
 
 
 
+
+
+
+
+function plotSpectrogram(spectrogramA,spectrogramB){
+    const startTimeD = performance.now();
+    
+    // SPECTROGRAM A
+    const normalizedDBSpectrogramA = normalizeSpectrogramToDB(spectrogramA, -80);
+    const normalizedSpectrogramA = normalizeDBspectrogram(normalizedDBSpectrogramA);
+    const imageDataA = spectrogramToImageData(normalizedSpectrogramA);
+    // SPECTROGRAM B
+    const normalizedDBSpectrogramB = normalizeSpectrogramToDB(spectrogramB, -80);
+    const normalizedSpectrogramB = normalizeDBspectrogram(normalizedDBSpectrogramB);
+    const imageDataB = spectrogramToImageData(normalizedSpectrogramB);
+
+    drawImageDataOnCanvas(imageDataA, "spectrogramA");
+    drawImageDataOnCanvas(imageDataB, "spectrogramB");
+
+    const endTimeD = performance.now();
+    console.log(`CH ${ch}: Plotting the Spectrogram: Elapsed time: ${endTimeD - startTimeD} milliseconds`);    
+}
 
 
 
@@ -810,6 +824,8 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
     // Array to store promises for each channel processing
     const processingPromises = [];
 
+    let spectrogramA = [];
+    let spectrogramB = [];
     
     // Record the start time
     const startTime = performance.now();
@@ -820,11 +836,15 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
         const inputData = inputBuffer.getChannelData(ch);
         // Push the promise for processing this channel into the array
         //processingPromises.push(processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor));
-        await processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor);
+        let spectrogram;
+        await processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor, spectrogram);
+
         const endTimeCH = performance.now();
         const elapsedTimeCH = endTimeCH - startTimeCH;
         console.log(`PhaseVocoder: CH ${ch} Elapsed time: ${elapsedTimeCH} milliseconds`);
     }
+
+    plotSpectrogram(spectrogramA, spectrogramB);
 
     // Wait for all promises to resolve
     //await Promise.all(processingPromises);
@@ -841,11 +861,11 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
     return outputBuffer;
 }
 
-async function processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor) {
+async function processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor, spectrogram) {
     // Time-stretch the input data
     const startTimeCH = performance.now();
 
-    const processedSignal = await timeStretch(inputData, stretchFactor, windowSize, hopSize, smoothFactor, ch);
+    const {processedSignal, spectrogram} = await timeStretch(inputData, stretchFactor, windowSize, hopSize, smoothFactor, ch);
     const processedSignalFloat32 = new Float32Array(processedSignal);  // Convert processedSignal to Float32Array if necessary
 
     const endTimeCH = performance.now();

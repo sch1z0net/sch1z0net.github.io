@@ -585,12 +585,23 @@ canvas {
 
 #spectrogramA {
   width: 800px;
-  height: 400px;
+  height: 200px;
   background-color: rgba(10, 10, 10, 0.8);
   position: absolute;
   right:0px;
   z-index: 2000;
 }
+#spectrogramB {
+  width: 800px;
+  height: 200px;
+  background-color: rgba(10, 10, 10, 0.8);
+  position: absolute;
+  right:0px;
+  top: 200px;
+  z-index: 2000;
+}
+
+
 
 
 #controls {
