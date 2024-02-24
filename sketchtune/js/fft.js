@@ -257,14 +257,7 @@ function fftRealInPlace(input) {
         }
     }
 
-    // Convert the real-valued input to a complex-valued Float32Array
-    const complexInput = new Float32Array(N * 2);
-    for (let i = 0; i < N; i++) {
-        complexInput[i * 2] = input[i];
-        complexInput[i * 2 + 1] = 0; // Imaginary part is set to 0
-    }
-
-    // Recursively calculate FFT
+    // Recursively calculate FFT in-place
     for (let size = 2; size <= N; size *= 2) {
         const halfSize = size / 2;
         // Precompute FFT factors
@@ -275,31 +268,29 @@ function fftRealInPlace(input) {
                 const oddIndex = i + j + halfSize;
 
                 // Get real and imaginary parts of even and odd elements
-                const evenRe = complexInput[evenIndex * 2];
-                const evenIm = complexInput[evenIndex * 2 + 1];
-                const oddRe = complexInput[oddIndex * 2];
-                const oddIm = complexInput[oddIndex * 2 + 1];
+                const evenRe = input[evenIndex];
+                const oddRe = input[oddIndex];
 
                 const twiddleRe = factors[j].re;
                 const twiddleIm = factors[j].im;
 
                 // Perform complex multiplication
+                const oddIm = input[oddIndex + N / 2]; // Get imaginary part of odd element
                 const twiddledOddRe = oddRe * twiddleRe - oddIm * twiddleIm;
                 const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
 
                 // Update even and odd elements with new values
-                complexInput[evenIndex * 2] = evenRe + twiddledOddRe;
-                complexInput[evenIndex * 2 + 1] = evenIm + twiddledOddIm;
-                complexInput[oddIndex * 2] = evenRe - twiddledOddRe;
-                complexInput[oddIndex * 2 + 1] = evenIm - twiddledOddIm;
+                input[evenIndex] = evenRe + twiddledOddRe;
+                input[oddIndex] = evenRe - twiddledOddRe;
+                input[evenIndex + N / 2] = twiddledOddIm; // Update imaginary part of even element
+                input[oddIndex + N / 2] = -twiddledOddIm; // Update imaginary part of odd element
             }
         }
     }
 
-    // Return the output
-    return complexInput;
+    // Return the output (in-place FFT result)
+    return input;
 }
-
 
 
 
