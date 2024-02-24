@@ -481,7 +481,7 @@ function linearToMelody(frequency) {
 function melodyToLinear(melody) {
     return 700 * (Math.pow(10, melody / 2595) - 1);
 }
-
+/*
 // Convert spectrogram data to image data
 function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
@@ -527,22 +527,11 @@ function spectrogramToImageData(spectrogram) {
             imageData.data[index + 1] = color[1]; // Green channel
             imageData.data[index + 2] = color[2]; // Blue channel
             imageData.data[index + 3] = 255;      // Alpha channel (fully opaque)
-
-
-            /*
-            // Convert magnitude/intensity to grayscale value (0-255)
-            const intensity = Math.round(value * 255);
-            // Set the same value for R, G, and B channels (grayscale)
-            imageData.data[index] = intensity;     // Red channel
-            imageData.data[index + 1] = intensity; // Green channel
-            imageData.data[index + 2] = intensity; // Blue channel
-            imageData.data[index + 3] = 255;       // Alpha channel (fully opaque)
-            */
         }
     }
 
     return imageData;
-}
+}*/
 
 
 /*
@@ -635,6 +624,136 @@ function spectrogramToImageData(spectrogram) {
 */
 
 
+
+
+
+
+// Convert spectrogram data to image data with interpolated colors
+function spectrogramToImageData(spectrogram) {
+    // Assume spectrogram is a 2D array of magnitudes or intensities
+    const numFrames = spectrogram.length;
+    const numBins = spectrogram[0].length / 2;  // Only need half the FFT size due to Nyquist theorem
+    
+    // Create a new ImageData object with the same dimensions as the spectrogram
+    var h = 16000;
+    const imageData = new ImageData(numFrames, h);
+    
+    // Calculate the frequency range corresponding to each bin on a logarithmic scale
+    const minFreq = 0; // Minimum frequency
+    const maxFreq = 22050; // Maximum frequency (assuming audio sampled at 44100 Hz)
+    const logMinFreq = Math.log(minFreq + 1); // Logarithm of the minimum frequency (avoiding log(0))
+    const logMaxFreq = Math.log(maxFreq + 1); // Logarithm of the maximum frequency (avoiding log(0))
+    const melMaxFreq = linearToMelody(maxFreq);
+
+    // Convert spectrogram data to grayscale image data
+    for (let i = 0; i < numFrames; i++) {
+        var spectrum = spectrogram[i];
+        for (let y = 0; y < h; y++) {
+            // Calculate the frequency corresponding to the current row (on a logarithmic scale)
+            //const logFreq = logMinFreq + (logMaxFreq - logMinFreq) * (y / h);
+            
+            const freq = melodyToLinear(melMaxFreq * (y / h));
+            //console.log(melMaxFreq * (y / h), freq);
+            //const freq = Math.exp(logFreq) - 1; // Convert back to linear scale
+            // Find the closest bin index in the spectrogram for the current frequency
+            const binIndex = Math.round((numBins - 1) * (freq - minFreq) / (maxFreq - minFreq));
+            // Get the value from the spectrogram for the closest bin index
+            var value = spectrum[binIndex];
+
+            // Calculate the index in the image data array
+            //const index = ((numBins - binIndex - 1) * numFrames + i) * 4; // Reverse
+            const index = ((h - y - 1) * numFrames + i) * 4; // Reverse
+
+            const colorIndex = Math.round(value * (colorMap.length - 1));
+
+            const color1 = colorMap[Math.floor(colorIndex)];
+            const color2 = colorMap[Math.ceil(colorIndex)];
+
+            // Interpolate between the two closest colors based on the fractional part of colorIndex
+            const fraction = colorIndex % 1;
+            const interpolatedColor = interpolateColor(color1, color2, fraction);
+
+            // Convert interpolated HSL color to RGB
+            const rgbColor = hslToRgb(interpolatedColor[0], interpolatedColor[1], interpolatedColor[2]);
+
+            imageData.data[index] = rgbColor[0];     // Red channel
+            imageData.data[index + 1] = rgbColor[1]; // Green channel
+            imageData.data[index + 2] = rgbColor[2]; // Blue channel
+            imageData.data[index + 3] = 255;         // Alpha channel (fully opaque)
+        }
+    }
+
+    return imageData;
+}
+
+// Function to interpolate between two colors
+function interpolateColor(color1, color2, fraction) {
+    const hsl1 = rgbToHsl(color1[0], color1[1], color1[2]);
+    const hsl2 = rgbToHsl(color2[0], color2[1], color2[2]);
+
+    // Interpolate HSL components separately
+    const h = interpolate(hsl1[0], hsl2[0], fraction);
+    const s = interpolate(hsl1[1], hsl2[1], fraction);
+    const l = interpolate(hsl1[2], hsl2[2], fraction);
+
+    return [h, s, l];
+}
+
+// Function to interpolate between two values
+function interpolate(value1, value2, fraction) {
+    return value1 + fraction * (value2 - value1);
+}
+
+// Function to convert RGB color to HSL
+function rgbToHsl(r, g, b) {
+    r /= 255;
+    g /= 255;
+    b /= 255;
+
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+
+    if (max === min) {
+        h = s = 0; // achromatic
+    } else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+
+    return [h, s, l];
+}
+
+// Function to convert HSL color to RGB
+function hslToRgb(h, s, l) {
+    let r, g, b;
+
+    if (s === 0) {
+        r = g = b = l; // achromatic
+    } else {
+        const hue2rgb = (p, q, t) => {
+            if (t < 0) t += 1;
+            if (t > 1) t -= 1;
+            if (t < 1 / 6) return p + (q - p) * 6 * t;
+            if (t < 1 / 2) return q;
+            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+            return p;
+        };
+        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        const p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1 / 3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1 / 3);
+    }
+
+    return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+}
 
 
 
