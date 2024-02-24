@@ -352,7 +352,7 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
         }
     }
 
-    return spectrogram;
+    //return spectrogram;
 
 }
 
