@@ -251,9 +251,9 @@ function fftRealInPlace(input) {
         const reversedIndex = bitReverse(i, bits);
         if (reversedIndex > i) {
             // Swap elements if necessary
-            const temp = floatInput[i];
-            floatInput[i] = floatInput[reversedIndex];
-            floatInput[reversedIndex] = temp;
+            const temp = input[i];
+            input[i] = input[reversedIndex];
+            input[reversedIndex] = temp;
         }
     }
 
@@ -266,8 +266,8 @@ function fftRealInPlace(input) {
             for (let j = 0; j < halfSize; j++) {
                 const evenIndex = i + j;
                 const oddIndex = i + j + halfSize;
-                const evenPart = floatInput[evenIndex];
-                const oddPart = floatInput[oddIndex];
+                const evenPart = input[evenIndex];
+                const oddPart = input[oddIndex];
 
                 const twiddleRe = factors[j].re;
                 const twiddleIm = factors[j].im;
@@ -277,14 +277,14 @@ function fftRealInPlace(input) {
                 const twiddledOddIm = oddPart * twiddleIm;
 
                 // Combine results of even and odd parts in place
-                floatInput[evenIndex] = evenPart + twiddledOddRe;
-                floatInput[oddIndex] = evenPart - twiddledOddRe;
+                input[evenIndex] = evenPart + twiddledOddRe;
+                input[oddIndex] = evenPart - twiddledOddRe;
             }
         }
     }
 
     // Return the output
-    return floatInput;
+    return input;
 }
 
 
@@ -422,15 +422,19 @@ async function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
     // For simplicity, let's assume computeFFT returns the magnitude spectrum
     const startTime = performance.now();
     const spectrum = await FFT(frame, fftFactorLookup);
+    const endTime = performance.now();
+    const elapsedTime = endTime - startTime;
+    console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);
+
     // Convert the Float32Array spectrum back to a complex array
     const complexSpectrum = [];
     for (let i = 0; i < spectrum.length; i += 2) {
         complexSpectrum.push({ re: spectrum[i], im: spectrum[i + 1] });
     }
 
-    const endTime = performance.now();
-    const elapsedTime = endTime - startTime;
-    console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);
+    const endTime2 = performance.now();
+    const elapsedTime2 = endTime2 - startTime;
+    console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time 2: ${elapsedTime2} milliseconds`);
 
     return complexSpectrum;
 }
