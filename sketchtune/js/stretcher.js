@@ -467,7 +467,7 @@ function normalizeDBspectrogram(spectrogram) {
 
 
 // Returns dB in form of negative values up to 0 (max)
-function normalizeSpectrogramToDB(spectrogram, dBmin=-20) {
+function normalizeSpectrogramToDB(spectrogram, dBmin = -20) {
     const normalizedSpectrogram = [];
 
     // Iterate over each frame in the spectrogram
@@ -477,22 +477,28 @@ function normalizeSpectrogramToDB(spectrogram, dBmin=-20) {
         const minDB = dBmin; // Set a minimum value for dB to avoid infinity or negative infinity
         const frameDB = [];
 
-        // Convert power to dB for each bin in the frame
-        for (const power of framePower) {
-            const dB = 10 * Math.log10(power / maxPower);
-            // Clip dB values to minDB to avoid infinity or negative infinity
-            const clippedDB = Math.max(dB, minDB);
-            frameDB.push(clippedDB);
+        // Check if maxPower is 0
+        if (maxPower === 0) {
+            // Handle the case where maxPower is 0
+            // For example, you can set all dB values to a default value
+            frameDB.fill(dBmin, 0, framePower.length);
+        } else {
+            // Convert power to dB for each bin in the frame
+            for (const power of framePower) {
+                const dB = 10 * Math.log10(power / maxPower);
+                // Clip dB values to minDB to avoid infinity or negative infinity
+                const clippedDB = Math.max(dB, minDB);
+                frameDB.push(clippedDB);
+            }
         }
 
         // Add the dB values for the frame to the normalized spectrogram
         normalizedSpectrogram.push(frameDB);
     }
 
-    console.log(spectrogram, normalizedSpectrogram);
-
     return normalizedSpectrogram;
 }
+
 
 
 
@@ -540,7 +546,6 @@ function spectrogramToImageData(spectrogram) {
         var i = Math.floor((x/(w-1))*(numFrames-1));
         if(i<0 || i>spectrogram.length-1){ console.error(i," in wrong range"); }
         var spectrum = spectrogram[i];
-        console.log(spectrum);
         if(spectrum == null){ console.error("no spectrum"); }
         for (let y = 0; y < h; y++) {
             // Calculate the frequency corresponding to the current row (on a logarithmic scale)
