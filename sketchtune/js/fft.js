@@ -457,8 +457,9 @@ async function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
 }
 
 
+
 /******************** INVERSE *********************/
-async function ifft(input) {
+/*async function ifft(input) {
     const N = input.length / 2; // Divide by 2 since input represents complex numbers
     const pi = Math.PI;
 
@@ -478,6 +479,23 @@ async function ifft(input) {
         ifftResult[i * 2] = fftResult[i * 2] / N; // Scale real part
         ifftResult[i * 2 + 1] = -fftResult[i * 2 + 1] / N; // Scale and negate imaginary part
     }
+
+    return ifftResult;
+}*/
+
+async function ifft(input) {
+    const N = input.length;
+    const pi = Math.PI;
+
+    // Take the complex conjugate of the input spectrum
+    const conjugateSpectrum = input.map(({ re, im }) => ({ re: re, im: -im }));
+
+    // Apply FFT to the conjugate spectrum
+    const fftResult = await fftComplexInPlace(conjugateSpectrum);
+    //const fftResult = await fft(conjugateSpectrum);
+
+    // Take the complex conjugate of the FFT result
+    const ifftResult = fftResult.map(({ re, im }) => ({ re: re / N, im: -im / N }));
 
     return ifftResult;
 }
