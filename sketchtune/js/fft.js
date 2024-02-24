@@ -303,12 +303,12 @@ function fftRealInPlace(input) {
                 const twiddledOddRe = oddRe * twiddleRe - oddIm * twiddleIm;
                 const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
 
-                if(Number.isNaN(evenRe)){ console.error("evenRe is NaN"); }
+                /*if(Number.isNaN(evenRe)){ console.error("evenRe is NaN"); }
                 if(Number.isNaN(evenIm)){ console.error("evenIm is NaN"); }
                 if(Number.isNaN(oddRe)){ console.error("oddRe is NaN"); }
                 if(Number.isNaN(oddIm)){ console.error("oddIm is NaN"); }
                 if(Number.isNaN(twiddleRe)){ console.error("twiddleRe is NaN"); }
-                if(Number.isNaN(twiddleIm)){ console.error("twiddleIm is NaN"); }
+                if(Number.isNaN(twiddleIm)){ console.error("twiddleIm is NaN"); }*/
 
                 // Update even and odd elements with new values
                 complexInput[evenIndex * 2]     = evenRe + twiddledOddRe;
@@ -478,8 +478,8 @@ function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
     const complexSpectrum = [];
     for (let i = 0; i < spectrum.length; i += 2) {
         complexSpectrum.push({ re: spectrum[i], im: spectrum[i + 1] });
-        if(Number.isNaN(spectrum[i])){ console.error("spectrum[",i,"] is NaN"); }
-        if(Number.isNaN(spectrum[i+1])){ console.error("spectrum[",i+1,"] is NaN"); }
+        //if(Number.isNaN(spectrum[i])){ console.error("spectrum[",i,"] is NaN"); }
+        //if(Number.isNaN(spectrum[i+1])){ console.error("spectrum[",i+1,"] is NaN"); }
     }
 
     //const endTime2 = performance.now();

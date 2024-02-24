@@ -459,6 +459,8 @@ function normalizeDBspectrogram(spectrogram) {
         }
     }
 
+    console.log(spectrogram, normalizedSpectrogram);
+
 
     return normalizedSpectrogram;
 }
@@ -779,9 +781,9 @@ function plotSpectrogram(spectrogramA,spectrogramB){
         // SPECTROGRAM A
         const normalizedDBSpectrogramA = normalizeSpectrogramToDB(spectrogramA, -80);
         const normalizedSpectrogramA = normalizeDBspectrogram(normalizedDBSpectrogramA);
-        console.log(normalizedSpectrogramA);
+        //console.log(normalizedSpectrogramA);
         const imageDataA = spectrogramToImageData(normalizedSpectrogramA);
-        console.log(imageDataA);
+        //console.log(imageDataA);
         // SPECTROGRAM B
         const normalizedDBSpectrogramB = normalizeSpectrogramToDB(spectrogramB, -80);
         const normalizedSpectrogramB = normalizeDBspectrogram(normalizedDBSpectrogramB);
