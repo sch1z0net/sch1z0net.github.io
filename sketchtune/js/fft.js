@@ -458,14 +458,14 @@ function FFT(inputSignal, fftFactorLookup=null) {
 }
 
 // Function to compute FFT of a frame
-async function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
+function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
     // Perform FFT on the frame (you can use your FFT implementation here)
     // For simplicity, let's assume computeFFT returns the magnitude spectrum
-    const startTime = performance.now();
+    //const startTime = performance.now();
     const spectrum = FFT(frame, fftFactorLookup);
-    const endTime = performance.now();
-    const elapsedTime = endTime - startTime;
-    console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);
+    //const endTime = performance.now();
+    //const elapsedTime = endTime - startTime;
+    //console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);
 
     // Convert the Float32Array spectrum back to a complex array
     const complexSpectrum = [];
@@ -473,10 +473,20 @@ async function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
         complexSpectrum.push({ re: spectrum[i], im: spectrum[i + 1] });
     }
 
-    const endTime2 = performance.now();
-    const elapsedTime2 = endTime2 - startTime;
+    //const endTime2 = performance.now();
+    //const elapsedTime2 = endTime2 - startTime;
     //console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time 2: ${elapsedTime2} milliseconds`);
 
+    return complexSpectrum;
+}
+
+// Function to compute FFT of a frame
+async function computeFFTasync(frame, frameID, frames, fftFactorLookup=null) {
+    const spectrum = FFT(frame, fftFactorLookup);
+    const complexSpectrum = [];
+    for (let i = 0; i < spectrum.length; i += 2) {
+        complexSpectrum.push({ re: spectrum[i], im: spectrum[i + 1] });
+    }
     return complexSpectrum;
 }
 
