@@ -474,6 +474,7 @@ const colorMap = [
         [255, 255, 255]  // White
 ];
 
+/*
 // Convert spectrogram data to image data
 function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
@@ -515,22 +516,62 @@ function spectrogramToImageData(spectrogram) {
             imageData.data[index + 1] = color[1]; // Green channel
             imageData.data[index + 2] = color[2]; // Blue channel
             imageData.data[index + 3] = 255;      // Alpha channel (fully opaque)
+        }
+    }
 
+    return imageData;
+}*/
 
-            /*
-            // Convert magnitude/intensity to grayscale value (0-255)
-            const intensity = Math.round(value * 255);
-            // Set the same value for R, G, and B channels (grayscale)
-            imageData.data[index] = intensity;     // Red channel
-            imageData.data[index + 1] = intensity; // Green channel
-            imageData.data[index + 2] = intensity; // Blue channel
-            imageData.data[index + 3] = 255;       // Alpha channel (fully opaque)
-            */
+// Convert spectrogram data to image data
+function spectrogramToImageData(spectrogram) {
+    // Assume spectrogram is a 2D array of magnitudes or intensities
+    const numFrames = spectrogram.length;
+    const numBins = spectrogram[0].length / 2;  // Only need half the FFT size due to Nyquist theorem
+
+    // Define the parameters for the Mel scale
+    const minFreq = 0;  // Minimum frequency
+    const maxFreq = 22050;  // Maximum frequency (assuming audio sampled at 44100 Hz)
+    const melMin = 1127 * Math.log(1 + minFreq / 700);  // Mel frequency corresponding to the minimum frequency
+    const melMax = 1127 * Math.log(1 + maxFreq / 700);  // Mel frequency corresponding to the maximum frequency
+
+    // Create a new ImageData object with the same dimensions as the spectrogram
+    const h = 16000; // Height of the image (can be adjusted)
+    const imageData = new ImageData(numFrames, h);
+
+    // Convert spectrogram data to grayscale image data
+    for (let i = 0; i < numFrames; i++) {
+        const spectrum = spectrogram[i];
+        for (let y = 0; y < h; y++) {
+            // Calculate the Mel frequency corresponding to the current row
+            const melFreq = melMin + (melMax - melMin) * (y / h);
+
+            // Convert Mel frequency back to linear scale
+            const linearFreq = 700 * (Math.exp(melFreq / 1127) - 1);
+
+            // Find the closest bin index in the spectrogram for the current frequency
+            const binIndex = Math.round((numBins - 1) * (linearFreq - minFreq) / (maxFreq - minFreq));
+
+            // Get the value from the spectrogram for the closest bin index
+            const value = spectrum[binIndex * 2]; // Assuming the spectrum is in the format [re, im, re, im, ...]
+
+            // Calculate the index in the image data array
+            const index = ((h - y - 1) * numFrames + i) * 4; // Reverse
+
+            // Interpolate color based on the normalized magnitude
+            const colorIndex = Math.round(value * (colorMap.length - 1));
+            const color = colorMap[colorIndex];
+
+            // Set the color channels of the pixel
+            imageData.data[index] = color[0];     // Red channel
+            imageData.data[index + 1] = color[1]; // Green channel
+            imageData.data[index + 2] = color[2]; // Blue channel
+            imageData.data[index + 3] = 255;      // Alpha channel (fully opaque)
         }
     }
 
     return imageData;
 }
+
 
 
 /*
