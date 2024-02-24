@@ -478,6 +478,8 @@ function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
     const complexSpectrum = [];
     for (let i = 0; i < spectrum.length; i += 2) {
         complexSpectrum.push({ re: spectrum[i], im: spectrum[i + 1] });
+        if(Number.isNaN(spectrum[i])){ console.error("spectrum[",i,"] is NaN"); }
+        if(Number.isNaN(spectrum[i+1])){ console.error("spectrum[",i+1,"] is NaN"); }
     }
 
     //const endTime2 = performance.now();
