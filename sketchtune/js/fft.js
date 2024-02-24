@@ -511,9 +511,6 @@ async function IFFT(spectrum) {
 
 // Function to compute inverse FFT of a spectrum
 async function computeInverseFFT(spectrum) {
-    // Perform inverse FFT to obtain the time-domain frame (you can use your IFFT implementation here)
-    // For simplicity, let's assume computeInverseFFT returns the time-domain frame
-    
     // Ensure the size of the spectrum array is a power of 2
     const paddedSize = nextPowerOf2(spectrum.length);
 
@@ -535,4 +532,5 @@ async function computeInverseFFT(spectrum) {
 
     return audioSignal;
 }
+
 
