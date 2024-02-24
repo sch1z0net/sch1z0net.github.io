@@ -98,9 +98,9 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
 
     // Calculate frames per worker
     const framesPerWorker = Math.ceil(numFrames / numWorkers);
-    console.log("Input Signal Length",inputSignal.length);
-    console.log("Number of Frames", numFrames);
-    console.log("Frames per Worker", framesPerWorker);
+    //console.log("Input Signal Length",inputSignal.length);
+    //console.log("Number of Frames", numFrames);
+    //console.log("Frames per Worker", framesPerWorker);
 
     // Initialize a counter for finished workers
     let numFinishedWorkers = 0;
@@ -958,11 +958,17 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
 
 async function processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor) {
     // Time-stretch the input data
-    //console.log("TimeStretching the Input Channel", ch);
+    const startTimeCH = performance.now();
+
     const processedSignal = await timeStretch(inputData, stretchFactor, windowSize, hopSize, smoothFactor, ch);
-    // Convert processedSignal to Float32Array if necessary
-    const processedSignalFloat32 = new Float32Array(processedSignal);
-    //console.log("Ready Processed Input Channel", ch);
+    const endTimeCH = performance.now();
+    const elapsedTimeCH = endTimeCH - startTimeCH;
+    console.log(`TimeStretch: CH ${ch} Elapsed time: ${elapsedTimeCH} milliseconds`);
+
+    const processedSignalFloat32 = new Float32Array(processedSignal);  // Convert processedSignal to Float32Array if necessary
+    const endTimeCH2 = performance.now();
+    const elapsedTimeCH2 = endTimeCH2 - startTimeCH;
+    console.log(`TimeStretch2: CH ${ch} Elapsed time: ${elapsedTimeCH2} milliseconds`);
 
     // Copy the processed signal to the output buffer
     outputBuffer.copyToChannel(processedSignalFloat32, ch);
