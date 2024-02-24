@@ -46,6 +46,8 @@ function generateFFTFactorLookup(maxSampleLength) {
 }
 
 /******************** FORWARD *********************/
+
+/*
 // Cache object to store precalculated FFT factors
 const fftFactorCache = {};
 
@@ -185,66 +187,6 @@ function fftRealInPlace(input) {
     return output;
 }
 
-
-
-
-
-/*
-// Async function to perform FFT in-place
-async function fftInPlace(input, fftFactorLookup = null) {
-    const N = input.length;
-    const bits = Math.log2(N);
-
-    if (N <= 1) {
-        return input;
-    }
-
-    // Check if FFT factors for this size are cached
-    let factors;
-    if (!fftFactorLookup) {
-        factors = computeFFTFactorsWithCache(N);
-    }else{
-        factors = fftFactorLookup[N];
-    }
-
-    // Bit reversal permutation
-    for (let i = 0; i < N; i++) {
-        const j = bitReverse(i, bits);
-        if (j > i) {
-            const temp = input[j];
-            input[j] = input[i];
-            input[i] = temp;
-        }
-    }
-
-    // Perform FFT in-place
-    for (let len = 2; len <= N; len <<= 1) {
-        const angle = -2 * Math.PI / len;
-        for (let i = 0; i < N; i += len) {
-            for (let k = 0; k < len / 2; k++) {
-                const index = k + i;
-                const evenIndex = index;
-                const oddIndex = index + len / 2;
-
-                const exp = factors[k];
-
-                const tRe = exp.re * input[oddIndex].re - exp.im * input[oddIndex].im;
-                const tIm = exp.re * input[oddIndex].im + exp.im * input[oddIndex].re;
-
-                input[oddIndex].re = input[evenIndex].re - tRe;
-                input[oddIndex].im = input[evenIndex].im - tIm;
-                input[evenIndex].re += tRe;
-                input[evenIndex].im += tIm;
-            }
-        }
-    }
-
-    return input;
-}*/
-
-
-
-
 function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Apply Hanning window to the input signal
     const windowedSignal = inputSignal;
@@ -264,7 +206,219 @@ function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     //return spectrumComplex;
     return fftRealInPlace(paddedInput);
     //return fftReal(paddedInput);
+}*/
+
+
+
+
+/******************** FORWARD *********************/
+// Cache object to store precalculated FFT factors
+const fftFactorCache = {};
+
+// Pre-calculate FFT factors for a given size and cache them for future use
+function precalculateFFTFactors(N) {
+    const factors = new Float32Array(N); // Double the size for both real and imaginary parts
+    for (let k = 0; k < N / 2; k++) {
+        const theta = -2 * Math.PI * k / N;
+        factors[k * 2] = Math.cos(theta); // Real part
+        factors[k * 2 + 1] = Math.sin(theta); // Imaginary part
+    }
+    return factors;
 }
+
+// Function to compute FFT factors with caching
+function computeFFTFactorsWithCache(N) {
+    // Check if FFT factors for this size are already cached
+    if (!fftFactorCache[N]) {
+        // Calculate FFT factors and cache them
+        fftFactorCache[N] = precalculateFFTFactors(N);
+    }
+
+    // Return the cached factors
+    return fftFactorCache[N];
+}
+
+
+// Bit reversal function
+function bitReverse(num, bits) {
+    let reversed = 0;
+    for (let i = 0; i < bits; i++) {
+        reversed = (reversed << 1) | (num & 1);
+        num >>= 1;
+    }
+    return reversed;
+}
+
+// Function to pad the input array with zeros to make its length a power of 2
+function padArray(input) {
+    const N = input.length;
+    const paddedLength = Math.pow(2, Math.ceil(Math.log2(N)));
+    const paddedInput = new Array(paddedLength).fill(0);
+    input.forEach((value, index) => paddedInput[index] = value);
+    return paddedInput;
+}
+
+
+function fftRealInPlace(input) {
+    const N = input.length;
+    const bits = Math.log2(N);
+
+    if (N !== nextPowerOf2(N)) {
+        console.error("FFT FRAME must have power of 2");
+        return;
+    }
+
+    // Perform bit reversal in place, treating the input as real-valued
+    for (let i = 0; i < N; i++) {
+        const reversedIndex = bitReverse(i, bits);
+        if (reversedIndex > i) {
+            // Swap elements if necessary
+            const temp = input[i];
+            input[i] = input[reversedIndex];
+            input[reversedIndex] = temp;
+        }
+    }
+
+    // Convert the real-valued input to a complex-valued Float32Array
+    const complexInput = new Float32Array(N * 2);
+    for (let i = 0; i < N; i++) {
+        complexInput[i * 2] = input[i];
+        complexInput[i * 2 + 1] = 0; // Imaginary part is set to 0
+    }
+
+    // Recursively calculate FFT
+    for (let size = 2; size <= N; size *= 2) {
+        const halfSize = size / 2;
+        // Precompute FFT factors
+        const factors = computeFFTFactorsWithCache(size);
+        for (let i = 0; i < N; i += size) {
+            for (let j = 0; j < halfSize; j++) {
+                const evenIndex = i + j;
+                const oddIndex = i + j + halfSize;
+
+                // Get real and imaginary parts of even and odd elements
+                const evenRe = complexInput[evenIndex * 2];
+                const evenIm = complexInput[evenIndex * 2 + 1];
+                const oddRe = complexInput[oddIndex * 2];
+                const oddIm = complexInput[oddIndex * 2 + 1];
+
+                // Use precalculated FFT factors directly
+                const twiddleRe = factors[j * 2];
+                const twiddleIm = factors[j * 2 + 1];
+
+                // Perform complex multiplication
+                const twiddledOddRe = oddRe * twiddleRe - oddIm * twiddleIm;
+                const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
+
+                // Update even and odd elements with new values
+                complexInput[evenIndex * 2]     = evenRe + twiddledOddRe;
+                complexInput[evenIndex * 2 + 1] = evenIm + twiddledOddIm;
+                complexInput[oddIndex * 2]      = evenRe - twiddledOddRe;
+                complexInput[oddIndex * 2 + 1]  = evenIm - twiddledOddIm;
+            }
+        }
+
+    }
+
+    // Return the output
+    return complexInput;
+}
+
+
+async function fftComplexInPlace(input, fftFactorLookup = null) {
+    const N = input.length / 2;
+    const bits = Math.log2(N);
+
+    if (N !== nextPowerOf2(N)) {
+        console.error("FFT FRAME must have power of 2");
+        return;
+    }
+
+    // Perform bit reversal
+    const output = new Float32Array(N * 2);
+    for (let i = 0; i < N; i++) {
+        const reversedIndex = bitReverse(i, bits);
+        output[reversedIndex * 2] = input[i * 2]; // Copy real part
+        output[reversedIndex * 2 + 1] = input[i * 2 + 1]; // Copy imaginary part
+    }
+
+    if (N <= 1) {
+        return output;
+    }
+
+    // Recursively calculate FFT
+    for (let size = 2; size <= N; size *= 2) {
+        const halfSize = size / 2;
+        for (let i = 0; i < N; i += size) {
+            // Get FFT factors with caching
+            const factors = computeFFTFactorsWithCache(size);
+            for (let j = 0; j < halfSize; j++) {
+                const evenIndex = i + j;
+                const oddIndex = i + j + halfSize;
+                const evenPartRe = output[evenIndex * 2];
+                const evenPartIm = output[evenIndex * 2 + 1];
+                const oddPartRe = output[oddIndex * 2];
+                const oddPartIm = output[oddIndex * 2 + 1];
+
+                const twiddleRe = factors[j * 2];
+                const twiddleIm = factors[j * 2 + 1];
+
+                // Multiply by twiddle factors
+                const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
+                const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
+
+                // Combine results of even and odd parts in place
+                output[evenIndex * 2] = evenPartRe + twiddledOddRe;
+                output[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+                output[oddIndex * 2] = evenPartRe - twiddledOddRe;
+                output[oddIndex * 2 + 1] = evenPartIm - twiddledOddIm;
+            }
+        }
+    }
+
+    return output;
+}
+
+
+
+
+async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
+    // Apply Hanning window to the input signal (if needed)
+    // const windowedSignal = applyHanningWindow(inputSignal); // Assuming the windowing function is already applied or not needed
+
+    // Zero-padding to the next power of 2
+    const FFT_SIZE = nextPowerOf2(inputSignal.length);
+    const paddedInput = new Float32Array(FFT_SIZE).fill(0);
+    inputSignal.forEach((value, index) => paddedInput[index] = value); // Store real part in even indices
+
+    // Perform FFT
+    return await fftRealInPlace(paddedInput);
+}
+
+
+
+async function FFT(inputSignal, fftFactorLookup=null) {
+    return await prepare_and_fft(inputSignal, fftFactorLookup);
+}
+
+
+// Function to compute FFT of a frame
+async function computeFFT(frame, fftFactorLookup=null) {
+    // Perform FFT on the frame (you can use your FFT implementation here)
+    // For simplicity, let's assume computeFFT returns the magnitude spectrum
+    const spectrum = await FFT(frame, fftFactorLookup);
+
+    // Convert the Float32Array spectrum back to a complex array
+    const complexSpectrum = [];
+    for (let i = 0; i < spectrum.length; i += 2) {
+        complexSpectrum.push({ re: spectrum[i], im: spectrum[i + 1] });
+    }
+
+    return complexSpectrum;
+}
+
+
+
 
 
 
@@ -352,7 +506,7 @@ process(inputs, outputs, parameters) {
 
   performFFT(inputData) {
     // Perform the processing (FFT analysis) on the mono channel
-    var spectrum = prepare_and_fft(inputData);
+    var spectrum = computeFFT(inputData)
     return spectrum;
   }
 
