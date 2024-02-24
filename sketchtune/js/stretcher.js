@@ -507,6 +507,7 @@ function spectrogramToImageData(spectrogram) {
             //const logFreq = logMinFreq + (logMaxFreq - logMinFreq) * (y / h);
             
             const freq = melodyToLinear((maxFreq - minFreq) * (y / h));
+            console.log(freq);
             //const freq = Math.exp(logFreq) - 1; // Convert back to linear scale
             // Find the closest bin index in the spectrogram for the current frequency
             const binIndex = Math.round((numBins - 1) * (freq - minFreq) / (maxFreq - minFreq));
