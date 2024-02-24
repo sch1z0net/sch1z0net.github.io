@@ -160,7 +160,6 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
 
                 // Sort the spectrogram data based on the worker id
                 receivedChunks.sort((a, b) => a.id - b.id);
-                console.log(receivedChunks);
 
                 // Combine receivedChunks data into the final spectrogram array
                 for (const { id, chunk } of receivedChunks) {
