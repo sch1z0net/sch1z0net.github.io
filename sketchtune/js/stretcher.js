@@ -520,7 +520,8 @@ function spectrogramToImageData(spectrogram) {
     
     // Create a new ImageData object with the same dimensions as the spectrogram
     var h = 2000; //16000;
-    const imageData = new ImageData(numFrames, h);
+    var w = Math.min(4000,numframes);
+    const imageData = new ImageData(w, h);
     
     // Calculate the frequency range corresponding to each bin on a logarithmic scale
     const minFreq = 0; // Minimum frequency
@@ -530,7 +531,7 @@ function spectrogramToImageData(spectrogram) {
     const melMaxFreq = linearToMelody(maxFreq);
 
     // Convert spectrogram data to grayscale image data
-    for (let i = 0; i < numFrames; i++) {
+    for (let i = 0; i < w; i++) {
         var spectrum = spectrogram[i];
         for (let y = 0; y < h; y++) {
             // Calculate the frequency corresponding to the current row (on a logarithmic scale)
@@ -546,7 +547,7 @@ function spectrogramToImageData(spectrogram) {
 
             // Calculate the index in the image data array
             //const index = ((numBins - binIndex - 1) * numFrames + i) * 4; // Reverse
-            const index = ((h - y - 1) * numFrames + i) * 4; // Reverse
+            const index = ((h - y - 1) * w + i) * 4; // Reverse
 
             var rgbColor;
             if(val != 0 && val != 1){
