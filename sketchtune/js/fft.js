@@ -429,32 +429,32 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
 
 
 
-async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
+function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Apply Hanning window to the input signal (if needed)
     // const windowedSignal = applyHanningWindow(inputSignal); // Assuming the windowing function is already applied or not needed
 
-    const startTime = performance.now();
+    //const startTime = performance.now();
     // Zero-padding to the next power of 2
     const FFT_SIZE = nextPowerOf2(inputSignal.length);
-    const endTime1 = performance.now();
+    /*const endTime1 = performance.now();
     const elapsedTime1 = endTime1 - startTime;
-    console.log(`FFT - FFTSIZE: Elapsed time: ${elapsedTime1} milliseconds`);
+    console.log(`FFT - FFTSIZE: Elapsed time: ${elapsedTime1} milliseconds`);*/
 
     const paddedInput = new Float32Array(FFT_SIZE).fill(0);
     inputSignal.forEach((value, index) => paddedInput[index] = value); // Store real part in even indices
 
-    const endTime2 = performance.now();
+    /*const endTime2 = performance.now();
     const elapsedTime2 = endTime2 - startTime;
-    console.log(`FFT - PADDING: Elapsed time: ${elapsedTime2} milliseconds`);
+    console.log(`FFT - PADDING: Elapsed time: ${elapsedTime2} milliseconds`);*/
 
     // Perform FFT
-    return await fftRealInPlace(paddedInput);
+    return fftRealInPlace(paddedInput);
 }
 
 
 
-async function FFT(inputSignal, fftFactorLookup=null) {
-    return await prepare_and_fft(inputSignal, fftFactorLookup);
+function FFT(inputSignal, fftFactorLookup=null) {
+    return prepare_and_fft(inputSignal, fftFactorLookup);
 }
 
 // Function to compute FFT of a frame
@@ -462,10 +462,10 @@ async function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
     // Perform FFT on the frame (you can use your FFT implementation here)
     // For simplicity, let's assume computeFFT returns the magnitude spectrum
     const startTime = performance.now();
-    const spectrum = await FFT(frame, fftFactorLookup);
+    const spectrum = FFT(frame, fftFactorLookup);
     const endTime = performance.now();
     const elapsedTime = endTime - startTime;
-    //console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);
+    console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);
 
     // Convert the Float32Array spectrum back to a complex array
     const complexSpectrum = [];
