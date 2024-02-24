@@ -882,23 +882,31 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
 
     // Process inputBuffer frame by frame for each channel
     for (let ch = 0; ch < numChannels; ch++) {
-        const startTimeCH = performance.now();
         const inputData = copyBuffer.getChannelData(ch);
-        // Push the promise for processing this channel into the array
-        //processingPromises.push(processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor));
-        let spectrogram = await processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor);
+        // SEQUENCIALLY
+        /*let spectrogram = await processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor);
         if(ch == 0){ spectrogramA = spectrogram; }
-        if(ch == 1){ spectrogramB = spectrogram; }
-
-        const endTimeCH = performance.now();
-        const elapsedTimeCH = endTimeCH - startTimeCH;
-        console.log(`PhaseVocoder: CH ${ch} Elapsed time: ${elapsedTimeCH} milliseconds`);
+        if(ch == 1){ spectrogramB = spectrogram; }*/
+        
+        // PARALLEL 
+        // Push the promise for processing this channel into the array
+        processingPromises.push(
+            processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor)
+            .then(spectrogram => {
+                if (ch === 0) { spectrogramA = spectrogram; }
+                if (ch === 1) { spectrogramB = spectrogram; }
+            })
+            .catch(error => {
+                // Handle errors if needed
+                console.error("Error processing channel:", error);
+            })
+        );
     }
 
-    plotSpectrogram(spectrogramA, spectrogramB);
-
     // Wait for all promises to resolve
-    //await Promise.all(processingPromises);
+    await Promise.all(processingPromises);
+
+    plotSpectrogram(spectrogramA, spectrogramB);
 
     // Record the end time
     const endTime = performance.now();

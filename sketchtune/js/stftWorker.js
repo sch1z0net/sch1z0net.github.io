@@ -46,7 +46,7 @@ function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames) {
         // Array to hold promises for each computation
         const computationPromises = [];
 
-/*
+        /*
         //  PARALLEL
         const processFrames = async () => {
             try {
@@ -56,7 +56,6 @@ function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames) {
                     const frame = inputSignalChunk.slice(startIdx, endIdx);
                     const windowedFrame = applyHanningWindow(frame);
 
-                    //console.log("FRAME",frame.length, "WFRAME",windowedFrame.length);
                     // Create a promise for each computation
                     const spectrumPromise = await computeFFT(windowedFrame, i, frames);
                     
@@ -75,8 +74,9 @@ function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames) {
                 reject(error);
             }
         };
-*/
+        */
 
+        
         //  SEQUENCIALLY
         const processFrames = async () => {
             try {
@@ -101,6 +101,8 @@ function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames) {
                 throw error;
             }
         };
+        
+
 
         processFrames();
     });
