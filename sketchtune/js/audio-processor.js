@@ -325,61 +325,6 @@ function fftRealInPlace(input) {
 }
 
 
-async function fftComplexInPlace(input, fftFactorLookup = null) {
-    const N = input.length / 2;
-    const bits = Math.log2(N);
-
-    if (N !== nextPowerOf2(N)) {
-        console.error("FFT FRAME must have power of 2");
-        return;
-    }
-
-    // Perform bit reversal
-    const output = new Float32Array(N * 2);
-    for (let i = 0; i < N; i++) {
-        const reversedIndex = bitReverse(i, bits);
-        output[reversedIndex * 2] = input[i * 2]; // Copy real part
-        output[reversedIndex * 2 + 1] = input[i * 2 + 1]; // Copy imaginary part
-    }
-
-    if (N <= 1) {
-        return output;
-    }
-
-    // Recursively calculate FFT
-    for (let size = 2; size <= N; size *= 2) {
-        const halfSize = size / 2;
-        for (let i = 0; i < N; i += size) {
-            // Get FFT factors with caching
-            const factors = computeFFTFactorsWithCache(size);
-            for (let j = 0; j < halfSize; j++) {
-                const evenIndex = i + j;
-                const oddIndex = i + j + halfSize;
-                const evenPartRe = output[evenIndex * 2];
-                const evenPartIm = output[evenIndex * 2 + 1];
-                const oddPartRe = output[oddIndex * 2];
-                const oddPartIm = output[oddIndex * 2 + 1];
-
-                const twiddleRe = factors[j * 2];
-                const twiddleIm = factors[j * 2 + 1];
-
-                // Multiply by twiddle factors
-                const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
-                const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
-
-                // Combine results of even and odd parts in place
-                output[evenIndex * 2] = evenPartRe + twiddledOddRe;
-                output[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
-                output[oddIndex * 2] = evenPartRe - twiddledOddRe;
-                output[oddIndex * 2 + 1] = evenPartIm - twiddledOddIm;
-            }
-        }
-    }
-
-    return output;
-}
-
-
 
 
 async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
@@ -407,7 +352,8 @@ async function computeFFT(frame, fftFactorLookup=null) {
     // Perform FFT on the frame (you can use your FFT implementation here)
     // For simplicity, let's assume computeFFT returns the magnitude spectrum
     const spectrum = await FFT(frame, fftFactorLookup);
-
+    
+    console.log(spectrum);
     // Convert the Float32Array spectrum back to a complex array
     const complexSpectrum = [];
     for (let i = 0; i < spectrum.length; i += 2) {
