@@ -101,6 +101,9 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
     console.log("Number of Frames", numFrames);
     console.log("Frames per Worker", framesPerWorker);
 
+    // Initialize a counter for finished workers
+    let numFinishedWorkers = 0;
+
     // Create and run workers
     for (let i = 0; i < numWorkers; i++) {
         const startFrame = i * framesPerWorker;
@@ -141,9 +144,6 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
             worker.terminate();
         };
         */
-
-        // Initialize a counter for finished workers
-        let numFinishedWorkers = 0;
 
         // Listen for messages from the worker
         worker.onmessage = function (e) {
