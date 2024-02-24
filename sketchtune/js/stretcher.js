@@ -794,8 +794,7 @@ function plotSpectrogram(spectrogramA,spectrogramB){
         // SPECTROGRAM A
         const normalizedDBSpectrogramA = normalizeSpectrogramToDB(spectrogramA, -80);
         const normalizedSpectrogramA = normalizeDBspectrogram(normalizedDBSpectrogramA);
-        //console.log(normalizedSpectrogramA);
-        console.log(normalizedSpectrogramA);
+        const imageDataA = spectrogramToImageData(normalizedSpectrogramA);
         // SPECTROGRAM B
         const normalizedDBSpectrogramB = normalizeSpectrogramToDB(spectrogramB, -80);
         const normalizedSpectrogramB = normalizeDBspectrogram(normalizedDBSpectrogramB);
@@ -878,7 +877,7 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
         const inputData = copyBuffer.getChannelData(ch);
         // Push the promise for processing this channel into the array
         //processingPromises.push(processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor));
-        const spectrogram = await processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor);
+        let spectrogram = await processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor);
         if(ch == 0){ spectrogramA = spectrogram; }
         if(ch == 1){ spectrogramB = spectrogram; }
 
@@ -908,7 +907,7 @@ async function processChannel(audioContext, inputData, outputBuffer, ch, stretch
     // Time-stretch the input data
     const startTimeCH = performance.now();
 
-    const {processedSignal, preSpectrogram, postSpectrogram} = await timeStretch(inputData, stretchFactor, windowSize, hopSize, smoothFactor, ch);
+    const {processedSignal, preSpectrogram, postSpectrogram} = await timeStretch(inputData, 1, windowSize, hopSize, smoothFactor, ch);
     const processedSignalFloat32 = new Float32Array(processedSignal);  // Convert processedSignal to Float32Array if necessary
     
     const endTimeCH = performance.now();
