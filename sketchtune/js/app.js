@@ -1882,15 +1882,17 @@ $(document).ready(function(){
 async function playSample(audioContext, audioBuffer, time, offset, duration) {
     const stretchFactor = 1 / GLOBAL_PLAYBACK_RATE;
 
-    let resampledBuffer;
+    let outputBuffer;
 
     //if (stretchFactor !== 1) {
     if (true) {
-        resampledBuffer = await phaseVocoder(audioContext, audioBuffer, stretchFactor, windowSize, hopFactor, smoothFactor); 
+        const {resampledBuffer, spectrogramA, spectrogramB } = await phaseVocoder(audioContext, audioBuffer, stretchFactor, windowSize, hopFactor, smoothFactor); 
+        outputBuffer = resampledBuffer;
+        //plotSpectrogram(spectrogramA, spectrogramB);
     }
 
     const sampleSource = new AudioBufferSourceNode(audioContext, {
-        buffer: resampledBuffer,
+        buffer: outputBuffer,
         playbackRate: 1.0,
     });
 

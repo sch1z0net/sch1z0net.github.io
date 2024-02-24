@@ -906,8 +906,6 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
     // Wait for all promises to resolve
     await Promise.all(processingPromises);
 
-    plotSpectrogram(spectrogramA, spectrogramB);
-
     // Record the end time
     const endTime = performance.now();
     // Calculate the elapsed time
@@ -915,9 +913,8 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
     // Output the elapsed time
     console.log(`PhaseVocoder: Elapsed time: ${elapsedTime} milliseconds`);
 
-
     // All channels processed, return the output buffer
-    return outputBuffer;
+    return {outputBuffer, spectrogramA, spectrogramB};
 }
 
 async function processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor) {

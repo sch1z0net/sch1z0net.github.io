@@ -48,6 +48,7 @@ function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames) {
 
         
         //  PARALLEL
+        /*
         const processFrames = async () => {
             try {
                 for (let i = 0; i <= frames; i++) {
@@ -73,11 +74,9 @@ function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames) {
             } catch (error) {
                 reject(error);
             }
-        };
+        };*/
         
 
-        
-        /*
         //  SEQUENCIALLY
         const processFrames = async () => {
             try {
@@ -102,7 +101,6 @@ function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames) {
                 throw error;
             }
         };
-        */
 
 
         processFrames();
