@@ -836,8 +836,9 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
         const inputData = inputBuffer.getChannelData(ch);
         // Push the promise for processing this channel into the array
         //processingPromises.push(processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor));
-        let spectrogram;
-        await processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor, spectrogram);
+        let spectrogram = await processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor);
+        if(ch == 0){ spectrogramA = spectrogram; }
+        if(ch == 1){ spectrogramB = spectrogram; }
 
         const endTimeCH = performance.now();
         const elapsedTimeCH = endTimeCH - startTimeCH;
@@ -861,11 +862,11 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
     return outputBuffer;
 }
 
-async function processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor, spectrogram) {
+async function processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor) {
     // Time-stretch the input data
     const startTimeCH = performance.now();
 
-    const {processedSignal, spectrogram} = await timeStretch(inputData, stretchFactor, windowSize, hopSize, smoothFactor, ch);
+    const {processedSignal, preSpectrogram} = await timeStretch(inputData, stretchFactor, windowSize, hopSize, smoothFactor, ch);
     const processedSignalFloat32 = new Float32Array(processedSignal);  // Convert processedSignal to Float32Array if necessary
 
     const endTimeCH = performance.now();
@@ -874,6 +875,8 @@ async function processChannel(audioContext, inputData, outputBuffer, ch, stretch
 
     // Copy the processed signal to the output buffer
     outputBuffer.copyToChannel(processedSignalFloat32, ch);
+
+    return preSpectrogram;
 }
 
 
