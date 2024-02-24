@@ -664,16 +664,19 @@ function spectrogramToImageData(spectrogram) {
             //const index = ((numBins - binIndex - 1) * numFrames + i) * 4; // Reverse
             const index = ((h - y - 1) * numFrames + i) * 4; // Reverse
 
-            const ci1 = Math.floor(val * (colorMap.length - 1));
-            const ci2 = Math.ceil(val * (colorMap.length - 1));
-            const color1 = colorMap[ci1];
-            const color2 = colorMap[ci2];
-            const val1 = ci1 / (colorMap.length - 1);
-            const val2 = ci2 / (colorMap.length - 1);
-            const fraction = (val-val1)/(val2-val1);
-            console.log(fraction, ci1, ci2, val1, val2);
-            //const fraction = 0;
-            const interpolatedColor = interpolateColor(color1, color2, fraction);
+            var interpolatedColor;
+            if(val != 0 && val != 1){
+              const ci1 = Math.floor(val * (colorMap.length - 1));
+              const ci2 = Math.ceil(val * (colorMap.length - 1));
+              const color1 = colorMap[ci1];
+              const color2 = colorMap[ci2];
+              const val1 = ci1 / (colorMap.length - 1);
+              const val2 = ci2 / (colorMap.length - 1);
+              const fraction = (val-val1)/(val2-val1);
+              interpolatedColor = interpolateColor(color1, color2, fraction);
+            else{
+              interpolatedColor = val * (colorMap.length - 1);
+            }
 
             // Convert interpolated HSL color to RGB
             const rgbColor = hslToRgb(interpolatedColor[0], interpolatedColor[1], interpolatedColor[2]);
