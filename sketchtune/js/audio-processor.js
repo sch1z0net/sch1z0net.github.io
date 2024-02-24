@@ -350,8 +350,6 @@ async function computeFFT(frame, fftFactorLookup=null) {
         complexSpectrum.push({ re: spectrum[i], im: spectrum[i + 1] });
     }
 
-    console.log(complexSpectrum);
-
     return complexSpectrum;
 }
 
@@ -431,6 +429,7 @@ process(inputs, outputs, parameters) {
         const samplesToProcess = this.sampleBuffer.splice(0, this.fftSize);
         // Perform processing (e.g., FFT analysis) on the extracted samples
         const fftData = this.performFFT(samplesToProcess);
+        console.log(fftData);
         // Convert FFT data to frequency data
         this.convertToFrequencyData(fftData);
         // Perform EMA smoothing on frequency data
