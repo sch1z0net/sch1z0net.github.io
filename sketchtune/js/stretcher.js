@@ -503,8 +503,8 @@ function spectrogramToImageData(spectrogram) {
             var value = spectrum[binIndex];
 
             // Calculate the index in the image data array
-            const index = ((numBins - binIndex - 1) * numFrames + i) * 4; // Reverse
-
+            //const index = ((numBins - binIndex - 1) * numFrames + i) * 4; // Reverse
+            const index = ((h - y - 1) * numFrames + i) * 4; // Reverse
 
 
             // Interpolate color based on the normalized magnitude
@@ -532,7 +532,6 @@ function spectrogramToImageData(spectrogram) {
 
     return imageData;
 }
-
 
 
 /*
