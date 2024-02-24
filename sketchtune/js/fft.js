@@ -49,25 +49,28 @@ function generateFFTFactorLookup(maxSampleLength) {
 // Cache object to store precalculated FFT factors
 const fftFactorCache = {};
 
+// Pre-calculate FFT factors for a given size and cache them for future use
+function precalculateFFTFactors(N) {
+    const factors = new Array(N / 2);
+    for (let k = 0; k < N / 2; k++) {
+        const theta = -2 * Math.PI * k / N;
+        factors[k] = { re: Math.cos(theta), im: Math.sin(theta) };
+    }
+    return factors;
+}
+
 // Function to compute FFT factors with caching
 function computeFFTFactorsWithCache(N) {
     // Check if FFT factors for this size are already cached
-    if (fftFactorCache[N]) {
-        return fftFactorCache[N];
+    if (!fftFactorCache[N]) {
+        // Calculate FFT factors and cache them
+        fftFactorCache[N] = precalculateFFTFactors(N);
     }
 
-    // Calculate FFT factors
-    const factors = [];
-    for (let k = 0; k < N / 2; k++) {
-        const theta = -2 * Math.PI * k / N;
-        factors.push({ re: Math.cos(theta), im: Math.sin(theta) });
-    }
-
-    // Cache the factors for future use
-    fftFactorCache[N] = factors;
-
-    return factors;
+    // Return the cached factors
+    return fftFactorCache[N];
 }
+
 
 // Bit reversal function
 function bitReverse(num, bits) {
@@ -257,7 +260,14 @@ function fftRealInPlace(input) {
         }
     }
 
-    // Recursively calculate FFT in-place
+    // Convert the real-valued input to a complex-valued Float32Array
+    const complexInput = new Float32Array(N * 2);
+    for (let i = 0; i < N; i++) {
+        complexInput[i * 2] = input[i];
+        complexInput[i * 2 + 1] = 0; // Imaginary part is set to 0
+    }
+
+    // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
         const halfSize = size / 2;
         // Precompute FFT factors
@@ -268,29 +278,31 @@ function fftRealInPlace(input) {
                 const oddIndex = i + j + halfSize;
 
                 // Get real and imaginary parts of even and odd elements
-                const evenRe = input[evenIndex];
-                const oddRe = input[oddIndex];
+                const evenRe = complexInput[evenIndex * 2];
+                const evenIm = complexInput[evenIndex * 2 + 1];
+                const oddRe = complexInput[oddIndex * 2];
+                const oddIm = complexInput[oddIndex * 2 + 1];
 
                 const twiddleRe = factors[j].re;
                 const twiddleIm = factors[j].im;
 
                 // Perform complex multiplication
-                const oddIm = input[oddIndex + N / 2]; // Get imaginary part of odd element
                 const twiddledOddRe = oddRe * twiddleRe - oddIm * twiddleIm;
                 const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
 
                 // Update even and odd elements with new values
-                input[evenIndex] = evenRe + twiddledOddRe;
-                input[oddIndex] = evenRe - twiddledOddRe;
-                input[evenIndex + N / 2] = twiddledOddIm; // Update imaginary part of even element
-                input[oddIndex + N / 2] = -twiddledOddIm; // Update imaginary part of odd element
+                complexInput[evenIndex * 2]     = evenRe + twiddledOddRe;
+                complexInput[evenIndex * 2 + 1] = evenIm + twiddledOddIm;
+                complexInput[oddIndex * 2]      = evenRe - twiddledOddRe;
+                complexInput[oddIndex * 2 + 1]  = evenIm - twiddledOddIm;
             }
         }
     }
 
-    // Return the output (in-place FFT result)
-    return input;
+    // Return the output
+    return complexInput;
 }
+
 
 
 
