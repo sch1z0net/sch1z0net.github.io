@@ -796,7 +796,7 @@ function plotSpectrogram(spectrogramA,spectrogramB){
         const normalizedSpectrogramA = normalizeDBspectrogram(normalizedDBSpectrogramA);
         //console.log(normalizedSpectrogramA);
         const imageDataA = spectrogramToImageData(normalizedSpectrogramA);
-        console.log(normalizedSpectrogramA.length);
+        console.log(normalizedSpectrogramA);
         // SPECTROGRAM B
         const normalizedDBSpectrogramB = normalizeSpectrogramToDB(spectrogramB, -80);
         const normalizedSpectrogramB = normalizeDBspectrogram(normalizedDBSpectrogramB);
