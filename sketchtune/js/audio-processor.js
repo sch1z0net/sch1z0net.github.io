@@ -25,15 +25,6 @@ function applyHanningWindow(frame) {
     return windowedFrame;
 }
 
-function precalculateFFTFactors(N) {
-    const factors = [];
-    for (let k = 0; k < N / 2; k++) {
-        const theta = -2 * Math.PI * k / N;
-        factors.push({ re: Math.cos(theta), im: Math.sin(theta) });
-    }
-    return factors;
-}
-
 function generateFFTFactorLookup(maxSampleLength) {
     const maxN = nextPowerOf2(maxSampleLength);
     const fftFactorLookup = {};
