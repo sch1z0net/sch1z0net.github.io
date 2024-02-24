@@ -283,6 +283,7 @@ function fftRealInPlace(input) {
 
                 const twiddleRe = factors[j].re;
                 const twiddleIm = factors[j].im;
+                console.log(twiddleRe, twiddleIm);
 
                 // Multiply by twiddle factors
                 const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
@@ -305,6 +306,7 @@ function fftRealInPlace(input) {
 
     return output;
 }
+
 
 
 
