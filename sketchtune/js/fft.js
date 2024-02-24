@@ -458,7 +458,7 @@ function FFT(inputSignal, fftFactorLookup=null) {
 }
 
 // Function to compute FFT of a frame
-async function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
+function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
     // Perform FFT on the frame (you can use your FFT implementation here)
     // For simplicity, let's assume computeFFT returns the magnitude spectrum
     const startTime = performance.now();
@@ -483,7 +483,7 @@ async function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
 
 
 /******************** INVERSE *********************/
-async function ifft(input) {
+function ifft(input) {
     const N = input.length / 2; // Divide by 2 since input represents complex numbers
     const pi = Math.PI;
 
@@ -495,7 +495,7 @@ async function ifft(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    const fftResult = await fftComplexInPlace(conjugateSpectrum);
+    const fftResult = fftComplexInPlace(conjugateSpectrum);
 
     // Take the complex conjugate of the FFT result and scale by 1/N
     const ifftResult = new Float32Array(N * 2);
@@ -526,13 +526,13 @@ async function ifft(input) {
 }*/
 
 
-async function IFFT(spectrum) {
-    return (await ifft(spectrum));
+function IFFT(spectrum) {
+    return ifft(spectrum);
 }
 
 
 // Function to compute inverse FFT of a spectrum
-async function computeInverseFFT(spectrum) {
+function computeInverseFFT(spectrum) {
     // Ensure the size of the spectrum array is a power of 2
     const paddedSize = nextPowerOf2(spectrum.length);
 
@@ -544,7 +544,7 @@ async function computeInverseFFT(spectrum) {
     }
 
     // Now you can pass paddedSpectrum to the IFFT function
-    const timeDomainSignal = await IFFT(paddedSpectrum);
+    const timeDomainSignal = IFFT(paddedSpectrum);
 
     // Extract only the real parts of the time-domain signal
     const audioSignal = new Float32Array(timeDomainSignal.length / 2);
