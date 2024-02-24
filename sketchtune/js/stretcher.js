@@ -546,6 +546,7 @@ function spectrogramToImageData(spectrogram) {
             //const freq = Math.exp(logFreq) - 1; // Convert back to linear scale
             // Find the closest bin index in the spectrogram for the current frequency
             const binIndex = Math.round((w - 1) * (freq - minFreq) / (maxFreq - minFreq));
+            if(binIndex<0 || binIndex>numBins){ console.error(binIndex, "in wrong bin range [",numBins,"]"); }
             // Get the value from the spectrogram for the closest bin index
             var val = spectrum[binIndex];
             if(val<0 || val>1){ console.error(val, "in wrong intensity range"); }
