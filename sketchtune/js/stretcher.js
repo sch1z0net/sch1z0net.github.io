@@ -374,7 +374,7 @@ function stretchSpectrogram(preSpectrogram, stretchFactor) {
     synchronizePhase(spectrogramCopy, stretchFactor, synchronizedPhases);
 
     const stretchedSpectrogram = [];
-    for (let i = 0; i < spectrogramCopy.length; i++) {
+    for (let i = 0; i < interpolatedMagnitudes.length; i++) {
         const frameWithMagnitudes = interpolatedMagnitudes[i];
         const frameWithPhases = synchronizedPhases[i];
         const frameWithPairs = [];
