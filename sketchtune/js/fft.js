@@ -459,7 +459,7 @@ async function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
 
 
 /******************** INVERSE *********************/
-/*async function ifft(input) {
+async function ifft(input) {
     const N = input.length / 2; // Divide by 2 since input represents complex numbers
     const pi = Math.PI;
 
@@ -480,9 +480,12 @@ async function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
         ifftResult[i * 2 + 1] = -fftResult[i * 2 + 1] / N; // Scale and negate imaginary part
     }
 
-    return ifftResult;
-}*/
+    console.log(ifftResult);
 
+    return ifftResult;
+}
+
+/*
 async function ifft(input) {
     const N = input.length;
     const pi = Math.PI;
@@ -498,7 +501,7 @@ async function ifft(input) {
     const ifftResult = fftResult.map(({ re, im }) => ({ re: re / N, im: -im / N }));
 
     return ifftResult;
-}
+}*/
 
 
 async function IFFT(spectrum) {
