@@ -365,8 +365,8 @@ function stretchSpectrogram(preSpectrogram, stretchFactor) {
     const interpolatedMagnitudes = [];
     const synchronizedPhases = [];
 
-    interpolateMagnitudes(spectrogramCopy, stretchFactor, interpolatedMagnitudes);
-    synchronizePhase(spectrogramCopy, stretchFactor, synchronizedPhases);
+    interpolateMagnitudes(spectrogramCopy, 1, interpolatedMagnitudes);
+    synchronizePhase(spectrogramCopy, 1, synchronizedPhases);
 
     const stretchedSpectrogram = [];
     for (let i = 0; i < spectrogramCopy.length; i++) {
@@ -907,7 +907,7 @@ async function processChannel(audioContext, inputData, outputBuffer, ch, stretch
     // Time-stretch the input data
     const startTimeCH = performance.now();
 
-    const {processedSignal, preSpectrogram, postSpectrogram} = await timeStretch(inputData, 1, windowSize, hopSize, smoothFactor, ch);
+    const {processedSignal, preSpectrogram, postSpectrogram} = await timeStretch(inputData, stretchFactor, windowSize, hopSize, smoothFactor, ch);
     const processedSignalFloat32 = new Float32Array(processedSignal);  // Convert processedSignal to Float32Array if necessary
     
     const endTimeCH = performance.now();
