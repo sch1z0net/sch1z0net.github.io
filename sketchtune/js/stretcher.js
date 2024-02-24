@@ -883,10 +883,13 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoo
         const endTime1 = performance.now();
         console.log(`CH ${ch}: Calculating the Spectrogram: Elapsed time: ${endTime1 - startTime1} milliseconds`);
 
+        const startTimeD = performance.now();
         const normalizedDBSpectrogram = normalizeSpectrogramToDB(spectrogram, -80);
         const normalizedSpectrogram = normalizeDBspectrogram(normalizedDBSpectrogram);
         const imageData = spectrogramToImageData(normalizedSpectrogram);
         drawImageDataOnCanvas(imageData, "spectrogramA");
+        const endTimeD = performance.now();
+        console.log(`CH ${ch}: Plotting the Spectrogram: Elapsed time: ${endTimeD - startTimeD} milliseconds`);
 
         const startTime2 = performance.now();
         const stretchedSpectrogram = await stretchSpectrogram(spectrogram, stretchFactor);
