@@ -318,7 +318,7 @@ function fftRealInPlace(input) {
 
 
 
-async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
+function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Apply Hanning window to the input signal (if needed)
     // const windowedSignal = applyHanningWindow(inputSignal); // Assuming the windowing function is already applied or not needed
 
@@ -333,13 +333,13 @@ async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
 
 
 
-async function FFT(inputSignal, fftFactorLookup=null) {
+function FFT(inputSignal, fftFactorLookup=null) {
     return await prepare_and_fft(inputSignal, fftFactorLookup);
 }
 
 
 // Function to compute FFT of a frame
-async function computeFFT(frame, fftFactorLookup=null) {
+function computeFFT(frame, fftFactorLookup=null) {
     // Perform FFT on the frame (you can use your FFT implementation here)
     // For simplicity, let's assume computeFFT returns the magnitude spectrum
     const spectrum = await FFT(frame, fftFactorLookup);
@@ -429,7 +429,6 @@ process(inputs, outputs, parameters) {
         const samplesToProcess = this.sampleBuffer.splice(0, this.fftSize);
         // Perform processing (e.g., FFT analysis) on the extracted samples
         const fftData = this.performFFT(samplesToProcess);
-        console.log(fftData);
         // Convert FFT data to frequency data
         this.convertToFrequencyData(fftData);
         // Perform EMA smoothing on frequency data
