@@ -1881,7 +1881,19 @@ $(document).ready(function(){
 
 async function playSample(audioContext, audioBuffer, time, offset, duration) {
     const stretchFactor = 1 / GLOBAL_PLAYBACK_RATE;
-    let resampledBuffer = audioBuffer;
+
+    // Create a new AudioBuffer with the same properties as the original one
+    const resampledBuffer = audioContext.createBuffer(
+       audioBuffer.numberOfChannels,
+       audioBuffer.length,
+       audioBuffer.sampleRate
+    );
+
+    // Copy the data from the original buffer to the new one
+    for (let channel = 0; channel < audioBuffer.numberOfChannels; channel++) {
+       const channelData = audioBuffer.getChannelData(channel);
+       resampledBuffer.copyToChannel(channelData.slice(), channel);
+    }
 
     //if (stretchFactor !== 1) {
     if (true) {
