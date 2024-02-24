@@ -165,7 +165,7 @@ onmessage = function (e) {
         .then((spectrogramChunk) => {
             // Send the result back to the main thread
             //console.log("WORKER",workerID,"Spectrogram on Chunk ready");
-            postMessage(spectrogramChunk);
+            postMessage({id: workerID, chunk: spectrogramChunk});
         })
         .catch((error) => {
             console.log("WORKER",workerID,'Error:', error);

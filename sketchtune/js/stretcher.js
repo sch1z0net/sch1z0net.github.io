@@ -90,7 +90,8 @@ test();
 // Function to perform Short-Time Fourier Transform (STFT) using Web Workers
 function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
     const numFrames = Math.floor((inputSignal.length - windowSize) / hopSize) + 1;
-    const spectrogram = [];
+    const receivedChunks = [];
+    let finalSpectrogram = [];
 
     // Define the number of workers (you can adjust this based on performance testing)
     const numWorkers = NUM_WORKERS;
@@ -147,23 +148,21 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
 
         // Listen for messages from the worker
         worker.onmessage = function (e) {
-            const workerSpectrogram = e.data;
-            spectrogram.push(workerSpectrogram);
+            const {id, chunk} = e.data;
+            receivedChunks.push({id, chunk});
 
             // Increment the counter for finished workers
             numFinishedWorkers++;
-            console.log(numFinishedWorkers);
 
             // Check if all workers have finished processing
             if (numFinishedWorkers === numWorkers) {
                 // All workers have finished processing
 
-                // Sort the spectrogram data based on the start frame index
-                spectrogram.sort((a, b) => a.startFrame - b.startFrame);
+                // Sort the spectrogram data based on the worker id
+                receivedChunks.sort((a, b) => a.id - b.id);
 
-                // Combine spectrogram data into the final spectrogram array
-                const finalSpectrogram = [];
-                for (const { data } of spectrogram) {
+                // Combine receivedChunks data into the final spectrogram array
+                for (const { data } of receivedChunks) {
                     finalSpectrogram.push(...data);
                 }
 
@@ -180,8 +179,8 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
         const checkCompletion = () => {
             if(numFinishedWorkers === numWorkers) {
                 console.log("Spectrogram completed.");
-                if (spectrogram.length != numFrames) { console.error("Spectrogram not as long as expected"); }
-                resolve(spectrogram);
+                if (finalSpectrogram.length != numFrames) { console.error("Spectrogram not as long as expected"); }
+                resolve(finalSpectrogram);
             } else {
                 setTimeout(checkCompletion, 100); // Check again after a short delay
             }
