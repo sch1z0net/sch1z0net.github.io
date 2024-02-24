@@ -827,14 +827,14 @@ function drawImageDataOnCanvas(imageData, canvasId) {
 
 
 
-function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFactor) {
+function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFactor, ch) {
     return Promise.resolve()
         .then(async () => {
             const startTime = performance.now();
             const spectrogram = await STFTWithWebWorkers(inputSignal, windowSize, hopSize, 1);
             const endTime = performance.now();
             const elapsedTime = endTime - startTime;
-            console.log(`Calculating the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);
+            console.log(`CH ${ch}: Calculating the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);
             return spectrogram;
         })
         .then(async (spectrogram) => {
@@ -851,7 +851,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
             const result = await stretchSpectrogram(spectrogram, stretchFactor)
             const endTime = performance.now();
             const elapsedTime = endTime - startTime;
-            console.log(`Now Stretching the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);
+            console.log(`CH ${ch}: Now Stretching the Spectrogram: Elapsed time: ${elapsedTime} milliseconds`);
 
             return result;
         })
@@ -860,7 +860,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
             const result =  await ISTFTWithWebWorkers(stretchedSpectrogram, windowSize, hopSize);
             const endTime = performance.now();
             const elapsedTime = endTime - startTime;
-            console.log(`Now Reconstructing the Audio Signal: Elapsed time: ${elapsedTime} milliseconds`);
+            console.log(`CH ${ch}: Now Reconstructing the Audio Signal: Elapsed time: ${elapsedTime} milliseconds`);
             return result;
         })
         /*.then((processedSignal) => {
@@ -954,7 +954,7 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
 async function processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor) {
     // Time-stretch the input data
     //console.log("TimeStretching the Input Channel", ch);
-    const processedSignal = await timeStretch(inputData, stretchFactor, windowSize, hopSize, smoothFactor);
+    const processedSignal = await timeStretch(inputData, stretchFactor, windowSize, hopSize, smoothFactor, ch);
     // Convert processedSignal to Float32Array if necessary
     const processedSignalFloat32 = new Float32Array(processedSignal);
     //console.log("Ready Processed Input Channel", ch);
