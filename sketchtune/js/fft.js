@@ -250,7 +250,7 @@ function fftRealInPlace(input) {
         return;
     }
 
-    const startTime = performance.now();
+    //const startTime = performance.now();
 
     // Perform bit reversal in place, treating the input as real-valued
     for (let i = 0; i < N; i++) {
@@ -263,10 +263,9 @@ function fftRealInPlace(input) {
         }
     }
 
-    const endTime1 = performance.now();
+    /*const endTime1 = performance.now();
     const elapsedTime1 = endTime1 - startTime;
-    console.log(`FFT - Bit Reversal: Elapsed time: ${elapsedTime1} milliseconds`);
-
+    console.log(`FFT - Bit Reversal: Elapsed time: ${elapsedTime1} milliseconds`);*/
 
     // Convert the real-valued input to a complex-valued Float32Array
     const complexInput = new Float32Array(N * 2);
@@ -275,9 +274,9 @@ function fftRealInPlace(input) {
         complexInput[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
 
-    const endTime3 = performance.now();
+    /*const endTime3 = performance.now();
     const elapsedTime3 = endTime3 - startTime;
-    console.log(`FFT - Real To Complex: Elapsed time: ${elapsedTime3} milliseconds`);
+    console.log(`FFT - Real To Complex: Elapsed time: ${elapsedTime3} milliseconds`);*/
 
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
@@ -313,9 +312,9 @@ function fftRealInPlace(input) {
         }
     }
 
-    const endTime2 = performance.now();
+    /*const endTime2 = performance.now();
     const elapsedTime2 = endTime2 - startTime;
-    console.log(`FFT: Elapsed time: ${elapsedTime2} milliseconds`);
+    console.log(`FFT: Elapsed time: ${elapsedTime2} milliseconds`);*/
 
 
     // Return the output
@@ -434,10 +433,19 @@ async function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Apply Hanning window to the input signal (if needed)
     // const windowedSignal = applyHanningWindow(inputSignal); // Assuming the windowing function is already applied or not needed
 
+    const startTime = performance.now();
     // Zero-padding to the next power of 2
     const FFT_SIZE = nextPowerOf2(inputSignal.length);
+    const endTime1 = performance.now();
+    const elapsedTime1 = endTime1 - startTime;
+    console.log(`FFT - FFTSIZE: Elapsed time: ${elapsedTime1} milliseconds`);
+
     const paddedInput = new Float32Array(FFT_SIZE).fill(0);
     inputSignal.forEach((value, index) => paddedInput[index] = value); // Store real part in even indices
+
+    const endTime2 = performance.now();
+    const elapsedTime2 = endTime2 - startTime;
+    console.log(`FFT - PADDING: Elapsed time: ${elapsedTime2} milliseconds`);
 
     // Perform FFT
     return await fftRealInPlace(paddedInput);
