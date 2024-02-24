@@ -520,8 +520,8 @@ function spectrogramToImageData(spectrogram) {
     
     // Create a new ImageData object with the same dimensions as the spectrogram
     var h = 500; //16000;
-    //var w = Math.min(1000,numFrames);
-    var w = numFrames;
+    var w = Math.min(1000,numFrames);
+    //var w = numFrames;
     const imageData = new ImageData(w, h);
     
     // Calculate the frequency range corresponding to each bin on a logarithmic scale
@@ -559,7 +559,6 @@ function spectrogramToImageData(spectrogram) {
             if(val != 0 && val != 1){
               const ci1 = Math.floor(val * (colorMap.length - 1));
               const ci2 = Math.ceil(val * (colorMap.length - 1));
-              console.log(freq, binIndex, val, ci1, ci2);
               const color1 = colorMap[ci1];
               const color2 = colorMap[ci2];
               const val1 = ci1 / (colorMap.length - 1);
