@@ -520,7 +520,7 @@ function spectrogramToImageData(spectrogram) {
     
     // Create a new ImageData object with the same dimensions as the spectrogram
     var h = 2000; //16000;
-    var w = Math.min(4000,numFrames);
+    var w = Math.min(2000,numFrames);
     const imageData = new ImageData(w, h);
     
     // Calculate the frequency range corresponding to each bin on a logarithmic scale
