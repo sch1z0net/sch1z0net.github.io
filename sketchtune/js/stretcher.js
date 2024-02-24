@@ -671,7 +671,7 @@ function spectrogramToImageData(spectrogram) {
             const val1 = ci1 / (colorMap.length - 1);
             const val2 = ci2 / (colorMap.length - 1);
             const fraction = (val-val1)/(val2-val1);
-            console.log(fraction);
+            console.log(fraction, ci1, ci2, val1, val2);
             //const fraction = 0;
             const interpolatedColor = interpolateColor(color1, color2, fraction);
 
@@ -693,13 +693,21 @@ function interpolateColor(color1, color2, fraction) {
     const hsl1 = rgbToHsl(color1[0], color1[1], color1[2]);
     const hsl2 = rgbToHsl(color2[0], color2[1], color2[2]);
 
-    // Interpolate HSL components separately
-    const h = interpolate(hsl1[0], hsl2[0], fraction);
-    const s = interpolate(hsl1[1], hsl2[1], fraction);
-    const l = interpolate(hsl1[2], hsl2[2], fraction);
+    // Handle hue wrapping
+    var deltaHue = (hsl2[0] - hsl1[0] + 180) % 360 - 180;
+    var h = (hsl1[0] + deltaHue * fraction + 360) % 360;
+
+    // Interpolate saturation and lightness
+    var s1 = hsl1[1];
+    var s2 = hsl2[1];
+    var s = interpolate(hsl1[1], hsl2[1], fraction);
+    if(s2 == 0){  h = hsl1[0];  }  //If going to to greyscale, keep hue of source
+    if(s1 == 0){  h = hsl2[0];  }  //If coming from greyscale, keep hue of target
+    var l = interpolate(hsl1[2], hsl2[2], fraction);
 
     return [h, s, l];
 }
+
 
 // Function to interpolate between two values
 function interpolate(value1, value2, fraction) {
