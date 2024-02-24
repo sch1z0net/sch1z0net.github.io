@@ -98,7 +98,7 @@ function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames) {
                     windowedFrame = null;
                 }
 
-                return spectrogramChunk;
+                resolve(spectrogramChunk);
             } catch (error) {
                 throw error;
             }
