@@ -779,7 +779,7 @@ function plotSpectrogram(spectrogramA,spectrogramB){
     drawImageDataOnCanvas(imageDataB, "spectrogramB");
 
     const endTimeD = performance.now();
-    console.log(`CH ${ch}: Plotting the Spectrogram: Elapsed time: ${endTimeD - startTimeD} milliseconds`);    
+    console.log(`Plotting the Spectrogram: Elapsed time: ${endTimeD - startTimeD} milliseconds`);    
 }
 
 
