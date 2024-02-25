@@ -259,13 +259,12 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
                 if (numFinishedWorkers === numWorkers) {
                     // All workers have finished processing
 
-                    console.log(receivedChunks);
                     // Sort the spectrogram data based on the worker id
                     receivedChunks.sort((a, b) => a.id - b.id);
-                    console.log(receivedChunks);
+                    
                     // Combine receivedChunks data into the final spectrogram array
-                    for (const { id, chunk } of receivedChunks) {
-                        finalSpectrogram.push(...chunk);
+                    for (const { id, reconstructedChunk } of receivedChunks) {
+                        finalSpectrogram.push(...reconstructedChunk);
                     }
 
                     // Resolve the promise with the final spectrogram
