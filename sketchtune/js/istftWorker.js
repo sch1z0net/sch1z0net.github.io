@@ -84,20 +84,20 @@ function ISTFT_OLA_NORMALIZED(spectrogramChunk, windowSize, hopSize, workerID) {
 // Function to perform Weighted Overlap-Add (WOLA) for signal reconstruction from STFT
 function ISTFT_WOLA(spectrogramChunk, windowSize, hopSize, windowType, halfSpec) {
     return new Promise((resolve, reject) => {
-        const outputSignalChunk = new Float32Array(spectrogramChunk.length * hopSize);
+        let spectra = spectrogramChunk.length;
+        const outputSignalChunk = new Float32Array(spectra * hopSize);
         
         // Process each frame in the spectrogram chunk asynchronously
         const processFrames = async () => {
             try {
-                for (let i = 0; i < spectrogramChunk.length; i++) {
+                for (let i = 0; i < spectra; i++) {
                     // Compute inverse FFT of the spectrum to obtain the frame in time domain
+                    let spectrum = spectrogramChunk[i];
                     let frame;
-                    if(halfSpec){
-                       frame = await computeInverseFFTonHalf(spectrogramChunk[i]);
-                    }else{
-                       frame = await computeInverseFFT(spectrogramChunk[i]);
-                    }
-                    
+                    if(halfSpec){  frame = await computeInverseFFTonHalf(spectrum);
+                    }else{         frame = await computeInverseFFT(spectrum);        }
+                    console.log(frame.length);
+
                     // Apply synthesis window to the frame
                     const synthesisWindow = hanningWindow(windowSize);
                     //const synthesisWindow = hammingWindow(windowSize);
