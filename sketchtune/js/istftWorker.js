@@ -36,7 +36,7 @@ function ISTFT(spectrogramChunk, windowSize, hopSize, workerID) {
 // Listen for messages from the main thread
 onmessage = function (e) {
     const { spectrogramChunk, windowSize, hopSize, workerID } = e.data;
-
+    console.log(spectrogramChunk);
     // Convert the flattened chunk back to the original nested structure
     const binsPerFrame = windowSize;
     const reconstructedChunk = [];
@@ -51,15 +51,14 @@ onmessage = function (e) {
         }
         reconstructedChunk.push(frame);
     }
+    console.log(reconstructedChunk);
     
     ISTFT(reconstructedChunk, windowSize, hopSize, workerID)
         .then((outputSignalChunk) => {
-            console.log(outputSignalChunk);
             // Convert the output signal chunk to Float32Array
             const float32Array = new Float32Array(outputSignalChunk);
             // Convert the Float32Array to an ArrayBuffer
             const arrayBuffer = float32Array.buffer;
-            console.log(arrayBuffer);
             // Send the ArrayBuffer back to the main thread, transferring ownership
             postMessage({ id: workerID, buffer: arrayBuffer }, [arrayBuffer]);
         })
