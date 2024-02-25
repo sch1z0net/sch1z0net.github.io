@@ -266,7 +266,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
             }
 
             // Listen for errors from the worker
-            worker.onerror = function (error) {
+            onerror = function (error) {
                 console.error("Error in worker", i, ":", error.message);
             };
         }
