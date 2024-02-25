@@ -316,7 +316,7 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfS
 
         // Slice spectrogram array to create a smaller chunk for this worker
         const chunk = spectrogram.slice(startFrame, endFrame);
-        if(i==0){ console.log("CHUNK1",i,chunk); }
+
         const flattenedChunk = chunk.flatMap(frame => frame.flatMap(spectrum => [spectrum.re, spectrum.im]) );
         // Convert the flattened array to a Float32Array
         const float32Array = new Float32Array(flattenedChunk);
