@@ -1772,7 +1772,7 @@ let windowSize = 512; // Default value
 let hopFactor = 2; // Default value
 let smoothFactor = 1;
 let windowTypeWOLA = 0;
-let halfSpec = true;
+let halfSpec = 0;
 $(document).ready(function(){
   // Function to update global variables when select boxes change
   function updateVariables() {
@@ -1820,7 +1820,7 @@ $(document).ready(function(){
     $windowTypeWOLASelect.append($("<option>").attr("value", type).text(type));
   });
 
-  [true, false].forEach(function(type) {
+  [0, 1].forEach(function(type) {
     $halfSpecSelect.append($("<option>").attr("value", type).text(type));
   });
 
