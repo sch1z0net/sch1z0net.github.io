@@ -228,6 +228,9 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
             worker.onmessage = function (e) {
                 const { id, chunk } = e.data;
                 receivedChunks.push({ id, chunk });
+                const endTime = performance.now();
+                const elapsedTime = endTime - startTime;
+                console.log("Worker sent Chunk after ", elapsedTime, "ms");
 
                 // Increment the counter for finished workers
                 numFinishedWorkers++;
@@ -235,9 +238,6 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
                 // Check if all workers have finished processing
                 if (numFinishedWorkers === numWorkers) {
                     // All workers have finished processing
-                    const endTime = performance.now();
-                    const elapsedTime = endTime - startTime;
-                    console.log("All Workers finished in", elapsedTime, "ms");
 
                     // Sort the spectrogram data based on the worker id
                     receivedChunks.sort((a, b) => a.id - b.id);
