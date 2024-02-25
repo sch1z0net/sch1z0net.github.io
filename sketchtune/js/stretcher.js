@@ -226,11 +226,12 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
 
             // Listen for messages from the worker
             worker.onmessage = function (e) {
-                const { id, chunk } = e.data;
-                receivedChunks.push({ id, chunk });
                 const endTime = performance.now();
                 const elapsedTime = endTime - startTime;
                 console.log("Worker sent Chunk after ", elapsedTime, "ms");
+                
+                const { id, chunk } = e.data;
+                receivedChunks.push({ id, chunk });
 
                 // Increment the counter for finished workers
                 numFinishedWorkers++;
