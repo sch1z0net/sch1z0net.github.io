@@ -318,8 +318,6 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize) {
         // Create worker and send the chunk of spectrogram
         const worker = new Worker('./js/istftWorker.js');
 
-        console.log(float32Array);
-
         // Construct the message object
         const message = {
             flattenedChunk: arrayBuffer,
