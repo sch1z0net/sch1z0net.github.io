@@ -628,8 +628,8 @@ async function computeInverseFFT(spectrum) {
     }
 
     for (let i = 0; i < paddedSpectrum.length/2; i++){
-        console.log(paddedSpectrum[i * 2], paddedSpectrum[paddedSize * 2 - i * 2]);
-        console.log(paddedSpectrum[i * 2 + 1], paddedSpectrum[paddedSize * 2 - i * 2 + 1]);
+        console.log("HALF",paddedSpectrum[i * 2], paddedSpectrum[paddedSize * 2 - i * 2]);
+        //console.log(paddedSpectrum[i * 2 + 1], paddedSpectrum[paddedSize * 2 - i * 2 + 1]);
     }
 
 
@@ -667,7 +667,7 @@ async function computeInverseFFTonHalf(halfSpectrum) {
     }
 
     for (let i = 0; i < fullSpectrum.length/2; i++){
-        console.log(fullSpectrum[i * 2], fullSpectrum[paddedSize * 2 - i * 2]);
+        console.log("HALF", fullSpectrum[i * 2], fullSpectrum[paddedSize * 2 - i * 2]);
         //console.log(fullSpectrum[i * 2 + 1], fullSpectrum[paddedSize * 2 - i * 2 + 1]);
     }
 
@@ -683,6 +683,7 @@ async function computeInverseFFTonHalf(halfSpectrum) {
     return audioSignal;
 }
 
+computeInverseFFT([{re:91,im:92},{re:45,im:56},{re:26,im:37},{re:56,im:36},{re:27,im:28},{re:14,im:25},{re:51,im:42},{re:21,im:42}]);
 
 computeInverseFFTonHalf([{re:91,im:92},{re:45,im:56},{re:26,im:37},{re:56,im:36},{re:27,im:28},{re:14,im:25},{re:51,im:42},{re:21,im:42}]);
 //computeInverseFFTonHalf([{re:91,im:92},{re:45,im:56},{re:26,im:37},{re:56,im:36},{re:27,im:28},{re:14,im:25},{re:51,im:42}]);
