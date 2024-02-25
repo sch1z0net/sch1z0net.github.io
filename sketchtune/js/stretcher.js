@@ -228,7 +228,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
             worker.onmessage = function (e) {
                 const endTime = performance.now();
                 const elapsedTime = endTime - startTime;
-                if(workerID == 0){
+                if(i == 0){
                     console.log("Worker",i,"sent Chunk after ", elapsedTime, "ms");
                 }
 
