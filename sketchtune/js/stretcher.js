@@ -182,6 +182,8 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
 
 function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
     return new Promise((resolve) => {
+        var startTime = performance.now();
+
         const numFrames = Math.floor((inputSignal.length - windowSize) / hopSize) + 1;
         const receivedChunks = [];
         let finalSpectrogram = [];
@@ -233,6 +235,9 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
                 // Check if all workers have finished processing
                 if (numFinishedWorkers === numWorkers) {
                     // All workers have finished processing
+                    const endTime = performance.now();
+                    const elapsedTime = endTime - startTime;
+                    console.log("All Workers finished in", elapsedTime, "ms");
 
                     // Sort the spectrogram data based on the worker id
                     receivedChunks.sort((a, b) => a.id - b.id);
