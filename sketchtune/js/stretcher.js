@@ -228,7 +228,9 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
             worker.onmessage = function (e) {
                 const endTime = performance.now();
                 const elapsedTime = endTime - startTime;
-                console.log("Worker sent Chunk after ", elapsedTime, "ms");
+                if(workerID == 0){
+                    console.log("Worker",i,"sent Chunk after ", elapsedTime, "ms");
+                }
 
                 const { id, buffer } = e.data;
 
@@ -872,17 +874,20 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoo
         const startTime1 = performance.now();
         const preSpectrogram = await STFTWithWebWorkers(inputSignal, windowSize, hopSize, 1);
         const endTime1 = performance.now();
-        console.log(`CH ${ch}: Calculating the Spectrogram: Elapsed time: ${endTime1 - startTime1} milliseconds`);
 
         const startTime2 = performance.now();
         const postSpectrogram = await stretchSpectrogram(preSpectrogram, stretchFactor);
         const endTime2 = performance.now();
-        console.log(`CH ${ch}: Now Stretching the Spectrogram: Elapsed time: ${endTime2 - startTime2} milliseconds`);
 
         const startTime3 = performance.now();
         const processedSignal = await ISTFTWithWebWorkers(postSpectrogram, windowSize, hopSize);
         const endTime3 = performance.now();
-        console.log(`CH ${ch}: Now Reconstructing the Audio Signal: Elapsed time: ${endTime3 - startTime3} milliseconds`);
+
+        if(ch == 0){
+            console.log(`CH ${ch}: Calculating the Spectrogram: Elapsed time: ${endTime1 - startTime1} milliseconds`);
+            console.log(`CH ${ch}: Now Stretching the Spectrogram: Elapsed time: ${endTime2 - startTime2} milliseconds`);
+            console.log(`CH ${ch}: Now Reconstructing the Audio Signal: Elapsed time: ${endTime3 - startTime3} milliseconds`);
+        }
 
         return {processedSignal, preSpectrogram, postSpectrogram};
     } catch (error) {
