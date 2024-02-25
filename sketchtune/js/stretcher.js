@@ -291,7 +291,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
 
 
 // Function to perform Inverse Short-Time Fourier Transform (ISTFT) using Web Workers
-function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize) {
+function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType) {
     const numFrames = spectrogram.length;
     const outputSignal = new Float32Array((numFrames - 1) * hopSize + windowSize);
 
@@ -325,7 +325,8 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize) {
             flattenedChunk: arrayBuffer,
             windowSize: windowSize,
             hopSize: hopSize,
-            workerID: i
+            workerID: i,
+            windowType, windowType
         };
 
         // Send the message to the worker
@@ -869,7 +870,7 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
 
 
 
-async function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFactor, ch) {
+async function timeStretch(inputSignal, stretchFactor, windowSize, windowType, hopSize, smoothFactor, ch) {
     try {
         const startTime1 = performance.now();
         const preSpectrogram = await STFTWithWebWorkers(inputSignal, windowSize, hopSize, 1);
@@ -880,7 +881,7 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoo
         const endTime2 = performance.now();
 
         const startTime3 = performance.now();
-        const processedSignal = await ISTFTWithWebWorkers(postSpectrogram, windowSize, hopSize);
+        const processedSignal = await ISTFTWithWebWorkers(postSpectrogram, windowSize, hopSize, windowType);
         const endTime3 = performance.now();
 
         if(ch == 0){
@@ -936,7 +937,7 @@ function plotSpectrogram(spectrogramA,spectrogramB){
 
 // FOR COMPRESSING: 
 // windowSize = 512*4, hopSize = windowSize / 8
-async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize=1024, hopFactor=4, smoothFactor=1) {
+async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize=1024, hopFactor=4, smoothFactor=1, windowType=0) {
     //For beats with a clear BPM, where the goal is to preserve rhythmic structure and transient characteristics, 
     //it's often beneficial to prioritize temporal resolution over frequency resolution. 
     //In this case, using a smaller window size in the Short-Time Fourier Transform (STFT) analysis would be more suitable. 
@@ -1000,7 +1001,7 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
         // PARALLEL 
         // Push the promise for processing this channel into the array
         processingPromises.push(
-            processChannel(audioContext, inputData, resampledBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor)
+            processChannel(audioContext, inputData, resampledBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor, windowType)
             .then(spectrogram => {
                 if (ch === 0) { spectrogramA = spectrogram; }
                 if (ch === 1) { spectrogramB = spectrogram; }
@@ -1026,11 +1027,11 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
     return {resampledBuffer, spectrogramA, spectrogramB};
 }
 
-async function processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor) {
+async function processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor, windowType) {
     // Time-stretch the input data
     const startTimeCH = performance.now();
 
-    const {processedSignal, preSpectrogram, postSpectrogram} = await timeStretch(inputData, stretchFactor, windowSize, hopSize, smoothFactor, ch);
+    const {processedSignal, preSpectrogram, postSpectrogram} = await timeStretch(inputData, stretchFactor, windowSize, windowType, hopSize, smoothFactor, ch);
     const processedSignalFloat32 = new Float32Array(processedSignal);  // Convert processedSignal to Float32Array if necessary
     
     const endTimeCH = performance.now();
