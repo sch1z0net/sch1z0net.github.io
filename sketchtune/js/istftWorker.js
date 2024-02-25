@@ -85,9 +85,8 @@ function ISTFT_OLA_NORMALIZED(spectrogramChunk, windowSize, hopSize, workerID) {
 function ISTFT_WOLA(spectrogramChunk, windowSize, hopSize, workerID, windowType, halfSpec) {
     return new Promise((resolve, reject) => {
         let spectra = spectrogramChunk.length;
-        let outputLength = spectra * hopSize;
-        if(halfSpec){ outputLength /= 2; }
-        const outputSignalChunk = new Float32Array(outputLength);
+        
+        const outputSignalChunk = new Float32Array(spectra * hopSize);
         
         // Process each frame in the spectrogram chunk asynchronously
         const processFrames = async () => {
