@@ -132,7 +132,6 @@ onmessage = function (e) {
     const { flattenedChunk, windowSize, hopSize, workerID, windowType } = e.data;
     // Convert back
     const spectrogramChunk = new Float32Array(flattenedChunk);
-    console.log("ON MESSAGE",spectrogramChunk);
 
     // Convert the flattened chunk back to the original nested structure
     //const binsPerFrame = windowSize;
