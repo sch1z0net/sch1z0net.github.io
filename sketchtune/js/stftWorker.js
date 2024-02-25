@@ -196,7 +196,6 @@ onmessage = function (e) {
             const flattenedChunk = spectrogramChunk.flatMap(frame => frame.flatMap(spectrum => [spectrum.re, spectrum.im]) );
             // Convert the flattened array to a Float32Array
             const float32Array = new Float32Array(flattenedChunk);
-            console.log(float32Array);
             // Convert the Float32Array to an ArrayBuffer
             const arrayBuffer = float32Array.buffer;
             // Send the ArrayBuffer back to the main thread, transferring ownership

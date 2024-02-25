@@ -263,6 +263,11 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
                     // Resolve the promise with the final spectrogram
                     resolve(finalSpectrogram);
                 }
+            }
+
+            // Listen for errors from the worker
+            worker.onerror = function (error) {
+                console.error("Error in worker", i, ":", error.message);
             };
         }
     });
