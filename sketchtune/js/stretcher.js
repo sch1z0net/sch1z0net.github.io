@@ -337,7 +337,7 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize) {
 
                 // Convert the ArrayBuffer back to a Float32Array
                 const outputChunk = new Float32Array(buffer);
-
+                console.log(outputChunk);
                 // Copy the processed signal chunk to the output signal
                 const startIdx = id * framesPerWorker * hopSize;
                 outputSignal.set(outputChunk, startIdx);
