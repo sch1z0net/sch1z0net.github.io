@@ -240,7 +240,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
                 const reconstructedChunk = [];
                 for (let i = 0; i < flattenedChunk.length; i += binsPerFrame * 2) {
                     const frame = [];
-                    for (let j = 0; j < binsPerFrame / 2; j++) {
+                    for (let j = 0; j < binsPerFrame; j++) {
                         const spectrum = {
                             re: flattenedChunk[i + j * 2],
                             im: flattenedChunk[i + j * 2 + 1]
