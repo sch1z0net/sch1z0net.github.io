@@ -1,6 +1,6 @@
 importScripts('./fft.js');
 
-// Function to perform Inverse Short-Time Fourier Transform (ISTFT)
+/*// Function to perform Inverse Short-Time Fourier Transform (ISTFT)
 function ISTFT(spectrogramChunk, windowSize, hopSize, workerID) {
     return new Promise((resolve, reject) => {
         const outputSignalChunk = [];
@@ -12,7 +12,7 @@ function ISTFT(spectrogramChunk, windowSize, hopSize, workerID) {
                 for (let i = 0; i < spectrogramChunk.length; i++) {
                     // Compute inverse FFT of the spectrum to obtain the frame in time domain
                     const frame = await computeInverseFFT(spectrogramChunk[i]);
-                    // Apply overlap-add to reconstruct the output signal
+                    // Apply overlap-add to reconstruct the output signal [OLA]
                     const startIdx = i * hopSize;
                     for (let j = 0; j < windowSize; j++) {
                         if (!outputSignalChunk[startIdx + j]) {
@@ -22,7 +22,48 @@ function ISTFT(spectrogramChunk, windowSize, hopSize, workerID) {
                         }
                     }
                 }
-                //console.log("WORKER", workerID, "resolve Output Signal Chunk");
+                resolve(outputSignalChunk);
+            } catch (error) {
+                reject(error);
+            }
+        };
+
+        processFrames();
+    });
+}*/
+
+// Function to perform Inverse Short-Time Fourier Transform (ISTFT)
+function ISTFT(spectrogramChunk, windowSize, hopSize, workerID) {
+    return new Promise((resolve, reject) => {
+        const outputSignalChunk = [];
+        
+        // Process each frame in the spectrogram chunk asynchronously
+        const processFrames = async () => {
+            try {
+                // Compute the maximum absolute value of the output signal
+                let maxAbsValue = 0;
+
+                for (let i = 0; i < spectrogramChunk.length; i++) {
+                    const frame = await computeInverseFFT(spectrogramChunk[i]);
+                    const startIdx = i * hopSize;
+                    for (let j = 0; j < windowSize; j++) {
+                        if (!outputSignalChunk[startIdx + j]) {
+                            outputSignalChunk[startIdx + j] = frame[j];
+                            // Update maxAbsValue if necessary
+                            maxAbsValue = Math.max(maxAbsValue, Math.abs(frame[j]));
+                        } else {
+                            outputSignalChunk[startIdx + j] += frame[j] * 0.5 * (1 - Math.cos(2 * Math.PI * j / (windowSize - 1)));
+                            // Update maxAbsValue if necessary
+                            maxAbsValue = Math.max(maxAbsValue, Math.abs(outputSignalChunk[startIdx + j]));
+                        }
+                    }
+                }
+
+                // Normalize the output signal
+                for (let i = 0; i < outputSignalChunk.length; i++) {
+                    outputSignalChunk[i] /= maxAbsValue;
+                }
+
                 resolve(outputSignalChunk);
             } catch (error) {
                 reject(error);
@@ -32,6 +73,7 @@ function ISTFT(spectrogramChunk, windowSize, hopSize, workerID) {
         processFrames();
     });
 }
+
 
 // Listen for messages from the main thread
 onmessage = function (e) {
