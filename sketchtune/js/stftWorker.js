@@ -194,7 +194,13 @@ onmessage = function (e) {
     STFT(chunk, windowSize, hopSize, numFrames, mode)
         .then((spectrogramChunk) => {
             // Flatten the nested array
-            const flattenedChunk = [].concat(...spectrogramChunk);
+            const flattenedChunk = spectrogramChunk.reduce((acc, frame) => {
+                // Concatenate spectra from the current frame to the accumulator array
+                return acc.concat(frame.map(spectrum => spectrum.re, spectrum.im));
+            }, []);
+
+            console.log(flattenedChunk);
+
             // Convert the flattened array to a Float32Array
             const float32Array = new Float32Array(flattenedChunk);
             // Convert the Float32Array to an ArrayBuffer
