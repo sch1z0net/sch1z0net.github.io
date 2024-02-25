@@ -82,7 +82,7 @@ function ISTFT_OLA_NORMALIZED(spectrogramChunk, windowSize, hopSize, workerID) {
 
 
 // Function to perform Weighted Overlap-Add (WOLA) for signal reconstruction from STFT
-function ISTFT_WOLA(spectrogramChunk, windowSize, hopSize, windowType, halfSpec) {
+function ISTFT_WOLA(spectrogramChunk, windowSize, hopSize, workerID, windowType, halfSpec) {
     return new Promise((resolve, reject) => {
         let spectra = spectrogramChunk.length;
         const outputSignalChunk = new Float32Array(spectra * hopSize);
