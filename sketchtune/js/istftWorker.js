@@ -97,10 +97,6 @@ function ISTFT_WOLA(spectrogramChunk, windowSize, hopSize, windowType, halfSpec)
                     }else{
                        frame = await computeInverseFFT(spectrogramChunk[i]);
                     }
-
-                    if(i==0){
-                        console.log(frame[0]);
-                    }
                     
                     // Apply synthesis window to the frame
                     const synthesisWindow = hanningWindow(windowSize);

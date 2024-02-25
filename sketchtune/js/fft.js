@@ -652,9 +652,9 @@ async function computeInverseFFTonHalf(halfSpectrum) {
     }
 
     // Apply symmetry to fill the second half of the spectrum
-    for (let i = 1; i < halfSpectrum.length; i++) {
-        fullSpectrum[(paddedSize - i) * 2] = halfSpectrum[i].re; // Copy the real part
-        fullSpectrum[(paddedSize - i) * 2 + 1] = halfSpectrum[i].im; // Copy imaginary part
+    for (let i = 1; i <= halfSpectrum.length; i++) {
+        fullSpectrum[paddedSize * 2 - i * 2] = halfSpectrum[i-1].re; // Copy the real part
+        fullSpectrum[paddedSize * 2 - i * 2 + 1] = halfSpectrum[i-1].im; // Copy imaginary part
     }
 
     // Perform the IFFT on the full spectrum
