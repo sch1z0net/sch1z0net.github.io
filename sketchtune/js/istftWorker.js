@@ -37,17 +37,18 @@ function ISTFT(spectrogramChunk, windowSize, hopSize, workerID) {
 onmessage = function (e) {
     const { spectrogramChunk, windowSize, hopSize, workerID } = e.data;
     
-    //console.log("WORKER", workerID, "received message.")
-    
-    // Use fftFactorLookup for computations
     ISTFT(spectrogramChunk, windowSize, hopSize, workerID)
         .then((outputSignalChunk) => {
-            // Send the result back to the main thread
-            //console.log("WORKER", workerID, "Output Signal Chunk ready");
-            postMessage({id:workerID, chunk:outputSignalChunk});
+            // Convert the output signal chunk to Float32Array
+            const float32Array = new Float32Array(outputSignalChunk);
+            // Convert the Float32Array to an ArrayBuffer
+            const arrayBuffer = float32Array.buffer;
+            // Send the ArrayBuffer back to the main thread, transferring ownership
+            postMessage({ id: workerID, buffer: arrayBuffer }, [arrayBuffer]);
         })
         .catch((error) => {
             console.log("WORKER", workerID, 'Error:', error);
             // Optionally, handle the error and send back an error message to the main thread
         });
 };
+

@@ -255,6 +255,9 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
                 // Increment the counter for finished workers
                 numFinishedWorkers++;
 
+                // Close the worker after it completes its work
+                worker.terminate();
+
                 // Check if all workers have finished processing
                 if (numFinishedWorkers === numWorkers) {
                     // All workers have finished processing
@@ -325,10 +328,10 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize) {
         processingPromises.push(new Promise((resolve, reject) => {
             // Listen for messages from the worker
             worker.onmessage = function (e) {
-                const {id, chunk} = e.data;
+                const {id, buffer} = e.data;
                 // Copy the processed signal chunk to the output signal
                 const startIdx = id * framesPerWorker * hopSize;
-                outputSignal.set(chunk, startIdx);
+                outputSignal.set(buffer, startIdx);
                 // Close the worker after it completes its work
                 worker.terminate();
                 resolve(); // Resolve the promise
