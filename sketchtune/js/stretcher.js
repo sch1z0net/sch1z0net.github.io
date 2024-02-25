@@ -250,6 +250,8 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
                     reconstructedChunk.push(frame);
                 }
 
+                console.log(reconstructedChunk);
+
                 receivedChunks.push({ id, reconstructedChunk });
 
                 // Increment the counter for finished workers
