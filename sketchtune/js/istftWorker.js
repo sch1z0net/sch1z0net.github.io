@@ -134,7 +134,9 @@ onmessage = function (e) {
     const spectrogramChunk = new Float32Array(flattenedChunk);
 
     // Convert the flattened chunk back to the original nested structure
-    const binsPerFrame = windowSize;
+    //const binsPerFrame = windowSize;
+    const binsPerFrame = windowSize / 2;
+
     const reconstructedChunk = [];
     for (let i = 0; i < spectrogramChunk.length; i += binsPerFrame * 2) {
         const frame = [];
