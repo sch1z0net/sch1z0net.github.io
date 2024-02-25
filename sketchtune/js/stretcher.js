@@ -318,9 +318,11 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize) {
         // Create worker and send the chunk of spectrogram
         const worker = new Worker('./js/istftWorker.js');
 
+        console.log(float32Array);
+
         // Construct the message object
         const message = {
-            spectrogramChunk: arrayBuffer,
+            flattenedChunk: arrayBuffer,
             windowSize: windowSize,
             hopSize: hopSize,
             workerID: i
@@ -337,7 +339,6 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize) {
 
                 // Convert the ArrayBuffer back to a Float32Array
                 const outputChunk = new Float32Array(buffer);
-                console.log(outputChunk);
                 // Copy the processed signal chunk to the output signal
                 const startIdx = id * framesPerWorker * hopSize;
                 outputSignal.set(outputChunk, startIdx);
