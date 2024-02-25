@@ -1,7 +1,7 @@
 importScripts('./fft.js');
 
 /*// Function to perform Inverse Short-Time Fourier Transform (ISTFT)
-function ISTFT(spectrogramChunk, windowSize, hopSize, workerID) {
+function ISTFT_OLA(spectrogramChunk, windowSize, hopSize, workerID) {
     return new Promise((resolve, reject) => {
         const outputSignalChunk = [];
         
@@ -32,8 +32,9 @@ function ISTFT(spectrogramChunk, windowSize, hopSize, workerID) {
     });
 }*/
 
+/*
 // Function to perform Inverse Short-Time Fourier Transform (ISTFT)
-function ISTFT(spectrogramChunk, windowSize, hopSize, workerID) {
+function ISTFT_OLA_NORMALIZED(spectrogramChunk, windowSize, hopSize, workerID) {
     return new Promise((resolve, reject) => {
         const outputSignalChunk = [];
         
@@ -73,6 +74,85 @@ function ISTFT(spectrogramChunk, windowSize, hopSize, workerID) {
         processFrames();
     });
 }
+*/
+
+
+
+
+// Function to perform Weighted Overlap-Add (WOLA) for signal reconstruction from STFT
+function ISTFT_WOLA(spectrogramChunk, windowSize, hopSize, synthesisWindow) {
+    return new Promise((resolve, reject) => {
+        const outputSignalChunk = new Float32Array(spectrogramChunk.length * hopSize);
+        
+        // Process each frame in the spectrogram chunk asynchronously
+        const processFrames = async () => {
+            try {
+                for (let i = 0; i < spectrogramChunk.length; i++) {
+                    // Compute inverse FFT of the spectrum to obtain the frame in time domain
+                    const frame = await computeInverseFFT(spectrogramChunk[i]);
+
+                    // Apply synthesis window to the frame
+                    const synthesisWindow = hanningWindow(windowSize);
+                    //const synthesisWindow = hammingWindow(windowSize);
+                    //const synthesisWindow = blackmanWindow(windowSize);
+                    const weightedFrame = applySynthesisWindow(frame, synthesisWindow);
+
+                    // Overlap-add the weighted frame to the output signal
+                    const startIdx = i * hopSize;
+                    for (let j = 0; j < windowSize; j++) {
+                        outputSignalChunk[startIdx + j] += weightedFrame[j];
+                    }
+                }
+
+                // Normalize the output signal
+                normalizeOutput(outputSignalChunk);
+
+                resolve(outputSignalChunk);
+            } catch (error) {
+                reject(error);
+            }
+        };
+
+        processFrames();
+    });
+}
+
+// Function to apply synthesis window to a frame
+function applySynthesisWindow(frame, synthesisWindow) {
+    const weightedFrame = new Float32Array(frame.length);
+    for (let i = 0; i < frame.length; i++) {
+        weightedFrame[i] = frame[i] * synthesisWindow[i];
+    }
+    return weightedFrame;
+}
+
+// Function to normalize the output signal
+function normalizeOutput(outputSignalChunk) {
+    // Find the maximum absolute value in the output signal
+    let maxAbsValue = 0;
+    for (let i = 0; i < outputSignalChunk.length; i++) {
+        const absValue = Math.abs(outputSignalChunk[i]);
+        if (absValue > maxAbsValue) {
+            maxAbsValue = absValue;
+        }
+    }
+
+    // Normalize the output signal
+    if (maxAbsValue > 0) {
+        const scaleFactor = 1 / maxAbsValue;
+        for (let i = 0; i < outputSignalChunk.length; i++) {
+            outputSignalChunk[i] *= scaleFactor;
+        }
+    }
+}
+
+
+
+
+
+
+
+
 
 
 // Listen for messages from the main thread
@@ -96,7 +176,9 @@ onmessage = function (e) {
         reconstructedChunk.push(frame);
     }
     
-    ISTFT(reconstructedChunk, windowSize, hopSize, workerID)
+    //ISTFT_OLA(reconstructedChunk, windowSize, hopSize, workerID)
+    //ISTFT_OLA_NORMALIZED(reconstructedChunk, windowSize, hopSize, workerID)
+    ISTFT_WOLA(reconstructedChunk, windowSize, hopSize, workerID)
         .then((outputSignalChunk) => {
             // Convert the output signal chunk to Float32Array
             const float32Array = new Float32Array(outputSignalChunk);
