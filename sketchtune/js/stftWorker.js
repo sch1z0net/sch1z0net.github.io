@@ -196,7 +196,7 @@ onmessage = function (e) {
 
     // Convert back
     const chunk = new Float32Array(inputSignal);
-
+    
     STFT(chunk, windowSize, hopSize, numFrames, mode, halfSpec)
         .then((spectrogramChunk) => {
             //console.log(spectrogramChunk);
