@@ -90,6 +90,7 @@ function ISTFT_WOLA(spectrogramChunk, windowSize, hopSize, windowType) {
         const processFrames = async () => {
             try {
                 for (let i = 0; i < spectrogramChunk.length; i++) {
+                    console.log(spectrogramChunk[i]);
                     // Compute inverse FFT of the spectrum to obtain the frame in time domain
                     const frame = await computeInverseFFT(spectrogramChunk[i]);
 
