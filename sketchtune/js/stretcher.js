@@ -883,6 +883,7 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, windowType, h
         const postSpectrogram = await stretchSpectrogram(preSpectrogram, stretchFactor);
         const endTime2 = performance.now();
 
+        console.log(postSpectrogram);
         const startTime3 = performance.now();
         const processedSignal = await ISTFTWithWebWorkers(postSpectrogram, windowSize, hopSize, windowType);
         const endTime3 = performance.now();
