@@ -225,7 +225,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
             worker.postMessage(message, [chunky.buffer]); // Transfer ownership of the ArrayBuffer
 
             // Listen for messages from the main thread
-            onmessage = function (e) {
+            worker.onmessage = function (e) {
                 const endTime = performance.now();
                 const elapsedTime = endTime - startTime;
                 console.log("Worker sent Chunk after ", elapsedTime, "ms");
@@ -266,7 +266,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
             }
 
             // Listen for errors from the worker
-            onerror = function (error) {
+            worker.onerror = function (error) {
                 console.error("Error in worker", i, ":", error.message);
             };
         }
