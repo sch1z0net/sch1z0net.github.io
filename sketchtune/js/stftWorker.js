@@ -193,10 +193,7 @@ onmessage = function (e) {
 
     STFT(chunk, windowSize, hopSize, numFrames, mode)
         .then((spectrogramChunk) => {
-            const flattenedChunk = [].concat(...spectrogramChunk.map(frame =>
-                frame.map(spectrum => [spectrum.re, spectrum.im])
-            ));
-
+            const flattenedFrames = spectrogramChunk.map(frame => frame.flatMap(spectrum => [spectrum.re, spectrum.im]) );
             console.log(flattenedChunk);
 
             // Convert the flattened array to a Float32Array
