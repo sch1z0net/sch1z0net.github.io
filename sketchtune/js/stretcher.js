@@ -224,13 +224,25 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
             // Send the message to the worker
             worker.postMessage(message, [chunky.buffer]); // Transfer ownership of the ArrayBuffer
 
-            // Listen for messages from the worker
-            worker.onmessage = function (e) {
+            // Listen for messages from the main thread
+            onmessage = function (e) {
                 const endTime = performance.now();
                 const elapsedTime = endTime - startTime;
                 console.log("Worker sent Chunk after ", elapsedTime, "ms");
-                
-                const { id, chunk } = e.data;
+
+                const { id, buffer } = e.data;
+
+                // Convert the ArrayBuffer back to a Float32Array
+                const float32Array = new Float32Array(buffer);
+
+                // Convert the Float32Array back to a nested array
+                const chunk = [];
+                const numElementsPerFrame = windowSize;
+                for (let i = 0; i < float32Array.length; i += numElementsPerFrame) {
+                    const frame = float32Array.slice(i, i + numElementsPerFrame);
+                    chunk.push(frame);
+                }
+
                 receivedChunks.push({ id, chunk });
 
                 // Increment the counter for finished workers

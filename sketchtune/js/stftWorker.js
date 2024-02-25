@@ -193,11 +193,14 @@ onmessage = function (e) {
 
     STFT(chunk, windowSize, hopSize, numFrames, mode)
         .then((spectrogramChunk) => {
-            // Convert the spectrogramChunk to an ArrayBuffer
-            const arrayBuffer = spectrogramChunk.buffer;
-
+            // Flatten the nested array
+            const flattenedChunk = [].concat(...spectrogramChunk);
+            // Convert the flattened array to a Float32Array
+            const float32Array = new Float32Array(flattenedChunk);
+            // Convert the Float32Array to an ArrayBuffer
+            const arrayBuffer = float32Array.buffer;
             // Send the ArrayBuffer back to the main thread, transferring ownership
-            postMessage({ id: workerID, chunk: arrayBuffer }, [arrayBuffer]);
+            postMessage({ id: workerID, buffer: arrayBuffer }, [arrayBuffer]);
 
             const endTime = performance.now();
             const elapsedTime = endTime - startTime;
@@ -208,4 +211,5 @@ onmessage = function (e) {
             // Optionally, handle the error and send back an error message to the main thread
         });
 };
+
 
