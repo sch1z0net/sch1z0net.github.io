@@ -54,10 +54,12 @@ onmessage = function (e) {
     
     ISTFT(reconstructedChunk, windowSize, hopSize, workerID)
         .then((outputSignalChunk) => {
+            console.log(outputSignalChunk);
             // Convert the output signal chunk to Float32Array
             const float32Array = new Float32Array(outputSignalChunk);
             // Convert the Float32Array to an ArrayBuffer
             const arrayBuffer = float32Array.buffer;
+            console.log(arrayBuffer);
             // Send the ArrayBuffer back to the main thread, transferring ownership
             postMessage({ id: workerID, buffer: arrayBuffer }, [arrayBuffer]);
         })
