@@ -86,7 +86,6 @@ function ISTFT_WOLA(spectrogramChunk, windowSize, hopSize, windowType, halfSpec)
     return new Promise((resolve, reject) => {
         const outputSignalChunk = new Float32Array(spectrogramChunk.length * hopSize);
         
-
         // Process each frame in the spectrogram chunk asynchronously
         const processFrames = async () => {
             try {
@@ -98,6 +97,8 @@ function ISTFT_WOLA(spectrogramChunk, windowSize, hopSize, windowType, halfSpec)
                     }else{
                        frame = await computeInverseFFT(spectrogramChunk[i]);
                     }
+
+                    console.log(i,frame);
                     
                     // Apply synthesis window to the frame
                     const synthesisWindow = hanningWindow(windowSize);
