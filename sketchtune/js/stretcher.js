@@ -86,7 +86,7 @@ test();
 
 
 
-
+/*
 // Function to perform Short-Time Fourier Transform (STFT) using Web Workers
 function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
     const numFrames = Math.floor((inputSignal.length - windowSize) / hopSize) + 1;
@@ -134,18 +134,6 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
         // Send the message to the worker
         worker.postMessage(message, [chunky.buffer]); // Transfer ownership of the ArrayBuffer
 
-        /*
-        // Listen for messages from the worker
-        worker.onmessage = function (e) {
-            //console.log( "WORKER finished." )
-            const workerSpectrogram = e.data;
-            spectrogram.push(...workerSpectrogram);
-
-            // Close the worker after it completes its work
-            worker.terminate();
-        };
-        */
-
         // Listen for messages from the worker
         worker.onmessage = function (e) {
             const {id, chunk} = e.data;
@@ -174,6 +162,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
         };
     }
 
+
     // Return a promise that resolves when all workers finish processing
     return new Promise((resolve) => {
         const checkCompletion = () => {
@@ -188,6 +177,80 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
         checkCompletion(); // Start checking for completion
     });
 }
+*/
+
+
+function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
+    const numFrames = Math.floor((inputSignal.length - windowSize) / hopSize) + 1;
+    const receivedChunks = [];
+    let finalSpectrogram = [];
+
+    // Define the number of workers (you can adjust this based on performance testing)
+    const numWorkers = NUM_WORKERS;
+
+    // Calculate frames per worker
+    const framesPerWorker = Math.ceil(numFrames / numWorkers);
+
+    // Initialize a counter for finished workers
+    let numFinishedWorkers = 0;
+
+    // Create and run workers
+    for (let i = 0; i < numWorkers; i++) {
+        const startFrame = i * framesPerWorker;
+        const endFrame = Math.min(startFrame + framesPerWorker, numFrames);
+
+        // Slice inputSignal array to create a smaller chunk for this worker
+        const chunk = inputSignal.slice(startFrame * hopSize, (endFrame - 1) * hopSize + windowSize);
+
+        // Create worker and send the chunk of inputSignal
+        const worker = new Worker('./js/stftWorker.js');
+
+        // Convert chunk array to Float32Array (assuming it contains float values)
+        const chunky = new Float32Array(chunk);
+
+        // Construct the message object
+        const message = {
+            inputSignal: chunky.buffer, // Transfer ownership of the ArrayBuffer
+            windowSize: windowSize,
+            hopSize: hopSize,
+            numFrames: numFrames,
+            workerID: i,
+            mode: mode
+        };
+
+        // Send the message to the worker
+        worker.postMessage(message, [chunky.buffer]); // Transfer ownership of the ArrayBuffer
+
+        // Listen for messages from the worker
+        worker.onmessage = function (e) {
+            const { id, chunk } = e.data;
+            receivedChunks.push({ id, chunk });
+
+            // Increment the counter for finished workers
+            numFinishedWorkers++;
+
+            // Check if all workers have finished processing
+            if (numFinishedWorkers === numWorkers) {
+                // All workers have finished processing
+
+                // Sort the spectrogram data based on the worker id
+                receivedChunks.sort((a, b) => a.id - b.id);
+
+                // Combine receivedChunks data into the final spectrogram array
+                for (const { id, chunk } of receivedChunks) {
+                    finalSpectrogram.push(...chunk);
+                }
+
+                // Resolve the promise with the final spectrogram
+                resolve(finalSpectrogram);
+            }
+        };
+    }
+
+    // Return a promise that resolves when all workers finish processing
+    return new Promise((resolve) => {});
+}
+
 
 
 
