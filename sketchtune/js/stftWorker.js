@@ -41,12 +41,7 @@ function STFT_1(inputSignalChunk, windowSize, hopSize, numFrames) {
 function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames, halfSpec) {
     return new Promise((resolve, reject) => {
         var frames = (inputSignalChunk.length - windowSize)/hopSize;
-        let spectrogramChunk;
-        if(halfSpec){ 
-            spectrogramChunk = new Array(frames/2); // Preallocate memory 
-        }else{
-            spectrogramChunk = new Array(frames); // Preallocate memory 
-        }
+        const spectrogramChunk = new Array(frames); // Preallocate memory
 
         // Array to hold promises for each computation
         const computationPromises = [];
