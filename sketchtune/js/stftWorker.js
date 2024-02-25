@@ -38,7 +38,7 @@ function STFT_1(inputSignalChunk, windowSize, hopSize, numFrames) {
 
 
 // Function to perform Short-Time Fourier Transform (STFT)
-function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames) {
+function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames, halfSpec) {
     return new Promise((resolve, reject) => {
         var frames = (inputSignalChunk.length - windowSize)/hopSize;
         const spectrogramChunk = new Array(frames); // Preallocate memory
@@ -86,12 +86,16 @@ function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames) {
                     let frame = inputSignalChunk.slice(startIdx, endIdx);
                     let windowedFrame = applyHanningWindow(frame);
                     const spectrum = computeFFT(windowedFrame, i, frames);
-
                     // Assuming spectrum is the array containing the full spectrum obtained from FFT
                     const halfSpectrum = spectrum.slice(0, spectrum.length / 2);
 
                     // Store the result in the spectrogram chunk
-                    spectrogramChunk[i] = halfSpectrum;
+                    if(halfSpec){
+                        spectrogramChunk[i] = halfSpectrum;
+                    }else{
+                        spectrogramChunk[i] = spectrum;
+                    }
+                    
 
                     // Clear memory by reusing variables
                     frame = null;
@@ -178,7 +182,7 @@ function STFT_3(inputSignalChunk, windowSize, hopSize) {
 
 function STFT(chunk, windowSize, hopSize, numFrames, mode){
     //if(mode==0){ return STFT_1(chunk, windowSize, hopSize, numFrames); }
-    if(mode==1){ return STFT_2(chunk, windowSize, hopSize, numFrames); }
+    if(mode==1){ return STFT_2(chunk, windowSize, hopSize, numFrames, halfSpec); }
     //if(mode==2){ return STFT_3(chunk, windowSize, hopSize, numFrames); }
 }
 
@@ -188,12 +192,12 @@ function STFT(chunk, windowSize, hopSize, numFrames, mode){
 onmessage = function (e) {
     const startTime = performance.now();
 
-    const { inputSignal, windowSize, hopSize, numFrames, workerID, mode } = e.data;
+    const { inputSignal, windowSize, hopSize, numFrames, workerID, mode, halfSpec } = e.data;
 
     // Convert back
     const chunk = new Float32Array(inputSignal);
 
-    STFT(chunk, windowSize, hopSize, numFrames, mode)
+    STFT(chunk, windowSize, hopSize, numFrames, mode, halfSpec)
         .then((spectrogramChunk) => {
             const flattenedChunk = spectrogramChunk.flatMap(frame => frame.flatMap(spectrum => [spectrum.re, spectrum.im]) );
             // Convert the flattened array to a Float32Array

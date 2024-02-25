@@ -218,7 +218,8 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
                 hopSize: hopSize,
                 numFrames: numFrames,
                 workerID: i,
-                mode: mode
+                mode: mode,
+                halfSpec: halfSpec
             };
 
             // Send the message to the worker
