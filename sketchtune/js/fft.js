@@ -639,22 +639,22 @@ async function computeInverseFFT(spectrum) {
     return audioSignal;
 }*/
 
-// Function to compute inverse FFT of a half spectrum
+// Function to compute inverse FFT of a spectrum
 async function computeInverseFFT(halfSpectrum) {
     // Ensure the size of the spectrum array is a power of 2
     const paddedSize = nextPowerOf2(halfSpectrum.length * 2);
 
-    // Create a full-sized spectrum array and fill it with the half spectrum
-    const fullSpectrum = new Float32Array(paddedSize).fill(0);
+    // Create a full-sized spectrum array and fill it with the values from halfSpectrum
+    const fullSpectrum = new Float32Array(paddedSize * 2).fill(0);
     for (let i = 0; i < halfSpectrum.length; i++) {
-        fullSpectrum[i] = halfSpectrum[i]; // Copy the half spectrum
+        fullSpectrum[i * 2] = halfSpectrum[i]; // Copy the real part
+        fullSpectrum[i * 2 + 1] = 0; // Imaginary part is padded with zeros
         if (i > 0 && i < halfSpectrum.length - 1) {
             // Apply symmetry to fill the second half of the spectrum
-            fullSpectrum[paddedSize - i] = halfSpectrum[i];
+            fullSpectrum[(paddedSize - i) * 2] = halfSpectrum[i];
+            fullSpectrum[(paddedSize - i) * 2 + 1] = 0; // Imaginary part is padded with zeros
         }
     }
-
-    console.log(fullSpectrum);
 
     // Perform the IFFT on the full spectrum
     const timeDomainSignal = IFFT(fullSpectrum);
