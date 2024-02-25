@@ -48,7 +48,9 @@ function ISTFT_OLA_NORMALIZED(spectrogramChunk, windowSize, hopSize, workerID) {
                     const frame = await computeInverseFFT(spectrogramChunk[i]);
                     const startIdx = i * hopSize;
                     for (let j = 0; j < windowSize; j++) {
+                        // Check if there's no existing value at the current index in the output signal chunk
                         if (!outputSignalChunk[startIdx + j]) {
+                            // If there's no existing value, initialize it with the value from the current frame
                             outputSignalChunk[startIdx + j] = frame[j];
                             // Update maxAbsValue if necessary
                             maxAbsValue = Math.max(maxAbsValue, Math.abs(frame[j]));
@@ -100,7 +102,13 @@ function ISTFT_WOLA(spectrogramChunk, windowSize, hopSize, workerID) {
                     // Overlap-add the weighted frame to the output signal
                     const startIdx = i * hopSize;
                     for (let j = 0; j < windowSize; j++) {
-                        outputSignalChunk[startIdx + j] += weightedFrame[j];
+                        // Check if there's no existing value at the current index in the output signal chunk
+                        if (!outputSignalChunk[startIdx + j]) {
+                            // If there's no existing value, initialize it with the value from the current frame
+                            outputSignalChunk[startIdx + j] = frame[j];
+                        } else {
+                            outputSignalChunk[startIdx + j] += weightedFrame[j];
+                        }
                     }
                 }
 
