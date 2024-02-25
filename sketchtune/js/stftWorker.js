@@ -193,11 +193,9 @@ onmessage = function (e) {
 
     STFT(chunk, windowSize, hopSize, numFrames, mode)
         .then((spectrogramChunk) => {
-            // Flatten the nested array
-            const flattenedChunk = spectrogramChunk.reduce((acc, frame) => {
-                // Concatenate spectra from the current frame to the accumulator array
-                return acc.concat(frame.map(spectrum => spectrum.re, spectrum.im));
-            }, []);
+            const flattenedChunk = [].concat(...spectrogramChunk.map(frame =>
+                frame.map(spectrum => [spectrum.re, spectrum.im])
+            ));
 
             console.log(flattenedChunk);
 
