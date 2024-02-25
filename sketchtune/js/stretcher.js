@@ -250,8 +250,6 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
                     reconstructedChunk.push(frame);
                 }
 
-                console.log(reconstructedChunk);
-
                 receivedChunks.push({ id, reconstructedChunk });
 
                 // Increment the counter for finished workers
@@ -261,9 +259,10 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
                 if (numFinishedWorkers === numWorkers) {
                     // All workers have finished processing
 
+                    console.log(receivedChunks);
                     // Sort the spectrogram data based on the worker id
                     receivedChunks.sort((a, b) => a.id - b.id);
-
+                    console.log(receivedChunks);
                     // Combine receivedChunks data into the final spectrogram array
                     for (const { id, chunk } of receivedChunks) {
                         finalSpectrogram.push(...chunk);
