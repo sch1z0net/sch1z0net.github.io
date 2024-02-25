@@ -1,4 +1,4 @@
-const NUM_WORKERS = 4;
+const NUM_WORKERS = 1;
 const maxWorkers = navigator.hardwareConcurrency || 1; // Fallback to 1 if hardwareConcurrency is not available
 //console.log("Maximum number of workers:", maxWorkers);
 //console.log("Current workers:", NUM_WORKERS);
@@ -261,7 +261,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
 
                     // Sort the spectrogram data based on the worker id
                     receivedChunks.sort((a, b) => a.id - b.id);
-                    
+
                     // Combine receivedChunks data into the final spectrogram array
                     for (const { id, reconstructedChunk } of receivedChunks) {
                         finalSpectrogram.push(...reconstructedChunk);
