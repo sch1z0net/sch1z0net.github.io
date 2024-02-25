@@ -117,43 +117,6 @@ function ISTFT_WOLA(spectrogramChunk, windowSize, hopSize, workerID) {
     });
 }
 
-// Function to apply synthesis window to a frame
-function applySynthesisWindow(frame, synthesisWindow) {
-    const weightedFrame = new Float32Array(frame.length);
-    for (let i = 0; i < frame.length; i++) {
-        weightedFrame[i] = frame[i] * synthesisWindow[i];
-    }
-    return weightedFrame;
-}
-
-// Function to normalize the output signal
-function normalizeOutput(outputSignalChunk) {
-    // Find the maximum absolute value in the output signal
-    let maxAbsValue = 0;
-    for (let i = 0; i < outputSignalChunk.length; i++) {
-        const absValue = Math.abs(outputSignalChunk[i]);
-        if (absValue > maxAbsValue) {
-            maxAbsValue = absValue;
-        }
-    }
-
-    // Normalize the output signal
-    if (maxAbsValue > 0) {
-        const scaleFactor = 1 / maxAbsValue;
-        for (let i = 0; i < outputSignalChunk.length; i++) {
-            outputSignalChunk[i] *= scaleFactor;
-        }
-    }
-}
-
-
-
-
-
-
-
-
-
 
 // Listen for messages from the main thread
 onmessage = function (e) {

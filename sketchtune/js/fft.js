@@ -6,7 +6,71 @@ function nextPowerOf2(n) {
     return Math.pow(2, Math.ceil(Math.log2(n)));
 }
 
+
+// Function to apply synthesis window to a frame
+function applySynthesisWindow(frame, synthesisWindow) {
+    const weightedFrame = new Float32Array(frame.length);
+    for (let i = 0; i < frame.length; i++) {
+        weightedFrame[i] = frame[i] * synthesisWindow[i];
+    }
+    return weightedFrame;
+}
+
+// Function to normalize the output signal
+function normalizeOutput(outputSignalChunk) {
+    // Find the maximum absolute value in the output signal
+    let maxAbsValue = 0;
+    for (let i = 0; i < outputSignalChunk.length; i++) {
+        const absValue = Math.abs(outputSignalChunk[i]);
+        if (absValue > maxAbsValue) {
+            maxAbsValue = absValue;
+        }
+    }
+
+    // Normalize the output signal
+    if (maxAbsValue > 0) {
+        const scaleFactor = 1 / maxAbsValue;
+        for (let i = 0; i < outputSignalChunk.length; i++) {
+            outputSignalChunk[i] *= scaleFactor;
+        }
+    }
+}
+
 /******************** UTILS *********************/
+function hanningWindow(windowSize) {
+    const window = new Float32Array(windowSize);
+    const alpha = 0.5;
+    for (let i = 0; i < windowSize; i++) {
+        window[i] = (1 - alpha) - (alpha * Math.cos(2 * Math.PI * i / (windowSize - 1)));
+    }
+    return window;
+}
+
+function hammingWindow(windowSize) {
+    const window = new Float32Array(windowSize);
+    const alpha = 0.54;
+    const beta = 1 - alpha;
+    for (let i = 0; i < windowSize; i++) {
+        window[i] = alpha - (beta * Math.cos(2 * Math.PI * i / (windowSize - 1)));
+    }
+    return window;
+}
+
+function blackmanWindow(windowSize) {
+    const window = new Float32Array(windowSize);
+    const alpha = 0.42;
+    const beta = 0.5;
+    const gamma = 0.08;
+    for (let i = 0; i < windowSize; i++) {
+        window[i] = alpha - (beta * Math.cos(2 * Math.PI * i / (windowSize - 1))) + (gamma * Math.cos(4 * Math.PI * i / (windowSize - 1)));
+    }
+    return window;
+}
+
+
+
+
+
 // Function to create a Hanning window
 function createHanningWindow(windowLength) {
     const window = new Float32Array(windowLength);
