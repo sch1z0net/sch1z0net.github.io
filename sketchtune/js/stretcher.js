@@ -944,7 +944,7 @@ function plotSpectrogram(spectrogramA,spectrogramB){
 
 // FOR COMPRESSING: 
 // windowSize = 512*4, hopSize = windowSize / 8
-async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize=1024, hopFactor=4, smoothFactor=1, windowType=0) {
+async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize=1024, hopFactor=4, smoothFactor=1, windowType=0, halfSpec = false) {
     //For beats with a clear BPM, where the goal is to preserve rhythmic structure and transient characteristics, 
     //it's often beneficial to prioritize temporal resolution over frequency resolution. 
     //In this case, using a smaller window size in the Short-Time Fourier Transform (STFT) analysis would be more suitable. 
@@ -1008,7 +1008,7 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
         // PARALLEL 
         // Push the promise for processing this channel into the array
         processingPromises.push(
-            processChannel(audioContext, inputData, resampledBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor, windowType)
+            processChannel(audioContext, inputData, resampledBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor, windowType, halfSpec)
             .then(spectrogram => {
                 if (ch === 0) { spectrogramA = spectrogram; }
                 if (ch === 1) { spectrogramB = spectrogram; }
@@ -1034,11 +1034,10 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
     return {resampledBuffer, spectrogramA, spectrogramB};
 }
 
-async function processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor, windowType) {
+async function processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor, windowType, halfSpec) {
     // Time-stretch the input data
     const startTimeCH = performance.now();
 
-    const halfSpec = true;
     const {processedSignal, preSpectrogram, postSpectrogram} = await timeStretch(inputData, stretchFactor, windowSize, windowType, hopSize, smoothFactor, halfSpec, ch);
     const processedSignalFloat32 = new Float32Array(processedSignal);  // Convert processedSignal to Float32Array if necessary
     

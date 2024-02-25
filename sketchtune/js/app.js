@@ -1772,6 +1772,7 @@ let windowSize = 512; // Default value
 let hopFactor = 2; // Default value
 let smoothFactor = 1;
 let windowTypeWOLA = 0;
+let halfSpec = true;
 $(document).ready(function(){
   // Function to update global variables when select boxes change
   function updateVariables() {
@@ -1779,6 +1780,7 @@ $(document).ready(function(){
     hopFactor      = parseInt($("#hopFactorSelect").val());
     smoothFactor   = parseInt($("#smoothFactorSelect").val());
     windowTypeWOLA = parseInt($("#windowTypeWOLASelect").val());
+    halfSpec       = parseInt($("#halfSpecSelect").val());
     range_mode     = parseInt($("#rangeModeSelect").val());
     scale_mode     = parseInt($("#scaleModeSelect").val()); 
     smoothing_mode = parseInt($("#smoothingModeSelect").val());  
@@ -1792,6 +1794,7 @@ $(document).ready(function(){
   const $hopFactorSelect     = $("<select>").attr("id", "hopFactorSelect");
   const $smoothFactorSelect  = $("<select>").attr("id", "smoothFactorSelect");
   const $windowTypeWOLASelect= $("<select>").attr("id", "windowTypeWOLASelect");
+  const $halfSpecSelect      = $("<select>").attr("id", "halfSpecSelect");
   const $rangeModeSelect     = $("<select>").attr("id", "rangeModeSelect");
   const $scaleModeSelect     = $("<select>").attr("id", "scaleModeSelect");
   const $smoothingModeSelect = $("<select>").attr("id", "smoothingModeSelect");
@@ -1815,6 +1818,10 @@ $(document).ready(function(){
 
   [0, 1, 2].forEach(function(type) {
     $windowTypeWOLASelect.append($("<option>").attr("value", type).text(type));
+  });
+
+  [true, false].forEach(function(type) {
+    $halfSpecSelect.append($("<option>").attr("value", type).text(type));
   });
 
   [0, 1, 2].forEach(function(mode) {
@@ -1857,6 +1864,9 @@ $(document).ready(function(){
     .append($windowTypeWOLASelect.val(windowTypeWOLA))
     .append($("<label>").attr("for", "windowTypeWOLA").text("Window Type"))
     .append("<br>")
+    .append($halfSpecSelect.val(halfSpec))
+    .append($("<label>").attr("for", "halfSpec").text("Half Spec"))
+    .append("<br>")
     .append("<span>LIVE SPECTRUM ANALYZER<span>")
     .append("<br>")
     .append($rangeModeSelect.val(range_mode))
@@ -1881,7 +1891,7 @@ $(document).ready(function(){
   $('body').append(controls);
 
   // Add event listener to select boxes
-  $("#windowSizeSelect, #hopFactorSelect, #smoothFactorSelect, #windowTypeWOLASelect, #rangeModeSelect, #scaleModeSelect, #smoothingModeSelect, #lsFFTsizeSelect, #lsSmoothingSizeSelect, #lsRefreshRateSelect").on("change", updateVariables);
+  $("#windowSizeSelect, #hopFactorSelect, #smoothFactorSelect, #windowTypeWOLASelect, #halfSpecSelect, #rangeModeSelect, #scaleModeSelect, #smoothingModeSelect, #lsFFTsizeSelect, #lsSmoothingSizeSelect, #lsRefreshRateSelect").on("change", updateVariables);
 });
 
 
@@ -1896,7 +1906,7 @@ async function playSample(audioContext, audioBuffer, time, offset, duration) {
 
     //if (stretchFactor !== 1) {
     if (true) {
-        const { resampledBuffer, spectrogramA, spectrogramB } = await phaseVocoder(audioContext, audioBuffer, stretchFactor, windowSize, hopFactor, smoothFactor, windowTypeWOLA); 
+        const { resampledBuffer, spectrogramA, spectrogramB } = await phaseVocoder(audioContext, audioBuffer, stretchFactor, windowSize, hopFactor, smoothFactor, windowTypeWOLA, halfSpec); 
         outputBuffer = resampledBuffer;
         // Start the execution of plotSpectrogram asynchronously
         Promise.resolve().then(() => {  plotSpectrogram(spectrogramA, spectrogramB);  });
