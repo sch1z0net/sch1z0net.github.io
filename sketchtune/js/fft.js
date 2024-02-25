@@ -684,5 +684,5 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 }
 
 
-computeInverseFFTonHalf([{14,25},{26,37},{18,29},{21,32},{13,24},{25,36},{17,28},{29,30},{11,22},{23,34},{15,26},{27,38},{19,20},{212,32},{131,24},{251,35}]);
+computeInverseFFTonHalf([{re:91,im:92},{re:45,im:56},{re:26,im:37},{re:56,im:36},{re:27,im:28},{re:14,im:25},{re:51,im:42},{re:21,im:42}]);
 
