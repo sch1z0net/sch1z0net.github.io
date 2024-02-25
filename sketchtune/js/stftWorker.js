@@ -180,7 +180,7 @@ function STFT_3(inputSignalChunk, windowSize, hopSize) {
 
 
 
-function STFT(chunk, windowSize, hopSize, numFrames, mode){
+function STFT(chunk, windowSize, hopSize, numFrames, mode, halfSpec){
     //if(mode==0){ return STFT_1(chunk, windowSize, hopSize, numFrames); }
     if(mode==1){ return STFT_2(chunk, windowSize, hopSize, numFrames, halfSpec); }
     //if(mode==2){ return STFT_3(chunk, windowSize, hopSize, numFrames); }
