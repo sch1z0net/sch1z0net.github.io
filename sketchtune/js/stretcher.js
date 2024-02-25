@@ -309,29 +309,34 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize) {
 
         // Slice spectrogram array to create a smaller chunk for this worker
         const chunk = spectrogram.slice(startFrame, endFrame);
+        const arrayBuffer = chunk.flatMap(frame => frame.flatMap(spectrum => [spectrum.re, spectrum.im]) );
 
         // Create worker and send the chunk of spectrogram
         const worker = new Worker('./js/istftWorker.js');
 
         // Construct the message object
         const message = {
-            spectrogramChunk: chunk,
+            spectrogramChunk: arrayBuffer,
             windowSize: windowSize,
             hopSize: hopSize,
             workerID: i
         };
 
         // Send the message to the worker
-        worker.postMessage(message);
+        worker.postMessage(message, [arrayBuffer]);
 
         // Push the promise for processing this chunk into the array
         processingPromises.push(new Promise((resolve, reject) => {
             // Listen for messages from the worker
             worker.onmessage = function (e) {
                 const {id, buffer} = e.data;
+
+                // Convert the ArrayBuffer back to a Float32Array
+                const outputChunk = new Float32Array(buffer);
+
                 // Copy the processed signal chunk to the output signal
                 const startIdx = id * framesPerWorker * hopSize;
-                outputSignal.set(buffer, startIdx);
+                outputSignal.set(outputChunk, startIdx);
                 // Close the worker after it completes its work
                 worker.terminate();
                 resolve(); // Resolve the promise
