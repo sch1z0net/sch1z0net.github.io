@@ -235,15 +235,17 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
                 // Convert the ArrayBuffer back to a Float32Array
                 const float32Array = new Float32Array(buffer);
 
-                // Convert the Float32Array back to a nested array
-                const chunk = [];
-                const numElementsPerFrame = windowSize;
-                for (let i = 0; i < float32Array.length; i += numElementsPerFrame) {
-                    const frame = float32Array.slice(i, i + numElementsPerFrame);
-                    chunk.push(frame);
+                // Convert the flattened chunk back to the original nested structure
+                const reconstructedChunk = [];
+                for (let i = 0; i < flattenedChunk.length; i += windowSize) {
+                    const spectrum = {
+                        re: flattenedChunk[i],
+                        im: flattenedChunk[i + 1]
+                    };
+                    reconstructedChunk.push(spectrum);
                 }
 
-                receivedChunks.push({ id, chunk });
+                receivedChunks.push({ id, reconstructedChunk });
 
                 // Increment the counter for finished workers
                 numFinishedWorkers++;
