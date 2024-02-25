@@ -650,8 +650,9 @@ function melodyToLinear(melody) {
 function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
     const numFrames = spectrogram.length;
-    const numBins = spectrogram[0].length / 2;  // Only need half the FFT size due to Nyquist theorem
-    
+    //const numBins = spectrogram[0].length / 2;  // Only need half the FFT size due to Nyquist theorem
+    const numBins = spectrogram[0].length;  // Only need half the FFT size due to Nyquist theorem, already done in STFT
+
     // Create a new ImageData object with the same dimensions as the spectrogram
     var h = 1000; //16000;
     var w = Math.min(4000,numFrames);
