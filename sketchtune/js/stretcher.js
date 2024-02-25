@@ -233,7 +233,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
                 const { id, buffer } = e.data;
 
                 // Convert the ArrayBuffer back to a Float32Array
-                const float32Array = new Float32Array(buffer);
+                const flattenedChunk = new Float32Array(buffer);
 
                 // Convert the flattened chunk back to the original nested structure
                 const reconstructedChunk = [];
