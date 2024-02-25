@@ -184,6 +184,8 @@ function STFT(chunk, windowSize, hopSize, numFrames, mode){
 
 // Listen for messages from the main thread
 onmessage = function (e) {
+    const startTime = performance.now();
+
     const { inputSignal, windowSize, hopSize, numFrames, workerID, mode } = e.data;
 
     //sconsole.log("WORKER",workerID,"received message.")
@@ -195,6 +197,11 @@ onmessage = function (e) {
             // Send the result back to the main thread
             //console.log("WORKER",workerID,"Spectrogram on Chunk ready");
             postMessage({id: workerID, chunk: spectrogramChunk});
+
+            const endTime = performance.now();
+            const elapsedTime = endTime - startTime;
+            console.log("Worker ",workerID," finished in", elapsedTime, "ms");
+
         })
         .catch((error) => {
             console.log("WORKER",workerID,'Error:', error);
