@@ -188,23 +188,24 @@ onmessage = function (e) {
 
     const { inputSignal, windowSize, hopSize, numFrames, workerID, mode } = e.data;
 
-    //sconsole.log("WORKER",workerID,"received message.")
     // Convert back
     const chunk = new Float32Array(inputSignal);
 
     STFT(chunk, windowSize, hopSize, numFrames, mode)
         .then((spectrogramChunk) => {
-            // Send the result back to the main thread
-            //console.log("WORKER",workerID,"Spectrogram on Chunk ready");
-            postMessage({id: workerID, chunk: spectrogramChunk});
+            // Convert the spectrogramChunk to an ArrayBuffer
+            const arrayBuffer = spectrogramChunk.buffer;
+
+            // Send the ArrayBuffer back to the main thread, transferring ownership
+            postMessage({ id: workerID, chunk: arrayBuffer }, [arrayBuffer]);
 
             const endTime = performance.now();
             const elapsedTime = endTime - startTime;
-            console.log("Worker ",workerID," finished in", elapsedTime, "ms");
-
+            console.log("Worker ", workerID, " finished in", elapsedTime, "ms");
         })
         .catch((error) => {
-            console.log("WORKER",workerID,'Error:', error);
+            console.log("WORKER", workerID, 'Error:', error);
             // Optionally, handle the error and send back an error message to the main thread
         });
 };
+
