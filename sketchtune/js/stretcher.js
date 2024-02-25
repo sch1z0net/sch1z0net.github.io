@@ -236,13 +236,18 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
                 const flattenedChunk = new Float32Array(buffer);
 
                 // Convert the flattened chunk back to the original nested structure
+                const binsPerFrame = windowSize;
                 const reconstructedChunk = [];
-                for (let i = 0; i < flattenedChunk.length; i += windowSize) {
-                    const spectrum = {
-                        re: flattenedChunk[i],
-                        im: flattenedChunk[i + 1]
-                    };
-                    reconstructedChunk.push(spectrum);
+                for (let i = 0; i < flattenedChunk.length; i += binsPerFrame * 2) {
+                    const frame = [];
+                    for (let j = 0; j < binsPerFrame / 2; j++) {
+                        const spectrum = {
+                            re: flattenedChunk[i + j * 2],
+                            im: flattenedChunk[i + j * 2 + 1]
+                        };
+                        frame.push(spectrum);
+                    }
+                    reconstructedChunk.push(frame);
                 }
 
                 receivedChunks.push({ id, reconstructedChunk });
