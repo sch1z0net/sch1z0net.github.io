@@ -647,14 +647,14 @@ async function computeInverseFFT(halfSpectrum) {
     // Create a full-sized spectrum array and fill it with the values from halfSpectrum
     const fullSpectrum = new Float32Array(paddedSize * 2).fill(0);
     for (let i = 0; i < halfSpectrum.length; i++) {
-        fullSpectrum[i * 2] = halfSpectrum[i]; // Copy the real part
-        fullSpectrum[i * 2 + 1] = 0; // Imaginary part is padded with zeros
+        fullSpectrum[i * 2] = halfSpectrum[i].re; // Copy the real part
+        fullSpectrum[i * 2 + 1] = halfSpectrum[i].im; // Copy imaginary part
     }
 
     // Apply symmetry to fill the second half of the spectrum
     for (let i = 1; i < halfSpectrum.length; i++) {
-        fullSpectrum[(paddedSize - i) * 2] = halfSpectrum[i]; // Copy the real part
-        fullSpectrum[(paddedSize - i) * 2 + 1] = 0; // Imaginary part is padded with zeros
+        fullSpectrum[(paddedSize - i) * 2] = halfSpectrum[i].re; // Copy the real part
+        fullSpectrum[(paddedSize - i) * 2 + 1] = halfSpectrum[i].im; // Copy imaginary part
     }
 
     console.log("FULL SPECTRUM", fullSpectrum);
