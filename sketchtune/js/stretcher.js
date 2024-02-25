@@ -238,7 +238,9 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
                 const flattenedChunk = new Float32Array(buffer);
 
                 // Convert the flattened chunk back to the original nested structure
-                const binsPerFrame = windowSize;
+                //const binsPerFrame = windowSize;
+                const binsPerFrame = windowSize / 2; //Since we only need half of the symmetric spectrum
+
                 const reconstructedChunk = [];
                 for (let i = 0; i < flattenedChunk.length; i += binsPerFrame * 2) {
                     const frame = [];
