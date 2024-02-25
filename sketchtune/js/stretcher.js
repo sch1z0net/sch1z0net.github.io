@@ -1038,7 +1038,7 @@ async function processChannel(audioContext, inputData, outputBuffer, ch, stretch
     // Time-stretch the input data
     const startTimeCH = performance.now();
 
-    const halfSpec = false;
+    const halfSpec = true;
     const {processedSignal, preSpectrogram, postSpectrogram} = await timeStretch(inputData, stretchFactor, windowSize, windowType, hopSize, smoothFactor, halfSpec, ch);
     const processedSignalFloat32 = new Float32Array(processedSignal);  // Convert processedSignal to Float32Array if necessary
     
