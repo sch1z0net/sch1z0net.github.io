@@ -646,6 +646,7 @@ async function computeInverseFFT(spectrum) {
 }
 
 
+
 // Function to compute inverse FFT of a spectrum
 async function computeInverseFFTonHalf(halfSpectrum) {
     // Ensure the size of the spectrum array is a power of 2
@@ -667,7 +668,7 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 
     for (let i = 0; i < fullSpectrum.length/2; i++){
         console.log(fullSpectrum[i * 2], fullSpectrum[paddedSize * 2 - i * 2]);
-        console.log(fullSpectrum[i * 2 + 1], fullSpectrum[paddedSize * 2 - i * 2 + 1]);
+        //console.log(fullSpectrum[i * 2 + 1], fullSpectrum[paddedSize * 2 - i * 2 + 1]);
     }
 
     // Perform the IFFT on the full spectrum
@@ -683,5 +684,5 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 }
 
 
-
+computeInverseFFTonHalf([{14,25},{26,37},{18,29},{21,32},{13,24},{25,36},{17,28},{29,30},{11,22},{23,34},{15,26},{27,38},{19,20},{212,32},{131,24},{251,35}]);
 
