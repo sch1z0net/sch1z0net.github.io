@@ -155,7 +155,7 @@ onmessage = function (e) {
         reconstructedChunk.push(frame);
     }
 
-    console.log("CHUNK2",workerID,reconstructedChunk);
+    if(workerID==0){ console.log("CHUNK2",workerID,reconstructedChunk); }
     
     //ISTFT_OLA(reconstructedChunk, windowSize, hopSize, workerID, halfSpec)
     //ISTFT_OLA_NORMALIZED(reconstructedChunk, windowSize, hopSize, workerID, halfSpec)
