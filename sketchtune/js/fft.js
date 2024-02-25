@@ -628,7 +628,7 @@ async function computeInverseFFT(spectrum) {
     }
 
     for (let i = 0; i < paddedSpectrum.length/2; i++){
-        console.log("FULL",paddedSpectrum[i * 2], paddedSpectrum[paddedSize * 2 - i * 2]);
+        console.log("FULL",paddedSpectrum[i * 2], paddedSpectrum[(paddedSize-1) * 2 - i * 2]);
         //console.log(paddedSpectrum[i * 2 + 1], paddedSpectrum[paddedSize * 2 - i * 2 + 1]);
     }
 
@@ -667,7 +667,7 @@ async function computeInverseFFTonHalf(halfSpectrum) {
     }
 
     for (let i = 0; i < fullSpectrum.length/2; i++){
-        console.log("HALF", fullSpectrum[i * 2], fullSpectrum[paddedSize * 2 - i * 2]);
+        console.log("HALF", fullSpectrum[i * 2], fullSpectrum[(paddedSize-1) * 2 - i * 2]);
         //console.log(fullSpectrum[i * 2 + 1], fullSpectrum[paddedSize * 2 - i * 2 + 1]);
     }
 
