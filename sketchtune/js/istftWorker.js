@@ -44,8 +44,8 @@ onmessage = function (e) {
         const frame = [];
         for (let j = 0; j < binsPerFrame; j++) {
             const spectrum = {
-                re: flattenedChunk[i + j * 2],
-                im: flattenedChunk[i + j * 2 + 1]
+                re: spectrogramChunk[i + j * 2],
+                im: spectrogramChunk[i + j * 2 + 1]
             };
             frame.push(spectrum);
         }
