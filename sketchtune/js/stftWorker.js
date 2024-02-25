@@ -84,8 +84,7 @@ function STFT_2(inputSignalChunk, windowSize, hopSize, numFrames) {
                     const startIdx = i * hopSize;
                     const endIdx = startIdx + windowSize;
                     let frame = inputSignalChunk.slice(startIdx, endIdx);
-                    //let windowedFrame = applyHanningWindow(frame);
-                    let windowedFrame = frame;
+                    let windowedFrame = applyHanningWindow(frame);
                     const spectrum = computeFFT(windowedFrame, i, frames);
 
                     // Store the result in the spectrogram chunk
