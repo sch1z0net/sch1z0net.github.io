@@ -654,6 +654,8 @@ async function computeInverseFFT(halfSpectrum) {
         }
     }
 
+    console.log(fullSpectrum);
+
     // Perform the IFFT on the full spectrum
     const timeDomainSignal = IFFT(fullSpectrum);
 
