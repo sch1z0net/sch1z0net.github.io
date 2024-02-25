@@ -82,18 +82,23 @@ function ISTFT_OLA_NORMALIZED(spectrogramChunk, windowSize, hopSize, workerID) {
 
 
 // Function to perform Weighted Overlap-Add (WOLA) for signal reconstruction from STFT
-function ISTFT_WOLA(spectrogramChunk, windowSize, hopSize, windowType) {
+function ISTFT_WOLA(spectrogramChunk, windowSize, hopSize, windowType, halfSpec) {
     return new Promise((resolve, reject) => {
         const outputSignalChunk = new Float32Array(spectrogramChunk.length * hopSize);
         
+
         // Process each frame in the spectrogram chunk asynchronously
         const processFrames = async () => {
             try {
                 for (let i = 0; i < spectrogramChunk.length; i++) {
-                    console.log("ISTFT WOLA",spectrogramChunk[i]);
                     // Compute inverse FFT of the spectrum to obtain the frame in time domain
-                    const frame = await computeInverseFFT(spectrogramChunk[i]);
-
+                    let frame;
+                    if(halfSpec){
+                       frame = await computeInverseFFTonHalf(spectrogramChunk[i]);
+                    }else{
+                       frame = await computeInverseFFT(spectrogramChunk[i]);
+                    }
+                    
                     // Apply synthesis window to the frame
                     const synthesisWindow = hanningWindow(windowSize);
                     //const synthesisWindow = hammingWindow(windowSize);
@@ -129,13 +134,15 @@ function ISTFT_WOLA(spectrogramChunk, windowSize, hopSize, windowType) {
 
 // Listen for messages from the main thread
 onmessage = function (e) {
-    const { flattenedChunk, windowSize, hopSize, workerID, windowType } = e.data;
+    const { flattenedChunk, windowSize, hopSize, workerID, windowType, halfSpec } = e.data;
     // Convert back
     const spectrogramChunk = new Float32Array(flattenedChunk);
 
     // Convert the flattened chunk back to the original nested structure
-    //const binsPerFrame = windowSize;
-    const binsPerFrame = windowSize / 2;
+    let binsPerFrame = windowSize;
+    if(halfSpec){
+        binsPerFrame = windowSize / 2;
+    }
 
     const reconstructedChunk = [];
     for (let i = 0; i < spectrogramChunk.length; i += binsPerFrame * 2) {
@@ -150,9 +157,9 @@ onmessage = function (e) {
         reconstructedChunk.push(frame);
     }
     
-    //ISTFT_OLA(reconstructedChunk, windowSize, hopSize, workerID)
-    //ISTFT_OLA_NORMALIZED(reconstructedChunk, windowSize, hopSize, workerID)
-    ISTFT_WOLA(reconstructedChunk, windowSize, hopSize, workerID, windowType)
+    //ISTFT_OLA(reconstructedChunk, windowSize, hopSize, workerID, halfSpec)
+    //ISTFT_OLA_NORMALIZED(reconstructedChunk, windowSize, hopSize, workerID, halfSpec)
+    ISTFT_WOLA(reconstructedChunk, windowSize, hopSize, workerID, windowType, halfSpec)
         .then((outputSignalChunk) => {
             // Convert the output signal chunk to Float32Array
             const float32Array = new Float32Array(outputSignalChunk);

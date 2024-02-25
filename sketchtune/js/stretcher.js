@@ -180,7 +180,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
 */
 
 
-function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
+function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
     return new Promise((resolve) => {
         var startTime = performance.now();
 
@@ -238,8 +238,10 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
                 const flattenedChunk = new Float32Array(buffer);
 
                 // Convert the flattened chunk back to the original nested structure
-                //const binsPerFrame = windowSize;
-                const binsPerFrame = windowSize / 2; //Since we only need half of the symmetric spectrum
+                let binsPerFrame = windowSize;
+                if(halfSpec){ 
+                   binsPerFrame = windowSize / 2; //Since we only need half of the symmetric spectrum
+                }
 
                 const reconstructedChunk = [];
                 for (let i = 0; i < flattenedChunk.length; i += binsPerFrame * 2) {
@@ -293,7 +295,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
 
 
 // Function to perform Inverse Short-Time Fourier Transform (ISTFT) using Web Workers
-function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType) {
+function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfSpec) {
     const numFrames = spectrogram.length;
     const outputSignal = new Float32Array((numFrames - 1) * hopSize + windowSize);
 
@@ -328,7 +330,8 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType) {
             windowSize: windowSize,
             hopSize: hopSize,
             workerID: i,
-            windowType, windowType
+            windowType: windowType,
+            halfSpec: halfSpec
         };
 
         // Send the message to the worker
@@ -651,7 +654,7 @@ function spectrogramToImageData(spectrogram) {
     // Assume spectrogram is a 2D array of magnitudes or intensities
     const numFrames = spectrogram.length;
     //const numBins = spectrogram[0].length / 2;  // Only need half the FFT size due to Nyquist theorem
-    const numBins = spectrogram[0].length;  // Only need half the FFT size due to Nyquist theorem, already done in STFT
+    const numBins = spectrogram[0].length;
 
     // Create a new ImageData object with the same dimensions as the spectrogram
     var h = 1000; //16000;
@@ -873,10 +876,10 @@ function timeStretch(inputSignal, stretchFactor, windowSize, hopSize, smoothFact
 
 
 
-async function timeStretch(inputSignal, stretchFactor, windowSize, windowType, hopSize, smoothFactor, ch) {
+async function timeStretch(inputSignal, stretchFactor, windowSize, windowType, hopSize, smoothFactor, halfSpec, ch) {
     try {
         const startTime1 = performance.now();
-        const preSpectrogram = await STFTWithWebWorkers(inputSignal, windowSize, hopSize, 1);
+        const preSpectrogram = await STFTWithWebWorkers(inputSignal, windowSize, hopSize, 1, halfSpec);
         const endTime1 = performance.now();
 
         const startTime2 = performance.now();
@@ -884,7 +887,7 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, windowType, h
         const endTime2 = performance.now();
 
         const startTime3 = performance.now();
-        const processedSignal = await ISTFTWithWebWorkers(postSpectrogram, windowSize, hopSize, windowType);
+        const processedSignal = await ISTFTWithWebWorkers(postSpectrogram, windowSize, hopSize, windowType, halfSpec);
         const endTime3 = performance.now();
 
         if(ch == 0){
@@ -1034,7 +1037,8 @@ async function processChannel(audioContext, inputData, outputBuffer, ch, stretch
     // Time-stretch the input data
     const startTimeCH = performance.now();
 
-    const {processedSignal, preSpectrogram, postSpectrogram} = await timeStretch(inputData, stretchFactor, windowSize, windowType, hopSize, smoothFactor, ch);
+    const halfSpec = false;
+    const {processedSignal, preSpectrogram, postSpectrogram} = await timeStretch(inputData, stretchFactor, windowSize, windowType, hopSize, smoothFactor, halfSpec, ch);
     const processedSignalFloat32 = new Float32Array(processedSignal);  // Convert processedSignal to Float32Array if necessary
     
     const endTimeCH = performance.now();
