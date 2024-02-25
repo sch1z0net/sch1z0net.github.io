@@ -673,8 +673,6 @@ async function computeInverseFFTonHalf(halfSpectrum) {
     return audioSignal;
 }
 
-computeInverseFFTonHalf([{re:1,im:2},{re:3,im:4},{re:5,im:6},{re:7,im:8}]);
-
 
 
 

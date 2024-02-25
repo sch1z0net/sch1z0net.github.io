@@ -154,6 +154,8 @@ onmessage = function (e) {
         }
         reconstructedChunk.push(frame);
     }
+
+    console.log("CHUNK2",reconstructedChunk);
     
     //ISTFT_OLA(reconstructedChunk, windowSize, hopSize, workerID, halfSpec)
     //ISTFT_OLA_NORMALIZED(reconstructedChunk, windowSize, hopSize, workerID, halfSpec)
