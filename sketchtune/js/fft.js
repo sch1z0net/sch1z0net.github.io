@@ -327,7 +327,7 @@ function fftRealInPlaceRADIX2(input) {
     }
 
     // Create a copy of the input array
-    //const input = inputOriginal.slice();
+    const input = inputOriginal.slice();
 
     //const startTime = performance.now();
 
