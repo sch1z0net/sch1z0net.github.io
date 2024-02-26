@@ -447,6 +447,8 @@ function fftRealInPlaceRADIX2(inputOriginal) {
         pre += size;
     }
 
+    console.log(complexInput);
+
     // Return the output
     return complexInput;
 }
