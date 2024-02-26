@@ -400,6 +400,17 @@ function fftRealInPlaceRADIX2(inputOriginal) {
 
     const factors = LOOKUP_RADIX2;
 
+    /*
+    for (let size = 2; size <= N; size *= 2) {
+        const halfSize = size / 2;
+        // Get FFT factors with caching
+        const factors = computeFFTFactorsWithCache(size);
+        for (let i = 0; i < N; i += size) {
+            for (let j = 0; j < halfSize; j++) {
+                factors[j]
+                factors[j+1]
+    */
+
     // Recursively calculate FFT
     // Perform Radix-2 FFT
     let pre = 0;
@@ -407,7 +418,7 @@ function fftRealInPlaceRADIX2(inputOriginal) {
         // Precompute FFT factors
         // const factors = computeFFTFactorsWithCache(size);
         const halfSize = size >> 1;
-        for (let i = 0, j = 0; i < N; i += size, j = (j+1)%size) {
+        for (let i = 0, j = 0; i < N; i += size, j += halfsize) {
             const evenIndex = i;
             const oddIndex = i + halfSize;
 
