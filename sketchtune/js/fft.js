@@ -115,7 +115,7 @@ const fftFactorCacheRADIX2 = {};
 const fftFactorCacheRADIX4 = {};
 
 // Pre-calculate FFT factors for a given size and cache them for future use
-function precalculateFFTFactors(N) {
+function precalculateFFTFactorsRADIX2(N) {
     const factors = new Float32Array(N); // Double the size for both real and imaginary parts
     for (let k = 0; k < N / 2; k++) {
         const theta = -2 * Math.PI * k / N;
@@ -125,27 +125,41 @@ function precalculateFFTFactors(N) {
     return factors;
 }
 
+// Compute FFT factors with caching (optimized for Radix-4 FFT)
+function precalculateFFTFactorsRADIX4(maxSampleLength) {
+    const maxN = nextPowerOf4(maxSampleLength);
+    var len = 0;
+    for (let N = 4; N <= maxN; N *= 4) {
+       len *= N;
+    }
+    const factors = new Array(len); // Preallocate memory for factors
+
+   var pre = 0;
+   for (let N = 4; N <= maxN; N *= 4) {
+    for (let i = 0; i < N / 4; i++) {
+        const angle1 = (2 * Math.PI * i) / N;
+        const angle2 = (4 * Math.PI * i) / N;
+        factors[pre + i * 4] = Math.cos(angle1); // Cosine of angle1
+        factors[pre + i * 4 + 1] = Math.sin(angle1); // Sine of angle1
+        factors[pre + i * 4 + 2] = Math.cos(angle2); // Cosine of angle2
+        factors[pre + i * 4 + 3] = Math.sin(angle2); // Sine of angle2
+    }
+    pre += N;
+   }
+
+    return new Float32Array(factors);
+}
+
 // Function to compute FFT factors with caching
 function computeFFTFactorsWithCache(N) {
     // Check if FFT factors for this size are already cached
     if (!fftFactorCacheRADIX2[N]) {
         // Calculate FFT factors and cache them
-        fftFactorCacheRADIX2[N] = precalculateFFTFactors(N);
+        fftFactorCacheRADIX2[N] = precalculateFFTFactorsRADIX2(N);
     }
 
     // Return the cached factors
     return fftFactorCacheRADIX2[N];
-}
-
-function generateFFTFactorLookup(maxSampleLength) {
-    const maxN = nextPowerOf2(maxSampleLength);
-    const fftFactorLookup = {};
-
-    for (let N = 2; N <= maxN; N *= 2) {
-        fftFactorLookup[N] = precalculateFFTFactors(N);
-    }
-
-    return fftFactorLookup;
 }
 
 
@@ -340,6 +354,9 @@ function precomputeBitReversalMap(N) {
 precomputeBitReversalMap(1024);
 
 
+// Create the flattened lookup table for twiddle factors
+const LOOKUP_RADIX4 = precalculateFFTFactorsRADIX4(1024);
+const LOOKUP_RADIX2 = precalculateFFTFactorsRADIX2(1024);
 
 function fftRealInPlaceRADIX2(inputOriginal) {
     const N = inputOriginal.length;
@@ -371,10 +388,10 @@ function fftRealInPlaceRADIX2(inputOriginal) {
         complexInput[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
 
+    const factors = LOOKUP_RADIX2;
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
         const halfSize = size / 2;
-        const factors = computeFFTFactorsWithCache(size);
         // Precompute FFT factors
         //const factors = computeFFTFactorsWithCache(size);
         for (let i = 0; i < N; i += size) {
@@ -410,43 +427,6 @@ function fftRealInPlaceRADIX2(inputOriginal) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-// Compute FFT factors with caching (optimized for Radix-4 FFT)
-function precalculateFFTFactorsRADIX4(maxSampleLength) {
-    const maxN = nextPowerOf4(maxSampleLength);
-    var len = 0;
-    for (let N = 4; N <= maxN; N *= 4) {
-       len *= N;
-    }
-    const factors = new Array(len); // Preallocate memory for factors
-
-   var pre = 0;
-   for (let N = 4; N <= maxN; N *= 4) {
-    for (let i = 0; i < N / 4; i++) {
-        const angle1 = (2 * Math.PI * i) / N;
-        const angle2 = (4 * Math.PI * i) / N;
-        factors[pre + i * 4] = Math.cos(angle1); // Cosine of angle1
-        factors[pre + i * 4 + 1] = Math.sin(angle1); // Sine of angle1
-        factors[pre + i * 4 + 2] = Math.cos(angle2); // Cosine of angle2
-        factors[pre + i * 4 + 3] = Math.sin(angle2); // Sine of angle2
-    }
-    pre += N;
-   }
-
-    return new Float32Array(factors);
-}
-
 /*
 // Function to compute FFT factors with caching
 function computeFFTFactorsWithCacheRADIX4(N) {
@@ -459,11 +439,6 @@ function computeFFTFactorsWithCacheRADIX4(N) {
     // Return the cached factors
     return fftFactorCacheRADIX4[N];
 }*/
-
-
-
-// Create the flattened lookup table for twiddle factors
-const LOOKUP_RADIX4 = precalculateFFTFactorsRADIX4(1024*4);
 
 
 function fftRealInPlaceRADIX4(input) {
