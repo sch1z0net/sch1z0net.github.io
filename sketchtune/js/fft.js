@@ -558,6 +558,7 @@ function fftRealInPlaceRADIX4(input) {
     var len = (size / step) << 1;
     var inv = -1;
 
+    /*
     // Perform bit reversal in place
     for (let i = 0; i < N; i++) {
         const reversedIndex = bitReverse(i, bits);
@@ -565,7 +566,7 @@ function fftRealInPlaceRADIX4(input) {
             // Swap elements if necessary
             [out[i], out[reversedIndex]] = [out[reversedIndex], out[i]];
         }
-    }
+    }*/
 
     const table = LOOKUP_RADIX4;
 
@@ -679,7 +680,7 @@ function fftRealInPlaceRADIX4(input) {
         }
     }
 
-    return input;
+    return out;
 }
 
 
