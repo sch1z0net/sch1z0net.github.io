@@ -314,14 +314,17 @@ function fftRealInPlace(input) {
     return input;
 }*/
 
-function fftRealInPlaceRADIX2(input) {
-    const N = input.length;
+function fftRealInPlaceRADIX2(inputOriginal) {
+    const N = inputOriginal.length;
     const bits = Math.log2(N);
 
     if (N !== nextPowerOf2(N)) {
         console.error("FFT FRAME must have power of 2");
         return;
     }
+
+    // Create a copy of the input array
+    const input = inputOriginal.slice();
 
     //const startTime = performance.now();
 
@@ -797,7 +800,8 @@ const testData = generateTestData(fftSize);
 const performFFTOperations = () => {
     // Perform FFT operations numOperations times
     for (let i = 0; i < numOperations; i++) {
-        fftRealInPlaceRADIX4(testData);
+        //fftRealInPlaceRADIX4(testData);
+        fftRealInPlaceRADIX2(testData);
     }
 };
 
