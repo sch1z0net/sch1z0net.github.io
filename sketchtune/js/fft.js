@@ -362,11 +362,11 @@ function precomputeBitReversalMap(N) {
     bitReversalMap.set(N, map);
 }
 
-precomputeBitReversalMap(1024);
+precomputeBitReversalMap(16);
 
 // Create the flattened lookup table for twiddle factors
-const LOOKUP_RADIX4 = precalculateFFTFactorsRADIX4(1024);
-const LOOKUP_RADIX2 = precalculateFFTFactorsRADIX2(1024);
+const LOOKUP_RADIX4 = precalculateFFTFactorsRADIX4(16);
+const LOOKUP_RADIX2 = precalculateFFTFactorsRADIX2(16);
 
 function fftRealInPlaceRADIX2(inputOriginal) {
     const N = inputOriginal.length;
