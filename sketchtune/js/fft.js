@@ -460,7 +460,13 @@ function generateFFTFactorLookupRADIX4(maxSampleLength) {
 
 // Create the flattened lookup table for twiddle factors
 const LOOKUP_RADIX4 = generateFFTFactorLookupRADIX4(1024*4);
-const FLATTENED_LOOKUP_RADIX4 = LOOKUP_RADIX4.flat();
+
+// Manually flatten the LOOKUP_RADIX4 table
+const FLATTENED_LOOKUP_RADIX4 = [];
+for (let i = 0; i < LOOKUP_RADIX4.length; i++) {
+    FLATTENED_LOOKUP_RADIX4.push(...LOOKUP_RADIX4[i]);
+}
+
 console.log(LOOKUP_RADIX4);
 console.log(FLATTENED_LOOKUP_RADIX4);
 
