@@ -418,19 +418,20 @@ function fftRealInPlaceRADIX2(inputOriginal) {
         // Precompute FFT factors
         // const factors = computeFFTFactorsWithCache(size);
         const halfSize = size >> 1;
-        for (let i = 0, j = 0; i < N; i += size, j += halfSize) {
-            const evenIndex = i;
-            const oddIndex = i + halfSize;
+        const steps = N / size;
+        for (let j = 0; j < halfSize*steps; j += 1) {
+            // Use precalculated FFT factors directly
+            const twiddleRe = factors[pre + (j << 1)%halfSize];
+            const twiddleIm = factors[pre + (j << 1)%halfSize + 1];
+
+            const evenIndex = Math.floor(j/halfSize)*size;
+            const oddIndex = Math.floor(j/halfSize)*size + halfSize;
 
             // Get real and imaginary parts of even and odd elements
             const evenRe = complexInput[evenIndex << 1];
             const evenIm = complexInput[(evenIndex << 1) + 1];
             const oddRe = complexInput[oddIndex << 1];
             const oddIm = complexInput[(oddIndex << 1) + 1];
-
-            // Use precalculated FFT factors directly
-            const twiddleRe = factors[pre + (j << 1)];
-            const twiddleIm = factors[pre + (j << 1) + 1];
 
             // Perform complex multiplication
             const twiddledOddRe = oddRe * twiddleRe - oddIm * twiddleIm;
