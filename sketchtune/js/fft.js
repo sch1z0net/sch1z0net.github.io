@@ -552,7 +552,7 @@ function fftRealInPlaceRADIX4(input) {
     const out = input.slice();
 
     // Initial step (permute and transform)
-    var width = 4;
+    var width = 2;
     var size = N;
     var step = 1 << width;
     var len = (size / step) << 1;
