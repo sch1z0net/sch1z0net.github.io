@@ -115,7 +115,7 @@ const fftFactorCacheRADIX2 = {};
 const fftFactorCacheRADIX4 = {};
 
 // Pre-calculate FFT factors for a given size and cache them for future use
-function precalculateFFTFactorsRADIX2(maySampleLength) {
+function precalculateFFTFactorsRADIX2(maxSampleLength) {
     const maxN = nextPowerOf2(maxSampleLength);
     var len = 0;
     for (let N = 2; N <= maxN; N *= 2) {
@@ -1024,6 +1024,6 @@ const measureTime = (type) => {
     console.log("Type",type,"Number of FFT operations per second:", operationsPerSecond);
 };
 
-measureTime(0);
+//measureTime(0);
 //measureTime(1);
 
