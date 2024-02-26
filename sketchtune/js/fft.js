@@ -629,8 +629,8 @@ async function computeInverseFFT(spectrum) {
  
     console.log(paddedSpectrum.length/2);
     for (let i = 0; i < paddedSpectrum.length/2; i++){
-        console.log(paddedSpectrum[i * 2], paddedSpectrum[paddedSize * 2 - (i+1) * 2]);
-        console.log(paddedSpectrum[i * 2 + 1], paddedSpectrum[paddedSize * 2 - (i+1) * 2 + 1]);
+        //console.log(paddedSpectrum[i * 2], paddedSpectrum[paddedSize * 2 - (i+1) * 2]);
+        //console.log(paddedSpectrum[i * 2 + 1], paddedSpectrum[paddedSize * 2 - (i+1) * 2 + 1]);
         /*if(paddedSpectrum[i * 2] != paddedSpectrum[(paddedSize-1) * 2 - i * 2]){
             throw(Error("Spectrum not symmetric at index: "+i));
         }*/
