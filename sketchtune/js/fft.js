@@ -117,21 +117,21 @@ const fftFactorCacheRADIX4 = {};
 // Pre-calculate FFT factors for a given size and cache them for future use
 function precalculateFFTFactorsRADIX2(maxSampleLength) {
     const maxN = nextPowerOf2(maxSampleLength);
-    var len = 0;
+    let len = 0; // Initialize len
     for (let N = 2; N <= maxN; N *= 2) {
-       len *= N;
+        len += N; // Update len by adding N
     }
     const factors = new Array(len); // Preallocate memory for factors
 
-   var pre = 0;
-   for (let N = 2; N <= maxN; N *= 2) {
-    for (let i = 0; i < N / 2; i++) {
-        const angle1 = (2 * Math.PI * i) / N;
-        factors[pre + i * 2] = Math.cos(angle1); // Cosine of angle1
-        factors[pre + i * 2 + 1] = Math.sin(angle1); // Sine of angle1
+    let pre = 0;
+    for (let N = 2; N <= maxN; N *= 2) {
+        for (let i = 0; i < N / 2; i++) {
+            const angle1 = (2 * Math.PI * i) / N;
+            factors[pre + i * 2] = Math.cos(angle1); // Cosine of angle1
+            factors[pre + i * 2 + 1] = Math.sin(angle1); // Sine of angle1
+        }
+        pre += N;
     }
-    pre += N;
-   }
 
     return new Float32Array(factors);
 }
@@ -141,7 +141,7 @@ function precalculateFFTFactorsRADIX4(maxSampleLength) {
     const maxN = nextPowerOf4(maxSampleLength);
     var len = 0;
     for (let N = 4; N <= maxN; N *= 4) {
-       len *= N;
+       len += N;
     }
     const factors = new Array(len); // Preallocate memory for factors
 
@@ -400,17 +400,16 @@ function fftRealInPlaceRADIX2(inputOriginal) {
 
     const factors = LOOKUP_RADIX2;
 
-    console.log(complexInput);
-    console.log(factors);
     // Recursively calculate FFT
     // Perform Radix-2 FFT
+    let pre = 0;
     for (let size = 2; size <= N; size <<= 1) {
         // Precompute FFT factors
         // const factors = computeFFTFactorsWithCache(size);
         const halfSize = size >> 1;
         for (let i = 0, j = 0; i < N; i += size, j += halfSize) {
-            const evenIndex = i + j;
-            const oddIndex = i + j + halfSize;
+            const evenIndex = i;
+            const oddIndex = i + halfSize;
 
             // Get real and imaginary parts of even and odd elements
             const evenRe = complexInput[evenIndex << 1];
@@ -419,8 +418,8 @@ function fftRealInPlaceRADIX2(inputOriginal) {
             const oddIm = complexInput[(oddIndex << 1) + 1];
 
             // Use precalculated FFT factors directly
-            const twiddleRe = factors[j << 1];
-            const twiddleIm = factors[(j << 1) + 1];
+            const twiddleRe = factors[pre + (j << 1)];
+            const twiddleIm = factors[pre + (j << 1) + 1];
 
             // Perform complex multiplication
             const twiddledOddRe = oddRe * twiddleRe - oddIm * twiddleIm;
@@ -432,6 +431,7 @@ function fftRealInPlaceRADIX2(inputOriginal) {
             complexInput[oddIndex << 1]      = evenRe - twiddledOddRe;
             complexInput[(oddIndex << 1) + 1]  = evenIm - twiddledOddIm;
         }
+        pre += size;
     }
 
     // Return the output
@@ -471,11 +471,12 @@ function fftRealInPlaceRADIX4(input) {
     }
 
     const factors = LOOKUP_RADIX4;
+
     // Perform Radix-4 FFT
     for (let size = N; size >= 4; size >>= 2) { // Loop in decreasing order using bitshift
         const halfSize = size >> 1; // Using bitwise right shift for efficiency
         const quarterSize = size >> 2; // Using bitwise right shift for efficiency
-        
+
         // Combine both loops into a single loop
         for (let i = 0, j = 0; i < N; i += size, j += quarterSize) {
             const evenIndex1 = i + j;
