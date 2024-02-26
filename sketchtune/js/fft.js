@@ -12,8 +12,9 @@ function nextPowerOf4(n) {
     while (power < n) {
         power *= 4;
     }
-    return power;
+    return power === n ? n : power; // Return n if it's already a power of 4
 }
+
 
 
 
