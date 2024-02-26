@@ -629,11 +629,11 @@ async function computeInverseFFT(spectrum) {
         paddedSpectrum[i * 2 + 1] = spectrum[i].im; // Copy imaginary part
     }
 
-    /*
     for (let i = 0; i < paddedSpectrum.length/2; i++){
-        console.log("FULL",paddedSpectrum[i * 2], paddedSpectrum[(paddedSize-1) * 2 - i * 2]);
-        console.log("FULL",paddedSpectrum[i * 2 + 1], paddedSpectrum[(paddedSize-1) * 2 - i * 2 + 1]);
-    }*/
+        if(paddedSpectrum[i * 2 + 1] != paddedSpectrum[(paddedSize-1) * 2 - i * 2 + 1]){
+            throw(Error("Spectrum not symmetric at index: "+i));
+        }
+    }
 
 
     // Now you can pass paddedSpectrum to the IFFT function
@@ -670,12 +670,13 @@ async function computeInverseFFTonHalf(halfSpectrum) {
         fullSpectrum[fullSize - i * 2] = halfSpectrum[i-1].re; // Copy the real part
         fullSpectrum[fullSize - i * 2 + 1] = -halfSpectrum[i-1].im; // Copy imaginary part
     }
-
-    /*
+    
+    
     for (let i = 0; i < fullSpectrum.length/2; i++){
-        //console.log("HALF", fullSpectrum[i * 2], fullSpectrum[(paddedSize-1) * 2 - i * 2]);
-        console.log(fullSpectrum[i * 2 + 1], fullSpectrum[(paddedSize-1) * 2 - i * 2 + 1]);
-    }*/
+        if(fullSpectrum[i * 2 + 1] != fullSpectrum[(paddedSize-1) * 2 - i * 2 + 1]){
+            throw(Error("Spectrum not symmetric at index: "+i));
+        }
+    }
 
     // Perform the IFFT on the full spectrum
     const timeDomainSignal = IFFT(fullSpectrum);
