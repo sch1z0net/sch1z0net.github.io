@@ -800,10 +800,10 @@ const testData = generateTestData(fftSize);
 const performFFTOperations = () => {
     // Perform FFT operations numOperations times
     for (let i = 0; i < numOperations; i++) {
-        //console.log("fftRealInPlaceRADIX4");
-        //fftRealInPlaceRADIX4(testData);
-        console.log("fftRealInPlaceRADIX2");
-        fftRealInPlaceRADIX2(testData);
+        console.log("fftRealInPlaceRADIX4");
+        fftRealInPlaceRADIX4(testData);
+        //console.log("fftRealInPlaceRADIX2");
+        //fftRealInPlaceRADIX2(testData);
     }
 };
 
