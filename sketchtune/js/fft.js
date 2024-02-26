@@ -455,6 +455,9 @@ function fftRealInPlaceRADIX2(inputOriginal) {
         let j = 0; // Initialize j to 0
         let k = 0; // Initialize k to 0
 
+        const halfSize = size >> 1;
+        const steps = N / size;
+
         // Loop condition
         while (k < halfSize * steps) {
             // Use precalculated FFT factors directly
