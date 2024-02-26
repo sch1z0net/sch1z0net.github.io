@@ -364,20 +364,12 @@ function fftRealInPlaceRADIX2(inputOriginal) {
         out[i] = input[map[i]];
     }
 
-    /*const endTime1 = performance.now();
-    const elapsedTime1 = endTime1 - startTime;
-    console.log(`FFT - Bit Reversal: Elapsed time: ${elapsedTime1} milliseconds`);*/
-
     // Convert the real-valued input to a complex-valued Float32Array
     const complexInput = new Float32Array(N * 2);
     for (let i = 0; i < N; i++) {
         complexInput[i * 2] = out[i];
         complexInput[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
-
-    /*const endTime3 = performance.now();
-    const elapsedTime3 = endTime3 - startTime;
-    console.log(`FFT - Real To Complex: Elapsed time: ${elapsedTime3} milliseconds`);*/
 
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
@@ -404,13 +396,6 @@ function fftRealInPlaceRADIX2(inputOriginal) {
                 const twiddledOddRe = oddRe * twiddleRe - oddIm * twiddleIm;
                 const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
 
-                /*if(Number.isNaN(evenRe)){ console.error("evenRe is NaN"); }
-                if(Number.isNaN(evenIm)){ console.error("evenIm is NaN"); }
-                if(Number.isNaN(oddRe)){ console.error("oddRe is NaN"); }
-                if(Number.isNaN(oddIm)){ console.error("oddIm is NaN"); }
-                if(Number.isNaN(twiddleRe)){ console.error("twiddleRe is NaN"); }
-                if(Number.isNaN(twiddleIm)){ console.error("twiddleIm is NaN"); }*/
-
                 // Update even and odd elements with new values
                 complexInput[evenIndex * 2]     = evenRe + twiddledOddRe;
                 complexInput[evenIndex * 2 + 1] = evenIm + twiddledOddIm;
@@ -419,11 +404,6 @@ function fftRealInPlaceRADIX2(inputOriginal) {
             }
         }
     }
-
-    /*const endTime2 = performance.now();
-    const elapsedTime2 = endTime2 - startTime;
-    console.log(`FFT: Elapsed time: ${elapsedTime2} milliseconds`);*/
-
 
     // Return the output
     return complexInput;
@@ -825,7 +805,7 @@ function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     console.log(`FFT - PADDING: Elapsed time: ${elapsedTime2} milliseconds`);*/
 
     // Perform FFT
-    return fftRealInPlaceRADIX4(paddedInput);
+    return fftRealInPlaceRADIX2(paddedInput);
     //return fftRealInPlace(paddedInput);
 }
 
