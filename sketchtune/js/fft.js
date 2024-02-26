@@ -780,11 +780,12 @@ const numOperations = 10000; // You can adjust this number based on your require
 
 // Perform FFT operations
 const performFFTOperations = () => {
+    // Generate test data (replace this with your actual data)
+    const testData = generateTestData(fftSize);
     // Perform FFT operations numOperations times
     for (let i = 0; i < numOperations; i++) {
-        // Generate test data (replace this with your actual data)
-        const testData = generateTestData(fftSize);
-        fftRealInPlaceRADIX4(testData);
+        const testDataCopy = testData.slice();
+        fftRealInPlaceRADIX4(testDataCopy);
         //computeFFT(testData,0,0);
     }
 };
