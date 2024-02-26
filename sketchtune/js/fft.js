@@ -482,7 +482,7 @@ function precomputeBitReversalMap(N) {
     bitReversalMap.set(N, map);
 }
 
-precomputeBitReversalMap(4096);
+precomputeBitReversalMap(1024);
 
 
 
@@ -1003,7 +1003,7 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 
 
 // Define the FFT size
-const fftSize = 4096;
+const fftSize = 1024;
 // Define the number of FFT operations to perform
 const numOperations = 1000; // You can adjust this number based on your requirements
 
