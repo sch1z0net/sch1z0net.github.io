@@ -626,7 +626,8 @@ async function computeInverseFFT(spectrum) {
         paddedSpectrum[i * 2] = spectrum[i].re; // Copy real part
         paddedSpectrum[i * 2 + 1] = spectrum[i].im; // Copy imaginary part
     }
-
+ 
+    console.log(paddedSpectrum.length/2);
     for (let i = 0; i < paddedSpectrum.length/2; i++){
         console.log(paddedSpectrum[i * 2], paddedSpectrum[paddedSize * 2 - (i+1) * 2]);
         console.log(paddedSpectrum[i * 2 + 1], paddedSpectrum[paddedSize * 2 - (i+1) * 2 + 1]);
