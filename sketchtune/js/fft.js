@@ -463,9 +463,11 @@ function fftRealInPlaceRADIX2(inputOriginal) {
             // Use precalculated FFT factors directly
             const twiddleRe = factors[pre + (j << 1)];
             const twiddleIm = factors[pre + (j << 1) + 1];
-            console.log("TwiddleRE",pre + (j << 1), "TwiddleIM", pre + (j << 1) + 1);
+
             const evenIndex = i;
             const oddIndex = i + halfSize;
+
+            console.log("evenIndex",i, "oddIndex",i+halfSize, "TwiddleRE",pre + (j << 1), "TwiddleIM", pre + (j << 1) + 1);
 
             // Get real and imaginary parts of even and odd elements
             const evenRe = complexInput[evenIndex << 1];
