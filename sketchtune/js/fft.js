@@ -422,20 +422,26 @@ function fftRealInPlaceRADIX2(input) {
 // Compute FFT factors with caching (optimized for Radix-4 FFT)
 function precalculateFFTFactorsRADIX4(maxSampleLength) {
     const maxN = nextPowerOf4(maxSampleLength);
-    const factors = new Array(maxN * 2); // Preallocate memory for factors
+    var len = 0;
+    for (let N = 4; N <= maxN; N *= 4) {
+       len *= N;
+    }
+    const factors = new Array(len); // Preallocate memory for factors
 
+   var pre = 0;
    for (let N = 4; N <= maxN; N *= 4) {
     for (let i = 0; i < N / 4; i++) {
         const angle1 = (2 * Math.PI * i) / N;
         const angle2 = (4 * Math.PI * i) / N;
-        factors[i * 4] = Math.cos(angle1); // Cosine of angle1
-        factors[i * 4 + 1] = Math.sin(angle1); // Sine of angle1
-        factors[i * 4 + 2] = Math.cos(angle2); // Cosine of angle2
-        factors[i * 4 + 3] = Math.sin(angle2); // Sine of angle2
+        factors[pre + i * 4] = Math.cos(angle1); // Cosine of angle1
+        factors[pre + i * 4 + 1] = Math.sin(angle1); // Sine of angle1
+        factors[pre + i * 4 + 2] = Math.cos(angle2); // Cosine of angle2
+        factors[pre + i * 4 + 3] = Math.sin(angle2); // Sine of angle2
     }
+    pre += N;
    }
 
-    return factors;
+    return new Float32Array(factors);
 }
 
 /*
