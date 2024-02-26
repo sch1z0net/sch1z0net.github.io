@@ -159,6 +159,7 @@ function bitReverse(num, bits) {
     return reversed;
 }
 
+
 // Function to pad the input array with zeros to make its length a power of 2
 function padArray(input) {
     const N = input.length;
@@ -558,6 +559,7 @@ function fftRealInPlaceRADIX4(input) {
     var len = (size / step) << 1;
     var inv = -1;
 
+    
     /*
     // Perform bit reversal in place
     for (let i = 0; i < N; i++) {
@@ -567,6 +569,18 @@ function fftRealInPlaceRADIX4(input) {
             [out[i], out[reversedIndex]] = [out[reversedIndex], out[i]];
         }
     }*/
+
+    // Perform bit reversal in place
+    for (let i = 0; i < N; i++) {
+        const reversedIndex = bitReverse(i, bits);
+        if (reversedIndex > i) {
+            // Swap elements if necessary
+            const temp = out[i];
+            out[i] = out[reversedIndex];
+            out[reversedIndex] = temp;
+        }
+    }
+
 
     const table = LOOKUP_RADIX4;
 
