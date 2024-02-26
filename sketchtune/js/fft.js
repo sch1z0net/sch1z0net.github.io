@@ -486,8 +486,8 @@ precomputeBitReversalMap(1024);
 
 
 
-function fftRealInPlaceRADIX4(inputOriginal) {
-    const N = inputOriginal.length;
+function fftRealInPlaceRADIX4(input) {
+    const N = input.length;
 
     if (N !== nextPowerOf4(N)) {
         console.error("FFT FRAME must have power of 4");
@@ -495,7 +495,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     }
 
     // Create a copy of the input array
-    const input = inputOriginal.slice();
+    const out = new Float32Array(N);
 
     // Perform bit reversal
     const map = bitReversalMap.get(N);
@@ -515,14 +515,14 @@ function fftRealInPlaceRADIX4(inputOriginal) {
                 const evenIndex2 = i + j + halfSize;
                 const oddIndex2 = i + j + halfSize + quarterSize;
 
-                const evenRe1 = input[evenIndex1 * 2];
-                const evenIm1 = input[evenIndex1 * 2 + 1];
-                const oddRe1 = input[oddIndex1 * 2];
-                const oddIm1 = input[oddIndex1 * 2 + 1];
-                const evenRe2 = input[evenIndex2 * 2];
-                const evenIm2 = input[evenIndex2 * 2 + 1];
-                const oddRe2 = input[oddIndex2 * 2];
-                const oddIm2 = input[oddIndex2 * 2 + 1];
+                const evenRe1 = out[evenIndex1 * 2];
+                const evenIm1 = out[evenIndex1 * 2 + 1];
+                const oddRe1 = out[oddIndex1 * 2];
+                const oddIm1 = out[oddIndex1 * 2 + 1];
+                const evenRe2 = out[evenIndex2 * 2];
+                const evenIm2 = out[evenIndex2 * 2 + 1];
+                const oddRe2 = out[oddIndex2 * 2];
+                const oddIm2 = out[oddIndex2 * 2 + 1];
 
                 const twiddleRe1 = factors[j * 4];
                 const twiddleIm1 = factors[j * 4 + 1];
@@ -534,20 +534,20 @@ function fftRealInPlaceRADIX4(inputOriginal) {
                 const twiddledOddRe2 = oddRe2 * twiddleRe2 - oddIm2 * twiddleIm2;
                 const twiddledOddIm2 = oddRe2 * twiddleIm2 + oddIm2 * twiddleRe2;
 
-                input[evenIndex1 * 2]     = evenRe1 + twiddledOddRe1;
-                input[evenIndex1 * 2 + 1] = evenIm1 + twiddledOddIm1;
-                input[oddIndex1 * 2]      = evenRe1 - twiddledOddRe1;
-                input[oddIndex1 * 2 + 1]  = evenIm1 - twiddledOddIm1;
+                out[evenIndex1 * 2]     = evenRe1 + twiddledOddRe1;
+                out[evenIndex1 * 2 + 1] = evenIm1 + twiddledOddIm1;
+                out[oddIndex1 * 2]      = evenRe1 - twiddledOddRe1;
+                out[oddIndex1 * 2 + 1]  = evenIm1 - twiddledOddIm1;
 
-                input[evenIndex2 * 2]     = evenRe2 + twiddledOddRe2;
-                input[evenIndex2 * 2 + 1] = evenIm2 + twiddledOddIm2;
-                input[oddIndex2 * 2]      = evenRe2 - twiddledOddRe2;
-                input[oddIndex2 * 2 + 1]  = evenIm2 - twiddledOddIm2;
+                out[evenIndex2 * 2]     = evenRe2 + twiddledOddRe2;
+                out[evenIndex2 * 2 + 1] = evenIm2 + twiddledOddIm2;
+                out[oddIndex2 * 2]      = evenRe2 - twiddledOddRe2;
+                out[oddIndex2 * 2 + 1]  = evenIm2 - twiddledOddIm2;
             }
         }
     }
 
-    return input;
+    return out;
 }
 
 
