@@ -539,6 +539,27 @@ function fftRealInPlaceRADIX4(inputOriginal) {
 
 
 
+// Define a global map to store bit reversal indices
+const bitReversalMap = new Map();
+
+// Function to precompute and store bit reversal map for a given size N
+function precomputeBitReversalMap(N) {
+    const bits = Math.log2(N);
+    const map = new Array(N);
+
+    for (let i = 0; i < N; i++) {
+        let reversedIndex = 0;
+        for (let j = 0; j < bits; j++) {
+            reversedIndex = (reversedIndex << 1) | ((i >> j) & 1);
+        }
+        map[i] = reversedIndex;
+    }
+
+    bitReversalMap.set(N, map);
+}
+
+precomputeBitReversalMap(1024);
+
 
 function fftRealInPlaceRADIX4(input) {
     const N = input.length;
@@ -550,7 +571,8 @@ function fftRealInPlaceRADIX4(input) {
     }
 
     // Create a copy of the input array
-    const out = input.slice();
+    //const out = input.slice();
+    const out = new Float32Array(N);
 
     // Initial step (permute and transform)
     var width = 2;
@@ -569,7 +591,8 @@ function fftRealInPlaceRADIX4(input) {
             [out[i], out[reversedIndex]] = [out[reversedIndex], out[i]];
         }
     }*/
-
+    
+    /*
     // Perform bit reversal in place
     for (let i = 0; i < N; i++) {
         const reversedIndex = bitReverse(i, bits);
@@ -579,7 +602,13 @@ function fftRealInPlaceRADIX4(input) {
             out[i] = out[reversedIndex];
             out[reversedIndex] = temp;
         }
+    }*/
+
+    const map = bitReversalMap.get(N);
+    for (let i = 0; i < N; i++) {
+        out[i] = input[map[i]];
     }
+
 
 
     const table = LOOKUP_RADIX4;
