@@ -12,9 +12,8 @@ function nextPowerOf4(n) {
     while (power < n) {
         power *= 4;
     }
-    return power === n ? n : power; // Return n if it's already a power of 4
+    return power;
 }
-
 
 
 
@@ -783,6 +782,7 @@ const numOperations = 10000; // You can adjust this number based on your require
 const performFFTOperations = () => {
     // Generate test data (replace this with your actual data)
     const testData = generateTestData(fftSize);
+    console.log(testData.length);
 
     // Perform FFT operations numOperations times
     for (let i = 0; i < numOperations; i++) {
