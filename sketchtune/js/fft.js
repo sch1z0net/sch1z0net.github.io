@@ -791,20 +791,10 @@ const generateTestData = (size) => {
     return testData;
 };
 
-// Function to generate an array of test data arrays
-function generateTestArrays(numTestData, size) {
-    const testArrays = [];
-    for (let i = 0; i < numTestData; i++) {
-        testArrays.push(generateTestData(size));
-    }
-    return testArrays;
-}
-
-let testDatas = generateTestArrays(numOperations, fftSize);
+const testData = generateTestData(fftSize);
 
 // Perform FFT operations
 const performFFTOperations = () => {
-    const testData = generateTestData(fftSize);
     // Perform FFT operations numOperations times
     for (let i = 0; i < numOperations; i++) {
         fftRealInPlaceRADIX4(testData);
@@ -813,10 +803,21 @@ const performFFTOperations = () => {
 
 // Measure the time taken to perform FFT operations
 const measureTime = () => {
+    const startTimeA = performance.now(); // Start time
+    for (let i = 0; i < numOperations; i++) {
+        var copy = testData.slice();
+    }
+    const endTimeA = performance.now(); // End time
+    const elapsedTimeA = endTimeA - startTimeA; // Elapsed time in milliseconds
+    console.log("Slicing takes: ",elapsedTimeA,"ms");
+
+
     const startTime = performance.now(); // Start time
     performFFTOperations(); // Perform FFT operations
     const endTime = performance.now(); // End time
     const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
+
+    console.log("FFT takes: ",elapsedTime,"ms");
 
     return elapsedTime;
 };
