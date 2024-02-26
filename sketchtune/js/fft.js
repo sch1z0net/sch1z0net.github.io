@@ -794,12 +794,10 @@ const generateTestData = (size) => {
     return testData;
 };
 
-
-const testData = generateTestData(fftSize);
-
 // Perform FFT operations
 const performFFTOperations = () => {
-    console.log("fftRealInPlaceRADIX4");
+    const testData = generateTestData(fftSize);
+    //console.log("fftRealInPlaceRADIX4");
     //console.log("fftRealInPlaceRADIX2");
     // Perform FFT operations numOperations times
     for (let i = 0; i < numOperations; i++) {
