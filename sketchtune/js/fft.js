@@ -384,8 +384,9 @@ function fftRealInPlace(input) {
     }
 
     const endTime2 = performance.now();
-    const elapsedTime2 = endTime2 - startTime;
-    console.log(`FFT: Elapsed time: ${elapsedTime2} milliseconds`);
+    const elapsedTimeMicroseconds = (endTime2 - startTime) * 1000;
+
+    console.log("Elapsed time:", elapsedTimeMicroseconds, "microseconds");
 
 
     // Return the output
