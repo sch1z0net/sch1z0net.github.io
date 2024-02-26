@@ -399,6 +399,9 @@ function fftRealInPlaceRADIX2(inputOriginal) {
     }
 
     const factors = LOOKUP_RADIX2;
+
+    console.log(complexInput);
+    console.log(factors);
     // Recursively calculate FFT
     // Perform Radix-2 FFT
     for (let size = 2; size <= N; size <<= 1) {
@@ -430,7 +433,6 @@ function fftRealInPlaceRADIX2(inputOriginal) {
             complexInput[(oddIndex << 1) + 1]  = evenIm - twiddledOddIm;
         }
     }
-
 
     // Return the output
     return complexInput;
