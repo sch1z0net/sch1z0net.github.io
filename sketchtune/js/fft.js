@@ -353,7 +353,6 @@ function precomputeBitReversalMap(N) {
 
 precomputeBitReversalMap(1024);
 
-
 // Create the flattened lookup table for twiddle factors
 const LOOKUP_RADIX4 = precalculateFFTFactorsRADIX4(1024);
 const LOOKUP_RADIX2 = precalculateFFTFactorsRADIX2(1024);
@@ -390,37 +389,37 @@ function fftRealInPlaceRADIX2(inputOriginal) {
 
     const factors = LOOKUP_RADIX2;
     // Recursively calculate FFT
-    for (let size = 2; size <= N; size *= 2) {
-        const halfSize = size / 2;
+    // Perform Radix-2 FFT
+    for (let size = 2; size <= N; size <<= 1) {
         // Precompute FFT factors
-        //const factors = computeFFTFactorsWithCache(size);
-        for (let i = 0; i < N; i += size) {
-            for (let j = 0; j < halfSize; j++) {
-                const evenIndex = i + j;
-                const oddIndex = i + j + halfSize;
+        // const factors = computeFFTFactorsWithCache(size);
+        const halfSize = size >> 1;
+        for (let i = 0, j = 0; i < N; i += size, j += halfSize) {
+            const evenIndex = i + j;
+            const oddIndex = i + j + halfSize;
 
-                // Get real and imaginary parts of even and odd elements
-                const evenRe = complexInput[evenIndex * 2];
-                const evenIm = complexInput[evenIndex * 2 + 1];
-                const oddRe = complexInput[oddIndex * 2];
-                const oddIm = complexInput[oddIndex * 2 + 1];
+            // Get real and imaginary parts of even and odd elements
+            const evenRe = complexInput[evenIndex << 1];
+            const evenIm = complexInput[(evenIndex << 1) + 1];
+            const oddRe = complexInput[oddIndex << 1];
+            const oddIm = complexInput[(oddIndex << 1) + 1];
 
-                // Use precalculated FFT factors directly
-                const twiddleRe = factors[j * 2];
-                const twiddleIm = factors[j * 2 + 1];
+            // Use precalculated FFT factors directly
+            const twiddleRe = factors[j << 1];
+            const twiddleIm = factors[(j << 1) + 1];
 
-                // Perform complex multiplication
-                const twiddledOddRe = oddRe * twiddleRe - oddIm * twiddleIm;
-                const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
+            // Perform complex multiplication
+            const twiddledOddRe = oddRe * twiddleRe - oddIm * twiddleIm;
+            const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
 
-                // Update even and odd elements with new values
-                complexInput[evenIndex * 2]     = evenRe + twiddledOddRe;
-                complexInput[evenIndex * 2 + 1] = evenIm + twiddledOddIm;
-                complexInput[oddIndex * 2]      = evenRe - twiddledOddRe;
-                complexInput[oddIndex * 2 + 1]  = evenIm - twiddledOddIm;
-            }
+            // Update even and odd elements with new values
+            complexInput[evenIndex << 1]     = evenRe + twiddledOddRe;
+            complexInput[(evenIndex << 1) + 1] = evenIm + twiddledOddIm;
+            complexInput[oddIndex << 1]      = evenRe - twiddledOddRe;
+            complexInput[(oddIndex << 1) + 1]  = evenIm - twiddledOddIm;
         }
     }
+
 
     // Return the output
     return complexInput;
@@ -1014,6 +1013,6 @@ const measureTime = (type) => {
     console.log("Type",type,"Number of FFT operations per second:", operationsPerSecond);
 };
 
-//measureTime(0);
+measureTime(0);
 //measureTime(1);
 
