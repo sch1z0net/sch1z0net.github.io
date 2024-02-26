@@ -85,7 +85,7 @@ function ISTFT_OLA_NORMALIZED(spectrogramChunk, windowSize, hopSize, workerID) {
 function ISTFT_WOLA(spectrogramChunk, windowSize, hopSize, workerID, windowType, halfSpec) {
     return new Promise((resolve, reject) => {
         let spectra = spectrogramChunk.length;
-        
+
         const outputSignalChunk = new Float32Array(spectra * hopSize);
         
         // Process each frame in the spectrogram chunk asynchronously
@@ -97,6 +97,8 @@ function ISTFT_WOLA(spectrogramChunk, windowSize, hopSize, workerID, windowType,
                     let frame;
                     if(halfSpec){  frame = await computeInverseFFTonHalf(spectrum);
                     }else{         frame = await computeInverseFFT(spectrum);        }
+
+                    if(workerID==0 && i == 10){ console.log(frame); }
 
                     // Apply synthesis window to the frame
                     const synthesisWindow = hanningWindow(windowSize);
