@@ -405,6 +405,74 @@ function fftRealInPlaceRADIX2(input) {
 }
 
 
+
+
+
+
+
+
+
+
+
+/*
+// Function to generate twiddle factor table for Radix-4 FFT
+function generateTwiddleFactors(N) {
+    const twiddleFactors = new Float32Array(N * 2); // Complex numbers (real and imaginary parts)
+    const pi2_N = 2 * Math.PI / N;
+    for (let k = 0; k < N / 4; k++) {
+        const angle = k * pi2_N;
+        const cosVal = Math.cos(angle);
+        const sinVal = Math.sin(angle);
+        twiddleFactors[k * 8] = 1; // Cosine of angle (k/N * 2π)
+        twiddleFactors[k * 8 + 1] = 0; // Sine of angle (k/N * 2π)
+        twiddleFactors[k * 8 + 2] = cosVal; // Cosine of 2 * angle
+        twiddleFactors[k * 8 + 3] = sinVal; // Sine of 2 * angle
+        twiddleFactors[k * 8 + 4] = cosVal * cosVal - sinVal * sinVal; // Cosine of 4 * angle
+        twiddleFactors[k * 8 + 5] = 2 * cosVal * sinVal; // Sine of 4 * angle
+        twiddleFactors[k * 8 + 6] = cosVal * (cosVal * cosVal - 3 * sinVal * sinVal); // Cosine of 6 * angle
+        twiddleFactors[k * 8 + 7] = sinVal * (3 * cosVal * cosVal - sinVal * sinVal); // Sine of 6 * angle
+    }
+    return twiddleFactors;
+}
+
+// Example: Generate twiddle factor table for N = 64 (Radix-4 FFT with N/4 = 16 factors)
+const N = 64;
+const factors = generateTwiddleFactors(N / 4);
+console.log("Twiddle Factor Table:", factors);
+*/
+
+
+
+
+// Compute FFT factors with caching (optimized for Radix-4 FFT)
+function precalculateFFTFactorsRADIX4(N) {
+    const factors = new Float32Array(N * 4); // Preallocate memory for factors
+
+    for (let i = 0; i < N / 4; i++) {
+        const angle1 = (2 * Math.PI * i) / N;
+        const angle2 = (4 * Math.PI * i) / N;
+        factors[i * 4] = Math.cos(angle1); // Cosine of angle1
+        factors[i * 4 + 1] = Math.sin(angle1); // Sine of angle1
+        factors[i * 4 + 2] = Math.cos(angle2); // Cosine of angle2
+        factors[i * 4 + 3] = Math.sin(angle2); // Sine of angle2
+    }
+
+    return factors;
+}
+
+// Function to compute FFT factors with caching
+function computeFFTFactorsWithCacheRADIX4(N) {
+    // Check if FFT factors for this size are already cached
+    if (!fftFactorCache[N]) {
+        // Calculate FFT factors and cache them
+        fftFactorCache[N] = precalculateFFTFactorsRADIX4(N);
+    }
+
+    // Return the cached factors
+    return fftFactorCache[N];
+}
+
+
 function fftRealInPlaceRADIX4(inputOriginal) {
     const N = inputOriginal.length;
     const bits = Math.log2(N);
@@ -432,7 +500,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     for (let size = 4; size <= N; size *= 4) {
         const halfSize = size / 2;
         const quarterSize = size / 4;
-        const factors = computeFFTFactorsWithCache(size);
+        const factors = computeFFTFactorsWithCacheRADIX4(size);
         for (let i = 0; i < N; i += size) {
             for (let j = 0; j < quarterSize; j++) {
                 const evenIndex1 = i + j;
