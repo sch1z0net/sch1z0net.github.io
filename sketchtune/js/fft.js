@@ -784,15 +784,16 @@ const fftSize = 1024;
 const numOperations = 5000; // You can adjust this number based on your requirements
 
 
-// Generate test data (replace this with your actual data generation logic)
+// Generate test data as Float32Array
 const generateTestData = (size) => {
-    const testData = [];
+    const testData = new Float32Array(size);
     for (let i = 0; i < size; i++) {
         // For demonstration purposes, generate random data between -1 and 1
-        testData.push(Math.random() * 2 - 1);
+        testData[i] = Math.random() * 2 - 1;
     }
     return testData;
 };
+
 
 const testData = generateTestData(fftSize);
 
