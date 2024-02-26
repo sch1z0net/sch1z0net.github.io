@@ -503,56 +503,50 @@ function fftRealInPlaceRADIX4(input) {
         out[i] = input[map[i]];
     }
 
+    const factors = LOOKUP_RADIX4;
     // Perform Radix-4 FFT
-    for (let size = 4; size <= N; size *= 4) {
+    for (let size = N; size >= 4; size >>= 2) { // Loop in decreasing order using bitshift
         const halfSize = size >> 1; // Using bitwise right shift for efficiency
         const quarterSize = size >> 2; // Using bitwise right shift for efficiency
-        const factors = LOOKUP_RADIX4[size];
-
+        
         // Combine both loops into a single loop
         for (let i = 0, j = 0; i < N; i += size, j += quarterSize) {
-            const baseEvenIndex1 = i << 1;
-            const baseOddIndex1 = (i + quarterSize) << 1;
-            const baseEvenIndex2 = (i + halfSize) << 1;
-            const baseOddIndex2 = (i + halfSize + quarterSize) << 1;
+            const evenIndex1 = i + j;
+            const oddIndex1 = i + j + quarterSize;
+            const evenIndex2 = i + j + halfSize;
+            const oddIndex2 = i + j + halfSize + quarterSize;
 
-            for (let k = 0; k < quarterSize; k++) {
-                const evenIndex1 = baseEvenIndex1 + (k << 1);
-                const oddIndex1 = baseOddIndex1 + (k << 1);
-                const evenIndex2 = baseEvenIndex2 + (k << 1);
-                const oddIndex2 = baseOddIndex2 + (k << 1);
+            const evenRe1 = out[evenIndex1 << 1]; // Using bitwise left shift for efficiency
+            const evenIm1 = out[(evenIndex1 << 1) + 1]; // Using bitwise left shift for efficiency
+            const oddRe1 = out[oddIndex1 << 1]; // Using bitwise left shift for efficiency
+            const oddIm1 = out[(oddIndex1 << 1) + 1]; // Using bitwise left shift for efficiency
+            const evenRe2 = out[evenIndex2 << 1]; // Using bitwise left shift for efficiency
+            const evenIm2 = out[(evenIndex2 << 1) + 1]; // Using bitwise left shift for efficiency
+            const oddRe2 = out[oddIndex2 << 1]; // Using bitwise left shift for efficiency
+            const oddIm2 = out[(oddIndex2 << 1) + 1]; // Using bitwise left shift for efficiency
 
-                const evenRe1 = out[evenIndex1];
-                const evenIm1 = out[evenIndex1 + 1];
-                const oddRe1 = out[oddIndex1];
-                const oddIm1 = out[oddIndex1 + 1];
-                const evenRe2 = out[evenIndex2];
-                const evenIm2 = out[evenIndex2 + 1];
-                const oddRe2 = out[oddIndex2];
-                const oddIm2 = out[oddIndex2 + 1];
+            const twiddleRe1 = factors[j << 2]; // Using bitwise left shift for efficiency
+            const twiddleIm1 = factors[(j << 2) + 1]; // Using bitwise left shift for efficiency
+            const twiddleRe2 = factors[(j << 2) + 2]; // Using bitwise left shift for efficiency
+            const twiddleIm2 = factors[(j << 2) + 3]; // Using bitwise left shift for efficiency
 
-                const twiddleRe1 = factors[j << 2]; // Using bitwise left shift for efficiency
-                const twiddleIm1 = factors[(j << 2) + 1]; // Using bitwise left shift for efficiency
-                const twiddleRe2 = factors[(j << 2) + 2]; // Using bitwise left shift for efficiency
-                const twiddleIm2 = factors[(j << 2) + 3]; // Using bitwise left shift for efficiency
+            const twiddledOddRe1 = oddRe1 * twiddleRe1 - oddIm1 * twiddleIm1;
+            const twiddledOddIm1 = oddRe1 * twiddleIm1 + oddIm1 * twiddleRe1;
+            const twiddledOddRe2 = oddRe2 * twiddleRe2 - oddIm2 * twiddleIm2;
+            const twiddledOddIm2 = oddRe2 * twiddleIm2 + oddIm2 * twiddleRe2;
 
-                const twiddledOddRe1 = oddRe1 * twiddleRe1 - oddIm1 * twiddleIm1;
-                const twiddledOddIm1 = oddRe1 * twiddleIm1 + oddIm1 * twiddleRe1;
-                const twiddledOddRe2 = oddRe2 * twiddleRe2 - oddIm2 * twiddleIm2;
-                const twiddledOddIm2 = oddRe2 * twiddleIm2 + oddIm2 * twiddleRe2;
+            out[evenIndex1 << 1]     = evenRe1 + twiddledOddRe1; // Using bitwise left shift for efficiency
+            out[(evenIndex1 << 1) + 1] = evenIm1 + twiddledOddIm1; // Using bitwise left shift for efficiency
+            out[oddIndex1 << 1]      = evenRe1 - twiddledOddRe1; // Using bitwise left shift for efficiency
+            out[(oddIndex1 << 1) + 1]  = evenIm1 - twiddledOddIm1; // Using bitwise left shift for efficiency
 
-                out[evenIndex1] = evenRe1 + twiddledOddRe1;
-                out[evenIndex1 + 1] = evenIm1 + twiddledOddIm1;
-                out[oddIndex1] = evenRe1 - twiddledOddRe1;
-                out[oddIndex1 + 1] = evenIm1 - twiddledOddIm1;
-
-                out[evenIndex2] = evenRe2 + twiddledOddRe2;
-                out[evenIndex2 + 1] = evenIm2 + twiddledOddIm2;
-                out[oddIndex2] = evenRe2 - twiddledOddRe2;
-                out[oddIndex2 + 1] = evenIm2 - twiddledOddIm2;
-            }
+            out[evenIndex2 << 1]     = evenRe2 + twiddledOddRe2; // Using bitwise left shift for efficiency
+            out[(evenIndex2 << 1) + 1] = evenIm2 + twiddledOddIm2; // Using bitwise left shift for efficiency
+            out[oddIndex2 << 1]      = evenRe2 - twiddledOddRe2; // Using bitwise left shift for efficiency
+            out[(oddIndex2 << 1) + 1]  = evenIm2 - twiddledOddIm2; // Using bitwise left shift for efficiency
         }
     }
+
 
 
     return out;
