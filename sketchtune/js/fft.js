@@ -121,7 +121,8 @@ function generateFFTFactorLookup(maxSampleLength) {
 
 /******************** FORWARD *********************/
 // Cache object to store precalculated FFT factors
-const fftFactorCache = {};
+const fftFactorCacheRADIX2 = {};
+const fftFactorCacheRADIX4 = {};
 
 // Pre-calculate FFT factors for a given size and cache them for future use
 function precalculateFFTFactors(N) {
@@ -137,13 +138,13 @@ function precalculateFFTFactors(N) {
 // Function to compute FFT factors with caching
 function computeFFTFactorsWithCache(N) {
     // Check if FFT factors for this size are already cached
-    if (!fftFactorCache[N]) {
+    if (!fftFactorCacheRADIX2[N]) {
         // Calculate FFT factors and cache them
-        fftFactorCache[N] = precalculateFFTFactors(N);
+        fftFactorCacheRADIX2[N] = precalculateFFTFactors(N);
     }
 
     // Return the cached factors
-    return fftFactorCache[N];
+    return fftFactorCacheRADIX2[N];
 }
 
 
@@ -463,13 +464,13 @@ function precalculateFFTFactorsRADIX4(N) {
 // Function to compute FFT factors with caching
 function computeFFTFactorsWithCacheRADIX4(N) {
     // Check if FFT factors for this size are already cached
-    if (!fftFactorCache[N]) {
+    if (!fftFactorCacheRADIX4[N]) {
         // Calculate FFT factors and cache them
-        fftFactorCache[N] = precalculateFFTFactorsRADIX4(N);
+        fftFactorCacheRADIX4[N] = precalculateFFTFactorsRADIX4(N);
     }
 
     // Return the cached factors
-    return fftFactorCache[N];
+    return fftFactorCacheRADIX4[N];
 }
 
 
