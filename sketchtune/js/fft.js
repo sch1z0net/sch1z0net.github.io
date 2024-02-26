@@ -449,10 +449,10 @@ function computeFFTFactorsWithCacheRADIX4(N) {
 
 function generateFFTFactorLookupRADIX4(maxSampleLength) {
     const maxN = nextPowerOf4(maxSampleLength);
-    const fftFactorLookup = {};
+    const fftFactorLookup = new Array();
 
     for (let N = 4; N <= maxN; N *= 4) {
-        fftFactorLookup[N] = precalculateFFTFactorsRADIX4(N);
+        fftFactorLookup.push(precalculateFFTFactorsRADIX4(N));
     }
 
     return fftFactorLookup;
