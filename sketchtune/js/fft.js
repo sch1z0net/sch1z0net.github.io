@@ -482,7 +482,7 @@ function precomputeBitReversalMap(N) {
     bitReversalMap.set(N, map);
 }
 
-precomputeBitReversalMap(1024);
+precomputeBitReversalMap(4096);
 
 
 
