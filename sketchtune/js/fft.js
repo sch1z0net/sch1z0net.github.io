@@ -459,7 +459,6 @@ function fftRealInPlaceRADIX2(inputOriginal) {
         let j = 0; // Initialize j to 0
 
         const halfSize = size >> 1;
-        const steps = N / size;
         console.log("------------------------ size",size)
         // Loop condition
         while (i < N) {
@@ -492,7 +491,7 @@ function fftRealInPlaceRADIX2(inputOriginal) {
             j = (j + 1) % halfSize;
             if (j % halfSize === 0) {
                 i += size;
-                console.log("-------------------")
+                console.log("-------------------",i,"<",N);
             }
         }
         pre += size;
