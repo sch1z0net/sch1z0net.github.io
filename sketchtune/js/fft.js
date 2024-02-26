@@ -779,7 +779,7 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 
 
 // Define the FFT size
-const fftSize = 1024;
+const fftSize = 1024*4;
 // Define the number of FFT operations to perform
 const numOperations = 1000; // You can adjust this number based on your requirements
 
