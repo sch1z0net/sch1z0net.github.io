@@ -556,6 +556,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     var size = N;
     var step = 1 << width;
     var len = (size / step) << 1;
+    var inv = -1;
 
     // Perform bit reversal in place
     for (let i = 0; i < N; i++) {
