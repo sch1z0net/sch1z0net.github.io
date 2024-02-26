@@ -229,9 +229,9 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
             worker.onmessage = function (e) {
                 const endTime = performance.now();
                 const elapsedTime = endTime - startTime;
-                if(i == 0){
+                /*if(i == 0){
                     console.log("Worker",i,"sent Chunk after ", elapsedTime, "ms");
-                }
+                }*/
 
                 const { id, buffer } = e.data;
 
@@ -892,11 +892,12 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, windowType, h
         const processedSignal = await ISTFTWithWebWorkers(postSpectrogram, windowSize, hopSize, windowType, halfSpec);
         const endTime3 = performance.now();
 
+        /*
         if(ch == 0){
             console.log(`CH ${ch}: Calculating the Spectrogram: Elapsed time: ${endTime1 - startTime1} milliseconds`);
             console.log(`CH ${ch}: Now Stretching the Spectrogram: Elapsed time: ${endTime2 - startTime2} milliseconds`);
             console.log(`CH ${ch}: Now Reconstructing the Audio Signal: Elapsed time: ${endTime3 - startTime3} milliseconds`);
-        }
+        }*/
 
         return {processedSignal, preSpectrogram, postSpectrogram};
     } catch (error) {
