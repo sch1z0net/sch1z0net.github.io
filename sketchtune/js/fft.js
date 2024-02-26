@@ -563,7 +563,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     const factors = LOOKUP_RADIX4;
 
     // Perform Radix-4 FFT
-    for (let size = 4; size <= N; size *= 4) {
+    for (let size = N; size >= 4; size >>= 2) { // Loop in decreasing order using bitshift
         const halfSize = size >> 1; // Using bitwise right shift for efficiency
         const quarterSize = size >> 2; // Using bitwise right shift for efficiency
         
@@ -606,7 +606,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     }
 
     return input;
-}
+
 
 
 
