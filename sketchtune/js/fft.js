@@ -1027,6 +1027,6 @@ const measureTime = (type) => {
     console.log("Type",type,"Number of FFT operations per second:", operationsPerSecond);
 };
 
-//measureTime(0);
+measureTime(0);
 //measureTime(1);
 
