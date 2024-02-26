@@ -630,7 +630,7 @@ async function computeInverseFFT(spectrum) {
     }
 
     for (let i = 0; i < paddedSpectrum.length/2; i++){
-        if(paddedSpectrum[i * 2 + 1] != paddedSpectrum[(paddedSize-1) * 2 - i * 2 + 1]){
+        if(paddedSpectrum[i * 2] != paddedSpectrum[(paddedSize-1) * 2 - i * 2]){
             throw(Error("Spectrum not symmetric at index: "+i));
         }
     }
@@ -673,7 +673,7 @@ async function computeInverseFFTonHalf(halfSpectrum) {
     
     
     for (let i = 0; i < fullSpectrum.length/2; i++){
-        if(fullSpectrum[i * 2 + 1] != fullSpectrum[(paddedSize-1) * 2 - i * 2 + 1]){
+        if(fullSpectrum[i * 2] != fullSpectrum[(paddedSize-1) * 2 - i * 2]){
             throw(Error("Spectrum not symmetric at index: "+i));
         }
     }
