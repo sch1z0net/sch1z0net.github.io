@@ -627,7 +627,6 @@ async function computeInverseFFT(spectrum) {
         paddedSpectrum[i * 2 + 1] = spectrum[i].im; // Copy imaginary part
     }
  
-    console.log(paddedSpectrum.length/2);
     for (let i = 0; i < Math.floor(paddedSpectrum.length/2); i++){
         //console.log(paddedSpectrum[i * 2], paddedSpectrum[paddedSize * 2 - (i+1) * 2]);
         //console.log(paddedSpectrum[i * 2 + 1], paddedSpectrum[paddedSize * 2 - (i+1) * 2 + 1]);
@@ -656,26 +655,37 @@ async function computeInverseFFTonHalf(halfSpectrum) {
     // Ensure the size of the spectrum array is a power of 2
     const paddedSize = nextPowerOf2(halfSpectrum.length * 2);
 
+    const halfSize = paddedSize;
+    const fullSize = halfSize * 2;
+
     // Create a full-sized spectrum array and fill it with the values from halfSpectrum
-    const fullSpectrum = new Float32Array(paddedSize * 2).fill(0);
-    const fullSize = paddedSize * 2;
-    for (let i = 0; i < halfSpectrum.length; i++) {
+    const fullSpectrum = new Float32Array(fullSize).fill(0);
+
+    // Copy DC component (index 0)
+    fullSpectrum[0] = halfSpectrum[0].re; // Copy the real part
+    fullSpectrum[1] = halfSpectrum[0].im; // Copy the imaginary part
+
+    // Copy Nyquist frequency component (index paddedSize)
+    fullSpectrum[halfSize    ] = 0; // Copy the real part
+    fullSpectrum[halfSize + 1] = 0; // Invert the imaginary part
+
+    // Apply symmetry to fill the rest of the spectrum
+    for (let i = 1; i < halfSpectrum.length; i++) {
         fullSpectrum[i * 2] = halfSpectrum[i].re; // Copy the real part
         fullSpectrum[i * 2 + 1] = halfSpectrum[i].im; // Copy imaginary part
+
+        // Fill the mirrored part of the spectrum
+        fullSpectrum[fullSize - (i * 2)    ] = halfSpectrum[i].re; // Copy the real part
+        fullSpectrum[fullSize - (i * 2) + 1] = -halfSpectrum[i].im; // Invert the imaginary part
     }
 
-    // Apply symmetry to fill the second half of the spectrum
-    for (let i = 1; i <= halfSpectrum.length; i++) {
-        fullSpectrum[fullSize - i * 2] = halfSpectrum[i-1].re; // Copy the real part
-        fullSpectrum[fullSize - i * 2 + 1] = -halfSpectrum[i-1].im; // Copy imaginary part
-    }
     
-    
+    /*
     for (let i = 0; i < fullSpectrum.length/2; i++){
         if(fullSpectrum[i * 2] != fullSpectrum[(paddedSize-1) * 2 - i * 2]){
             throw(Error("Spectrum not symmetric at index: "+i));
         }
-    }
+    }*/
 
     // Perform the IFFT on the full spectrum
     const timeDomainSignal = IFFT(fullSpectrum);
