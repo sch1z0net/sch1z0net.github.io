@@ -405,8 +405,8 @@ function fftRealInPlaceRADIX2(input) {
 }
 
 
-function fftRealInPlaceRADIX4(inputOriginal) {
-    const N = inputOriginal.length;
+function fftRealInPlaceRADIX4(input) {
+    const N = input.length;
     const bits = Math.log2(N);
 
     if (N !== nextPowerOf4(N)) {
@@ -415,7 +415,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     }
 
     // Create a copy of the input array
-    const input = inputOriginal.slice();
+    //const input = inputOriginal.slice();
 
     // Perform bit reversal in place
     for (let i = 0; i < N; i++) {
