@@ -1044,7 +1044,7 @@ async function processChannel(audioContext, inputData, outputBuffer, ch, stretch
     
     const endTimeCH = performance.now();
     const elapsedTimeCH = endTimeCH - startTimeCH;
-    console.log(`TimeStretch: CH ${ch} Elapsed time: ${elapsedTimeCH} milliseconds`);
+    //console.log(`TimeStretch: CH ${ch} Elapsed time: ${elapsedTimeCH} milliseconds`);
 
     // Copy the processed signal to the output buffer
     outputBuffer.copyToChannel(processedSignalFloat32, ch);

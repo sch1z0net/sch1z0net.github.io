@@ -210,9 +210,9 @@ onmessage = function (e) {
 
             const endTime = performance.now();
             const elapsedTime = endTime - startTime;
-            if(workerID == 0){
+            /*if(workerID == 0){
                 console.log("Worker ", workerID, " finished in", elapsedTime, "ms");
-            }
+            }*/
         })
         .catch((error) => {
             console.log("WORKER", workerID, 'Error:', error);
