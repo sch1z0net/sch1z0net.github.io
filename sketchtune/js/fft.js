@@ -549,64 +549,135 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     }
 
     // Create a copy of the input array
-    const input = inputOriginal.slice();
+    const out = inputOriginal.slice();
+
+    // Initial step (permute and transform)
+    var width = 4;
+    var size = N;
+    var step = 1 << width;
+    var len = (size / step) << 1;
 
     // Perform bit reversal in place
     for (let i = 0; i < N; i++) {
         const reversedIndex = bitReverse(i, bits);
         if (reversedIndex > i) {
             // Swap elements if necessary
-            [input[i], input[reversedIndex]] = [input[reversedIndex], input[i]];
+            [out[i], out[reversedIndex]] = [out[reversedIndex], out[i]];
         }
     }
 
-    const factors = LOOKUP_RADIX4;
+    const table = LOOKUP_RADIX4;
 
-    // Perform Radix-4 FFT
-    for (let size = N; size >= 4; size >>= 2) { // Loop in decreasing order using bitshift
-        const halfSize = size >> 1; // Using bitwise right shift for efficiency
-        const quarterSize = size >> 2; // Using bitwise right shift for efficiency
-        
-        // Combine both loops into a single loop
-        for (let i = 0, j = 0; i < N; i += size, j += quarterSize) {
-            const evenIndex1 = i + j;
-            const oddIndex1 = i + j + quarterSize;
-            const evenIndex2 = i + j + halfSize;
-            const oddIndex2 = i + j + halfSize + quarterSize;
+    for (step >>= 2; step >= 2; step >>= 2) {
+        len = (size / step) << 1;
+        var halfLen = len >>> 1;
+        var quarterLen = halfLen >>> 1;
+        var hquarterLen = quarterLen >>> 1;
 
-            const evenRe1 = input[evenIndex1 << 1]; // Using bitwise left shift for efficiency
-            const evenIm1 = input[(evenIndex1 << 1) + 1]; // Using bitwise left shift for efficiency
-            const oddRe1 = input[oddIndex1 << 1]; // Using bitwise left shift for efficiency
-            const oddIm1 = input[(oddIndex1 << 1) + 1]; // Using bitwise left shift for efficiency
-            const evenRe2 = input[evenIndex2 << 1]; // Using bitwise left shift for efficiency
-            const evenIm2 = input[(evenIndex2 << 1) + 1]; // Using bitwise left shift for efficiency
-            const oddRe2 = input[oddIndex2 << 1]; // Using bitwise left shift for efficiency
-            const oddIm2 = input[(oddIndex2 << 1) + 1]; // Using bitwise left shift for efficiency
+        // Loop through offsets in the data
+          for (var i = 0, k = 0; i <= hquarterLen; i += 2, k += step) {
+            var A = i;
+            var B = A + quarterLen;
+            var C = B + quarterLen;
+            var D = C + quarterLen;
 
-            const twiddleRe1 = factors[j << 2]; // Using bitwise left shift for efficiency
-            const twiddleIm1 = factors[(j << 2) + 1]; // Using bitwise left shift for efficiency
-            const twiddleRe2 = factors[(j << 2) + 2]; // Using bitwise left shift for efficiency
-            const twiddleIm2 = factors[(j << 2) + 3]; // Using bitwise left shift for efficiency
+            // Original values
+            var Ar = out[A];
+            var Ai = out[A + 1];
+            var Br = out[B];
+            var Bi = out[B + 1];
+            var Cr = out[C];
+            var Ci = out[C + 1];
+            var Dr = out[D];
+            var Di = out[D + 1];
 
-            const twiddledOddRe1 = oddRe1 * twiddleRe1 - oddIm1 * twiddleIm1;
-            const twiddledOddIm1 = oddRe1 * twiddleIm1 + oddIm1 * twiddleRe1;
-            const twiddledOddRe2 = oddRe2 * twiddleRe2 - oddIm2 * twiddleIm2;
-            const twiddledOddIm2 = oddRe2 * twiddleIm2 + oddIm2 * twiddleRe2;
+            // Middle values
+            var MAr = Ar;
+            var MAi = Ai;
 
-            input[evenIndex1 << 1]     = evenRe1 + twiddledOddRe1; // Using bitwise left shift for efficiency
-            input[(evenIndex1 << 1) + 1] = evenIm1 + twiddledOddIm1; // Using bitwise left shift for efficiency
-            input[oddIndex1 << 1]      = evenRe1 - twiddledOddRe1; // Using bitwise left shift for efficiency
-            input[(oddIndex1 << 1) + 1]  = evenIm1 - twiddledOddIm1; // Using bitwise left shift for efficiency
+            var tableBr = table[k];
+            var tableBi = inv * table[k + 1];
+            var MBr = Br * tableBr - Bi * tableBi;
+            var MBi = Br * tableBi + Bi * tableBr;
 
-            input[evenIndex2 << 1]     = evenRe2 + twiddledOddRe2; // Using bitwise left shift for efficiency
-            input[(evenIndex2 << 1) + 1] = evenIm2 + twiddledOddIm2; // Using bitwise left shift for efficiency
-            input[oddIndex2 << 1]      = evenRe2 - twiddledOddRe2; // Using bitwise left shift for efficiency
-            input[(oddIndex2 << 1) + 1]  = evenIm2 - twiddledOddIm2; // Using bitwise left shift for efficiency
+            var tableCr = table[2 * k];
+            var tableCi = inv * table[2 * k + 1];
+            var MCr = Cr * tableCr - Ci * tableCi;
+            var MCi = Cr * tableCi + Ci * tableCr;
+
+            var tableDr = table[3 * k];
+            var tableDi = inv * table[3 * k + 1];
+            var MDr = Dr * tableDr - Di * tableDi;
+            var MDi = Dr * tableDi + Di * tableDr;
+
+            // Pre-Final values
+            var T0r = MAr + MCr;
+            var T0i = MAi + MCi;
+            var T1r = MAr - MCr;
+            var T1i = MAi - MCi;
+            var T2r = MBr + MDr;
+            var T2i = MBi + MDi;
+            var T3r = inv * (MBr - MDr);
+            var T3i = inv * (MBi - MDi);
+
+            // Final values
+            var FAr = T0r + T2r;
+            var FAi = T0i + T2i;
+
+            var FBr = T1r + T3i;
+            var FBi = T1i - T3r;
+
+            out[A] = FAr;
+            out[A + 1] = FAi;
+            out[B] = FBr;
+            out[B + 1] = FBi;
+
+            // Output final middle point
+            if (i === 0) {
+              var FCr = T0r - T2r;
+              var FCi = T0i - T2i;
+              out[C] = FCr;
+              out[C + 1] = FCi;
+              continue;
+            }
+
+            // Do not overwrite ourselves
+            if (i === hquarterLen)
+              continue;
+
+            // In the flipped case:
+            // MAi = -MAi
+            // MBr=-MBi, MBi=-MBr
+            // MCr=-MCr
+            // MDr=MDi, MDi=MDr
+            var ST0r = T1r;
+            var ST0i = -T1i;
+            var ST1r = T0r;
+            var ST1i = -T0i;
+            var ST2r = -inv * T3i;
+            var ST2i = -inv * T3r;
+            var ST3r = -inv * T2i;
+            var ST3i = -inv * T2r;
+
+            var SFAr = ST0r + ST2r;
+            var SFAi = ST0i + ST2i;
+
+            var SFBr = ST1r + ST3i;
+            var SFBi = ST1i - ST3r;
+
+            var SA = outOff + quarterLen - i;
+            var SB = outOff + halfLen - i;
+
+            out[SA] = SFAr;
+            out[SA + 1] = SFAi;
+            out[SB] = SFBr;
+            out[SB + 1] = SFBi;
+          }
         }
-    }
 
     return input;
 }
+
 
 
 
