@@ -460,8 +460,8 @@ function generateFFTFactorLookupRADIX4(maxSampleLength) {
 
 const LOOKUP_RADIX4 = generateFFTFactorLookupRADIX4(1024*4);
 
-function fftRealInPlaceRADIX4(inputOriginal) {
-    const N = inputOriginal.length;
+function fftRealInPlaceRADIX4(input) {
+    const N = input.length;
     const bits = Math.log2(N);
 
     if (N !== nextPowerOf4(N)) {
