@@ -420,9 +420,11 @@ function fftRealInPlaceRADIX2(input) {
 
 
 // Compute FFT factors with caching (optimized for Radix-4 FFT)
-function precalculateFFTFactorsRADIX4(N) {
-    const factors = new Array(N * 4); // Preallocate memory for factors
+function precalculateFFTFactorsRADIX4(maxSampleLength) {
+    const maxN = nextPowerOf4(maxSampleLength);
+    const factors = new Array(maxN * 2); // Preallocate memory for factors
 
+   for (let N = 4; N <= maxN; N *= 4) {
     for (let i = 0; i < N / 4; i++) {
         const angle1 = (2 * Math.PI * i) / N;
         const angle2 = (4 * Math.PI * i) / N;
@@ -431,10 +433,12 @@ function precalculateFFTFactorsRADIX4(N) {
         factors[i * 4 + 2] = Math.cos(angle2); // Cosine of angle2
         factors[i * 4 + 3] = Math.sin(angle2); // Sine of angle2
     }
+   }
 
     return factors;
 }
 
+/*
 // Function to compute FFT factors with caching
 function computeFFTFactorsWithCacheRADIX4(N) {
     // Check if FFT factors for this size are already cached
@@ -445,23 +449,12 @@ function computeFFTFactorsWithCacheRADIX4(N) {
 
     // Return the cached factors
     return fftFactorCacheRADIX4[N];
-}
+}*/
 
-function generateFFTFactorLookupRADIX4(maxSampleLength) {
-    const maxN = nextPowerOf4(maxSampleLength);
-    const fftFactorLookup = new Array();
 
-    for (let N = 4; N <= maxN; N *= 4) {
-        const factors = precalculateFFTFactorsRADIX4(N)
-        fftFactorLookup.push(...factors);
-    }
-
-    return fftFactorLookup;
-}
 
 // Create the flattened lookup table for twiddle factors
-const LOOKUP_RADIX4 = generateFFTFactorLookupRADIX4(1024*4);
-
+const LOOKUP_RADIX4 = precalculateFFTFactorsRADIX4(1024*4);
 console.log(LOOKUP_RADIX4);
 
 
