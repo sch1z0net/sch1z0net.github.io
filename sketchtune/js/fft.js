@@ -314,8 +314,8 @@ function fftRealInPlace(input) {
     return input;
 }*/
 
-function fftRealInPlaceRADIX2(inputOriginal) {
-    const N = inputOriginal.length;
+function fftRealInPlaceRADIX2(input) {
+    const N = input.length;
     const bits = Math.log2(N);
 
     if (N !== nextPowerOf2(N)) {
@@ -324,7 +324,7 @@ function fftRealInPlaceRADIX2(inputOriginal) {
     }
 
     // Create a copy of the input array
-    const input = inputOriginal.slice();
+    //const input = inputOriginal.slice();
 
     //const startTime = performance.now();
 
@@ -809,13 +809,13 @@ const performFFTOperations = () => {
 
 // Measure the time taken to perform FFT operations
 const measureTime = () => {
-    const startTimeA = performance.now(); // Start time
+    /*const startTimeA = performance.now(); // Start time
     for (let i = 0; i < numOperations; i++) {
         var copy = testData.slice();
     }
     const endTimeA = performance.now(); // End time
     const elapsedTimeA = endTimeA - startTimeA; // Elapsed time in milliseconds
-    console.log("Slicing takes: ",elapsedTimeA,"ms");
+    console.log("Slicing takes: ",elapsedTimeA,"ms");*/
 
 
     const startTime = performance.now(); // Start time
