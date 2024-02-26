@@ -797,18 +797,24 @@ const generateTestData = (size) => {
 const testData = generateTestData(fftSize);
 
 // Perform FFT operations
-const performFFTOperations = () => {
+const performFFTOperations = (type) => {
     //console.log("fftRealInPlaceRADIX4");
     //console.log("fftRealInPlaceRADIX2");
     // Perform FFT operations numOperations times
-    for (let i = 0; i < numOperations; i++) {
-        fftRealInPlaceRADIX4(testData);
-        //fftRealInPlaceRADIX2(testData);
+    if(type==0){
+        for (let i = 0; i < numOperations; i++) {
+            fftRealInPlaceRADIX2(testData);
+        }
+    }else{
+        for (let i = 0; i < numOperations; i++) {
+            fftRealInPlaceRADIX4(testData);
+        }
     }
+
 };
 
 // Measure the time taken to perform FFT operations
-const measureTime = () => {
+const measureTime = (type) => {
     /*const startTimeA = performance.now(); // Start time
     for (let i = 0; i < numOperations; i++) {
         var copy = testData.slice();
@@ -819,20 +825,16 @@ const measureTime = () => {
 
 
     const startTime = performance.now(); // Start time
-    performFFTOperations(); // Perform FFT operations
+    performFFTOperations(type); // Perform FFT operations
     const endTime = performance.now(); // End time
     const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
 
-    console.log("FFT takes: ",elapsedTime,"ms");
+    // Calculate the number of FFT operations per second
+    const operationsPerSecond = Math.floor(numOperations / (elapsedTime / 1000));
 
-    return elapsedTime;
+    console.log("Type",type,"Number of FFT operations per second:", operationsPerSecond);
 };
 
-// Perform FFT operations and measure the time
-const elapsedTime = measureTime();
-
-// Calculate the number of FFT operations per second
-const operationsPerSecond = Math.floor(numOperations / (elapsedTime / 1000));
-
-console.log("Number of FFT operations per second:", operationsPerSecond);
+measureTime(0);
+measureTime(1);
 
