@@ -418,7 +418,7 @@ function fftRealInPlaceRADIX2(inputOriginal) {
         // Precompute FFT factors
         // const factors = computeFFTFactorsWithCache(size);
         const halfSize = size >> 1;
-        for (let i = 0, j = 0; i < N; i += size, j += halfsize) {
+        for (let i = 0, j = 0; i < N; i += size, j += halfSize) {
             const evenIndex = i;
             const oddIndex = i + halfSize;
 
