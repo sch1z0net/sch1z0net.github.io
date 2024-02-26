@@ -115,14 +115,25 @@ const fftFactorCacheRADIX2 = {};
 const fftFactorCacheRADIX4 = {};
 
 // Pre-calculate FFT factors for a given size and cache them for future use
-function precalculateFFTFactorsRADIX2(N) {
-    const factors = new Float32Array(N); // Double the size for both real and imaginary parts
-    for (let k = 0; k < N / 2; k++) {
-        const theta = -2 * Math.PI * k / N;
-        factors[k * 2] = Math.cos(theta); // Real part
-        factors[k * 2 + 1] = Math.sin(theta); // Imaginary part
+function precalculateFFTFactorsRADIX2(maySampleLength) {
+    const maxN = nextPowerOf2(maxSampleLength);
+    var len = 0;
+    for (let N = 2; N <= maxN; N *= 2) {
+       len *= N;
     }
-    return factors;
+    const factors = new Array(len); // Preallocate memory for factors
+
+   var pre = 0;
+   for (let N = 2; N <= maxN; N *= 2) {
+    for (let i = 0; i < N / 2; i++) {
+        const angle1 = (2 * Math.PI * i) / N;
+        factors[pre + i * 2] = Math.cos(angle1); // Cosine of angle1
+        factors[pre + i * 2 + 1] = Math.sin(angle1); // Sine of angle1
+    }
+    pre += N;
+   }
+
+    return new Float32Array(factors);
 }
 
 // Compute FFT factors with caching (optimized for Radix-4 FFT)
