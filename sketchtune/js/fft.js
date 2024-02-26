@@ -413,6 +413,7 @@ function fftRealInPlaceRADIX2(inputOriginal) {
 
     // Recursively calculate FFT
     // Perform Radix-2 FFT
+    /*
     let pre = 0;
     for (let size = 2; size <= N; size <<= 1) {
         // Precompute FFT factors
@@ -445,7 +446,50 @@ function fftRealInPlaceRADIX2(inputOriginal) {
             complexInput[(oddIndex << 1) + 1]  = evenIm - twiddledOddIm;
         }
         pre += size;
+    }*/
+
+    let pre = 0;
+    for (let size = 2; size <= N; size <<= 1) {
+        // Define variables
+        let i = 0; // Initialize i to 0
+        let j = 0; // Initialize j to 0
+        let k = 0; // Initialize k to 0
+
+        // Loop condition
+        while (k < halfSize * steps) {
+            // Use precalculated FFT factors directly
+            const twiddleRe = factors[pre + (j << 1)];
+            const twiddleIm = factors[pre + (j << 1) + 1];
+
+            const evenIndex = i;
+            const oddIndex = i + halfSize;
+
+            // Get real and imaginary parts of even and odd elements
+            const evenRe = complexInput[evenIndex << 1];
+            const evenIm = complexInput[(evenIndex << 1) + 1];
+            const oddRe = complexInput[oddIndex << 1];
+            const oddIm = complexInput[(oddIndex << 1) + 1];
+
+            // Perform complex multiplication
+            const twiddledOddRe = oddRe * twiddleRe - oddIm * twiddleIm;
+            const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
+
+            // Update even and odd elements with new values
+            complexInput[evenIndex << 1]     = evenRe + twiddledOddRe;
+            complexInput[(evenIndex << 1) + 1] = evenIm + twiddledOddIm;
+            complexInput[oddIndex << 1]      = evenRe - twiddledOddRe;
+            complexInput[(oddIndex << 1) + 1]  = evenIm - twiddledOddIm;
+
+            // Increment k and update i if k is a multiple of halfSize
+            k++;
+            j = (j + 1) % halfSize;
+            if (k % halfSize === 0) {
+                i += size;
+            }
+        }
+        pre += size;
     }
+
 
     console.log(complexInput);
 
