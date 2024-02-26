@@ -421,7 +421,7 @@ function fftRealInPlaceRADIX2(input) {
 
 // Compute FFT factors with caching (optimized for Radix-4 FFT)
 function precalculateFFTFactorsRADIX4(N) {
-    const factors = new Float32Array(N * 4); // Preallocate memory for factors
+    const factors = new Array(N * 4); // Preallocate memory for factors
 
     for (let i = 0; i < N / 4; i++) {
         const angle1 = (2 * Math.PI * i) / N;
@@ -460,7 +460,7 @@ function generateFFTFactorLookupRADIX4(maxSampleLength) {
 
 // Create the flattened lookup table for twiddle factors
 const LOOKUP_RADIX4 = generateFFTFactorLookupRADIX4(1024*4);
-const FLATTENED_LOOKUP_RADIX4 = [].concat.apply([], LOOKUP_RADIX4);
+const FLATTENED_LOOKUP_RADIX4 = new Float32Array(LOOKUP_RADIX4.flat());
 console.log(LOOKUP_RADIX4);
 console.log(FLATTENED_LOOKUP_RADIX4);
 
