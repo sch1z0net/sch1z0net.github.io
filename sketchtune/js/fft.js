@@ -547,8 +547,6 @@ function fftRealInPlaceRADIX4(input) {
         }
     }
 
-
-
     return out;
 }
 
