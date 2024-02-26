@@ -317,8 +317,8 @@ function fftRealInPlace(input) {
     return input;
 }*/
 
-function fftRealInPlaceRADIX2(input) {
-    const N = input.length;
+function fftRealInPlaceRADIX2(inputOriginal) {
+    const N = inputOriginal.length;
     const bits = Math.log2(N);
 
     if (N !== nextPowerOf2(N)) {
