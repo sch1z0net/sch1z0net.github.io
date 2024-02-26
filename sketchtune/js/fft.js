@@ -777,17 +777,6 @@ const fftSize = 1024;
 // Define the number of FFT operations to perform
 const numOperations = 5000; // You can adjust this number based on your requirements
 
-// Function to generate an array of test data arrays
-function generateTestArrays(numTestData, size) {
-    const testArrays = [];
-    for (let i = 0; i < numTestData; i++) {
-        testArrays.push(generateTestData(size));
-    }
-    return testArrays;
-}
-
-let testDatas = generateTestArrays(numOperations, fftSize);
-
 // Perform FFT operations
 const performFFTOperations = () => {
     // Perform FFT operations numOperations times
@@ -805,6 +794,17 @@ const generateTestData = (size) => {
     }
     return testData;
 };
+
+// Function to generate an array of test data arrays
+function generateTestArrays(numTestData, size) {
+    const testArrays = [];
+    for (let i = 0; i < numTestData; i++) {
+        testArrays.push(generateTestData(size));
+    }
+    return testArrays;
+}
+
+let testDatas = generateTestArrays(numOperations, fftSize);
 
 // Measure the time taken to perform FFT operations
 const measureTime = () => {
