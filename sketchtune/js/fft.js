@@ -99,6 +99,7 @@ function applyHanningWindow(frame) {
     return windowedFrame;
 }
 
+/*
 function precalculateFFTFactors(N) {
     const factors = [];
     for (let k = 0; k < N / 2; k++) {
@@ -106,18 +107,7 @@ function precalculateFFTFactors(N) {
         factors.push({ re: Math.cos(theta), im: Math.sin(theta) });
     }
     return factors;
-}
-
-function generateFFTFactorLookup(maxSampleLength) {
-    const maxN = nextPowerOf2(maxSampleLength);
-    const fftFactorLookup = {};
-
-    for (let N = 2; N <= maxN; N *= 2) {
-        fftFactorLookup[N] = precalculateFFTFactors(N);
-    }
-
-    return fftFactorLookup;
-}
+}*/
 
 /******************** FORWARD *********************/
 // Cache object to store precalculated FFT factors
@@ -145,6 +135,17 @@ function computeFFTFactorsWithCache(N) {
 
     // Return the cached factors
     return fftFactorCacheRADIX2[N];
+}
+
+function generateFFTFactorLookup(maxSampleLength) {
+    const maxN = nextPowerOf2(maxSampleLength);
+    const fftFactorLookup = {};
+
+    for (let N = 2; N <= maxN; N *= 2) {
+        fftFactorLookup[N] = precalculateFFTFactors(N);
+    }
+
+    return fftFactorLookup;
 }
 
 
@@ -415,33 +416,6 @@ function fftRealInPlaceRADIX2(input) {
 
 
 
-/*
-// Function to generate twiddle factor table for Radix-4 FFT
-function generateTwiddleFactors(N) {
-    const twiddleFactors = new Float32Array(N * 2); // Complex numbers (real and imaginary parts)
-    const pi2_N = 2 * Math.PI / N;
-    for (let k = 0; k < N / 4; k++) {
-        const angle = k * pi2_N;
-        const cosVal = Math.cos(angle);
-        const sinVal = Math.sin(angle);
-        twiddleFactors[k * 8] = 1; // Cosine of angle (k/N * 2π)
-        twiddleFactors[k * 8 + 1] = 0; // Sine of angle (k/N * 2π)
-        twiddleFactors[k * 8 + 2] = cosVal; // Cosine of 2 * angle
-        twiddleFactors[k * 8 + 3] = sinVal; // Sine of 2 * angle
-        twiddleFactors[k * 8 + 4] = cosVal * cosVal - sinVal * sinVal; // Cosine of 4 * angle
-        twiddleFactors[k * 8 + 5] = 2 * cosVal * sinVal; // Sine of 4 * angle
-        twiddleFactors[k * 8 + 6] = cosVal * (cosVal * cosVal - 3 * sinVal * sinVal); // Cosine of 6 * angle
-        twiddleFactors[k * 8 + 7] = sinVal * (3 * cosVal * cosVal - sinVal * sinVal); // Sine of 6 * angle
-    }
-    return twiddleFactors;
-}
-
-// Example: Generate twiddle factor table for N = 64 (Radix-4 FFT with N/4 = 16 factors)
-const N = 64;
-const factors = generateTwiddleFactors(N / 4);
-console.log("Twiddle Factor Table:", factors);
-*/
-
 
 
 
@@ -473,6 +447,18 @@ function computeFFTFactorsWithCacheRADIX4(N) {
     return fftFactorCacheRADIX4[N];
 }
 
+function generateFFTFactorLookupRADIX4(maxSampleLength) {
+    const maxN = nextPowerOf4(maxSampleLength);
+    const fftFactorLookup = {};
+
+    for (let N = 4; N <= maxN; N *= 4) {
+        fftFactorLookup[N] = precalculateFFTFactors(N);
+    }
+
+    return fftFactorLookup;
+}
+
+const LOOKUP_RADIX4 = generateFFTFactorLookupRADIX4(1024*4);
 
 function fftRealInPlaceRADIX4(inputOriginal) {
     const N = inputOriginal.length;
@@ -501,7 +487,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     for (let size = 4; size <= N; size *= 4) {
         const halfSize = size / 2;
         const quarterSize = size / 4;
-        const factors = computeFFTFactorsWithCacheRADIX4(size);
+        const factors = LOOKUP_RADIX4[size];//computeFFTFactorsWithCacheRADIX4(size);
         for (let i = 0; i < N; i += size) {
             for (let j = 0; j < quarterSize; j++) {
                 const evenIndex1 = i + j;
