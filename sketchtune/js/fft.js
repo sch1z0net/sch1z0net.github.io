@@ -539,8 +539,8 @@ function fftRealInPlaceRADIX4(inputOriginal) {
 
 
 
-function fftRealInPlaceRADIX4(inputOriginal) {
-    const N = inputOriginal.length;
+function fftRealInPlaceRADIX4(input) {
+    const N = input.length;
     const bits = Math.log2(N);
 
     if (N !== nextPowerOf4(N)) {
@@ -549,7 +549,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     }
 
     // Create a copy of the input array
-    const out = inputOriginal.slice();
+    const out = input.slice();
 
     // Initial step (permute and transform)
     var width = 4;
