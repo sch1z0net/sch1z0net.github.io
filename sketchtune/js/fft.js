@@ -314,7 +314,7 @@ function fftRealInPlace(input) {
         return;
     }
 
-    //const startTime = performance.now();
+    const startTime = performance.now();
 
     // Perform bit reversal in place, treating the input as real-valued
     for (let i = 0; i < N; i++) {
@@ -383,9 +383,9 @@ function fftRealInPlace(input) {
         }
     }
 
-    /*const endTime2 = performance.now();
+    const endTime2 = performance.now();
     const elapsedTime2 = endTime2 - startTime;
-    console.log(`FFT: Elapsed time: ${elapsedTime2} milliseconds`);*/
+    console.log(`FFT: Elapsed time: ${elapsedTime2} milliseconds`);
 
 
     // Return the output
