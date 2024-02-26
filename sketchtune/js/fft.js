@@ -576,8 +576,10 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         var hquarterLen = quarterLen >>> 1;
 
         // Loop through offsets in the data
+        for (var outOff = 0; outOff < size; outOff += len) {
+        // Loop through offsets in the data
           for (var i = 0, k = 0; i <= hquarterLen; i += 2, k += step) {
-            var A = i;
+            var A = outOff + i;
             var B = A + quarterLen;
             var C = B + quarterLen;
             var D = C + quarterLen;
@@ -675,6 +677,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             out[SB + 1] = SFBi;
           }
         }
+    }
 
     return input;
 }
