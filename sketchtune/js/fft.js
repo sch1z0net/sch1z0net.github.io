@@ -699,7 +699,7 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 const fftSize = 2048;
 
 // Define the number of FFT operations to perform
-const numOperations = 1000; // You can adjust this number based on your requirements
+const numOperations = 10000; // You can adjust this number based on your requirements
 
 // Perform FFT operations
 const performFFTOperations = () => {
@@ -736,7 +736,7 @@ const measureTime = () => {
 const elapsedTime = measureTime();
 
 // Calculate the number of FFT operations per second
-const operationsPerSecond = numOperations / (elapsedTime / 1000);
+const operationsPerSecond = Math.floor(numOperations / (elapsedTime / 1000));
 
 console.log("Number of FFT operations per second:", operationsPerSecond);
 
