@@ -708,7 +708,8 @@ const performFFTOperations = () => {
 
     // Perform FFT operations numOperations times
     for (let i = 0; i < numOperations; i++) {
-        computeFFT(testData,0,0);
+        fftRealInPlace(testData);
+        //computeFFT(testData,0,0);
     }
 };
 
