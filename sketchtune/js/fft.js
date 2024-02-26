@@ -487,7 +487,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     for (let size = 4; size <= N; size *= 4) {
         const halfSize = size / 2;
         const quarterSize = size / 4;
-        const factors = LOOKUP_RADIX4[size];//computeFFTFactorsWithCacheRADIX4(size);
+        const factors = computeFFTFactorsWithCacheRADIX4(size);
         for (let i = 0; i < N; i += size) {
             for (let j = 0; j < quarterSize; j++) {
                 const evenIndex1 = i + j;
