@@ -406,7 +406,7 @@ function fftRealInPlaceRADIX4(input) {
     const N = input.length;
     const bits = Math.log2(N);
 
-    if (N !== nextPowerOf4(N)) {
+    if (N != nextPowerOf4(N)) {
         console.error("FFT FRAME must have power of 4");
         return;
     }
@@ -782,7 +782,6 @@ const numOperations = 10000; // You can adjust this number based on your require
 const performFFTOperations = () => {
     // Generate test data (replace this with your actual data)
     const testData = generateTestData(fftSize);
-    console.log(testData.length);
 
     // Perform FFT operations numOperations times
     for (let i = 0; i < numOperations; i++) {
