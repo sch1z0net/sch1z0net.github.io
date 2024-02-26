@@ -95,13 +95,9 @@ function ISTFT_WOLA(spectrogramChunk, windowSize, hopSize, workerID, windowType,
                     // Compute inverse FFT of the spectrum to obtain the frame in time domain
                     let spectrum = spectrogramChunk[i];
 
-                    if(workerID==0 && i == 10){ console.log(spectrum); }
-
                     let frame;
                     if(halfSpec){  frame = await computeInverseFFTonHalf(spectrum);
                     }else{         frame = await computeInverseFFT(spectrum);        }
-
-                    if(workerID==0 && i == 10){ console.log(frame); }
 
                     // Apply synthesis window to the frame
                     const synthesisWindow = hanningWindow(windowSize);
