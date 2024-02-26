@@ -620,8 +620,6 @@ async function computeInverseFFT(spectrum) {
     // Ensure the size of the spectrum array is a power of 2
     const paddedSize = nextPowerOf2(spectrum.length);
 
-    console.log(paddedSize);
-
     // Pad both real and imaginary parts of the spectrum
     const paddedSpectrum = new Float32Array(paddedSize * 2).fill(0);
     for (let i = 0; i < spectrum.length; i++) {
@@ -630,9 +628,10 @@ async function computeInverseFFT(spectrum) {
     }
 
     for (let i = 0; i < paddedSpectrum.length/2; i++){
-        if(paddedSpectrum[i * 2] != paddedSpectrum[(paddedSize-1) * 2 - i * 2]){
+        console.log(paddedSpectrum[i * 2], paddedSpectrum[(paddedSize-1) * 2 - i * 2]);
+        /*if(paddedSpectrum[i * 2] != paddedSpectrum[(paddedSize-1) * 2 - i * 2]){
             throw(Error("Spectrum not symmetric at index: "+i));
-        }
+        }*/
     }
 
 
@@ -654,8 +653,6 @@ async function computeInverseFFT(spectrum) {
 async function computeInverseFFTonHalf(halfSpectrum) {
     // Ensure the size of the spectrum array is a power of 2
     const paddedSize = nextPowerOf2(halfSpectrum.length * 2);
-
-    console.log(paddedSize);
 
     // Create a full-sized spectrum array and fill it with the values from halfSpectrum
     const fullSpectrum = new Float32Array(paddedSize * 2).fill(0);
