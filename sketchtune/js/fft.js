@@ -773,20 +773,26 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 
 
 // Define the FFT size
-const fftSize = 2048*2;
-
+const fftSize = 1024;
 // Define the number of FFT operations to perform
-const numOperations = 10000; // You can adjust this number based on your requirements
+const numOperations = 5000; // You can adjust this number based on your requirements
+
+// Function to generate an array of test data arrays
+function generateTestArrays(numTestData, size) {
+    const testArrays = [];
+    for (let i = 0; i < numTestData; i++) {
+        testArrays.push(generateTestData(size));
+    }
+    return testArrays;
+}
+
+let testDatas = generateTestArrays(numOperations, fftSize);
 
 // Perform FFT operations
 const performFFTOperations = () => {
-    // Generate test data (replace this with your actual data)
-    const testData = generateTestData(fftSize);
     // Perform FFT operations numOperations times
     for (let i = 0; i < numOperations; i++) {
-        const testDataCopy = testData.slice();
-        fftRealInPlaceRADIX4(testDataCopy);
-        //computeFFT(testData,0,0);
+        fftRealInPlaceRADIX4(testDatas[0]);
     }
 };
 
