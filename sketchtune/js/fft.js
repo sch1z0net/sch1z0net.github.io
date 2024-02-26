@@ -804,9 +804,10 @@ let testDatas = generateTestArrays(numOperations, fftSize);
 
 // Perform FFT operations
 const performFFTOperations = () => {
+    const testData = generateTestData(fftSize);
     // Perform FFT operations numOperations times
     for (let i = 0; i < numOperations; i++) {
-        fftRealInPlaceRADIX4(testDatas[i]);
+        fftRealInPlaceRADIX4(testData);
     }
 };
 
