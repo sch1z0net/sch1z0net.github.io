@@ -978,6 +978,8 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
        inputBuffer.sampleRate
     );
 
+    console.log("SAMPLE RATE: ",inputBuffer.sampleRate);
+
     // Copy the data from the original buffer to the new one
     for (let channel = 0; channel < inputBuffer.numberOfChannels; channel++) {
        const channelData = inputBuffer.getChannelData(channel);
