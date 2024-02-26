@@ -486,7 +486,7 @@ function fftRealInPlaceRADIX2(inputOriginal) {
             complexInput[(oddIndex << 1) + 1]  = evenIm - twiddledOddIm;
 
             // Increment k and update i if k is a multiple of halfSize
-            k++;
+            k+=2;
             j = (j + 1) % halfSize;
             if (k % halfSize === 0) {
                 i += size;
