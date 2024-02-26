@@ -461,7 +461,6 @@ function computeFFTFactorsWithCacheRADIX4(N) {
 
 // Create the flattened lookup table for twiddle factors
 const LOOKUP_RADIX4 = precalculateFFTFactorsRADIX4(1024*4);
-console.log(LOOKUP_RADIX4);
 
 
 
@@ -561,11 +560,12 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         }
     }
 
+    const factors = LOOKUP_RADIX4;
+
     // Perform Radix-4 FFT
     for (let size = 4; size <= N; size *= 4) {
         const halfSize = size >> 1; // Using bitwise right shift for efficiency
         const quarterSize = size >> 2; // Using bitwise right shift for efficiency
-        const factors = computeFFTFactorsWithCacheRADIX4(size);
         
         // Combine both loops into a single loop
         for (let i = 0, j = 0; i < N; i += size, j += quarterSize) {
