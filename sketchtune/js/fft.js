@@ -314,7 +314,7 @@ function fftRealInPlace(input) {
         return;
     }
 
-    const startTime = performance.now();
+    //const startTime = performance.now();
 
     // Perform bit reversal in place, treating the input as real-valued
     for (let i = 0; i < N; i++) {
@@ -383,10 +383,9 @@ function fftRealInPlace(input) {
         }
     }
 
-    const endTime2 = performance.now();
-    const elapsedTimeMicroseconds = (endTime2 - startTime) * 1000;
-
-    console.log("Elapsed time:", elapsedTimeMicroseconds, "microseconds");
+    /*const endTime2 = performance.now();
+    const elapsedTime2 = endTime2 - startTime;
+    console.log(`FFT: Elapsed time: ${elapsedTime2} milliseconds`);*/
 
 
     // Return the output
@@ -683,9 +682,61 @@ async function computeInverseFFTonHalf(halfSpectrum) {
     return audioSignal;
 }
 
-/*
-computeInverseFFT([{re:91,im:92},{re:45,im:56},{re:26,im:37},{re:56,im:36},{re:56,im:36},{re:26,im:37},{re:45,im:56},{re:91,im:92}]);
-computeInverseFFTonHalf([{re:91,im:92},{re:45,im:56},{re:26,im:37},{re:56,im:36},{re:27,im:28},{re:14,im:25},{re:51,im:42},{re:21,im:42}]);
-*/
 
+
+
+
+
+
+/****** TESTING PERFORMANCE ******/
+
+
+
+
+
+
+// Define the FFT size
+const fftSize = 2048;
+
+// Define the number of FFT operations to perform
+const numOperations = 1000; // You can adjust this number based on your requirements
+
+// Perform FFT operations
+const performFFTOperations = () => {
+    // Generate test data (replace this with your actual data)
+    const testData = generateTestData(fftSize);
+
+    // Perform FFT operations numOperations times
+    for (let i = 0; i < numOperations; i++) {
+        computeFFT(testData,0,0);
+    }
+};
+
+// Generate test data (replace this with your actual data generation logic)
+const generateTestData = (size) => {
+    const testData = [];
+    for (let i = 0; i < size; i++) {
+        // For demonstration purposes, generate random data between -1 and 1
+        testData.push(Math.random() * 2 - 1);
+    }
+    return testData;
+};
+
+// Measure the time taken to perform FFT operations
+const measureTime = () => {
+    const startTime = performance.now(); // Start time
+    performFFTOperations(); // Perform FFT operations
+    const endTime = performance.now(); // End time
+    const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
+
+    return elapsedTime;
+};
+
+// Perform FFT operations and measure the time
+const elapsedTime = measureTime();
+
+// Calculate the number of FFT operations per second
+const operationsPerSecond = numOperations / (elapsedTime / 1000);
+
+console.log("Number of FFT operations per second:", operationsPerSecond);
 
