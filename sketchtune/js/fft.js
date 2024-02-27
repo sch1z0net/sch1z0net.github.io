@@ -508,8 +508,8 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             // Use precalculated FFT factors directly
             const tIdxRe1 = pre + (j % quarterSize) * 2;
             const tIdxIm1 = pre + (j % quarterSize) * 2 + 1;
-            const tIdxRe2 = pre + ((j + quarterSize) % quarterSize) * 2;
-            const tIdxIm2 = pre + ((j + quarterSize) % quarterSize) * 2 + 1;
+            const tIdxRe2 = pre + ((j % quarterSize) + quarterSize) * 2;
+            const tIdxIm2 = pre + ((j % quarterSize) + quarterSize) * 2 + 1;
 
             const twiddleRe1 = factors[tIdxRe1];
             const twiddleIm1 = factors[tIdxIm1];
