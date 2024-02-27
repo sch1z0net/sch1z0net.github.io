@@ -453,7 +453,7 @@ function fftRealInPlaceRADIX2(inputOriginal) {
                 */
 
     let pre = 0;
-    for (let size = 2; size < N; size <<= 1) {
+    for (let size = 2; size <= N; size <<= 1) {
         // Define variables
         let i = 0; // Initialize i to 0
         let j = 0; // Initialize j to 0
@@ -488,11 +488,16 @@ function fftRealInPlaceRADIX2(inputOriginal) {
             complexInput[(evenIndex << 1) + 1] = evenIm + twiddledOddIm;
             complexInput[oddIndex << 1]      = evenRe - twiddledOddRe;
             complexInput[(oddIndex << 1) + 1]  = evenIm - twiddledOddIm;
-
-            i += size; j++;
+            
+            j++;
+            if(j % halfSize === 0){
+                i += size; 
+            }
         }
         pre += size;
     }
+
+    //ev 0-7 -> 0-7 twid
 
     // Return the output
     return complexInput;
