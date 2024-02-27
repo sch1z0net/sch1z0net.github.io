@@ -793,6 +793,78 @@ function fftComplexInPlace(input, fftFactorLookup = null) {
     return output;
 }*/
 
+
+function fftComplexInPlace(input) {
+    const N = input.length / 2;
+    const bits = Math.log2(N);
+
+    if (N !== nextPowerOf2(N)) {
+        console.error("FFT FRAME must have power of 2");
+        return;
+    }
+
+    // Perform bit reversal
+    const output = new Float32Array(N * 2);
+    const map = bitReversalMap.get(N);
+    for (let i = 0; i < N; i++) {
+        const reversedIndex = map[i];
+        output[i * 2] = input[reversedIndex * 2]; // Copy real part
+        output[i * 2 + 1] = input[reversedIndex * 2 + 1]; // Copy imaginary part
+    }
+
+    if (N <= 1) {
+        return output;
+    }
+
+    const factors = LOOKUP_RADIX2;
+
+    let pre = 0;
+    let inv = 1;
+    for (let size = 2; size <= N; size <<= 1) {
+        let i = 0; // Initialize i to 0
+        let j = 0; // Initialize j to 0
+
+        if (size == N) { inv = -inv; }
+
+        const halfSize = size >> 1;
+        
+        while (i < N) {
+            const tIdxRe = pre + (j % halfSize) * 2;
+            const tIdxIm = pre + (j % halfSize) * 2 + 1;
+            const twiddleRe = factors[tIdxRe];
+            const twiddleIm = factors[tIdxIm];
+
+            const evenIndex = i + j;
+            const oddIndex = i + j + halfSize;
+
+            const evenRe = output[evenIndex * 2];
+            const evenIm = output[evenIndex * 2 + 1];
+            const oddRe = output[oddIndex * 2];
+            const oddIm = output[oddIndex * 2 + 1];
+
+            const twiddledOddRe = oddRe * twiddleRe - oddIm * twiddleIm;
+            const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
+
+            output[evenIndex * 2] = evenRe + twiddledOddRe;
+            output[evenIndex * 2 + 1] = (evenIm + twiddledOddIm) * inv;
+            output[oddIndex * 2] = evenRe - twiddledOddRe;
+            output[oddIndex * 2 + 1] = (evenIm - twiddledOddIm) * inv;
+
+            j++;
+            if (j % halfSize === 0) {
+                i += size;
+                j = 0;
+            }
+        }
+        pre += size;
+    }
+
+    return output;
+}
+
+
+
+/*
 function fftComplexInPlace(input, fftFactorLookup = null) {
     const N = input.length / 2;
     const bits = Math.log2(N);
@@ -845,7 +917,7 @@ function fftComplexInPlace(input, fftFactorLookup = null) {
     }
 
     return output;
-}
+}*/
 
 
 
@@ -1042,8 +1114,7 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 /****** TESTING PERFORMANCE ******/
 
 //console.log(fftRealInPlaceRADIX2([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]));
-console.log(fftComplexInPlace([1,0,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9,0,10,0,11,0,12,0,13,0,14,0,15,0,16,0]));
-
+//console.log(fftComplexInPlace([1,0,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9,0,10,0,11,0,12,0,13,0,14,0,15,0,16,0]));
 
 
 // Define the FFT size
