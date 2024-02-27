@@ -401,10 +401,12 @@ function fftRealInPlaceRADIX2(inputOriginal) {
     //const startTime = performance.now();
 
     let factors, map;
+    if(N == 4){    factors = LOOKUP_RADIX2_4;    map = bitReversalMap4.get(N);}
+    if(N == 8){    factors = LOOKUP_RADIX2_8;    map = bitReversalMap8.get(N);}
     if(N == 16){   factors = LOOKUP_RADIX2_16;   map = bitReversalMap16.get(N);}
-    /*if(N == 512){  factors = LOOKUP_RADIX2_512;  map = bitReversalMap512.get(N);}
+    if(N == 512){  factors = LOOKUP_RADIX2_512;  map = bitReversalMap512.get(N);}
     if(N == 1024){ factors = LOOKUP_RADIX2_1024; map = bitReversalMap1024.get(N);}
-    if(N == 2048){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap2048.get(N);}*/
+    if(N == 2048){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap2048.get(N);}
 
     // Create a copy of the input array
     const out = new Float32Array(N);
@@ -1237,6 +1239,9 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 
 //console.log(fftRealInPlaceRADIX2([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]));
 //console.log(fftComplexInPlace([1,0,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9,0,10,0,11,0,12,0,13,0,14,0,15,0,16,0]));
+
+console.log(fftRealInPlaceRADIX2([1,2,3,4]));
+console.log(fftRealInPlaceRADIX2([1,2,3,4,5,6,7,8]));
 
 console.log(fftRealInPlaceRADIX4([1,2,3,4]));
 console.log(fftRealInPlaceRADIX4([1,2,3,4,5,6,7,8]));
