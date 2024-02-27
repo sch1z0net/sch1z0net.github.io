@@ -462,7 +462,7 @@ function fftRealInPlaceRADIX2(inputOriginal) {
         console.log("------------------------ size",size)
         // Loop condition
         while (i < N) {
-            if(j % halfSize != 0){ j++; continue; }
+            if(j % halfSize !== 0){ j++; continue; }
             // Use precalculated FFT factors directly
             const twiddleRe = factors[pre + (j << 1)];
             const twiddleIm = factors[pre + (j << 1) + 1];
