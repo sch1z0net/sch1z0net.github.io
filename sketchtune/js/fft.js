@@ -500,20 +500,20 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         out[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
 
-    let pre  = 2;
-    let inv  = 1;
+    let pre  = 0;    //offset for indexing Factor Lookup
+    let inv  = 1;    
     let pwr  = 0;    //power 
     let mpwr = bits; //max power
     //for (let size = 4; size <= N; size <<= 2) {
     for (let size = 2; size <= N; size <<= 1) {
         pwr++;
         // Define variables
-        let i = 0;    // ev index  
+        let i = 0;    // ev index, increases with every line step
         let l = 0;    // line step made
         let b = size; // block size
         let bs = 0;   // block steps made
         let ni = 0;   // number of indices handled 
-        const c = 4*mpwr/pwr;  // circled index start  
+        let c = 4*mpwr/pwr; // circled index start  
 
         if (size == N) { inv = -inv; }
 
@@ -536,7 +536,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
 
         
         //  For N = 16, the indices must look like this after each iteration
-        // 
+        //  
         //  power = 1      power = 2      power = 3       power = 4
         //  size = 2       size = 4       size = 8        size = 16
         //  half = 1       half = 2       half = 4        half =  8
@@ -562,8 +562,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
 
 
             // (1) Use precalculated FFT factors directly                                               
-            const tIdxRe1 = 0; //pre + (v*2 + 0)%size;     
-            const tIdxIm1 = 0; //pre + (v*2 + 1)%size; 
+            const tIdxRe1 = pre + (l + 0)%b;  const tIdxIm1 = pre + (l + 1)%b; 
             // (1) TwiddleFactors
             const tRe1 = factors[tIdxRe1];
             const tIm1 = factors[tIdxIm1];
@@ -616,7 +615,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             // line reaches block-end
             if (l % h === 0) { bs++; i=bs*b; }
         }
-        pre += size + 2*size;
+        pre += size;
     }
 
     return out;
