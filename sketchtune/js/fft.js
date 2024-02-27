@@ -562,7 +562,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
 
 
             // (1) Use precalculated FFT factors directly                                               
-            const tIdxRe1 = pre + (l + 0)%b;  const tIdxIm1 = pre + (l + 1)%b; 
+            const tIdxRe1 = pre + (2*l + 0)%b;  const tIdxIm1 = pre + (2*l + 1)%b; 
             // (1) TwiddleFactors
             const tRe1 = factors[tIdxRe1];
             const tIm1 = factors[tIdxIm1];
