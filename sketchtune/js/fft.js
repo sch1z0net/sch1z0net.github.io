@@ -433,8 +433,8 @@ function fftRealInPlaceRADIX2(inputOriginal) {
             const evenIndex = i + j;
             const oddIndex = i + j + halfSize;
 
-            //console.log(evenIndex,oddIndex,"-",tIdxRe,tIdxIm);
-            console.log(evenIndex,oddIndex);
+            console.log(evenIndex,oddIndex,"-",tIdxRe,tIdxIm);
+            //console.log(evenIndex,oddIndex);
 
             // Get real and imaginary parts of even and odd elements
             const evenRe = complexInput[evenIndex << 1];
@@ -523,6 +523,9 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         //  4    8     3     0     8  2       //  2    0      -     -     4  8
         //  5    12    4     1     8  2       //  3    16     1     0     4  8
         while (i < N) {
+            const x = (N >> step);
+            const y = (size >> 1);
+
             // Use precalculated FFT factors directly
             const tIdxRe1 = pre + (j % quarterSize) * 2;
             const tIdxIm1 = pre + (j % quarterSize) * 2 + 1;
@@ -534,14 +537,12 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             const twiddleRe2 = factors[tIdxRe2];
             const twiddleIm2 = factors[tIdxIm2];
             
-            const x = (N >> step);
-            const y = (size >> 1);
             const evenIndex1 = j ;
             const oddIndex1  = j + y;
             const evenIndex2 = j + x;
             const oddIndex2  = j + x + y;
 
-            console.log(evenIndex1,oddIndex1,/*"-",tIdxRe1,tIdxIm1,*/"|||",evenIndex2,oddIndex2/*,"-",tIdxRe2,tIdxIm2*/);
+            console.log(evenIndex1,oddIndex1,"-",tIdxRe1,tIdxIm1,"|||",evenIndex2,oddIndex2,"-",tIdxRe2,tIdxIm2);
 
             // Get real and imaginary parts of elements
             const evenRe1 = complexInput[evenIndex1 << 1];
