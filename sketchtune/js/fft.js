@@ -535,6 +535,8 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         //  5    12    4     1       2        //  3    16     1     0       8  
 
         
+        //  For N = 16, the indices must look like this after each iteration
+        // 
         //  power = 1      power = 2      power = 3       power = 4
         //  size = 2       size = 4       size = 8        size = 16
         //  half = 1       half = 2       half = 4        half =  8
@@ -552,7 +554,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         // _block = 2     _block = 4      _block = 8     _block = 16
         // max_l =16/2    max_l =16/4     max_l = 16/2   max_l = 16/4
         
-        const isPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
+        const isNotPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
 
         while (ni < N) {                                                               
             const eInd1 = i;        const oInd1 = i + h;                         
@@ -580,7 +582,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             out[(oInd1 << 1) + 1] = inv * (eIm1 - t_oIm1);
             
             // Not Power of 4?
-            if( !isPowerOf4 ){ 
+            if( isNotPowerOf4 ){ 
                 console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1);
                 i++; l++; ni+=2;
                 // line reaches block-end
