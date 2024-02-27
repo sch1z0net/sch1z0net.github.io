@@ -545,7 +545,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
 
         let c = (2*N - ((N/b) & 1)) >> 2;         // circled index start
 
-        console.log("------------------------ size",size)
+        //console.log("------------------------ size",size)
    
 
         //  For N = 4, the indices must look like this after each iteration
@@ -611,7 +611,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             
             // Not Power of 4?
             if( isNotPowerOf4 ){ 
-                console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1);
+                //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1);
                 i++; l++; ni+=2;
                 // line reaches block-end
                 if (l % h === 0) { bs++; i=bs*b; }
@@ -639,7 +639,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             out[(oInd2 << 1)    ] =       (eRe2 - t_oRe2);
             out[(oInd2 << 1) + 1] = inv * (eIm2 - t_oIm2);
 
-            console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
+            //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
 
             i++; l++; ni+=4;
             // line reaches block-end
@@ -1266,8 +1266,8 @@ console.log(fftRealInPlaceRADIX4([1,2,3,4,5,6,7,8]));
 console.log("...................... RADIX 4 [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]..............");
 */
 
-console.log(fftRealInPlaceRADIX2([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]));
-console.log(fftRealInPlaceRADIX4([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]));
+//console.log(fftRealInPlaceRADIX2([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]));
+//console.log(fftRealInPlaceRADIX4([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]));
 
 
 // Define the number of FFT operations to perform
