@@ -514,6 +514,14 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         const quarterSize = size >> 2;
         console.log("------------------------ size",size)
         // Loop condition
+
+        // size = 4  half = 2  quarter = 1    // size = 16  half = 8  quarter = 4
+        //                                    //  
+        //  j    i     k  k%2==0   x  y       //  j    i      k  k%2==0   x  y
+        //  0    0     1     0     8  2       //  0    0      -     -     4  8
+        //  1    4     2     1     8  2       //  1    0      -     -     4  8
+        //  4    8     3     0     8  2       //  2    0      -     -     4  8
+        //  5    12    4     1     8  2       //  3    16     1     0     4  8
         while (i < N) {
             // Use precalculated FFT factors directly
             const tIdxRe1 = pre + (j % quarterSize) * 2;
@@ -525,19 +533,13 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             const twiddleIm1 = factors[tIdxIm1];
             const twiddleRe2 = factors[tIdxRe2];
             const twiddleIm2 = factors[tIdxIm2];
-         
-         // size = 4  half = 2  quarter = 1    // size = 16  half = 8  quarter = 4
-         //                                    //  
-         //  j    i     k  k%2==0   x          //  j    i      k  k%2==0   x
-         //  0    0     1     0     8          //  0    0      -     -     4
-         //  1    4     2     1     8          //  1    0      -     -     4
-         //  4    8     3     0     8          //  2    0      -     -     4
-         //  5    12    4     1     8          //  3    16     1     0     4
             
-            const evenIndex1 = j + 0 * quarterSize;
-            const oddIndex1  = j;
-            const evenIndex2 = j + (N >> step);
-            const oddIndex2  = j;
+            const x = (N >> step);
+            const y = (size >> 1);
+            const evenIndex1 = j ;
+            const oddIndex1  = j + y;
+            const evenIndex2 = j + x;
+            const oddIndex2  = j + x + y;
 
             console.log(evenIndex1,oddIndex1,/*"-",tIdxRe1,tIdxIm1,*/"|||",evenIndex2,oddIndex2/*,"-",tIdxRe2,tIdxIm2*/);
 
