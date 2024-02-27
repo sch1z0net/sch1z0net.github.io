@@ -529,15 +529,15 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             const twiddledOddIm2 = oddRe2 * twiddleIm2 + oddIm2 * twiddleRe2;
 
             // Update elements with new values
-            complexInput[evenIndex1 << 1] = evenRe1 + twiddledOddRe1;
-            complexInput[(evenIndex1 << 1) + 1] = evenIm1 + twiddledOddIm1;
-            complexInput[oddIndex1 << 1] = evenRe1 - twiddledOddRe1;
-            complexInput[(oddIndex1 << 1) + 1] = evenIm1 - twiddledOddIm1;
+            complexInput[evenIndex1 << 1]       =  evenRe1 + twiddledOddRe1;
+            complexInput[(evenIndex1 << 1) + 1] = (evenIm1 + twiddledOddIm1) * inv;
+            complexInput[oddIndex1 << 1]        =  evenRe1 - twiddledOddRe1;
+            complexInput[(oddIndex1 << 1) + 1]  = (evenIm1 - twiddledOddIm1) * inv;
 
-            complexInput[evenIndex2 << 1] = evenRe2 + twiddledOddRe2;
-            complexInput[(evenIndex2 << 1) + 1] = evenIm2 + twiddledOddIm2;
-            complexInput[oddIndex2 << 1] = evenRe2 - twiddledOddRe2;
-            complexInput[(oddIndex2 << 1) + 1] = evenIm2 - twiddledOddIm2;
+            complexInput[evenIndex2 << 1]       =  evenRe2 + twiddledOddRe2;
+            complexInput[(evenIndex2 << 1) + 1] = (evenIm2 + twiddledOddIm2) * inv;
+            complexInput[oddIndex2 << 1]        =  evenRe2 - twiddledOddRe2;
+            complexInput[(oddIndex2 << 1) + 1]  = (evenIm2 - twiddledOddIm2) * inv;
 
             j++;
             if (j % halfSize === 0) {
