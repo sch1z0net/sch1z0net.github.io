@@ -473,12 +473,14 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         out[i] = input[map[i]];
     }
 
+    /*
     // Convert the real-valued input to a complex-valued Float32Array
     const complexInput = new Float32Array(N * 2);
     for (let i = 0; i < N; i++) {
         complexInput[i * 2] = out[i];
         complexInput[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
+    */
 
     const factors = LOOKUP_RADIX4;
 
@@ -492,49 +494,53 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         if (size == N) { inv = -inv; }
 
         const halfSize = size >> 2;
-        const quarterSize = size >> 2;
         // Loop condition
         while (i < N) {
             // Use precalculated FFT factors directly
-            const tIdxRe1 = i * 2;
-            const tIdxIm1 = tIdxRe1 + 1;
-            const tIdxRe2 = tIdxRe1 + quarterSize;
-            const tIdxIm2 = tIdxIm1 + quarterSize;
+            const tIdxRe1 = pre + (j % halfSize) * 2;
+            const tIdxIm1 = pre + (j % halfSize) * 2 + 1;
+            const twiddleRe1 = factors[tIdxRe1];
+            const twiddleIm1 = factors[tIdxIm1];
+
+            const tIdxRe2 = pre + ((j + halfSize) % halfSize) * 2;
+            const tIdxIm2 = pre + ((j + halfSize) % halfSize) * 2 + 1;
+            const twiddleRe2 = factors[tIdxRe2];
+            const twiddleIm2 = factors[tIdxIm2];
 
             const evenIndex1 = i + j;
-            const oddIndex1  = evenIndex1 + quarterSize;
-            const evenIndex2 = evenIndex1 + halfSize;
-            const oddIndex2  = oddIndex1  + halfSize;
+            const oddIndex1  = i + j + halfSize;
+            const evenIndex2 = i + j + 2 * halfSize;
+            const oddIndex2  = i + j + 3 * halfSize;
 
-            const twiddleRe1 = factors[tIdxRe1 + j];
-            const twiddleIm1 = factors[tIdxIm1 + j];
-            const twiddleRe2 = factors[tIdxRe2 + j];
-            const twiddleIm2 = factors[tIdxIm2 + j];
+            // Get real and imaginary parts of elements
+            const evenRe1 = complexInput[evenIndex1 << 1];
+            const evenIm1 = complexInput[(evenIndex1 << 1) + 1];
+            const oddRe1  = complexInput[oddIndex1 << 1];
+            const oddIm1  = complexInput[(oddIndex1 << 1) + 1];
 
-            const evenRe1 = complexInput[evenIndex1 * 2];
-            const evenIm1 = complexInput[evenIndex1 * 2 + 1];
-            const oddRe1  = complexInput[oddIndex1 * 2];
-            const oddIm1  = complexInput[oddIndex1 * 2 + 1];
-            const evenRe2 = complexInput[evenIndex2 * 2];
-            const evenIm2 = complexInput[evenIndex2 * 2 + 1];
-            const oddRe2  = complexInput[oddIndex2 * 2];
-            const oddIm2  = complexInput[oddIndex2 * 2 + 1];
+            const evenRe2 = complexInput[evenIndex2 << 1];
+            const evenIm2 = complexInput[(evenIndex2 << 1) + 1];
+            const oddRe2  = complexInput[oddIndex2 << 1];
+            const oddIm2  = complexInput[(oddIndex2 << 1) + 1];
 
+            // Perform complex multiplications
             const twiddledOddRe1 = oddRe1 * twiddleRe1 - oddIm1 * twiddleIm1;
             const twiddledOddIm1 = oddRe1 * twiddleIm1 + oddIm1 * twiddleRe1;
+
             const twiddledOddRe2 = oddRe2 * twiddleRe2 - oddIm2 * twiddleIm2;
             const twiddledOddIm2 = oddRe2 * twiddleIm2 + oddIm2 * twiddleRe2;
 
-            complexInput[evenIndex1 * 2]     = evenRe1 + twiddledOddRe1;
-            complexInput[evenIndex1 * 2 + 1] = (evenIm1 + twiddledOddIm1) * inv;
-            complexInput[oddIndex1 * 2]      = evenRe1 - twiddledOddRe1;
-            complexInput[oddIndex1 * 2 + 1]  = (evenIm1 - twiddledOddIm1) * inv;
+            // Update elements with new values
+            complexInput[evenIndex1 << 1]       =  evenRe1 + twiddledOddRe1;
+            complexInput[(evenIndex1 << 1) + 1] = (evenIm1 + twiddledOddIm1) * inv;
+            complexInput[oddIndex1 << 1]        =  evenRe1 - twiddledOddRe1;
+            complexInput[(oddIndex1 << 1) + 1]  = (evenIm1 - twiddledOddIm1) * inv;
 
-            complexInput[evenIndex2 * 2]     = evenRe2 + twiddledOddRe2;
-            complexInput[evenIndex2 * 2 + 1] = (evenIm2 + twiddledOddIm2) * inv;
-            complexInput[oddIndex2 * 2]      = evenRe2 - twiddledOddRe2;
-            complexInput[oddIndex2 * 2 + 1]  = (evenIm2 - twiddledOddIm2) * inv;
-            
+            complexInput[evenIndex2 << 1]       =  evenRe2 + twiddledOddRe2;
+            complexInput[(evenIndex2 << 1) + 1] = (evenIm2 + twiddledOddIm2) * inv;
+            complexInput[oddIndex2 << 1]        = evenRe2 - twiddledOddRe2;
+            complexInput[(oddIndex2 << 1) + 1]  = (evenIm2 - twiddledOddIm2) * inv;
+
             j++;
             if (j % halfSize === 0) {
                 i += size;
