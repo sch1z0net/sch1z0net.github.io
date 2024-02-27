@@ -400,58 +400,6 @@ function fftRealInPlaceRADIX2(inputOriginal) {
 
     const factors = LOOKUP_RADIX2;
 
-    // Recursively calculate FFT
-    // Perform Radix-2 FFT
-    /*
-    let pre = 0;
-    for (let size = 2; size <= N; size <<= 1) {
-        // Precompute FFT factors
-        // const factors = computeFFTFactorsWithCache(size);
-        const halfSize = size >> 1;
-        const steps = N / size;
-        for (let i = 0, j = 0, k = 0; k < halfSize*steps; k++, j = (j+1)%halfSize, i = Math.floor(k/halfSize)*size ) {
-
-            // Use precalculated FFT factors directly
-            const twiddleRe = factors[pre + (j << 1)];
-            const twiddleIm = factors[pre + (j << 1) + 1];
-
-            const evenIndex = i;
-            const oddIndex = i + halfSize;
-
-            // Get real and imaginary parts of even and odd elements
-            const evenRe = complexInput[evenIndex << 1];
-            const evenIm = complexInput[(evenIndex << 1) + 1];
-            const oddRe = complexInput[oddIndex << 1];
-            const oddIm = complexInput[(oddIndex << 1) + 1];
-
-            // Perform complex multiplication
-            const twiddledOddRe = oddRe * twiddleRe - oddIm * twiddleIm;
-            const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
-
-            // Update even and odd elements with new values
-            complexInput[evenIndex << 1]     = evenRe + twiddledOddRe;
-            complexInput[(evenIndex << 1) + 1] = evenIm + twiddledOddIm;
-            complexInput[oddIndex << 1]      = evenRe - twiddledOddRe;
-            complexInput[(oddIndex << 1) + 1]  = evenIm - twiddledOddIm;
-        }
-        pre += size;
-    }*/
-
-
-
-
-
-    /*
-    for (let size = 2; size <= N; size *= 2) {
-        const halfSize = size / 2;
-        // Get FFT factors with caching
-        const factors = computeFFTFactorsWithCache(size);
-        for (let i = 0; i < N; i += size) {
-            for (let j = 0; j < halfSize; j++) {
-                const evenIndex = i + j;
-                const oddIndex = i + j + halfSize;
-                */
-
     let pre = 0;
     let inv = 1;
     for (let size = 2; size <= N; size <<= 1) {
@@ -474,8 +422,6 @@ function fftRealInPlaceRADIX2(inputOriginal) {
             const evenIndex = i + j;
             const oddIndex = i + j + halfSize;
             
-            //console.log("evenIndex", evenIndex, "oddIndex", oddIndex, "TwiddleRE", tIdxRe, "TwiddleIM", tIdxIm);
-            
             // Get real and imaginary parts of even and odd elements
             const evenRe = complexInput[evenIndex << 1];
             const evenIm = complexInput[(evenIndex << 1) + 1];
@@ -487,10 +433,15 @@ function fftRealInPlaceRADIX2(inputOriginal) {
             const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
             
             // Update even and odd elements with new values
-            complexInput[evenIndex << 1]       =  evenRe + twiddledOddRe;
+            /*complexInput[evenIndex << 1]       =  evenRe + twiddledOddRe;
             complexInput[(evenIndex << 1) + 1] = (evenIm + twiddledOddIm) * inv;
             complexInput[oddIndex << 1]        =  evenRe - twiddledOddRe;
-            complexInput[(oddIndex << 1) + 1]  = (evenIm - twiddledOddIm) * inv;
+            complexInput[(oddIndex << 1) + 1]  = (evenIm - twiddledOddIm) * inv;*/
+            // Update even and odd elements with new values
+           complexInput[evenIndex << 1]       =  evenRe + twiddledOddRe;
+           complexInput[(evenIndex << 1) + 1] =  evenIm + twiddledOddIm;
+           complexInput[oddIndex << 1]        =  evenRe - twiddledOddRe;
+           complexInput[(oddIndex << 1) + 1]  = -evenIm + twiddledOddIm; // Take negative for negative frequencies
 
             j++;
             if(j % halfSize === 0){
@@ -500,17 +451,18 @@ function fftRealInPlaceRADIX2(inputOriginal) {
         }
         pre += size;
     }
-    
-    //N = 16
-    //ev 0-7  -> 0-7 twid
-    //od 8-15 -> 8-15 twid
-
-    //N = 2
-    //ev 0 2 4 6 8 10 12 14
 
     // Return the output
     return complexInput;
 }
+
+
+
+
+
+
+
+
 
 
 /*
