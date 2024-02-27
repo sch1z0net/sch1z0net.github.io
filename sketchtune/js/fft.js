@@ -503,7 +503,8 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     let pre = 2;
     let inv = 1;
     let step = 0;
-    for (let size = 4; size <= N; size <<= 2) {
+    //for (let size = 4; size <= N; size <<= 2) {
+    for (let size = 2; size <= N; size <<= 1) {
         // Define variables
         let i = 0; // Initialize i to 0
         let j = 0; // Initialize j to 0
@@ -529,60 +530,66 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         //  4    8     3     0       2        //  2    0      -     -       8  
         //  5    12    4     1       2        //  3    16     1     0       8  
 
+        
+        
         while (i < N) {                                                                                 // N = 4  (Example)
             const y = step * 4;                                                                         // y = 4
             const x = (N >> step);                                                                      // x = 2
             
-            const eInd1 = j;                         const eInd2 = j + x;                               // eInd1 = 0; eInd2 = 2
-            const oInd1 = j + h;                     const oInd2 = j + x + h;                           // oInd1 = 2; oInd2 = 4
-                                                                                                        
-            // Use precalculated FFT factors directly                                                   //
-            const tIdxRe1 = pre + (v*2 + 0)%size;     const tIdxRe2 = pre + (v*2 + 0 + y)%size;         //
-            const tIdxIm1 = pre + (v*2 + 1)%size;     const tIdxIm2 = pre + (v*2 + 1 + y)%size;         //
+            const eInd1 = j;                          const eInd2 = j + x;                              // eInd1 = 0; eInd2 = 2
+            const oInd1 = j + h;                      const oInd2 = j + x + h;                          // oInd1 = 2; oInd2 = 4
 
-            const twiddleRe1 = factors[tIdxRe1];
-            const twiddleIm1 = factors[tIdxIm1];
-            const twiddleRe2 = factors[tIdxRe2];
-            const twiddleIm2 = factors[tIdxIm2];
+            
 
-            console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
-
-            // Get real and imaginary parts of elements
-            const evenRe1 = out[(eInd1 << 1)    ];
-            const evenIm1 = out[(eInd1 << 1) + 1];
-            const oddRe1  = out[(oInd1 << 1)    ];
-            const oddIm1  = out[(oInd1 << 1) + 1];
-
-            const evenRe2 = out[(eInd2 << 1)    ];
-            const evenIm2 = out[(eInd2 << 1) + 1];
-            const oddRe2  = out[(oInd2 << 1)    ];
-            const oddIm2  = out[(oInd2 << 1) + 1];
-
-            // Perform complex multiplications
-            const twiddledOddRe1 = oddRe1 * twiddleRe1 - oddIm1 * twiddleIm1;
-            const twiddledOddIm1 = oddRe1 * twiddleIm1 + oddIm1 * twiddleRe1;
-            const twiddledOddRe2 = oddRe2 * twiddleRe2 - oddIm2 * twiddleIm2;
-            const twiddledOddIm2 = oddRe2 * twiddleIm2 + oddIm2 * twiddleRe2;
-
-            // Update elements with new values
-            out[(eInd1 << 1)    ] =       (evenRe1 + twiddledOddRe1);
-            out[(eInd1 << 1) + 1] = inv * (evenIm1 + twiddledOddIm1);
-            out[(oInd1 << 1)    ] =       (evenRe1 - twiddledOddRe1);
-            out[(oInd1 << 1) + 1] = inv * (evenIm1 - twiddledOddIm1);
-
-            out[(eInd2 << 1)    ] =       (evenRe2 + twiddledOddRe2);
-            out[(eInd2 << 1) + 1] = inv * (evenIm2 + twiddledOddIm2);
-            out[(oInd2 << 1)    ] =       (evenRe2 - twiddledOddRe2);
-            out[(oInd2 << 1) + 1] = inv * (evenIm2 - twiddledOddIm2);
-
-            j++;
-            if (j % q === 0) {
-                i += size; k++;
-                if (k % 2 === 0){
-                    j = size;
-                }
+            // (1) Use precalculated FFT factors directly                                               
+            const tIdxRe1 = pre + (v*2 + 0)%size;     const tIdxRe2 = pre + (v*2 + 0 + y)%size;       
+            // (1) TwiddleFactors
+            const tRe1 = factors[tIdxRe1];
+            const tIm1 = factors[tIdxIm1];
+            // (1) Get real and imaginary parts of elements
+            const eRe1  = out[(eInd1 << 1)    ];
+            const eIm1  = out[(eInd1 << 1) + 1];
+            const oRe1  = out[(oInd1 << 1)    ];
+            const oIm1  = out[(oInd1 << 1) + 1];
+            // (1) Perform complex multiplications
+            const t_oRe1 = oRe1 * tRe1 - oIm1 * tIm1;
+            const t_oIm1 = oRe1 * tIm1 + oIm1 * tRe1;
+            // (1) Update elements with new values
+            out[(eInd1 << 1)    ] =       (eRe1 + t_oRe1);
+            out[(eInd1 << 1) + 1] = inv * (eIm1 + t_oIm1);
+            out[(oInd1 << 1)    ] =       (eRe1 - t_oRe1);
+            out[(oInd1 << 1) + 1] = inv * (eIm1 - t_oIm1);
+            
+            // Not Divisible by 4?
+            if( (size & 0b11) !== 0 ){ 
+                j++; v++;
+                if (j % q === 0) { i += size; k++; j = (k % 2 === 0) ? size : j; }
+                continue; 
             }
-            v++;
+
+            // (2) Use precalculated FFT factors directly 
+            const tIdxIm1 = pre + (v*2 + 1)%size;     const tIdxIm2 = pre + (v*2 + 1 + y)%size; 
+            // (2) TwiddleFactors
+            const tRe2 = factors[tIdxRe2];
+            const tIm2 = factors[tIdxIm2];
+            // (2) Get real and imaginary parts of elements
+            const eRe2  = out[(eInd2 << 1)    ];
+            const eIm2  = out[(eInd2 << 1) + 1];
+            const oRe2  = out[(oInd2 << 1)    ];
+            const oIm2  = out[(oInd2 << 1) + 1];
+            // (2) Perform complex multiplications
+            const t_oRe2 = oRe2 * tRe2 - oIm2 * tIm2;
+            const t_oIm2 = oRe2 * tIm2 + oIm2 * tRe2;
+            // (2) Update elements with new values
+            out[(eInd2 << 1)    ] =       (eRe2 + t_oRe2);
+            out[(eInd2 << 1) + 1] = inv * (eIm2 + t_oIm2);
+            out[(oInd2 << 1)    ] =       (eRe2 - t_oRe2);
+            out[(oInd2 << 1) + 1] = inv * (eIm2 - t_oIm2);
+
+            //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
+
+            j++; v++;
+            if (j % q === 0) { i += size; k++; j = (k % 2 === 0) ? size : j; }
         }
         pre += size + 2*size;
     }
