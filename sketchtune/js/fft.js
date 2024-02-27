@@ -509,7 +509,7 @@ function fftComplexInPlace(out, factors) {
 
         let c = (2*N - ((N/b) & 1)) >> 2;         // circled index start
 
-        //console.log("------------------------ size",size)
+        console.log("------------------------ size",size)
    
 
         //  For N = 4, the indices must look like this after each iteration
@@ -572,6 +572,8 @@ function fftComplexInPlace(out, factors) {
             out[(eInd1 << 1) + 1] = inv * (eIm1 + t_oIm1);
             out[(oInd1 << 1)    ] =       (eRe1 - t_oRe1);
             out[(oInd1 << 1) + 1] = inv * (eIm1 - t_oIm1);
+
+            console.log(out[(eInd1 << 1)],out[(eInd1 << 1) + 1],out[(oInd1 << 1)],out[(oInd1 << 1) + 1]);
             
             // Not Power of 4?
             if( isNotPowerOf4 ){ 
@@ -612,7 +614,7 @@ function fftComplexInPlace(out, factors) {
         pre += size;
     }
     
-    console.log(out);
+    //console.log(out);
 
     return out;
 }
