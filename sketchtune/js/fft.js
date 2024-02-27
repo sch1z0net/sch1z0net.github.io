@@ -490,11 +490,8 @@ function fftRealInPlaceRADIX2(inputOriginal) {
 
 
 
-
-
-
-function fftComplexInPlace(input, factors) {
-    const N = input.length / 2;
+function fftComplexInPlace(out, factors) {
+    const N = out.length / 2;
     const bits = Math.log2(N);
 
     let pre  = 0;    //offset for indexing Factor Lookup
