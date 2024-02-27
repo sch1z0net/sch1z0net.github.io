@@ -492,6 +492,7 @@ function fftRealInPlaceRADIX2(inputOriginal) {
             j++;
             if(j % halfSize === 0){
                 i += size; 
+                j = 0;
             }
         }
         pre += size;
