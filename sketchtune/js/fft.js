@@ -511,28 +511,33 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         step++;
         if (size == N) { inv = -inv; }
 
-        const halfSize = size >> 1;
-        const quarterSize = size >> 2;
+        const h = size >> 1;
+        const q = size >> 2;
         console.log("------------------------ size",size)
         // Loop condition
 
+        // step = 1                           // step = 2
         // size = 4  half = 2  quarter = 1    // size = 16  half = 8  quarter = 4
         //                                    //  
-        //  j    i     k  k%2==0   x  y       //  j    i      k  k%2==0   x  y
-        //  0    0     1     0     8  2       //  0    0      -     -     4  8
-        //  1    4     2     1     8  2       //  1    0      -     -     4  8
-        //  4    8     3     0     8  2       //  2    0      -     -     4  8
-        //  5    12    4     1     8  2       //  3    16     1     0     4  8
+        //           x = 8     y = 4          //            x = 4     y = 8
+        //                                    //           
+        //                                    //
+        //  j    i     k  k%2==0     h        //  j    i      k  k%2==0     h 
+        //  0    0     1     0       2        //  0    0      -     -       8  
+        //  1    4     2     1       2        //  1    0      -     -       8  
+        //  4    8     3     0       2        //  2    0      -     -       8  
+        //  5    12    4     1       2        //  3    16     1     0       8  
+
         while (i < N) {
+            const y = step * 4;
             const x = (N >> step);
-            const y = (size >> 1);
             
-            const evenIndex1 = j ;             const evenIndex2 = j + x;
-            const oddIndex1  = j + y;          const oddIndex2  = j + x + y;
+            const evenIndex1 = j ;                    const evenIndex2 = j + x;
+            const oddIndex1  = j + h;                 const oddIndex2  = j + x + h;
             
             // Use precalculated FFT factors directly
-            const tIdxRe1 = pre + (v*2 + 0 + halfSize)%size;     const tIdxRe2 = pre + (v*2 + 0 + halfSize)%size;
-            const tIdxIm1 = pre + (v*2 + 1 + halfSize)%size;     const tIdxIm2 = pre + (v*2 + 1 + halfSize)%size;
+            const tIdxRe1 = pre + (v*2 + 0)%size;     const tIdxRe2 = pre + (v*2 + 0 + y)%size;
+            const tIdxIm1 = pre + (v*2 + 1)%size;     const tIdxIm2 = pre + (v*2 + 1 + y)%size;
 
 
             const twiddleRe1 = factors[tIdxRe1];
@@ -572,7 +577,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             complexInput[(oddIndex2 << 1) + 1]  = (evenIm2 - twiddledOddIm2) * inv;
 
             j++;
-            if (j % quarterSize === 0) {
+            if (j % q === 0) {
                 i += size; k++;
                 if (k % 2 === 0){
                     j = size;
