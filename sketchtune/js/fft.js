@@ -367,6 +367,8 @@ let bitReversalMap1024  = precomputeBitReversalMap(1024);
 let bitReversalMap2048  = precomputeBitReversalMap(2048);
 let bitReversalMap4096  = precomputeBitReversalMap(4096);
 
+const LOOKUP_RADIX2_16   = precalculateFFTFactorsRADIX2(16);
+
 // Create the flattened lookup table for twiddle factors
 const LOOKUP_RADIX4_16   = precalculateFFTFactorsRADIX4(16);
 const LOOKUP_RADIX4_512  = precalculateFFTFactorsRADIX4(512);
@@ -388,11 +390,16 @@ function fftRealInPlaceRADIX2(inputOriginal) {
 
     //const startTime = performance.now();
 
+    let factors, map;
+    if(N == 16){   factors = LOOKUP_RADIX2_16;   map = bitReversalMap16.get(N);}
+    /*if(N == 512){  factors = LOOKUP_RADIX2_512;  map = bitReversalMap512.get(N);}
+    if(N == 1024){ factors = LOOKUP_RADIX2_1024; map = bitReversalMap1024.get(N);}
+    if(N == 2048){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap2048.get(N);}*/
+
     // Create a copy of the input array
     const out = new Float32Array(N);
 
     // Perform bit reversal
-    const map = bitReversalMap.get(N);
     for (let i = 0; i < N; i++) {
         out[i] = input[map[i]];
     }
@@ -404,8 +411,6 @@ function fftRealInPlaceRADIX2(inputOriginal) {
         complexInput[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
 
-    const factors = LOOKUP_RADIX2;
-
     let pre = 0;
     let inv = 1;
     for (let size = 2; size <= N; size <<= 1) {
@@ -416,7 +421,7 @@ function fftRealInPlaceRADIX2(inputOriginal) {
         if(size == N){ inv = -inv; }
 
         const halfSize = size >> 1;
-        //console.log("------------------------ size",size)
+        console.log("------------------------ size",size)
         // Loop condition
         while (i < N) {
             // Use precalculated FFT factors directly
@@ -427,6 +432,8 @@ function fftRealInPlaceRADIX2(inputOriginal) {
 
             const evenIndex = i + j;
             const oddIndex = i + j + halfSize;
+
+            console.log(evenIndex,oddIndex,"-",tIdxRe,tIdxIm);
 
             // Get real and imaginary parts of even and odd elements
             const evenRe = complexInput[evenIndex << 1];
@@ -1162,6 +1169,7 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 
 /****** TESTING PERFORMANCE ******/
 
+console.log(fftRealInPlaceRADIX2([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]));
 console.log(fftRealInPlaceRADIX4([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]));
 //console.log(fftComplexInPlace([1,0,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9,0,10,0,11,0,12,0,13,0,14,0,15,0,16,0]));
 
