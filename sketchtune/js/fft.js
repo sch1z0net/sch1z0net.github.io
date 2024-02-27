@@ -499,7 +499,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         out[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
 
-    let pre = 0;
+    let pre = 2;
     let inv = 1;
     let step = 0;
     for (let size = 4; size <= N; size <<= 2) {
@@ -583,7 +583,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             }
             v++;
         }
-        pre += h;
+        pre += size + 2*size;
     }
 
     return out;
