@@ -512,7 +512,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         const quarterSize = size >> 2;
         console.log("------------------------ size",size)
         // Loop condition
-        while (i < N/2) {
+        while (i < N) {
             // Use precalculated FFT factors directly
             const tIdxRe1 = pre + (j % quarterSize) * 2;
             const tIdxIm1 = pre + (j % quarterSize) * 2 + 1;
