@@ -362,11 +362,11 @@ function precomputeBitReversalMap(N) {
     bitReversalMap.set(N, map);
 }
 
-precomputeBitReversalMap(512);
+precomputeBitReversalMap(1024);
 
 // Create the flattened lookup table for twiddle factors
-const LOOKUP_RADIX4 = precalculateFFTFactorsRADIX4(512);
-const LOOKUP_RADIX2 = precalculateFFTFactorsRADIX2(512);
+const LOOKUP_RADIX4 = precalculateFFTFactorsRADIX4(1024);
+const LOOKUP_RADIX2 = precalculateFFTFactorsRADIX2(1024);
 
 function fftRealInPlaceRADIX2(inputOriginal) {
     const N = inputOriginal.length;
@@ -454,6 +454,104 @@ function fftRealInPlaceRADIX2(inputOriginal) {
 
 
 
+function fftRealInPlaceRADIX4(inputOriginal) {
+    const N = inputOriginal.length;
+    const bits = Math.log2(N);
+
+    if (N !== nextPowerOf4(N)) {
+        console.error("FFT FRAME must have power of 2");
+        return;
+    }
+
+    // Create a copy of the input array
+    const input = inputOriginal.slice();
+
+    // Perform bit reversal
+    const map = bitReversalMap.get(N);
+    const out = new Float32Array(N);
+    for (let i = 0; i < N; i++) {
+        out[i] = input[map[i]];
+    }
+
+    // Convert the real-valued input to a complex-valued Float32Array
+    const complexInput = new Float32Array(N * 2);
+    for (let i = 0; i < N; i++) {
+        complexInput[i * 2] = out[i];
+        complexInput[i * 2 + 1] = 0; // Imaginary part is set to 0
+    }
+
+    const factors = LOOKUP_RADIX4;
+
+    let pre = 0;
+    let inv = 1;
+    for (let size = 4; size <= N; size <<= 2) {
+        // Define variables
+        let i = 0; // Initialize i to 0
+        let j = 0; // Initialize j to 0
+
+        if (size == N) { inv = -inv; }
+
+        const halfSize = size >> 2;
+        // Loop condition
+        while (i < N) {
+            // Use precalculated FFT factors directly
+            const tIdxRe1 = pre + (j % halfSize) * 2;
+            const tIdxIm1 = pre + (j % halfSize) * 2 + 1;
+            const twiddleRe1 = factors[tIdxRe1];
+            const twiddleIm1 = factors[tIdxIm1];
+
+            const tIdxRe2 = pre + ((j + halfSize) % halfSize) * 2;
+            const tIdxIm2 = pre + ((j + halfSize) % halfSize) * 2 + 1;
+            const twiddleRe2 = factors[tIdxRe2];
+            const twiddleIm2 = factors[tIdxIm2];
+
+            const evenIndex1 = i + j;
+            const oddIndex1 = i + j + halfSize;
+            const evenIndex2 = i + j + 2 * halfSize;
+            const oddIndex2 = i + j + 3 * halfSize;
+
+            // Get real and imaginary parts of elements
+            const evenRe1 = complexInput[evenIndex1 << 1];
+            const evenIm1 = complexInput[(evenIndex1 << 1) + 1];
+            const oddRe1 = complexInput[oddIndex1 << 1];
+            const oddIm1 = complexInput[(oddIndex1 << 1) + 1];
+
+            const evenRe2 = complexInput[evenIndex2 << 1];
+            const evenIm2 = complexInput[(evenIndex2 << 1) + 1];
+            const oddRe2 = complexInput[oddIndex2 << 1];
+            const oddIm2 = complexInput[(oddIndex2 << 1) + 1];
+
+            // Perform complex multiplications
+            const twiddledOddRe1 = oddRe1 * twiddleRe1 - oddIm1 * twiddleIm1;
+            const twiddledOddIm1 = oddRe1 * twiddleIm1 + oddIm1 * twiddleRe1;
+
+            const twiddledOddRe2 = oddRe2 * twiddleRe2 - oddIm2 * twiddleIm2;
+            const twiddledOddIm2 = oddRe2 * twiddleIm2 + oddIm2 * twiddleRe2;
+
+            // Update elements with new values
+            complexInput[evenIndex1 << 1] = evenRe1 + twiddledOddRe1;
+            complexInput[(evenIndex1 << 1) + 1] = evenIm1 + twiddledOddIm1;
+            complexInput[oddIndex1 << 1] = evenRe1 - twiddledOddRe1;
+            complexInput[(oddIndex1 << 1) + 1] = evenIm1 - twiddledOddIm1;
+
+            complexInput[evenIndex2 << 1] = evenRe2 + twiddledOddRe2;
+            complexInput[(evenIndex2 << 1) + 1] = evenIm2 + twiddledOddIm2;
+            complexInput[oddIndex2 << 1] = evenRe2 - twiddledOddRe2;
+            complexInput[(oddIndex2 << 1) + 1] = evenIm2 - twiddledOddIm2;
+
+            j++;
+            if (j % halfSize === 0) {
+                i += size;
+                j = 0;
+            }
+        }
+        pre += size;
+    }
+
+    return complexInput;
+}
+
+
 
 
 
@@ -473,71 +571,6 @@ function computeFFTFactorsWithCacheRADIX4(N) {
     return fftFactorCacheRADIX4[N];
 }*/
 
-
-function fftRealInPlaceRADIX4(input) {
-    const N = input.length;
-
-    if (N !== nextPowerOf4(N)) {
-        console.error("FFT FRAME must have power of 4");
-        return;
-    }
-
-    // Create a copy of the input array
-    const out = new Float32Array(N);
-
-    // Perform bit reversal
-    const map = bitReversalMap.get(N);
-    for (let i = 0; i < N; i++) {
-        out[i] = input[map[i]];
-    }
-
-    const factors = LOOKUP_RADIX4;
-
-    // Perform Radix-4 FFT
-    for (let size = N; size >= 4; size >>= 2) { // Loop in decreasing order using bitshift
-        const halfSize = size >> 1; // Using bitwise right shift for efficiency
-        const quarterSize = size >> 2; // Using bitwise right shift for efficiency
-
-        // Combine both loops into a single loop
-        for (let i = 0, j = 0; i < N; i += size, j += quarterSize) {
-            const evenIndex1 = i + j;
-            const oddIndex1 = i + j + quarterSize;
-            const evenIndex2 = i + j + halfSize;
-            const oddIndex2 = i + j + halfSize + quarterSize;
-
-            const evenRe1 = out[evenIndex1 << 1]; // Using bitwise left shift for efficiency
-            const evenIm1 = out[(evenIndex1 << 1) + 1]; // Using bitwise left shift for efficiency
-            const oddRe1 = out[oddIndex1 << 1]; // Using bitwise left shift for efficiency
-            const oddIm1 = out[(oddIndex1 << 1) + 1]; // Using bitwise left shift for efficiency
-            const evenRe2 = out[evenIndex2 << 1]; // Using bitwise left shift for efficiency
-            const evenIm2 = out[(evenIndex2 << 1) + 1]; // Using bitwise left shift for efficiency
-            const oddRe2 = out[oddIndex2 << 1]; // Using bitwise left shift for efficiency
-            const oddIm2 = out[(oddIndex2 << 1) + 1]; // Using bitwise left shift for efficiency
-
-            const twiddleRe1 = factors[j << 2]; // Using bitwise left shift for efficiency
-            const twiddleIm1 = factors[(j << 2) + 1]; // Using bitwise left shift for efficiency
-            const twiddleRe2 = factors[(j << 2) + 2]; // Using bitwise left shift for efficiency
-            const twiddleIm2 = factors[(j << 2) + 3]; // Using bitwise left shift for efficiency
-
-            const twiddledOddRe1 = oddRe1 * twiddleRe1 - oddIm1 * twiddleIm1;
-            const twiddledOddIm1 = oddRe1 * twiddleIm1 + oddIm1 * twiddleRe1;
-            const twiddledOddRe2 = oddRe2 * twiddleRe2 - oddIm2 * twiddleIm2;
-            const twiddledOddIm2 = oddRe2 * twiddleIm2 + oddIm2 * twiddleRe2;
-
-            out[evenIndex1 << 1]       = evenRe1 + twiddledOddRe1; // Using bitwise left shift for efficiency
-            out[(evenIndex1 << 1) + 1] = evenIm1 + twiddledOddIm1; // Using bitwise left shift for efficiency
-            out[oddIndex1 << 1]        = evenRe1 - twiddledOddRe1; // Using bitwise left shift for efficiency
-            out[(oddIndex1 << 1) + 1]  = evenIm1 - twiddledOddIm1; // Using bitwise left shift for efficiency
-
-            out[evenIndex2 << 1]       = evenRe2 + twiddledOddRe2; // Using bitwise left shift for efficiency
-            out[(evenIndex2 << 1) + 1] = evenIm2 + twiddledOddIm2; // Using bitwise left shift for efficiency
-            out[oddIndex2 << 1]        = evenRe2 - twiddledOddRe2; // Using bitwise left shift for efficiency
-            out[(oddIndex2 << 1) + 1]  = evenIm2 - twiddledOddIm2; // Using bitwise left shift for efficiency
-        }
-    }
-
-    return out;
-}
 
 
 
@@ -941,7 +974,8 @@ function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     console.log(`FFT - PADDING: Elapsed time: ${elapsedTime2} milliseconds`);*/
 
     // Perform FFT
-    return fftRealInPlaceRADIX2(paddedInput);
+    //return fftRealInPlaceRADIX2(paddedInput);
+    return fftRealInPlaceRADIX4(paddedInput);
     //return fftRealInPlace(paddedInput);
 }
 
@@ -1118,7 +1152,7 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 
 
 // Define the FFT size
-const fftSize = 512;
+const fftSize = 1024;
 // Define the number of FFT operations to perform
 const numOperations = 10000; // You can adjust this number based on your requirements
 
@@ -1174,6 +1208,6 @@ const measureTime = (type) => {
     console.log("Type",type,"Number of FFT operations per second:", operationsPerSecond);
 };
 
-measureTime(0);
-//measureTime(1);
+//measureTime(0);
+measureTime(1);
 
