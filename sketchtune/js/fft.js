@@ -484,10 +484,10 @@ function fftRealInPlaceRADIX2(inputOriginal) {
             const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
             
             // Update even and odd elements with new values
-            complexInput[evenIndex << 1]     = evenRe + twiddledOddRe;
-            complexInput[(evenIndex << 1) + 1] = evenIm + twiddledOddIm;
-            complexInput[oddIndex << 1]      = evenRe - twiddledOddRe;
-            complexInput[(oddIndex << 1) + 1]  = evenIm - twiddledOddIm;
+            complexInput[evenIndex << 1]       =   evenRe + twiddledOddRe;
+            complexInput[(evenIndex << 1) + 1] = -(evenIm + twiddledOddIm);
+            complexInput[oddIndex << 1]        =   evenRe - twiddledOddRe;
+            complexInput[(oddIndex << 1) + 1]  = -(evenIm - twiddledOddIm);
             
             j++;
             if(j % halfSize === 0){
@@ -574,14 +574,14 @@ function fftRealInPlaceRADIX4(input) {
             const twiddledOddRe2 = oddRe2 * twiddleRe2 - oddIm2 * twiddleIm2;
             const twiddledOddIm2 = oddRe2 * twiddleIm2 + oddIm2 * twiddleRe2;
 
-            out[evenIndex1 << 1]     = evenRe1 + twiddledOddRe1; // Using bitwise left shift for efficiency
+            out[evenIndex1 << 1]       = evenRe1 + twiddledOddRe1; // Using bitwise left shift for efficiency
             out[(evenIndex1 << 1) + 1] = evenIm1 + twiddledOddIm1; // Using bitwise left shift for efficiency
-            out[oddIndex1 << 1]      = evenRe1 - twiddledOddRe1; // Using bitwise left shift for efficiency
+            out[oddIndex1 << 1]        = evenRe1 - twiddledOddRe1; // Using bitwise left shift for efficiency
             out[(oddIndex1 << 1) + 1]  = evenIm1 - twiddledOddIm1; // Using bitwise left shift for efficiency
 
-            out[evenIndex2 << 1]     = evenRe2 + twiddledOddRe2; // Using bitwise left shift for efficiency
+            out[evenIndex2 << 1]       = evenRe2 + twiddledOddRe2; // Using bitwise left shift for efficiency
             out[(evenIndex2 << 1) + 1] = evenIm2 + twiddledOddIm2; // Using bitwise left shift for efficiency
-            out[oddIndex2 << 1]      = evenRe2 - twiddledOddRe2; // Using bitwise left shift for efficiency
+            out[oddIndex2 << 1]        = evenRe2 - twiddledOddRe2; // Using bitwise left shift for efficiency
             out[(oddIndex2 << 1) + 1]  = evenIm2 - twiddledOddIm2; // Using bitwise left shift for efficiency
         }
     }
@@ -1098,6 +1098,6 @@ const measureTime = (type) => {
     console.log("Type",type,"Number of FFT operations per second:", operationsPerSecond);
 };
 
-measureTime(0);
+//measureTime(0);
 //measureTime(1);
 
