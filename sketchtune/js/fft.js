@@ -507,6 +507,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         let i = 0; // Initialize i to 0
         let j = 0; // Initialize j to 0
         let k = 0;
+        let v = 0;
         step++;
         if (size == N) { inv = -inv; }
 
@@ -523,19 +524,17 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         //  4    8     3     0     8  2       //  2    0      -     -     4  8
         //  5    12    4     1     8  2       //  3    16     1     0     4  8
         while (i < N) {
+            v++;
             const x = (N >> step);
             const y = (size >> 1);
             
-            const evenIndex1 = j ;
-            const oddIndex1  = j + y;
-            const evenIndex2 = j + x;
-            const oddIndex2  = j + x + y;
-
+            const evenIndex1 = j ;           const evenIndex2 = j + x;
+            const oddIndex1  = j + y;        const oddIndex2  = j + x + y;
+            
             // Use precalculated FFT factors directly
-            const tIdxRe1 = pre + evenIndex1;
-            const tIdxIm1 = pre + oddIndex1;
-            const tIdxRe2 = pre + evenIndex2;
-            const tIdxIm2 = pre + oddIndex2;
+            const tIdxRe1 = pre + v*2 + 0;     const tIdxRe2 = pre + j + 2;
+            const tIdxIm1 = pre + v*2 + 1;     const tIdxIm2 = pre + j + 3;
+
 
             const twiddleRe1 = factors[tIdxRe1];
             const twiddleIm1 = factors[tIdxIm1];
