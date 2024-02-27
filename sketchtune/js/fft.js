@@ -362,11 +362,11 @@ function precomputeBitReversalMap(N) {
     bitReversalMap.set(N, map);
 }
 
-precomputeBitReversalMap(1024);
+precomputeBitReversalMap(512);
 
 // Create the flattened lookup table for twiddle factors
-const LOOKUP_RADIX4 = precalculateFFTFactorsRADIX4(1024);
-const LOOKUP_RADIX2 = precalculateFFTFactorsRADIX2(1024);
+const LOOKUP_RADIX4 = precalculateFFTFactorsRADIX4(512);
+const LOOKUP_RADIX2 = precalculateFFTFactorsRADIX2(512);
 
 function fftRealInPlaceRADIX2(inputOriginal) {
     const N = inputOriginal.length;
@@ -1118,7 +1118,7 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 
 
 // Define the FFT size
-const fftSize = 1024;
+const fftSize = 512;
 // Define the number of FFT operations to perform
 const numOperations = 10000; // You can adjust this number based on your requirements
 
