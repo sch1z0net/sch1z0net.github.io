@@ -560,7 +560,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             complexInput[(oddIndex2 << 1) + 1]  = (evenIm2 - twiddledOddIm2) * inv;
 
             j++;
-            if (j % halfSize === 0) {
+            if (j % quarterSize === 0) {
                 i += size;
                 j = 0;
             }
