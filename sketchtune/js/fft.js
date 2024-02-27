@@ -433,15 +433,10 @@ function fftRealInPlaceRADIX2(inputOriginal) {
             const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
             
             // Update even and odd elements with new values
-            /*complexInput[evenIndex << 1]       =  evenRe + twiddledOddRe;
+            complexInput[evenIndex << 1]       =  evenRe + twiddledOddRe;
             complexInput[(evenIndex << 1) + 1] = (evenIm + twiddledOddIm) * inv;
             complexInput[oddIndex << 1]        =  evenRe - twiddledOddRe;
-            complexInput[(oddIndex << 1) + 1]  = (evenIm - twiddledOddIm) * inv;*/
-            // Update even and odd elements with new values
-           complexInput[evenIndex << 1]       =  evenRe + twiddledOddRe;
-           complexInput[(evenIndex << 1) + 1] =  evenIm + twiddledOddIm;
-           complexInput[oddIndex << 1]        =  evenRe - twiddledOddRe;
-           complexInput[(oddIndex << 1) + 1]  = -evenIm + twiddledOddIm; // Take negative for negative frequencies
+            complexInput[(oddIndex << 1) + 1]  = (evenIm - twiddledOddIm) * inv;
 
             j++;
             if(j % halfSize === 0){
@@ -743,6 +738,61 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
     return output;
 }*/
 
+/*
+function fftComplexInPlace(input, fftFactorLookup = null) {
+    const N = input.length / 2;
+    const bits = Math.log2(N);
+
+    if (N !== nextPowerOf2(N)) {
+        console.error("FFT FRAME must have power of 2");
+        return;
+    }
+
+    // Perform bit reversal
+    const output = new Float32Array(N * 2);
+    for (let i = 0; i < N; i++) {
+        const reversedIndex = bitReverse(i, bits);
+        output[reversedIndex * 2] = input[i * 2]; // Copy real part
+        output[reversedIndex * 2 + 1] = input[i * 2 + 1]; // Copy imaginary part
+    }
+
+    if (N <= 1) {
+        return output;
+    }
+
+    // Recursively calculate FFT
+    for (let size = 2; size <= N; size *= 2) {
+        const halfSize = size / 2;
+        for (let i = 0; i < N; i += size) {
+            // Get FFT factors with caching
+            const factors = computeFFTFactorsWithCache(size);
+            for (let j = 0; j < halfSize; j++) {
+                const evenIndex = i + j;
+                const oddIndex = i + j + halfSize;
+                const evenPartRe = output[evenIndex * 2];
+                const evenPartIm = output[evenIndex * 2 + 1];
+                const oddPartRe = output[oddIndex * 2];
+                const oddPartIm = output[oddIndex * 2 + 1];
+
+                const twiddleRe = factors[j * 2];
+                const twiddleIm = factors[j * 2 + 1];
+
+                // Multiply by twiddle factors
+                const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
+                const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
+
+                // Combine results of even and odd parts in place
+                output[evenIndex * 2] = evenPartRe + twiddledOddRe;
+                output[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+                output[oddIndex * 2] = evenPartRe - twiddledOddRe;
+                output[oddIndex * 2 + 1] = evenPartIm - twiddledOddIm;
+            }
+        }
+    }
+
+    return output;
+}*/
+
 function fftComplexInPlace(input, fftFactorLookup = null) {
     const N = input.length / 2;
     const bits = Math.log2(N);
@@ -992,7 +1042,7 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 /****** TESTING PERFORMANCE ******/
 
 //console.log(fftRealInPlaceRADIX2([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]));
-
+console.log(fftComplexInPlace([1,0,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9,0,10,0,11,0,12,0,13,0,14,0,15,0,16,0]));
 
 
 
