@@ -372,10 +372,13 @@ const LOOKUP_RADIX4_16   = precalculateFFTFactorsRADIX4(16);
 const LOOKUP_RADIX4_512  = precalculateFFTFactorsRADIX4(512);
 const LOOKUP_RADIX4_1024 = precalculateFFTFactorsRADIX4(1024);
 const LOOKUP_RADIX4_2048 = precalculateFFTFactorsRADIX4(2048);
+const LOOKUP_RADIX4_4096 = precalculateFFTFactorsRADIX4(4096);
+
 const LOOKUP_RADIX2_16   = precalculateFFTFactorsRADIX2(16);
 const LOOKUP_RADIX2_512  = precalculateFFTFactorsRADIX2(512);
 const LOOKUP_RADIX2_1024 = precalculateFFTFactorsRADIX2(1024);
 const LOOKUP_RADIX2_2048 = precalculateFFTFactorsRADIX2(2048);
+const LOOKUP_RADIX2_4096 = precalculateFFTFactorsRADIX2(4096);
 
 function fftRealInPlaceRADIX2(inputOriginal) {
     const N = inputOriginal.length;
