@@ -524,10 +524,10 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             const twiddleRe2 = factors[tIdxRe2];
             const twiddleIm2 = factors[tIdxIm2];
             
-           /* 0   0  0  0  0 
+         /* 0   0  0  0  0 
             4   1  1  0  1
             8   2  0  4  4
-            12  3  1  4  5*/
+            12  3  1  4  5 */
             
             const evenIndex1 = i + j + 0 * quarterSize;
             const oddIndex1  = i + j + 1 * quarterSize;
@@ -568,7 +568,9 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             j++;
             if (j % quarterSize === 0) {
                 i += size;
-                j = size;
+                if (j % halfSize === 0)
+                  j = size;
+                }
             }
         }
         pre += size;
