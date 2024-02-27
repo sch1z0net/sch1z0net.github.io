@@ -611,6 +611,8 @@ function fftComplexInPlace(out, factors) {
         }
         pre += size;
     }
+    
+    console.log(out);
 
     return out;
 }
