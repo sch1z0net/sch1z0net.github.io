@@ -535,7 +535,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             
             const evenIndex1 = j + 0 * quarterSize;
             const oddIndex1  = j + 1 * quarterSize;
-            const evenIndex2 = j + 2 * quarterSize + 2 * size;
+            const evenIndex2 = j + 2 * size;
             const oddIndex2  = j + 3 * quarterSize;
 
             console.log(evenIndex1,oddIndex1,/*"-",tIdxRe1,tIdxIm1,*/"|||",evenIndex2,oddIndex2/*,"-",tIdxRe2,tIdxIm2*/);
