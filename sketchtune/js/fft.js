@@ -463,8 +463,8 @@ function fftRealInPlaceRADIX2(inputOriginal) {
         // Loop condition
         while (i < N) {
             // Use precalculated FFT factors directly
-            const tIdxRe = pre + (j % halfSize);
-            const tIdxIm = pre + (j % halfSize) + 1;
+            const tIdxRe = pre + (j % halfSize) * 2; // Multiply by 2 to get the correct index for real part
+            const tIdxIm = pre + (j % halfSize) * 2 + 1; // Multiply by 2 and add 1 for the imaginary part
             const twiddleRe = factors[tIdxRe];
             const twiddleIm = factors[tIdxIm];
 
