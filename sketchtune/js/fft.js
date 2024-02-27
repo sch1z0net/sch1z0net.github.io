@@ -523,22 +523,9 @@ function fftRealInPlaceRADIX4(inputOriginal) {
 
         const h = size >> 1;
         const q = size >> 2;
+
         //console.log("------------------------ size",size)
-        // Loop condition
-
-        // step = 1                           // step = 2
-        // size = 4  half = 2  quarter = 1    // size = 16  half = 8  quarter = 4
-        //                                    //  
-        //           x = 8     y = 4          //            x = 4     y = 8
-        //                                    //           
-        //------------------------------------//--------------------------------------
-        //  j    i     k  k%2==0     h        //  j    i      k  k%2==0     h 
-        //  0    0     1     0       2        //  0    0      -     -       8  
-        //  1    4     2     1       2        //  1    0      -     -       8  
-        //  4    8     3     0       2        //  2    0      -     -       8  
-        //  5    12    4     1       2        //  3    16     1     0       8  
-
-        
+   
         //  For N = 16, the indices must look like this after each iteration
         //  
         //  power = 1      power = 2      power = 3       power = 4
@@ -1241,10 +1228,10 @@ const generateTestData = (size) => {
     return testData;
 };
 
-const testData512  = generateTestData(512);
+/*const testData512  = generateTestData(512);
 const testData1024 = generateTestData(1024);
 const testData2048 = generateTestData(2048);
-const testData4096 = generateTestData(4096);
+const testData4096 = generateTestData(4096);*/
 
 // Perform FFT operations
 const performFFTOperations = (type,fftSize) => {
@@ -1290,8 +1277,8 @@ const measureTime = (type, fftSize) => {
 };
 
 //measureTime(0);
-measureTime(1, 512);
-measureTime(1, 1024);
-measureTime(1, 2048);
-measureTime(1, 4096);
+//measureTime(1, 512);
+//measureTime(1, 1024);
+//measureTime(1, 2048);
+//measureTime(1, 4096);
 
