@@ -574,7 +574,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         //                                                                 
         
         const isNotPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
-
+        let ci = 0;
         while (ni < N) {                                                               
             const eInd1 = i;        const oInd1 = i + h;                         
             const eInd2 = i + c;    const oInd2 = i + h + c;              
@@ -582,6 +582,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
 
             // (1) Use precalculated FFT factors directly                                               
             const tIdxRe1 = pre + (2*l + 0)%b;  const tIdxIm1 = pre + (2*l + 1)%b; 
+            ci += 2;
             // (1) TwiddleFactors
             const tRe1 = factors[tIdxRe1];
             const tIm1 = factors[tIdxIm1];
@@ -607,10 +608,9 @@ function fftRealInPlaceRADIX4(inputOriginal) {
                 if (l % h === 0) { bs++; i=bs*b; }
                 continue; 
             }
-
+            
             // (2) Use precalculated FFT factors directly  
-            //const tIdxRe2 = pre + (2*l + 0)%b;   const tIdxIm2 = pre + (2*l + 1)%b;
-            const tIdxRe2 = pre + ((2 * l) % b); const tIdxIm2 = pre + ((2 * l) % b) + 1;
+            const tIdxRe2 = pre + (ci + 0)%b;  const tIdxIm2 = pre + (ci + 1)%b;
             // (2) TwiddleFactors
             const tRe2 = factors[tIdxRe2];
             const tIm2 = factors[tIdxIm2];
