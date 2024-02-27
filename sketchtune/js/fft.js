@@ -527,10 +527,10 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             const y = (size >> 1);
 
             // Use precalculated FFT factors directly
-            const tIdxRe1 = pre + (j % quarterSize) * 2;
-            const tIdxIm1 = pre + (j % quarterSize) * 2 + 1;
-            const tIdxRe2 = pre + ((j % quarterSize) + quarterSize) * 2;
-            const tIdxIm2 = pre + ((j % quarterSize) + quarterSize) * 2 + 1;
+            const tIdxRe1 = pre + 0 + j;
+            const tIdxIm1 = pre + 1 + j;
+            const tIdxRe2 = pre + 2 + j;
+            const tIdxIm2 = pre + 3 + j;
 
             const twiddleRe1 = factors[tIdxRe1];
             const twiddleIm1 = factors[tIdxIm1];
@@ -581,7 +581,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
                 }
             }
         }
-        pre += size;
+        //pre += size;
     }
 
     return complexInput;
