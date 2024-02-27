@@ -505,6 +505,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         // Define variables
         let i = 0; // Initialize i to 0
         let j = 0; // Initialize j to 0
+        let k = 0;
 
         if (size == N) { inv = -inv; }
 
@@ -529,10 +530,10 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             8   2  0  4  4
             12  3  1  4  5 */
             
-            const evenIndex1 = i + j + 0 * quarterSize;
-            const oddIndex1  = i + j + 1 * quarterSize;
-            const evenIndex2 = i + j + 2 * quarterSize;
-            const oddIndex2  = i + j + 3 * quarterSize;
+            const evenIndex1 = j + 0 * quarterSize;
+            const oddIndex1  = j + 1 * quarterSize;
+            const evenIndex2 = j + 2 * quarterSize;
+            const oddIndex2  = j + 3 * quarterSize;
 
             console.log(evenIndex1,oddIndex1,/*"-",tIdxRe1,tIdxIm1,*/"|||",evenIndex2,oddIndex2/*,"-",tIdxRe2,tIdxIm2*/);
 
@@ -567,9 +568,9 @@ function fftRealInPlaceRADIX4(inputOriginal) {
 
             j++;
             if (j % quarterSize === 0) {
-                i += size;
-                if (j % halfSize === 0){
-                   j = size;
+                i += size; k++;
+                if (k % 2 === 0){
+                    j += size;
                 }
             }
         }
