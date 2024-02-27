@@ -461,7 +461,7 @@ function fftRealInPlaceRADIX2(inputOriginal) {
         const halfSize = size >> 1;
         console.log("------------------------ size",size)
         // Loop condition
-        while (i < N) {
+        while (i < N/2) {
             // Use precalculated FFT factors directly
             const tIdxRe = pre + (j % halfSize) * 2; // Multiply by 2 to get the correct index for real part
             const tIdxIm = pre + (j % halfSize) * 2 + 1; // Multiply by 2 and add 1 for the imaginary part
