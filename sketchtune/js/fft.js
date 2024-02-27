@@ -536,8 +536,8 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             const y = step * 4;                                                                         // y = 4
             const x = (N >> step);                                                                      // x = 2
             
-            const eInd1 = j;                          const eInd2 = j + x;                              // eInd1 = 0; eInd2 = 2
-            const oInd1 = j + h;                      const oInd2 = j + x + h;                          // oInd1 = 2; oInd2 = 4
+            const eInd1 = i;                          const eInd2 = i + x;                              // eInd1 = 0; eInd2 = 2
+            const oInd1 = i + h;                      const oInd2 = i + x + h;                          // oInd1 = 2; oInd2 = 4
 
             
 
@@ -565,7 +565,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             if( (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0 ){ 
                 console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1);
                 j++; v++;
-                if (j % h === 0) { i += size; k++; j = size; }
+                if (j % h === 0) { i += size; k++; j = (k % 2 === 0) ? size : j; }
                 continue; 
             }
 
