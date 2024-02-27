@@ -526,15 +526,31 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         let b = size; // block size
         let bs = 0;   // block steps made
         let ni = 0;   // number of indices handled 
-        let c = 4*mpwr/pwr; // circled index start  
 
         if (size == N) { inv = -inv; }
 
         const h = size >> 1;
         const q = size >> 2;
 
+        let c = (2*N - ((N/b) & 1)) >> 2;         // circled index start
+
         console.log("------------------------ size",size)
    
+
+        //  For N = 4, the indices must look like this after each iteration
+        //  
+        //  power = 1      power = 2      
+        //  size = 2       size = 4  
+        //  half = 1       half = 2  
+        //  ev  odd        ev odd     
+        // _0     1        0    2     
+        // (2)     3      _(1)  3     
+        //    
+        // _block = 2     _block = 4    
+        // max_bn =4/2    max_bn =4/4   
+
+
+
         //  For N = 16, the indices must look like this after each iteration
         //  
         //  power = 1      power = 2      power = 3       power = 4
@@ -545,14 +561,15 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         //  2     3       _1   3          1   5           1   9
         //  4     5        4   6          2   6           2  10
         //  6     7        5   7         _3   7           3  11
-        //  8     9       (8) 10          8  12          (4) 12   <---- circled index start = 4
+        // (8)    9       (8) 10         (8) 12          (4) 12   <---- circled index start = 4
         // 10    11        9  11          9  13           5  13
         // 12    13       12  14          10  14          6  14
         // 14    15       13  15          11  15         _7  15
-        //
-        // _jump = 2      _jump = 3       _jump = 5      _jump = 9
-        // _block = 2     _block = 4      _block = 8     _block = 16
-        // max_l =16/2    max_l =16/4     max_l = 16/2   max_l = 16/4
+        //  
+        // ratio = 4      ratio = 2       ratio = 1      ratio = 1/2       (N/b) -> 1  2  4 ..... 8
+        // _block = 2     _block = 4      _block = 8     _block = 16       1 is a special case, map it to 1/2 and the rest to 1
+        // max_bn =16/2   max_bn =16/4    max_bn = 16/2  max_bn = 16/4     therefor: c = (N/2) * (2-((N/b) & 1))/2  
+        //                                                                 
         
         const isNotPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
 
