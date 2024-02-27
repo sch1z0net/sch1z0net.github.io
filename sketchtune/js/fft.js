@@ -562,6 +562,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             
             // Not Divisible by 4?
             if( (size & 0b11) !== 0 ){ 
+                console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1);
                 j++; v++;
                 if (j % q === 0) { i += size; k++; j = (k % 2 === 0) ? size : j; }
                 continue; 
@@ -586,7 +587,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             out[(oInd2 << 1)    ] =       (eRe2 - t_oRe2);
             out[(oInd2 << 1) + 1] = inv * (eIm2 - t_oIm2);
 
-            //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
+            console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
 
             j++; v++;
             if (j % q === 0) { i += size; k++; j = (k % 2 === 0) ? size : j; }
