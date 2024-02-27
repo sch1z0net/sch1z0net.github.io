@@ -365,6 +365,8 @@ let bitReversalMap4     = precomputeBitReversalMap(4);
 let bitReversalMap8     = precomputeBitReversalMap(8);
 let bitReversalMap16    = precomputeBitReversalMap(16);
 let bitReversalMap32    = precomputeBitReversalMap(32);
+let bitReversalMap64    = precomputeBitReversalMap(64);
+let bitReversalMap128   = precomputeBitReversalMap(128);
 let bitReversalMap512   = precomputeBitReversalMap(512);
 let bitReversalMap1024  = precomputeBitReversalMap(1024);
 let bitReversalMap2048  = precomputeBitReversalMap(2048);
@@ -381,6 +383,8 @@ const LOOKUP_RADIX2_4    = precalculateFFTFactorsRADIX2(4);
 const LOOKUP_RADIX2_8    = precalculateFFTFactorsRADIX2(8);
 const LOOKUP_RADIX2_16   = precalculateFFTFactorsRADIX2(16);
 const LOOKUP_RADIX2_32   = precalculateFFTFactorsRADIX2(32);
+const LOOKUP_RADIX2_64   = precalculateFFTFactorsRADIX2(64);
+const LOOKUP_RADIX2_128  = precalculateFFTFactorsRADIX2(128);
 const LOOKUP_RADIX2_512  = precalculateFFTFactorsRADIX2(512);
 const LOOKUP_RADIX2_1024 = precalculateFFTFactorsRADIX2(1024);
 const LOOKUP_RADIX2_2048 = precalculateFFTFactorsRADIX2(2048);
@@ -404,6 +408,9 @@ function fftRealInPlaceRADIX2(inputOriginal) {
     if(N == 4){    factors = LOOKUP_RADIX2_4;    map = bitReversalMap4.get(N);}
     if(N == 8){    factors = LOOKUP_RADIX2_8;    map = bitReversalMap8.get(N);}
     if(N == 16){   factors = LOOKUP_RADIX2_16;   map = bitReversalMap16.get(N);}
+    if(N == 32){   factors = LOOKUP_RADIX2_32;   map = bitReversalMap32.get(N);}
+    if(N == 64){   factors = LOOKUP_RADIX2_64;   map = bitReversalMap64.get(N);}
+    if(N == 128){  factors = LOOKUP_RADIX2_128;  map = bitReversalMap128.get(N);}
     if(N == 512){  factors = LOOKUP_RADIX2_512;  map = bitReversalMap512.get(N);}
     if(N == 1024){ factors = LOOKUP_RADIX2_1024; map = bitReversalMap1024.get(N);}
     if(N == 2048){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap2048.get(N);}
@@ -497,6 +504,8 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     if(N == 8){    factors = LOOKUP_RADIX2_8;    map = bitReversalMap8.get(N);}
     if(N == 16){   factors = LOOKUP_RADIX2_16;   map = bitReversalMap16.get(N);}
     if(N == 32){   factors = LOOKUP_RADIX2_32;   map = bitReversalMap32.get(N);}
+    if(N == 64){   factors = LOOKUP_RADIX2_64;   map = bitReversalMap64.get(N);}
+    if(N == 128){  factors = LOOKUP_RADIX2_128;  map = bitReversalMap128.get(N);}
     if(N == 512){  factors = LOOKUP_RADIX2_512;  map = bitReversalMap512.get(N);}
     if(N == 1024){ factors = LOOKUP_RADIX2_1024; map = bitReversalMap1024.get(N);}
     if(N == 2048){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap2048.get(N);}
