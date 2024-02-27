@@ -361,13 +361,15 @@ function precomputeBitReversalMap(N) {
 }
 
 // Define a global map to store bit reversal indices
+let bitReversalMap16    = precomputeBitReversalMap(16)
 let bitReversalMap512   = precomputeBitReversalMap(512);
 let bitReversalMap1024  = precomputeBitReversalMap(1024);
 let bitReversalMap2048  = precomputeBitReversalMap(2048);
 let bitReversalMap4096  = precomputeBitReversalMap(4096);
 
 // Create the flattened lookup table for twiddle factors
-const LOOKUP_RADIX4_512 = precalculateFFTFactorsRADIX4(512);
+const LOOKUP_RADIX4_16   = precalculateFFTFactorsRADIX4(16);
+const LOOKUP_RADIX4_512  = precalculateFFTFactorsRADIX4(512);
 const LOOKUP_RADIX4_1024 = precalculateFFTFactorsRADIX4(1024);
 const LOOKUP_RADIX4_2048 = precalculateFFTFactorsRADIX4(2048);
 const LOOKUP_RADIX2 = precalculateFFTFactorsRADIX2(1024);
@@ -463,7 +465,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     const bits = Math.log2(N);
 
     if (N !== nextPowerOf4(N)) {
-        console.error("FFT FRAME must have power of 2");
+        console.error("FFT FRAME must have power of 4");
         return;
     }
 
@@ -471,6 +473,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     const input = inputOriginal.slice();
 
     let factors, map;
+    if(N == 16){   factors = LOOKUP_RADIX4_16;   map = bitReversalMap16.get(N);}
     if(N == 512){  factors = LOOKUP_RADIX4_512;  map = bitReversalMap512.get(N);}
     if(N == 1024){ factors = LOOKUP_RADIX4_1024; map = bitReversalMap1024.get(N);}
     if(N == 2048){ factors = LOOKUP_RADIX4_2048; map = bitReversalMap2048.get(N);}
@@ -880,16 +883,16 @@ function fftComplexInPlace(input) {
 
             const evenRe = output[evenIndex * 2];
             const evenIm = output[evenIndex * 2 + 1];
-            const oddRe = output[oddIndex * 2];
-            const oddIm = output[oddIndex * 2 + 1];
+            const oddRe  = output[oddIndex * 2];
+            const oddIm  = output[oddIndex * 2 + 1];
 
             const twiddledOddRe = oddRe * twiddleRe - oddIm * twiddleIm;
             const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
 
-            output[evenIndex * 2] = evenRe + twiddledOddRe;
+            output[evenIndex * 2]     =  evenRe + twiddledOddRe;
             output[evenIndex * 2 + 1] = (evenIm + twiddledOddIm) * inv;
-            output[oddIndex * 2] = evenRe - twiddledOddRe;
-            output[oddIndex * 2 + 1] = (evenIm - twiddledOddIm) * inv;
+            output[oddIndex * 2]      =  evenRe - twiddledOddRe;
+            output[oddIndex * 2 + 1]  = (evenIm - twiddledOddIm) * inv;
 
             j++;
             if (j % halfSize === 0) {
@@ -1155,7 +1158,7 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 
 /****** TESTING PERFORMANCE ******/
 
-//console.log(fftRealInPlaceRADIX2([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]));
+console.log(fftRealInPlaceRADIX2([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]));
 //console.log(fftComplexInPlace([1,0,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9,0,10,0,11,0,12,0,13,0,14,0,15,0,16,0]));
 
 
