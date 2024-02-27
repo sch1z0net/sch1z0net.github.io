@@ -1145,7 +1145,6 @@ function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
     // For simplicity, let's assume computeFFT returns the magnitude spectrum
     //const startTime = performance.now();
     const spectrum = FFT(frame, fftFactorLookup);
-    console.log(spectrum);
     //const endTime = performance.now();
     //const elapsedTime = endTime - startTime;
     //console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);
@@ -1191,7 +1190,6 @@ function ifft(input) {
 
     // Apply FFT to the conjugate spectrum
     const fftResult = fftComplexInPlaceRADIX4(conjugateSpectrum);
-    console.log(fftResult);
     //const fftResult = fftComplexInPlace(conjugateSpectrum);
 
     // Take the complex conjugate of the FFT result and scale by 1/N
@@ -1391,4 +1389,8 @@ const measureTime = (type, fftSize) => {
 measureTime(1, 1024);
 measureTime(1, 2048);
 measureTime(1, 4096);*/
+
+
+
+console.log(IFFT(FFT([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])));
 
