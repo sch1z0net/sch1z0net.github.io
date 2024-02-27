@@ -453,10 +453,13 @@ function fftRealInPlaceRADIX2(inputOriginal) {
                 */
 
     let pre = 0;
+    let inv = 1;
     for (let size = N; size >= 2; size >>= 1) {
         // Define variables
         let i = 0; // Initialize i to 0
         let j = 0; // Initialize j to 0
+
+        if(size == 2){ inv = -inv; }
 
         const halfSize = size >> 1;
         //console.log("------------------------ size",size)
@@ -484,11 +487,11 @@ function fftRealInPlaceRADIX2(inputOriginal) {
             const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
             
             // Update even and odd elements with new values
-            complexInput[evenIndex << 1]       = evenRe + twiddledOddRe;
-            complexInput[(evenIndex << 1) + 1] = evenIm + twiddledOddIm;
-            complexInput[oddIndex << 1]        = evenRe - twiddledOddRe;
-            complexInput[(oddIndex << 1) + 1]  = evenIm - twiddledOddIm;
-            
+            complexInput[evenIndex << 1]       =  evenRe + twiddledOddRe;
+            complexInput[(evenIndex << 1) + 1] = (evenIm + twiddledOddIm) * inv;
+            complexInput[oddIndex << 1]        =  evenRe - twiddledOddRe;
+            complexInput[(oddIndex << 1) + 1]  = (evenIm - twiddledOddIm) * inv;
+
             j++;
             if(j % halfSize === 0){
                 i += size; 
