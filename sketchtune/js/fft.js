@@ -489,6 +489,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     if(N == 512){  factors = LOOKUP_RADIX2_512;  map = bitReversalMap512.get(N);}
     if(N == 1024){ factors = LOOKUP_RADIX2_1024; map = bitReversalMap1024.get(N);}
     if(N == 2048){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap2048.get(N);}
+    if(N == 4096){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap4096.get(N);}
 
     // Perform bit reversal
     const inputBR = new Float32Array(N);
