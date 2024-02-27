@@ -487,42 +487,15 @@ function fftRealInPlaceRADIX2(inputOriginal) {
 
 
 
-function fftRealInPlaceRADIX4(inputOriginal) {
-    const N = inputOriginal.length;
+
+
+
+
+
+
+function fftComplexInPlace(input, factors) {
+    const N = input.length / 2;
     const bits = Math.log2(N);
-
-    if (N !== nextPowerOf2(N)) {
-        console.error("FFT FRAME must have power of 2");
-        return;
-    }
-
-    // Create a copy of the input array
-    const input = inputOriginal.slice();
-
-    let factors, map;
-    if(N == 4){    factors = LOOKUP_RADIX2_4;    map = bitReversalMap4.get(N);}
-    if(N == 8){    factors = LOOKUP_RADIX2_8;    map = bitReversalMap8.get(N);}
-    if(N == 16){   factors = LOOKUP_RADIX2_16;   map = bitReversalMap16.get(N);}
-    if(N == 32){   factors = LOOKUP_RADIX2_32;   map = bitReversalMap32.get(N);}
-    if(N == 64){   factors = LOOKUP_RADIX2_64;   map = bitReversalMap64.get(N);}
-    if(N == 128){  factors = LOOKUP_RADIX2_128;  map = bitReversalMap128.get(N);}
-    if(N == 512){  factors = LOOKUP_RADIX2_512;  map = bitReversalMap512.get(N);}
-    if(N == 1024){ factors = LOOKUP_RADIX2_1024; map = bitReversalMap1024.get(N);}
-    if(N == 2048){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap2048.get(N);}
-    if(N == 4096){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap4096.get(N);}
-
-    // Perform bit reversal
-    const inputBR = new Float32Array(N);
-    for (let i = 0; i < N; i++) {
-        inputBR[i] = input[map[i]];
-    }
-
-    // Convert the real-valued input to a complex-valued Float32Array
-    const out = new Float32Array(N * 2);
-    for (let i = 0; i < N; i++) {
-        out[i * 2] = inputBR[i];
-        out[i * 2 + 1] = 0; // Imaginary part is set to 0
-    }
 
     let pre  = 0;    //offset for indexing Factor Lookup
     let inv  = 1;    
@@ -651,6 +624,84 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     return out;
 }
 
+
+
+
+
+function fftRealInPlaceRADIX4(inputOriginal) {
+    const N = inputOriginal.length;
+    const bits = Math.log2(N);
+
+    if (N !== nextPowerOf2(N)) {
+        console.error("FFT FRAME must have power of 2");
+        return;
+    }
+
+    // Create a copy of the input array
+    const input = inputOriginal.slice();
+
+    let factors, map;
+    if(N == 4){    factors = LOOKUP_RADIX2_4;    map = bitReversalMap4.get(N);}
+    if(N == 8){    factors = LOOKUP_RADIX2_8;    map = bitReversalMap8.get(N);}
+    if(N == 16){   factors = LOOKUP_RADIX2_16;   map = bitReversalMap16.get(N);}
+    if(N == 32){   factors = LOOKUP_RADIX2_32;   map = bitReversalMap32.get(N);}
+    if(N == 64){   factors = LOOKUP_RADIX2_64;   map = bitReversalMap64.get(N);}
+    if(N == 128){  factors = LOOKUP_RADIX2_128;  map = bitReversalMap128.get(N);}
+    if(N == 512){  factors = LOOKUP_RADIX2_512;  map = bitReversalMap512.get(N);}
+    if(N == 1024){ factors = LOOKUP_RADIX2_1024; map = bitReversalMap1024.get(N);}
+    if(N == 2048){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap2048.get(N);}
+    if(N == 4096){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap4096.get(N);}
+
+    // Perform bit reversal
+    const inputBR = new Float32Array(N);
+    for (let i = 0; i < N; i++) {
+        inputBR[i] = input[map[i]];
+    }
+
+    // Convert the real-valued input to a complex-valued Float32Array
+    const out = new Float32Array(N * 2);
+    for (let i = 0; i < N; i++) {
+        out[i * 2] = inputBR[i];
+        out[i * 2 + 1] = 0; // Imaginary part is set to 0
+    }
+
+    return fftComplexInPlace(out, factors);
+}
+
+
+function fftComplexInPlaceRADIX4(inputOriginal) {
+    const N = inputOriginal.length;
+    const bits = Math.log2(N);
+
+    if (N !== nextPowerOf2(N)) {
+        console.error("FFT FRAME must have power of 2");
+        return;
+    }
+
+    // Create a copy of the input array
+    const input = inputOriginal.slice();
+
+    let factors, map;
+    if(N == 4){    factors = LOOKUP_RADIX2_4;    map = bitReversalMap4.get(N);}
+    if(N == 8){    factors = LOOKUP_RADIX2_8;    map = bitReversalMap8.get(N);}
+    if(N == 16){   factors = LOOKUP_RADIX2_16;   map = bitReversalMap16.get(N);}
+    if(N == 32){   factors = LOOKUP_RADIX2_32;   map = bitReversalMap32.get(N);}
+    if(N == 64){   factors = LOOKUP_RADIX2_64;   map = bitReversalMap64.get(N);}
+    if(N == 128){  factors = LOOKUP_RADIX2_128;  map = bitReversalMap128.get(N);}
+    if(N == 512){  factors = LOOKUP_RADIX2_512;  map = bitReversalMap512.get(N);}
+    if(N == 1024){ factors = LOOKUP_RADIX2_1024; map = bitReversalMap1024.get(N);}
+    if(N == 2048){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap2048.get(N);}
+    if(N == 4096){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap4096.get(N);}
+
+    // Perform bit reversal
+    const out = new Float32Array(N);
+    for (let i = 0; i < N; i++) {
+        out[i*2  ] = input[map[i]  ];
+        out[i*2+1] = input[map[i]+1];
+    }
+
+    return fftComplexInPlace(out, factors);
+}
 
 
 
@@ -927,6 +978,10 @@ function fftComplexInPlace(input, fftFactorLookup = null) {
 }*/
 
 
+
+
+
+/*
 function fftComplexInPlace(input) {
     const N = input.length / 2;
     const bits = Math.log2(N);
@@ -996,7 +1051,7 @@ function fftComplexInPlace(input) {
 
     return output;
 }
-
+*/
 
 
 /*
@@ -1137,7 +1192,8 @@ function ifft(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    const fftResult = fftComplexInPlace(conjugateSpectrum);
+    const fftResult = fftComplexInPlaceRADIX4(conjugateSpectrum);
+    //const fftResult = fftComplexInPlace(conjugateSpectrum);
 
     // Take the complex conjugate of the FFT result and scale by 1/N
     const ifftResult = new Float32Array(N * 2);
