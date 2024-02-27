@@ -586,7 +586,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         pre += h;
     }
 
-    return complexInput;
+    return out;
 }
 
 
