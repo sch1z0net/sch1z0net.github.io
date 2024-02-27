@@ -453,7 +453,7 @@ function fftRealInPlaceRADIX2(inputOriginal) {
                 */
 
     let pre = 0;
-    for (let size = 2; size <= N; size <<= 1) {
+    for (let size = N; size >= 2; size >>= 1) {
         // Define variables
         let i = 0; // Initialize i to 0
         let j = 0; // Initialize j to 0
@@ -463,8 +463,8 @@ function fftRealInPlaceRADIX2(inputOriginal) {
         // Loop condition
         while (i < N) {
             // Use precalculated FFT factors directly
-            const tIdxRe = pre + (j % halfSize) * 2; // Multiply by 2 to get the correct index for real part
-            const tIdxIm = pre + (j % halfSize) * 2 + 1; // Multiply by 2 and add 1 for the imaginary part
+            const tIdxRe = pre + (j % halfSize) * 2;
+            const tIdxIm = pre + (j % halfSize) * 2 + 1;
             const twiddleRe = factors[tIdxRe];
             const twiddleIm = factors[tIdxIm];
 
@@ -484,10 +484,10 @@ function fftRealInPlaceRADIX2(inputOriginal) {
             const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
             
             // Update even and odd elements with new values
-            complexInput[evenIndex << 1]       =   evenRe + twiddledOddRe;
-            complexInput[(evenIndex << 1) + 1] = -(evenIm + twiddledOddIm);
-            complexInput[oddIndex << 1]        =   evenRe - twiddledOddRe;
-            complexInput[(oddIndex << 1) + 1]  = -(evenIm - twiddledOddIm);
+            complexInput[evenIndex << 1]       = evenRe + twiddledOddRe;
+            complexInput[(evenIndex << 1) + 1] = evenIm + twiddledOddIm;
+            complexInput[oddIndex << 1]        = evenRe - twiddledOddRe;
+            complexInput[(oddIndex << 1) + 1]  = evenIm - twiddledOddIm;
             
             j++;
             if(j % halfSize === 0){
