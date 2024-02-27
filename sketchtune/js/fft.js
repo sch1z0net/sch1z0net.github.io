@@ -342,14 +342,11 @@ function fftRealInPlace(input) {
     return input;
 }*/
 
-
-// Define a global map to store bit reversal indices
-const bitReversalMap = new Map();
-
 // Function to precompute and store bit reversal map for a given size N
 function precomputeBitReversalMap(N) {
     const bits = Math.log2(N);
     const map = new Array(N);
+    const bitReversalMap = new Map();
 
     for (let i = 0; i < N; i++) {
         let reversedIndex = 0;
@@ -358,14 +355,21 @@ function precomputeBitReversalMap(N) {
         }
         map[i] = reversedIndex;
     }
-
+    
     bitReversalMap.set(N, map);
+    return bitReversalMap;
 }
 
-precomputeBitReversalMap(1024);
+// Define a global map to store bit reversal indices
+let bitReversalMap512   = precomputeBitReversalMap(512);
+let bitReversalMap1024  = precomputeBitReversalMap(1024);
+let bitReversalMap2048  = precomputeBitReversalMap(2048);
+let bitReversalMap4096  = precomputeBitReversalMap(4096);
 
 // Create the flattened lookup table for twiddle factors
-const LOOKUP_RADIX4 = precalculateFFTFactorsRADIX4(1024);
+const LOOKUP_RADIX4_512 = precalculateFFTFactorsRADIX4(512);
+const LOOKUP_RADIX4_1024 = precalculateFFTFactorsRADIX4(1024);
+const LOOKUP_RADIX4_2048 = precalculateFFTFactorsRADIX4(2048);
 const LOOKUP_RADIX2 = precalculateFFTFactorsRADIX2(1024);
 
 function fftRealInPlaceRADIX2(inputOriginal) {
@@ -466,13 +470,16 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     // Create a copy of the input array
     const input = inputOriginal.slice();
 
+    let factors, map;
+    if(N == 512){  factors = LOOKUP_RADIX4_512;  map = bitReversalMap512.get(N);}
+    if(N == 1024){ factors = LOOKUP_RADIX4_1024; map = bitReversalMap1024.get(N);}
+    if(N == 2048){ factors = LOOKUP_RADIX4_2048; map = bitReversalMap2048.get(N);}
+
     // Perform bit reversal
-    const map = bitReversalMap.get(N);
     const out = new Float32Array(N);
     for (let i = 0; i < N; i++) {
         out[i] = input[map[i]];
     }
-
 
     // Convert the real-valued input to a complex-valued Float32Array
     const complexInput = new Float32Array(N * 2);
@@ -480,8 +487,6 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         complexInput[i * 2] = out[i];
         complexInput[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
-
-    const factors = LOOKUP_RADIX4;
 
     let pre = 0;
     let inv = 1;
