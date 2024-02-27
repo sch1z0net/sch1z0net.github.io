@@ -1223,8 +1223,6 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 //console.log(fftComplexInPlace([1,0,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9,0,10,0,11,0,12,0,13,0,14,0,15,0,16,0]));
 
 
-// Define the FFT size
-const fftSize = 1024;
 // Define the number of FFT operations to perform
 const numOperations = 10000; // You can adjust this number based on your requirements
 
@@ -1239,12 +1237,19 @@ const generateTestData = (size) => {
     return testData;
 };
 
-const testData = generateTestData(fftSize);
+const testData512  = generateTestData(512);
+const testData1024 = generateTestData(1024);
+const testData2048 = generateTestData(2048);
+const testData4196 = generateTestData(4096);
 
 // Perform FFT operations
-const performFFTOperations = (type) => {
-    //console.log("fftRealInPlaceRADIX4");
-    //console.log("fftRealInPlaceRADIX2");
+const performFFTOperations = (type,fftSize) => {
+    let testData;
+    if(fftSize ==  512){ testData = testData512; } 
+    if(fftSize == 1024){ testData = testData1024; } 
+    if(fftSize == 2048){ testData = testData2048; } 
+    if(fftSize == 4096){ testData = testData4096; } 
+
     // Perform FFT operations numOperations times
     if(type==0){
         for (let i = 0; i < numOperations; i++) {
@@ -1259,7 +1264,7 @@ const performFFTOperations = (type) => {
 };
 
 // Measure the time taken to perform FFT operations
-const measureTime = (type) => {
+const measureTime = (type, fftSize) => {
     /*const startTimeA = performance.now(); // Start time
     for (let i = 0; i < numOperations; i++) {
         var copy = testData.slice();
@@ -1270,16 +1275,19 @@ const measureTime = (type) => {
 
 
     const startTime = performance.now(); // Start time
-    performFFTOperations(type); // Perform FFT operations
+    performFFTOperations(type, fftSize); // Perform FFT operations
     const endTime = performance.now(); // End time
     const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
 
     // Calculate the number of FFT operations per second
     const operationsPerSecond = Math.floor(numOperations / (elapsedTime / 1000));
 
-    console.log("Type",type,"Number of FFT operations per second:", operationsPerSecond);
+    console.log("Type",type,"Number of FFT",fftSize,"operations per second:", operationsPerSecond);
 };
 
 //measureTime(0);
-measureTime(1);
+measureTime(1, 512);
+measureTime(1, 1024);
+measureTime(1, 2048);
+measureTime(1, 4096);
 
