@@ -467,11 +467,11 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     const input = inputOriginal.slice();
 
     // Perform bit reversal
-    //const map = bitReversalMap.get(N);
+    const map = bitReversalMap.get(N);
     const out = new Float32Array(N);
-    /*for (let i = 0; i < N; i++) {
+    for (let i = 0; i < N; i++) {
         out[i] = input[map[i]];
-    }*/
+    }
 
 
     // Convert the real-valued input to a complex-valued Float32Array
@@ -975,8 +975,8 @@ function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     console.log(`FFT - PADDING: Elapsed time: ${elapsedTime2} milliseconds`);*/
 
     // Perform FFT
-    //return fftRealInPlaceRADIX2(paddedInput);
-    return fftRealInPlaceRADIX4(paddedInput);
+    return fftRealInPlaceRADIX2(paddedInput);
+    //return fftRealInPlaceRADIX4(paddedInput);
     //return fftRealInPlace(paddedInput);
 }
 
@@ -1209,6 +1209,6 @@ const measureTime = (type) => {
     console.log("Type",type,"Number of FFT operations per second:", operationsPerSecond);
 };
 
-//measureTime(0);
-measureTime(1);
+measureTime(0);
+//measureTime(1);
 
