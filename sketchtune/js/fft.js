@@ -568,11 +568,10 @@ function fftRealInPlaceRADIX4(inputOriginal) {
 
             j++;
             if (j % quarterSize === 0) {
-                i += size;
+                i += size; k++;
                 if (k % 2 === 0){
                     j += size;
                 }
-                k++;
             }
         }
         pre += size;
