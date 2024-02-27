@@ -517,9 +517,9 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             const twiddleIm2 = factors[tIdxIm2];
 
             const evenIndex1 = i + j;
-            const oddIndex1  = i + j + halfSize;
-            const evenIndex2 = i + j + 2 * halfSize;
-            const oddIndex2  = i + j + 3 * halfSize;
+            const oddIndex1  = i + j + quarterSize;
+            const evenIndex2 = i + j + 2 * quarterSize;
+            const oddIndex2  = i + j + 3 * quarterSize;
 
             console.log(evenIndex1,oddIndex1,"-",tIdxRe1,tIdxIm1);
             console.log(evenIndex2,oddIndex2,"-",tIdxRe2,tIdxIm2);
