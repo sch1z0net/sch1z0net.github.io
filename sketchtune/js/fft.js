@@ -454,12 +454,12 @@ function fftRealInPlaceRADIX2(inputOriginal) {
 
     let pre = 0;
     let inv = 1;
-    for (let size = N; size >= 2; size >>= 1) {
+    for (let size = 2; size <= N; size <<= 1) {
         // Define variables
         let i = 0; // Initialize i to 0
         let j = 0; // Initialize j to 0
 
-        if(size == 2){ inv = -inv; }
+        if(size == N){ inv = -inv; }
 
         const halfSize = size >> 1;
         //console.log("------------------------ size",size)
