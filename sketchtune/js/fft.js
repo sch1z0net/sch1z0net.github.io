@@ -536,10 +536,10 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             const y = step * 4;                                                                         // y = 4
             const x = (N >> step);                                                                      // x = 2
             
-            const eInd1 = i;                          const eInd2 = i + x;                              // eInd1 = 0; eInd2 = 2
-            const oInd1 = i + h;                      const oInd2 = i + x + h;                          // oInd1 = 2; oInd2 = 4
+            const eInd1 = i;                          const eInd2 = i + 1;                              // eInd1 = 0; eInd2 = 2
+            const oInd1 = i + h;                      const oInd2 = i + 1 + h;                          // oInd1 = 2; oInd2 = 4
 
-            
+
 
             // (1) Use precalculated FFT factors directly                                               
             const tIdxRe1 = pre + (v*2 + 0)%size;     
