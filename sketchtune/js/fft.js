@@ -374,7 +374,10 @@ const LOOKUP_RADIX4_16   = precalculateFFTFactorsRADIX4(16);
 const LOOKUP_RADIX4_512  = precalculateFFTFactorsRADIX4(512);
 const LOOKUP_RADIX4_1024 = precalculateFFTFactorsRADIX4(1024);
 const LOOKUP_RADIX4_2048 = precalculateFFTFactorsRADIX4(2048);
-const LOOKUP_RADIX2 = precalculateFFTFactorsRADIX2(1024);
+const LOOKUP_RADIX2_16   = precalculateFFTFactorsRADIX2(16);
+const LOOKUP_RADIX2_512  = precalculateFFTFactorsRADIX2(512);
+const LOOKUP_RADIX2_1024 = precalculateFFTFactorsRADIX2(1024);
+const LOOKUP_RADIX2_2048 = precalculateFFTFactorsRADIX2(2048);
 
 function fftRealInPlaceRADIX2(inputOriginal) {
     const N = inputOriginal.length;
@@ -481,10 +484,10 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     const input = inputOriginal.slice();
 
     let factors, map;
-    if(N == 16){   factors = LOOKUP_RADIX4_16;   map = bitReversalMap16.get(N);}
-    if(N == 512){  factors = LOOKUP_RADIX4_512;  map = bitReversalMap512.get(N);}
-    if(N == 1024){ factors = LOOKUP_RADIX4_1024; map = bitReversalMap1024.get(N);}
-    if(N == 2048){ factors = LOOKUP_RADIX4_2048; map = bitReversalMap2048.get(N);}
+    if(N == 16){   factors = LOOKUP_RADIX2_16;   map = bitReversalMap16.get(N);}
+    if(N == 512){  factors = LOOKUP_RADIX2_512;  map = bitReversalMap512.get(N);}
+    if(N == 1024){ factors = LOOKUP_RADIX2_1024; map = bitReversalMap1024.get(N);}
+    if(N == 2048){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap2048.get(N);}
 
     // Perform bit reversal
     const inputBR = new Float32Array(N);
