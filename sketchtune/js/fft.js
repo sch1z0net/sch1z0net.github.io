@@ -667,7 +667,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
 
 
 function fftComplexInPlaceRADIX4(inputOriginal) {
-    const N = inputOriginal.length;
+    const N = inputOriginal.length / 2;
     const bits = Math.log2(N);
 
     if (N !== nextPowerOf2(N)) {
@@ -691,7 +691,7 @@ function fftComplexInPlaceRADIX4(inputOriginal) {
     if(N == 4096){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap4096.get(N);}
 
     // Perform bit reversal
-    const out = new Float32Array(N);
+    const out = new Float32Array(N*2);
     for (let i = 0; i < N; i++) {
         out[i*2  ] = input[map[i]  ];
         out[i*2+1] = input[map[i]+1];
