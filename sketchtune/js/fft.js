@@ -519,7 +519,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
 
         const h = size >> 1;
         const q = size >> 2;
-        console.log("------------------------ size",size)
+        //console.log("------------------------ size",size)
         // Loop condition
 
         // step = 1                           // step = 2
