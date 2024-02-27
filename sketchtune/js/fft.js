@@ -565,7 +565,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             if( (size & 0b11) !== 0 ){ 
                 console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1);
                 j++; v++;
-                if (j % h === 0) { i += size; k++; j = (k % 2 === 0) ? size : j; }
+                if (j % h === 0) { i += size; k++; j = size; }
                 continue; 
             }
 
