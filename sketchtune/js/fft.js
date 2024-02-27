@@ -582,7 +582,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             
             // Not Power of 4?
             if( isNotPowerOf4 ){ 
-                console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1);
+                //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1);
                 i++; l++; ni+=2;
                 // line reaches block-end
                 if (l % h === 0) { bs++; i=bs*b; }
@@ -608,7 +608,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             out[(oInd2 << 1)    ] =       (eRe2 - t_oRe2);
             out[(oInd2 << 1) + 1] = inv * (eIm2 - t_oIm2);
 
-            console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
+            //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
 
             i++; l++; ni+=4;
             // line reaches block-end
