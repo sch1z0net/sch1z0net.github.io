@@ -842,9 +842,13 @@ function fftComplexInPlace(input) {
         return;
     }
 
+    let factors, map;
+    if(N == 512){  factors = LOOKUP_RADIX4_512;  map = bitReversalMap512.get(N);}
+    if(N == 1024){ factors = LOOKUP_RADIX4_1024; map = bitReversalMap1024.get(N);}
+    if(N == 2048){ factors = LOOKUP_RADIX4_2048; map = bitReversalMap2048.get(N);}
+
     // Perform bit reversal
     const output = new Float32Array(N * 2);
-    const map = bitReversalMap.get(N);
     for (let i = 0; i < N; i++) {
         const reversedIndex = map[i];
         output[i * 2] = input[reversedIndex * 2]; // Copy real part
@@ -854,8 +858,6 @@ function fftComplexInPlace(input) {
     if (N <= 1) {
         return output;
     }
-
-    const factors = LOOKUP_RADIX2;
 
     let pre = 0;
     let inv = 1;
