@@ -467,20 +467,19 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     const input = inputOriginal.slice();
 
     // Perform bit reversal
-    const map = bitReversalMap.get(N);
+    //const map = bitReversalMap.get(N);
     const out = new Float32Array(N);
-    for (let i = 0; i < N; i++) {
+    /*for (let i = 0; i < N; i++) {
         out[i] = input[map[i]];
-    }
+    }*/
 
-    /*
+
     // Convert the real-valued input to a complex-valued Float32Array
     const complexInput = new Float32Array(N * 2);
     for (let i = 0; i < N; i++) {
         complexInput[i * 2] = out[i];
         complexInput[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
-    */
 
     const factors = LOOKUP_RADIX4;
 
