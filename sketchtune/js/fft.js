@@ -487,16 +487,16 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     if(N == 2048){ factors = LOOKUP_RADIX4_2048; map = bitReversalMap2048.get(N);}
 
     // Perform bit reversal
-    const out = new Float32Array(N);
+    const inputBR = new Float32Array(N);
     for (let i = 0; i < N; i++) {
-        out[i] = input[map[i]];
+        inputBR[i] = input[map[i]];
     }
 
     // Convert the real-valued input to a complex-valued Float32Array
-    const complexInput = new Float32Array(N * 2);
+    const out = new Float32Array(N * 2);
     for (let i = 0; i < N; i++) {
-        complexInput[i * 2] = out[i];
-        complexInput[i * 2 + 1] = 0; // Imaginary part is set to 0
+        out[i * 2] = inputBR[i];
+        out[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
 
     let pre = 0;
@@ -521,60 +521,58 @@ function fftRealInPlaceRADIX4(inputOriginal) {
         //                                    //  
         //           x = 8     y = 4          //            x = 4     y = 8
         //                                    //           
-        //                                    //
+        //------------------------------------//--------------------------------------
         //  j    i     k  k%2==0     h        //  j    i      k  k%2==0     h 
         //  0    0     1     0       2        //  0    0      -     -       8  
         //  1    4     2     1       2        //  1    0      -     -       8  
         //  4    8     3     0       2        //  2    0      -     -       8  
         //  5    12    4     1       2        //  3    16     1     0       8  
 
-        while (i < N) {
-            const y = step * 4;
-            const x = (N >> step);
+        while (i < N) {                                                                                 // N = 4  (Example)
+            const y = step * 4;                                                                         // y = 4
+            const x = (N >> step);                                                                      // x = 2
             
-            const evenIndex1 = j ;                    const evenIndex2 = j + x;
-            const oddIndex1  = j + h;                 const oddIndex2  = j + x + h;
-            
-            // Use precalculated FFT factors directly
-            const tIdxRe1 = pre + (v*2 + 0)%size;     const tIdxRe2 = pre + (v*2 + 0 + y)%size;
-            const tIdxIm1 = pre + (v*2 + 1)%size;     const tIdxIm2 = pre + (v*2 + 1 + y)%size;
-
+            const eInd1 = j;                         const eInd2 = j + x;                               // eInd1 = 0; eInd2 = 2
+            const oInd1 = j + h;                     const oInd2 = j + x + h;                           // oInd1 = 2; oInd2 = 4
+                                                                                                        
+            // Use precalculated FFT factors directly                                                   //
+            const tIdxRe1 = pre + (v*2 + 0)%size;     const tIdxRe2 = pre + (v*2 + 0 + y)%size;         //
+            const tIdxIm1 = pre + (v*2 + 1)%size;     const tIdxIm2 = pre + (v*2 + 1 + y)%size;         //
 
             const twiddleRe1 = factors[tIdxRe1];
             const twiddleIm1 = factors[tIdxIm1];
             const twiddleRe2 = factors[tIdxRe2];
             const twiddleIm2 = factors[tIdxIm2];
 
-            console.log(evenIndex1,oddIndex1,"-",tIdxRe1,tIdxIm1,"|||",evenIndex2,oddIndex2,"-",tIdxRe2,tIdxIm2);
+            console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
 
             // Get real and imaginary parts of elements
-            const evenRe1 = complexInput[evenIndex1 << 1];
-            const evenIm1 = complexInput[(evenIndex1 << 1) + 1];
-            const oddRe1  = complexInput[oddIndex1 << 1];
-            const oddIm1  = complexInput[(oddIndex1 << 1) + 1];
+            const evenRe1 = out[(eInd1 << 1)    ];
+            const evenIm1 = out[(eInd1 << 1) + 1];
+            const oddRe1  = out[(oInd1 << 1)    ];
+            const oddIm1  = out[(oInd1 << 1) + 1];
 
-            const evenRe2 = complexInput[evenIndex2 << 1];
-            const evenIm2 = complexInput[(evenIndex2 << 1) + 1];
-            const oddRe2  = complexInput[oddIndex2 << 1];
-            const oddIm2  = complexInput[(oddIndex2 << 1) + 1];
+            const evenRe2 = out[(eInd2 << 1)    ];
+            const evenIm2 = out[(eInd2 << 1) + 1];
+            const oddRe2  = out[(oInd2 << 1)    ];
+            const oddIm2  = out[(oInd2 << 1) + 1];
 
             // Perform complex multiplications
             const twiddledOddRe1 = oddRe1 * twiddleRe1 - oddIm1 * twiddleIm1;
             const twiddledOddIm1 = oddRe1 * twiddleIm1 + oddIm1 * twiddleRe1;
-
             const twiddledOddRe2 = oddRe2 * twiddleRe2 - oddIm2 * twiddleIm2;
             const twiddledOddIm2 = oddRe2 * twiddleIm2 + oddIm2 * twiddleRe2;
 
             // Update elements with new values
-            complexInput[evenIndex1 << 1]       =  evenRe1 + twiddledOddRe1;
-            complexInput[(evenIndex1 << 1) + 1] = (evenIm1 + twiddledOddIm1) * inv;
-            complexInput[oddIndex1 << 1]        =  evenRe1 - twiddledOddRe1;
-            complexInput[(oddIndex1 << 1) + 1]  = (evenIm1 - twiddledOddIm1) * inv;
+            out[(eInd1 << 1)    ] =       (evenRe1 + twiddledOddRe1);
+            out[(eInd1 << 1) + 1] = inv * (evenIm1 + twiddledOddIm1);
+            out[(oInd1 << 1)    ] =       (evenRe1 - twiddledOddRe1);
+            out[(oInd1 << 1) + 1] = inv * (evenIm1 - twiddledOddIm1);
 
-            complexInput[evenIndex2 << 1]       =  evenRe2 + twiddledOddRe2;
-            complexInput[(evenIndex2 << 1) + 1] = (evenIm2 + twiddledOddIm2) * inv;
-            complexInput[oddIndex2 << 1]        = evenRe2 - twiddledOddRe2;
-            complexInput[(oddIndex2 << 1) + 1]  = (evenIm2 - twiddledOddIm2) * inv;
+            out[(eInd2 << 1)    ] =       (evenRe2 + twiddledOddRe2);
+            out[(eInd2 << 1) + 1] = inv * (evenIm2 + twiddledOddIm2);
+            out[(oInd2 << 1)    ] =       (evenRe2 - twiddledOddRe2);
+            out[(oInd2 << 1) + 1] = inv * (evenIm2 - twiddledOddIm2);
 
             j++;
             if (j % q === 0) {
@@ -585,7 +583,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             }
             v++;
         }
-        //pre += size;
+        pre += h;
     }
 
     return complexInput;
