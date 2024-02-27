@@ -373,12 +373,6 @@ let bitReversalMap2048  = precomputeBitReversalMap(2048);
 let bitReversalMap4096  = precomputeBitReversalMap(4096);
 
 // Create the flattened lookup table for twiddle factors
-const LOOKUP_RADIX4_16   = precalculateFFTFactorsRADIX4(16);
-const LOOKUP_RADIX4_512  = precalculateFFTFactorsRADIX4(512);
-const LOOKUP_RADIX4_1024 = precalculateFFTFactorsRADIX4(1024);
-const LOOKUP_RADIX4_2048 = precalculateFFTFactorsRADIX4(2048);
-const LOOKUP_RADIX4_4096 = precalculateFFTFactorsRADIX4(4096);
-
 const LOOKUP_RADIX2_4    = precalculateFFTFactorsRADIX2(4);
 const LOOKUP_RADIX2_8    = precalculateFFTFactorsRADIX2(8);
 const LOOKUP_RADIX2_16   = precalculateFFTFactorsRADIX2(16);
