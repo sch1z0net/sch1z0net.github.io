@@ -521,8 +521,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
             const evenIndex2 = i + j*2 + 2 * quarterSize;
             const oddIndex2  = i + j*2 + 3 * quarterSize;
 
-            console.log(evenIndex1,oddIndex1,"-",tIdxRe1,tIdxIm1);
-            //console.log(evenIndex2,oddIndex2,"-",tIdxRe2,tIdxIm2);
+            console.log(evenIndex1,oddIndex1,"-",tIdxRe1,tIdxIm1,"|||",evenIndex2,oddIndex2,"-",tIdxRe2,tIdxIm2);
 
             // Get real and imaginary parts of elements
             const evenRe1 = complexInput[evenIndex1 << 1];
