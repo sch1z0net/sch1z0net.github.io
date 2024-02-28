@@ -936,9 +936,9 @@ function fftComplexInPlace2(input, fftFactorLookup = null) {
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
         const halfSize = size / 2;
+        // Get FFT factors with caching
+        const factors = computeFFTFactorsWithCache(size);
         for (let i = 0; i < N; i += size) {
-            // Get FFT factors with caching
-            const factors = computeFFTFactorsWithCache(size);
             for (let j = 0; j < halfSize; j++) {
                 const evenIndex = i + j;
                 const oddIndex = i + j + halfSize;
@@ -991,9 +991,9 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
         const halfSize = size / 2;
+        // Get FFT factors with caching
+        const factors = computeFFTFactorsWithCache(size);
         for (let i = 0; i < N; i += size) {
-            // Get FFT factors with caching
-            const factors = computeFFTFactorsWithCache(size);
             for (let j = 0; j < halfSize; j++) {
                 const evenIndex = i + j;
                 const oddIndex = i + j + halfSize;
