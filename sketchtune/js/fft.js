@@ -509,9 +509,6 @@ function fftComplexInPlace(out, factors) {
       
         let c = (2-((N/b) & 1)) * N >> 2;  // circled index start
 
-        //console.log("------------------------ size",size)
-   
-
         //  For N = 4, the indices must look like this after each iteration
         //  
         //  power = 1      power = 2      
@@ -546,6 +543,8 @@ function fftComplexInPlace(out, factors) {
         // max_bn =16/2   max_bn =16/4    max_bn = 16/2  max_bn = 16/4     therefor: c = (N/2) * (2-((N/b) & 1))/2  
         //                                                                 
         
+        console.log("------------------------ size",size)
+
         const isNotPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
         while (ni < N) {                                                               
             //const eInd1 = i;        const oInd1 = i + h;                         
@@ -572,8 +571,6 @@ function fftComplexInPlace(out, factors) {
             out[(eInd1 << 1) + 1] = inv * (eIm1 + t_oIm1);
             out[(oInd1 << 1)    ] =       (eRe1 - t_oRe1);
             out[(oInd1 << 1) + 1] = inv * (eIm1 - t_oIm1);
-
-            //console.log(out[(eInd1 << 1)],out[(eInd1 << 1) + 1],out[(oInd1 << 1)],out[(oInd1 << 1) + 1]);
             
             // Not Power of 4?
             if( isNotPowerOf4 ){ 
@@ -604,7 +601,7 @@ function fftComplexInPlace(out, factors) {
             out[(oInd2 << 1)    ] =       (eRe2 - t_oRe2);
             out[(oInd2 << 1) + 1] = inv * (eIm2 - t_oIm2);
 
-            //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
+            console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
 
             i++; l++; ni+=4;
             // line reaches block-end
@@ -1381,8 +1378,8 @@ console.log(fftRealInPlaceRADIX4([1,-10,-2,20]));
 */
 
 
-//console.log(fftRealInPlaceRADIX4([1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8]));
 console.log(fftRealInPlaceRADIX2([1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8]));
+console.log(fftRealInPlaceRADIX4([1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8]));
 
 /*
 288.000000,0.000000
