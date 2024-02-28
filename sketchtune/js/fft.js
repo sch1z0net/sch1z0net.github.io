@@ -535,8 +535,8 @@ function fftComplexInPlace(out, factors) {
         // runs N/2 times for PowerOf2
         // runs N/4 times for PowerOf4
         while (ni < N) {                                                                      
-            const eInd1 = i;        const oInd1 = i + h;                         
-            const eInd2 = i + c;    const oInd2 = i + h + c;              
+            const eInd1 = i;        const oInd1 = i + c;                         
+            const eInd2 = i + h;    const oInd2 = i + h + c;              
 
 
             // (1) Use precalculated FFT factors directly                                               
