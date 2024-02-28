@@ -1359,6 +1359,34 @@ const measureTime = (type, fftSize) => {
     console.log("Type",type,"Number of FFT",fftSize,"operations per second:", operationsPerSecond);
 };
 
+
+function compareFFTResults(array1, array2) {
+    // Check if arrays have the same length
+    if (array1.length !== array2.length) {
+        return false;
+    }
+
+    // Check each element in the arrays for equality
+    for (let i = 0; i < array1.length; i++) {
+        // Compare elements with a small tolerance for floating-point imprecision
+        if (Math.abs(array1[i] - array2[i]) > 1e-6) {
+            return false;
+        }
+    }
+
+    // If all elements are equal within tolerance, arrays are considered equal
+    return true;
+}
+
+let testData1 = [0,0.5,1,0.5];
+let testData2 = [0,0.5,1,0.5,1,2,3,4];
+let testData3 = [0,0.5,1,0.5,3,2,1,4,0,0.5,1,0.5,7,8,9,6];
+let testData4 = [0,0.5,1,0.5,3,2,1,4,0,0.5,1,0.5,7,8,9,6,1,2,1,1,3,2,1,4,0,0.5,1,0.5,7,8,9,6];
+console.log(compareFFTResults(fftRealInPlaceRADIX2(testData1),fftRealInPlaceRADIX4(testData1)));
+console.log(compareFFTResults(fftRealInPlaceRADIX2(testData2),fftRealInPlaceRADIX4(testData2)));
+console.log(compareFFTResults(fftRealInPlaceRADIX2(testData3),fftRealInPlaceRADIX4(testData3)));
+console.log(compareFFTResults(fftRealInPlaceRADIX2(testData4),fftRealInPlaceRADIX4(testData4)));
+
 /*measureTime(1, 512);
 measureTime(1, 1024);
 measureTime(1, 2048);
@@ -1378,77 +1406,6 @@ console.log(fftRealInPlaceRADIX2([1,-10,-2,20]));
 console.log(fftRealInPlaceRADIX4([1,-10,-2,20]));
 */
 
-
-console.log(fftRealInPlaceRADIX2([1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8]));
-console.log(fftRealInPlaceRADIX4([1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8]));
-
-/*
-288.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
--32.000000,77.254834
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
--32.000000,32.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
--32.000000,13.254834
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
--32.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
--32.000000,-13.254834
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
--32.000000,-32.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
--32.000000,-77.254834
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-0.000000,0.000000
-*/
-
 //console.log(fftRealInPlaceRADIX2([0,0.5,1,0.5]));
 //console.log(fftRealInPlaceRADIX4([0,0.5,1,0.5]));
 
@@ -1460,3 +1417,4 @@ for (let i = 0; i < spectrum.length; i += 2) {
 }
 console.log(computeInverseFFT(complexSpectrum));
 */
+
