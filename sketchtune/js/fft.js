@@ -502,7 +502,7 @@ function fftComplexInPlace(out, factors) {
         let bs = 0;   // block steps made
         let ni = 0;   // number of indices handled 
 
-        //if (size == N) { inv = -inv; }
+        if (size == N) { inv = -inv; }
 
         const h = size >> 1;
         const q = size >> 2;
