@@ -110,12 +110,8 @@ function precalculateFFTFactors(N) {
 }*/
 
 /******************** FORWARD *********************/
-// Cache object to store precalculated FFT factors
-const fftFactorCacheRADIX2 = {};
-const fftFactorCacheRADIX4 = {};
-
 // Pre-calculate FFT factors for a given size and cache them for future use
-function precalculateFFTFactorsRADIX2(maxSampleLength) {
+function precalculateFFTFactorsRADIX2flattened(maxSampleLength) {
     const maxN = nextPowerOf2(maxSampleLength);
     let len = 0; // Initialize len
     for (let N = 2; N <= maxN; N *= 2) {
@@ -903,6 +899,23 @@ function bitReverse(num, bits) {
     return reversed;
 }
 
+// Cache object to store precalculated FFT factors
+const fftFactorCacheRADIX2 = {};
+const fftFactorCacheRADIX4 = {};
+
+// Pre-calculate FFT factors for a given size and cache them for future use
+function precalculateFFTFactorsRADIX2(N) {
+    const factors = new Array(N); // Preallocate memory for factors
+
+    for (let i = 0; i < N / 2; i++) {
+        const angle1 = (2 * Math.PI * i) / N;
+        factors[pre + i * 2] = Math.cos(angle1); // Cosine of angle1
+        factors[pre + i * 2 + 1] = Math.sin(angle1); // Sine of angle1
+    }
+
+    return new Float32Array(factors);
+}
+
 // Function to compute FFT factors with caching
 function computeFFTFactorsWithCache(N) {
     // Check if FFT factors for this size are already cached
@@ -940,6 +953,7 @@ function fftComplexInPlace2(input, fftFactorLookup = null) {
     for (let size = 2; size <= N; size *= 2) {
         const halfSize = size / 2;
         // Get FFT factors with caching
+        const factors = computeFFTFactorsWithCache(size);
         for (let i = 0; i < N; i += size) {
             for (let j = 0; j < halfSize; j++) {
                 const evenIndex = i + j;
@@ -949,8 +963,10 @@ function fftComplexInPlace2(input, fftFactorLookup = null) {
                 const oddPartRe = output[oddIndex * 2];
                 const oddPartIm = output[oddIndex * 2 + 1];
 
-                const twiddleRe = Math.cos((2 * Math.PI * j) / size);
-                const twiddleIm = Math.sin((2 * Math.PI * j) / size);
+                //const twiddleRe = Math.cos((2 * Math.PI * j) / size);
+                //const twiddleIm = Math.sin((2 * Math.PI * j) / size);
+                const twiddleRe = factors[2 * j    ];
+                const twiddleIm = factors[2 * j + 1];
 
                 // Multiply by twiddle factors
                 const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
@@ -996,6 +1012,8 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
         const halfSize = size / 2;
+        // Get FFT factors with caching
+        const factors = computeFFTFactorsWithCache(size);
         for (let i = 0; i < N; i += size) {
             for (let j = 0; j < halfSize; j++) {
                 const evenIndex = i + j;
@@ -1005,8 +1023,10 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
                 const oddPartRe = output[oddIndex * 2];
                 const oddPartIm = output[oddIndex * 2 + 1];
 
-                const twiddleRe = Math.cos((2 * Math.PI * j) / size);
-                const twiddleIm = Math.sin((2 * Math.PI * j) / size);
+                //const twiddleRe = Math.cos((2 * Math.PI * j) / size);
+                //const twiddleIm = Math.sin((2 * Math.PI * j) / size);
+                const twiddleRe = factors[2 * j    ];
+                const twiddleIm = factors[2 * j + 1];
 
                 // Multiply by twiddle factors
                 const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
