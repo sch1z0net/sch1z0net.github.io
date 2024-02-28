@@ -345,6 +345,9 @@ function fftRealInPlace(input) {
 }*/
 
 // Function to precompute and store bit reversal map for a given size N
+//For 4:     0 2 1 3 
+//For 8:     0 4 2 6 1 5 3 7 
+//For 16:    0 8 4 12 2 10 6 14 1 9 5 13 3 11 7 15
 function precomputeBitReversalMap(N) {
     const bits = Math.log2(N);
     const map = new Array(N);
@@ -947,8 +950,8 @@ function fftComplexInPlace2(input, fftFactorLookup = null) {
                 const oddPartRe = output[oddIndex * 2];
                 const oddPartIm = output[oddIndex * 2 + 1];
 
-                const twiddleRe = factors[j * 2];
-                const twiddleIm = factors[j * 2 + 1];
+                const twiddleRe = factors[bitReverse(j, bits) * 2];
+                const twiddleIm = factors[bitReverse(j, bits) * 2 + 1];
 
                 // Multiply by twiddle factors
                 const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
@@ -985,7 +988,7 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
         output[reversedIndex * 2] = input[i]; // Copy real part
         output[reversedIndex * 2 + 1] = 0; // Copy imaginary part
     }
-    console.log("BR:",brs);
+    //console.log("BR:",brs);
 
     if (N <= 1) {
         return output;
@@ -1005,8 +1008,8 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
                 const oddPartRe = output[oddIndex * 2];
                 const oddPartIm = output[oddIndex * 2 + 1];
 
-                const twiddleRe = factors[j * 2];
-                const twiddleIm = factors[j * 2 + 1];
+                const twiddleRe = factors[bitReverse(j, bits) * 2];
+                const twiddleIm = factors[bitReverse(j, bits) * 2 + 1];
 
                 // Multiply by twiddle factors
                 const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
