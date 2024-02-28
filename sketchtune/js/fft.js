@@ -912,8 +912,8 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
     return output;
 }*/
 
-/*
-function fftComplexInPlace(input, fftFactorLookup = null) {
+
+function fftComplexInPlace2(input, fftFactorLookup = null) {
     const N = input.length / 2;
     const bits = Math.log2(N);
 
@@ -965,7 +965,7 @@ function fftComplexInPlace(input, fftFactorLookup = null) {
     }
 
     return output;
-}*/
+}
 
 
 
@@ -1183,9 +1183,8 @@ function ifft(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    const fftResult = fftComplexInPlaceRADIX2(conjugateSpectrum);
+    const fftResult = fftComplexInPlace2(conjugateSpectrum);
     //const fftResult = fftComplexInPlaceRADIX4(conjugateSpectrum);
-    //const fftResult = fftComplexInPlace(conjugateSpectrum);
 
     // Take the complex conjugate of the FFT result and scale by 1/N
     const ifftResult = new Float32Array(N * 2);
