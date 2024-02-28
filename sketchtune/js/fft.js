@@ -370,8 +370,8 @@ const LOOKUP_RADIX2_1024 = precalculateFFTFactorsRADIX2flattened(1024);
 const LOOKUP_RADIX2_2048 = precalculateFFTFactorsRADIX2flattened(2048);
 const LOOKUP_RADIX2_4096 = precalculateFFTFactorsRADIX2flattened(4096);
 
-function fftRealInPlaceRADIX2(inputOriginal) {
-    const N = inputOriginal.length;
+function fftRealInPlaceRADIX2(realInput) {
+    const N = realInput.length;
     const bits = Math.log2(N);
 
     if (N !== nextPowerOf2(N)) {
@@ -380,7 +380,7 @@ function fftRealInPlaceRADIX2(inputOriginal) {
     }
 
     // Create a copy of the input array
-    const input = inputOriginal.slice();
+    const input = realInput.slice();
 
     //const startTime = performance.now();
 
@@ -637,8 +637,8 @@ function fftComplexInPlace(out, factors) {
 
 
 
-function fftRealInPlaceRADIX4(inputOriginal) {
-    const N = inputOriginal.length;
+function fftRealInPlaceRADIX4(realInput) {
+    const N = realInput.length;
     const bits = Math.log2(N);
     
     if (N !== nextPowerOf2(N)) {
@@ -647,7 +647,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     }
     
     // Create a copy of the input array
-    const input = inputOriginal.slice();
+    const input = realInput.slice();
     
     let factors, map;
     if(N == 4){    factors = LOOKUP_RADIX2_4;    map = bitReversalMap4.get(N);}
@@ -669,13 +669,13 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     }
 
     // Convert the real-valued input to a complex-valued Float32Array
-    const out = new Float32Array(N * 2);
+    const complexOut = new Float32Array(N * 2);
     for (let i = 0; i < N; i++) {
-        out[i * 2] = inputBR[i];
-        out[i * 2 + 1] = 0; // Imaginary part is set to 0
+        complexOut[i * 2] = inputBR[i];
+        complexOut[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
 
-    return fftComplexInPlace(out, factors);
+    return fftComplexInPlace(complexOut, factors);
 }
 
 
