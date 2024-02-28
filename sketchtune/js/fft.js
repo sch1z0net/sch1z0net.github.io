@@ -973,8 +973,8 @@ function computeFFTFactorsWithCache(N) {
     return fftFactorCacheRADIX2[N];
 }
 
-function fftComplexInPlace_ref(input, fftFactorLookup = null) {
-    const N = input.length / 2;
+function fftComplexInPlace_ref(complexInput, fftFactorLookup = null) {
+    const N = complexInput.length / 2;
     const bits = Math.floor(Math.log2(N));
 
     if (N !== nextPowerOf2(N)) {
@@ -983,11 +983,11 @@ function fftComplexInPlace_ref(input, fftFactorLookup = null) {
     }
 
     // Perform bit reversal
-    const output = new Float32Array(N * 2);
+    const out = new Float32Array(N * 2);
     for (let i = 0; i < N; i++) {
         const reversedIndex = bitReverse(i, bits);
-        output[reversedIndex * 2] = input[i * 2]; // Copy real part
-        output[reversedIndex * 2 + 1] = input[i * 2 + 1]; // Copy imaginary part
+        out[reversedIndex * 2    ] = complexInput[i * 2    ]; // Copy real part
+        out[reversedIndex * 2 + 1] = complexInput[i * 2 + 1]; // Copy imaginary part
     }
 
     if (N <= 1) {
@@ -1003,10 +1003,10 @@ function fftComplexInPlace_ref(input, fftFactorLookup = null) {
             for (let j = 0; j < halfSize; j++) {
                 const evenIndex = i + j;
                 const oddIndex = i + j + halfSize;
-                const evenPartRe = output[evenIndex * 2];
-                const evenPartIm = output[evenIndex * 2 + 1];
-                const oddPartRe = output[oddIndex * 2];
-                const oddPartIm = output[oddIndex * 2 + 1];
+                const evenPartRe = out[evenIndex * 2    ];
+                const evenPartIm = out[evenIndex * 2 + 1];
+                const oddPartRe  = out[oddIndex  * 2    ];
+                const oddPartIm  = out[oddIndex  * 2 + 1];
 
                 //const twiddleRe = Math.cos((2 * Math.PI * j) / size);
                 //const twiddleIm = Math.sin((2 * Math.PI * j) / size);
@@ -1018,20 +1018,20 @@ function fftComplexInPlace_ref(input, fftFactorLookup = null) {
                 const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
 
                 // Combine results of even and odd parts in place
-                output[evenIndex * 2] = evenPartRe + twiddledOddRe;
-                output[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
-                output[oddIndex * 2] = evenPartRe - twiddledOddRe;
-                output[oddIndex * 2 + 1] = evenPartIm - twiddledOddIm;
+                out[evenIndex * 2    ] = evenPartRe + twiddledOddRe;
+                out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+                out[oddIndex  * 2    ] = evenPartRe - twiddledOddRe;
+                out[oddIndex  * 2 + 1] = evenPartIm - twiddledOddIm;
             }
         }
     }
 
-    return output;
+    return out;
 }
 
 
-function fftRealInPlace_ref(input, fftFactorLookup = null) {
-    const N = input.length;
+function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
+    const N = realInput.length;
     const bits = Math.floor(Math.log2(N));
 
     if (N !== nextPowerOf2(N)) {
@@ -1040,13 +1040,13 @@ function fftRealInPlace_ref(input, fftFactorLookup = null) {
     }
 
     // Perform bit reversal
-    const output = new Float32Array(N * 2);
+    const out = new Float32Array(N * 2);
     let brs = [];
     for (let i = 0; i < N; i++) {
         const reversedIndex = bitReverse(i, bits);
         brs.push(reversedIndex);
-        output[reversedIndex * 2] = input[i]; // Copy real part
-        output[reversedIndex * 2 + 1] = 0; // Copy imaginary part
+        out[reversedIndex * 2    ] = realInput[i]; // Copy real part
+        out[reversedIndex * 2 + 1] = 0;            // Copy imaginary part
     }
     //console.log("BR:",brs);
 
@@ -1067,10 +1067,10 @@ function fftRealInPlace_ref(input, fftFactorLookup = null) {
                 const evenIndex = i + j;
                 const oddIndex = i + j + halfSize;
 
-                const eRe = output[evenIndex * 2];
-                const eIm = output[evenIndex * 2 + 1];
-                const oRe = output[oddIndex * 2];
-                const oIm = output[oddIndex * 2 + 1];
+                const eRe = out[evenIndex * 2];
+                const eIm = out[evenIndex * 2 + 1];
+                const oRe = out[oddIndex * 2];
+                const oIm = out[oddIndex * 2 + 1];
 
                 //const twiddleRe = Math.cos((2 * Math.PI * j) / size);
                 //const twiddleIm = Math.sin((2 * Math.PI * j) / size);
@@ -1084,10 +1084,10 @@ function fftRealInPlace_ref(input, fftFactorLookup = null) {
                 const t_oIm = oRe * twiddleIm + oIm * twiddleRe;
 
                 // Combine results of even and odd parts in place
-                output[evenIndex * 2    ] = eRe + t_oRe;
-                output[evenIndex * 2 + 1] = eIm + t_oIm;
-                output[oddIndex  * 2    ] = eRe - t_oRe;
-                output[oddIndex  * 2 + 1] = eIm - t_oIm;
+                out[evenIndex * 2    ] = eRe + t_oRe;
+                out[evenIndex * 2 + 1] = eIm + t_oIm;
+                out[oddIndex  * 2    ] = eRe - t_oRe;
+                out[oddIndex  * 2 + 1] = eIm - t_oIm;
 
                 //console.log("**** EV.RE",evenIndex,(eRe + t_oRe).toFixed(2),"<- EV.RE",evenIndex,"+ (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","EV.IM",evenIndex,(eIm + t_oIm).toFixed(2),"<- EV.IM",evenIndex,"+ (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
                 //console.log("**** OD.RE",oddIndex ,(eRe - t_oRe).toFixed(2),"<- EV.RE",evenIndex,"- (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","OD.IM",oddIndex ,(eIm - t_oIm).toFixed(2),"<- EV.IM",evenIndex,"- (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
@@ -1098,7 +1098,7 @@ function fftRealInPlace_ref(input, fftFactorLookup = null) {
         js = [];
     }
 
-    return output;
+    return out;
 }
 
 
@@ -1412,24 +1412,6 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 
 /****** TESTING PERFORMANCE ******/
 
-/*
-console.log("...................... RADIX 2 [1,2,3,4].............................................");
-console.log(fftRealInPlaceRADIX2([1,2,3,4]));
-console.log("...................... RADIX 2 [1,2,3,4,5,6,7,8].....................................");
-console.log(fftRealInPlaceRADIX2([1,2,3,4,5,6,7,8]));
-console.log("...................... RADIX 2 [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]..............");
-console.log(fftRealInPlaceRADIX2([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]));
-console.log("...................... RADIX 4 [1,2,3,4].............................................");
-console.log(fftRealInPlaceRADIX4([1,2,3,4]));
-console.log("...................... RADIX 4 [1,2,3,4,5,6,7,8].....................................");
-console.log(fftRealInPlaceRADIX4([1,2,3,4,5,6,7,8]));
-console.log("...................... RADIX 4 [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]..............");
-*/
-
-//console.log(fftRealInPlaceRADIX2([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]));
-//console.log(fftRealInPlaceRADIX4([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]));
-
-
 // Define the number of FFT operations to perform
 const numOperations = 10000; // You can adjust this number based on your requirements
 
@@ -1508,8 +1490,8 @@ function compareFFTResults(array1, array2) {
 }
 
 
-
-
+/****************** TEST IF FORWARD IS CORRECT by comparison with REFERENCE *******************/ 
+/*
 const testData8    = generateTestData(8);
 const testData16   = generateTestData(16);
 const testData32   = generateTestData(32);
@@ -1531,31 +1513,20 @@ console.log("512:  ",compareFFTResults(fftRealInPlace_ref(testData512),fftRealIn
 console.log("1024: ",compareFFTResults(fftRealInPlace_ref(testData1024),fftRealInPlaceRADIX4(testData1024)));
 console.log("2048: ",compareFFTResults(fftRealInPlace_ref(testData2048),fftRealInPlaceRADIX4(testData2048)));
 console.log("4096: ",compareFFTResults(fftRealInPlace_ref(testData4096),fftRealInPlaceRADIX4(testData4096)));
+*/
 
 
+/****************** TEST SPEED *******************/ 
 
-/*
+
 measureTime(1, 512);
 measureTime(1, 1024);
 measureTime(1, 2048);
 measureTime(1, 4096);
-*/
-
-//console.log(fftRealInPlace_ref(signal1));
-//console.log(fftRealInPlaceRADIX4(signal1));
-/*console.log("-----------OLD----------");
-console.log(fftRealInPlace_ref(signal2));
-console.log("---------Radix4---------");
-console.log(fftRealInPlaceRADIX4(signal2));*/
-/*console.log();
-console.log();
-console.log();
-console.log("-----------OLD----------");
-console.log(fftRealInPlace_ref(signal3));
-console.log("---------Radix4---------");
-console.log(fftRealInPlaceRADIX4(signal3));*/
 
 
+/****************** TEST IF FFT AND IFFT RETURN ORIGINAL SIGNAL *******************/ 
+/*
 const signal1 = [ 1.0, 0.4, 0.0, 0.2 ];
 const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5 ];
 const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
@@ -1567,4 +1538,4 @@ console.log(signal2);
 console.log(computeInverseFFT(computeFFT(signal2)));
 console.log(signal3);
 console.log(computeInverseFFT(computeFFT(signal3)));
-
+*/
