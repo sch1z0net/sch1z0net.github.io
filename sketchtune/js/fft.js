@@ -550,8 +550,8 @@ function fftComplexInPlace(out, factors) {
         while (ni < N) {                                                               
             //const eInd1 = i;        const oInd1 = i + h;                         
             //const eInd2 = i + c;    const oInd2 = i + h + c;              
-            const eInd1 = i;        const oInd1 = i + c;                         
-            const eInd2 = i + h;    const oInd2 = i + h + c;              
+            const eInd1 = i;        const oInd1 = i + h;                         
+            const eInd2 = i + c;    const oInd2 = i + h + c;              
 
 
             // (1) Use precalculated FFT factors directly                                               
@@ -573,7 +573,7 @@ function fftComplexInPlace(out, factors) {
             out[(oInd1 << 1)    ] =       (eRe1 - t_oRe1);
             out[(oInd1 << 1) + 1] = inv * (eIm1 - t_oIm1);
 
-            //console.log(out[(eInd1 << 1)],out[(eInd1 << 1) + 1],out[(oInd1 << 1)],out[(oInd1 << 1) + 1]);
+            console.log(out[(eInd1 << 1)],out[(eInd1 << 1) + 1],out[(oInd1 << 1)],out[(oInd1 << 1) + 1]);
             
             // Not Power of 4?
             if( isNotPowerOf4 ){ 
@@ -604,7 +604,7 @@ function fftComplexInPlace(out, factors) {
             out[(oInd2 << 1)    ] =       (eRe2 - t_oRe2);
             out[(oInd2 << 1) + 1] = inv * (eIm2 - t_oIm2);
 
-            //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
+            console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
 
             i++; l++; ni+=4;
             // line reaches block-end
@@ -1281,9 +1281,6 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 
 /****** TESTING PERFORMANCE ******/
 
-//console.log(fftRealInPlaceRADIX2([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]));
-//console.log(fftComplexInPlace([1,0,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9,0,10,0,11,0,12,0,13,0,14,0,15,0,16,0]));
-
 /*
 console.log("...................... RADIX 2 [1,2,3,4].............................................");
 console.log(fftRealInPlaceRADIX2([1,2,3,4]));
@@ -1375,10 +1372,18 @@ measureTime(1, 4096);*/
 //console.log(FFT([1,0,1,0,1,0,1,0]));
 //console.log(FFT([1,-1,0,1,0,-1,0,1]));
 
-const spectrum = FFT([1,2,3,4]);
+console.log(fftRealInPlaceRADIX2([1,10,2,20]));
+console.log(fftRealInPlaceRADIX4([1,10,2,20]));
+
+console.log(fftRealInPlaceRADIX2([1,-10,-2,20]));
+console.log(fftRealInPlaceRADIX4([1,-10,-2,20]));
+
+
+
+/*const spectrum = FFT([1,2,3,4]);
 const complexSpectrum = [];
 for (let i = 0; i < spectrum.length; i += 2) {
     complexSpectrum.push({ re: spectrum[i], im: spectrum[i + 1] });
 }
 console.log(computeInverseFFT(complexSpectrum));
-
+*/
