@@ -1311,11 +1311,6 @@ const generateTestData = (size) => {
     return testData;
 };
 
-/*const testData512  = generateTestData(512);
-const testData1024 = generateTestData(1024);
-const testData2048 = generateTestData(2048);
-const testData4096 = generateTestData(4096);*/
-
 // Perform FFT operations
 const performFFTOperations = (type,fftSize) => {
     let testData;
@@ -1382,10 +1377,18 @@ let testData1 = [0,0.5,1,0.5];
 let testData2 = [0,0.5,1,0.5,1,2,3,4];
 let testData3 = [0,0.5,1,0.5,3,2,1,4,0,0.5,1,0.5,7,8,9,6];
 let testData4 = [0,0.5,1,0.5,3,2,1,4,0,0.5,1,0.5,7,8,9,6,1,2,1,1,3,2,1,4,0,0.5,1,0.5,7,8,9,6];
+const testData512  = generateTestData(512);
+const testData1024 = generateTestData(1024);
+const testData2048 = generateTestData(2048);
+const testData4096 = generateTestData(4096);
 console.log(compareFFTResults(fftRealInPlaceRADIX2(testData1),fftRealInPlaceRADIX4(testData1)));
 console.log(compareFFTResults(fftRealInPlaceRADIX2(testData2),fftRealInPlaceRADIX4(testData2)));
 console.log(compareFFTResults(fftRealInPlaceRADIX2(testData3),fftRealInPlaceRADIX4(testData3)));
 console.log(compareFFTResults(fftRealInPlaceRADIX2(testData4),fftRealInPlaceRADIX4(testData4)));
+console.log(compareFFTResults(fftRealInPlaceRADIX2(testData512),fftRealInPlaceRADIX4(testData512)));
+console.log(compareFFTResults(fftRealInPlaceRADIX2(testData1024),fftRealInPlaceRADIX4(testData1024)));
+console.log(compareFFTResults(fftRealInPlaceRADIX2(testData2048),fftRealInPlaceRADIX4(testData2048)));
+console.log(compareFFTResults(fftRealInPlaceRADIX2(testData4096),fftRealInPlaceRADIX4(testData4096)));
 
 /*measureTime(1, 512);
 measureTime(1, 1024);
