@@ -539,11 +539,10 @@ function fftComplexInPlace(out, factors) {
             // (1) Use precalculated FFT factors directly                                               
             //const tIdxRe1 = pre + (2*l + 0)%b;  const tIdxIm1 = pre + (2*l + 1)%b; 
             const tIdxRe1 = (2*l + 0)%b;  const tIdxIm1 = (2*l + 1)%b; 
+            js.push(j);
             // (1) TwiddleFactors
-            const tRe1 = Math.cos((2 * Math.PI * tIdxRe1) / size);  // Calculate Directly
-            const tIm1 = Math.sin((2 * Math.PI * tIdxIm1) / size);  // Calculate Directly
-
-            js.push(tIdxRe1);
+            const tRe1 = Math.cos((2 * Math.PI * j) / size);  // Calculate Directly
+            const tIm1 = Math.sin((2 * Math.PI * j) / size);  // Calculate Directly
 
             //const tRe1 = factors[tIdxRe1];
             //const tIm1 = factors[tIdxIm1];
@@ -574,9 +573,10 @@ function fftComplexInPlace(out, factors) {
             if( N == 4 ){ l = 1 } // Correction for a special case
             //const tIdxRe2 = pre + (2*l + N/2 + 0)%b;  const tIdxIm2 = pre + (2*l + N/2 + 1)%b;
             const tIdxRe2 = (2*l + N/2 + 0)%b;  const tIdxIm2 = (2*l + N/2 + 1)%b; 
+            js.push(j);
             // (1) TwiddleFactors
-            const tRe2 = Math.cos((2 * Math.PI * tIdxRe2) / size);  // Calculate Directly
-            const tIm2 = Math.sin((2 * Math.PI * tIdxIm2) / size);  // Calculate Directly
+            const tRe2 = Math.cos((2 * Math.PI * j) / size);  // Calculate Directly
+            const tIm2 = Math.sin((2 * Math.PI * j) / size);  // Calculate Directly
             //const tRe1 = factors[tIdxRe1];
             //const tIm1 = factors[tIdxIm1];
             // (2) Get real and imaginary parts of elements
