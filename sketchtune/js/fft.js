@@ -551,9 +551,18 @@ function fftComplexInPlace(out, factors) {
         const isNotPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
         // runs N/2 times for PowerOf2
         // runs N/4 times for PowerOf4
-        while (ni < N) {                                                                      
+        while (ni < N) {         
             const eInd1 = i;        const oInd1 = i + h;                         
             const eInd2 = i + c;    const oInd2 = i + h + c;              
+
+            if(2*ni >= N){
+                out[(eInd1 << 1)    ] = 100;
+                out[(eInd1 << 1) + 1] = 100;
+                out[(oInd1 << 1)    ] = 100;
+                out[(oInd1 << 1) + 1] = 100;
+                continue;
+            }
+
 
             // (1) TwiddleFactors
             const j1 = (l)%h;
@@ -1300,12 +1309,12 @@ function compareFFTResults(array1, array2) {
 }
 
 /****************** TEST SPEED *******************/ 
-
+/*
 measureTime(1, 512);
 measureTime(1, 1024);
 measureTime(1, 2048);
 measureTime(1, 4096);
-
+*/
 
 /****************** TEST IF FORWARD IS CORRECT by comparison with REFERENCE *******************/ 
 /*
