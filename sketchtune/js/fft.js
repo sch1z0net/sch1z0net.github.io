@@ -1013,7 +1013,7 @@ function fftComplexInPlace2(input, fftFactorLookup = null) {
 }
 
 
-function fftRealInPlace2(input, fftFactorLookup = null) {
+function fftRealInPlace_ref(input, fftFactorLookup = null) {
     const N = input.length;
     const bits = Math.floor(Math.log2(N));
 
@@ -1237,7 +1237,7 @@ function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     console.log(`FFT - PADDING: Elapsed time: ${elapsedTime2} milliseconds`);*/
 
     // Perform FFT
-    return fftRealInPlace2(paddedInput);
+    return fftRealInPlace_ref(paddedInput);
     //return fftRealInPlaceRADIX2(paddedInput);
     //return fftRealInPlaceRADIX4(paddedInput);
 }
@@ -1504,9 +1504,9 @@ const signal1 = [ 1.0, 0.4, 0.0, 0.2];
 const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5];
 const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1];
 
-console.log(compareFFTResults(fftRealInPlace2(signal1),fftRealInPlaceRADIX4(signal1)));
-console.log(compareFFTResults(fftRealInPlace2(signal2),fftRealInPlaceRADIX4(signal2)));
-console.log(compareFFTResults(fftRealInPlace2(signal3),fftRealInPlaceRADIX4(signal3)));
+console.log(compareFFTResults(fftRealInPlace_ref(signal1),fftRealInPlaceRADIX4(signal1)));
+console.log(compareFFTResults(fftRealInPlace_ref(signal2),fftRealInPlaceRADIX4(signal2)));
+console.log(compareFFTResults(fftRealInPlace_ref(signal3),fftRealInPlaceRADIX4(signal3)));
 
 //console.log(compareFFTResults(fftRealInPlaceRADIX2(testData512),fftRealInPlaceRADIX4(testData512)));
 //console.log(compareFFTResults(fftRealInPlaceRADIX2(testData1024),fftRealInPlaceRADIX4(testData1024)));
@@ -1515,17 +1515,17 @@ console.log(compareFFTResults(fftRealInPlace2(signal3),fftRealInPlaceRADIX4(sign
 
 
 
-//console.log(fftRealInPlace2(signal1));
+//console.log(fftRealInPlace_ref(signal1));
 //console.log(fftRealInPlaceRADIX4(signal1));
 /*console.log("-----------OLD----------");
-console.log(fftRealInPlace2(signal2));
+console.log(fftRealInPlace_ref(signal2));
 console.log("---------Radix4---------");
 console.log(fftRealInPlaceRADIX4(signal2));*/
 /*console.log();
 console.log();
 console.log();
 console.log("-----------OLD----------");
-console.log(fftRealInPlace2(signal3));
+console.log(fftRealInPlace_ref(signal3));
 console.log("---------Radix4---------");
 console.log(fftRealInPlaceRADIX4(signal3));*/
 
