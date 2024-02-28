@@ -1121,8 +1121,8 @@ function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     console.log(`FFT - PADDING: Elapsed time: ${elapsedTime2} milliseconds`);*/
 
     // Perform FFT
-    //return fftRealInPlaceRADIX2(paddedInput);
-    return fftRealInPlaceRADIX4(paddedInput);
+    return fftRealInPlaceRADIX2(paddedInput);
+    //return fftRealInPlaceRADIX4(paddedInput);
     //return fftRealInPlace(paddedInput);
 }
 
