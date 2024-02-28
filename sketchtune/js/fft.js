@@ -653,7 +653,7 @@ function fftComplexInPlace(out) {
         out[eImI2]  = (eIm2 + t_oIm2);
         out[oReI2]  = (eRe2 - t_oRe2);
         out[oImI2]  = (eIm2 - t_oIm2);
-        i+12;
+        i+=12;
     }
 
     return out;
