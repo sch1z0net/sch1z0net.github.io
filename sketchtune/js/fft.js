@@ -610,27 +610,23 @@ function fftComplexInPlace(out) {
     if(N ==4096){ idx_LKUP = INDEX_LOOKUP_4096; } 
 
 
-    let tRe, tIm;
-    let eReI, eImI, eRe, eIm, oRe, oIm;   
-    let t_oRe, t_oIm;
-
     let i = 0;
     while(i < len){
         // TwiddleFactors
-        tRe = factors[idx_LKUP[i++]];
-        tIm = factors[idx_LKUP[i++]];
+        const tRe = factors[idx_LKUP[i++]];
+        const tIm = factors[idx_LKUP[i++]];
         // Get real and imaginary parts of elements
-        eReI = idx_LKUP[i++];
-        eImI = idx_LKUP[i++];
-        oReI = idx_LKUP[i++];
-        oImI = idx_LKUP[i++];
-        eRe  = out[eReI];
-        eIm  = out[eImI];
-        oRe  = out[oReI];
-        oIm  = out[oImI];
+        const eReI = idx_LKUP[i++];
+        const eImI = idx_LKUP[i++];
+        const oReI = idx_LKUP[i++];
+        const oImI = idx_LKUP[i++];
+        const eRe  = out[eReI];
+        const eIm  = out[eImI];
+        const oRe  = out[oReI];
+        const oIm  = out[oImI];
         // Perform complex multiplications
-        t_oRe = oRe * tRe - oIm * tIm;
-        t_oIm = oRe * tIm + oIm * tRe;
+        const t_oRe = oRe * tRe - oIm * tIm;
+        const t_oIm = oRe * tIm + oIm * tRe;
         // Update elements with new values
         out[eReI]  = (eRe + t_oRe);
         out[eImI]  = (eIm + t_oIm);
@@ -638,25 +634,25 @@ function fftComplexInPlace(out) {
         out[oImI]  = (eIm - t_oIm);
 
         // TwiddleFactors
-        tRe = factors[idx_LKUP[i++]];
-        tIm = factors[idx_LKUP[i++]];
+        const tRe2 = factors[idx_LKUP[i++]];
+        const tIm2 = factors[idx_LKUP[i++]];
         // Get real and imaginary parts of elements
-        eReI = idx_LKUP[i++];
-        eImI = idx_LKUP[i++];
-        oReI = idx_LKUP[i++];
-        oImI = idx_LKUP[i++];
-        eRe  = out[eReI];
-        eIm  = out[eImI];
-        oRe  = out[oReI];
-        oIm  = out[oImI];
+        const eReI2 = idx_LKUP[i++];
+        const eImI2 = idx_LKUP[i++];
+        const oReI2 = idx_LKUP[i++];
+        const oImI2 = idx_LKUP[i++];
+        const eRe2  = out[eReI2];
+        const eIm2  = out[eImI2];
+        const oRe2  = out[oReI2];
+        const oIm2  = out[oImI2];
         // Perform complex multiplications
-        t_oRe = oRe * tRe - oIm * tIm;
-        t_oIm = oRe * tIm + oIm * tRe;
+        const t_oRe2 = oRe2 * tRe2 - oIm2 * tIm2;
+        const t_oIm2 = oRe2 * tIm2 + oIm2 * tRe2;
         // Update elements with new values
-        out[eReI]  = (eRe + t_oRe);
-        out[eImI]  = (eIm + t_oIm);
-        out[oReI]  = (eRe - t_oRe);
-        out[oImI]  = (eIm - t_oIm);
+        out[eReI2]  = (eRe2 + t_oRe2);
+        out[eImI2]  = (eIm2 + t_oIm2);
+        out[oReI2]  = (eRe2 - t_oRe2);
+        out[oImI2]  = (eIm2 - t_oIm2);
     }
 
     return out;
