@@ -552,17 +552,17 @@ function index_lookup(N){
     return lookup;
 }
 
-INDEX_LOOKUP_4    = index_lookup(4);
-INDEX_LOOKUP_8    = index_lookup(8);
-INDEX_LOOKUP_16   = index_lookup(16);
-INDEX_LOOKUP_32   = index_lookup(32);
-INDEX_LOOKUP_64   = index_lookup(64);
-INDEX_LOOKUP_128  = index_lookup(128);
-INDEX_LOOKUP_256  = index_lookup(256);
-INDEX_LOOKUP_512  = index_lookup(512);
-INDEX_LOOKUP_1024 = index_lookup(1024);
-INDEX_LOOKUP_2048 = index_lookup(2048);
-INDEX_LOOKUP_4096 = index_lookup(4096);
+let INDEX_LOOKUP_4    = index_lookup(4);
+let INDEX_LOOKUP_8    = index_lookup(8);
+let INDEX_LOOKUP_16   = index_lookup(16);
+let INDEX_LOOKUP_32   = index_lookup(32);
+let INDEX_LOOKUP_64   = index_lookup(64);
+let INDEX_LOOKUP_128  = index_lookup(128);
+let INDEX_LOOKUP_256  = index_lookup(256);
+let INDEX_LOOKUP_512  = index_lookup(512);
+let INDEX_LOOKUP_1024 = index_lookup(1024);
+let INDEX_LOOKUP_2048 = index_lookup(2048);
+let INDEX_LOOKUP_4096 = index_lookup(4096);
 
 function fftComplexInPlace(out) {
     const N = out.length/2;
