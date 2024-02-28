@@ -565,18 +565,22 @@ function fftComplexInPlace(out, factors) {
         const tRe = factors[idx_LKUP[i++]];
         const tIm = factors[idx_LKUP[i++]];
         // Get real and imaginary parts of elements
-        const eRe  = out[idx_LKUP[i]];
-        const eIm  = out[idx_LKUP[i]];
-        const oRe  = out[idx_LKUP[i]];
-        const oIm  = out[idx_LKUP[i]];
+        const eReI = idx_LKUP[i++];
+        const eImI = idx_LKUP[i++];
+        const oReI = idx_LKUP[i++];
+        const oImI = idx_LKUP[i++];
+        const eRe  = out[eReI];
+        const eIm  = out[eImI];
+        const oRe  = out[oReI];
+        const oIm  = out[oImI];
         // Perform complex multiplications
         const t_oRe = oRe * tRe - oIm * tIm;
         const t_oIm = oRe * tIm + oIm * tRe;
         // Update elements with new values
-        out[idx_LKUP[i++]] = (eRe + t_oRe);
-        out[idx_LKUP[i++]] = (eIm + t_oIm);
-        out[idx_LKUP[i++]] = (eRe - t_oRe);
-        out[idx_LKUP[i++]] = (eIm - t_oIm);
+        out[eReI]  = (eRe + t_oRe);
+        out[eImI]  = (eIm + t_oIm);
+        out[oReI]  = (eRe - t_oRe);
+        out[oImI]  = (eIm - t_oIm);
     }
 
     return out;
