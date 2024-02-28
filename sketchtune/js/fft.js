@@ -535,8 +535,8 @@ function fftComplexInPlace(out, factors) {
         // runs N/2 times for PowerOf2
         // runs N/4 times for PowerOf4
         while (ni < N) {                                                                      
-            const eInd1 = i;        const oInd1 = i + c;                         
-            const eInd2 = i + h;    const oInd2 = i + h + c;              
+            const eInd1 = i;        const oInd1 = i + h;                         
+            const eInd2 = i + c;    const oInd2 = i + h + c;              
 
 
             // (1) Use precalculated FFT factors directly                                               
@@ -566,6 +566,7 @@ function fftComplexInPlace(out, factors) {
             // Not Power of 4?
             if( isNotPowerOf4 ){ 
                 //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1);
+                console.log(eInd1,oInd1,"-",j1);
                 i++; l++; ni+=2;
                 // line reaches block-end
                 if (l % h === 0) { bs++; i=bs*b; }
@@ -597,7 +598,7 @@ function fftComplexInPlace(out, factors) {
             out[(oInd2 << 1) + 1] = inv * (eIm2 - t_oIm2);
 
             //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
-
+            console.log(eInd1,oInd1,"-",j1,"|||",eInd2,oInd2,"-",j2);
             i++; l++; ni+=4;
             // line reaches block-end
             if (l % h === 0) { bs++; i=bs*b; }
@@ -1041,6 +1042,7 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
                 js.push(j);
                 const evenIndex = i + j;
                 const oddIndex = i + j + halfSize;
+
                 const evenPartRe = output[evenIndex * 2];
                 const evenPartIm = output[evenIndex * 2 + 1];
                 const oddPartRe = output[oddIndex * 2];
@@ -1050,6 +1052,8 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
                 //const twiddleIm = Math.sin((2 * Math.PI * j) / size);
                 const twiddleRe = factors[2 * j    ];
                 const twiddleIm = factors[2 * j + 1];
+
+                console.log(evenIndex,oddIndex,"-",j);
 
                 // Multiply by twiddle factors
                 const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
