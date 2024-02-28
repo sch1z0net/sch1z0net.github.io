@@ -561,9 +561,25 @@ INDEX_LOOKUP_128  = index_lookup(128);
 INDEX_LOOKUP_256  = index_lookup(256);
 INDEX_LOOKUP_512  = index_lookup(512);
 INDEX_LOOKUP_1024 = index_lookup(1024);
+INDEX_LOOKUP_2048 = index_lookup(2048);
+INDEX_LOOKUP_4096 = index_lookup(4096);
 
 function fftComplexInPlace(out, factors) {
     const N = out.length/2;
+
+    let factors;
+    if(N == 4){    factors = LOOKUP_RADIX2_4;    }
+    if(N == 8){    factors = LOOKUP_RADIX2_8;    }
+    if(N == 16){   factors = LOOKUP_RADIX2_16;   }
+    if(N == 32){   factors = LOOKUP_RADIX2_32;   }
+    if(N == 64){   factors = LOOKUP_RADIX2_64;   }
+    if(N == 128){  factors = LOOKUP_RADIX2_128;  }
+    if(N == 256){  factors = LOOKUP_RADIX2_256;  }
+    if(N == 512){  factors = LOOKUP_RADIX2_512;  }
+    if(N == 1024){ factors = LOOKUP_RADIX2_1024; }
+    if(N == 2048){ factors = LOOKUP_RADIX2_2048; }
+    if(N == 4096){ factors = LOOKUP_RADIX2_4096; }
+
     let idx_LKUP; 
     if(N ==   4){ idx_LKUP = INDEX_LOOKUP_4;    }
     if(N ==   8){ idx_LKUP = INDEX_LOOKUP_8;    }
@@ -833,7 +849,7 @@ function fftRealInPlaceRADIX4(realInput) {
         complexOut[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
 
-    return fftComplexInPlace(complexOut, factors);
+    return fftComplexInPlace(complexOut);
 }
 
 
@@ -869,7 +885,7 @@ function fftComplexInPlaceRADIX4(complexInput) {
         out[i*2+1] = input[map[i]*2+1];
     }
 
-    return fftComplexInPlace(out, factors);
+    return fftComplexInPlace(out);
 }
 
 
