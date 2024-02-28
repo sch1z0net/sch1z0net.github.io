@@ -481,7 +481,7 @@ function fftRealInPlaceRADIX2(realInput) {
 /**********************************************************************************************/
 
 
-function fftComplexInPlace_tidy(out) {
+function fftComplexInPlace_radix2(out) {
     const N = out.length / 2;
     const bits = Math.log2(N);
 
@@ -502,10 +502,11 @@ function fftComplexInPlace_tidy(out) {
     let pre  = 0;    //offset for indexing Factor Lookup 
     let pwr  = 0;    //power 
     let mpwr = bits; //max power
-    //for (let size = 4; size <= N; size <<= 2) {
-    //let js = new Array(N/2);
+    let N_half    = N >> 1;
+    let N_quarter = N >> 2;
+    let c = N_half;  // circled index start
+
     for (let size = 2; size <= N; size <<= 1) {
-        //console.log("-size "+size+"-------------------------------------------------------------------------------------------------");
         pwr++;
         // Define variables
         let i = 0;    // ev index, increases with every line step
@@ -517,20 +518,14 @@ function fftComplexInPlace_tidy(out) {
         const h = size >> 1;
         const q = size >> 2;
       
-        let c = (2-((N/b) & 1)) * N >> 2;  // circled index start
+        if( size == N ){ c = N_quarter; }; 
 
-        let br = (size==N) ? h/2 : 0;
-
-        const isNotPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
-        // runs N/2 times for PowerOf2
-        // runs N/4 times for PowerOf4
         while (ni < N) {                                                                      
             const eInd1 = i;        const oInd1 = i + h;                         
             const eInd2 = i + c;    const oInd2 = i + h + c;              
 
             // (1) Use precalculated FFT factors directly                                               
             const j1 = (l)%h;
-
             // (1) TwiddleFactors
             const tRe1 = factors[pre + 2*j1 + 0];  // LOOKUP
             const tIm1 = factors[pre + 2*j1 + 1];  // LOOKUP
@@ -548,36 +543,7 @@ function fftComplexInPlace_tidy(out) {
             out[(oInd1 << 1)    ] =  (eRe1 - t_oRe1);
             out[(oInd1 << 1) + 1] =  (eIm1 - t_oIm1);
             
-            // Not Power of 4?
-            if( isNotPowerOf4 ){ 
-                i++; l++; ni+=2;
-                // line reaches block-end
-                if (l % h === 0) { bs++; i=bs*b; }
-                continue; 
-            }
-            
-            // (2) Use precalculated FFT factors directly  
-            if( N == 4 ){ l = 1; } // Correction for a special case
-
-            const j2 = j1 + br;
-            // (1) TwiddleFactors
-            const tRe2 = factors[pre + 2*j2 + 0];  // LOOKUP
-            const tIm2 = factors[pre + 2*j2 + 1];  // LOOKUP
-            // (2) Get real and imaginary parts of elements
-            const eRe2  = out[(eInd2 << 1)    ];
-            const eIm2  = out[(eInd2 << 1) + 1];
-            const oRe2  = out[(oInd2 << 1)    ];
-            const oIm2  = out[(oInd2 << 1) + 1];
-            // (2) Perform complex multiplications
-            const t_oRe2 = oRe2 * tRe2 - oIm2 * tIm2;
-            const t_oIm2 = oRe2 * tIm2 + oIm2 * tRe2;
-            // (2) Update elements with new values
-            out[(eInd2 << 1)    ] =  (eRe2 + t_oRe2);
-            out[(eInd2 << 1) + 1] =  (eIm2 + t_oIm2);
-            out[(oInd2 << 1)    ] =  (eRe2 - t_oRe2);
-            out[(oInd2 << 1) + 1] =  (eIm2 - t_oIm2);
-
-            i++; l++; ni+=4;
+            i++; l++; ni+=2;
             // line reaches block-end
             if (l % h === 0) { bs++; i=bs*b; }
         }
@@ -608,7 +574,7 @@ function index_lookup(N){
     let N_half    = N >> 1;
     let N_quarter = N >> 2;
     let c = N_half;  // circled index start
-    
+
     for (let size = 2; size <= N; size <<= 1) {
         pwr++;
         // Define variables
@@ -979,7 +945,8 @@ function fftRealInPlaceRADIX4(realInput) {
         complexOut[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
 
-    return fftComplexInPlace_tidy(complexOut);
+    return fftComplexInPlace_radix2(complexOut);
+    //return fftComplexInPlace_tidy(complexOut);
     //return fftComplexInPlace(complexOut);
 }
 
