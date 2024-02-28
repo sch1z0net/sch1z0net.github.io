@@ -909,8 +909,8 @@ function precalculateFFTFactorsRADIX2(N) {
 
     for (let i = 0; i < N / 2; i++) {
         const angle1 = (2 * Math.PI * i) / N;
-        factors[pre + i * 2] = Math.cos(angle1); // Cosine of angle1
-        factors[pre + i * 2 + 1] = Math.sin(angle1); // Sine of angle1
+        factors[i * 2] = Math.cos(angle1); // Cosine of angle1
+        factors[i * 2 + 1] = Math.sin(angle1); // Sine of angle1
     }
 
     return new Float32Array(factors);
