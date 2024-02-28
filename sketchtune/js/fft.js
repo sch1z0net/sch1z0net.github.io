@@ -380,7 +380,6 @@ const LOOKUP_RADIX2_8    = precalculateFFTFactorsRADIX2(8);
 const LOOKUP_RADIX2_16   = precalculateFFTFactorsRADIX2(16);
 const LOOKUP_RADIX2_32   = precalculateFFTFactorsRADIX2(32);
 const LOOKUP_RADIX2_64   = precalculateFFTFactorsRADIX2(64);
-console.log(LOOKUP_RADIX2_64.length);
 const LOOKUP_RADIX2_128  = precalculateFFTFactorsRADIX2(128);
 const LOOKUP_RADIX2_512  = precalculateFFTFactorsRADIX2(512);
 const LOOKUP_RADIX2_1024 = precalculateFFTFactorsRADIX2(1024);
@@ -968,6 +967,60 @@ function fftComplexInPlace2(input, fftFactorLookup = null) {
 }
 
 
+function fftRealInPlace2(input, fftFactorLookup = null) {
+    const N = input.length;
+    const bits = Math.log2(N);
+
+    if (N !== nextPowerOf2(N)) {
+        console.error("FFT FRAME must have power of 2");
+        return;
+    }
+
+    // Perform bit reversal
+    const output = new Float32Array(N * 2);
+    for (let i = 0; i < N; i++) {
+        const reversedIndex = bitReverse(i, bits);
+        output[reversedIndex * 2] = input[i]; // Copy real part
+        output[reversedIndex * 2 + 1] = 0; // Copy imaginary part
+    }
+
+    if (N <= 1) {
+        return output;
+    }
+
+    // Recursively calculate FFT
+    for (let size = 2; size <= N; size *= 2) {
+        const halfSize = size / 2;
+        for (let i = 0; i < N; i += size) {
+            // Get FFT factors with caching
+            const factors = computeFFTFactorsWithCache(size);
+            for (let j = 0; j < halfSize; j++) {
+                const evenIndex = i + j;
+                const oddIndex = i + j + halfSize;
+                const evenPartRe = output[evenIndex * 2];
+                const evenPartIm = output[evenIndex * 2 + 1];
+                const oddPartRe = output[oddIndex * 2];
+                const oddPartIm = output[oddIndex * 2 + 1];
+
+                const twiddleRe = factors[j * 2];
+                const twiddleIm = factors[j * 2 + 1];
+
+                // Multiply by twiddle factors
+                const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
+                const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
+
+                // Combine results of even and odd parts in place
+                output[evenIndex * 2] = evenPartRe + twiddledOddRe;
+                output[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+                output[oddIndex * 2] = evenPartRe - twiddledOddRe;
+                output[oddIndex * 2 + 1] = evenPartIm - twiddledOddIm;
+            }
+        }
+    }
+
+    return output;
+}
+
 
 
 
@@ -1121,9 +1174,9 @@ function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     console.log(`FFT - PADDING: Elapsed time: ${elapsedTime2} milliseconds`);*/
 
     // Perform FFT
-    return fftRealInPlaceRADIX2(paddedInput);
+    return fftRealInPlace2(paddedInput);
+    //return fftRealInPlaceRADIX2(paddedInput);
     //return fftRealInPlaceRADIX4(paddedInput);
-    //return fftRealInPlace(paddedInput);
 }
 
 
