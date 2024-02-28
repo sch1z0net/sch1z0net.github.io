@@ -612,23 +612,24 @@ function fftComplexInPlace(out) {
 */
 
 
+    let tRe, tIm;
+    let eReI, eImI, eRe, eIm, oRe, oIm;   
 
 
     let i = 0;
     while(i < len){
         // TwiddleFactors
-        const tRe = factors[idx_LKUP[i+1]];
-        const tIm = factors[idx_LKUP[i+2]];
+        tRe = factors[idx_LKUP[i+1]];
+        tIm = factors[idx_LKUP[i+2]];
         // Get real and imaginary parts of elements
-        const eReI = idx_LKUP[i+3];
-        const eImI = idx_LKUP[i+4];
-        const oReI = idx_LKUP[i+5];
-        const oImI = idx_LKUP[i+6];
-        i+=6;
-        const eRe  = out[eReI];
-        const eIm  = out[eImI];
-        const oRe  = out[oReI];
-        const oIm  = out[oImI];
+        eReI = idx_LKUP[i+3];
+        eImI = idx_LKUP[i+4];
+        oReI = idx_LKUP[i+5];
+        oImI = idx_LKUP[i+6];
+        eRe  = out[eReI];
+        eIm  = out[eImI];
+        oRe  = out[oReI];
+        oIm  = out[oImI];
         // Perform complex multiplications
         const t_oRe = oRe * tRe - oIm * tIm;
         const t_oIm = oRe * tIm + oIm * tRe;
@@ -637,6 +638,7 @@ function fftComplexInPlace(out) {
         out[eImI]  = (eIm + t_oIm);
         out[oReI]  = (eRe - t_oRe);
         out[oImI]  = (eIm - t_oIm);
+        i+=6;
     }
 
     return out;
