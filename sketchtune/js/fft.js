@@ -482,7 +482,6 @@ function fftRealInPlaceRADIX2(realInput) {
 
 
 function index_lookup(N){
-    const N = out.length / 2;
     const bits = Math.log2(N);
 
     let lookup = [];
