@@ -1181,8 +1181,7 @@ function ifft(input) {
     const conjugateSpectrum = new Float32Array(N * 2);
     for (let i = 0; i < N; i++) {
         conjugateSpectrum[i * 2] = input[i * 2]; // Copy real part
-        conjugateSpectrum[i * 2 + 1] = input[i * 2 + 1]; // Negate imaginary part
-        //conjugateSpectrum[i * 2 + 1] = -input[i * 2 + 1]; // Negate imaginary part
+        conjugateSpectrum[i * 2 + 1] = -input[i * 2 + 1]; // Negate imaginary part
     }
 
     // Apply FFT to the conjugate spectrum
