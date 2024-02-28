@@ -481,14 +481,121 @@ function fftRealInPlaceRADIX2(realInput) {
 /**********************************************************************************************/
 
 
-
-function fftComplexInPlace(out, factors) {
+function index_lookup(N){
     const N = out.length / 2;
     const bits = Math.log2(N);
+
+    let lookup = [];
 
     let pre  = 0;    //offset for indexing Factor Lookup  
     let pwr  = 0;    //power 
     let mpwr = bits; //max power
+    for (let size = 2; size <= N; size <<= 1) {
+        pwr++;
+        // Define variables
+        let i = 0;    // ev index, increases with every line step
+        let l = 0;    // line step made
+        let b = size; // block size
+        let bs = 0;   // block steps made
+        let ni = 0;   // number of indices handled 
+
+        const h = size >> 1;
+        const q = size >> 2;
+      
+        let c = (2-((N/b) & 1)) * N >> 2;  // circled index start
+        let br = (size==N) ? h/2 : 0;
+
+        const isNotPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
+        // runs N/2 times for PowerOf2
+        // runs N/4 times for PowerOf4
+        while (ni < N) {         
+            const eInd1 = i;        const oInd1 = i + h;                         
+            const eInd2 = i + c;    const oInd2 = i + h + c;              
+
+            const j1 = (l)%h;
+            const tRe1 = pre + 2*j1 + 0;  // LOOKUP
+            const tIm1 = pre + 2*j1 + 1;  // LOOKUP
+
+            const eRe1Indx = (eInd1 << 1);
+            const eIm1Indx = (eInd1 << 1) + 1;
+            const oRe1Indx = (oInd1 << 1);
+            const oIm1Indx = (oInd1 << 1) + 1;
+
+            lookup.push(tRe1,tIm1,eRe1Indx,eIm1Indx,oRe1Indx,oIm1Indx);
+
+            // Not Power of 4?
+            if( isNotPowerOf4 ){ 
+                i++; l++; ni+=2;
+                // line reaches block-end
+                if (l % h === 0) { bs++; i=bs*b; }
+                continue; 
+            }
+
+            const j2 = j1 + br;
+            const tRe2 = pre + 2*j2 + 0;  // LOOKUP
+            const tIm2 = pre + 2*j2 + 1;  // LOOKUP
+
+            const eRe2Indx = (eInd2 << 1);
+            const eIm2Indx = (eInd2 << 1) + 1;
+            const oRe2Indx = (oInd2 << 1);
+            const oIm2Indx = (oInd2 << 1) + 1;
+
+            lookup.push(tRe2,tIm2,eRe2Indx,eIm2Indx,oRe2Indx,oIm2Indx);
+            
+            i++; l++; ni+=4;
+            // line reaches block-end
+            if (l % h === 0) { bs++; i=bs*b; }
+
+        }
+        pre += size;
+    }
+
+    return lookup;
+}
+
+INDEX_LOOKUP_1024 = index_lookup(1024);
+
+
+
+function fftComplexInPlace(out, factors) {
+    let idx_LKUP = INDEX_LOOKUP_1024;
+    let len = idx_LKUP.length;
+    let i = 0;
+    while(i < len){
+        // TwiddleFactors
+        const tRe = factors[idx_LKUP[i++]];
+        const tIm = factors[idx_LKUP[i++]];
+        // Get real and imaginary parts of elements
+        const eRe  = out[idx_LKUP[i++]];
+        const eIm  = out[idx_LKUP[i++]];
+        const oRe  = out[idx_LKUP[i++]];
+        const oIm  = out[idx_LKUP[i++]];
+        // Perform complex multiplications
+        const t_oRe = oRe * tRe - oIm * tIm;
+        const t_oIm = oRe * tIm + oIm * tRe;
+        // Update elements with new values
+        out[idx_LKUP[i++]] = (eRe + t_oRe);
+        out[idx_LKUP[i++]] = (eIm + t_oIm);
+        out[idx_LKUP[i++]] = (eRe - t_oRe);
+        out[idx_LKUP[i++]] = (eIm - t_oIm);
+    }
+
+    return out;
+}
+
+
+
+
+function fftComplexInPlace_tidy(out, factors) {
+    const N = out.length / 2;
+    const bits = Math.log2(N);
+
+    let pre  = 0;    //offset for indexing Factor Lookup
+    let inv  = 1;    
+    let pwr  = 0;    //power 
+    let mpwr = bits; //max power
+    //for (let size = 4; size <= N; size <<= 2) {
+    //let js = new Array(N/2);
     for (let size = 2; size <= N; size <<= 1) {
         //console.log("-size "+size+"-------------------------------------------------------------------------------------------------");
         pwr++;
@@ -498,6 +605,8 @@ function fftComplexInPlace(out, factors) {
         let b = size; // block size
         let bs = 0;   // block steps made
         let ni = 0;   // number of indices handled 
+
+        //if (size == N) { inv = -inv; }
 
         const h = size >> 1;
         const q = size >> 2;
@@ -547,147 +656,8 @@ function fftComplexInPlace(out, factors) {
         // ratio = 4          ratio = 2           ratio = 1          ratio = 1/2       (N/b) -> 1  2  4 ..... 8
         // _block = 2         _block = 4          _block = 8         _block = 16       1 is a special case, map it to 1/2 and the rest to 1
         // max_bn =16/2       max_bn =16/4        max_bn = 16/2      max_bn = 16/4     therefor: c = (N/2) * (2-((N/b) & 1))/2  
-        //                                                                 
+        //              
 
-        const isNotPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
-        // runs N/2 times for PowerOf2
-        // runs N/4 times for PowerOf4
-        while (ni < N) {         
-            const eInd1 = i;        const oInd1 = i + h;                         
-            const eInd2 = i + c;    const oInd2 = i + h + c;              
-
-
-            // (1) TwiddleFactors
-            const j1 = (l)%h;
-            const tRe1 = factors[pre + 2*j1 + 0];  // LOOKUP
-            const tIm1 = factors[pre + 2*j1 + 1];  // LOOKUP
-            // (1) Get real and imaginary parts of elements
-            const eRe1  = out[(eInd1 << 1)    ];    // (eInd1 << 1)     -> even.re
-            const eIm1  = out[(eInd1 << 1) + 1];    // (eInd1 << 1) + 1 -> even.im
-            const oRe1  = out[(oInd1 << 1)    ];    // (oInd1 << 1)     -> odd.re
-            const oIm1  = out[(oInd1 << 1) + 1];    // (oInd1 << 1) + 1 -> odd.im
-            // (1) Perform complex multiplications
-            const t_oRe1 = oRe1 * tRe1 - oIm1 * tIm1;
-            const t_oIm1 = oRe1 * tIm1 + oIm1 * tRe1;
-            // (1) Update elements with new values
-            out[(eInd1 << 1)    ] = (eRe1 + t_oRe1);
-            out[(eInd1 << 1) + 1] = (eIm1 + t_oIm1);
-
-            out[(oInd1 << 1)    ] = (eRe1 - t_oRe1); //<--- synthesize
-            out[(oInd1 << 1) + 1] = (eIm1 - t_oIm1); //<--- synthesize
-
-            //console.log("**** EV.RE",eInd1,(eRe1 + t_oRe1).toFixed(2),"<- EV.RE",eInd1,"+ (OD.RE",oInd1,"* TW.RE",j1,"- OD.IM",oInd1,"* TW.IM",j1,")","|||||||","EV.IM",eInd1,(eIm1 + t_oIm1).toFixed(2),"<- EV.IM",eInd1,"+ (OD.RE",oInd1,"* TW.IM",j1,"+ OD.IM",oInd1,"* TW.RE",j1,")");
-            //console.log("**** OD.RE",oInd1,(eRe1 - t_oRe1).toFixed(2),"<- EV.RE",eInd1,"- (OD.RE",oInd1,"* TW.RE",j1,"- OD.IM",oInd1,"* TW.IM",j1,")","|||||||","OD.IM",oInd1,(eIm1 - t_oIm1).toFixed(2),"<- EV.IM",eInd1,"- (OD.RE",oInd1,"* TW.IM",j1,"+ OD.IM",oInd1,"* TW.RE",j1,")");
-
-
-            // Not Power of 4?
-            if( isNotPowerOf4 ){ 
-                i++; l++; ni+=2;
-                // line reaches block-end
-                if (l % h === 0) { bs++; i=bs*b; }
-                continue; 
-            }
-            
-            // (2) TwiddleFactors
-            const j2 = j1 + br;
-            const tRe2 = factors[pre + 2*j2 + 0];  // LOOKUP
-            const tIm2 = factors[pre + 2*j2 + 1];  // LOOKUP
-            // (2) Get real and imaginary parts of elements
-            const eRe2  = out[(eInd2 << 1)    ];
-            const eIm2  = out[(eInd2 << 1) + 1];
-            const oRe2  = out[(oInd2 << 1)    ];
-            const oIm2  = out[(oInd2 << 1) + 1];
-            // (2) Perform complex multiplications
-            const t_oRe2 = oRe2 * tRe2 - oIm2 * tIm2;
-            const t_oIm2 = oRe2 * tIm2 + oIm2 * tRe2;
-            // (2) Update elements with new values
-            out[(eInd2 << 1)    ] = (eRe2 + t_oRe2);
-            out[(eInd2 << 1) + 1] = (eIm2 + t_oIm2);
-
-            out[(oInd2 << 1)    ] = (eRe2 - t_oRe2); //<--- synthesize
-            out[(oInd2 << 1) + 1] = (eIm2 - t_oIm2); //<--- synthesize
-
-            //console.log("**** EV.RE",eInd2,(eRe2 + t_oRe2).toFixed(2),"<- EV.RE",eInd2,"+ (OD.RE",oInd2,"* TW.RE",j2,"- OD.IM",oInd2,"* TW.IM",j2,")","|||||||","EV.IM",eInd2,(eIm2 + t_oIm2).toFixed(2),"<- EV.IM",eInd2,"+ (OD.RE",oInd2,"* TW.IM",j2,"+ OD.IM",oInd2,"* TW.RE",j2,")");
-            //console.log("**** OD.RE",oInd2,(eRe2 - t_oRe2).toFixed(2),"<- EV.RE",eInd2,"- (OD.RE",oInd2,"* TW.RE",j2,"- OD.IM",oInd2,"* TW.IM",j2,")","|||||||","OD.IM",oInd2,(eIm2 - t_oIm2).toFixed(2),"<- EV.IM",eInd2,"- (OD.RE",oInd2,"* TW.IM",j2,"+ OD.IM",oInd2,"* TW.RE",j2,")");
-
-
-            i++; l++; ni+=4;
-            // line reaches block-end
-            if (l % h === 0) { bs++; i=bs*b; }
-        }
-        pre += size;
-    }
-
-    return out;
-}
-
-
-
-
-
-
-
-function fftComplexInPlace_tidy(out, factors) {
-    const N = out.length / 2;
-    const bits = Math.log2(N);
-
-    let pre  = 0;    //offset for indexing Factor Lookup
-    let inv  = 1;    
-    let pwr  = 0;    //power 
-    let mpwr = bits; //max power
-    //for (let size = 4; size <= N; size <<= 2) {
-    //let js = new Array(N/2);
-    for (let size = 2; size <= N; size <<= 1) {
-        //console.log("-size "+size+"-------------------------------------------------------------------------------------------------");
-        pwr++;
-        // Define variables
-        let i = 0;    // ev index, increases with every line step
-        let l = 0;    // line step made
-        let b = size; // block size
-        let bs = 0;   // block steps made
-        let ni = 0;   // number of indices handled 
-
-        //if (size == N) { inv = -inv; }
-
-        const h = size >> 1;
-        const q = size >> 2;
-      
-        let c = (2-((N/b) & 1)) * N >> 2;  // circled index start
-        let br = (size==N) ? h/2 : 0;
-
-        //  For N = 4, the indices must look like this after each iteration
-        //  
-        //  power = 1      power = 2      
-        //  size = 2       size = 4  
-        //  half = 1       half = 2  
-        //  ev  odd        ev odd     
-        // _0     1        0    2     
-        // (2)     3      _(1)  3     
-        //    
-        // _block = 2     _block = 4    
-        // max_bn =4/2    max_bn =4/4   
-
-
-
-        //  For N = 16, the indices must look like this after each iteration
-        //  
-        //  power = 1          power = 2          power = 3           power = 4
-        //  size = 2           size = 4           size = 8            size = 16
-        //  half = 1           half = 2           half = 4            half =  8
-        //  ev  j odd          ev  j odd       _  ev  j odd           ev  j odd 
-        // _0   0   1          0   0   2      |   0   0   4            0  0   8  
-        //  2   0   3         _1   1   3      |h  1   1   5            1  1   9  
-        //  4   0   5          4   0   6      |   2   2   6            2  2  10  
-        //  6   0   7          5   1   7      |_ _3   3   7            3  3  11  
-        // (8)  0   9         (8)  0  10         (8)  0  12           (4) 4  12   <---- circled index start = 4
-        // 10   0  11          9   1  11          9   1  13            5  5  13  
-        // 12   0  13         12   0  14         10   2  14            6  6  14  
-        // 14   0  15         13   1  15         11   3  15           _7  7  15  
-        //  
-        // ratio = 4          ratio = 2           ratio = 1          ratio = 1/2       (N/b) -> 1  2  4 ..... 8
-        // _block = 2         _block = 4          _block = 8         _block = 16       1 is a special case, map it to 1/2 and the rest to 1
-        // max_bn =16/2       max_bn =16/4        max_bn = 16/2      max_bn = 16/4     therefor: c = (N/2) * (2-((N/b) & 1))/2  
-        //                                                                 
 
         const isNotPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
         // runs N/2 times for PowerOf2
