@@ -973,7 +973,7 @@ function computeFFTFactorsWithCache(N) {
     return fftFactorCacheRADIX2[N];
 }
 
-function fftComplexInPlace2(input, fftFactorLookup = null) {
+function fftComplexInPlace_ref(input, fftFactorLookup = null) {
     const N = input.length / 2;
     const bits = Math.floor(Math.log2(N));
 
@@ -1254,9 +1254,9 @@ function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     console.log(`FFT - PADDING: Elapsed time: ${elapsedTime2} milliseconds`);*/
 
     // Perform FFT
-    //return fftRealInPlace_ref(paddedInput);
+    return fftRealInPlace_ref(paddedInput);
     //return fftRealInPlaceRADIX2(paddedInput);
-    return fftRealInPlaceRADIX4(paddedInput);
+    //return fftRealInPlaceRADIX4(paddedInput);
 }
 
 
@@ -1316,8 +1316,8 @@ function ifft(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    //const fftResult = fftComplexInPlace2(conjugateSpectrum);
-    const fftResult = fftComplexInPlaceRADIX4(conjugateSpectrum);
+    const fftResult = fftComplexInPlace_ref(conjugateSpectrum);
+    //const fftResult = fftComplexInPlaceRADIX4(conjugateSpectrum);
 
     // Take the complex conjugate of the FFT result and scale by 1/N
     const ifftResult = new Float32Array(N * 2);
