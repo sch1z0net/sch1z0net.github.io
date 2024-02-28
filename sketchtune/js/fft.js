@@ -130,8 +130,8 @@ function precalculateFFTFactorsRADIX2(maxSampleLength) {
             factors[pre + i * 2] = Math.cos(angle1); // Cosine of angle1
             factors[pre + i * 2 + 1] = Math.sin(angle1); // Sine of angle1
         }
-        pre += N;
         if(maxN==64){ console.log("for N=",N,"LOOKUP goes from",pre,"to",pre+N); }
+        pre += N;
         //2 + 4 + 8 + 16 + 32 + 64...
     }
 
