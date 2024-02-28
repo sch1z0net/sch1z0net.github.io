@@ -642,7 +642,7 @@ function fftRealInPlaceRADIX4(inputOriginal) {
     if(N == 512){  factors = LOOKUP_RADIX2_512;  map = bitReversalMap512.get(N);}
     if(N == 1024){ factors = LOOKUP_RADIX2_1024; map = bitReversalMap1024.get(N);}
     if(N == 2048){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap2048.get(N);}
-    if(N == 4096){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap4096.get(N);}
+    if(N == 4096){ factors = LOOKUP_RADIX2_4096; map = bitReversalMap4096.get(N);}
 
     // Perform bit reversal
     const inputBR = new Float32Array(N);
@@ -683,7 +683,7 @@ function fftComplexInPlaceRADIX4(inputOriginal) {
     if(N == 512){  factors = LOOKUP_RADIX2_512;  map = bitReversalMap512.get(N);}
     if(N == 1024){ factors = LOOKUP_RADIX2_1024; map = bitReversalMap1024.get(N);}
     if(N == 2048){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap2048.get(N);}
-    if(N == 4096){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap4096.get(N);}
+    if(N == 4096){ factors = LOOKUP_RADIX2_4096; map = bitReversalMap4096.get(N);}
 
     // Perform bit reversal
     const out = new Float32Array(N*2);
@@ -1181,7 +1181,8 @@ function ifft(input) {
     const conjugateSpectrum = new Float32Array(N * 2);
     for (let i = 0; i < N; i++) {
         conjugateSpectrum[i * 2] = input[i * 2]; // Copy real part
-        conjugateSpectrum[i * 2 + 1] = -input[i * 2 + 1]; // Negate imaginary part
+        conjugateSpectrum[i * 2 + 1] = input[i * 2 + 1]; // Negate imaginary part
+        //conjugateSpectrum[i * 2 + 1] = -input[i * 2 + 1]; // Negate imaginary part
     }
 
     // Apply FFT to the conjugate spectrum
