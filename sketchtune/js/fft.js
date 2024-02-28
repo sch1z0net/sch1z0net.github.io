@@ -477,6 +477,7 @@ function fftComplexInPlace(out, factors) {
     let pwr  = 0;    //power 
     let mpwr = bits; //max power
     //for (let size = 4; size <= N; size <<= 2) {
+    let js = [];
     for (let size = 2; size <= N; size <<= 1) {
         pwr++;
         // Define variables
@@ -541,6 +542,9 @@ function fftComplexInPlace(out, factors) {
             // (1) TwiddleFactors
             const tRe1 = Math.cos((2 * Math.PI * tIdxRe1) / size);  // Calculate Directly
             const tIm1 = Math.sin((2 * Math.PI * tIdxIm1) / size);  // Calculate Directly
+
+            js.push(tIdxRe1);
+
             //const tRe1 = factors[tIdxRe1];
             //const tIm1 = factors[tIdxIm1];
             // (1) Get real and imaginary parts of elements
@@ -596,6 +600,9 @@ function fftComplexInPlace(out, factors) {
             if (l % h === 0) { bs++; i=bs*b; }
         }
         pre += size;
+
+        console.log("size:"+size, js);
+        js = [];
     }
 
     return out;
@@ -1490,13 +1497,11 @@ const signal1 = [ 1.0, 0.4, 0.0, 0.2];
 const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5];
 const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1];
 
-console.log(fftRealInPlace2(signal1));
-console.log(fftRealInPlaceRADIX4(signal1));
-//console.log(fftRealInPlaceRADIX2(signal1));
-/*console.log(fftRealInPlace2(signal2));
-console.log(fftRealInPlaceRADIX4(signal1));
-console.log(fftRealInPlaceRADIX2(signal2));
-console.log(fftRealInPlace2(signal3));
+//console.log(fftRealInPlace2(signal1));
+//console.log(fftRealInPlaceRADIX4(signal1));
+console.log(fftRealInPlace2(signal2));
+console.log(fftRealInPlaceRADIX4(signal2));
+/*console.log(fftRealInPlace2(signal3));
 console.log(fftRealInPlaceRADIX2(signal3));
 console.log(fftRealInPlaceRADIX4(signal3));*/
 
