@@ -876,7 +876,7 @@ function fftRealInPlaceRADIX4(realInput) {
         complexOut[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
 
-    return fftComplexInPlace_red(complexOut);
+    return fftComplexInPlace_ref(complexOut);
     //return fftComplexInPlace(complexOut);
 }
 
