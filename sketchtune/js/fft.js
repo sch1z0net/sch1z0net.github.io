@@ -611,16 +611,20 @@ function fftComplexInPlace(out) {
     if(N ==4096){ idx_LKUP = INDEX_LOOKUP_4096; } 
 */
 
+
+
+
     let i = 0;
     while(i < len){
         // TwiddleFactors
-        const tRe = factors[idx_LKUP[i++]];
-        const tIm = factors[idx_LKUP[i++]];
+        const tRe = factors[idx_LKUP[i+1]];
+        const tIm = factors[idx_LKUP[i+2]];
         // Get real and imaginary parts of elements
-        const eReI = idx_LKUP[i++];
-        const eImI = idx_LKUP[i++];
-        const oReI = idx_LKUP[i++];
-        const oImI = idx_LKUP[i++];
+        const eReI = idx_LKUP[i+3];
+        const eImI = idx_LKUP[i+4];
+        const oReI = idx_LKUP[i+5];
+        const oImI = idx_LKUP[i+6];
+        i+=6;
         const eRe  = out[eReI];
         const eIm  = out[eImI];
         const oRe  = out[oReI];
@@ -637,6 +641,8 @@ function fftComplexInPlace(out) {
 
     return out;
 }
+
+
 
 
 
