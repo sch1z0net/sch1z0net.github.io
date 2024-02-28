@@ -481,6 +481,120 @@ function fftRealInPlaceRADIX2(realInput) {
 /**********************************************************************************************/
 
 
+function fftComplexInPlace_tidy(out) {
+    const N = out.length / 2;
+    const bits = Math.log2(N);
+
+    let factors;
+    if(N == 4){    factors = LOOKUP_RADIX2_4;    }
+    if(N == 8){    factors = LOOKUP_RADIX2_8;    }
+    if(N == 16){   factors = LOOKUP_RADIX2_16;   }
+    if(N == 32){   factors = LOOKUP_RADIX2_32;   }
+    if(N == 64){   factors = LOOKUP_RADIX2_64;   }
+    if(N == 128){  factors = LOOKUP_RADIX2_128;  }
+    if(N == 256){  factors = LOOKUP_RADIX2_256;  }
+    if(N == 512){  factors = LOOKUP_RADIX2_512;  }
+    if(N == 1024){ factors = LOOKUP_RADIX2_1024; }
+    if(N == 2048){ factors = LOOKUP_RADIX2_2048; }
+    if(N == 4096){ factors = LOOKUP_RADIX2_4096; }
+
+
+    let pre  = 0;    //offset for indexing Factor Lookup 
+    let pwr  = 0;    //power 
+    let mpwr = bits; //max power
+    //for (let size = 4; size <= N; size <<= 2) {
+    //let js = new Array(N/2);
+    for (let size = 2; size <= N; size <<= 1) {
+        //console.log("-size "+size+"-------------------------------------------------------------------------------------------------");
+        pwr++;
+        // Define variables
+        let i = 0;    // ev index, increases with every line step
+        let l = 0;    // line step made
+        let b = size; // block size
+        let bs = 0;   // block steps made
+        let ni = 0;   // number of indices handled 
+
+        const h = size >> 1;
+        const q = size >> 2;
+      
+        let c = (2-((N/b) & 1)) * N >> 2;  // circled index start
+
+        let br = (size==N) ? h/2 : 0;
+
+        const isNotPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
+        // runs N/2 times for PowerOf2
+        // runs N/4 times for PowerOf4
+        while (ni < N) {                                                                      
+            const eInd1 = i;        const oInd1 = i + h;                         
+            const eInd2 = i + c;    const oInd2 = i + h + c;              
+
+            // (1) Use precalculated FFT factors directly                                               
+            const j1 = (l)%h;
+
+            // (1) TwiddleFactors
+            const tRe1 = factors[pre + 2*j1 + 0];  // LOOKUP
+            const tIm1 = factors[pre + 2*j1 + 1];  // LOOKUP
+            // (1) Get real and imaginary parts of elements
+            const eRe1  = out[(eInd1 << 1)    ];
+            const eIm1  = out[(eInd1 << 1) + 1];
+            const oRe1  = out[(oInd1 << 1)    ];
+            const oIm1  = out[(oInd1 << 1) + 1];
+            // (1) Perform complex multiplications
+            const t_oRe1 = oRe1 * tRe1 - oIm1 * tIm1;
+            const t_oIm1 = oRe1 * tIm1 + oIm1 * tRe1;
+            // (1) Update elements with new values
+            out[(eInd1 << 1)    ] =  (eRe1 + t_oRe1);
+            out[(eInd1 << 1) + 1] =  (eIm1 + t_oIm1);
+            out[(oInd1 << 1)    ] =  (eRe1 - t_oRe1);
+            out[(oInd1 << 1) + 1] =  (eIm1 - t_oIm1);
+            
+            // Not Power of 4?
+            if( isNotPowerOf4 ){ 
+                i++; l++; ni+=2;
+                // line reaches block-end
+                if (l % h === 0) { bs++; i=bs*b; }
+                continue; 
+            }
+            
+            // (2) Use precalculated FFT factors directly  
+            if( N == 4 ){ l = 1; } // Correction for a special case
+
+            const j2 = j1 + br;
+            // (1) TwiddleFactors
+            const tRe2 = factors[pre + 2*j2 + 0];  // LOOKUP
+            const tIm2 = factors[pre + 2*j2 + 1];  // LOOKUP
+            // (2) Get real and imaginary parts of elements
+            const eRe2  = out[(eInd2 << 1)    ];
+            const eIm2  = out[(eInd2 << 1) + 1];
+            const oRe2  = out[(oInd2 << 1)    ];
+            const oIm2  = out[(oInd2 << 1) + 1];
+            // (2) Perform complex multiplications
+            const t_oRe2 = oRe2 * tRe2 - oIm2 * tIm2;
+            const t_oIm2 = oRe2 * tIm2 + oIm2 * tRe2;
+            // (2) Update elements with new values
+            out[(eInd2 << 1)    ] =  (eRe2 + t_oRe2);
+            out[(eInd2 << 1) + 1] =  (eIm2 + t_oIm2);
+            out[(oInd2 << 1)    ] =  (eRe2 - t_oRe2);
+            out[(oInd2 << 1) + 1] =  (eIm2 - t_oIm2);
+
+            i++; l++; ni+=4;
+            // line reaches block-end
+            if (l % h === 0) { bs++; i=bs*b; }
+        }
+        pre += size;
+    }
+
+    return out;
+}
+
+
+
+
+
+
+
+
+
 function index_lookup(N){
     const bits = Math.log2(N);
 
@@ -503,7 +617,9 @@ function index_lookup(N){
         const h = size >> 1;
         const q = size >> 2;
       
-        let c = (2-((N/b) & 1)) * N >> 2;  // circled index start
+        let c = N >> 2;  // circled index start
+        if( N/b == 1 ){ c = N >> 1; }; 
+
         let br = (size==N) ? h/2 : 0;
 
         const isNotPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
@@ -580,7 +696,7 @@ let factors = LOOKUP_RADIX2_1024;
 let idx_LKUP = INDEX_LOOKUP_1024;
 let len = idx_LKUP.length;
 
-function fftComplexInPlace(out) {
+function fftComplexInPlace_seq(out) {
     const N = out.length/2;
 
     let factors;
@@ -636,10 +752,6 @@ function fftComplexInPlace(out) {
 
     return out;
 }
-
-
-
-
 
 
 function fftComplexInPlace_tidy(out) {
