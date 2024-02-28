@@ -1521,16 +1521,6 @@ const testData1024 = generateTestData(1024);
 const testData2048 = generateTestData(2048);
 const testData4096 = generateTestData(4096);
 
-const signal1 = [ 1.0, 0.4, 0.0, 0.2 ];
-const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5 ];
-const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
-const signal4 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
-
-/*console.log(compareFFTResults(fftRealInPlace_ref(signal1),fftRealInPlaceRADIX4(signal1)));
-console.log(compareFFTResults(fftRealInPlace_ref(signal2),fftRealInPlaceRADIX4(signal2)));
-console.log(compareFFTResults(fftRealInPlace_ref(signal3),fftRealInPlaceRADIX4(signal3)));
-console.log(compareFFTResults(fftRealInPlace_ref(signal4),fftRealInPlaceRADIX4(signal4)));*/
-
 console.log("8:    ",compareFFTResults(fftRealInPlace_ref(testData8),fftRealInPlaceRADIX4(testData8)));
 console.log("16:   ",compareFFTResults(fftRealInPlace_ref(testData16),fftRealInPlaceRADIX4(testData16)));
 console.log("32:   ",compareFFTResults(fftRealInPlace_ref(testData32),fftRealInPlaceRADIX4(testData32)));
@@ -1565,11 +1555,16 @@ console.log(fftRealInPlace_ref(signal3));
 console.log("---------Radix4---------");
 console.log(fftRealInPlaceRADIX4(signal3));*/
 
-/*
+
+const signal1 = [ 1.0, 0.4, 0.0, 0.2 ];
+const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5 ];
+const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
+const signal4 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
+
 console.log(signal1);
 console.log(computeInverseFFT(computeFFT(signal1)));
 console.log(signal2);
 console.log(computeInverseFFT(computeFFT(signal2)));
 console.log(signal3);
-console.log(computeInverseFFT(computeFFT(signal3)));*/
+console.log(computeInverseFFT(computeFFT(signal3)));
 
