@@ -1348,5 +1348,5 @@ console.log(signal3);
 console.log(computeInverseFFT(computeFFT(signal3)));
 */
 
-console.log(computeFFT(signal1));
+console.log(computeFFT(signal2));
 
