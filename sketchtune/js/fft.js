@@ -611,7 +611,7 @@ function fftComplexInPlace(out, factors) {
         pre += size;
     }
     
-    //console.log(out);
+    console.log(out);
 
     return out;
 }
@@ -1131,6 +1131,7 @@ function prepare_and_fft(inputSignal, fftFactorLookup=null) {
 
 
 function FFT(inputSignal, fftFactorLookup=null) {
+    console.log("----FFT-----");
     return prepare_and_fft(inputSignal, fftFactorLookup);
 }
 
@@ -1197,26 +1198,9 @@ function ifft(input) {
     return ifftResult;
 }
 
-/*
-async function ifft(input) {
-    const N = input.length;
-    const pi = Math.PI;
-
-    // Take the complex conjugate of the input spectrum
-    const conjugateSpectrum = input.map(({ re, im }) => ({ re: re, im: -im }));
-
-    // Apply FFT to the conjugate spectrum
-    const fftResult = await fftComplexInPlace(conjugateSpectrum);
-    //const fftResult = await fft(conjugateSpectrum);
-
-    // Take the complex conjugate of the FFT result
-    const ifftResult = fftResult.map(({ re, im }) => ({ re: re / N, im: -im / N }));
-
-    return ifftResult;
-}*/
-
 
 function IFFT(spectrum) {
+    console.log("----IFFT-----");
     return ifft(spectrum);
 }
 
@@ -1387,5 +1371,5 @@ measureTime(1, 4096);*/
 
 
 
-console.log(IFFT(FFT([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])));
+//console.log(IFFT(FFT([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])));
 
