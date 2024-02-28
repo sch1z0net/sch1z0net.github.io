@@ -978,12 +978,14 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
 
     // Perform bit reversal
     const output = new Float32Array(N * 2);
+    let brs = [];
     for (let i = 0; i < N; i++) {
         const reversedIndex = bitReverse(i, bits);
-        console.log("BR:",reversedIndex);
+        brs.push(reversedIndex);
         output[reversedIndex * 2] = input[i]; // Copy real part
         output[reversedIndex * 2 + 1] = 0; // Copy imaginary part
     }
+    console.log("BR:",brs);
 
     if (N <= 1) {
         return output;
