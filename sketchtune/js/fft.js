@@ -1412,7 +1412,7 @@ console.log(fftRealInPlaceRADIX4([1,-10,-2,20]));
 //console.log(fftRealInPlaceRADIX4([0,0.5,1,0.5]));
 
 
-const spectrum = FFT([0,0.5,1,0.5]);
+const spectrum = FFT([0,0.5,1,0.5,0,-0.5,1,-0.5,]);
 const complexSpectrum = [];
 for (let i = 0; i < spectrum.length; i += 2) {
     complexSpectrum.push({ re: spectrum[i], im: spectrum[i + 1] });
