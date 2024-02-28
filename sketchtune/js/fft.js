@@ -610,7 +610,7 @@ function fftComplexInPlace(out) {
     if(N ==2048){ idx_LKUP = INDEX_LOOKUP_2048; }  
     if(N ==4096){ idx_LKUP = INDEX_LOOKUP_4096; } 
 */
-    
+
     let i = 0;
     while(i < len){
         // TwiddleFactors
@@ -827,6 +827,8 @@ function fftComplexInPlace_tidy(out) {
 
 /******************** WRAPPER *******************************************************/
 
+let map = bitReversalMap1024.get(N);
+
 function fftRealInPlaceRADIX4(realInput) {
     const N = realInput.length;
     const bits = Math.log2(N);
@@ -839,6 +841,7 @@ function fftRealInPlaceRADIX4(realInput) {
     // Create a copy of the input array
     const input = realInput.slice();
     
+    /*
     let map;
     if(N == 4){    map = bitReversalMap4.get(N);}
     if(N == 8){    map = bitReversalMap8.get(N);}
@@ -851,6 +854,7 @@ function fftRealInPlaceRADIX4(realInput) {
     if(N == 1024){ map = bitReversalMap1024.get(N);}
     if(N == 2048){ map = bitReversalMap2048.get(N);}
     if(N == 4096){ map = bitReversalMap4096.get(N);}
+    */
 
     // Perform bit reversal
     const inputBR = new Float32Array(N);
