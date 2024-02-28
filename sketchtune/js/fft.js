@@ -1489,16 +1489,19 @@ function compareFFTResults(array1, array2) {
     return true;
 }
 
-const testData512  = generateTestData(512);
+/*
 const testData512  = generateTestData(512);
 const testData1024 = generateTestData(1024);
 const testData2048 = generateTestData(2048);
 const testData4096 = generateTestData(2096);
+*/
 
-/*measureTime(1, 512);
+/*
+measureTime(1, 512);
 measureTime(1, 1024);
 measureTime(1, 2048);
-measureTime(1, 4096);*/
+measureTime(1, 4096);
+*/
 
 const signal1 = [ 1.0, 0.4, 0.0, 0.2];
 const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5];
