@@ -666,8 +666,7 @@ function fftComplexInPlace_tidy(out) {
     if(N == 4096){ factors = LOOKUP_RADIX2_4096; }
 
 
-    let pre  = 0;    //offset for indexing Factor Lookup
-    let inv  = 1;    
+    let pre  = 0;    //offset for indexing Factor Lookup 
     let pwr  = 0;    //power 
     let mpwr = bits; //max power
     //for (let size = 4; size <= N; size <<= 2) {
@@ -681,8 +680,6 @@ function fftComplexInPlace_tidy(out) {
         let b = size; // block size
         let bs = 0;   // block steps made
         let ni = 0;   // number of indices handled 
-
-        //if (size == N) { inv = -inv; }
 
         const h = size >> 1;
         const q = size >> 2;
@@ -768,10 +765,10 @@ function fftComplexInPlace_tidy(out) {
             const t_oRe1 = oRe1 * tRe1 - oIm1 * tIm1;
             const t_oIm1 = oRe1 * tIm1 + oIm1 * tRe1;
             // (1) Update elements with new values
-            out[(eInd1 << 1)    ] =       (eRe1 + t_oRe1);
-            out[(eInd1 << 1) + 1] = inv * (eIm1 + t_oIm1);
-            out[(oInd1 << 1)    ] =       (eRe1 - t_oRe1);
-            out[(oInd1 << 1) + 1] = inv * (eIm1 - t_oIm1);
+            out[(eInd1 << 1)    ] =  (eRe1 + t_oRe1);
+            out[(eInd1 << 1) + 1] =  (eIm1 + t_oIm1);
+            out[(oInd1 << 1)    ] =  (eRe1 - t_oRe1);
+            out[(oInd1 << 1) + 1] =  (eIm1 - t_oIm1);
             
             //console.log("**** EV.RE",eInd1,(eRe1 + t_oRe1).toFixed(2),"<- EV.RE",eInd1,"+ (OD.RE",oInd1,"* TW.RE",j1,"- OD.IM",oInd1,"* TW.IM",j1,")","|||||||","EV.IM",eInd1,(eIm1 + t_oIm1).toFixed(2),"<- EV.IM",eInd1,"+ (OD.RE",oInd1,"* TW.IM",j1,"+ OD.IM",oInd1,"* TW.RE",j1,")");
             //console.log("**** OD.RE",oInd1,(eRe1 - t_oRe1).toFixed(2),"<- EV.RE",eInd1,"- (OD.RE",oInd1,"* TW.RE",j1,"- OD.IM",oInd1,"* TW.IM",j1,")","|||||||","OD.IM",oInd1,(eIm1 - t_oIm1).toFixed(2),"<- EV.IM",eInd1,"- (OD.RE",oInd1,"* TW.IM",j1,"+ OD.IM",oInd1,"* TW.RE",j1,")");
@@ -806,10 +803,10 @@ function fftComplexInPlace_tidy(out) {
             const t_oRe2 = oRe2 * tRe2 - oIm2 * tIm2;
             const t_oIm2 = oRe2 * tIm2 + oIm2 * tRe2;
             // (2) Update elements with new values
-            out[(eInd2 << 1)    ] =       (eRe2 + t_oRe2);
-            out[(eInd2 << 1) + 1] = inv * (eIm2 + t_oIm2);
-            out[(oInd2 << 1)    ] =       (eRe2 - t_oRe2);
-            out[(oInd2 << 1) + 1] = inv * (eIm2 - t_oIm2);
+            out[(eInd2 << 1)    ] =  (eRe2 + t_oRe2);
+            out[(eInd2 << 1) + 1] =  (eIm2 + t_oIm2);
+            out[(oInd2 << 1)    ] =  (eRe2 - t_oRe2);
+            out[(oInd2 << 1) + 1] =  (eIm2 - t_oIm2);
 
             //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
             //console.log(eInd1,oInd1,"-",j1,"|||",eInd2,oInd2,"-",j2);
@@ -845,7 +842,6 @@ function fftRealInPlaceRADIX4(realInput) {
     
     // Create a copy of the input array
     const input = realInput.slice();
-    
     
     let map;
     if(N == 4){    map = bitReversalMap4.get(N);}
