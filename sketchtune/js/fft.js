@@ -950,8 +950,10 @@ function fftComplexInPlace2(input, fftFactorLookup = null) {
                 const oddPartRe = output[oddIndex * 2];
                 const oddPartIm = output[oddIndex * 2 + 1];
 
-                const twiddleRe = factors[bitReverse(j, bits) * 2];
-                const twiddleIm = factors[bitReverse(j, bits) * 2 + 1];
+                const ji = j;
+                const rev = bitReverse(ji, bits);
+                const twiddleRe = factors[rev * 2];
+                const twiddleIm = factors[rev * 2 + 1];
 
                 // Multiply by twiddle factors
                 const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
@@ -1008,8 +1010,10 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
                 const oddPartRe = output[oddIndex * 2];
                 const oddPartIm = output[oddIndex * 2 + 1];
 
-                const twiddleRe = factors[bitReverse(j, bits) * 2];
-                const twiddleIm = factors[bitReverse(j, bits) * 2 + 1];
+                const ji = j;
+                const rev = bitReverse(ji, bits);
+                const twiddleRe = factors[rev * 2];
+                const twiddleIm = factors[rev * 2 + 1];
 
                 // Multiply by twiddle factors
                 const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
