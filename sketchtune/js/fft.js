@@ -827,7 +827,7 @@ function fftComplexInPlace_tidy(out) {
 
 /******************** WRAPPER *******************************************************/
 
-let map = bitReversalMap1024.get(N);
+let map = bitReversalMap1024.get(1024);
 
 function fftRealInPlaceRADIX4(realInput) {
     const N = realInput.length;
