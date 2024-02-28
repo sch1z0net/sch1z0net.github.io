@@ -479,7 +479,7 @@ function fftComplexInPlace(out, factors) {
     //for (let size = 4; size <= N; size <<= 2) {
     let js = new Array(N/2);
     for (let size = 2; size <= N; size <<= 1) {
-        console.log("-size "+size+"-------------------------------------------------------------------------------------------------");
+        //console.log("-size "+size+"-------------------------------------------------------------------------------------------------");
         pwr++;
         // Define variables
         let i = 0;    // ev index, increases with every line step
@@ -488,7 +488,7 @@ function fftComplexInPlace(out, factors) {
         let bs = 0;   // block steps made
         let ni = 0;   // number of indices handled 
 
-        if (size == N) { inv = -inv; }
+        //if (size == N) { inv = -inv; }
 
         const h = size >> 1;
         const q = size >> 2;
@@ -541,7 +541,7 @@ function fftComplexInPlace(out, factors) {
             // (1) Use precalculated FFT factors directly                                               
             //const tIdxRe1 = pre + (2*l + 0)%b;  const tIdxIm1 = pre + (2*l + 1)%b; 
             const j1 = (l)%h;
-            js[l] = j1;
+            //js[l] = j1;
             // (1) TwiddleFactors
             const tRe1 = Math.cos((2 * Math.PI * j1) / size);  // Calculate Directly
             const tIm1 = Math.sin((2 * Math.PI * j1) / size);  // Calculate Directly
@@ -562,8 +562,8 @@ function fftComplexInPlace(out, factors) {
             out[(oInd1 << 1)    ] =       (eRe1 - t_oRe1);
             out[(oInd1 << 1) + 1] = inv * (eIm1 - t_oIm1);
             
-            console.log("**** EV.RE",eInd1,(eRe1 + t_oRe1).toFixed(2),"<- EV.RE",eInd1,"+ (OD.RE",oInd1,"* TW.RE",j1,"- OD.IM",oInd1,"* TW.IM",j1,")","|||||||","EV.IM",eInd1,(eIm1 + t_oIm1).toFixed(2),"<- EV.IM",eInd1,"+ (OD.RE",oInd1,"* TW.IM",j1,"+ OD.IM",oInd1,"* TW.RE",j1,")");
-            console.log("**** OD.RE",oInd1,(eRe1 - t_oRe1).toFixed(2),"<- EV.RE",eInd1,"- (OD.RE",oInd1,"* TW.RE",j1,"- OD.IM",oInd1,"* TW.IM",j1,")","|||||||","OD.IM",oInd1,(eIm1 - t_oIm1).toFixed(2),"<- EV.IM",eInd1,"- (OD.RE",oInd1,"* TW.IM",j1,"+ OD.IM",oInd1,"* TW.RE",j1,")");
+            //console.log("**** EV.RE",eInd1,(eRe1 + t_oRe1).toFixed(2),"<- EV.RE",eInd1,"+ (OD.RE",oInd1,"* TW.RE",j1,"- OD.IM",oInd1,"* TW.IM",j1,")","|||||||","EV.IM",eInd1,(eIm1 + t_oIm1).toFixed(2),"<- EV.IM",eInd1,"+ (OD.RE",oInd1,"* TW.IM",j1,"+ OD.IM",oInd1,"* TW.RE",j1,")");
+            //console.log("**** OD.RE",oInd1,(eRe1 - t_oRe1).toFixed(2),"<- EV.RE",eInd1,"- (OD.RE",oInd1,"* TW.RE",j1,"- OD.IM",oInd1,"* TW.IM",j1,")","|||||||","OD.IM",oInd1,(eIm1 - t_oIm1).toFixed(2),"<- EV.IM",eInd1,"- (OD.RE",oInd1,"* TW.IM",j1,"+ OD.IM",oInd1,"* TW.RE",j1,")");
 
             // Not Power of 4?
             if( isNotPowerOf4 ){ 
@@ -579,7 +579,7 @@ function fftComplexInPlace(out, factors) {
             if( N == 4 ){ l = 1; } // Correction for a special case
             //const tIdxRe2 = pre + (2*l + N/2 + 0)%b;  const tIdxIm2 = pre + (2*l + N/2 + 1)%b;
             const j2 = j1 + br;
-            js[l+N/4] = j2;
+            //js[l+N/4] = j2;
             // (1) TwiddleFactors
             const tRe2 = Math.cos((2 * Math.PI * j2) / size);  // Calculate Directly
             const tIm2 = Math.sin((2 * Math.PI * j2) / size);  // Calculate Directly
@@ -602,17 +602,17 @@ function fftComplexInPlace(out, factors) {
             //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
             //console.log(eInd1,oInd1,"-",j1,"|||",eInd2,oInd2,"-",j2);
 
-            console.log("**** EV.RE",eInd2,(eRe2 + t_oRe2).toFixed(2),"<- EV.RE",eInd2,"+ (OD.RE",oInd2,"* TW.RE",j2,"- OD.IM",oInd2,"* TW.IM",j2,")","|||||||","EV.IM",eInd2,(eIm2 + t_oIm2).toFixed(2),"<- EV.IM",eInd2,"+ (OD.RE",oInd2,"* TW.IM",j2,"+ OD.IM",oInd2,"* TW.RE",j2,")");
-            console.log("**** OD.RE",oInd2,(eRe2 - t_oRe2).toFixed(2),"<- EV.RE",eInd2,"- (OD.RE",oInd2,"* TW.RE",j2,"- OD.IM",oInd2,"* TW.IM",j2,")","|||||||","OD.IM",oInd2,(eIm2 - t_oIm2).toFixed(2),"<- EV.IM",eInd2,"- (OD.RE",oInd2,"* TW.IM",j2,"+ OD.IM",oInd2,"* TW.RE",j2,")");
+            //console.log("**** EV.RE",eInd2,(eRe2 + t_oRe2).toFixed(2),"<- EV.RE",eInd2,"+ (OD.RE",oInd2,"* TW.RE",j2,"- OD.IM",oInd2,"* TW.IM",j2,")","|||||||","EV.IM",eInd2,(eIm2 + t_oIm2).toFixed(2),"<- EV.IM",eInd2,"+ (OD.RE",oInd2,"* TW.IM",j2,"+ OD.IM",oInd2,"* TW.RE",j2,")");
+            //console.log("**** OD.RE",oInd2,(eRe2 - t_oRe2).toFixed(2),"<- EV.RE",eInd2,"- (OD.RE",oInd2,"* TW.RE",j2,"- OD.IM",oInd2,"* TW.IM",j2,")","|||||||","OD.IM",oInd2,(eIm2 - t_oIm2).toFixed(2),"<- EV.IM",eInd2,"- (OD.RE",oInd2,"* TW.IM",j2,"+ OD.IM",oInd2,"* TW.RE",j2,")");
 
             i++; l++; ni+=4;
             // line reaches block-end
             if (l % h === 0) { bs++; i=bs*b; }
         }
         pre += size;
-        //console.log("size:"+size, out);
+        console.log("size:"+size, out);
         //console.log("size:"+size, js);
-        js = new Array(N/2);
+        //js = new Array(N/2);
     }
 
     return out;
