@@ -480,7 +480,7 @@ function fftComplexInPlace(out, factors) {
     let pwr  = 0;    //power 
     let mpwr = bits; //max power
     //for (let size = 4; size <= N; size <<= 2) {
-    let js = new Array(N/2);
+    //let js = new Array(N/2);
     for (let size = 2; size <= N; size <<= 1) {
         //console.log("-size "+size+"-------------------------------------------------------------------------------------------------");
         pwr++;
@@ -546,11 +546,11 @@ function fftComplexInPlace(out, factors) {
             const j1 = (l)%h;
             //js[l] = j1;
             // (1) TwiddleFactors
-            const tRe1 = Math.cos((2 * Math.PI * j1) / size);  // Calculate Directly
-            const tIm1 = Math.sin((2 * Math.PI * j1) / size);  // Calculate Directly
-
-            //const tRe1 = factors[tIdxRe1];
-            //const tIm1 = factors[tIdxIm1];
+            //const tRe1 = Math.cos((2 * Math.PI * j1) / size);  // Calculate Directly
+            //const tIm1 = Math.sin((2 * Math.PI * j1) / size);  // Calculate Directly
+            const tRe1 = factors[pre + j1 + 0];  // LOOKUP
+            const tIm1 = factors[pre + j1 + 1];  // LOOKUP
+            
             // (1) Get real and imaginary parts of elements
             const eRe1  = out[(eInd1 << 1)    ];
             const eIm1  = out[(eInd1 << 1) + 1];
@@ -584,10 +584,11 @@ function fftComplexInPlace(out, factors) {
             const j2 = j1 + br;
             //js[l+N/4] = j2;
             // (1) TwiddleFactors
-            const tRe2 = Math.cos((2 * Math.PI * j2) / size);  // Calculate Directly
-            const tIm2 = Math.sin((2 * Math.PI * j2) / size);  // Calculate Directly
-            //const tRe1 = factors[tIdxRe1];
-            //const tIm1 = factors[tIdxIm1];
+            //const tRe2 = Math.cos((2 * Math.PI * j2) / size);  // Calculate Directly
+            //const tIm2 = Math.sin((2 * Math.PI * j2) / size);  // Calculate Directly
+            const tRe2 = factors[pre + j2 + 0];  // LOOKUP
+            const tIm2 = factors[pre + j2 + 1];  // LOOKUP
+
             // (2) Get real and imaginary parts of elements
             const eRe2  = out[(eInd2 << 1)    ];
             const eIm2  = out[(eInd2 << 1) + 1];
@@ -1072,10 +1073,10 @@ function fftRealInPlace_ref(input, fftFactorLookup = null) {
                 const t_oIm = oRe * twiddleIm + oIm * twiddleRe;
 
                 // Combine results of even and odd parts in place
-                output[evenIndex * 2]     = eRe + t_oRe;
+                output[evenIndex * 2    ] = eRe + t_oRe;
                 output[evenIndex * 2 + 1] = eIm + t_oIm;
-                output[oddIndex * 2]      = eRe - t_oRe;
-                output[oddIndex * 2 + 1]  = eIm - t_oIm;
+                output[oddIndex  * 2    ] = eRe - t_oRe;
+                output[oddIndex  * 2 + 1] = eIm - t_oIm;
 
                 //console.log("**** EV.RE",evenIndex,(eRe + t_oRe).toFixed(2),"<- EV.RE",evenIndex,"+ (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","EV.IM",evenIndex,(eIm + t_oIm).toFixed(2),"<- EV.IM",evenIndex,"+ (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
                 //console.log("**** OD.RE",oddIndex ,(eRe - t_oRe).toFixed(2),"<- EV.RE",evenIndex,"- (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","OD.IM",oddIndex ,(eIm - t_oIm).toFixed(2),"<- EV.IM",evenIndex,"- (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
