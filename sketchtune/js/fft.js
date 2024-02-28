@@ -1064,9 +1064,14 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
                 output[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
                 output[oddIndex * 2]      = evenPartRe - twiddledOddRe;
                 output[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
+
+                console.log("EV.RE",evenIndex,"<- EV.RE",evenIndex,"+ (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")");
+                console.log("EV.IM",evenIndex,"<- EV.IM",evenIndex,"+ (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
+                console.log("OD.RE",oddIndex ,"<- EV.RE",evenIndex,"- (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")");
+                console.log("OD.IM",oddIndex ,"<- EV.IM",evenIndex,"- (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
             }
         }
-        console.log("size:"+size, output);
+        //console.log("size:"+size, output);
         //console.log("size:"+size, js);
         js = [];
     }
