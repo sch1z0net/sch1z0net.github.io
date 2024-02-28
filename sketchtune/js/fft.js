@@ -548,8 +548,10 @@ function fftComplexInPlace(out, factors) {
         
         const isNotPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
         while (ni < N) {                                                               
-            const eInd1 = i;        const oInd1 = i + h;                         
-            const eInd2 = i + c;    const oInd2 = i + h + c;              
+            //const eInd1 = i;        const oInd1 = i + h;                         
+            //const eInd2 = i + c;    const oInd2 = i + h + c;              
+            const eInd1 = i;        const oInd1 = i + c;                         
+            const eInd2 = i + h;    const oInd2 = i + h + c;              
 
 
             // (1) Use precalculated FFT factors directly                                               
