@@ -573,7 +573,7 @@ function fftComplexInPlace(out, factors) {
             out[(oInd1 << 1)    ] =       (eRe1 - t_oRe1);
             out[(oInd1 << 1) + 1] = inv * (eIm1 - t_oIm1);
 
-            console.log(out[(eInd1 << 1)],out[(eInd1 << 1) + 1],out[(oInd1 << 1)],out[(oInd1 << 1) + 1]);
+            //console.log(out[(eInd1 << 1)],out[(eInd1 << 1) + 1],out[(oInd1 << 1)],out[(oInd1 << 1) + 1]);
             
             // Not Power of 4?
             if( isNotPowerOf4 ){ 
@@ -604,7 +604,7 @@ function fftComplexInPlace(out, factors) {
             out[(oInd2 << 1)    ] =       (eRe2 - t_oRe2);
             out[(oInd2 << 1) + 1] = inv * (eIm2 - t_oIm2);
 
-            console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
+            //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
 
             i++; l++; ni+=4;
             // line reaches block-end
