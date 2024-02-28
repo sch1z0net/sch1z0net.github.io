@@ -574,7 +574,7 @@ function fftComplexInPlace(out, factors) {
             
             // Not Power of 4?
             if( isNotPowerOf4 ){ 
-                //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1);
+                console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1);
                 i++; l++; ni+=2;
                 // line reaches block-end
                 if (l % h === 0) { bs++; i=bs*b; }
