@@ -477,7 +477,7 @@ function fftComplexInPlace(out, factors) {
     let pwr  = 0;    //power 
     let mpwr = bits; //max power
     //for (let size = 4; size <= N; size <<= 2) {
-    let js = [];
+    let js = new Array(N/2);
     for (let size = 2; size <= N; size <<= 1) {
         pwr++;
         // Define variables
@@ -541,7 +541,7 @@ function fftComplexInPlace(out, factors) {
             // (1) Use precalculated FFT factors directly                                               
             //const tIdxRe1 = pre + (2*l + 0)%b;  const tIdxIm1 = pre + (2*l + 1)%b; 
             const j1 = (l)%h;
-            js.push(j1);
+            js[l] = j1;
             // (1) TwiddleFactors
             const tRe1 = Math.cos((2 * Math.PI * j1) / size);  // Calculate Directly
             const tIm1 = Math.sin((2 * Math.PI * j1) / size);  // Calculate Directly
@@ -575,7 +575,7 @@ function fftComplexInPlace(out, factors) {
             if( N == 4 ){ l = 1 } // Correction for a special case
             //const tIdxRe2 = pre + (2*l + N/2 + 0)%b;  const tIdxIm2 = pre + (2*l + N/2 + 1)%b;
             const j2 = (j1+h/2)%h;
-            js.push(j2);
+            js[l*2] = j2;
             // (1) TwiddleFactors
             const tRe2 = Math.cos((2 * Math.PI * j2) / size);  // Calculate Directly
             const tIm2 = Math.sin((2 * Math.PI * j2) / size);  // Calculate Directly
@@ -604,7 +604,7 @@ function fftComplexInPlace(out, factors) {
         pre += size;
 
         console.log("size:"+size, js);
-        js = [];
+        js = new Array(N/2);
     }
 
     return out;
