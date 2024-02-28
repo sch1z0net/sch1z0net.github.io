@@ -586,7 +586,7 @@ function fftComplexInPlace(out, factors) {
             
             // (2) Use precalculated FFT factors directly  
             if( N == 4 ){ l = 1 } // Correction for a special case
-            const tIdxRe2 = pre + (2*l + 0)%b;  const tIdxIm2 = pre + (2*l + 1)%b;
+            const tIdxRe2 = pre + (2*(2*l + 0))%b;  const tIdxIm2 = pre + (2*(2*l + 1))%b;
             // (2) TwiddleFactors
             const tRe2 = factors[tIdxRe2];
             const tIm2 = factors[tIdxIm2];
@@ -608,7 +608,7 @@ function fftComplexInPlace(out, factors) {
 
             i++; l++; ni+=4;
             // line reaches block-end
-            if (l % q === 0) { bs++; i=bs*b; }
+            if (l % h === 0) { bs++; i=bs*b; }
         }
         pre += size;
     }
