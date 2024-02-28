@@ -513,15 +513,15 @@ function fftComplexInPlace(out, factors) {
         //  power = 1          power = 2          power = 3           power = 4
         //  size = 2           size = 4           size = 8            size = 16
         //  half = 1           half = 2           half = 4            half =  8
-        //  ev  j odd  j       ev  j odd  j       ev  j odd  j        ev  j odd  j
-        // _0   0   1  0       0   0   2  1       0   0   4  1         0  0   8  1
-        //  2   0   3  0      _1   0   3  1       1   2   5  3         1  2   9  3
-        //  4   0   5  0       4   0   6  1       2   0   6  1         2  4  10  5
-        //  6   0   7  0       5   0   7  1      _3   2   7  3         3  6  11  7
-        // (8)  0   9  0      (8)  0  10  1      (8)  0  12  1        (4) 0  12  1 <---- circled index start = 4
-        // 10   0  11  0       9   0  11  1       9   2  13  3         5  2  13  3
-        // 12   0  13  0      12   0  14  1      10   0  14  1         6  4  14  5
-        // 14   0  15  0      13   0  15  1      11   2  15  3        _7  5  15  7
+        //  ev  j odd          ev  j odd       _  ev  j odd           ev  j odd 
+        // _0   0   1          0   0   2      |   0   0   4            0  0   8  
+        //  2   0   3         _1   1   3      |h  1   1   5            1  1   9  
+        //  4   0   5          4   0   6      |   2   2   6            2  2  10  
+        //  6   0   7          5   1   7      |_ _3   3   7            3  3  11  
+        // (8)  0   9         (8)  0  10         (8)  0  12           (4) 4  12   <---- circled index start = 4
+        // 10   0  11          9   1  11          9   1  13            5  5  13  
+        // 12   0  13         12   0  14         10   2  14            6  6  14  
+        // 14   0  15         13   1  15         11   3  15           _7  7  15  
         //  
         // ratio = 4          ratio = 2           ratio = 1          ratio = 1/2       (N/b) -> 1  2  4 ..... 8
         // _block = 2         _block = 4          _block = 8         _block = 16       1 is a special case, map it to 1/2 and the rest to 1
@@ -531,14 +531,16 @@ function fftComplexInPlace(out, factors) {
         //console.log("------------------------ size",size)
 
         const isNotPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
-        while (ni < N) {                                                                          
+        // runs N/2 times for PowerOf2
+        // runs N/4 times for PowerOf4
+        while (ni < N) {                                                                      
             const eInd1 = i;        const oInd1 = i + h;                         
             const eInd2 = i + c;    const oInd2 = i + h + c;              
 
 
             // (1) Use precalculated FFT factors directly                                               
             //const tIdxRe1 = pre + (2*l + 0)%b;  const tIdxIm1 = pre + (2*l + 1)%b; 
-            const j1 = (2*l)%h;
+            const j1 = (l)%h;
             js.push(j1);
             // (1) TwiddleFactors
             const tRe1 = Math.cos((2 * Math.PI * j1) / size);  // Calculate Directly
@@ -572,7 +574,7 @@ function fftComplexInPlace(out, factors) {
             // (2) Use precalculated FFT factors directly  
             if( N == 4 ){ l = 1 } // Correction for a special case
             //const tIdxRe2 = pre + (2*l + N/2 + 0)%b;  const tIdxIm2 = pre + (2*l + N/2 + 1)%b;
-            const j2 = (j1+1)%h;
+            const j2 = (j1+h/2)%h;
             js.push(j2);
             // (1) TwiddleFactors
             const tRe2 = Math.cos((2 * Math.PI * j2) / size);  // Calculate Directly
