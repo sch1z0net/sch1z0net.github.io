@@ -553,7 +553,7 @@ function index_lookup(N){
 }
 
 INDEX_LOOKUP_1024 = index_lookup(1024);
-
+console.log(INDEX_LOOKUP_1024);
 
 
 function fftComplexInPlace(out, factors) {
