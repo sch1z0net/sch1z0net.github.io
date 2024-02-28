@@ -1050,10 +1050,10 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
                 const evenIndex = i + j;
                 const oddIndex = i + j + halfSize;
 
-                const evenPartRe = output[evenIndex * 2];
-                const evenPartIm = output[evenIndex * 2 + 1];
-                const oddPartRe = output[oddIndex * 2];
-                const oddPartIm = output[oddIndex * 2 + 1];
+                const eRe = output[evenIndex * 2];
+                const eIm = output[evenIndex * 2 + 1];
+                const oRe = output[oddIndex * 2];
+                const oIm = output[oddIndex * 2 + 1];
 
                 //const twiddleRe = Math.cos((2 * Math.PI * j) / size);
                 //const twiddleIm = Math.sin((2 * Math.PI * j) / size);
@@ -1067,13 +1067,13 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
                 const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
 
                 // Combine results of even and odd parts in place
-                output[evenIndex * 2]     = evenPartRe + twiddledOddRe;
-                output[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
-                output[oddIndex * 2]      = evenPartRe - twiddledOddRe;
-                output[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
+                output[evenIndex * 2]     = eRe + twiddledOddRe;
+                output[evenIndex * 2 + 1] = eIm + twiddledOddIm;
+                output[oddIndex * 2]      = eRe - twiddledOddRe;
+                output[oddIndex * 2 + 1]  = eIm - twiddledOddIm;
 
-                console.log("**** EV.RE",evenIndex,"<- EV.RE",evenIndex,"+ (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","EV.IM",evenIndex,"<- EV.IM",evenIndex,"+ (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
-                console.log("**** OD.RE",oddIndex ,"<- EV.RE",evenIndex,"- (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","OD.IM",oddIndex ,"<- EV.IM",evenIndex,"- (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
+                console.log("**** EV.RE",evenIndex,eRe.toFixed(2),"<- EV.RE",evenIndex,"+ (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","EV.IM",evenIndex,eIm.toFixed(2),"<- EV.IM",evenIndex,"+ (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
+                console.log("**** OD.RE",oddIndex ,oRe.toFixed(2),"<- EV.RE",evenIndex,"- (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","OD.IM",oddIndex ,oIm.toFixed(2),"<- EV.IM",evenIndex,"- (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
             }
         }
         //console.log("size:"+size, output);
