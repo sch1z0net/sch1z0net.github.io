@@ -1373,5 +1373,10 @@ measureTime(1, 4096);*/
 //console.log(FFT([1,0,1,0,1,0,1,0]));
 //console.log(FFT([1,-1,0,1,0,-1,0,1]));
 
-console.log(computeInverseFFT(FFT([1,3,5,7,2,4,6,8])));
+const spectrum = FFT([1,3,5,7,2,4,6,8]);
+const complexSpectrum = [];
+for (let i = 0; i < spectrum.length; i += 2) {
+    complexSpectrum.push({ re: spectrum[i], im: spectrum[i + 1] });
+}
+console.log(computeInverseFFT(complexSpectrum));
 
