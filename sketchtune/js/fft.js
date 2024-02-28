@@ -506,11 +506,10 @@ function fftComplexInPlace(out, factors) {
 
         const h = size >> 1;
         const q = size >> 2;
-
-        //let c = (2*N - ((N/b) & 1)) >> 2;         
+      
         let c = (2-((N/b) & 1)) * N >> 2;  // circled index start
 
-        console.log("------------------------ size",size)
+        //console.log("------------------------ size",size)
    
 
         //  For N = 4, the indices must look like this after each iteration
@@ -603,7 +602,7 @@ function fftComplexInPlace(out, factors) {
             out[(oInd2 << 1)    ] =       (eRe2 - t_oRe2);
             out[(oInd2 << 1) + 1] = inv * (eIm2 - t_oIm2);
 
-            console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
+            //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
 
             i++; l++; ni+=4;
             // line reaches block-end
