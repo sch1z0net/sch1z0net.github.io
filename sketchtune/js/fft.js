@@ -566,7 +566,7 @@ function fftComplexInPlace(out, factors) {
             // Not Power of 4?
             if( isNotPowerOf4 ){ 
                 //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1);
-                console.log(eInd1,oInd1,"-",j1);
+                //console.log(eInd1,oInd1,"-",j1);
                 i++; l++; ni+=2;
                 // line reaches block-end
                 if (l % h === 0) { bs++; i=bs*b; }
@@ -598,14 +598,14 @@ function fftComplexInPlace(out, factors) {
             out[(oInd2 << 1) + 1] = inv * (eIm2 - t_oIm2);
 
             //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
-            console.log(eInd1,oInd1,"-",j1,"|||",eInd2,oInd2,"-",j2);
+            //console.log(eInd1,oInd1,"-",j1,"|||",eInd2,oInd2,"-",j2);
             i++; l++; ni+=4;
             // line reaches block-end
             if (l % h === 0) { bs++; i=bs*b; }
         }
         pre += size;
-
-        console.log("size:"+size, js);
+        console.log("size:"+size, output);
+        //console.log("size:"+size, js);
         js = new Array(N/2);
     }
 
@@ -1053,7 +1053,7 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
                 const twiddleRe = factors[2 * j    ];
                 const twiddleIm = factors[2 * j + 1];
 
-                console.log(evenIndex,oddIndex,"-",j);
+                //console.log(evenIndex,oddIndex,"-",j);
 
                 // Multiply by twiddle factors
                 const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
@@ -1066,7 +1066,8 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
                 output[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
             }
         }
-        console.log("size:"+size, js);
+        console.log("size:"+size, output);
+        //console.log("size:"+size, js);
         js = [];
     }
 
