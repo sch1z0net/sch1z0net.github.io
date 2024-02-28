@@ -1506,10 +1506,16 @@ const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.
 
 //console.log(fftRealInPlace2(signal1));
 //console.log(fftRealInPlaceRADIX4(signal1));
+console.log("-----------OLD----------");
 console.log(fftRealInPlace2(signal2));
+console.log("---------Radix4---------");
 console.log(fftRealInPlaceRADIX4(signal2));
-
+console.log();
+console.log();
+console.log();
+console.log("-----------OLD----------");
 console.log(fftRealInPlace2(signal3));
+console.log("---------Radix4---------");
 console.log(fftRealInPlaceRADIX4(signal3));
 
 /*
