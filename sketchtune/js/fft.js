@@ -864,8 +864,8 @@ function fftRealInPlaceRADIX4(realInput) {
         complexOut[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
 
-    //return fftComplexInPlace_tidy(complexOut);
-    return fftComplexInPlace(complexOut);
+    return fftComplexInPlace_tidy(complexOut);
+    //return fftComplexInPlace(complexOut);
 }
 
 
@@ -1349,7 +1349,7 @@ function compareFFTResults(array1, array2) {
 measureTime(512);
 measureTime(1024);
 measureTime(2048);
-measureTime(4096);
+//measureTime(4096);
 
 
 /****************** TEST IF FORWARD IS CORRECT by comparison with REFERENCE *******************/ 
