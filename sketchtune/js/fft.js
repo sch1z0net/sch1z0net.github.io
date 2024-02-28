@@ -481,7 +481,50 @@ function fftRealInPlaceRADIX2(realInput) {
 /**********************************************************************************************/
 
 
+function fftComplexInPlace(out, factors) {
+    const N = out.length / 2;
+    const bits = Math.log2(N);
 
+    let pre = 0; // Offset for indexing Factor Lookup
+    for (let size = 2; size <= N; size <<= 1) {
+        const h = size >> 1;
+        const isPowerOf4 = (size & (size - 1)) === 0 && size !== 0 && (size & 0xAAAAAAAA) === 0;
+        let c = (2 - ((N / size) & 1)) * N >> 2;
+        let br = (size == N) ? h / 2 : 0;
+
+        for (let i = 0, l = 0, bs = 0, ni = 0; ni < N; i++, l++) {
+            const eInd1 = i, oInd1 = i + h;
+            const j1 = (l) % h;
+            const tRe1 = factors[pre + 2 * j1], tIm1 = factors[pre + 2 * j1 + 1];
+            const eRe1 = out[(eInd1 << 1)], eIm1 = out[(eInd1 << 1) + 1];
+            const oRe1 = out[(oInd1 << 1)], oIm1 = out[(oInd1 << 1) + 1];
+            const t_oRe1 = oRe1 * tRe1 - oIm1 * tIm1, t_oIm1 = oRe1 * tIm1 + oIm1 * tRe1;
+            out[(eInd1 << 1)] = eRe1 + t_oRe1;
+            out[(eInd1 << 1) + 1] = eIm1 + t_oIm1;
+            out[(oInd1 << 1)] = eRe1 - t_oRe1;
+            out[(oInd1 << 1) + 1] = eIm1 - t_oIm1;
+
+            if (!isPowerOf4) continue;
+
+            const eInd2 = i + c, oInd2 = i + h + c;
+            const j2 = j1 + br;
+            const tRe2 = factors[pre + 2 * j2], tIm2 = factors[pre + 2 * j2 + 1];
+            const eRe2 = out[(eInd2 << 1)], eIm2 = out[(eInd2 << 1) + 1];
+            const oRe2 = out[(oInd2 << 1)], oIm2 = out[(oInd2 << 1) + 1];
+            const t_oRe2 = oRe2 * tRe2 - oIm2 * tIm2, t_oIm2 = oRe2 * tIm2 + oIm2 * tRe2;
+            out[(eInd2 << 1)] = eRe2 + t_oRe2;
+            out[(eInd2 << 1) + 1] = eIm2 + t_oIm2;
+            out[(oInd2 << 1)] = eRe2 - t_oRe2;
+            out[(oInd2 << 1) + 1] = eIm2 - t_oIm2;
+        }
+        pre += size;
+    }
+    return out;
+}
+
+
+
+/*
 function fftComplexInPlace(out, factors) {
     const N = out.length / 2;
     const bits = Math.log2(N);
@@ -572,8 +615,9 @@ function fftComplexInPlace(out, factors) {
             // (1) Update elements with new values
             out[(eInd1 << 1)    ] = (eRe1 + t_oRe1);
             out[(eInd1 << 1) + 1] = (eIm1 + t_oIm1);
-            out[(oInd1 << 1)    ] = (eRe1 - t_oRe1);
-            out[(oInd1 << 1) + 1] = (eIm1 - t_oIm1);
+
+            out[(oInd1 << 1)    ] = (eRe1 - t_oRe1); //<--- synthesize
+            out[(oInd1 << 1) + 1] = (eIm1 - t_oIm1); //<--- synthesize
 
             console.log("**** EV.RE",eInd1,(eRe1 + t_oRe1).toFixed(2),"<- EV.RE",eInd1,"+ (OD.RE",oInd1,"* TW.RE",j1,"- OD.IM",oInd1,"* TW.IM",j1,")","|||||||","EV.IM",eInd1,(eIm1 + t_oIm1).toFixed(2),"<- EV.IM",eInd1,"+ (OD.RE",oInd1,"* TW.IM",j1,"+ OD.IM",oInd1,"* TW.RE",j1,")");
             console.log("**** OD.RE",oInd1,(eRe1 - t_oRe1).toFixed(2),"<- EV.RE",eInd1,"- (OD.RE",oInd1,"* TW.RE",j1,"- OD.IM",oInd1,"* TW.IM",j1,")","|||||||","OD.IM",oInd1,(eIm1 - t_oIm1).toFixed(2),"<- EV.IM",eInd1,"- (OD.RE",oInd1,"* TW.IM",j1,"+ OD.IM",oInd1,"* TW.RE",j1,")");
@@ -602,8 +646,9 @@ function fftComplexInPlace(out, factors) {
             // (2) Update elements with new values
             out[(eInd2 << 1)    ] = (eRe2 + t_oRe2);
             out[(eInd2 << 1) + 1] = (eIm2 + t_oIm2);
-            out[(oInd2 << 1)    ] = (eRe2 - t_oRe2);
-            out[(oInd2 << 1) + 1] = (eIm2 - t_oIm2);
+
+            out[(oInd2 << 1)    ] = (eRe2 - t_oRe2); //<--- synthesize
+            out[(oInd2 << 1) + 1] = (eIm2 - t_oIm2); //<--- synthesize
 
             console.log("**** EV.RE",eInd2,(eRe2 + t_oRe2).toFixed(2),"<- EV.RE",eInd2,"+ (OD.RE",oInd2,"* TW.RE",j2,"- OD.IM",oInd2,"* TW.IM",j2,")","|||||||","EV.IM",eInd2,(eIm2 + t_oIm2).toFixed(2),"<- EV.IM",eInd2,"+ (OD.RE",oInd2,"* TW.IM",j2,"+ OD.IM",oInd2,"* TW.RE",j2,")");
             console.log("**** OD.RE",oInd2,(eRe2 - t_oRe2).toFixed(2),"<- EV.RE",eInd2,"- (OD.RE",oInd2,"* TW.RE",j2,"- OD.IM",oInd2,"* TW.IM",j2,")","|||||||","OD.IM",oInd2,(eIm2 - t_oIm2).toFixed(2),"<- EV.IM",eInd2,"- (OD.RE",oInd2,"* TW.IM",j2,"+ OD.IM",oInd2,"* TW.RE",j2,")");
@@ -618,7 +663,7 @@ function fftComplexInPlace(out, factors) {
 
     return out;
 }
-
+*/
 
 
 
