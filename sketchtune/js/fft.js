@@ -1063,8 +1063,8 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
                 //console.log(evenIndex,oddIndex,"-",j);
 
                 // Multiply by twiddle factors
-                const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
-                const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
+                const twiddledOddRe = oRe * twiddleRe - oIm * twiddleIm;
+                const twiddledOddIm = oRe * twiddleIm + oIm * twiddleRe;
 
                 // Combine results of even and odd parts in place
                 output[evenIndex * 2]     = eRe + twiddledOddRe;
