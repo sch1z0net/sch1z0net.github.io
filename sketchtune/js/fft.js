@@ -128,7 +128,12 @@ function precalculateFFTFactorsRADIX2flattened(maxSampleLength) {
         }
         //if(maxN==64){ console.log("for N=",N,"LOOKUP goes from",pre,"to",pre+N-1); }
         pre += N;
-        //2 + 4 + 8 + 16 + 32 + 64...
+        
+        //N=2   - pre =  0: [ re, im ]
+        //N=4   - pre =  2: [ re, im, re, im ]
+        //N=8   - pre =  6: [ re, im, re, im, re, im, re, im ]  
+        //N=16  - pre = 14: [ re, im, re, im, re, im, re, im, re, im, re, im, re, im, re, im ] 
+        //....
     }
 
     return new Float32Array(factors);
@@ -548,9 +553,15 @@ function fftComplexInPlace(out, factors) {
             // (1) TwiddleFactors
             //const tRe1 = Math.cos((2 * Math.PI * j1) / size);  // Calculate Directly
             //const tIm1 = Math.sin((2 * Math.PI * j1) / size);  // Calculate Directly
-            const tRe1 = factors[pre + j1 + 0];  // LOOKUP
-            const tIm1 = factors[pre + j1 + 1];  // LOOKUP
-            
+            const tRe1 = factors[pre + 2*j1 + 0];  // LOOKUP
+            const tIm1 = factors[pre + 2*j1 + 1];  // LOOKUP
+            //j--------------------  0           1           2           3           4           5           6           7
+            //size=2   - pre = +0: [ re00, im01 ]
+            //size=4   - pre = +2: [ re02, im03, re04, im05 ]
+            //size=8   - pre = +6: [ re06, im07, re08, im09, re10, im11, re12, im13 ]  
+            //size=16  - pre =+14: [ re14, im15, re16, im17, re18, im19, re20, im21, re22, im23, re24, im25, re26, im27, re28, im29 ] 
+            //....
+
             // (1) Get real and imaginary parts of elements
             const eRe1  = out[(eInd1 << 1)    ];
             const eIm1  = out[(eInd1 << 1) + 1];
@@ -586,8 +597,8 @@ function fftComplexInPlace(out, factors) {
             // (1) TwiddleFactors
             //const tRe2 = Math.cos((2 * Math.PI * j2) / size);  // Calculate Directly
             //const tIm2 = Math.sin((2 * Math.PI * j2) / size);  // Calculate Directly
-            const tRe2 = factors[pre + j2 + 0];  // LOOKUP
-            const tIm2 = factors[pre + j2 + 1];  // LOOKUP
+            const tRe2 = factors[pre + 2*j2 + 0];  // LOOKUP
+            const tIm2 = factors[pre + 2*j2 + 1];  // LOOKUP
 
             // (2) Get real and imaginary parts of elements
             const eRe2  = out[(eInd2 << 1)    ];
