@@ -353,17 +353,17 @@ let bitReversalMap2048  = precomputeBitReversalMap(2048);
 let bitReversalMap4096  = precomputeBitReversalMap(4096);
 
 // Create the flattened lookup table for twiddle factors
-const LOOKUP_RADIX2_4    = precalculateFFTFactorsRADIX2(4);
-const LOOKUP_RADIX2_8    = precalculateFFTFactorsRADIX2(8);
-const LOOKUP_RADIX2_16   = precalculateFFTFactorsRADIX2(16);
-const LOOKUP_RADIX2_32   = precalculateFFTFactorsRADIX2(32);
-const LOOKUP_RADIX2_64   = precalculateFFTFactorsRADIX2(64);
-const LOOKUP_RADIX2_128  = precalculateFFTFactorsRADIX2(128);
-const LOOKUP_RADIX2_256  = precalculateFFTFactorsRADIX2(256);
-const LOOKUP_RADIX2_512  = precalculateFFTFactorsRADIX2(512);
-const LOOKUP_RADIX2_1024 = precalculateFFTFactorsRADIX2(1024);
-const LOOKUP_RADIX2_2048 = precalculateFFTFactorsRADIX2(2048);
-const LOOKUP_RADIX2_4096 = precalculateFFTFactorsRADIX2(4096);
+const LOOKUP_RADIX2_4    = precalculateFFTFactorsRADIX2flattened(4);
+const LOOKUP_RADIX2_8    = precalculateFFTFactorsRADIX2flattened(8);
+const LOOKUP_RADIX2_16   = precalculateFFTFactorsRADIX2flattened(16);
+const LOOKUP_RADIX2_32   = precalculateFFTFactorsRADIX2flattened(32);
+const LOOKUP_RADIX2_64   = precalculateFFTFactorsRADIX2flattened(64);
+const LOOKUP_RADIX2_128  = precalculateFFTFactorsRADIX2flattened(128);
+const LOOKUP_RADIX2_256  = precalculateFFTFactorsRADIX2flattened(256);
+const LOOKUP_RADIX2_512  = precalculateFFTFactorsRADIX2flattened(512);
+const LOOKUP_RADIX2_1024 = precalculateFFTFactorsRADIX2flattened(1024);
+const LOOKUP_RADIX2_2048 = precalculateFFTFactorsRADIX2flattened(2048);
+const LOOKUP_RADIX2_4096 = precalculateFFTFactorsRADIX2flattened(4096);
 
 function fftRealInPlaceRADIX2(inputOriginal) {
     const N = inputOriginal.length;
