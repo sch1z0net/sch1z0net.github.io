@@ -502,7 +502,7 @@ function fftComplexInPlace(out, factors) {
         let bs = 0;   // block steps made
         let ni = 0;   // number of indices handled 
 
-        if (size == N) { inv = -inv; }
+        //if (size == N) { inv = -inv; }
 
         const h = size >> 1;
         const q = size >> 2;
@@ -610,8 +610,6 @@ function fftComplexInPlace(out, factors) {
         }
         pre += size;
     }
-    
-    console.log(out);
 
     return out;
 }
@@ -623,15 +621,15 @@ function fftComplexInPlace(out, factors) {
 function fftRealInPlaceRADIX4(inputOriginal) {
     const N = inputOriginal.length;
     const bits = Math.log2(N);
-
+    
     if (N !== nextPowerOf2(N)) {
         console.error("FFT FRAME must have power of 2");
         return;
     }
-
+    
     // Create a copy of the input array
     const input = inputOriginal.slice();
-
+    
     let factors, map;
     if(N == 4){    factors = LOOKUP_RADIX2_4;    map = bitReversalMap4.get(N);}
     if(N == 8){    factors = LOOKUP_RADIX2_8;    map = bitReversalMap8.get(N);}
@@ -1131,7 +1129,7 @@ function prepare_and_fft(inputSignal, fftFactorLookup=null) {
 
 
 function FFT(inputSignal, fftFactorLookup=null) {
-    console.log("----FFT-----");
+    //console.log("----FFT-----");
     return prepare_and_fft(inputSignal, fftFactorLookup);
 }
 
@@ -1200,7 +1198,7 @@ function ifft(input) {
 
 
 function IFFT(spectrum) {
-    console.log("----IFFT-----");
+    //console.log("----IFFT-----");
     return ifft(spectrum);
 }
 
