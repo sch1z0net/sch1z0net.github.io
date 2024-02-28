@@ -470,13 +470,152 @@ function fftRealInPlaceRADIX2(realInput) {
     return complexInput;
 }
 
-
-
-
+/**********************************************************************************************/
+/**********************************************************************************************/
+/**********************************************************************************************/
+/**********************************************************************************************/
+/*******************************  RADIX 2/4 IMPLEMENTATIONS ***********************************/
+/**********************************************************************************************/
+/**********************************************************************************************/
+/**********************************************************************************************/
+/**********************************************************************************************/
 
 
 
 function fftComplexInPlace(out, factors) {
+    const N = out.length / 2;
+    const bits = Math.log2(N);
+
+    let pre  = 0;    //offset for indexing Factor Lookup  
+    let pwr  = 0;    //power 
+    let mpwr = bits; //max power
+    for (let size = 2; size <= N; size <<= 1) {
+        pwr++;
+        // Define variables
+        let i = 0;    // ev index, increases with every line step
+        let l = 0;    // line step made
+        let b = size; // block size
+        let bs = 0;   // block steps made
+        let ni = 0;   // number of indices handled 
+
+        const h = size >> 1;
+        const q = size >> 2;
+      
+        let c = (2-((N/b) & 1)) * N >> 2;  // circled index start
+        let br = (size==N) ? h/2 : 0;
+
+        //  For N = 2, the indices must look like this after each iteration
+        //  
+        //  power = 1       
+        //  size = 2 
+        //  half = 1     
+        //  ev  odd      
+        // _0     1     
+
+
+
+        //  For N = 4, the indices must look like this after each iteration
+        //  
+        //  power = 1          power = 2      
+        //  size = 2           size = 4  
+        //  half = 1           half = 2  
+        //  ev  odd            ev odd     
+        // _0     1            0    2     
+        // (2)    3           _(1)  3     
+        //    
+        // _block = 2         _block = 4    
+        // max_bn =4/2        max_bn =4/4   
+
+
+
+        //  For N = 16, the indices must look like this after each iteration
+        //  
+        //  power = 1          power = 2          power = 3           power = 4
+        //  size = 2           size = 4           size = 8            size = 16
+        //  half = 1           half = 2           half = 4            half =  8
+        //  ev  j odd          ev  j odd       _  ev  j odd           ev  j odd 
+        // _0   0   1          0   0   2      |   0   0   4            0  0   8  
+        //  2   0   3         _1   1   3      |h  1   1   5            1  1   9  
+        //  4   0   5          4   0   6      |   2   2   6            2  2  10  
+        //  6   0   7          5   1   7      |_ _3   3   7            3  3  11  
+        // (8)  0   9         (8)  0  10         (8)  0  12           (4) 4  12   <---- circled index start = 4
+        // 10   0  11          9   1  11          9   1  13            5  5  13  
+        // 12   0  13         12   0  14         10   2  14            6  6  14  
+        // 14   0  15         13   1  15         11   3  15           _7  7  15  
+        //  
+        // ratio = 4          ratio = 2           ratio = 1          ratio = 1/2       (N/b) -> 1  2  4 ..... 8
+        // _block = 2         _block = 4          _block = 8         _block = 16       1 is a special case, map it to 1/2 and the rest to 1
+        // max_bn =16/2       max_bn =16/4        max_bn = 16/2      max_bn = 16/4     therefor: c = (N/2) * (2-((N/b) & 1))/2  
+        //                                                                 
+
+        const isNotPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
+        // runs N/2 times for PowerOf2
+        // runs N/4 times for PowerOf4
+        while (ni < N) {                                                                      
+            const eInd1 = i;        const oInd1 = i + h;                         
+            const eInd2 = i + c;    const oInd2 = i + h + c;              
+
+            // (1) TwiddleFactors
+            const j1 = (l)%h;
+            const tRe1 = factors[pre + 2*j1 + 0];  // LOOKUP
+            const tIm1 = factors[pre + 2*j1 + 1];  // LOOKUP
+            // (1) Get real and imaginary parts of elements
+            const eRe1  = out[(eInd1 << 1)    ];
+            const eIm1  = out[(eInd1 << 1) + 1];
+            const oRe1  = out[(oInd1 << 1)    ];
+            const oIm1  = out[(oInd1 << 1) + 1];
+            // (1) Perform complex multiplications
+            const t_oRe1 = oRe1 * tRe1 - oIm1 * tIm1;
+            const t_oIm1 = oRe1 * tIm1 + oIm1 * tRe1;
+            // (1) Update elements with new values
+            out[(eInd1 << 1)    ] = (eRe1 + t_oRe1);
+            out[(eInd1 << 1) + 1] = (eIm1 + t_oIm1);
+            out[(oInd1 << 1)    ] = (eRe1 - t_oRe1);
+            out[(oInd1 << 1) + 1] = (eIm1 - t_oIm1);
+
+            // Not Power of 4?
+            if( isNotPowerOf4 ){ 
+                i++; l++; ni+=2;
+                // line reaches block-end
+                if (l % h === 0) { bs++; i=bs*b; }
+                continue; 
+            }
+            
+            // (2) TwiddleFactors
+            const j2 = j1 + br;
+            const tRe2 = factors[pre + 2*j2 + 0];  // LOOKUP
+            const tIm2 = factors[pre + 2*j2 + 1];  // LOOKUP
+            // (2) Get real and imaginary parts of elements
+            const eRe2  = out[(eInd2 << 1)    ];
+            const eIm2  = out[(eInd2 << 1) + 1];
+            const oRe2  = out[(oInd2 << 1)    ];
+            const oIm2  = out[(oInd2 << 1) + 1];
+            // (2) Perform complex multiplications
+            const t_oRe2 = oRe2 * tRe2 - oIm2 * tIm2;
+            const t_oIm2 = oRe2 * tIm2 + oIm2 * tRe2;
+            // (2) Update elements with new values
+            out[(eInd2 << 1)    ] = (eRe2 + t_oRe2);  //EV RE
+            out[(eInd2 << 1) + 1] = (eIm2 + t_oIm2);  //EV IM
+            out[(oInd2 << 1)    ] = (eRe2 - t_oRe2);  //OD RE 
+            out[(oInd2 << 1) + 1] = (eIm2 - t_oIm2);  //OD IM
+
+            i++; l++; ni+=4;
+            // line reaches block-end
+            if (l % h === 0) { bs++; i=bs*b; }
+        }
+        pre += size;
+    }
+
+    return out;
+}
+
+
+
+
+
+
+
+function fftComplexInPlace_tidy(out, factors) {
     const N = out.length / 2;
     const bits = Math.log2(N);
 
@@ -635,7 +774,7 @@ function fftComplexInPlace(out, factors) {
 
 
 
-
+/******************** WRAPPER *******************************************************/
 
 function fftRealInPlaceRADIX4(realInput) {
     const N = realInput.length;
@@ -720,218 +859,14 @@ function fftComplexInPlaceRADIX4(complexInput) {
 
 
 
-/*
-// Function to compute FFT factors with caching
-function computeFFTFactorsWithCacheRADIX4(N) {
-    // Check if FFT factors for this size are already cached
-    if (!fftFactorCacheRADIX4[N]) {
-        // Calculate FFT factors and cache them
-        fftFactorCacheRADIX4[N] = precalculateFFTFactorsRADIX4(N);
-    }
-
-    // Return the cached factors
-    return fftFactorCacheRADIX4[N];
-}*/
 
 
 
 
-
-/*
-function fftRealInPlaceRADIX4(input) {
-    const N = input.length;
-    const bits = Math.log2(N);
-
-    if (N !== nextPowerOf4(N)) {
-        console.error("FFT FRAME must have power of 4");
-        return;
-    }
-
-    // Create a copy of the input array
-    //const out = input.slice();
-    const out = new Float32Array(N);
-
-    // Initial step (permute and transform)
-    var width = 2;
-    var size = N;
-    var step = 1 << width;
-    var len = (size / step) << 1;
-    var inv = -1;
-
-
-    const map = bitReversalMap.get(N);
-    for (let i = 0; i < N; i++) {
-        out[i] = input[map[i]];
-    }
-
-    const table = LOOKUP_RADIX4;
-
-    for (step >>= 2; step >= 2; step >>= 2) {
-        len = (size / step) << 1;
-        var halfLen = len >>> 1;
-        var quarterLen = halfLen >>> 1;
-        var hquarterLen = quarterLen >>> 1;
-
-        // Loop through offsets in the data
-        for (var outOff = 0; outOff < size; outOff += len) {
-        // Loop through offsets in the data
-          for (var i = 0, k = 0; i <= hquarterLen; i += 2, k += step) {
-            var A = outOff + i;
-            var B = A + quarterLen;
-            var C = B + quarterLen;
-            var D = C + quarterLen;
-
-            // Original values
-            var Ar = out[A];
-            var Ai = out[A + 1];
-            var Br = out[B];
-            var Bi = out[B + 1];
-            var Cr = out[C];
-            var Ci = out[C + 1];
-            var Dr = out[D];
-            var Di = out[D + 1];
-
-            // Middle values
-            var MAr = Ar;
-            var MAi = Ai;
-
-            var tableBr = table[k];
-            var tableBi = inv * table[k + 1];
-            var MBr = Br * tableBr - Bi * tableBi;
-            var MBi = Br * tableBi + Bi * tableBr;
-
-            var tableCr = table[2 * k];
-            var tableCi = inv * table[2 * k + 1];
-            var MCr = Cr * tableCr - Ci * tableCi;
-            var MCi = Cr * tableCi + Ci * tableCr;
-
-            var tableDr = table[3 * k];
-            var tableDi = inv * table[3 * k + 1];
-            var MDr = Dr * tableDr - Di * tableDi;
-            var MDi = Dr * tableDi + Di * tableDr;
-
-            // Pre-Final values
-            var T0r = MAr + MCr;
-            var T0i = MAi + MCi;
-            var T1r = MAr - MCr;
-            var T1i = MAi - MCi;
-            var T2r = MBr + MDr;
-            var T2i = MBi + MDi;
-            var T3r = inv * (MBr - MDr);
-            var T3i = inv * (MBi - MDi);
-
-            // Final values
-            var FAr = T0r + T2r;
-            var FAi = T0i + T2i;
-
-            var FBr = T1r + T3i;
-            var FBi = T1i - T3r;
-
-            out[A] = FAr;
-            out[A + 1] = FAi;
-            out[B] = FBr;
-            out[B + 1] = FBi;
-
-            // Output final middle point
-            if (i === 0) {
-              var FCr = T0r - T2r;
-              var FCi = T0i - T2i;
-              out[C] = FCr;
-              out[C + 1] = FCi;
-              continue;
-            }
-
-            // Do not overwrite ourselves
-            if (i === hquarterLen)
-              continue;
-
-            // In the flipped case:
-            // MAi = -MAi
-            // MBr=-MBi, MBi=-MBr
-            // MCr=-MCr
-            // MDr=MDi, MDi=MDr
-            var ST0r = T1r;
-            var ST0i = -T1i;
-            var ST1r = T0r;
-            var ST1i = -T0i;
-            var ST2r = -inv * T3i;
-            var ST2i = -inv * T3r;
-            var ST3r = -inv * T2i;
-            var ST3i = -inv * T2r;
-
-            var SFAr = ST0r + ST2r;
-            var SFAi = ST0i + ST2i;
-
-            var SFBr = ST1r + ST3i;
-            var SFBi = ST1i - ST3r;
-
-            var SA = outOff + quarterLen - i;
-            var SB = outOff + halfLen - i;
-
-            out[SA] = SFAr;
-            out[SA + 1] = SFAi;
-            out[SB] = SFBr;
-            out[SB + 1] = SFBi;
-          }
-        }
-    }
-
-    return out;
-}*/
-
-
-
-
-
-
-
-
-/*
-// Async function to perform FFT in-place
-async function fftComplexInPlace(input, fftFactorLookup = null) {
-    const N = input.length;
-
-    if(N != nextPowerOf2(N)){
-        console.error("FFT FRAME must have power of 2");
-        return;
-    }
-
-    // Perform bit reversal
-    const bits = Math.log2(N);
-    const output = new Array(N);
-    for (let i = 0; i < N; i++) {
-       const reversedIndex = bitReverse(i, bits);
-       output[reversedIndex] = input[i];
-    }
-
-    if (N <= 1) {
-        return input;
-    }
-
-    // Recursively calculate FFT
-    for (let size = 2; size <= N; size *= 2) {
-        const halfSize = size / 2;
-        // Get FFT factors with caching
-        const factors = computeFFTFactorsWithCache(size);
-        for (let i = 0; i < N; i += size) {
-            for (let j = 0; j < halfSize; j++) {
-                const evenIndex = i + j;
-                const oddIndex = i + j + halfSize;
-                const evenPart = output[evenIndex];
-                const oddPart = {
-                    re: output[oddIndex].re * factors[j].re - output[oddIndex].im * factors[j].im,
-                    im: output[oddIndex].re * factors[j].im + output[oddIndex].im * factors[j].re
-                };
-
-                // Combine results of even and odd parts
-                output[evenIndex] = {  re: evenPart.re + oddPart.re, im: evenPart.im + oddPart.im  };
-                output[oddIndex]  = {  re: evenPart.re - oddPart.re, im: evenPart.im - oddPart.im  };
-            }
-        }
-    }
-
-    return output;
-}*/
+/**********************************************************************************************/
+/**********************************************************************************************/
+/***************************** OLD IMPLEMENTATION FOR REF *************************************/
+/**********************************************************************************************/
 
 
 // Bit reversal function
@@ -1102,137 +1037,10 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
 }
 
 
-
-
-/*
-function fftComplexInPlace(input) {
-    const N = input.length / 2;
-    const bits = Math.log2(N);
-
-    if (N !== nextPowerOf2(N)) {
-        console.error("FFT FRAME must have power of 2");
-        return;
-    }
-
-    let factors, map;
-    if(N == 512){  factors = LOOKUP_RADIX4_512;  map = bitReversalMap512.get(N);}
-    if(N == 1024){ factors = LOOKUP_RADIX4_1024; map = bitReversalMap1024.get(N);}
-    if(N == 2048){ factors = LOOKUP_RADIX4_2048; map = bitReversalMap2048.get(N);}
-
-    // Perform bit reversal
-    const output = new Float32Array(N * 2);
-    for (let i = 0; i < N; i++) {
-        const reversedIndex = map[i];
-        output[i * 2] = input[reversedIndex * 2]; // Copy real part
-        output[i * 2 + 1] = input[reversedIndex * 2 + 1]; // Copy imaginary part
-    }
-
-    if (N <= 1) {
-        return output;
-    }
-
-    let pre = 0;
-    let inv = 1;
-    for (let size = 2; size <= N; size <<= 1) {
-        let i = 0; // Initialize i to 0
-        let j = 0; // Initialize j to 0
-
-        if (size == N) { inv = -inv; }
-
-        const halfSize = size >> 1;
-        
-        while (i < N) {
-            const tIdxRe = pre + (j % halfSize) * 2;
-            const tIdxIm = pre + (j % halfSize) * 2 + 1;
-            const twiddleRe = factors[tIdxRe];
-            const twiddleIm = factors[tIdxIm];
-
-            const evenIndex = i + j;
-            const oddIndex = i + j + halfSize;
-
-            const evenRe = output[evenIndex * 2];
-            const evenIm = output[evenIndex * 2 + 1];
-            const oddRe  = output[oddIndex * 2];
-            const oddIm  = output[oddIndex * 2 + 1];
-
-            const twiddledOddRe = oddRe * twiddleRe - oddIm * twiddleIm;
-            const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
-
-            output[evenIndex * 2]     =  evenRe + twiddledOddRe;
-            output[evenIndex * 2 + 1] = (evenIm + twiddledOddIm) * inv;
-            output[oddIndex * 2]      =  evenRe - twiddledOddRe;
-            output[oddIndex * 2 + 1]  = (evenIm - twiddledOddIm) * inv;
-
-            j++;
-            if (j % halfSize === 0) {
-                i += size;
-                j = 0;
-            }
-        }
-        pre += size;
-    }
-
-    return output;
-}
-*/
-
-
-/*
-function fftComplexInPlace(input, fftFactorLookup = null) {
-    const N = input.length / 2;
-    const bits = Math.log2(N);
-
-    if (N !== nextPowerOf2(N)) {
-        console.error("FFT FRAME must have power of 2");
-        return;
-    }
-
-    // Perform bit reversal
-    const output = new Float32Array(N * 2);
-    for (let i = 0; i < N; i++) {
-        const reversedIndex = bitReverse(i, bits);
-        output[reversedIndex * 2] = input[i * 2]; // Copy real part
-        output[reversedIndex * 2 + 1] = input[i * 2 + 1]; // Copy imaginary part
-    }
-
-    if (N <= 1) {
-        return output;
-    }
-
-    // Recursively calculate FFT
-    for (let size = 2; size <= N; size *= 2) {
-        const halfSize = size / 2;
-        for (let i = 0; i < N; i += size) {
-            // Get FFT factors with caching
-            const factors = computeFFTFactorsWithCache(size);
-            for (let j = 0; j < halfSize; j++) {
-                const evenIndex = i + j;
-                const oddIndex = i + j + halfSize;
-                const evenPartRe = output[evenIndex * 2];
-                const evenPartIm = output[evenIndex * 2 + 1];
-                const oddPartRe = output[oddIndex * 2];
-                const oddPartIm = output[oddIndex * 2 + 1];
-
-                const twiddleRe = factors[j * 2];
-                const twiddleIm = factors[j * 2 + 1];
-
-                // Multiply by twiddle factors
-                const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
-                const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
-
-                // Combine results of even and odd parts in place
-                output[evenIndex * 2] = evenPartRe + twiddledOddRe;
-                output[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
-                output[oddIndex * 2] = evenPartRe - twiddledOddRe;
-                output[oddIndex * 2 + 1] = evenPartIm - twiddledOddIm;
-            }
-        }
-    }
-
-    return output;
-}*/
-
-
+/**********************************************************************************************/
+/**********************************************************************************************/
+/***************************** PREPARATION OF FFT AND IFFT ************************************/
+/**********************************************************************************************/
 
 
 function prepare_and_fft(inputSignal, fftFactorLookup=null) {
@@ -1409,7 +1217,9 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 
 
 
-
+/**********************************************************************************************/
+/**********************************************************************************************/
+/**********************************************************************************************/
 /********************************* TESTING PERFORMANCE ****************************************/
 
 // Define the number of FFT operations to perform
@@ -1513,12 +1323,13 @@ console.log("4096: ",compareFFTResults(fftRealInPlace_ref(testData4096),fftRealI
 */
 
 /****************** TEST IF FFT AND IFFT RETURN ORIGINAL SIGNAL *******************/ 
-/*
+
 const signal1 = [ 1.0, 0.4, 0.0, 0.2 ];
 const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5 ];
 const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
 const signal4 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
 
+/*
 console.log(signal1);
 console.log(computeInverseFFT(computeFFT(signal1)));
 console.log(signal2);
@@ -1526,3 +1337,6 @@ console.log(computeInverseFFT(computeFFT(signal2)));
 console.log(signal3);
 console.log(computeInverseFFT(computeFFT(signal3)));
 */
+
+console.log(computeFFT(signal2));
+
