@@ -613,13 +613,13 @@ function fftComplexInPlace(out) {
     let i = 0;
     while(i < len){
         // TwiddleFactors
-        const tRe = factors[idx_LKUP[i++]];
-        const tIm = factors[idx_LKUP[i++]];
+        const tRe = factors[idx_LKUP[i+1]];
+        const tIm = factors[idx_LKUP[i+2]];
         // Get real and imaginary parts of elements
-        const eReI = idx_LKUP[i++];
-        const eImI = idx_LKUP[i++];
-        const oReI = idx_LKUP[i++];
-        const oImI = idx_LKUP[i++];
+        const eReI = idx_LKUP[i+3];
+        const eImI = idx_LKUP[i+4];
+        const oReI = idx_LKUP[i+5];
+        const oImI = idx_LKUP[i+6];
         const eRe  = out[eReI];
         const eIm  = out[eImI];
         const oRe  = out[oReI];
@@ -634,13 +634,13 @@ function fftComplexInPlace(out) {
         out[oImI]  = (eIm - t_oIm);
 
         // TwiddleFactors
-        const tRe2 = factors[idx_LKUP[i++]];
-        const tIm2 = factors[idx_LKUP[i++]];
+        const tRe2 = factors[idx_LKUP[i+7]];
+        const tIm2 = factors[idx_LKUP[i+8]];
         // Get real and imaginary parts of elements
-        const eReI2 = idx_LKUP[i++];
-        const eImI2 = idx_LKUP[i++];
-        const oReI2 = idx_LKUP[i++];
-        const oImI2 = idx_LKUP[i++];
+        const eReI2 = idx_LKUP[i+9];
+        const eImI2 = idx_LKUP[i+10];
+        const oReI2 = idx_LKUP[i+11];
+        const oImI2 = idx_LKUP[i+12];
         const eRe2  = out[eReI2];
         const eIm2  = out[eImI2];
         const oRe2  = out[oReI2];
@@ -653,6 +653,7 @@ function fftComplexInPlace(out) {
         out[eImI2]  = (eIm2 + t_oIm2);
         out[oReI2]  = (eRe2 - t_oRe2);
         out[oImI2]  = (eIm2 - t_oIm2);
+        i+12;
     }
 
     return out;
