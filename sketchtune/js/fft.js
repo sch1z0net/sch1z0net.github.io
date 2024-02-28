@@ -1052,9 +1052,9 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
                 output[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
             }
         }
+        console.log("size:"+size, js);
+        js = [];
     }
-
-    console.log(js);
 
     return output;
 }
@@ -1492,13 +1492,13 @@ const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.
 
 console.log(fftRealInPlace2(signal1));
 console.log(fftRealInPlaceRADIX4(signal1));
-console.log(fftRealInPlaceRADIX2(signal1));
-console.log(fftRealInPlace2(signal2));
+//console.log(fftRealInPlaceRADIX2(signal1));
+/*console.log(fftRealInPlace2(signal2));
 console.log(fftRealInPlaceRADIX4(signal1));
 console.log(fftRealInPlaceRADIX2(signal2));
 console.log(fftRealInPlace2(signal3));
 console.log(fftRealInPlaceRADIX2(signal3));
-console.log(fftRealInPlaceRADIX4(signal3));
+console.log(fftRealInPlaceRADIX4(signal3));*/
 
 /*
 console.log(signal1);
