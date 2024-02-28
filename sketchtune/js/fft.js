@@ -652,7 +652,7 @@ function fftComplexInPlace_tidy(out) {
     const N = out.length / 2;
     const bits = Math.log2(N);
 
-    /*let factors;
+    let factors;
     if(N == 4){    factors = LOOKUP_RADIX2_4;    }
     if(N == 8){    factors = LOOKUP_RADIX2_8;    }
     if(N == 16){   factors = LOOKUP_RADIX2_16;   }
@@ -663,7 +663,7 @@ function fftComplexInPlace_tidy(out) {
     if(N == 512){  factors = LOOKUP_RADIX2_512;  }
     if(N == 1024){ factors = LOOKUP_RADIX2_1024; }
     if(N == 2048){ factors = LOOKUP_RADIX2_2048; }
-    if(N == 4096){ factors = LOOKUP_RADIX2_4096; }*/
+    if(N == 4096){ factors = LOOKUP_RADIX2_4096; }
 
 
     let pre  = 0;    //offset for indexing Factor Lookup
@@ -1309,25 +1309,18 @@ const testData1024 = generateTestData(1024);
 const testData2048 = generateTestData(2048);
 const testData4096 = generateTestData(4096);
 
+let fftSize = 1024;
+if(fftSize ==  512){ testData = testData512; } 
+if(fftSize == 1024){ testData = testData1024; } 
+if(fftSize == 2048){ testData = testData2048; } 
+if(fftSize == 4096){ testData = testData4096; } 
+
 // Perform FFT operations
-const performFFTOperations = (type,fftSize) => {
-    let testData;
-    if(fftSize ==  512){ testData = testData512; } 
-    if(fftSize == 1024){ testData = testData1024; } 
-    if(fftSize == 2048){ testData = testData2048; } 
-    if(fftSize == 4096){ testData = testData4096; } 
-
+const performFFTOperations = () => {
     // Perform FFT operations numOperations times
-    if(type==0){
-        for (let i = 0; i < numOperations; i++) {
-            fftRealInPlaceRADIX2(testData);
-        }
-    }else{
-        for (let i = 0; i < numOperations; i++) {
-            fftRealInPlaceRADIX4(testData);
-        }
+    for (let i = 0; i < numOperations; i++) {
+        fftRealInPlaceRADIX4(testData);
     }
-
 };
 
 // Measure the time taken to perform FFT operations
@@ -1365,7 +1358,7 @@ function compareFFTResults(array1, array2) {
 /****************** TEST SPEED *******************/ 
 
 //measureTime(1, 512);
-measureTime(1, 1024);
+measureTime(1);
 //measureTime(1, 2048);
 //measureTime(1, 4096);
 
