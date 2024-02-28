@@ -608,7 +608,7 @@ function fftComplexInPlace(out, factors) {
 
             i++; l++; ni+=4;
             // line reaches block-end
-            if (l % h === 0) { bs++; i=bs*b; }
+            if (l % q === 0) { bs++; i=bs*b; }
         }
         pre += size;
     }
