@@ -479,6 +479,7 @@ function fftComplexInPlace(out, factors) {
     //for (let size = 4; size <= N; size <<= 2) {
     let js = new Array(N/2);
     for (let size = 2; size <= N; size <<= 1) {
+        console.log("-size "+size+"-------------------------------------------------------------------------------------------------");
         pwr++;
         // Define variables
         let i = 0;    // ev index, increases with every line step
@@ -528,8 +529,6 @@ function fftComplexInPlace(out, factors) {
         // _block = 2         _block = 4          _block = 8         _block = 16       1 is a special case, map it to 1/2 and the rest to 1
         // max_bn =16/2       max_bn =16/4        max_bn = 16/2      max_bn = 16/4     therefor: c = (N/2) * (2-((N/b) & 1))/2  
         //                                                                 
-        
-        //console.log("------------------------ size",size)
 
         const isNotPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
         // runs N/2 times for PowerOf2
