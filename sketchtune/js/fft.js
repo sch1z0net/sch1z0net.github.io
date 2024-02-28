@@ -130,7 +130,7 @@ function precalculateFFTFactorsRADIX2(maxSampleLength) {
             factors[pre + i * 2] = Math.cos(angle1); // Cosine of angle1
             factors[pre + i * 2 + 1] = Math.sin(angle1); // Sine of angle1
         }
-        if(maxN==64){ console.log("for N=",N,"LOOKUP goes from",pre,"to",pre+N-1); }
+        //if(maxN==64){ console.log("for N=",N,"LOOKUP goes from",pre,"to",pre+N-1); }
         pre += N;
         //2 + 4 + 8 + 16 + 32 + 64...
     }
@@ -1464,11 +1464,13 @@ console.log(fftRealInPlaceRADIX4([1,-10,-2,20]));
 //console.log(fftRealInPlaceRADIX2([0,0.5,1,0.5]));
 //console.log(fftRealInPlaceRADIX4([0,0.5,1,0.5]));
 
-
-const signal1 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5];
-const signal2 = [ 1.0, 0.4, 0.0, 0.2, 0.0, 0.4, 0.2, 0.0];
+const signal1 = [ 1.0, 0.4, 0.0, 0.2];
+const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5];
 const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1];
+console.log(signal1);
 console.log(computeInverseFFT(computeFFT(signal1)));
+console.log(signal2);
 console.log(computeInverseFFT(computeFFT(signal2)));
+console.log(signal3);
 console.log(computeInverseFFT(computeFFT(signal3)));
 
