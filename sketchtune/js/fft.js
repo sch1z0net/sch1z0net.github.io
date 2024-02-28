@@ -1305,12 +1305,12 @@ function compareFFTResults(array1, array2) {
 }
 
 /****************** TEST SPEED *******************/ 
-/*
+
 measureTime(1, 512);
 measureTime(1, 1024);
 measureTime(1, 2048);
 measureTime(1, 4096);
-*/
+
 
 /****************** TEST IF FORWARD IS CORRECT by comparison with REFERENCE *******************/ 
 /*
@@ -1343,5 +1343,5 @@ console.log(signal3);
 console.log(computeInverseFFT(computeFFT(signal3)));
 */
 
-console.log(computeFFT(signal1));
+//console.log(computeFFT(signal1));
 
