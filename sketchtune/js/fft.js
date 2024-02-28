@@ -434,7 +434,7 @@ function fftRealInPlaceRADIX2(inputOriginal) {
         let i = 0; // Initialize i to 0
         let j = 0; // Initialize j to 0
 
-        //if(size == N){ inv = -inv; }
+        if(size == N){ inv = -inv; }
 
         const halfSize = size >> 1;
         console.log("------------------------ size",size)
@@ -549,9 +549,7 @@ function fftComplexInPlace(out, factors) {
         //console.log("------------------------ size",size)
 
         const isNotPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
-        while (ni < N) {                                                               
-            //const eInd1 = i;        const oInd1 = i + h;                         
-            //const eInd2 = i + c;    const oInd2 = i + h + c;              
+        while (ni < N) {                                                                          
             const eInd1 = i;        const oInd1 = i + h;                         
             const eInd2 = i + c;    const oInd2 = i + h + c;              
 
@@ -1381,8 +1379,8 @@ console.log(fftRealInPlaceRADIX4([1,-10,-2,20]));
 */
 
 
-console.log(fftRealInPlaceRADIX2([1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8]));
-console.log(fftRealInPlaceRADIX4([1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8]));
+//console.log(fftRealInPlaceRADIX2([1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8]));
+//console.log(fftRealInPlaceRADIX4([1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8]));
 
 /*
 288.000000,0.000000
@@ -1451,7 +1449,10 @@ console.log(fftRealInPlaceRADIX4([1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,
 0.000000,0.000000
 */
 
-const spectrum = FFT([1,2,3,4]);
+fftRealInPlaceRADIX2([0,0.5,1,0.5]);
+fftRealInPlaceRADIX4([0,0.5,1,0.5]);
+
+const spectrum = FFT([0,0.5,1,0.5]);
 const complexSpectrum = [];
 for (let i = 0; i < spectrum.length; i += 2) {
     complexSpectrum.push({ re: spectrum[i], im: spectrum[i + 1] });
