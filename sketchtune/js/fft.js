@@ -560,6 +560,7 @@ function fftComplexInPlace(out, factors) {
                 out[(eInd1 << 1) + 1] = 100;
                 out[(oInd1 << 1)    ] = 100;
                 out[(oInd1 << 1) + 1] = 100;
+                ni+=2;
                 continue;
             }
 
