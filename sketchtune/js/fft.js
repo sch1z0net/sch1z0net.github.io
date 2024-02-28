@@ -583,7 +583,6 @@ let len = idx_LKUP.length;
 function fftComplexInPlace(out) {
     const N = out.length/2;
 
-/*
     let factors;
     if(N ==    4){ factors = LOOKUP_RADIX2_4;    }
     if(N ==    8){ factors = LOOKUP_RADIX2_8;    }
@@ -609,12 +608,11 @@ function fftComplexInPlace(out) {
     if(N ==1024){ idx_LKUP = INDEX_LOOKUP_1024; }
     if(N ==2048){ idx_LKUP = INDEX_LOOKUP_2048; }  
     if(N ==4096){ idx_LKUP = INDEX_LOOKUP_4096; } 
-*/
 
 
     let tRe, tIm;
     let eReI, eImI, eRe, eIm, oRe, oIm;   
-
+    let t_oRe, t_oIm;
 
     let i = 0;
     while(i < len){
@@ -631,8 +629,29 @@ function fftComplexInPlace(out) {
         oRe  = out[oReI];
         oIm  = out[oImI];
         // Perform complex multiplications
-        const t_oRe = oRe * tRe - oIm * tIm;
-        const t_oIm = oRe * tIm + oIm * tRe;
+        t_oRe = oRe * tRe - oIm * tIm;
+        t_oIm = oRe * tIm + oIm * tRe;
+        // Update elements with new values
+        out[eReI]  = (eRe + t_oRe);
+        out[eImI]  = (eIm + t_oIm);
+        out[oReI]  = (eRe - t_oRe);
+        out[oImI]  = (eIm - t_oIm);
+
+        // TwiddleFactors
+        tRe = factors[idx_LKUP[i++]];
+        tIm = factors[idx_LKUP[i++]];
+        // Get real and imaginary parts of elements
+        eReI = idx_LKUP[i++];
+        eImI = idx_LKUP[i++];
+        oReI = idx_LKUP[i++];
+        oImI = idx_LKUP[i++];
+        eRe  = out[eReI];
+        eIm  = out[eImI];
+        oRe  = out[oReI];
+        oIm  = out[oImI];
+        // Perform complex multiplications
+        t_oRe = oRe * tRe - oIm * tIm;
+        t_oIm = oRe * tIm + oIm * tRe;
         // Update elements with new values
         out[eReI]  = (eRe + t_oRe);
         out[eImI]  = (eIm + t_oIm);
@@ -870,8 +889,8 @@ function fftRealInPlaceRADIX4(realInput) {
         complexOut[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
 
-    return fftComplexInPlace_tidy(complexOut);
-    //return fftComplexInPlace(complexOut);
+    //return fftComplexInPlace_tidy(complexOut);
+    return fftComplexInPlace(complexOut);
 }
 
 
