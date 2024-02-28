@@ -564,7 +564,7 @@ INDEX_LOOKUP_1024 = index_lookup(1024);
 INDEX_LOOKUP_2048 = index_lookup(2048);
 INDEX_LOOKUP_4096 = index_lookup(4096);
 
-function fftComplexInPlace(out, factors) {
+function fftComplexInPlace(out) {
     const N = out.length/2;
 
     let factors;
