@@ -552,12 +552,32 @@ function index_lookup(N){
     return lookup;
 }
 
+INDEX_LOOKUP_4    = index_lookup(4);
+INDEX_LOOKUP_8    = index_lookup(8);
+INDEX_LOOKUP_16   = index_lookup(16);
+INDEX_LOOKUP_32   = index_lookup(32);
+INDEX_LOOKUP_64   = index_lookup(64);
+INDEX_LOOKUP_128  = index_lookup(128);
+INDEX_LOOKUP_256  = index_lookup(256);
+INDEX_LOOKUP_512  = index_lookup(512);
 INDEX_LOOKUP_1024 = index_lookup(1024);
-console.log(INDEX_LOOKUP_1024);
-
 
 function fftComplexInPlace(out, factors) {
-    let idx_LKUP = INDEX_LOOKUP_1024;
+    const N = out.length/2;
+    let idx_LKUP; 
+    if(N ==   4){ idx_LKUP = INDEX_LOOKUP_4;    }
+    if(N ==   8){ idx_LKUP = INDEX_LOOKUP_8;    }
+    if(N ==  16){ idx_LKUP = INDEX_LOOKUP_16;   }
+    if(N ==  32){ idx_LKUP = INDEX_LOOKUP_32;   }
+    if(N ==  64){ idx_LKUP = INDEX_LOOKUP_64;   }
+    if(N == 128){ idx_LKUP = INDEX_LOOKUP_128;  }
+    if(N == 256){ idx_LKUP = INDEX_LOOKUP_256;  }
+    if(N == 512){ idx_LKUP = INDEX_LOOKUP_512;  }
+    if(N ==1024){ idx_LKUP = INDEX_LOOKUP_1024; }
+    if(N ==2048){ idx_LKUP = INDEX_LOOKUP_2048; }  
+    if(N ==4096){ idx_LKUP = INDEX_LOOKUP_4098; } 
+
+
     let len = idx_LKUP.length;
     let i = 0;
     while(i < len){
