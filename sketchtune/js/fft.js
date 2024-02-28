@@ -586,7 +586,7 @@ function fftComplexInPlace(out, factors) {
             
             // (2) Use precalculated FFT factors directly  
             if( N == 4 ){ l = 1 } // Correction for a special case
-            const tIdxRe2 = pre + (2*(2*l + 0))%b;  const tIdxIm2 = pre + (2*(2*l + 1))%b;
+            const tIdxRe2 = pre + (2*l + h + 0)%b;  const tIdxIm2 = pre + (2*l + h + 1)%b;
             // (2) TwiddleFactors
             const tRe2 = factors[tIdxRe2];
             const tIm2 = factors[tIdxIm2];
