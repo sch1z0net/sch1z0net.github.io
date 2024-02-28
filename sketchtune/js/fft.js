@@ -490,6 +490,7 @@ function fftComplexInPlace(out, factors) {
     let pwr  = 0;    //power 
     let mpwr = bits; //max power
     for (let size = 2; size <= N; size <<= 1) {
+        //console.log("-size "+size+"-------------------------------------------------------------------------------------------------");
         pwr++;
         // Define variables
         let i = 0;    // ev index, increases with every line step
