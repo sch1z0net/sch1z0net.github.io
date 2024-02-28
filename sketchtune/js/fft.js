@@ -163,28 +163,6 @@ function precalculateFFTFactorsRADIX4(maxSampleLength) {
     return new Float32Array(factors);
 }*/
 
-// Function to compute FFT factors with caching
-function computeFFTFactorsWithCache(N) {
-    // Check if FFT factors for this size are already cached
-    if (!fftFactorCacheRADIX2[N]) {
-        // Calculate FFT factors and cache them
-        fftFactorCacheRADIX2[N] = precalculateFFTFactorsRADIX2(N);
-    }
-
-    // Return the cached factors
-    return fftFactorCacheRADIX2[N];
-}
-
-
-// Bit reversal function
-function bitReverse(num, bits) {
-    let reversed = 0;
-    for (let i = 0; i < bits; i++) {
-        reversed = (reversed << 1) | (num & 1);
-        num >>= 1;
-    }
-    return reversed;
-}
 
 
 // Function to pad the input array with zeros to make its length a power of 2
@@ -915,6 +893,28 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
 }*/
 
 
+// Bit reversal function
+function bitReverse(num, bits) {
+    let reversed = 0;
+    for (let i = 0; i < bits; i++) {
+        reversed = (reversed << 1) | (num & 1);
+        num >>= 1;
+    }
+    return reversed;
+}
+
+// Function to compute FFT factors with caching
+function computeFFTFactorsWithCache(N) {
+    // Check if FFT factors for this size are already cached
+    if (!fftFactorCacheRADIX2[N]) {
+        // Calculate FFT factors and cache them
+        fftFactorCacheRADIX2[N] = precalculateFFTFactorsRADIX2(N);
+    }
+
+    // Return the cached factors
+    return fftFactorCacheRADIX2[N];
+}
+
 function fftComplexInPlace2(input, fftFactorLookup = null) {
     const N = input.length / 2;
     const bits = Math.floor(Math.log2(N));
@@ -1010,10 +1010,10 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
                 const oddPartRe = output[oddIndex * 2];
                 const oddPartIm = output[oddIndex * 2 + 1];
 
-                const ji = j;
+                const ji = j*2;
                 const rev = bitReverse(ji, bits);
-                const twiddleRe = factors[rev * 2];
-                const twiddleIm = factors[rev * 2 + 1];
+                const twiddleRe = factors[rev];
+                const twiddleIm = factors[rev + 1];
 
                 // Multiply by twiddle factors
                 const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
