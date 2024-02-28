@@ -1410,11 +1410,10 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 
 
 
-/****** TESTING PERFORMANCE ******/
+/********************************* TESTING PERFORMANCE ****************************************/
 
 // Define the number of FFT operations to perform
 const numOperations = 10000; // You can adjust this number based on your requirements
-
 
 // Generate test data as Float32Array
 const generateTestData = (size) => {
@@ -1425,6 +1424,17 @@ const generateTestData = (size) => {
     }
     return testData;
 };
+
+const testData8    = generateTestData(8);
+const testData16   = generateTestData(16);
+const testData32   = generateTestData(32);
+const testData64   = generateTestData(64);
+const testData128  = generateTestData(128);
+const testData256  = generateTestData(256);
+const testData512  = generateTestData(512);
+const testData1024 = generateTestData(1024);
+const testData2048 = generateTestData(2048);
+const testData4096 = generateTestData(4096);
 
 // Perform FFT operations
 const performFFTOperations = (type,fftSize) => {
@@ -1449,15 +1459,6 @@ const performFFTOperations = (type,fftSize) => {
 
 // Measure the time taken to perform FFT operations
 const measureTime = (type, fftSize) => {
-    /*const startTimeA = performance.now(); // Start time
-    for (let i = 0; i < numOperations; i++) {
-        var copy = testData.slice();
-    }
-    const endTimeA = performance.now(); // End time
-    const elapsedTimeA = endTimeA - startTimeA; // Elapsed time in milliseconds
-    console.log("Slicing takes: ",elapsedTimeA,"ms");*/
-
-
     const startTime = performance.now(); // Start time
     performFFTOperations(type, fftSize); // Perform FFT operations
     const endTime = performance.now(); // End time
@@ -1465,7 +1466,6 @@ const measureTime = (type, fftSize) => {
 
     // Calculate the number of FFT operations per second
     const operationsPerSecond = Math.floor(numOperations / (elapsedTime / 1000));
-
     console.log("Type",type,"Number of FFT",fftSize,"operations per second:", operationsPerSecond);
 };
 
@@ -1489,19 +1489,16 @@ function compareFFTResults(array1, array2) {
     return true;
 }
 
+/****************** TEST SPEED *******************/ 
+
+measureTime(1, 512);
+measureTime(1, 1024);
+measureTime(1, 2048);
+measureTime(1, 4096);
+
 
 /****************** TEST IF FORWARD IS CORRECT by comparison with REFERENCE *******************/ 
 /*
-const testData8    = generateTestData(8);
-const testData16   = generateTestData(16);
-const testData32   = generateTestData(32);
-const testData64   = generateTestData(64);
-const testData128  = generateTestData(128);
-const testData256  = generateTestData(256);
-const testData512  = generateTestData(512);
-const testData1024 = generateTestData(1024);
-const testData2048 = generateTestData(2048);
-const testData4096 = generateTestData(4096);
 
 console.log("8:    ",compareFFTResults(fftRealInPlace_ref(testData8),fftRealInPlaceRADIX4(testData8)));
 console.log("16:   ",compareFFTResults(fftRealInPlace_ref(testData16),fftRealInPlaceRADIX4(testData16)));
@@ -1514,16 +1511,6 @@ console.log("1024: ",compareFFTResults(fftRealInPlace_ref(testData1024),fftRealI
 console.log("2048: ",compareFFTResults(fftRealInPlace_ref(testData2048),fftRealInPlaceRADIX4(testData2048)));
 console.log("4096: ",compareFFTResults(fftRealInPlace_ref(testData4096),fftRealInPlaceRADIX4(testData4096)));
 */
-
-
-/****************** TEST SPEED *******************/ 
-
-
-measureTime(1, 512);
-measureTime(1, 1024);
-measureTime(1, 2048);
-measureTime(1, 4096);
-
 
 /****************** TEST IF FFT AND IFFT RETURN ORIGINAL SIGNAL *******************/ 
 /*
