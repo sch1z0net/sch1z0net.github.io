@@ -417,10 +417,15 @@ function fftRealInPlaceRADIX2(inputOriginal) {
         // Loop condition
         while (i < N) {
             // Use precalculated FFT factors directly
-            const tIdxRe = pre + (j % halfSize) * 2;
+            /*const tIdxRe = pre + (j % halfSize) * 2;
             const tIdxIm = pre + (j % halfSize) * 2 + 1;
             const twiddleRe = factors[tIdxRe];
-            const twiddleIm = factors[tIdxIm];
+            const twiddleIm = factors[tIdxIm];*/
+
+            const tIdxRe = (j % halfSize) * 2; 
+            const tIdxIm = (j % halfSize) * 2 + 1;
+            const tRe  = Math.cos((2 * Math.PI * tIdxRe) / size);  // Calculate Directly
+            const tIm  = Math.sin((2 * Math.PI * tIdxIm) / size);  // Calculate Directly
 
             const evenIndex = i + j;
             const oddIndex = i + j + halfSize;
@@ -435,8 +440,8 @@ function fftRealInPlaceRADIX2(inputOriginal) {
             const oddIm = complexInput[(oddIndex << 1) + 1];
             
             // Perform complex multiplication
-            const twiddledOddRe = oddRe * twiddleRe - oddIm * twiddleIm;
-            const twiddledOddIm = oddRe * twiddleIm + oddIm * twiddleRe;
+            const twiddledOddRe = oddRe * tRe - oddIm * tIm;
+            const twiddledOddIm = oddRe * tIm + oddIm * tRe;
             
             // Update even and odd elements with new values
             complexInput[evenIndex << 1]       =  evenRe + twiddledOddRe;
@@ -1477,29 +1482,25 @@ measureTime(1, 2048);
 measureTime(1, 4096);*/
 
 
-
-//console.log(FFT([1,2,3,4]));
-//console.log(FFT([1,0,1,0,1,0,1,0]));
-//console.log(FFT([1,-1,0,1,0,-1,0,1]));
-
-/*
-console.log(fftRealInPlaceRADIX2([1,10,2,20]));
-console.log(fftRealInPlaceRADIX4([1,10,2,20]));
-
-console.log(fftRealInPlaceRADIX2([1,-10,-2,20]));
-console.log(fftRealInPlaceRADIX4([1,-10,-2,20]));
-*/
-
-//console.log(fftRealInPlaceRADIX2([0,0.5,1,0.5]));
-//console.log(fftRealInPlaceRADIX4([0,0.5,1,0.5]));
-
 const signal1 = [ 1.0, 0.4, 0.0, 0.2];
 const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5];
 const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1];
+
+console.log(fftRealInPlace2(signal1));
+console.log(fftRealInPlaceRADIX4(signal1));
+console.log(fftRealInPlaceRADIX2(signal1));
+console.log(fftRealInPlace2(signal2));
+console.log(fftRealInPlaceRADIX4(signal1));
+console.log(fftRealInPlaceRADIX2(signal2));
+console.log(fftRealInPlace2(signal3));
+console.log(fftRealInPlaceRADIX2(signal3));
+console.log(fftRealInPlaceRADIX4(signal3));
+
+/*
 console.log(signal1);
 console.log(computeInverseFFT(computeFFT(signal1)));
 console.log(signal2);
 console.log(computeInverseFFT(computeFFT(signal2)));
 console.log(signal3);
-console.log(computeInverseFFT(computeFFT(signal3)));
+console.log(computeInverseFFT(computeFFT(signal3)));*/
 
