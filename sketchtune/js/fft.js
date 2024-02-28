@@ -484,7 +484,7 @@ function fftRealInPlaceRADIX2(realInput) {
 function index_lookup(N){
     const bits = Math.log2(N);
 
-    let lookup = [];
+    let lookup = new Uint16Array();
 
     let pre  = 0;    //offset for indexing Factor Lookup  
     let pwr  = 0;    //power 
@@ -591,7 +591,7 @@ function fftComplexInPlace(out) {
     if(N == 512){ idx_LKUP = INDEX_LOOKUP_512;  }
     if(N ==1024){ idx_LKUP = INDEX_LOOKUP_1024; }
     if(N ==2048){ idx_LKUP = INDEX_LOOKUP_2048; }  
-    if(N ==4096){ idx_LKUP = INDEX_LOOKUP_4098; } 
+    if(N ==4096){ idx_LKUP = INDEX_LOOKUP_4096; } 
 
 
     let len = idx_LKUP.length;
