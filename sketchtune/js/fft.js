@@ -1037,6 +1037,7 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
         const halfSize = size / 2;
         // Get FFT factors with caching
         const factors = computeFFTFactorsWithCache(size);
+        console.log("-size "+size+"-----------------------------------------------------------------------------------------------------");
         for (let i = 0; i < N; i += size) {
             for (let j = 0; j < halfSize; j++) {
                 js.push(j);
@@ -1516,13 +1517,13 @@ console.log("-----------OLD----------");
 console.log(fftRealInPlace2(signal2));
 console.log("---------Radix4---------");
 console.log(fftRealInPlaceRADIX4(signal2));
-console.log();
+/*console.log();
 console.log();
 console.log();
 console.log("-----------OLD----------");
 console.log(fftRealInPlace2(signal3));
 console.log("---------Radix4---------");
-console.log(fftRealInPlaceRADIX4(signal3));
+console.log(fftRealInPlaceRADIX4(signal3));*/
 
 /*
 console.log(signal1);
