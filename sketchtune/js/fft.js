@@ -1205,7 +1205,7 @@ function IFFT(spectrum) {
 
 
 // Function to compute inverse FFT of a spectrum
-async function computeInverseFFT(spectrum) {
+function computeInverseFFT(spectrum) {
     // Ensure the size of the spectrum array is a power of 2
     const paddedSize = nextPowerOf2(spectrum.length);
 
