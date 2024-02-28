@@ -1338,15 +1338,15 @@ const performFFTOperations = (fftSize) => {
 };
 
 // Measure the time taken to perform FFT operations
-const measureTime = (type, fftSize) => {
+const measureTime = (fftSize) => {
     const startTime = performance.now(); // Start time
-    performFFTOperations(type, fftSize); // Perform FFT operations
+    performFFTOperations(fftSize); // Perform FFT operations
     const endTime = performance.now(); // End time
     const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
 
     // Calculate the number of FFT operations per second
     const operationsPerSecond = Math.floor(numOperations / (elapsedTime / 1000));
-    console.log("Type",type,"Number of FFT",fftSize,"operations per second:", operationsPerSecond);
+    console.log("Number of FFT",fftSize,"operations per second:", operationsPerSecond);
 };
 
 
