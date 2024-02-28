@@ -1371,5 +1371,7 @@ measureTime(1, 4096);*/
 
 //console.log(FFT([1,2,3,4]));
 console.log(FFT([1,0,1,0,1,0,1,0]));
-console.log(FFT([1,-1,0,1,0,-1,0,1]));
+//console.log(FFT([1,-1,0,1,0,-1,0,1]));
+
+console.log(IFFT([4,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0]));
 
