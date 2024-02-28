@@ -1020,6 +1020,7 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
         return output;
     }
 
+    let js = [];
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
         const halfSize = size / 2;
@@ -1027,6 +1028,7 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
         const factors = computeFFTFactorsWithCache(size);
         for (let i = 0; i < N; i += size) {
             for (let j = 0; j < halfSize; j++) {
+                js.push(j);
                 const evenIndex = i + j;
                 const oddIndex = i + j + halfSize;
                 const evenPartRe = output[evenIndex * 2];
@@ -1051,6 +1053,8 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
             }
         }
     }
+
+    console.log(js);
 
     return output;
 }
