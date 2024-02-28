@@ -507,7 +507,8 @@ function fftComplexInPlace(out, factors) {
         const h = size >> 1;
         const q = size >> 2;
 
-        let c = (2*N - ((N/b) & 1)) >> 2;         // circled index start
+        //let c = (2*N - ((N/b) & 1)) >> 2;         
+        let c = (2-((N/b) & 1)) * N >> 2;  // circled index start
 
         console.log("------------------------ size",size)
    
@@ -547,7 +548,6 @@ function fftComplexInPlace(out, factors) {
         //                                                                 
         
         const isNotPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
-        let ci = 0;
         while (ni < N) {                                                               
             const eInd1 = i;        const oInd1 = i + h;                         
             const eInd2 = i + c;    const oInd2 = i + h + c;              
@@ -555,7 +555,6 @@ function fftComplexInPlace(out, factors) {
 
             // (1) Use precalculated FFT factors directly                                               
             const tIdxRe1 = pre + (2*l + 0)%b;  const tIdxIm1 = pre + (2*l + 1)%b; 
-            ci += 2;
             // (1) TwiddleFactors
             const tRe1 = factors[tIdxRe1];
             const tIm1 = factors[tIdxIm1];
@@ -587,7 +586,6 @@ function fftComplexInPlace(out, factors) {
             // (2) Use precalculated FFT factors directly  
             if( N == 4 ){ l = 1 } // Correction for a special case
             const tIdxRe2 = pre + (2*l + 0)%b;  const tIdxIm2 = pre + (2*l + 1)%b;
-            ci = 0;
             // (2) TwiddleFactors
             const tRe2 = factors[tIdxRe2];
             const tIm2 = factors[tIdxIm2];
