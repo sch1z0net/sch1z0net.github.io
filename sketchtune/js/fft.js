@@ -1309,18 +1309,19 @@ const testData1024 = generateTestData(1024);
 const testData2048 = generateTestData(2048);
 const testData4096 = generateTestData(4096);
 
-let fftSize = 1024;
-if(fftSize ==  512){ testData = testData512; } 
-if(fftSize == 1024){ testData = testData1024; } 
-if(fftSize == 2048){ testData = testData2048; } 
-if(fftSize == 4096){ testData = testData4096; } 
-
 // Perform FFT operations
-const performFFTOperations = () => {
+const performFFTOperations = (fftSize) => {
+    let testData;
+    if(fftSize ==  512){ testData = testData512; } 
+    if(fftSize == 1024){ testData = testData1024; } 
+    if(fftSize == 2048){ testData = testData2048; } 
+    if(fftSize == 4096){ testData = testData4096; } 
+
     // Perform FFT operations numOperations times
     for (let i = 0; i < numOperations; i++) {
         fftRealInPlaceRADIX4(testData);
     }
+
 };
 
 // Measure the time taken to perform FFT operations
@@ -1357,10 +1358,10 @@ function compareFFTResults(array1, array2) {
 
 /****************** TEST SPEED *******************/ 
 
-//measureTime(1, 512);
-measureTime(1);
-//measureTime(1, 2048);
-//measureTime(1, 4096);
+measureTime(512);
+measureTime(1024);
+measureTime(2048);
+measureTime(4096);
 
 
 /****************** TEST IF FORWARD IS CORRECT by comparison with REFERENCE *******************/ 
