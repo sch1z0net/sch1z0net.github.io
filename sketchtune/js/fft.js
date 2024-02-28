@@ -431,7 +431,7 @@ function fftRealInPlaceRADIX2(inputOriginal) {
         let i = 0; // Initialize i to 0
         let j = 0; // Initialize j to 0
 
-        if(size == N){ inv = -inv; }
+        //if(size == N){ inv = -inv; }
 
         const halfSize = size >> 1;
         console.log("------------------------ size",size)
