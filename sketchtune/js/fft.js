@@ -510,22 +510,22 @@ function fftComplexInPlace(out, factors) {
 
         //  For N = 16, the indices must look like this after each iteration
         //  
-        //  power = 1      power = 2      power = 3       power = 4
-        //  size = 2       size = 4       size = 8        size = 16
-        //  half = 1       half = 2       half = 4        half =  8
-        //  ev  odd        ev odd         ev odd          ev odd
-        // _0     1        0   2          0   4           0   8
-        //  2     3       _1   3          1   5           1   9
-        //  4     5        4   6          2   6           2  10
-        //  6     7        5   7         _3   7           3  11
-        // (8)    9       (8) 10         (8) 12          (4) 12   <---- circled index start = 4
-        // 10    11        9  11          9  13           5  13
-        // 12    13       12  14          10  14          6  14
-        // 14    15       13  15          11  15         _7  15
+        //  power = 1          power = 2          power = 3           power = 4
+        //  size = 2           size = 4           size = 8            size = 16
+        //  half = 1           half = 2           half = 4            half =  8
+        //  ev  j odd  j       ev  j odd  j       ev  j odd  j        ev  j odd  j
+        // _0   0   1  0       0   0   2  1       0   0   4  1         0  0   8  1
+        //  2   0   3  0      _1   0   3  1       1   2   5  3         1  2   9  3
+        //  4   0   5  0       4   0   6  1       2   0   6  1         2  4  10  5
+        //  6   0   7  0       5   0   7  1      _3   2   7  3         3  6  11  7
+        // (8)  0   9  0      (8)  0  10  1      (8)  0  12  1        (4) 0  12  1 <---- circled index start = 4
+        // 10   0  11  0       9   0  11  1       9   2  13  3         5  2  13  3
+        // 12   0  13  0      12   0  14  1      10   0  14  1         6  4  14  5
+        // 14   0  15  0      13   0  15  1      11   2  15  3        _7  5  15  7
         //  
-        // ratio = 4      ratio = 2       ratio = 1      ratio = 1/2       (N/b) -> 1  2  4 ..... 8
-        // _block = 2     _block = 4      _block = 8     _block = 16       1 is a special case, map it to 1/2 and the rest to 1
-        // max_bn =16/2   max_bn =16/4    max_bn = 16/2  max_bn = 16/4     therefor: c = (N/2) * (2-((N/b) & 1))/2  
+        // ratio = 4          ratio = 2           ratio = 1          ratio = 1/2       (N/b) -> 1  2  4 ..... 8
+        // _block = 2         _block = 4          _block = 8         _block = 16       1 is a special case, map it to 1/2 and the rest to 1
+        // max_bn =16/2       max_bn =16/4        max_bn = 16/2      max_bn = 16/4     therefor: c = (N/2) * (2-((N/b) & 1))/2  
         //                                                                 
         
         //console.log("------------------------ size",size)
