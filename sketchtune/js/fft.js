@@ -555,25 +555,16 @@ function fftComplexInPlace(out, factors) {
             const eInd1 = i;        const oInd1 = i + h;                         
             const eInd2 = i + c;    const oInd2 = i + h + c;              
 
-            if(2*ni >= N){
-                out[(eInd1 << 1)    ] = 100;
-                out[(eInd1 << 1) + 1] = 100;
-                out[(oInd1 << 1)    ] = 100;
-                out[(oInd1 << 1) + 1] = 100;
-                ni+=2;
-                continue;
-            }
-
 
             // (1) TwiddleFactors
             const j1 = (l)%h;
             const tRe1 = factors[pre + 2*j1 + 0];  // LOOKUP
             const tIm1 = factors[pre + 2*j1 + 1];  // LOOKUP
             // (1) Get real and imaginary parts of elements
-            const eRe1  = out[(eInd1 << 1)    ];
-            const eIm1  = out[(eInd1 << 1) + 1];
-            const oRe1  = out[(oInd1 << 1)    ];
-            const oIm1  = out[(oInd1 << 1) + 1];
+            const eRe1  = out[(eInd1 << 1)    ];    // (eInd1 << 1)     -> even.re
+            const eIm1  = out[(eInd1 << 1) + 1];    // (eInd1 << 1) + 1 -> even.im
+            const oRe1  = out[(oInd1 << 1)    ];    // (oInd1 << 1)     -> odd.re
+            const oIm1  = out[(oInd1 << 1) + 1];    // (oInd1 << 1) + 1 -> odd.im
             // (1) Perform complex multiplications
             const t_oRe1 = oRe1 * tRe1 - oIm1 * tIm1;
             const t_oIm1 = oRe1 * tIm1 + oIm1 * tRe1;
@@ -582,6 +573,10 @@ function fftComplexInPlace(out, factors) {
             out[(eInd1 << 1) + 1] = (eIm1 + t_oIm1);
             out[(oInd1 << 1)    ] = (eRe1 - t_oRe1);
             out[(oInd1 << 1) + 1] = (eIm1 - t_oIm1);
+
+            console.log("**** EV.RE",eInd1,(eRe1 + t_oRe1).toFixed(2),"<- EV.RE",eInd1,"+ (OD.RE",oInd1,"* TW.RE",j1,"- OD.IM",oInd1,"* TW.IM",j1,")","|||||||","EV.IM",eInd1,(eIm1 + t_oIm1).toFixed(2),"<- EV.IM",eInd1,"+ (OD.RE",oInd1,"* TW.IM",j1,"+ OD.IM",oInd1,"* TW.RE",j1,")");
+            console.log("**** OD.RE",oInd1,(eRe1 - t_oRe1).toFixed(2),"<- EV.RE",eInd1,"- (OD.RE",oInd1,"* TW.RE",j1,"- OD.IM",oInd1,"* TW.IM",j1,")","|||||||","OD.IM",oInd1,(eIm1 - t_oIm1).toFixed(2),"<- EV.IM",eInd1,"- (OD.RE",oInd1,"* TW.IM",j1,"+ OD.IM",oInd1,"* TW.RE",j1,")");
+
 
             // Not Power of 4?
             if( isNotPowerOf4 ){ 
@@ -604,10 +599,14 @@ function fftComplexInPlace(out, factors) {
             const t_oRe2 = oRe2 * tRe2 - oIm2 * tIm2;
             const t_oIm2 = oRe2 * tIm2 + oIm2 * tRe2;
             // (2) Update elements with new values
-            out[(eInd2 << 1)    ] = (eRe2 + t_oRe2);  //EV RE
-            out[(eInd2 << 1) + 1] = (eIm2 + t_oIm2);  //EV IM
-            out[(oInd2 << 1)    ] = (eRe2 - t_oRe2);  //OD RE 
-            out[(oInd2 << 1) + 1] = (eIm2 - t_oIm2);  //OD IM
+            out[(eInd2 << 1)    ] = (eRe2 + t_oRe2);
+            out[(eInd2 << 1) + 1] = (eIm2 + t_oIm2);
+            out[(oInd2 << 1)    ] = (eRe2 - t_oRe2);
+            out[(oInd2 << 1) + 1] = (eIm2 - t_oIm2);
+
+            console.log("**** EV.RE",eInd2,(eRe2 + t_oRe2).toFixed(2),"<- EV.RE",eInd2,"+ (OD.RE",oInd2,"* TW.RE",j2,"- OD.IM",oInd2,"* TW.IM",j2,")","|||||||","EV.IM",eInd2,(eIm2 + t_oIm2).toFixed(2),"<- EV.IM",eInd2,"+ (OD.RE",oInd2,"* TW.IM",j2,"+ OD.IM",oInd2,"* TW.RE",j2,")");
+            console.log("**** OD.RE",oInd2,(eRe2 - t_oRe2).toFixed(2),"<- EV.RE",eInd2,"- (OD.RE",oInd2,"* TW.RE",j2,"- OD.IM",oInd2,"* TW.IM",j2,")","|||||||","OD.IM",oInd2,(eIm2 - t_oIm2).toFixed(2),"<- EV.IM",eInd2,"- (OD.RE",oInd2,"* TW.IM",j2,"+ OD.IM",oInd2,"* TW.RE",j2,")");
+
 
             i++; l++; ni+=4;
             // line reaches block-end
@@ -1348,5 +1347,5 @@ console.log(signal3);
 console.log(computeInverseFFT(computeFFT(signal3)));
 */
 
-console.log(computeFFT(signal2));
+console.log(computeFFT(signal1));
 
