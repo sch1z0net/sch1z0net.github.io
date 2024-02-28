@@ -576,9 +576,14 @@ let INDEX_LOOKUP_1024 = index_lookup(1024);
 let INDEX_LOOKUP_2048 = index_lookup(2048);
 let INDEX_LOOKUP_4096 = index_lookup(4096);
 
+let factors = LOOKUP_RADIX2_1024;
+let idx_LKUP = INDEX_LOOKUP_1024;
+let len = idx_LKUP.length;
+
 function fftComplexInPlace(out) {
     const N = out.length/2;
 
+/*
     let factors;
     if(N ==    4){ factors = LOOKUP_RADIX2_4;    }
     if(N ==    8){ factors = LOOKUP_RADIX2_8;    }
@@ -604,9 +609,8 @@ function fftComplexInPlace(out) {
     if(N ==1024){ idx_LKUP = INDEX_LOOKUP_1024; }
     if(N ==2048){ idx_LKUP = INDEX_LOOKUP_2048; }  
     if(N ==4096){ idx_LKUP = INDEX_LOOKUP_4096; } 
-
-
-    let len = idx_LKUP.length;
+*/
+    
     let i = 0;
     while(i < len){
         // TwiddleFactors
@@ -1348,10 +1352,10 @@ function compareFFTResults(array1, array2) {
 
 /****************** TEST SPEED *******************/ 
 
-measureTime(1, 512);
+//measureTime(1, 512);
 measureTime(1, 1024);
-measureTime(1, 2048);
-measureTime(1, 4096);
+//measureTime(1, 2048);
+//measureTime(1, 4096);
 
 
 /****************** TEST IF FORWARD IS CORRECT by comparison with REFERENCE *******************/ 
