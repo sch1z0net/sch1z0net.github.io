@@ -652,7 +652,7 @@ function fftComplexInPlace_tidy(out) {
     const N = out.length / 2;
     const bits = Math.log2(N);
 
-    let factors;
+    /*let factors;
     if(N == 4){    factors = LOOKUP_RADIX2_4;    }
     if(N == 8){    factors = LOOKUP_RADIX2_8;    }
     if(N == 16){   factors = LOOKUP_RADIX2_16;   }
@@ -663,7 +663,7 @@ function fftComplexInPlace_tidy(out) {
     if(N == 512){  factors = LOOKUP_RADIX2_512;  }
     if(N == 1024){ factors = LOOKUP_RADIX2_1024; }
     if(N == 2048){ factors = LOOKUP_RADIX2_2048; }
-    if(N == 4096){ factors = LOOKUP_RADIX2_4096; }
+    if(N == 4096){ factors = LOOKUP_RADIX2_4096; }*/
 
 
     let pre  = 0;    //offset for indexing Factor Lookup
