@@ -1037,7 +1037,7 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
         const halfSize = size / 2;
         // Get FFT factors with caching
         const factors = computeFFTFactorsWithCache(size);
-        console.log("-size "+size+"-----------------------------------------------------------------------------------------------------");
+        console.log("-size "+size+"-------------------------------------------------------------------------------------------------");
         for (let i = 0; i < N; i += size) {
             for (let j = 0; j < halfSize; j++) {
                 js.push(j);
