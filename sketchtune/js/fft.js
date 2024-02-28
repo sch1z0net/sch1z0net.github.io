@@ -484,7 +484,7 @@ function fftRealInPlaceRADIX2(realInput) {
 function index_lookup(N){
     const bits = Math.log2(N);
 
-    let lookup = new Uint16Array();
+    let lookup = new Uint16Array(bits*12*N/2);
 
     let pre  = 0;    //offset for indexing Factor Lookup  
     let pwr  = 0;    //power 
@@ -568,14 +568,14 @@ function fftComplexInPlace(out) {
     const N = out.length/2;
 
     let factors;
-    if(N == 4){    factors = LOOKUP_RADIX2_4;    }
-    if(N == 8){    factors = LOOKUP_RADIX2_8;    }
-    if(N == 16){   factors = LOOKUP_RADIX2_16;   }
-    if(N == 32){   factors = LOOKUP_RADIX2_32;   }
-    if(N == 64){   factors = LOOKUP_RADIX2_64;   }
-    if(N == 128){  factors = LOOKUP_RADIX2_128;  }
-    if(N == 256){  factors = LOOKUP_RADIX2_256;  }
-    if(N == 512){  factors = LOOKUP_RADIX2_512;  }
+    if(N ==    4){ factors = LOOKUP_RADIX2_4;    }
+    if(N ==    8){ factors = LOOKUP_RADIX2_8;    }
+    if(N ==   16){ factors = LOOKUP_RADIX2_16;   }
+    if(N ==   32){ factors = LOOKUP_RADIX2_32;   }
+    if(N ==   64){ factors = LOOKUP_RADIX2_64;   }
+    if(N ==  128){ factors = LOOKUP_RADIX2_128;  }
+    if(N ==  256){ factors = LOOKUP_RADIX2_256;  }
+    if(N ==  512){ factors = LOOKUP_RADIX2_512;  }
     if(N == 1024){ factors = LOOKUP_RADIX2_1024; }
     if(N == 2048){ factors = LOOKUP_RADIX2_2048; }
     if(N == 4096){ factors = LOOKUP_RADIX2_4096; }
