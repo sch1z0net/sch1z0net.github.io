@@ -679,8 +679,8 @@ function fftRealInPlaceRADIX4(inputOriginal) {
 }
 
 
-function fftComplexInPlaceRADIX4(inputOriginal) {
-    const N = inputOriginal.length / 2;
+function fftComplexInPlaceRADIX4(complexInput) {
+    const N = complexInput.length / 2;
     const bits = Math.log2(N);
 
     if (N !== nextPowerOf2(N)) {
@@ -689,7 +689,7 @@ function fftComplexInPlaceRADIX4(inputOriginal) {
     }
 
     // Create a copy of the input array
-    const input = inputOriginal.slice();
+    const input = complexInput.slice();
 
     let factors, map;
     if(N == 4){    factors = LOOKUP_RADIX2_4;    map = bitReversalMap4.get(N);}
@@ -707,8 +707,8 @@ function fftComplexInPlaceRADIX4(inputOriginal) {
     // Perform bit reversal
     const out = new Float32Array(N*2);
     for (let i = 0; i < N; i++) {
-        out[i*2  ] = input[map[i]  ];
-        out[i*2+1] = input[map[i]+1];
+        out[i*2  ] = input[map[i]*2  ];
+        out[i*2+1] = input[map[i]*2+1];
     }
 
     return fftComplexInPlace(out, factors);
@@ -1316,8 +1316,8 @@ function ifft(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    const fftResult = fftComplexInPlace_ref(conjugateSpectrum);
-    //const fftResult = fftComplexInPlaceRADIX4(conjugateSpectrum);
+    //const fftResult = fftComplexInPlace_ref(conjugateSpectrum);
+    const fftResult = fftComplexInPlaceRADIX4(conjugateSpectrum);
 
     // Take the complex conjugate of the FFT result and scale by 1/N
     const ifftResult = new Float32Array(N * 2);
