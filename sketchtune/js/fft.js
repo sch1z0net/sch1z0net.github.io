@@ -610,7 +610,7 @@ function fftComplexInPlace(out, factors) {
             if (l % h === 0) { bs++; i=bs*b; }
         }
         pre += size;
-        console.log("size:"+size, out);
+        //console.log("size:"+size, out);
         //console.log("size:"+size, js);
         //js = new Array(N/2);
     }
@@ -1043,7 +1043,7 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
         const halfSize = size / 2;
         // Get FFT factors with caching
         const factors = computeFFTFactorsWithCache(size);
-        console.log("-size "+size+"-------------------------------------------------------------------------------------------------");
+        //console.log("-size "+size+"-------------------------------------------------------------------------------------------------");
         for (let i = 0; i < N; i += size) {
             for (let j = 0; j < halfSize; j++) {
                 js.push(j);
@@ -1072,8 +1072,8 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
                 output[oddIndex * 2]      = eRe - t_oRe;
                 output[oddIndex * 2 + 1]  = eIm - t_oIm;
 
-                console.log("**** EV.RE",evenIndex,(eRe + t_oRe).toFixed(2),"<- EV.RE",evenIndex,"+ (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","EV.IM",evenIndex,(eIm + t_oIm).toFixed(2),"<- EV.IM",evenIndex,"+ (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
-                console.log("**** OD.RE",oddIndex ,(eRe - t_oRe).toFixed(2),"<- EV.RE",evenIndex,"- (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","OD.IM",oddIndex ,(eIm - t_oIm).toFixed(2),"<- EV.IM",evenIndex,"- (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
+                //console.log("**** EV.RE",evenIndex,(eRe + t_oRe).toFixed(2),"<- EV.RE",evenIndex,"+ (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","EV.IM",evenIndex,(eIm + t_oIm).toFixed(2),"<- EV.IM",evenIndex,"+ (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
+                //console.log("**** OD.RE",oddIndex ,(eRe - t_oRe).toFixed(2),"<- EV.RE",evenIndex,"- (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","OD.IM",oddIndex ,(eIm - t_oIm).toFixed(2),"<- EV.IM",evenIndex,"- (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
             }
         }
         //console.log("size:"+size, output);
@@ -1489,10 +1489,7 @@ function compareFFTResults(array1, array2) {
     return true;
 }
 
-/*let testData1 = [0,0.5,1,0.5];
-let testData2 = [0,0.5,1,0.5,1,2,3,4];
-let testData3 = [0,0.5,1,0.5,3,2,1,4,0,0.5,1,0.5,7,8,9,6];
-let testData4 = [0,0.5,1,0.5,3,2,1,4,0,0.5,1,0.5,7,8,9,6,1,2,1,1,3,2,1,4,0,0.5,1,0.5,7,8,9,6];
+
 const testData512  = generateTestData(512);
 const testData1024 = generateTestData(1024);
 const testData2048 = generateTestData(2048);
@@ -1503,24 +1500,23 @@ const testData2048 = generateTestData(2048);
 //console.log(compareFFTResults(fftRealInPlaceRADIX2(testData512),fftRealInPlaceRADIX4(testData512)));
 //console.log(compareFFTResults(fftRealInPlaceRADIX2(testData1024),fftRealInPlaceRADIX4(testData1024)));
 //console.log(compareFFTResults(fftRealInPlaceRADIX2(testData2048),fftRealInPlaceRADIX4(testData2048)));
-*/
 
-/*measureTime(1, 512);
+measureTime(1, 512);
 measureTime(1, 1024);
 measureTime(1, 2048);
-measureTime(1, 4096);*/
+measureTime(1, 4096);
 
 
-const signal1 = [ 1.0, 0.4, 0.0, 0.2];
-const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5];
-const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1];
+//const signal1 = [ 1.0, 0.4, 0.0, 0.2];
+//const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5];
+//const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1];
 
 //console.log(fftRealInPlace2(signal1));
 //console.log(fftRealInPlaceRADIX4(signal1));
-console.log("-----------OLD----------");
+/*console.log("-----------OLD----------");
 console.log(fftRealInPlace2(signal2));
 console.log("---------Radix4---------");
-console.log(fftRealInPlaceRADIX4(signal2));
+console.log(fftRealInPlaceRADIX4(signal2));*/
 /*console.log();
 console.log();
 console.log();
