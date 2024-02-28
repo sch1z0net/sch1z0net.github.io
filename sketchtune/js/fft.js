@@ -914,7 +914,7 @@ async function fftComplexInPlace(input, fftFactorLookup = null) {
 
 function fftComplexInPlace2(input, fftFactorLookup = null) {
     const N = input.length / 2;
-    const bits = Math.log2(N);
+    const bits = Math.floor(Math.log2(N));
 
     if (N !== nextPowerOf2(N)) {
         console.error("FFT FRAME must have power of 2");
@@ -969,7 +969,7 @@ function fftComplexInPlace2(input, fftFactorLookup = null) {
 
 function fftRealInPlace2(input, fftFactorLookup = null) {
     const N = input.length;
-    const bits = Math.log2(N);
+    const bits = Math.floor(Math.log2(N));
 
     if (N !== nextPowerOf2(N)) {
         console.error("FFT FRAME must have power of 2");
@@ -980,6 +980,7 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
     const output = new Float32Array(N * 2);
     for (let i = 0; i < N; i++) {
         const reversedIndex = bitReverse(i, bits);
+        console.log("BR:",reversedIndex);
         output[reversedIndex * 2] = input[i]; // Copy real part
         output[reversedIndex * 2 + 1] = 0; // Copy imaginary part
     }
