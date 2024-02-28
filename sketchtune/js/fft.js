@@ -609,9 +609,23 @@ function fftComplexInPlace(out, factors) {
 
 
 
-function fftComplexInPlace_tidy(out, factors) {
+function fftComplexInPlace_tidy(out) {
     const N = out.length / 2;
     const bits = Math.log2(N);
+
+    let factors;
+    if(N == 4){    factors = LOOKUP_RADIX2_4;    }
+    if(N == 8){    factors = LOOKUP_RADIX2_8;    }
+    if(N == 16){   factors = LOOKUP_RADIX2_16;   }
+    if(N == 32){   factors = LOOKUP_RADIX2_32;   }
+    if(N == 64){   factors = LOOKUP_RADIX2_64;   }
+    if(N == 128){  factors = LOOKUP_RADIX2_128;  }
+    if(N == 256){  factors = LOOKUP_RADIX2_256;  }
+    if(N == 512){  factors = LOOKUP_RADIX2_512;  }
+    if(N == 1024){ factors = LOOKUP_RADIX2_1024; }
+    if(N == 2048){ factors = LOOKUP_RADIX2_2048; }
+    if(N == 4096){ factors = LOOKUP_RADIX2_4096; }
+
 
     let pre  = 0;    //offset for indexing Factor Lookup
     let inv  = 1;    
@@ -793,18 +807,18 @@ function fftRealInPlaceRADIX4(realInput) {
     // Create a copy of the input array
     const input = realInput.slice();
     
-    let factors, map;
-    if(N == 4){    factors = LOOKUP_RADIX2_4;    map = bitReversalMap4.get(N);}
-    if(N == 8){    factors = LOOKUP_RADIX2_8;    map = bitReversalMap8.get(N);}
-    if(N == 16){   factors = LOOKUP_RADIX2_16;   map = bitReversalMap16.get(N);}
-    if(N == 32){   factors = LOOKUP_RADIX2_32;   map = bitReversalMap32.get(N);}
-    if(N == 64){   factors = LOOKUP_RADIX2_64;   map = bitReversalMap64.get(N);}
-    if(N == 128){  factors = LOOKUP_RADIX2_128;  map = bitReversalMap128.get(N);}
-    if(N == 256){  factors = LOOKUP_RADIX2_256;  map = bitReversalMap256.get(N);}
-    if(N == 512){  factors = LOOKUP_RADIX2_512;  map = bitReversalMap512.get(N);}
-    if(N == 1024){ factors = LOOKUP_RADIX2_1024; map = bitReversalMap1024.get(N);}
-    if(N == 2048){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap2048.get(N);}
-    if(N == 4096){ factors = LOOKUP_RADIX2_4096; map = bitReversalMap4096.get(N);}
+    let map;
+    if(N == 4){    map = bitReversalMap4.get(N);}
+    if(N == 8){    map = bitReversalMap8.get(N);}
+    if(N == 16){   map = bitReversalMap16.get(N);}
+    if(N == 32){   map = bitReversalMap32.get(N);}
+    if(N == 64){   map = bitReversalMap64.get(N);}
+    if(N == 128){  map = bitReversalMap128.get(N);}
+    if(N == 256){  map = bitReversalMap256.get(N);}
+    if(N == 512){  map = bitReversalMap512.get(N);}
+    if(N == 1024){ map = bitReversalMap1024.get(N);}
+    if(N == 2048){ map = bitReversalMap2048.get(N);}
+    if(N == 4096){ map = bitReversalMap4096.get(N);}
 
     // Perform bit reversal
     const inputBR = new Float32Array(N);
@@ -835,18 +849,18 @@ function fftComplexInPlaceRADIX4(complexInput) {
     // Create a copy of the input array
     const input = complexInput.slice();
 
-    let factors, map;
-    if(N == 4){    factors = LOOKUP_RADIX2_4;    map = bitReversalMap4.get(N);}
-    if(N == 8){    factors = LOOKUP_RADIX2_8;    map = bitReversalMap8.get(N);}
-    if(N == 16){   factors = LOOKUP_RADIX2_16;   map = bitReversalMap16.get(N);}
-    if(N == 32){   factors = LOOKUP_RADIX2_32;   map = bitReversalMap32.get(N);}
-    if(N == 64){   factors = LOOKUP_RADIX2_64;   map = bitReversalMap64.get(N);}
-    if(N == 128){  factors = LOOKUP_RADIX2_128;  map = bitReversalMap128.get(N);}
-    if(N == 256){  factors = LOOKUP_RADIX2_256;  map = bitReversalMap256.get(N);}
-    if(N == 512){  factors = LOOKUP_RADIX2_512;  map = bitReversalMap512.get(N);}
-    if(N == 1024){ factors = LOOKUP_RADIX2_1024; map = bitReversalMap1024.get(N);}
-    if(N == 2048){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap2048.get(N);}
-    if(N == 4096){ factors = LOOKUP_RADIX2_4096; map = bitReversalMap4096.get(N);}
+    let map;
+    if(N == 4){    map = bitReversalMap4.get(N);}
+    if(N == 8){    map = bitReversalMap8.get(N);}
+    if(N == 16){   map = bitReversalMap16.get(N);}
+    if(N == 32){   map = bitReversalMap32.get(N);}
+    if(N == 64){   map = bitReversalMap64.get(N);}
+    if(N == 128){  map = bitReversalMap128.get(N);}
+    if(N == 256){  map = bitReversalMap256.get(N);}
+    if(N == 512){  map = bitReversalMap512.get(N);}
+    if(N == 1024){ map = bitReversalMap1024.get(N);}
+    if(N == 2048){ map = bitReversalMap2048.get(N);}
+    if(N == 4096){ map = bitReversalMap4096.get(N);}
 
     // Perform bit reversal
     const out = new Float32Array(N*2);
