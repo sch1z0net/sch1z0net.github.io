@@ -940,7 +940,6 @@ function fftComplexInPlace2(input, fftFactorLookup = null) {
     for (let size = 2; size <= N; size *= 2) {
         const halfSize = size / 2;
         // Get FFT factors with caching
-        const factors = computeFFTFactorsWithCache(size);
         for (let i = 0; i < N; i += size) {
             for (let j = 0; j < halfSize; j++) {
                 const evenIndex = i + j;
@@ -950,10 +949,8 @@ function fftComplexInPlace2(input, fftFactorLookup = null) {
                 const oddPartRe = output[oddIndex * 2];
                 const oddPartIm = output[oddIndex * 2 + 1];
 
-                const ji = j*2;
-                const rev = bitReverse(ji, bits);
-                const twiddleRe = factors[rev];
-                const twiddleIm = factors[rev + 1];
+                const twiddleRe = Math.cos((2 * Math.PI * j) / size);
+                const twiddleIm = Math.sin((2 * Math.PI * j) / size);
 
                 // Multiply by twiddle factors
                 const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
@@ -999,8 +996,6 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
         const halfSize = size / 2;
-        // Get FFT factors with caching
-        const factors = computeFFTFactorsWithCache(size);
         for (let i = 0; i < N; i += size) {
             for (let j = 0; j < halfSize; j++) {
                 const evenIndex = i + j;
@@ -1010,20 +1005,18 @@ function fftRealInPlace2(input, fftFactorLookup = null) {
                 const oddPartRe = output[oddIndex * 2];
                 const oddPartIm = output[oddIndex * 2 + 1];
 
-                const ji = j*2;
-                const rev = bitReverse(ji, bits);
-                const twiddleRe = factors[rev];
-                const twiddleIm = factors[rev + 1];
+                const twiddleRe = Math.cos((2 * Math.PI * j) / size);
+                const twiddleIm = Math.sin((2 * Math.PI * j) / size);
 
                 // Multiply by twiddle factors
                 const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
                 const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
 
                 // Combine results of even and odd parts in place
-                output[evenIndex * 2] = evenPartRe + twiddledOddRe;
+                output[evenIndex * 2]     = evenPartRe + twiddledOddRe;
                 output[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
-                output[oddIndex * 2] = evenPartRe - twiddledOddRe;
-                output[oddIndex * 2 + 1] = evenPartIm - twiddledOddIm;
+                output[oddIndex * 2]      = evenPartRe - twiddledOddRe;
+                output[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
             }
         }
     }
