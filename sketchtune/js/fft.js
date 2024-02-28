@@ -546,7 +546,7 @@ function fftComplexInPlace(out, factors) {
         // max_bn =16/2   max_bn =16/4    max_bn = 16/2  max_bn = 16/4     therefor: c = (N/2) * (2-((N/b) & 1))/2  
         //                                                                 
         
-        console.log("------------------------ size",size)
+        //console.log("------------------------ size",size)
 
         const isNotPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
         while (ni < N) {                                                               
@@ -577,7 +577,7 @@ function fftComplexInPlace(out, factors) {
             
             // Not Power of 4?
             if( isNotPowerOf4 ){ 
-                console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1);
+                //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1);
                 i++; l++; ni+=2;
                 // line reaches block-end
                 if (l % h === 0) { bs++; i=bs*b; }
@@ -604,7 +604,7 @@ function fftComplexInPlace(out, factors) {
             out[(oInd2 << 1)    ] =       (eRe2 - t_oRe2);
             out[(oInd2 << 1) + 1] = inv * (eIm2 - t_oIm2);
 
-            console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
+            //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
 
             i++; l++; ni+=4;
             // line reaches block-end
@@ -1451,10 +1451,10 @@ console.log(fftRealInPlaceRADIX4([1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,
 0.000000,0.000000
 */
 
-/*const spectrum = FFT([1,2,3,4]);
+const spectrum = FFT([1,2,3,4]);
 const complexSpectrum = [];
 for (let i = 0; i < spectrum.length; i += 2) {
     complexSpectrum.push({ re: spectrum[i], im: spectrum[i + 1] });
 }
 console.log(computeInverseFFT(complexSpectrum));
-*/
+
