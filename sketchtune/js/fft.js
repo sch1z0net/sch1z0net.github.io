@@ -1465,9 +1465,9 @@ console.log(fftRealInPlaceRADIX4([1,-10,-2,20]));
 //console.log(fftRealInPlaceRADIX4([0,0.5,1,0.5]));
 
 
-const signal1 = [0,0.5,1,0.5,0,-0.5,1,-0.5];
-const signal2 = [1,2,3,4,5,6,7,8];
-const signal3 = [1,4,2,3,1,4,2,3];
+const signal1 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5];
+const signal2 = [ 1.0, 0.4, 0.0, 0.2, 0.0, 0.4, 0.2, 0.0];
+const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1];
 console.log(computeInverseFFT(computeFFT(signal1)));
 console.log(computeInverseFFT(computeFFT(signal2)));
 console.log(computeInverseFFT(computeFFT(signal3)));
