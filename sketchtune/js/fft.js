@@ -607,6 +607,8 @@ function index_lookup(N){
     let mpwr = bits; //max power
     let N_half    = N >> 1;
     let N_quarter = N >> 2;
+    let c = N_half;  // circled index start
+    
     for (let size = 2; size <= N; size <<= 1) {
         pwr++;
         // Define variables
@@ -619,8 +621,7 @@ function index_lookup(N){
         const h = size >> 1;
         const q = size >> 2;
       
-        let c = N_half;  // circled index start
-        if( N/b == 1 ){ c = N_quarter; }; 
+        if( size == N ){ c = N_quarter; }; 
 
         let br = (size==N) ? h/2 : 0;
 
