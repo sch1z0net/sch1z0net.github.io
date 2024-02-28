@@ -486,6 +486,8 @@ function index_lookup(N){
 
     let lookup = new Uint16Array(bits*12*N/2);
 
+    let idx = 0;
+
     let pre  = 0;    //offset for indexing Factor Lookup  
     let pwr  = 0;    //power 
     let mpwr = bits; //max power
@@ -520,7 +522,12 @@ function index_lookup(N){
             const oRe1Indx = (oInd1 << 1);
             const oIm1Indx = (oInd1 << 1) + 1;
 
-            lookup.push(tRe1,tIm1,eRe1Indx,eIm1Indx,oRe1Indx,oIm1Indx);
+            lookup[idx++] = tRe1;
+            lookup[idx++] = tIm1;
+            lookup[idx++] = eRe1Indx;
+            lookup[idx++] = eIm1Indx;
+            lookup[idx++] = oRe1Indx;
+            lookup[idx++] = oIm1Indx;
 
             // Not Power of 4?
             if( isNotPowerOf4 ){ 
@@ -539,7 +546,12 @@ function index_lookup(N){
             const oRe2Indx = (oInd2 << 1);
             const oIm2Indx = (oInd2 << 1) + 1;
 
-            lookup.push(tRe2,tIm2,eRe2Indx,eIm2Indx,oRe2Indx,oIm2Indx);
+            lookup[idx++] = tRe2;
+            lookup[idx++] = tIm2;
+            lookup[idx++] = eRe2Indx;
+            lookup[idx++] = eIm2Indx;
+            lookup[idx++] = oRe2Indx;
+            lookup[idx++] = oIm2Indx;
             
             i++; l++; ni+=4;
             // line reaches block-end
