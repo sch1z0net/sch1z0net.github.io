@@ -1381,6 +1381,9 @@ console.log(fftRealInPlaceRADIX4([1,-10,-2,20]));
 */
 
 
+console.log(fftRealInPlaceRADIX4([1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8]));
+
+
 /*const spectrum = FFT([1,2,3,4]);
 const complexSpectrum = [];
 for (let i = 0; i < spectrum.length; i += 2) {
