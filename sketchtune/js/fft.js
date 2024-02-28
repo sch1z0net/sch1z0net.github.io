@@ -131,11 +131,13 @@ function precalculateFFTFactorsRADIX2(maxSampleLength) {
             factors[pre + i * 2 + 1] = Math.sin(angle1); // Sine of angle1
         }
         pre += N;
+        if(maxN==64){ console.log("for N=",N,"LOOKUP goes from",pre,"to",pre+N); }
+        //2 + 4 + 8 + 16 + 32 + 64...
     }
 
     return new Float32Array(factors);
 }
-
+/*
 // Compute FFT factors with caching (optimized for Radix-4 FFT)
 function precalculateFFTFactorsRADIX4(maxSampleLength) {
     const maxN = nextPowerOf4(maxSampleLength);
@@ -159,7 +161,7 @@ function precalculateFFTFactorsRADIX4(maxSampleLength) {
    }
 
     return new Float32Array(factors);
-}
+}*/
 
 // Function to compute FFT factors with caching
 function computeFFTFactorsWithCache(N) {
