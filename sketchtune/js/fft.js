@@ -1489,12 +1489,12 @@ function compareFFTResults(array1, array2) {
     return true;
 }
 
-/*
+
 const testData512  = generateTestData(512);
 const testData1024 = generateTestData(1024);
 const testData2048 = generateTestData(2048);
 const testData4096 = generateTestData(2096);
-*/
+
 
 /*
 measureTime(1, 512);
@@ -1503,19 +1503,18 @@ measureTime(1, 2048);
 measureTime(1, 4096);
 */
 
-const signal1 = [ 1.0, 0.4, 0.0, 0.2];
-const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5];
-const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1];
+const signal1 = [ 1.0, 0.4, 0.0, 0.2 ];
+const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5 ];
+const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
 
 console.log(compareFFTResults(fftRealInPlace_ref(signal1),fftRealInPlaceRADIX4(signal1)));
 console.log(compareFFTResults(fftRealInPlace_ref(signal2),fftRealInPlaceRADIX4(signal2)));
 console.log(compareFFTResults(fftRealInPlace_ref(signal3),fftRealInPlaceRADIX4(signal3)));
 
-//console.log(compareFFTResults(fftRealInPlaceRADIX2(testData512),fftRealInPlaceRADIX4(testData512)));
-//console.log(compareFFTResults(fftRealInPlaceRADIX2(testData1024),fftRealInPlaceRADIX4(testData1024)));
-//console.log(compareFFTResults(fftRealInPlaceRADIX2(testData2048),fftRealInPlaceRADIX4(testData2048)));
-
-
+console.log(compareFFTResults(fftRealInPlace_ref(testData512),fftRealInPlaceRADIX4(testData512)));
+console.log(compareFFTResults(fftRealInPlace_ref(testData1024),fftRealInPlaceRADIX4(testData1024)));
+console.log(compareFFTResults(fftRealInPlace_ref(testData2048),fftRealInPlaceRADIX4(testData2048)));
+console.log(compareFFTResults(fftRealInPlace_ref(testData4096),fftRealInPlaceRADIX4(testData4096)));
 
 
 //console.log(fftRealInPlace_ref(signal1));
