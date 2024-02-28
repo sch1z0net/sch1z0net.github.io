@@ -1205,7 +1205,7 @@ function IFFT(spectrum) {
 
 
 // Function to compute inverse FFT of a spectrum
-async function computeInverseFFT(spectrum) {
+function computeInverseFFT(spectrum) {
     // Ensure the size of the spectrum array is a power of 2
     const paddedSize = nextPowerOf2(spectrum.length);
 
@@ -1412,11 +1412,10 @@ console.log(fftRealInPlaceRADIX4([1,-10,-2,20]));
 //console.log(fftRealInPlaceRADIX4([0,0.5,1,0.5]));
 
 
-const spectrum = FFT([0,0.5,1,0.5,0,-0.5,1,-0.5,]);
-const complexSpectrum = [];
-for (let i = 0; i < spectrum.length; i += 2) {
-    complexSpectrum.push({ re: spectrum[i], im: spectrum[i + 1] });
-}
-console.log(computeInverseFFT(complexSpectrum));
-
+const signal1 = [0,0.5,1,0.5,0,-0.5,1,-0.5];
+const signal2 = [1,2,3,4,5,6,7,8];
+const signal3 = [1,4,2,3,1,4,2,3];
+console.log(computeInverseFFT(computeFFT(signal1)));
+console.log(computeInverseFFT(computeFFT(signal2)));
+console.log(computeInverseFFT(computeFFT(signal3)));
 
