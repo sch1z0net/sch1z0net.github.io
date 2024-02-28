@@ -563,8 +563,8 @@ function fftComplexInPlace(out, factors) {
             out[(oInd1 << 1)    ] =       (eRe1 - t_oRe1);
             out[(oInd1 << 1) + 1] = inv * (eIm1 - t_oIm1);
             
-            console.log("EV.RE",eInd1 ,"<- EV.RE",eInd1,"+ (OD.RE",oInd1,"* TW.RE",j,"- OD.IM",oInd1,"* TW.IM",j,")","|||||||","EV.IM",eInd1,"<- EV.IM",eInd1,"+ (OD.RE",oInd1,"* TW.IM",j,"+ OD.IM",oInd1,"* TW.RE",j,")");
-            console.log("OD.RE",oInd1 ,"<- EV.RE",eInd1,"- (OD.RE",oInd1,"* TW.RE",j,"- OD.IM",oInd1,"* TW.IM",j,")","|||||||","OD.IM",oInd1,"<- EV.IM",eInd1,"- (OD.RE",oInd1,"* TW.IM",j,"+ OD.IM",oInd1,"* TW.RE",j,")");
+            console.log("EV.RE",eInd1 ,"<- EV.RE",eInd1,"+ (OD.RE",oInd1,"* TW.RE",j1,"- OD.IM",oInd1,"* TW.IM",j1,")","|||||||","EV.IM",eInd1,"<- EV.IM",eInd1,"+ (OD.RE",oInd1,"* TW.IM",j1,"+ OD.IM",oInd1,"* TW.RE",j1,")");
+            console.log("OD.RE",oInd1 ,"<- EV.RE",eInd1,"- (OD.RE",oInd1,"* TW.RE",j1,"- OD.IM",oInd1,"* TW.IM",j1,")","|||||||","OD.IM",oInd1,"<- EV.IM",eInd1,"- (OD.RE",oInd1,"* TW.IM",j1,"+ OD.IM",oInd1,"* TW.RE",j1,")");
 
             // Not Power of 4?
             if( isNotPowerOf4 ){ 
@@ -602,9 +602,9 @@ function fftComplexInPlace(out, factors) {
 
             //console.log(eInd1,oInd1,"-",tIdxRe1,tIdxIm1,"|||",eInd2,oInd2,"-",tIdxRe2,tIdxIm2);
             //console.log(eInd1,oInd1,"-",j1,"|||",eInd2,oInd2,"-",j2);
-            
-            console.log("EV.RE",eInd2,"<- EV.RE",eInd2,"+ (OD.RE",oInd2,"* TW.RE",j,"- OD.IM",oInd2,"* TW.IM",j,")","|||||||","EV.IM",eInd2,"<- EV.IM",eInd2,"+ (OD.RE",oInd2,"* TW.IM",j,"+ OD.IM",oInd2,"* TW.RE",j,")");
-            console.log("OD.RE",oInd2,"<- EV.RE",eInd2,"- (OD.RE",oInd2,"* TW.RE",j,"- OD.IM",oInd2,"* TW.IM",j,")","|||||||","OD.IM",oInd2,"<- EV.IM",eInd2,"- (OD.RE",oInd2,"* TW.IM",j,"+ OD.IM",oInd2,"* TW.RE",j,")");
+
+            console.log("EV.RE",eInd2,"<- EV.RE",eInd2,"+ (OD.RE",oInd2,"* TW.RE",j2,"- OD.IM",oInd2,"* TW.IM",j2,")","|||||||","EV.IM",eInd2,"<- EV.IM",eInd2,"+ (OD.RE",oInd2,"* TW.IM",j2,"+ OD.IM",oInd2,"* TW.RE",j2,")");
+            console.log("OD.RE",oInd2,"<- EV.RE",eInd2,"- (OD.RE",oInd2,"* TW.RE",j2,"- OD.IM",oInd2,"* TW.IM",j2,")","|||||||","OD.IM",oInd2,"<- EV.IM",eInd2,"- (OD.RE",oInd2,"* TW.IM",j2,"+ OD.IM",oInd2,"* TW.RE",j2,")");
 
             i++; l++; ni+=4;
             // line reaches block-end
