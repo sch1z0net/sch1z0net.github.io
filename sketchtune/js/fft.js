@@ -538,7 +538,7 @@ function fftComplexInPlace(out, factors) {
 
             // (1) Use precalculated FFT factors directly                                               
             //const tIdxRe1 = pre + (2*l + 0)%b;  const tIdxIm1 = pre + (2*l + 1)%b; 
-            const j1 = l%h;
+            const j1 = (2*l)%h;
             js.push(j1);
             // (1) TwiddleFactors
             const tRe1 = Math.cos((2 * Math.PI * j1) / size);  // Calculate Directly
@@ -1501,9 +1501,9 @@ const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.
 //console.log(fftRealInPlaceRADIX4(signal1));
 console.log(fftRealInPlace2(signal2));
 console.log(fftRealInPlaceRADIX4(signal2));
-/*console.log(fftRealInPlace2(signal3));
-console.log(fftRealInPlaceRADIX2(signal3));
-console.log(fftRealInPlaceRADIX4(signal3));*/
+
+console.log(fftRealInPlace2(signal3));
+console.log(fftRealInPlaceRADIX4(signal3));
 
 /*
 console.log(signal1);
