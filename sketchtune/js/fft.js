@@ -1370,8 +1370,8 @@ measureTime(1, 4096);*/
 
 
 //console.log(FFT([1,2,3,4]));
-console.log(FFT([1,0,1,0,1,0,1,0]));
+//console.log(FFT([1,0,1,0,1,0,1,0]));
 //console.log(FFT([1,-1,0,1,0,-1,0,1]));
 
-console.log(IFFT([4,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0]));
+console.log(omputeInverseFFT(FFT([1,3,5,7,2,4,6,8])));
 
