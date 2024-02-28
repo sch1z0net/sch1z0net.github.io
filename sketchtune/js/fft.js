@@ -604,7 +604,7 @@ function fftComplexInPlace(out, factors) {
             if (l % h === 0) { bs++; i=bs*b; }
         }
         pre += size;
-        console.log("size:"+size, output);
+        console.log("size:"+size, out);
         //console.log("size:"+size, js);
         js = new Array(N/2);
     }
