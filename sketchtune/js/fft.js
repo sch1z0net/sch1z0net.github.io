@@ -985,7 +985,7 @@ function eff(N){
    for(let p = 1; p<=max_p; p++){
         const accesses_per_it = (2<<(p-1));
         const iterations = looplen / accesses_per_it;
-        const accesses = (2<<(p-1)) * looplen;
+        const accesses = looplen;
         const t_per_it = (2<<(p-1)) * p;
         const twiddles = t_per_it * iterations;
         const ratio =  accesses_per_it / t_per_it;
