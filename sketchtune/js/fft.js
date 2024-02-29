@@ -943,8 +943,7 @@ function fftComplexInPlace_seq(out) {
     let tRe15d, tIm15d;
     let tRe16d, tIm16d;
 
-
-    let eReI1, eImI1, oReI1, oImI1;
+    let tRe1, tIm1, eReI1, eImI1, oReI1, oImI1;
     let tRe2, tIm2, eReI2, eImI2, oReI2, oImI2;
     let tRe3, tIm3, eReI3, eImI3, oReI3, oImI3;
     let tRe4, tIm4, eReI4, eImI4, oReI4, oImI4;
@@ -983,7 +982,7 @@ function fftComplexInPlace_seq(out) {
 
           // TwiddleFactors
           // Power 1
-          tRe01a = factors[i];   tIm01a = factors[i];   // 0
+          tRe01a = factors[i];   tIm01a = factors[i];    // 0
           tRe02a = tRe01a;       tIm02a = tIm01a;        // 0
           tRe03a = tRe01a;       tIm03a = tIm01a;        // 0
           tRe04a = tRe01a;       tIm04a = tIm01a;        // 0
@@ -1068,26 +1067,30 @@ function fftComplexInPlace_seq(out) {
           tRe15d = factors[i];   tIm15d = factors[i];    // 14
           tRe16d = factors[i];   tIm16d = factors[i];    // 15
 
+          // 2  / (2 * 2 * 2)  =  1/4
+          // 4  / (2 * 3 * 4)  =  1/6
+          // 8  / (2 * 4 * 8)  =  1/8
+          // 16 / (2 * 5 * 16) =  1/10      *  
 
         //}else{
           i += 2+4+8+16; // factor 8
         //}
         
         //power 1
-        twiddlelizer(out, tRe1a, tIm1a, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe2a, tIm2a, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe3a, tIm3a, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe4a, tIm4a, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe01a, tIm01a, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe02a, tIm02a, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe03a, tIm03a, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe04a, tIm04a, eReI1, eImI1, oReI1, oImI1);
         // power 2
-        twiddlelizer(out, tRe1b, tIm1b, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe2b, tIm2b, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe3b, tIm3b, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe4b, tIm4b, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe01b, tIm01b, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe02b, tIm02b, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe03b, tIm03b, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe04b, tIm04b, eReI1, eImI1, oReI1, oImI1);
         // power 3
-        twiddlelizer(out, tRe1c, tIm1c, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe2c, tIm2c, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe3c, tIm3c, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe4c, tIm4c, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe01c, tIm01c, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe02c, tIm02c, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe03c, tIm03c, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe04c, tIm04c, eReI1, eImI1, oReI1, oImI1);
 
     }
 
