@@ -1441,24 +1441,25 @@ function fftComplexInPlace_seq(out) {
 //(array accesses = i++ jumps)
 
 // Iterations for N = 64
-// 768 (loop len) /   2 (array accesses) =  384    <- power 1 structure --  (2*1) =    2 twiddles per iteration
-// 768 (loop len) /   6 (array accesses) =  128    <- power 2 structure --  (4*2) =    8 twiddles per iteration
-// 768 (loop len) /  14 (array accesses) = ~54     <- power 3 structure --  (8*3) =   24 twiddles per iteration 
-// 768 (loop len) /  30 (array accesses) = ~25     <- power 4 structure -- (16*4) =   64 twiddles per iteration
-// 768 (loop len) /  62 (array accesses) = ~12     <- power 5 structure -- (32*5) =  160 twiddles per iteration 
-// 768 (loop len) / 126 (array accesses) = ~6      <- power 6 structure -- (64*6) =  384 twiddles per iteration 
-// 768 (loop len) / 254 (array accesses) = ~3      <- power 6 structure --(128*7) =  896 twiddles per iteration 
-// 768 (loop len) / 510 (array accesses) = ~1.5    <- power 6 structure --(256*8) = 2048 twiddles per iteration 
+// 448 (loop len) /   2 (twiddles) =  224  -- Array Accesses:   2    <- power 1 structure --  (2*1) =    2 twiddles per iteration
+// 448 (loop len) /   8 (twiddles) = ~     -- Array Accesses:   4    <- power 2 structure --  (4*2) =    8 twiddles per iteration
+// 448 (loop len) /  24 (twiddles) = ~     -- Array Accesses:   8    <- power 3 structure --  (8*3) =   24 twiddles per iteration 
+// 448 (loop len) /  64 (twiddles) = ~     -- Array Accesses:  16    <- power 4 structure -- (16*4) =   64 twiddles per iteration
+// 448 (loop len) / 160 (twiddles) = ~     -- Array Accesses:  32    <- power 5 structure -- (32*5) =  160 twiddles per iteration 
+// 448 (loop len) / 384 (twiddles) = ~     -- Array Accesses:  64    <- power 6 structure -- (64*6) =  384 twiddles per iteration 
+// 448 (loop len) / 896 (twiddles) = ~     -- Array Accesses: 128    <- power 7 structure --(128*7) =  896 twiddles per iteration 
+// 448 (loop len) /2048 (twiddles) = ~     -- Array Accesses: 256    <- power 8 structure --(256*8) = 2048 twiddles per iteration 
 
 // Array Accesses PER Twiddles for N = 64    (Must be as low as possible for Efficency)
-// ps 1 -> 768  / 768    =  1.00
-// ps 2 -> 768  / 1024   =  0.75
-// ps 3 -> 768  /~1296   =  0.59
-// ps 4 -> 768  /~1600   =  0.48
-// ps 5 -> 768  /~1920   =  0.40
-// ps 6 -> 768  /~2304   =  0.33
-// ps 7 -> 768  /~2688   =  0.28
-// ps 8 -> 768  /~3072   =  0.25
+
+// ps 1 -> 2   /    2   =  1
+// ps 2 -> 4   /    8   =  1/2
+// ps 3 -> 8   /   24   =  1/3
+// ps 4 -> 16  /   64   =  1/4
+// ps 5 -> 32  /  160   =  1/5
+// ps 6 -> 64  /  384   =  1/6
+// ps 7 -> 128 /  896   =  1/7
+// ps 8 -> 256 / 2048   =  1/8
 
 
 
@@ -1466,13 +1467,13 @@ function fftComplexInPlace_seq(out) {
 // Power 4 ->
 // Power 5 -> 5200 
 // Power 6 -> 5000
-// Power 7 -> 
+// Power 7 -> 4200
 
 
 function eff(N){
    const max_p = 8;
    let sum = 0;
-   let looplen = 2 * (Math.log2(N)+1) * N;
+   let looplen = (Math.log2(N)+1) * N;
    console.log("Efficiency For N=",N); 
    for(let p = 1; p<=max_p; p++){
         const accesses_per_it = (2<<(p-1));
@@ -1480,7 +1481,7 @@ function eff(N){
         const t_per_it = (2<<(p-1)) * p;
         const twiddles = t_per_it * iterations;
         const ratio =  accesses_per_it / t_per_it;
-        console.log("ps ",p,"-> ",ratio.toFixed(2), "Twiddles Per Iteration ->",t_per_it,"Iterations ->",iterations.toFixed(1));
+        console.log("ps ",p,"-> ",ratio.toFixed(2), "Twiddles per Iteration ->",t_per_it,"Iterations ->",iterations.toFixed(1));
    }
 }
 
