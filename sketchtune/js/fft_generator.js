@@ -39,7 +39,7 @@ print_code(5);
 
 
 $(document).ready(function(){
-    $('body').click(function(){
+    $('document').click(function(){
         // Create a Blob object with the text content
         const blob = new Blob([code], { type: 'text/plain' });
         
