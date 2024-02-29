@@ -790,32 +790,51 @@ function fftComplexInPlace_seq(out) {
     let i = 0;
     while(i < len){
         // TwiddleFactors
-        const tRe = factors[idx_LKUP[i++]];
-        const tIm = factors[idx_LKUP[i++]];
+        const tRe1 = factors[idx_LKUP[i++]];
+        const tIm1 = factors[idx_LKUP[i++]];
         // Get real and imaginary parts of elements
-        const eReI = idx_LKUP[i++];
-        const eImI = idx_LKUP[i++];
-        const oReI = idx_LKUP[i++];
-        const oImI = idx_LKUP[i++];
-        const eRe  = out[eReI];
-        const eIm  = out[eImI];
-        const oRe  = out[oReI];
-        const oIm  = out[oImI];
+        const eReI1 = idx_LKUP[i++];
+        const eImI1 = idx_LKUP[i++];
+        const oReI1 = idx_LKUP[i++];
+        const oImI1 = idx_LKUP[i++];
+        // TwiddleFactors
+        const tRe2 = factors[idx_LKUP[i++]];
+        const tIm2 = factors[idx_LKUP[i++]];
+        // Get real and imaginary parts of elements
+        const eReI2 = idx_LKUP[i++];
+        const eImI2 = idx_LKUP[i++];
+        const oReI2 = idx_LKUP[i++];
+        const oImI2 = idx_LKUP[i++];
+        // Get current values
+        const eRe1  = out[eReI1];
+        const eIm1  = out[eImI1];
+        const oRe1  = out[oReI1];
+        const oIm1  = out[oImI1];
+        const eRe2  = out[eReI2];
+        const eIm2  = out[eImI2];
+        const oRe2  = out[oReI2];
+        const oIm2  = out[oImI2];
         // Perform complex multiplications
-        const t_oRe = oRe * tRe - oIm * tIm;
-        const t_oIm = oRe * tIm + oIm * tRe;
+        const t_oRe1 = oRe1 * tRe1 - oIm1 * tIm1;
+        const t_oIm1 = oRe1 * tIm1 + oIm1 * tRe1;
+        const t_oRe2 = oRe2 * tRe2 - oIm2 * tIm2;
+        const t_oIm2 = oRe2 * tIm2 + oIm2 * tRe2;
         // Update elements with new values
-        out[eReI]  = (eRe + t_oRe);
-        out[eImI]  = (eIm + t_oIm);
-        out[oReI]  = (eRe - t_oRe);
-        out[oImI]  = (eIm - t_oIm);
+        out[eReI1]  = (eRe1 + t_oRe1);
+        out[eImI1]  = (eIm1 + t_oIm1);
+        out[oReI1]  = (eRe1 - t_oRe1);
+        out[oImI1]  = (eIm1 - t_oIm1);
+        out[eReI2]  = (eRe2 + t_oRe2);
+        out[eImI2]  = (eIm2 + t_oIm2);
+        out[oReI2]  = (eRe2 - t_oRe2);
+        out[oImI2]  = (eIm2 - t_oIm2);
     }
 
     return out;
 }
 
 
-function fftComplexInPlace_tidy(out) {
+function fftComplexInPlace_flexi(out) {
     const N = out.length / 2;
     const bits = Math.log2(N);
 
@@ -1037,9 +1056,9 @@ function fftRealInPlaceRADIX4(realInput) {
         complexOut[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
 
-    return fftComplexInPlace_radix2(complexOut);
-    //return fftComplexInPlace_tidy(complexOut);
-    //return fftComplexInPlace(complexOut);
+    //return fftComplexInPlace_radix2(complexOut);
+    //return fftComplexInPlace_flexi(complexOut);
+    return fftComplexInPlace_seq(complexOut);
 }
 
 
@@ -1520,10 +1539,10 @@ function compareFFTResults(array1, array2) {
 
 /****************** TEST SPEED *******************/ 
 
-//measureTime(512);
+measureTime(512);
 measureTime(1024);
 //measureTime(2048);
-measureTime(4096);
+//measureTime(4096);
 
 
 /****************** TEST IF FORWARD IS CORRECT by comparison with REFERENCE *******************/ 
