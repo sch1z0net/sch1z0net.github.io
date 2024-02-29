@@ -924,23 +924,49 @@ function fftComplexInPlace_seq(out) {
         // _block = 2         _block = 4         _block = 8      
         // max_bn =8/2        max_bn =8/4        max_bn =8/2
         //if(i % 8 == 0){ 
+
+
           // TwiddleFactors
+          // Power 1
           tRe1a = factors[i];  tIm1a = factors[i];   // 0
           tRe2a = tRe1a;       tIm2a = tIm1a;        // 0
           tRe3a = tRe1a;       tIm3a = tIm1a;        // 0
           tRe4a = tRe1a;       tIm4a = tIm1a;        // 0
-
+          tRe5a = tRe1a;       tIm5a = tIm1a;        // 0
+          tRe6a = tRe1a;       tIm6a = tIm1a;        // 0
+          tRe7a = tRe1a;       tIm7a = tIm1a;        // 0
+          tRe8a = tRe1a;       tIm8a = tIm1a;        // 0
+          // Power 2
           tRe1b = tRe1a;       tIm1b = tIm1a;        // 0
           tRe2b = factors[i];  tIm2b = factors[i];   // 1  new array access
           tRe3b = tRe1a;       tIm3b = tIm1a;        // 0
           tRe4b = tRe2b;       tIm4b = tIm2b;        // 1
-
+          tRe5b = tRe1a;       tIm5b = tIm1a;        // 0
+          tRe6b = tRe2a;       tIm6b = tIm2b;        // 1 
+          tRe7b = tRe1a;       tIm7b = tIm1a;        // 0
+          tRe8b = tRe2b;       tIm8b = tIm2b;        // 1
+          // Power 3
           tRe1c = tRe1a;       tIm1c = tIm1a;        // 0
           tRe2c = tRe2b;       tIm2c = tIm2b;        // 1
           tRe3c = factors[i];  tIm3c = factors[i];   // 2  new array access
           tRe4c = factors[i];  tIm4c = factors[i];   // 3  new array access
+          tRe5c = tRe1a;       tIm1c = tIm1a;        // 0
+          tRe6c = tRe2b;       tIm2c = tIm2b;        // 1
+          tRe7c = tRe3c;       tIm3c = tIm3c;        // 2
+          tRe8c = tRe4c;       tIm4c = tIm4c;        // 3
+          // Power 4
+          tRe1d = tRe1a;       tIm1d = tIm1a;        // 0
+          tRe2d = tRe2b;       tIm2d = tIm2b;        // 1
+          tRe3d = tRe3c;       tIm3d = tIm3c;        // 2 
+          tRe4d = tRe4c;       tIm4d = tIm4c;        // 3 
+          tRe5d = factors[i];  tIm5d = factors[i];   // 4  new array access
+          tRe6d = factors[i];  tIm6d = factors[i];   // 5  new array access
+          tRe7d = factors[i];  tIm7d = factors[i];   // 6  new array access
+          tRe8d = factors[i];  tIm8d = factors[i];   // 7  new array access
+
+
         //}else{
-          i += 8; // factor 8
+          i += 14; // factor 8
         //}
         
         //power 1
