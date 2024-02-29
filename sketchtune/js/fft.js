@@ -884,8 +884,7 @@ function fftComplexInPlace_seq(out) {
     let tRe8, tIm8, eReI8, eImI8, oReI8, oImI8;
 
     while(i < len){
-        if(i % (8*6) == 0){ 
-          // TwiddleFactors
+        if(i==0){
           tRe1 = factors[idx_LKUP[i++]]; tIm1 = factors[idx_LKUP[i++]]; eReI1 = idx_LKUP[i++]; eImI1 = idx_LKUP[i++]; oReI1 = idx_LKUP[i++]; oImI1 = idx_LKUP[i++];
           tRe2 = factors[idx_LKUP[i++]]; tIm2 = factors[idx_LKUP[i++]]; eReI2 = idx_LKUP[i++]; eImI2 = idx_LKUP[i++]; oReI2 = idx_LKUP[i++]; oImI2 = idx_LKUP[i++];
           tRe3 = factors[idx_LKUP[i++]]; tIm3 = factors[idx_LKUP[i++]]; eReI3 = idx_LKUP[i++]; eImI3 = idx_LKUP[i++]; oReI3 = idx_LKUP[i++]; oImI3 = idx_LKUP[i++];
@@ -894,18 +893,56 @@ function fftComplexInPlace_seq(out) {
           tRe6 = factors[idx_LKUP[i++]]; tIm6 = factors[idx_LKUP[i++]]; eReI6 = idx_LKUP[i++]; eImI6 = idx_LKUP[i++]; oReI6 = idx_LKUP[i++]; oImI6 = idx_LKUP[i++];
           tRe7 = factors[idx_LKUP[i++]]; tIm7 = factors[idx_LKUP[i++]]; eReI7 = idx_LKUP[i++]; eImI7 = idx_LKUP[i++]; oReI7 = idx_LKUP[i++]; oImI7 = idx_LKUP[i++];
           tRe8 = factors[idx_LKUP[i++]]; tIm8 = factors[idx_LKUP[i++]]; eReI8 = idx_LKUP[i++]; eImI8 = idx_LKUP[i++]; oReI8 = idx_LKUP[i++]; oImI8 = idx_LKUP[i++];
-        }else{
-          i += 8 * 6; // factor 8
         }
+
+        //  For N = 8, the indices must look like this after each iteration
+        //  
+        //  power = 1          power = 2         power = 3       
+        //  size = 2           size = 4          size = 8
+        //  half = 1           half = 2          half = 4
+        //  ev  j odd          ev  j odd         ev  j odd
+        // _0   0   1          0   0   2         0   0   4
+        //  2   0   3         _1   1   3         1   1   5
+        // (4)  0   5         (4)  0   6        (2)  2   6
+        //  6   0   7          5   1   7        _3   3   7
+        //    
+        // _block = 2         _block = 4         _block = 8      
+        // max_bn =8/2        max_bn =8/4        max_bn =8/2
+        //if(i % 8 == 0){ 
+          // TwiddleFactors
+          tRe1a = factors[i];  tIm1a = factors[i];   // 0
+          tRe2a = tRe1a;       tIm2a = tIm1a;        // 0
+          tRe3a = tRe1a;       tIm3a = tIm1a;        // 0
+          tRe4a = tRe1a;       tIm4a = tIm1a;        // 0
+
+          tRe1b = tRe1a;       tIm1b = tIm1a;        // 0
+          tRe2b = factors[i];  tIm2b = factors[i];   // 1  new array access
+          tRe3b = tRe1a;       tIm3b = tIm1a;        // 0
+          tRe4b = tRe2b;       tIm4b = tIm2b;        // 1
+
+          tRe1c = tRe1a;       tIm1c = tIm1a;        // 0
+          tRe2c =              tIm2c = tIm2b;        // 1
+          tRe3c = factors[i];  tIm3c = factors[i];   // 2  new array access
+          tRe4c = factors[i];  tIm4c = factors[i];   // 3  new array access
+        //}else{
+          i += 8; // factor 8
+        //}
         
-        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
+        //power 1
+        twiddlelizer(out, tRe1a, tIm1a, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe2a, tIm2a, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe3a, tIm3a, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe4a, tIm4a, eReI1, eImI1, oReI1, oImI1);
+        // power 2
+        twiddlelizer(out, tRe1b, tIm1b, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe2b, tIm2b, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe3b, tIm3b, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe4b, tIm4b, eReI1, eImI1, oReI1, oImI1);
+        // power 3
+        twiddlelizer(out, tRe1c, tIm1c, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe2c, tIm2c, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe3c, tIm3c, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe4c, tIm4c, eReI1, eImI1, oReI1, oImI1);
 
     }
 
@@ -980,11 +1017,11 @@ function fftComplexInPlace_flexi(out) {
         //  power = 1          power = 2         power = 3       
         //  size = 2           size = 4          size = 8
         //  half = 1           half = 2          half = 4
-        //  ev  odd            ev odd            ev  odd
-        // _0     1            0    2            0     4
-        //  2     3           _1    3            1     5
-        // (4)    5           (4)   6           (2)    6
-        //  6     7            5    7           _3     7
+        //  ev  j odd          ev  j odd         ev  j odd
+        // _0   0   1          0   0   2         0   0   4
+        //  2   0   3         _1   1   3         1   1   5
+        // (4)  0   5         (4)  0   6        (2)  2   6
+        //  6   0   7          5   1   7        _3   3   7
         //    
         // _block = 2         _block = 4         _block = 8      
         // max_bn =8/2        max_bn =8/4        max_bn =8/2
