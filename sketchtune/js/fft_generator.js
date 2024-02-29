@@ -43,7 +43,7 @@ function tIm_(r,c){
         f_start += f_lines;
     }
     if( r>=f_start && r<(f_start+f_lines) ){
-        res = "____F(i)";
+        res = "____F[i]";
     }else{
         res = "tIm"+d(r)+"_"+c;
     }
@@ -68,14 +68,16 @@ function print_code(power){
     
     line += "\n\n\n";
     line += "    while(i < 2*N*bits){"; 
+    line += "\n        ";
 
     for(let r = 1; r<=rows; r++){
         for(let c = 1; c<=cols; c++){
             line += tRe(r,c)+"="+tRe_(r,c)+";";
             line += tIm(r,c)+"="+tIm_(r,c)+";";
         }
-        line += "\n";
+        line += "\n        ";
     }
+    line += "\n\n";
     line += "        i+="+skips+";";
 
     line += "    }"; 
