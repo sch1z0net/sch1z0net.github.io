@@ -884,25 +884,34 @@ function fftComplexInPlace_seq(out) {
     let tRe6, tIm6, eReI6, eImI6, oReI6, oImI6;
     let tRe7, tIm7, eReI7, eImI7, oReI7, oImI7;
     let tRe8, tIm8, eReI8, eImI8, oReI8, oImI8;
-    let tRe001_1,tIm001_1,tRe002_1,tIm002_1,tRe003_1,tIm003_1,tRe004_1,tIm004_1,tRe005_1,tIm005_1,tRe006_1,tIm006_1,tRe007_1,tIm007_1,tRe008_1,tIm008_1; 
-    let tRe001_2,tIm001_2,tRe002_2,tIm002_2,tRe003_2,tIm003_2,tRe004_2,tIm004_2,tRe005_2,tIm005_2,tRe006_2,tIm006_2,tRe007_2,tIm007_2,tRe008_2,tIm008_2; 
-    let tRe001_3,tIm001_3,tRe002_3,tIm002_3,tRe003_3,tIm003_3,tRe004_3,tIm004_3,tRe005_3,tIm005_3,tRe006_3,tIm006_3,tRe007_3,tIm007_3,tRe008_3,tIm008_3; 
-    let tRe001_4,tIm001_4,tRe002_4,tIm002_4,tRe003_4,tIm003_4,tRe004_4,tIm004_4,tRe005_4,tIm005_4,tRe006_4,tIm006_4,tRe007_4,tIm007_4,tRe008_4,tIm008_4; 
+    let tRe001_1,tIm001_1,tRe002_1,tIm002_1,tRe003_1,tIm003_1,tRe004_1,tIm004_1,tRe005_1,tIm005_1,tRe006_1,tIm006_1,tRe007_1,tIm007_1,tRe008_1,tIm008_1,tRe009_1,tIm009_1,tRe010_1,tIm010_1,tRe011_1,tIm011_1,tRe012_1,tIm012_1,tRe013_1,tIm013_1,tRe014_1,tIm014_1,tRe015_1,tIm015_1,tRe016_1,tIm016_1; 
+    let tRe001_2,tIm001_2,tRe002_2,tIm002_2,tRe003_2,tIm003_2,tRe004_2,tIm004_2,tRe005_2,tIm005_2,tRe006_2,tIm006_2,tRe007_2,tIm007_2,tRe008_2,tIm008_2,tRe009_2,tIm009_2,tRe010_2,tIm010_2,tRe011_2,tIm011_2,tRe012_2,tIm012_2,tRe013_2,tIm013_2,tRe014_2,tIm014_2,tRe015_2,tIm015_2,tRe016_2,tIm016_2; 
+    let tRe001_3,tIm001_3,tRe002_3,tIm002_3,tRe003_3,tIm003_3,tRe004_3,tIm004_3,tRe005_3,tIm005_3,tRe006_3,tIm006_3,tRe007_3,tIm007_3,tRe008_3,tIm008_3,tRe009_3,tIm009_3,tRe010_3,tIm010_3,tRe011_3,tIm011_3,tRe012_3,tIm012_3,tRe013_3,tIm013_3,tRe014_3,tIm014_3,tRe015_3,tIm015_3,tRe016_3,tIm016_3; 
+    let tRe001_4,tIm001_4,tRe002_4,tIm002_4,tRe003_4,tIm003_4,tRe004_4,tIm004_4,tRe005_4,tIm005_4,tRe006_4,tIm006_4,tRe007_4,tIm007_4,tRe008_4,tIm008_4,tRe009_4,tIm009_4,tRe010_4,tIm010_4,tRe011_4,tIm011_4,tRe012_4,tIm012_4,tRe013_4,tIm013_4,tRe014_4,tIm014_4,tRe015_4,tIm015_4,tRe016_4,tIm016_4; 
+    let tRe001_5,tIm001_5,tRe002_5,tIm002_5,tRe003_5,tIm003_5,tRe004_5,tIm004_5,tRe005_5,tIm005_5,tRe006_5,tIm006_5,tRe007_5,tIm007_5,tRe008_5,tIm008_5,tRe009_5,tIm009_5,tRe010_5,tIm010_5,tRe011_5,tIm011_5,tRe012_5,tIm012_5,tRe013_5,tIm013_5,tRe014_5,tIm014_5,tRe015_5,tIm015_5,tRe016_5,tIm016_5; 
 
 
 
-    while(i < N*bits){
-        tRe001_1=____F[i];tIm001_1=____F[i];tRe001_2=tRe001_2;tIm001_2=tIm001_2;tRe001_3=tRe001_3;tIm001_3=tIm001_3;tRe001_4=tRe001_4;tIm001_4=tIm001_4;
-        tRe002_1=tRe002_1;tIm002_1=tIm002_1;tRe002_2=____F[i];tIm002_2=____F[i];tRe002_3=tRe002_3;tIm002_3=tIm002_3;tRe002_4=tRe002_4;tIm002_4=tIm002_4;
-        tRe003_1=tRe003_1;tIm003_1=tIm003_1;tRe003_2=tRe003_2;tIm003_2=tIm003_2;tRe003_3=____F[i];tIm003_3=____F[i];tRe003_4=tRe003_4;tIm003_4=tIm003_4;
-        tRe004_1=tRe004_1;tIm004_1=tIm004_1;tRe004_2=tRe004_2;tIm004_2=tIm004_2;tRe004_3=____F[i];tIm004_3=____F[i];tRe004_4=tRe004_4;tIm004_4=tIm004_4;
-        tRe005_1=tRe005_1;tIm005_1=tIm005_1;tRe005_2=tRe005_2;tIm005_2=tIm005_2;tRe005_3=tRe005_3;tIm005_3=tIm005_3;tRe005_4=____F[i];tIm005_4=____F[i];
-        tRe006_1=tRe006_1;tIm006_1=tIm006_1;tRe006_2=tRe006_2;tIm006_2=tIm006_2;tRe006_3=tRe006_3;tIm006_3=tIm006_3;tRe006_4=____F[i];tIm006_4=____F[i];
-        tRe007_1=tRe007_1;tIm007_1=tIm007_1;tRe007_2=tRe007_2;tIm007_2=tIm007_2;tRe007_3=tRe007_3;tIm007_3=tIm007_3;tRe007_4=____F[i];tIm007_4=____F[i];
-        tRe008_1=tRe008_1;tIm008_1=tIm008_1;tRe008_2=tRe008_2;tIm008_2=tIm008_2;tRe008_3=tRe008_3;tIm008_3=tIm008_3;tRe008_4=____F[i];tIm008_4=____F[i];
+    while(i < (N/2)*bits){
+        tRe001_1=____F[i];tIm001_1=____F[i];tRe001_2=tRe001_2;tIm001_2=tIm001_2;tRe001_3=tRe001_3;tIm001_3=tIm001_3;tRe001_4=tRe001_4;tIm001_4=tIm001_4;tRe001_5=tRe001_5;tIm001_5=tIm001_5;
+        tRe002_1=tRe002_1;tIm002_1=tIm002_1;tRe002_2=____F[i];tIm002_2=____F[i];tRe002_3=tRe002_3;tIm002_3=tIm002_3;tRe002_4=tRe002_4;tIm002_4=tIm002_4;tRe002_5=tRe002_5;tIm002_5=tIm002_5;
+        tRe003_1=tRe003_1;tIm003_1=tIm003_1;tRe003_2=tRe003_2;tIm003_2=tIm003_2;tRe003_3=____F[i];tIm003_3=____F[i];tRe003_4=tRe003_4;tIm003_4=tIm003_4;tRe003_5=tRe003_5;tIm003_5=tIm003_5;
+        tRe004_1=tRe004_1;tIm004_1=tIm004_1;tRe004_2=tRe004_2;tIm004_2=tIm004_2;tRe004_3=____F[i];tIm004_3=____F[i];tRe004_4=tRe004_4;tIm004_4=tIm004_4;tRe004_5=tRe004_5;tIm004_5=tIm004_5;
+        tRe005_1=tRe005_1;tIm005_1=tIm005_1;tRe005_2=tRe005_2;tIm005_2=tIm005_2;tRe005_3=tRe005_3;tIm005_3=tIm005_3;tRe005_4=____F[i];tIm005_4=____F[i];tRe005_5=tRe005_5;tIm005_5=tIm005_5;
+        tRe006_1=tRe006_1;tIm006_1=tIm006_1;tRe006_2=tRe006_2;tIm006_2=tIm006_2;tRe006_3=tRe006_3;tIm006_3=tIm006_3;tRe006_4=____F[i];tIm006_4=____F[i];tRe006_5=tRe006_5;tIm006_5=tIm006_5;
+        tRe007_1=tRe007_1;tIm007_1=tIm007_1;tRe007_2=tRe007_2;tIm007_2=tIm007_2;tRe007_3=tRe007_3;tIm007_3=tIm007_3;tRe007_4=____F[i];tIm007_4=____F[i];tRe007_5=tRe007_5;tIm007_5=tIm007_5;
+        tRe008_1=tRe008_1;tIm008_1=tIm008_1;tRe008_2=tRe008_2;tIm008_2=tIm008_2;tRe008_3=tRe008_3;tIm008_3=tIm008_3;tRe008_4=____F[i];tIm008_4=____F[i];tRe008_5=tRe008_5;tIm008_5=tIm008_5;
+        tRe009_1=tRe009_1;tIm009_1=tIm009_1;tRe009_2=tRe009_2;tIm009_2=tIm009_2;tRe009_3=tRe009_3;tIm009_3=tIm009_3;tRe009_4=tRe009_4;tIm009_4=tIm009_4;tRe009_5=____F[i];tIm009_5=____F[i];
+        tRe010_1=tRe010_1;tIm010_1=tIm010_1;tRe010_2=tRe010_2;tIm010_2=tIm010_2;tRe010_3=tRe010_3;tIm010_3=tIm010_3;tRe010_4=tRe010_4;tIm010_4=tIm010_4;tRe010_5=____F[i];tIm010_5=____F[i];
+        tRe011_1=tRe011_1;tIm011_1=tIm011_1;tRe011_2=tRe011_2;tIm011_2=tIm011_2;tRe011_3=tRe011_3;tIm011_3=tIm011_3;tRe011_4=tRe011_4;tIm011_4=tIm011_4;tRe011_5=____F[i];tIm011_5=____F[i];
+        tRe012_1=tRe012_1;tIm012_1=tIm012_1;tRe012_2=tRe012_2;tIm012_2=tIm012_2;tRe012_3=tRe012_3;tIm012_3=tIm012_3;tRe012_4=tRe012_4;tIm012_4=tIm012_4;tRe012_5=____F[i];tIm012_5=____F[i];
+        tRe013_1=tRe013_1;tIm013_1=tIm013_1;tRe013_2=tRe013_2;tIm013_2=tIm013_2;tRe013_3=tRe013_3;tIm013_3=tIm013_3;tRe013_4=tRe013_4;tIm013_4=tIm013_4;tRe013_5=____F[i];tIm013_5=____F[i];
+        tRe014_1=tRe014_1;tIm014_1=tIm014_1;tRe014_2=tRe014_2;tIm014_2=tIm014_2;tRe014_3=tRe014_3;tIm014_3=tIm014_3;tRe014_4=tRe014_4;tIm014_4=tIm014_4;tRe014_5=____F[i];tIm014_5=____F[i];
+        tRe015_1=tRe015_1;tIm015_1=tIm015_1;tRe015_2=tRe015_2;tIm015_2=tIm015_2;tRe015_3=tRe015_3;tIm015_3=tIm015_3;tRe015_4=tRe015_4;tIm015_4=tIm015_4;tRe015_5=____F[i];tIm015_5=____F[i];
+        tRe016_1=tRe016_1;tIm016_1=tIm016_1;tRe016_2=tRe016_2;tIm016_2=tIm016_2;tRe016_3=tRe016_3;tIm016_3=tIm016_3;tRe016_4=tRe016_4;tIm016_4=tIm016_4;tRe016_5=____F[i];tIm016_5=____F[i];
         
 
-        i+=32;
+        i+=80;
 
         // Power 1
         twiddlelizer(out, tRe001_1,tIm001_1, eReI1, eImI1, oReI1, oImI1);
@@ -913,6 +922,14 @@ function fftComplexInPlace_seq(out) {
         twiddlelizer(out, tRe006_1,tIm006_1, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe007_1,tIm007_1, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe008_1,tIm008_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe009_1,tIm009_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe010_1,tIm010_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe011_1,tIm011_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe012_1,tIm012_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe013_1,tIm013_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe014_1,tIm014_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe015_1,tIm015_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe016_1,tIm016_1, eReI1, eImI1, oReI1, oImI1);
 
         // Power 2
         twiddlelizer(out, tRe001_2,tIm001_2, eReI1, eImI1, oReI1, oImI1);
@@ -923,6 +940,14 @@ function fftComplexInPlace_seq(out) {
         twiddlelizer(out, tRe006_2,tIm006_2, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe007_2,tIm007_2, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe008_2,tIm008_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe009_2,tIm009_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe010_2,tIm010_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe011_2,tIm011_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe012_2,tIm012_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe013_2,tIm013_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe014_2,tIm014_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe015_2,tIm015_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe016_2,tIm016_2, eReI1, eImI1, oReI1, oImI1);
 
         // Power 3
         twiddlelizer(out, tRe001_3,tIm001_3, eReI1, eImI1, oReI1, oImI1);
@@ -933,6 +958,14 @@ function fftComplexInPlace_seq(out) {
         twiddlelizer(out, tRe006_3,tIm006_3, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe007_3,tIm007_3, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe008_3,tIm008_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe009_3,tIm009_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe010_3,tIm010_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe011_3,tIm011_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe012_3,tIm012_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe013_3,tIm013_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe014_3,tIm014_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe015_3,tIm015_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe016_3,tIm016_3, eReI1, eImI1, oReI1, oImI1);
 
         // Power 4
         twiddlelizer(out, tRe001_4,tIm001_4, eReI1, eImI1, oReI1, oImI1);
@@ -943,7 +976,32 @@ function fftComplexInPlace_seq(out) {
         twiddlelizer(out, tRe006_4,tIm006_4, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe007_4,tIm007_4, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe008_4,tIm008_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe009_4,tIm009_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe010_4,tIm010_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe011_4,tIm011_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe012_4,tIm012_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe013_4,tIm013_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe014_4,tIm014_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe015_4,tIm015_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe016_4,tIm016_4, eReI1, eImI1, oReI1, oImI1);
 
+        // Power 5
+        twiddlelizer(out, tRe001_5,tIm001_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe002_5,tIm002_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe003_5,tIm003_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe004_5,tIm004_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe005_5,tIm005_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe006_5,tIm006_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe007_5,tIm007_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe008_5,tIm008_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe009_5,tIm009_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe010_5,tIm010_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe011_5,tIm011_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe012_5,tIm012_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe013_5,tIm013_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe014_5,tIm014_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe015_5,tIm015_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe016_5,tIm016_5, eReI1, eImI1, oReI1, oImI1);
     }
 
     return out;
@@ -982,9 +1040,10 @@ function fftComplexInPlace_seq(out) {
 
 
 
-// Power 4 -> 
+// Power 4 -> 2600
 // Power 5 -> 
 // Power 6 -> 5000
+// Power 7 -> 5000
 
 
 function eff(N){

@@ -53,7 +53,7 @@ function tIm_(r,c){
 function print_code(power){
     const rows  = (2<<(power-1))>>1;
     const cols  = power;
-    const skips = (2<<(power));
+    const skips = (2<<(power-1))*power;
     
     let line = "";
     for(let c = 1; c<=cols; c++){
@@ -67,7 +67,7 @@ function print_code(power){
     }
     
     line += "\n\n\n";
-    line += "    while(i < 2*N*bits){"; 
+    line += "    while(i < (N>>1)*bits){"; 
     line += "\n        ";
 
     for(let r = 1; r<=rows; r++){
@@ -95,7 +95,7 @@ function print_code(power){
     
 }
 
-print_code(5);
+print_code(4);
 
 
 $(document).ready(function(){
