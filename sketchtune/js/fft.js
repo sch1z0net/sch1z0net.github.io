@@ -985,14 +985,14 @@ function eff(N){
    console.log("Efficiency For N=",N); 
    for(let p = 1; p<=max_p; p++){
         const accesses_per_it = (2<<(p-1));
-        const accesses = looplen;
         const t_per_it = (2<<(p-1)) * p;
         const iterations = looplen / (t_per_it/2);
+        const accesses = accesses_per_it * iterations;
         const twiddles = t_per_it * iterations;
         const ratio =  accesses_per_it / t_per_it;
-        console.log("ps ",p,": Iterations ->",iterations.toFixed(1),
+        console.log("ps ",p,": Iterations ->",iterations,
             "Total Accesses ->",accesses,
-            "Total Accesses (without Recycling) ->", t_per_it * looplen
+            "Total Accesses (without Recycling) ->", twiddles
         );
    }
 }
