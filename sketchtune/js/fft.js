@@ -891,6 +891,7 @@ function fftComplexInPlace_seq_4(out) {
     let tRe001_4,tIm001_4,tRe002_4,tIm002_4,tRe003_4,tIm003_4,tRe004_4,tIm004_4,tRe005_4,tIm005_4,tRe006_4,tIm006_4,tRe007_4,tIm007_4,tRe008_4,tIm008_4,tRe009_4,tIm009_4,tRe010_4,tIm010_4,tRe011_4,tIm011_4,tRe012_4,tIm012_4,tRe013_4,tIm013_4,tRe014_4,tIm014_4,tRe015_4,tIm015_4,tRe016_4,tIm016_4; 
     let tRe001_5,tIm001_5,tRe002_5,tIm002_5,tRe003_5,tIm003_5,tRe004_5,tIm004_5,tRe005_5,tIm005_5,tRe006_5,tIm006_5,tRe007_5,tIm007_5,tRe008_5,tIm008_5,tRe009_5,tIm009_5,tRe010_5,tIm010_5,tRe011_5,tIm011_5,tRe012_5,tIm012_5,tRe013_5,tIm013_5,tRe014_5,tIm014_5,tRe015_5,tIm015_5,tRe016_5,tIm016_5; 
 
+    let eRe, eIm, oRe, oIm, t_oRe, t_oIm;
 
     while(i < (N>>1)*bits){
         its++; accs+=32;
@@ -914,95 +915,92 @@ function fftComplexInPlace_seq_4(out) {
 
         i+=160;
 
-        // Power 1
-        twiddlelizer(out, tRe001_1,tIm001_1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe002_1,tIm002_1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe003_1,tIm003_1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe004_1,tIm004_1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe005_1,tIm005_1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe006_1,tIm006_1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe007_1,tIm007_1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe008_1,tIm008_1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe009_1,tIm009_1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe010_1,tIm010_1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe011_1,tIm011_1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe012_1,tIm012_1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe013_1,tIm013_1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe014_1,tIm014_1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe015_1,tIm015_1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe016_1,tIm016_1, eReI1, eImI1, oReI1, oImI1);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
 
-        // Power 2
-        twiddlelizer(out, tRe001_2,tIm001_2, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe002_2,tIm002_2, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe003_2,tIm003_2, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe004_2,tIm004_2, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe005_2,tIm005_2, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe006_2,tIm006_2, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe007_2,tIm007_2, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe008_2,tIm008_2, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe009_2,tIm009_2, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe010_2,tIm010_2, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe011_2,tIm011_2, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe012_2,tIm012_2, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe013_2,tIm013_2, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe014_2,tIm014_2, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe015_2,tIm015_2, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe016_2,tIm016_2, eReI1, eImI1, oReI1, oImI1);
 
-        // Power 3
-        twiddlelizer(out, tRe001_3,tIm001_3, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe002_3,tIm002_3, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe003_3,tIm003_3, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe004_3,tIm004_3, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe005_3,tIm005_3, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe006_3,tIm006_3, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe007_3,tIm007_3, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe008_3,tIm008_3, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe009_3,tIm009_3, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe010_3,tIm010_3, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe011_3,tIm011_3, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe012_3,tIm012_3, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe013_3,tIm013_3, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe014_3,tIm014_3, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe015_3,tIm015_3, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe016_3,tIm016_3, eReI1, eImI1, oReI1, oImI1);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
 
-        // Power 4
-        twiddlelizer(out, tRe001_4,tIm001_4, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe002_4,tIm002_4, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe003_4,tIm003_4, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe004_4,tIm004_4, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe005_4,tIm005_4, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe006_4,tIm006_4, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe007_4,tIm007_4, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe008_4,tIm008_4, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe009_4,tIm009_4, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe010_4,tIm010_4, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe011_4,tIm011_4, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe012_4,tIm012_4, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe013_4,tIm013_4, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe014_4,tIm014_4, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe015_4,tIm015_4, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe016_4,tIm016_4, eReI1, eImI1, oReI1, oImI1);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
 
-        // Power 5
-        twiddlelizer(out, tRe001_5,tIm001_5, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe002_5,tIm002_5, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe003_5,tIm003_5, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe004_5,tIm004_5, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe005_5,tIm005_5, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe006_5,tIm006_5, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe007_5,tIm007_5, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe008_5,tIm008_5, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe009_5,tIm009_5, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe010_5,tIm010_5, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe011_5,tIm011_5, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe012_5,tIm012_5, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe013_5,tIm013_5, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe014_5,tIm014_5, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe015_5,tIm015_5, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe016_5,tIm016_5, eReI1, eImI1, oReI1, oImI1);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+        eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
+
 
     }
     //console.log("Iterations: ",its,"\tAccesses",accs);
