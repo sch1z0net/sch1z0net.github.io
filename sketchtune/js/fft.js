@@ -875,18 +875,73 @@ function fftComplexInPlace_seq(out) {
     if(N ==4096){ idx_LKUP = INDEX_LOOKUP_4096; } 
 
     let i = 0;
-    let tRe1a, tIm1a;
-    let tRe2a, tIm2a;
-    let tRe3a, tIm3a;
-    let tRe4a, tIm4a;
-    let tRe1b, tIm1b;
-    let tRe2b, tIm2b;
-    let tRe3b, tIm3b;
-    let tRe4b, tIm4b;
-    let tRe1c, tIm1c;
-    let tRe2c, tIm2c;
-    let tRe3c, tIm3c;
-    let tRe4c, tIm4c;
+    let tRe01a, tIm01a;
+    let tRe02a, tIm02a;
+    let tRe03a, tIm03a;
+    let tRe04a, tIm04a;
+    let tRe05a, tIm05a;
+    let tRe06a, tIm06a;
+    let tRe07a, tIm07a;
+    let tRe08a, tIm08a;
+    let tRe09a, tIm09a;
+    let tRe10a, tIm10a;
+    let tRe11a, tIm11a;
+    let tRe12a, tIm12a;
+    let tRe13a, tIm13a;
+    let tRe14a, tIm14a;
+    let tRe15a, tIm15a;
+    let tRe16a, tIm16a;
+
+    let tRe01b, tIm01b;
+    let tRe02b, tIm02b;
+    let tRe03b, tIm03b;
+    let tRe04b, tIm04b;
+    let tRe05b, tIm05b;
+    let tRe06b, tIm06b;
+    let tRe07b, tIm07b;
+    let tRe08b, tIm08b;
+    let tRe09b, tIm09b;
+    let tRe10b, tIm10b;
+    let tRe11b, tIm11b;
+    let tRe12b, tIm12b;
+    let tRe13b, tIm13b;
+    let tRe14b, tIm14b;
+    let tRe15b, tIm15b;
+    let tRe16b, tIm16b;
+
+    let tRe01c, tIm01c;
+    let tRe02c, tIm02c;
+    let tRe03c, tIm03c;
+    let tRe04c, tIm04c;
+    let tRe05c, tIm05c;
+    let tRe06c, tIm06c;
+    let tRe07c, tIm07c;
+    let tRe08c, tIm08c;
+    let tRe09c, tIm09c;
+    let tRe10c, tIm10c;
+    let tRe11c, tIm11c;
+    let tRe12c, tIm12c;
+    let tRe13c, tIm13c;
+    let tRe14c, tIm14c;
+    let tRe15c, tIm15c;
+    let tRe16c, tIm16c;
+
+    let tRe01d, tIm01d;
+    let tRe02d, tIm02d;
+    let tRe03d, tIm03d;
+    let tRe04d, tIm04d;
+    let tRe05d, tIm05d;
+    let tRe06d, tIm06d;
+    let tRe07d, tIm07d;
+    let tRe08d, tIm08d;
+    let tRe09d, tIm09d;
+    let tRe10d, tIm10d;
+    let tRe11d, tIm11d;
+    let tRe12d, tIm12d;
+    let tRe13d, tIm13d;
+    let tRe14d, tIm14d;
+    let tRe15d, tIm15d;
+    let tRe16d, tIm16d;
 
 
     let eReI1, eImI1, oReI1, oImI1;
@@ -1015,7 +1070,7 @@ function fftComplexInPlace_seq(out) {
 
 
         //}else{
-          i += 14+16; // factor 8
+          i += 2+4+8+16; // factor 8
         //}
         
         //power 1
