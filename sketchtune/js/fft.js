@@ -921,7 +921,7 @@ function fftComplexInPlace_seq(out) {
           tRe4b = tRe2b;       tIm4b = tIm2b;        // 1
 
           tRe1c = tRe1a;       tIm1c = tIm1a;        // 0
-          tRe2c =              tIm2c = tIm2b;        // 1
+          tRe2c = tRe2b;       tIm2c = tIm2b;        // 1
           tRe3c = factors[i];  tIm3c = factors[i];   // 2  new array access
           tRe4c = factors[i];  tIm4c = factors[i];   // 3  new array access
         //}else{
