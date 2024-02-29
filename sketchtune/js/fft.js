@@ -1463,7 +1463,7 @@ function fftComplexInPlace_seq(out) {
 
 
 
-
+// Power 3 -> 
 // Power 4 ->
 // Power 5 -> 5200 
 // Power 6 -> 5000
@@ -1481,7 +1481,11 @@ function eff(N){
         const t_per_it = (2<<(p-1)) * p;
         const twiddles = t_per_it * iterations;
         const ratio =  accesses_per_it / t_per_it;
-        console.log("ps ",p,"-> ",ratio.toFixed(2), "Twiddles per Iteration ->",t_per_it,"Iterations ->",iterations.toFixed(1));
+        console.log("ps ",p,": Access Rate ->",ratio.toFixed(2), 
+            "Twiddlelizers per Iteration ->",t_per_it,
+            "Iterations ->",iterations.toFixed(1),
+            "Accesses per Iteration ->", accesses_per_it
+        );
    }
 }
 
