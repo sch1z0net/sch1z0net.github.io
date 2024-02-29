@@ -991,10 +991,10 @@ function eff(N){
         const twiddlelizers = t_per_it * looplen / (t_per_it/2);
         const twiddles = t_per_it * iterations;
         const ratio =  accesses_per_it / t_per_it;
-        console.log("ps ",p,": Iterations ->",iterations,
-            "Total Twiddelizers ->",twiddlelizers,
-            "Total Accesses ->",accesses,
-            "Total Accesses (without Recycling) ->", twiddles
+        console.log("ps ",p,": Iterations ->",iterations.toFixed(0),
+            "Total Twiddelizers ->",twiddlelizers.toFixed(0),
+            "Total Accesses ->",accesses.toFixed(0),
+            "Total Accesses (without Recycling) ->", twiddles.toFixed(0)
         );
    }
 }
