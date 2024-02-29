@@ -790,37 +790,38 @@ function fftComplexInPlace_seq(out) {
     let i = 0;
     while(i < len){
         // TwiddleFactors
-        const tRe1 = factors[idx_LKUP[i++]];
-        const tIm1 = factors[idx_LKUP[i++]];
+        const tRe1 = factors[idx_LKUP[i+0]];
+        const tIm1 = factors[idx_LKUP[i+1]];
         // Get real and imaginary parts of elements
-        const eReI1 = idx_LKUP[i++];
-        const eImI1 = idx_LKUP[i++];
-        const oReI1 = idx_LKUP[i++];
-        const oImI1 = idx_LKUP[i++];
+        const eReI1 = idx_LKUP[i+2];
+        const eImI1 = idx_LKUP[i+3];
+        const oReI1 = idx_LKUP[i+4];
+        const oImI1 = idx_LKUP[i+5];
         // TwiddleFactors
-        const tRe2 = factors[idx_LKUP[i++]];
-        const tIm2 = factors[idx_LKUP[i++]];
+        const tRe2 = factors[idx_LKUP[i+6]];
+        const tIm2 = factors[idx_LKUP[i+7]];
         // Get real and imaginary parts of elements
-        const eReI2 = idx_LKUP[i++];
-        const eImI2 = idx_LKUP[i++];
-        const oReI2 = idx_LKUP[i++];
-        const oImI2 = idx_LKUP[i++];
+        const eReI2 = idx_LKUP[i+8];
+        const eImI2 = idx_LKUP[i+9];
+        const oReI2 = idx_LKUP[i+10];
+        const oImI2 = idx_LKUP[i+11];
         // TwiddleFactors
-        const tRe3 = factors[idx_LKUP[i++]];
-        const tIm3 = factors[idx_LKUP[i++]];
+        const tRe3 = factors[idx_LKUP[i+12]];
+        const tIm3 = factors[idx_LKUP[i+13]];
         // Get real and imaginary parts of elements
-        const eReI3 = idx_LKUP[i++];
-        const eImI3 = idx_LKUP[i++];
-        const oReI3 = idx_LKUP[i++];
-        const oImI3 = idx_LKUP[i++];
+        const eReI3 = idx_LKUP[i+14];
+        const eImI3 = idx_LKUP[i+15];
+        const oReI3 = idx_LKUP[i+16];
+        const oImI3 = idx_LKUP[i+17];
         // TwiddleFactors
-        const tRe4 = factors[idx_LKUP[i++]];
-        const tIm4 = factors[idx_LKUP[i++]];
+        const tRe4 = factors[idx_LKUP[i+18]];
+        const tIm4 = factors[idx_LKUP[i+19]];
         // Get real and imaginary parts of elements
-        const eReI4 = idx_LKUP[i++];
-        const eImI4 = idx_LKUP[i++];
-        const oReI4 = idx_LKUP[i++];
-        const oImI4 = idx_LKUP[i++];
+        const eReI4 = idx_LKUP[i+20];
+        const eImI4 = idx_LKUP[i+21];
+        const oReI4 = idx_LKUP[i+22];
+        const oImI4 = idx_LKUP[i+23];
+        i+=24;
         // Get current values
         const eRe1  = out[eReI1];
         const eIm1  = out[eImI1];
