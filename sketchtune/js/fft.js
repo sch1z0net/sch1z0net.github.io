@@ -964,7 +964,7 @@ function fftComplexInPlace_seq(out) {
 
 function eff_p(){
    const max_p = 8;
-   console.log("Efficiency For Powers",N); 
+   console.log("Efficiency For Powers"); 
    for(let p = 1; p<=max_p; p++){
         const accesses_per_it = (2<<(p-1));
         const iterations = looplen / accesses_per_it;
