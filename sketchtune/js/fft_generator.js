@@ -95,7 +95,7 @@ function print_code(power){
     
 }
 
-print_code(6);
+print_code(4);
 
 
 $(document).ready(function(){
