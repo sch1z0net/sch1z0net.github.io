@@ -915,7 +915,7 @@ function fftComplexInPlace_seq_4(out) {
         
         i+=160;
 
-        for(let p = 1; p <= 5){
+        for(let p = 1; p <= 5; p++){
         eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
         eRe  = eRe;       eIm  = eIm;       oRe  = oRe;       oIm  = oIm;       t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
         eRe  = out[eReI]; eIm  = out[eImI]; oRe  = out[oReI]; oIm  = out[oImI]; t_oRe = oRe * tRe001_1 - oIm * tIm001_1; t_oIm = oRe * tIm001_1 + oIm * tRe001_1; out[eReI]  = (eRe + t_oRe); out[eImI]  = (eIm + t_oIm); out[oReI]  = (eRe - t_oRe); out[oImI]  = (eIm - t_oIm);
