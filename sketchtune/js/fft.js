@@ -970,10 +970,10 @@ function eff_p(){
         const t_per_it = (2<<(p-1)) * p;
         const ratio =  accesses_per_it / t_per_it;
         console.log("ps ",p,": Access Rate ->",ratio.toFixed(2), 
-            "Twiddle Declarations ->",t_per_it,
-            "Twiddlelizers per Iteration ->",t_per_it/2,
-            "Twiddles per Iteration ->", t_per_it,
-            "Accesses per Iteration ->", accesses_per_it
+            "\tTwiddle Declarations ->",t_per_it,
+            "\tTwiddlelizers per Iteration ->",t_per_it/2,
+            "\tTwiddles per Iteration ->", t_per_it,
+            "\tAccesses per Iteration ->", accesses_per_it
         );
    }
 }
@@ -992,9 +992,9 @@ function eff(N){
         const twiddles = t_per_it * iterations;
         const ratio =  accesses_per_it / t_per_it;
         console.log("ps ",p,": Iterations ->",iterations.toFixed(0),
-            "Total Twiddelizers ->",twiddlelizers.toFixed(0),
-            "Total Accesses ->",accesses.toFixed(0),
-            "Total Accesses (without Recycling) ->", twiddles.toFixed(0)
+            "\tTotal Twiddelizers ->",twiddlelizers.toFixed(0),
+            "\tTotal Accesses ->",accesses.toFixed(0),
+            "\tTotal Accesses (without Recycling) ->", twiddles.toFixed(0)
         );
    }
 }
