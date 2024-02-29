@@ -1069,12 +1069,14 @@ function eff_p(){
 function eff(N){
    const max_p = 8;
    let sum = 0;
-   let looplen = (Math.log2(N)+1) * N;
+   let bits = (Math.log2(N)+1);
+
+   let looplen = (N>>1)*bits;
    console.log("Efficiency For N=",N); 
    for(let p = 1; p<=max_p; p++){
         const accesses_per_it = (2<<(p-1));
         const t_per_it = (2<<(p-1)) * p;
-        const iterations = looplen / (t_per_it/2);
+        const iterations = looplen / (t_per_it/2);  
         const accesses = accesses_per_it * iterations;
         const twiddles = t_per_it * iterations;
         const twiddlelizers = twiddles / 2;
