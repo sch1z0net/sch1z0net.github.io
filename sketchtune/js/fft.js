@@ -750,12 +750,100 @@ let INDEX_LOOKUP_128  = index_lookup(128);
 let INDEX_LOOKUP_256  = index_lookup(256);
 let INDEX_LOOKUP_512  = index_lookup(512);
 let INDEX_LOOKUP_1024 = index_lookup(1024);
+let INDEX_LOOKUP_1024 = index_lookup(1024);
 let INDEX_LOOKUP_2048 = index_lookup(2048);
 let INDEX_LOOKUP_4096 = index_lookup(4096);
 
 let factors = LOOKUP_RADIX2_1024;
 let idx_LKUP = INDEX_LOOKUP_1024;
 let len = idx_LKUP.length;
+
+function twiddlelizer(out, tRe, tIm, eReI, eImI, oReI, oImI){
+        // Get current values
+        const eRe  = out[eReI];
+        const eIm  = out[eImI];
+        const oRe  = out[oReI];
+        const oIm  = out[oImI];
+        // Perform complex multiplications
+        const t_oRe = oRe * tRe - oIm * tIm;
+        const t_oIm = oRe * tIm + oIm * tRe;
+        // Update elements with new values
+        out[eReI]  = (eRe + t_oRe);
+        out[eImI]  = (eIm + t_oIm);
+        out[oReI]  = (eRe - t_oRe);
+        out[oImI]  = (eIm - t_oIm);
+}
+
+/*
+function fftComplexInPlace_seq(out) {
+    const N = out.length/2;
+
+    let factors;
+    if(N ==    4){ factors = LOOKUP_RADIX2_4;    }
+    if(N ==    8){ factors = LOOKUP_RADIX2_8;    }
+    if(N ==   16){ factors = LOOKUP_RADIX2_16;   }
+    if(N ==   32){ factors = LOOKUP_RADIX2_32;   }
+    if(N ==   64){ factors = LOOKUP_RADIX2_64;   }
+    if(N ==  128){ factors = LOOKUP_RADIX2_128;  }
+    if(N ==  256){ factors = LOOKUP_RADIX2_256;  }
+    if(N ==  512){ factors = LOOKUP_RADIX2_512;  }
+    if(N == 1024){ factors = LOOKUP_RADIX2_1024; }
+    if(N == 2048){ factors = LOOKUP_RADIX2_2048; }
+    if(N == 4096){ factors = LOOKUP_RADIX2_4096; }
+
+    let idx_LKUP; 
+    if(N ==   4){ idx_LKUP = INDEX_LOOKUP_4;    }
+    if(N ==   8){ idx_LKUP = INDEX_LOOKUP_8;    }
+    if(N ==  16){ idx_LKUP = INDEX_LOOKUP_16;   }
+    if(N ==  32){ idx_LKUP = INDEX_LOOKUP_32;   }
+    if(N ==  64){ idx_LKUP = INDEX_LOOKUP_64;   }
+    if(N == 128){ idx_LKUP = INDEX_LOOKUP_128;  }
+    if(N == 256){ idx_LKUP = INDEX_LOOKUP_256;  }
+    if(N == 512){ idx_LKUP = INDEX_LOOKUP_512;  }
+    if(N ==1024){ idx_LKUP = INDEX_LOOKUP_1024; }
+    if(N ==2048){ idx_LKUP = INDEX_LOOKUP_2048; }  
+    if(N ==4096){ idx_LKUP = INDEX_LOOKUP_4096; } 
+
+    let i = 0;
+    let tRe1, tIm1, eReI1, eImI1, oReI1, oImI1;
+    let tRe2, tIm2, eReI2, eImI2, oReI2, oImI2;
+    let tRe3, tIm3, eReI3, eImI3, oReI3, oImI3;
+    let tRe4, tIm4, eReI4, eImI4, oReI4, oImI4;
+    let tRe5, tIm5, eReI5, eImI5, oReI5, oImI5;
+    let tRe6, tIm6, eReI6, eImI6, oReI6, oImI6;
+    let tRe7, tIm7, eReI7, eImI7, oReI7, oImI7;
+    let tRe8, tIm8, eReI8, eImI8, oReI8, oImI8;
+
+    while(i < len){
+        if(i==0){ 
+          // TwiddleFactors
+          tRe1 = factors[idx_LKUP[i++]]; tIm1 = factors[idx_LKUP[i++]]; eReI1 = idx_LKUP[i++]; eImI1 = idx_LKUP[i++]; oReI1 = idx_LKUP[i++]; oImI1 = idx_LKUP[i++];
+          tRe2 = factors[idx_LKUP[i++]]; tIm2 = factors[idx_LKUP[i++]]; eReI2 = idx_LKUP[i++]; eImI2 = idx_LKUP[i++]; oReI2 = idx_LKUP[i++]; oImI2 = idx_LKUP[i++];
+          tRe3 = factors[idx_LKUP[i++]]; tIm3 = factors[idx_LKUP[i++]]; eReI3 = idx_LKUP[i++]; eImI3 = idx_LKUP[i++]; oReI3 = idx_LKUP[i++]; oImI3 = idx_LKUP[i++];
+          tRe4 = factors[idx_LKUP[i++]]; tIm4 = factors[idx_LKUP[i++]]; eReI4 = idx_LKUP[i++]; eImI4 = idx_LKUP[i++]; oReI4 = idx_LKUP[i++]; oImI4 = idx_LKUP[i++];
+          tRe5 = factors[idx_LKUP[i++]]; tIm5 = factors[idx_LKUP[i++]]; eReI5 = idx_LKUP[i++]; eImI5 = idx_LKUP[i++]; oReI5 = idx_LKUP[i++]; oImI5 = idx_LKUP[i++];
+          tRe6 = factors[idx_LKUP[i++]]; tIm6 = factors[idx_LKUP[i++]]; eReI6 = idx_LKUP[i++]; eImI6 = idx_LKUP[i++]; oReI6 = idx_LKUP[i++]; oImI6 = idx_LKUP[i++];
+          tRe7 = factors[idx_LKUP[i++]]; tIm7 = factors[idx_LKUP[i++]]; eReI7 = idx_LKUP[i++]; eImI7 = idx_LKUP[i++]; oReI7 = idx_LKUP[i++]; oImI7 = idx_LKUP[i++];
+          tRe8 = factors[idx_LKUP[i++]]; tIm8 = factors[idx_LKUP[i++]]; eReI8 = idx_LKUP[i++]; eImI8 = idx_LKUP[i++]; oReI8 = idx_LKUP[i++]; oImI8 = idx_LKUP[i++];
+        }else{
+          i += 8 * 6; // factor 8
+        }
+
+        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
+
+    }
+
+    return out;
+}*/
+
+
 
 function fftComplexInPlace_seq(out) {
     const N = out.length/2;
@@ -787,35 +875,39 @@ function fftComplexInPlace_seq(out) {
     if(N ==4096){ idx_LKUP = INDEX_LOOKUP_4096; } 
 
     let i = 0;
-    let tRe, tIm; 
-    let eReI, eImI, oReI, oImI;
+    let tRe1, tIm1, eReI1, eImI1, oReI1, oImI1;
+    let tRe2, tIm2, eReI2, eImI2, oReI2, oImI2;
+    let tRe3, tIm3, eReI3, eImI3, oReI3, oImI3;
+    let tRe4, tIm4, eReI4, eImI4, oReI4, oImI4;
+    let tRe5, tIm5, eReI5, eImI5, oReI5, oImI5;
+    let tRe6, tIm6, eReI6, eImI6, oReI6, oImI6;
+    let tRe7, tIm7, eReI7, eImI7, oReI7, oImI7;
+    let tRe8, tIm8, eReI8, eImI8, oReI8, oImI8;
+
     while(i < len){
-        if(i==0){ 
+        if(i%8==0){ 
           // TwiddleFactors
-          tRe = factors[idx_LKUP[i++]];
-          tIm = factors[idx_LKUP[i++]];
-          // Get real and imaginary parts of elements
-          eReI = idx_LKUP[i++];
-          eImI = idx_LKUP[i++];
-          oReI = idx_LKUP[i++];
-          oImI = idx_LKUP[i++];
+          tRe1 = factors[idx_LKUP[i++]]; tIm1 = factors[idx_LKUP[i++]]; eReI1 = idx_LKUP[i++]; eImI1 = idx_LKUP[i++]; oReI1 = idx_LKUP[i++]; oImI1 = idx_LKUP[i++];
+          tRe2 = factors[idx_LKUP[i++]]; tIm2 = factors[idx_LKUP[i++]]; eReI2 = idx_LKUP[i++]; eImI2 = idx_LKUP[i++]; oReI2 = idx_LKUP[i++]; oImI2 = idx_LKUP[i++];
+          tRe3 = factors[idx_LKUP[i++]]; tIm3 = factors[idx_LKUP[i++]]; eReI3 = idx_LKUP[i++]; eImI3 = idx_LKUP[i++]; oReI3 = idx_LKUP[i++]; oImI3 = idx_LKUP[i++];
+          tRe4 = factors[idx_LKUP[i++]]; tIm4 = factors[idx_LKUP[i++]]; eReI4 = idx_LKUP[i++]; eImI4 = idx_LKUP[i++]; oReI4 = idx_LKUP[i++]; oImI4 = idx_LKUP[i++];
+          tRe5 = factors[idx_LKUP[i++]]; tIm5 = factors[idx_LKUP[i++]]; eReI5 = idx_LKUP[i++]; eImI5 = idx_LKUP[i++]; oReI5 = idx_LKUP[i++]; oImI5 = idx_LKUP[i++];
+          tRe6 = factors[idx_LKUP[i++]]; tIm6 = factors[idx_LKUP[i++]]; eReI6 = idx_LKUP[i++]; eImI6 = idx_LKUP[i++]; oReI6 = idx_LKUP[i++]; oImI6 = idx_LKUP[i++];
+          tRe7 = factors[idx_LKUP[i++]]; tIm7 = factors[idx_LKUP[i++]]; eReI7 = idx_LKUP[i++]; eImI7 = idx_LKUP[i++]; oReI7 = idx_LKUP[i++]; oImI7 = idx_LKUP[i++];
+          tRe8 = factors[idx_LKUP[i++]]; tIm8 = factors[idx_LKUP[i++]]; eReI8 = idx_LKUP[i++]; eImI8 = idx_LKUP[i++]; oReI8 = idx_LKUP[i++]; oImI8 = idx_LKUP[i++];
         }else{
-          i+=48;
+          i += 8 * 6; // factor 8
         }
 
-        // Get current values
-        const eRe  = out[eReI];
-        const eIm  = out[eImI];
-        const oRe  = out[oReI];
-        const oIm  = out[oImI];
-        // Perform complex multiplications
-        const t_oRe = oRe * tRe - oIm * tIm;
-        const t_oIm = oRe * tIm + oIm * tRe;
-        // Update elements with new values
-        out[eReI]  = (eRe + t_oRe);
-        out[eImI]  = (eIm + t_oIm);
-        out[oReI]  = (eRe - t_oRe);
-        out[oImI]  = (eIm - t_oIm);
+        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
+
     }
 
     return out;
@@ -883,6 +975,20 @@ function fftComplexInPlace_flexi(out) {
         // _block = 2         _block = 4    
         // max_bn =4/2        max_bn =4/4   
 
+
+        //  For N = 8, the indices must look like this after each iteration
+        //  
+        //  power = 1          power = 2         power = 3       
+        //  size = 2           size = 4          size = 8
+        //  half = 1           half = 2          half = 4
+        //  ev  odd            ev odd            ev  odd
+        // _0     1            0    2            0     4
+        //  2     3           _1    3            1     5
+        // (4)    5           (4)   6           (2)    6
+        //  6     7            5    7           _3     7
+        //    
+        // _block = 2         _block = 4         _block = 8      
+        // max_bn =8/2        max_bn =8/4        max_bn =8/2
 
 
         //  For N = 16, the indices must look like this after each iteration
