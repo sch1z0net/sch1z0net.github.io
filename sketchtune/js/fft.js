@@ -1133,13 +1133,15 @@ function eff(N){
    }
 
    let looplen = 2 * (Math.log2(N)+1) * N;
+   
 
    console.log("Efficiency For N=",N); 
    for(let p = 1; p<=16; p++){
-        const iterations = looplen / map[p-1];
+        const accesses_per_it = map[p-1];
+        const iterations = looplen / accesses_per_it;
         const t_per_it = (2<<(p-1)) * p;
         const twiddles = t_per_it * iterations;
-        const ratio =  1 / t_per_it;
+        const ratio =  accesses / t_per_it;
         console.log("ps ",p,"-> ",ratio.toFixed(2), "Twiddles Per Iteration ->",t_per_it,"Iterations ->",iterations.toFixed(1));
    }
 }
