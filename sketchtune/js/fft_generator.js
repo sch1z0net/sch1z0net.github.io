@@ -50,8 +50,10 @@ function tIm_(r,c){
     return res;
 }
 
-
 function print_code(power){
+    const rows = (2<<(power-2))>>1;
+    const cols  = power;
+    
     let line = "";
     for(let r = 1; r<=rows; r++){
         for(let c = 1; c<=cols; c++){
@@ -65,7 +67,7 @@ function print_code(power){
     
 }
 
-print_code(4);
+print_code(5);
 
 
 $(document).ready(function(){
