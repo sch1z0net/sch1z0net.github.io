@@ -789,17 +789,18 @@ function fftComplexInPlace_seq(out) {
 
     let i = 0;
     let tRe, tIm; 
+    let eReI, eImI, oReI, oImI;
     while(i < len){
         if(i==0){ 
           // TwiddleFactors
           tRe = factors[idx_LKUP[i++]];
           tIm = factors[idx_LKUP[i++]];
-        } 
-        // Get real and imaginary parts of elements
-        const eReI = idx_LKUP[i++];
-        const eImI = idx_LKUP[i++];
-        const oReI = idx_LKUP[i++];
-        const oImI = idx_LKUP[i++];
+          // Get real and imaginary parts of elements
+          eReI = idx_LKUP[i++];
+          eImI = idx_LKUP[i++];
+          oReI = idx_LKUP[i++];
+          oImI = idx_LKUP[i++];
+        }
         // Get current values
         const eRe  = out[eReI];
         const eIm  = out[eImI];
