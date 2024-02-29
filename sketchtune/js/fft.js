@@ -874,7 +874,21 @@ function fftComplexInPlace_seq(out) {
     if(N ==4096){ idx_LKUP = INDEX_LOOKUP_4096; } 
 
     let i = 0;
-    let tRe1, tIm1, eReI1, eImI1, oReI1, oImI1;
+    let tRe1a, tIm1a;
+    let tRe2a, tIm2a;
+    let tRe3a, tIm3a;
+    let tRe4a, tIm4a;
+    let tRe1b, tIm1b;
+    let tRe2b, tIm2b;
+    let tRe3b, tIm3b;
+    let tRe4b, tIm4b;
+    let tRe1c, tIm1c;
+    let tRe2c, tIm2c;
+    let tRe3c, tIm3c;
+    let tRe4c, tIm4c;
+
+
+    let eReI1, eImI1, oReI1, oImI1;
     let tRe2, tIm2, eReI2, eImI2, oReI2, oImI2;
     let tRe3, tIm3, eReI3, eImI3, oReI3, oImI3;
     let tRe4, tIm4, eReI4, eImI4, oReI4, oImI4;
