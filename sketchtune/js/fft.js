@@ -843,23 +843,22 @@ function fftComplexInPlace_seq(out) {
 }*/
 
 
-
 function fftComplexInPlace_seq(out) {
     const N = out.length/2;
     const bits = Math.log2(N);
 
-    let fac;
-    if(N ==    4){ fac = LOOKUP_RADIX2_4;    }
-    if(N ==    8){ fac = LOOKUP_RADIX2_8;    }
-    if(N ==   16){ fac = LOOKUP_RADIX2_16;   }
-    if(N ==   32){ fac = LOOKUP_RADIX2_32;   }
-    if(N ==   64){ fac = LOOKUP_RADIX2_64;   }
-    if(N ==  128){ fac = LOOKUP_RADIX2_128;  }
-    if(N ==  256){ fac = LOOKUP_RADIX2_256;  }
-    if(N ==  512){ fac = LOOKUP_RADIX2_512;  }
-    if(N == 1024){ fac = LOOKUP_RADIX2_1024; }
-    if(N == 2048){ fac = LOOKUP_RADIX2_2048; }
-    if(N == 4096){ fac = LOOKUP_RADIX2_4096; }
+    let ____F;
+    if(N ==    4){ ____F = LOOKUP_RADIX2_4;    }
+    if(N ==    8){ ____F = LOOKUP_RADIX2_8;    }
+    if(N ==   16){ ____F = LOOKUP_RADIX2_16;   }
+    if(N ==   32){ ____F = LOOKUP_RADIX2_32;   }
+    if(N ==   64){ ____F = LOOKUP_RADIX2_64;   }
+    if(N ==  128){ ____F = LOOKUP_RADIX2_128;  }
+    if(N ==  256){ ____F = LOOKUP_RADIX2_256;  }
+    if(N ==  512){ ____F = LOOKUP_RADIX2_512;  }
+    if(N == 1024){ ____F = LOOKUP_RADIX2_1024; }
+    if(N == 2048){ ____F = LOOKUP_RADIX2_2048; }
+    if(N == 4096){ ____F = LOOKUP_RADIX2_4096; }
 
     let idx_LKUP; 
     if(N ==   4){ idx_LKUP = INDEX_LOOKUP_4;    }
@@ -875,123 +874,8 @@ function fftComplexInPlace_seq(out) {
     if(N ==4096){ idx_LKUP = INDEX_LOOKUP_4096; } 
 
     let i = 0;
-    let tRe01a, tIm01a;
-    let tRe02a, tIm02a;
-    let tRe03a, tIm03a;
-    let tRe04a, tIm04a;
-    let tRe05a, tIm05a;
-    let tRe06a, tIm06a;
-    let tRe07a, tIm07a;
-    let tRe08a, tIm08a;
-    let tRe09a, tIm09a;
-    let tRe10a, tIm10a;
-    let tRe11a, tIm11a;
-    let tRe12a, tIm12a;
-    let tRe13a, tIm13a;
-    let tRe14a, tIm14a;
-    let tRe15a, tIm15a;
-    let tRe16a, tIm16a;
 
-    let tRe01b, tIm01b;
-    let tRe02b, tIm02b;
-    let tRe03b, tIm03b;
-    let tRe04b, tIm04b;
-    let tRe05b, tIm05b;
-    let tRe06b, tIm06b;
-    let tRe07b, tIm07b;
-    let tRe08b, tIm08b;
-    let tRe09b, tIm09b;
-    let tRe10b, tIm10b;
-    let tRe11b, tIm11b;
-    let tRe12b, tIm12b;
-    let tRe13b, tIm13b;
-    let tRe14b, tIm14b;
-    let tRe15b, tIm15b;
-    let tRe16b, tIm16b;
 
-    let tRe01c, tIm01c;
-    let tRe02c, tIm02c;
-    let tRe03c, tIm03c;
-    let tRe04c, tIm04c;
-    let tRe05c, tIm05c;
-    let tRe06c, tIm06c;
-    let tRe07c, tIm07c;
-    let tRe08c, tIm08c;
-    let tRe09c, tIm09c;
-    let tRe10c, tIm10c;
-    let tRe11c, tIm11c;
-    let tRe12c, tIm12c;
-    let tRe13c, tIm13c;
-    let tRe14c, tIm14c;
-    let tRe15c, tIm15c;
-    let tRe16c, tIm16c;
-
-    let tRe01d, tIm01d;
-    let tRe02d, tIm02d;
-    let tRe03d, tIm03d;
-    let tRe04d, tIm04d;
-    let tRe05d, tIm05d;
-    let tRe06d, tIm06d;
-    let tRe07d, tIm07d;
-    let tRe08d, tIm08d;
-    let tRe09d, tIm09d;
-    let tRe10d, tIm10d;
-    let tRe11d, tIm11d;
-    let tRe12d, tIm12d;
-    let tRe13d, tIm13d;
-    let tRe14d, tIm14d;
-    let tRe15d, tIm15d;
-    let tRe16d, tIm16d;
-
-    let tRe01e, tIm01e;
-    let tRe02e, tIm02e;
-    let tRe03e, tIm03e;
-    let tRe04e, tIm04e;
-    let tRe05e, tIm05e;
-    let tRe06e, tIm06e;
-    let tRe07e, tIm07e;
-    let tRe08e, tIm08e;
-    let tRe09e, tIm09e;
-    let tRe10e, tIm10e;
-    let tRe11e, tIm11e;
-    let tRe12e, tIm12e;
-    let tRe13e, tIm13e;
-    let tRe14e, tIm14e;
-    let tRe15e, tIm15e;
-    let tRe16e, tIm16e;
-
-    let tRe01f, tIm01f;
-    let tRe02f, tIm02f;
-    let tRe03f, tIm03f;
-    let tRe04f, tIm04f;
-    let tRe05f, tIm05f;
-    let tRe06f, tIm06f;
-    let tRe07f, tIm07f;
-    let tRe08f, tIm08f;
-    let tRe09f, tIm09f;
-    let tRe10f, tIm10f;
-    let tRe11f, tIm11f;
-    let tRe12f, tIm12f;
-    let tRe13f, tIm13f;
-    let tRe14f, tIm14f;
-    let tRe15f, tIm15f;
-    let tRe16f, tIm16f;
-    let tRe17f, tIm17f;
-    let tRe18f, tIm18f;
-    let tRe19f, tIm19f;
-    let tRe20f, tIm20f;
-    let tRe21f, tIm21f;
-    let tRe22f, tIm22f;
-    let tRe23f, tIm23f;
-    let tRe24f, tIm24f;
-    let tRe25f, tIm25f;
-    let tRe26f, tIm26f;
-    let tRe27f, tIm27f;
-    let tRe28f, tIm28f;
-    let tRe29f, tIm29f;
-    let tRe30f, tIm30f;
-    let tRe31f, tIm31f;
-    let tRe32f, tIm32f;
 
     let tRe1, tIm1, eReI1, eImI1, oReI1, oImI1;
     let tRe2, tIm2, eReI2, eImI2, oReI2, oImI2;
@@ -1004,14 +888,14 @@ function fftComplexInPlace_seq(out) {
 
     while(i < 2*N*bits){ 
         if(i==0){
-          tRe1 = fac[idx_LKUP[i++]]; tIm1 = fac[idx_LKUP[i++]]; eReI1 = idx_LKUP[i++]; eImI1 = idx_LKUP[i++]; oReI1 = idx_LKUP[i++]; oImI1 = idx_LKUP[i++];
-          tRe2 = fac[idx_LKUP[i++]]; tIm2 = fac[idx_LKUP[i++]]; eReI2 = idx_LKUP[i++]; eImI2 = idx_LKUP[i++]; oReI2 = idx_LKUP[i++]; oImI2 = idx_LKUP[i++];
-          tRe3 = fac[idx_LKUP[i++]]; tIm3 = fac[idx_LKUP[i++]]; eReI3 = idx_LKUP[i++]; eImI3 = idx_LKUP[i++]; oReI3 = idx_LKUP[i++]; oImI3 = idx_LKUP[i++];
-          tRe4 = fac[idx_LKUP[i++]]; tIm4 = fac[idx_LKUP[i++]]; eReI4 = idx_LKUP[i++]; eImI4 = idx_LKUP[i++]; oReI4 = idx_LKUP[i++]; oImI4 = idx_LKUP[i++];
-          tRe5 = fac[idx_LKUP[i++]]; tIm5 = fac[idx_LKUP[i++]]; eReI5 = idx_LKUP[i++]; eImI5 = idx_LKUP[i++]; oReI5 = idx_LKUP[i++]; oImI5 = idx_LKUP[i++];
-          tRe6 = fac[idx_LKUP[i++]]; tIm6 = fac[idx_LKUP[i++]]; eReI6 = idx_LKUP[i++]; eImI6 = idx_LKUP[i++]; oReI6 = idx_LKUP[i++]; oImI6 = idx_LKUP[i++];
-          tRe7 = fac[idx_LKUP[i++]]; tIm7 = fac[idx_LKUP[i++]]; eReI7 = idx_LKUP[i++]; eImI7 = idx_LKUP[i++]; oReI7 = idx_LKUP[i++]; oImI7 = idx_LKUP[i++];
-          tRe8 = fac[idx_LKUP[i++]]; tIm8 = fac[idx_LKUP[i++]]; eReI8 = idx_LKUP[i++]; eImI8 = idx_LKUP[i++]; oReI8 = idx_LKUP[i++]; oImI8 = idx_LKUP[i++];
+          eReI1 = idx_LKUP[i++]; eImI1 = idx_LKUP[i++]; oReI1 = idx_LKUP[i++]; oImI1 = idx_LKUP[i++];
+          eReI2 = idx_LKUP[i++]; eImI2 = idx_LKUP[i++]; oReI2 = idx_LKUP[i++]; oImI2 = idx_LKUP[i++];
+          eReI3 = idx_LKUP[i++]; eImI3 = idx_LKUP[i++]; oReI3 = idx_LKUP[i++]; oImI3 = idx_LKUP[i++];
+          eReI4 = idx_LKUP[i++]; eImI4 = idx_LKUP[i++]; oReI4 = idx_LKUP[i++]; oImI4 = idx_LKUP[i++];
+          eReI5 = idx_LKUP[i++]; eImI5 = idx_LKUP[i++]; oReI5 = idx_LKUP[i++]; oImI5 = idx_LKUP[i++];
+          eReI6 = idx_LKUP[i++]; eImI6 = idx_LKUP[i++]; oReI6 = idx_LKUP[i++]; oImI6 = idx_LKUP[i++];
+          eReI7 = idx_LKUP[i++]; eImI7 = idx_LKUP[i++]; oReI7 = idx_LKUP[i++]; oImI7 = idx_LKUP[i++];
+          eReI8 = idx_LKUP[i++]; eImI8 = idx_LKUP[i++]; oReI8 = idx_LKUP[i++]; oImI8 = idx_LKUP[i++];
         }
 
         //  For N = 8, the indices must look like this after each iteration
@@ -1030,126 +914,10 @@ function fftComplexInPlace_seq(out) {
         //if(i % 8 == 0){ 
 
 
-          // TwiddleFactors
-          // Power 1
-          tRe01a = fac[i];       tIm01a = fac[i];        // 0
-          tRe02a = tRe01a;       tIm02a = tIm01a;        // 0
-          tRe03a = tRe01a;       tIm03a = tIm01a;        // 0
-          tRe04a = tRe01a;       tIm04a = tIm01a;        // 0
-          tRe05a = tRe01a;       tIm05a = tIm01a;        // 0
-          tRe06a = tRe01a;       tIm06a = tIm01a;        // 0
-          tRe07a = tRe01a;       tIm07a = tIm01a;        // 0
-          tRe08a = tRe01a;       tIm08a = tIm01a;        // 0
-          tRe09a = tRe01a;       tIm09a = tRe01a;        // 0
-          tRe10a = tRe01a;       tIm10a = tIm01a;        // 0
-          tRe11a = tRe01a;       tIm11a = tIm01a;        // 0
-          tRe12a = tRe01a;       tIm12a = tIm01a;        // 0
-          tRe13a = tRe01a;       tIm13a = tIm01a;        // 0
-          tRe14a = tRe01a;       tIm14a = tIm01a;        // 0
-          tRe15a = tRe01a;       tIm15a = tIm01a;        // 0
-          tRe16a = tRe01a;       tIm16a = tIm01a;        // 0
-          // Power 2
-          tRe01b = tRe01a;       tIm01b = tIm01a;        // 0
-          tRe02b = fac[i];       tIm02b = fac[i];        // 1  new array access
-          tRe03b = tRe01a;       tIm03b = tIm01a;        // 0
-          tRe04b = tRe02b;       tIm04b = tIm02b;        // 1
-          tRe05b = tRe01a;       tIm05b = tIm01a;        // 0
-          tRe06b = tRe02a;       tIm06b = tIm02b;        // 1 
-          tRe07b = tRe01a;       tIm07b = tIm01a;        // 0
-          tRe08b = tRe02b;       tIm08b = tIm02b;        // 1
-          tRe09b = tRe01a;       tIm09b = tIm01a;        // 0
-          tRe10b = tRe02b;       tIm10b = tIm02b;        // 1  new array access
-          tRe11b = tRe01a;       tIm11b = tIm01a;        // 0
-          tRe12b = tRe02b;       tIm12b = tIm02b;        // 1
-          tRe13b = tRe01a;       tIm13b = tIm01a;        // 0
-          tRe14b = tRe02a;       tIm14b = tIm02b;        // 1 
-          tRe15b = tRe01a;       tIm15b = tIm01a;        // 0
-          tRe16b = tRe02b;       tIm16b = tIm02b;        // 1
-          // Power 3
-          tRe01c = tRe01a;       tIm01c = tIm01a;        // 0
-          tRe02c = tRe02b;       tIm02c = tIm02b;        // 1
-          tRe03c = fac[i];       tIm03c = fac[i];        // 2  new array access
-          tRe04c = fac[i];       tIm04c = fac[i];        // 3  new array access
-          tRe05c = tRe01a;       tIm05c = tIm01a;        // 0
-          tRe06c = tRe02b;       tIm06c = tIm02b;        // 1
-          tRe07c = tRe03c;       tIm07c = tIm03c;        // 2
-          tRe08c = tRe04c;       tIm08c = tIm04c;        // 3
-          tRe09c = tRe01a;       tIm09c = tIm01a;        // 0
-          tRe10c = tRe02b;       tIm10c = tIm02b;        // 1
-          tRe11c = tRe03c;       tIm11c = tIm03c;        // 2
-          tRe12c = tRe04c;       tIm12c = tIm04c;        // 3
-          tRe13c = tRe01a;       tIm13c = tIm01a;        // 0
-          tRe14c = tRe02b;       tIm14c = tIm02b;        // 1
-          tRe15c = tRe03c;       tIm15c = tIm03c;        // 2
-          tRe16c = tRe04c;       tIm16c = tIm04c;        // 3
-          // Power 4
-          tRe01d = tRe01a;       tIm01d = tIm01a;        // 0
-          tRe02d = tRe02b;       tIm02d = tIm02b;        // 1
-          tRe03d = tRe03c;       tIm03d = tIm03c;        // 2 
-          tRe04d = tRe04c;       tIm04d = tIm04c;        // 3 
-          tRe05d = fac[i];       tIm05d = fac[i];       // 4  new array access
-          tRe06d = fac[i];       tIm06d = fac[i];       // 5  new array access
-          tRe07d = fac[i];       tIm07d = fac[i];       // 6  new array access
-          tRe08d = fac[i];       tIm08d = fac[i];       // 7  new array access
-          tRe09d = tRe01a;       tIm09d = tIm01a;        // 0
-          tRe10d = tRe02b;       tIm10d = tIm02b;        // 1
-          tRe11d = tRe03c;       tIm11d = tIm03c;        // 2 
-          tRe12d = tRe04c;       tIm12d = tIm04c;        // 3 
-          tRe13d = tRe05d;       tIm13d = tIm05d;        // 4 
-          tRe14d = tRe06d;       tIm14d = tIm06d;        // 5
-          tRe15d = tRe07d;       tIm15d = tIm07d;        // 6
-          tRe16d = tRe08d;       tIm16d = tIm08d;        // 7
-          // Power 5
-          tRe01e = tRe01a;       tIm01e = tIm01a;        // 0
-          tRe02e = tRe02b;       tIm02e = tIm02b;        // 1
-          tRe03e = tRe03c;       tIm03e = tIm03c;        // 2 
-          tRe04e = tRe04c;       tIm04e = tIm04c;        // 3 
-          tRe05e = tRe05d;       tIm05e = tIm05d;        // 4  new array access
-          tRe06e = tRe06d;       tIm06e = tIm06d;        // 5  new array access
-          tRe07e = tRe07d;       tIm07e = tIm07d;        // 6  new array access
-          tRe08e = tRe08d;       tIm08e = tIm08d;        // 7  new array access
-          tRe09e = fac[i];       tIm09e = fac[i];        // 8
-          tRe10e = fac[i];       tIm10e = fac[i];        // 9
-          tRe11e = fac[i];       tIm11e = fac[i];        // 10
-          tRe12e = fac[i];       tIm12e = fac[i];        // 11
-          tRe13e = fac[i];       tIm13e = fac[i];        // 12
-          tRe14e = fac[i];       tIm14e = fac[i];        // 13
-          tRe15e = fac[i];       tIm15e = fac[i];        // 14
-          tRe16e = fac[i];       tIm16e = fac[i];        // 15
 
-          // Power 6
-          tRe01f = tRe01a;       tIm01f = tIm01a;        // 0
-          tRe02f = tRe02b;       tIm02f = tIm02b;        // 1
-          tRe03f = tRe03c;       tIm03f = tIm03c;        // 2 
-          tRe04f = tRe04c;       tIm04f = tIm04c;        // 3 
-          tRe05f = tRe05d;       tIm05f = tIm05d;        // 4  new array access
-          tRe06f = tRe06d;       tIm06f = tIm06d;        // 5  new array access
-          tRe07f = tRe07d;       tIm07f = tIm07d;        // 6  new array access
-          tRe08f = tRe08d;       tIm08f = tIm08d;        // 7  new array access
-          tRe09f = tRe09e;       tIm09f = tIm09e;        // 8
-          tRe10f = tRe10e;       tIm10f = tIm10e;        // 9
-          tRe11f = tRe11e;       tIm11f = tIm11e;        // 10
-          tRe12f = tRe12e;       tIm12f = tIm12e;        // 11
-          tRe13f = tRe13e;       tIm13f = tIm13e;        // 12
-          tRe14f = tRe14e;       tIm14f = tIm14e;        // 13
-          tRe15f = tRe15e;       tIm15f = tIm15e;        // 14
-          tRe16f = tRe16e;       tIm16f = tIm16e;        // 15
-          tRe17f = fac[i];       tIm17f = fac[i];        // 16
-          tRe18f = fac[i];       tIm18f = fac[i];        // 17
-          tRe19f = fac[i];       tIm19f = fac[i];        // 18 
-          tRe20f = fac[i];       tIm20f = fac[i];        // 19 
-          tRe21f = fac[i];       tIm21f = fac[i];        // 20  new array access
-          tRe22f = fac[i];       tIm22f = fac[i];        // 21  new array access
-          tRe23f = fac[i];       tIm23f = fac[i];        // 22  new array access
-          tRe24f = fac[i];       tIm24f = fac[i];        // 23  new array access
-          tRe25f = fac[i];       tIm25f = fac[i];        // 24
-          tRe26f = fac[i];       tIm26f = fac[i];        // 25
-          tRe27f = fac[i];       tIm27f = fac[i];        // 26
-          tRe28f = fac[i];       tIm28f = fac[i];        // 27
-          tRe29f = fac[i];       tIm29f = fac[i];        // 28
-          tRe30f = fac[i];       tIm30f = fac[i];        // 29
-          tRe31f = fac[i];       tIm31f = fac[i];        // 30
-          tRe32f = fac[i];       tIm32f = fac[i];        // 31
+
+
+
 
 
           // loop len per N
@@ -1213,15 +981,8 @@ function fftComplexInPlace_seq(out) {
 
 function eff(N){
    const max_p = 8;
-   const map = [];
    let sum = 0;
-   for(let j = 0; j<max_p; j++){
-      sum += 2<<j;
-      map[j] = sum;
-   }
-
    let looplen = 2 * (Math.log2(N)+1) * N;
-   
    console.log("Efficiency For N=",N); 
    for(let p = 1; p<=max_p; p++){
         const accesses_per_it = (2<<(p-1));

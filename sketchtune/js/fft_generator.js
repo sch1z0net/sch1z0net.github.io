@@ -51,7 +51,7 @@ function tIm_(r,c){
 }
 
 function print_code(power){
-    const rows = (2<<(power-2))>>1;
+    const rows = (2<<(power-1))>>1;
     const cols  = power;
     
     let line = "";
@@ -78,7 +78,7 @@ function print_code(power){
     
 }
 
-print_code(6);
+print_code(5);
 
 
 $(document).ready(function(){
