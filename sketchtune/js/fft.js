@@ -846,6 +846,7 @@ function fftComplexInPlace_seq(out) {
 
 function fftComplexInPlace_seq(out) {
     const N = out.length/2;
+    const bits = Math.log2(N);
 
     let factors;
     if(N ==    4){ factors = LOOKUP_RADIX2_4;    }
@@ -897,7 +898,7 @@ function fftComplexInPlace_seq(out) {
     let tRe7, tIm7, eReI7, eImI7, oReI7, oImI7;
     let tRe8, tIm8, eReI8, eImI8, oReI8, oImI8;
 
-    while(i < len){
+    while(i < 2*N*bits){
         if(i==0){
           tRe1 = factors[idx_LKUP[i++]]; tIm1 = factors[idx_LKUP[i++]]; eReI1 = idx_LKUP[i++]; eImI1 = idx_LKUP[i++]; oReI1 = idx_LKUP[i++]; oImI1 = idx_LKUP[i++];
           tRe2 = factors[idx_LKUP[i++]]; tIm2 = factors[idx_LKUP[i++]]; eReI2 = idx_LKUP[i++]; eImI2 = idx_LKUP[i++]; oReI2 = idx_LKUP[i++]; oImI2 = idx_LKUP[i++];
