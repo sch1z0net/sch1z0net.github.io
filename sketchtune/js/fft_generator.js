@@ -18,15 +18,45 @@ function d(i) {
 function tRe(r,c){  return "tRe"+d(r)+"_"+c;  }
 function tIm(r,c){  return "tIm"+d(r)+"_"+c;  }
 
+function tRe_(r,c){
+    var res = "";
+    let f_lines = 1;
+    let f_start = 1;
+    if(c > 1){ 
+        f_lines = (2<<(c-2))>>1; 
+        f_start += f_lines;
+    }
+    if( r>=f_start || r<(f_start+f_lines) ){
+        res = "____F(i)";
+    }else{
+        res = "tRe"+d(r)+"_"+c;
+    }
+    return res;
+}
+
+function tIm_(r,c){
+    var res = "";
+    let f_lines = 1;
+    let f_start = 1;
+    if(c > 1){ 
+        f_lines = (2<<(c-2))>>1; 
+        f_start += f_lines;
+    }
+    if( r>=f_start || r<(f_start+f_lines) ){
+        res = "____F(i)";
+    }else{
+        res = "tIm"+d(r)+"_"+c;
+    }
+    return res;
+}
+
+
 function print_code(power){
-    const rows = (2<<(power-2));
-    const cols  = power;
-    
     let line = "";
     for(let r = 1; r<=rows; r++){
         for(let c = 1; c<=cols; c++){
-            line += tRe(r,c)+"="+tRe(r,c)+"; ";
-            line += tIm(r,c)+"="+tIm(r,c)+"; ";
+            line += tRe(r,c)+"="+tRe_(r,c)+"; ";
+            line += tIm(r,c)+"="+tIm_(r,c)+"; ";
         }
         line += "\n";
     }
@@ -35,7 +65,7 @@ function print_code(power){
     
 }
 
-print_code(5);
+print_code(4);
 
 
 $(document).ready(function(){
