@@ -884,7 +884,7 @@ function fftComplexInPlace_seq(out) {
     let tRe8, tIm8, eReI8, eImI8, oReI8, oImI8;
 
     while(i < len){
-        if(i%8==0){ 
+        if(i % (8*6) == 0){ 
           // TwiddleFactors
           tRe1 = factors[idx_LKUP[i++]]; tIm1 = factors[idx_LKUP[i++]]; eReI1 = idx_LKUP[i++]; eImI1 = idx_LKUP[i++]; oReI1 = idx_LKUP[i++]; oImI1 = idx_LKUP[i++];
           tRe2 = factors[idx_LKUP[i++]]; tIm2 = factors[idx_LKUP[i++]]; eReI2 = idx_LKUP[i++]; eImI2 = idx_LKUP[i++]; oReI2 = idx_LKUP[i++]; oImI2 = idx_LKUP[i++];
