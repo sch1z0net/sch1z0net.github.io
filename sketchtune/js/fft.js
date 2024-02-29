@@ -928,41 +928,90 @@ function fftComplexInPlace_seq(out) {
 
           // TwiddleFactors
           // Power 1
-          tRe1a = factors[i];  tIm1a = factors[i];   // 0
-          tRe2a = tRe1a;       tIm2a = tIm1a;        // 0
-          tRe3a = tRe1a;       tIm3a = tIm1a;        // 0
-          tRe4a = tRe1a;       tIm4a = tIm1a;        // 0
-          tRe5a = tRe1a;       tIm5a = tIm1a;        // 0
-          tRe6a = tRe1a;       tIm6a = tIm1a;        // 0
-          tRe7a = tRe1a;       tIm7a = tIm1a;        // 0
-          tRe8a = tRe1a;       tIm8a = tIm1a;        // 0
+          tRe01a = factors[i];   tIm01a = factors[i];   // 0
+          tRe02a = tRe01a;       tIm02a = tIm01a;        // 0
+          tRe03a = tRe01a;       tIm03a = tIm01a;        // 0
+          tRe04a = tRe01a;       tIm04a = tIm01a;        // 0
+          tRe05a = tRe01a;       tIm05a = tIm01a;        // 0
+          tRe06a = tRe01a;       tIm06a = tIm01a;        // 0
+          tRe07a = tRe01a;       tIm07a = tIm01a;        // 0
+          tRe08a = tRe01a;       tIm08a = tIm01a;        // 0
+          tRe09a = tRe01a;       tIm09a = tRe01a;        // 0
+          tRe10a = tRe01a;       tIm10a = tIm01a;        // 0
+          tRe11a = tRe01a;       tIm11a = tIm01a;        // 0
+          tRe12a = tRe01a;       tIm12a = tIm01a;        // 0
+          tRe13a = tRe01a;       tIm13a = tIm01a;        // 0
+          tRe14a = tRe01a;       tIm14a = tIm01a;        // 0
+          tRe15a = tRe01a;       tIm15a = tIm01a;        // 0
+          tRe16a = tRe01a;       tIm16a = tIm01a;        // 0
           // Power 2
-          tRe1b = tRe1a;       tIm1b = tIm1a;        // 0
-          tRe2b = factors[i];  tIm2b = factors[i];   // 1  new array access
-          tRe3b = tRe1a;       tIm3b = tIm1a;        // 0
-          tRe4b = tRe2b;       tIm4b = tIm2b;        // 1
-          tRe5b = tRe1a;       tIm5b = tIm1a;        // 0
-          tRe6b = tRe2a;       tIm6b = tIm2b;        // 1 
-          tRe7b = tRe1a;       tIm7b = tIm1a;        // 0
-          tRe8b = tRe2b;       tIm8b = tIm2b;        // 1
+          tRe01b = tRe01a;       tIm01b = tIm01a;        // 0
+          tRe02b = factors[i];   tIm02b = factors[i];    // 1  new array access
+          tRe03b = tRe01a;       tIm03b = tIm01a;        // 0
+          tRe04b = tRe02b;       tIm04b = tIm02b;        // 1
+          tRe05b = tRe01a;       tIm05b = tIm01a;        // 0
+          tRe06b = tRe02a;       tIm06b = tIm02b;        // 1 
+          tRe07b = tRe01a;       tIm07b = tIm01a;        // 0
+          tRe08b = tRe02b;       tIm08b = tIm02b;        // 1
+          tRe09b = tRe01a;       tIm09b = tIm01a;        // 0
+          tRe10b = tRe02b;       tIm10b = tIm02b;        // 1  new array access
+          tRe11b = tRe01a;       tIm11b = tIm01a;        // 0
+          tRe12b = tRe02b;       tIm12b = tIm02b;        // 1
+          tRe13b = tRe01a;       tIm13b = tIm01a;        // 0
+          tRe14b = tRe02a;       tIm14b = tIm02b;        // 1 
+          tRe15b = tRe01a;       tIm15b = tIm01a;        // 0
+          tRe16b = tRe02b;       tIm16b = tIm02b;        // 1
           // Power 3
-          tRe1c = tRe1a;       tIm1c = tIm1a;        // 0
-          tRe2c = tRe2b;       tIm2c = tIm2b;        // 1
-          tRe3c = factors[i];  tIm3c = factors[i];   // 2  new array access
-          tRe4c = factors[i];  tIm4c = factors[i];   // 3  new array access
-          tRe5c = tRe1a;       tIm1c = tIm1a;        // 0
-          tRe6c = tRe2b;       tIm2c = tIm2b;        // 1
-          tRe7c = tRe3c;       tIm3c = tIm3c;        // 2
-          tRe8c = tRe4c;       tIm4c = tIm4c;        // 3
+          tRe01c = tRe01a;       tIm01c = tIm01a;        // 0
+          tRe02c = tRe02b;       tIm02c = tIm02b;        // 1
+          tRe03c = factors[i];   tIm03c = factors[i];    // 2  new array access
+          tRe04c = factors[i];   tIm04c = factors[i];    // 3  new array access
+          tRe05c = tRe01a;       tIm05c = tIm01a;        // 0
+          tRe06c = tRe02b;       tIm06c = tIm02b;        // 1
+          tRe07c = tRe03c;       tIm07c = tIm03c;        // 2
+          tRe08c = tRe04c;       tIm08c = tIm04c;        // 3
+          tRe09c = tRe01a;       tIm09c = tIm01a;        // 0
+          tRe10c = tRe02b;       tIm10c = tIm02b;        // 1
+          tRe11c = tRe03c;       tIm11c = tIm03c;        // 2
+          tRe12c = tRe04c;       tIm12c = tIm04c;        // 3
+          tRe13c = tRe01a;       tIm13c = tIm01a;        // 0
+          tRe14c = tRe02b;       tIm14c = tIm02b;        // 1
+          tRe15c = tRe03c;       tIm15c = tIm03c;        // 2
+          tRe16c = tRe04c;       tIm16c = tIm04c;        // 3
           // Power 4
-          tRe1d = tRe1a;       tIm1d = tIm1a;        // 0
-          tRe2d = tRe2b;       tIm2d = tIm2b;        // 1
-          tRe3d = tRe3c;       tIm3d = tIm3c;        // 2 
-          tRe4d = tRe4c;       tIm4d = tIm4c;        // 3 
-          tRe5d = factors[i];  tIm5d = factors[i];   // 4  new array access
-          tRe6d = factors[i];  tIm6d = factors[i];   // 5  new array access
-          tRe7d = factors[i];  tIm7d = factors[i];   // 6  new array access
-          tRe8d = factors[i];  tIm8d = factors[i];   // 7  new array access
+          tRe01d = tRe01a;       tIm01d = tIm01a;        // 0
+          tRe02d = tRe02b;       tIm02d = tIm02b;        // 1
+          tRe03d = tRe03c;       tIm03d = tIm03c;        // 2 
+          tRe04d = tRe04c;       tIm04d = tIm04c;        // 3 
+          tRe05d = factors[i];   tIm05d = factors[i];    // 4  new array access
+          tRe06d = factors[i];   tIm06d = factors[i];    // 5  new array access
+          tRe07d = factors[i];   tIm07d = factors[i];    // 6  new array access
+          tRe08d = factors[i];   tIm08d = factors[i];    // 7  new array access
+          tRe09d = tRe01a;       tIm09d = tIm01a;        // 0
+          tRe10d = tRe02b;       tIm10d = tIm02b;        // 1
+          tRe11d = tRe03c;       tIm11d = tIm03c;        // 2 
+          tRe12d = tRe04c;       tIm12d = tIm04c;        // 3 
+          tRe13d = tRe05d;       tIm13d = tIm05d;        // 4 
+          tRe14d = tRe06d;       tIm14d = tIm06d;        // 5
+          tRe15d = tRe07d;       tIm15d = tIm07d;        // 6
+          tRe16d = tRe08d;       tIm16d = tIm08d;        // 7
+          // Power 5
+          tRe01d = tRe01a;       tIm01d = tIm01a;        // 0
+          tRe02d = tRe02b;       tIm02d = tIm02b;        // 1
+          tRe03d = tRe03c;       tIm03d = tIm03c;        // 2 
+          tRe04d = tRe04c;       tIm04d = tIm04c;        // 3 
+          tRe05d = tRe05d;       tIm05d = tIm05d;        // 4  new array access
+          tRe06d = tRe06d;       tIm06d = tIm06d;        // 5  new array access
+          tRe07d = tRe07d;       tIm07d = tIm07d;        // 6  new array access
+          tRe08d = tRe08d;       tIm08d = tIm08d;        // 7  new array access
+          tRe09d = factors[i];   tIm09d = factors[i];    // 8
+          tRe10d = factors[i];   tIm10d = factors[i];    // 9
+          tRe11d = factors[i];   tIm11d = factors[i];    // 10
+          tRe12d = factors[i];   tIm12d = factors[i];    // 11
+          tRe13d = factors[i];   tIm13d = factors[i];    // 12
+          tRe14d = factors[i];   tIm14d = factors[i];    // 13
+          tRe15d = factors[i];   tIm15d = factors[i];    // 14
+          tRe16d = factors[i];   tIm16d = factors[i];    // 15
 
 
         //}else{
