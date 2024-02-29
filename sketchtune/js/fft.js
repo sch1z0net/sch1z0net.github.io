@@ -1125,7 +1125,6 @@ function fftComplexInPlace_seq(out) {
     return out;
 }
 
-
 function eff(N){
    const map = [];
    let sum = 0;
@@ -1149,8 +1148,6 @@ function eff(N){
 eff(512);
 eff(1024);
 eff(2048);
-
-
 
 function fftComplexInPlace_flexi(out) {
     const N = out.length / 2;
