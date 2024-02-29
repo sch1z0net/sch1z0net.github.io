@@ -925,7 +925,7 @@ function fftComplexInPlace_seq(out) {
         tRe031_1=tRe031_1;tIm031_1=tIm031_1;tRe031_2=tRe031_2;tIm031_2=tIm031_2;tRe031_3=tRe031_3;tIm031_3=tIm031_3;tRe031_4=tRe031_4;tIm031_4=tIm031_4;tRe031_5=tRe031_5;tIm031_5=tIm031_5;tRe031_6=____F[i];tIm031_6=____F[i];
         tRe032_1=tRe032_1;tIm032_1=tIm032_1;tRe032_2=tRe032_2;tIm032_2=tIm032_2;tRe032_3=tRe032_3;tIm032_3=tIm032_3;tRe032_4=tRe032_4;tIm032_4=tIm032_4;tRe032_5=tRe032_5;tIm032_5=tIm032_5;tRe032_6=____F[i];tIm032_6=____F[i];
         
-        i+=128;
+        i+=384;
 
         // Power 1        
         twiddlelizer(out, tRe001_1,tIm001_1, eReI1, eImI1, oReI1, oImI1);        
