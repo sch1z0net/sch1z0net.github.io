@@ -955,18 +955,16 @@ function fftComplexInPlace_seq(out) {
 
 
 
-// Power 3 -> 
+// Power 3 -> 5500
 // Power 4 ->
 // Power 5 -> 5200 
 // Power 6 -> 5000
 // Power 7 -> 4200
 
 
-function eff(N){
+function eff_p(){
    const max_p = 8;
-   let sum = 0;
-   let looplen = (Math.log2(N)+1) * N;
-   console.log("Efficiency For N=",N); 
+   console.log("Efficiency For Powers",N); 
    for(let p = 1; p<=max_p; p++){
         const accesses_per_it = (2<<(p-1));
         const iterations = looplen / accesses_per_it;
@@ -976,12 +974,30 @@ function eff(N){
         console.log("ps ",p,": Access Rate ->",ratio.toFixed(2), 
             "Twiddle Declarations ->",t_per_it,
             "Twiddlelizers per Iteration ->",t_per_it/2,
-            "Iterations ->",iterations.toFixed(1),
             "Accesses per Iteration ->", accesses_per_it
         );
    }
 }
 
+function eff(N){
+   const max_p = 8;
+   let sum = 0;
+   let looplen = (Math.log2(N)+1) * N;
+   console.log("Efficiency For N=",N); 
+   for(let p = 1; p<=max_p; p++){
+        const accesses_per_it = (2<<(p-1));
+        const iterations = looplen / accesses_per_it;
+        const accesses = (2<<(p-1)) * looplen;
+        const t_per_it = (2<<(p-1)) * p;
+        const twiddles = t_per_it * iterations;
+        const ratio =  accesses_per_it / t_per_it;
+        console.log("ps ",p,": Iterations ->",iterations.toFixed(1),
+            "Total Accesses ->",accesses
+        );
+   }
+}
+
+eff_p();
 eff(512);
 eff(1024);
 eff(2048);
