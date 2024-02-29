@@ -800,7 +800,7 @@ function fftComplexInPlace_seq(out) {
           oReI = idx_LKUP[i++];
           oImI = idx_LKUP[i++];
         }else{
-          i+=6;
+          i+=12;
         }
 
         // Get current values
