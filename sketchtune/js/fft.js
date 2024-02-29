@@ -972,6 +972,7 @@ function eff_p(){
         console.log("ps ",p,": Access Rate ->",ratio.toFixed(2), 
             "Twiddle Declarations ->",t_per_it,
             "Twiddlelizers per Iteration ->",t_per_it/2,
+            "Twiddles per Iteration ->", t_per_it,
             "Accesses per Iteration ->", accesses_per_it
         );
    }
@@ -990,7 +991,8 @@ function eff(N){
         const twiddles = t_per_it * iterations;
         const ratio =  accesses_per_it / t_per_it;
         console.log("ps ",p,": Iterations ->",iterations.toFixed(1),
-            "Total Accesses ->",accesses
+            "Total Accesses ->",accesses,
+            "Total Accesses (without Recycling) ->", t_per_it * looplen
         );
    }
 }
