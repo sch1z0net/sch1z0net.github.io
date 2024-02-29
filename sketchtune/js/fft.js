@@ -788,83 +788,31 @@ function fftComplexInPlace_seq(out) {
 
 
     let i = 0;
+    let tRe, tIm; 
     while(i < len){
-        // TwiddleFactors
-        const tRe1 = factors[idx_LKUP[i+0]];
-        const tIm1 = factors[idx_LKUP[i+1]];
+        if(i==0){ 
+          // TwiddleFactors
+          tRe = factors[idx_LKUP[i++]];
+          tIm = factors[idx_LKUP[i++]];
+        } 
         // Get real and imaginary parts of elements
-        const eReI1 = idx_LKUP[i+2];
-        const eImI1 = idx_LKUP[i+3];
-        const oReI1 = idx_LKUP[i+4];
-        const oImI1 = idx_LKUP[i+5];
-        // TwiddleFactors
-        const tRe2 = factors[idx_LKUP[i+6]];
-        const tIm2 = factors[idx_LKUP[i+7]];
-        // Get real and imaginary parts of elements
-        const eReI2 = idx_LKUP[i+8];
-        const eImI2 = idx_LKUP[i+9];
-        const oReI2 = idx_LKUP[i+10];
-        const oImI2 = idx_LKUP[i+11];
-        // TwiddleFactors
-        const tRe3 = factors[idx_LKUP[i+12]];
-        const tIm3 = factors[idx_LKUP[i+13]];
-        // Get real and imaginary parts of elements
-        const eReI3 = idx_LKUP[i+14];
-        const eImI3 = idx_LKUP[i+15];
-        const oReI3 = idx_LKUP[i+16];
-        const oImI3 = idx_LKUP[i+17];
-        // TwiddleFactors
-        const tRe4 = factors[idx_LKUP[i+18]];
-        const tIm4 = factors[idx_LKUP[i+19]];
-        // Get real and imaginary parts of elements
-        const eReI4 = idx_LKUP[i+20];
-        const eImI4 = idx_LKUP[i+21];
-        const oReI4 = idx_LKUP[i+22];
-        const oImI4 = idx_LKUP[i+23];
-        i+=24;
+        const eReI = idx_LKUP[i++];
+        const eImI = idx_LKUP[i++];
+        const oReI = idx_LKUP[i++];
+        const oImI = idx_LKUP[i++];
         // Get current values
-        const eRe1  = out[eReI1];
-        const eIm1  = out[eImI1];
-        const oRe1  = out[oReI1];
-        const oIm1  = out[oImI1];
-        const eRe2  = out[eReI2];
-        const eIm2  = out[eImI2];
-        const oRe2  = out[oReI2];
-        const oIm2  = out[oImI2];
-        const eRe3  = out[eReI3];
-        const eIm3  = out[eImI3];
-        const oRe3  = out[oReI3];
-        const oIm3  = out[oImI3];
-        const eRe4  = out[eReI4];
-        const eIm4  = out[eImI4];
-        const oRe4  = out[oReI4];
-        const oIm4  = out[oImI4];
+        const eRe  = out[eReI];
+        const eIm  = out[eImI];
+        const oRe  = out[oReI];
+        const oIm  = out[oImI];
         // Perform complex multiplications
-        const t_oRe1 = oRe1 * tRe1 - oIm1 * tIm1;
-        const t_oIm1 = oRe1 * tIm1 + oIm1 * tRe1;
-        const t_oRe2 = oRe2 * tRe2 - oIm2 * tIm2;
-        const t_oIm2 = oRe2 * tIm2 + oIm2 * tRe2;
-        const t_oRe3 = oRe3 * tRe3 - oIm3 * tIm3;
-        const t_oIm3 = oRe3 * tIm3 + oIm3 * tRe3;
-        const t_oRe4 = oRe4 * tRe4 - oIm4 * tIm4;
-        const t_oIm4 = oRe4 * tIm4 + oIm4 * tRe4;
+        const t_oRe = oRe * tRe - oIm * tIm;
+        const t_oIm = oRe * tIm + oIm * tRe;
         // Update elements with new values
-        out[eReI1]  = (eRe1 + t_oRe1);
-        out[eImI1]  = (eIm1 + t_oIm1);
-        out[oReI1]  = (eRe1 - t_oRe1);
-        out[oImI1]  = (eIm1 - t_oIm1);
-        out[eReI2]  = (eRe2 + t_oRe2);
-        out[eImI2]  = (eIm2 + t_oIm2);
-        out[oReI2]  = (eRe2 - t_oRe2);
-        out[oImI2]  = (eIm2 - t_oIm2);
-        out[eReI3]  = (eRe3 + t_oRe3);
-        out[eImI3]  = (eIm3 + t_oIm3);
-        out[oReI3]  = (eRe3 - t_oRe3);
-        out[oImI3]  = (eIm3 - t_oIm3);
-        out[eReI4]  = (eRe4 + t_oRe4);
-        out[eImI4]  = (eIm4 + t_oIm4);
-        out[oReI4]  = (eRe4 - t_oRe4);
-        out[oImI4]  = (eIm4 - t_oIm4);
+        out[eReI]  = (eRe + t_oRe);
+        out[eImI]  = (eIm + t_oIm);
+        out[oReI]  = (eRe - t_oRe);
+        out[oImI]  = (eIm - t_oIm);
     }
 
     return out;
