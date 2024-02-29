@@ -805,6 +805,22 @@ function fftComplexInPlace_seq(out) {
         const eImI2 = idx_LKUP[i++];
         const oReI2 = idx_LKUP[i++];
         const oImI2 = idx_LKUP[i++];
+        // TwiddleFactors
+        const tRe3 = factors[idx_LKUP[i++]];
+        const tIm3 = factors[idx_LKUP[i++]];
+        // Get real and imaginary parts of elements
+        const eReI3 = idx_LKUP[i++];
+        const eImI3 = idx_LKUP[i++];
+        const oReI3 = idx_LKUP[i++];
+        const oImI3 = idx_LKUP[i++];
+        // TwiddleFactors
+        const tRe4 = factors[idx_LKUP[i++]];
+        const tIm4 = factors[idx_LKUP[i++]];
+        // Get real and imaginary parts of elements
+        const eReI4 = idx_LKUP[i++];
+        const eImI4 = idx_LKUP[i++];
+        const oReI4 = idx_LKUP[i++];
+        const oImI4 = idx_LKUP[i++];
         // Get current values
         const eRe1  = out[eReI1];
         const eIm1  = out[eImI1];
@@ -814,11 +830,23 @@ function fftComplexInPlace_seq(out) {
         const eIm2  = out[eImI2];
         const oRe2  = out[oReI2];
         const oIm2  = out[oImI2];
+        const eRe3  = out[eReI3];
+        const eIm3  = out[eImI3];
+        const oRe3  = out[oReI3];
+        const oIm3  = out[oImI3];
+        const eRe4  = out[eReI4];
+        const eIm4  = out[eImI4];
+        const oRe4  = out[oReI4];
+        const oIm4  = out[oImI4];
         // Perform complex multiplications
         const t_oRe1 = oRe1 * tRe1 - oIm1 * tIm1;
         const t_oIm1 = oRe1 * tIm1 + oIm1 * tRe1;
         const t_oRe2 = oRe2 * tRe2 - oIm2 * tIm2;
         const t_oIm2 = oRe2 * tIm2 + oIm2 * tRe2;
+        const t_oRe3 = oRe3 * tRe3 - oIm3 * tIm3;
+        const t_oIm3 = oRe3 * tIm3 + oIm3 * tRe3;
+        const t_oRe4 = oRe4 * tRe4 - oIm4 * tIm4;
+        const t_oIm4 = oRe4 * tIm4 + oIm4 * tRe4;
         // Update elements with new values
         out[eReI1]  = (eRe1 + t_oRe1);
         out[eImI1]  = (eIm1 + t_oIm1);
@@ -828,6 +856,14 @@ function fftComplexInPlace_seq(out) {
         out[eImI2]  = (eIm2 + t_oIm2);
         out[oReI2]  = (eRe2 - t_oRe2);
         out[oImI2]  = (eIm2 - t_oIm2);
+        out[eReI3]  = (eRe3 + t_oRe3);
+        out[eImI3]  = (eIm3 + t_oIm3);
+        out[oReI3]  = (eRe3 - t_oRe3);
+        out[oImI3]  = (eIm3 - t_oIm3);
+        out[eReI4]  = (eRe4 + t_oRe4);
+        out[eImI4]  = (eIm4 + t_oIm4);
+        out[oReI4]  = (eRe4 - t_oRe4);
+        out[oImI4]  = (eIm4 - t_oIm4);
     }
 
     return out;
