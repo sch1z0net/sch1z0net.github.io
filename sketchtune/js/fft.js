@@ -893,7 +893,8 @@ function fftComplexInPlace_seq(out) {
 
     let its = 0, accs = 0;
     while(i < (N>>1)*bits){
-        its++;
+        its++; accs+=32;
+
         tRe001_1=____F[i];tIm001_1=____F[i];tRe001_2=tRe001_2;tIm001_2=tIm001_2;tRe001_3=tRe001_3;tIm001_3=tIm001_3;tRe001_4=tRe001_4;tIm001_4=tIm001_4;tRe001_5=tRe001_5;tIm001_5=tIm001_5;
         tRe002_1=tRe002_1;tIm002_1=tIm002_1;tRe002_2=____F[i];tIm002_2=____F[i];tRe002_3=tRe002_3;tIm002_3=tIm002_3;tRe002_4=tRe002_4;tIm002_4=tIm002_4;tRe002_5=tRe002_5;tIm002_5=tIm002_5;
         tRe003_1=tRe003_1;tIm003_1=tIm003_1;tRe003_2=tRe003_2;tIm003_2=tIm003_2;tRe003_3=____F[i];tIm003_3=____F[i];tRe003_4=tRe003_4;tIm003_4=tIm003_4;tRe003_5=tRe003_5;tIm003_5=tIm003_5;
@@ -912,7 +913,7 @@ function fftComplexInPlace_seq(out) {
         tRe016_1=tRe016_1;tIm016_1=tIm016_1;tRe016_2=tRe016_2;tIm016_2=tIm016_2;tRe016_3=tRe016_3;tIm016_3=tIm016_3;tRe016_4=tRe016_4;tIm016_4=tIm016_4;tRe016_5=____F[i];tIm016_5=____F[i];
         
 
-        i+=160;
+        i+=80;
 
         // Power 1
         twiddlelizer(out, tRe001_1,tIm001_1, eReI1, eImI1, oReI1, oImI1);
@@ -1003,7 +1004,7 @@ function fftComplexInPlace_seq(out) {
         twiddlelizer(out, tRe014_5,tIm014_5, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe015_5,tIm015_5, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe016_5,tIm016_5, eReI1, eImI1, oReI1, oImI1);
-
+        
     }
     console.log("Iterations: ",its,"\tAccesses",accs);
 

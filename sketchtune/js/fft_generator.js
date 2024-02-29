@@ -53,7 +53,7 @@ function tIm_(r,c){
 function print_code(power){
     const rows  = (2<<(power-1))>>1;
     const cols  = power;
-    const skips = (2<<(power-2))*power;
+    const skips = (2<<(power-2))*power/2;
     
     let line = "";
     for(let c = 1; c<=cols; c++){
