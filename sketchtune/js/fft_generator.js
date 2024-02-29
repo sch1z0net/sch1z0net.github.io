@@ -51,20 +51,23 @@ function tIm_(r,c){
 }
 
 function print_code(power){
-    const rows = (2<<(power-1))>>1;
+    const rows  = (2<<(power-1))>>1;
     const cols  = power;
+    const skips = (2<<(power));
     
     let line = "";
     for(let c = 1; c<=cols; c++){
         line += "let ";
         for(let r = 1; r<=rows; r++){
             line += tRe(r,c)+",";
-            line += tIm(r,c)+",";
+            line += tIm(r,c);
+            if(r<rows){ line += ","; }
         }
         line += "; \n";
     }
     
     line += "\n\n\n";
+    line += "    while(i < 2*N*bits){"; 
 
     for(let r = 1; r<=rows; r++){
         for(let c = 1; c<=cols; c++){
@@ -73,12 +76,15 @@ function print_code(power){
         }
         line += "\n";
     }
+    line += "        i+="+skips+";";
+
+    line += "    }"; 
 
     code = line;
     
 }
 
-print_code(5);
+print_code(6);
 
 
 $(document).ready(function(){
