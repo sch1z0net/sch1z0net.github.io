@@ -967,9 +967,7 @@ function eff_p(){
    console.log("Efficiency For Powers"); 
    for(let p = 1; p<=max_p; p++){
         const accesses_per_it = (2<<(p-1));
-        const iterations = looplen / accesses_per_it;
         const t_per_it = (2<<(p-1)) * p;
-        const twiddles = t_per_it * iterations;
         const ratio =  accesses_per_it / t_per_it;
         console.log("ps ",p,": Access Rate ->",ratio.toFixed(2), 
             "Twiddle Declarations ->",t_per_it,
