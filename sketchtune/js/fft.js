@@ -1078,8 +1078,8 @@ function eff(N){
         const accesses_per_it = (2<<(p-1));
         const t_per_it = (2<<(p-1)) * p;
         const iterations = looplen / (t_per_it/2);  
-        const accesses = accesses_per_it * iterations;
-        const twiddles = t_per_it * iterations;
+        const accesses = accesses_per_it * looplen / (t_per_it/2);
+        const twiddles = t_per_it * looplen / (t_per_it/2);
         const twiddlelizers = twiddles / 2;
         const ratio =  accesses_per_it / t_per_it;
         console.log("ps ",p,": Iterations ->",iterations.toFixed(0),
