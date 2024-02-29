@@ -966,7 +966,7 @@ function fftComplexInPlace_seq(out) {
 
 
         //}else{
-          i += 14; // factor 8
+          i += 14+16; // factor 8
         //}
         
         //power 1
