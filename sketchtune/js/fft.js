@@ -911,7 +911,7 @@ function fftComplexInPlace_seq(out) {
         tRe016_1=tRe016_1;tIm016_1=tIm016_1;tRe016_2=tRe016_2;tIm016_2=tIm016_2;tRe016_3=tRe016_3;tIm016_3=tIm016_3;tRe016_4=tRe016_4;tIm016_4=tIm016_4;tRe016_5=____F[i];tIm016_5=____F[i];
         
 
-        i+=80;
+        i+=16*5;
 
         // Power 1
         twiddlelizer(out, tRe001_1,tIm001_1, eReI1, eImI1, oReI1, oImI1);
@@ -1040,7 +1040,7 @@ function fftComplexInPlace_seq(out) {
 
 
 
-// Power 4 -> 2600
+// Power 4 -> 5200
 // Power 5 -> 
 // Power 6 -> 5000
 // Power 7 -> 5000
