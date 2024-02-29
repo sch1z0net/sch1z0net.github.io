@@ -884,51 +884,84 @@ function fftComplexInPlace_seq(out) {
     let tRe6, tIm6, eReI6, eImI6, oReI6, oImI6;
     let tRe7, tIm7, eReI7, eImI7, oReI7, oImI7;
     let tRe8, tIm8, eReI8, eImI8, oReI8, oImI8;
-    let tRe001_1,tIm001_1,tRe002_1,tIm002_1,tRe003_1,tIm003_1,tRe004_1,tIm004_1,tRe005_1,tIm005_1,tRe006_1,tIm006_1,tRe007_1,tIm007_1,tRe008_1,tIm008_1,tRe009_1,tIm009_1,tRe010_1,tIm010_1,tRe011_1,tIm011_1,tRe012_1,tIm012_1,tRe013_1,tIm013_1,tRe014_1,tIm014_1,tRe015_1,tIm015_1,tRe016_1,tIm016_1,tRe017_1,tIm017_1,tRe018_1,tIm018_1,tRe019_1,tIm019_1,tRe020_1,tIm020_1,tRe021_1,tIm021_1,tRe022_1,tIm022_1,tRe023_1,tIm023_1,tRe024_1,tIm024_1,tRe025_1,tIm025_1,tRe026_1,tIm026_1,tRe027_1,tIm027_1,tRe028_1,tIm028_1,tRe029_1,tIm029_1,tRe030_1,tIm030_1,tRe031_1,tIm031_1,tRe032_1,tIm032_1; 
-    let tRe001_2,tIm001_2,tRe002_2,tIm002_2,tRe003_2,tIm003_2,tRe004_2,tIm004_2,tRe005_2,tIm005_2,tRe006_2,tIm006_2,tRe007_2,tIm007_2,tRe008_2,tIm008_2,tRe009_2,tIm009_2,tRe010_2,tIm010_2,tRe011_2,tIm011_2,tRe012_2,tIm012_2,tRe013_2,tIm013_2,tRe014_2,tIm014_2,tRe015_2,tIm015_2,tRe016_2,tIm016_2,tRe017_2,tIm017_2,tRe018_2,tIm018_2,tRe019_2,tIm019_2,tRe020_2,tIm020_2,tRe021_2,tIm021_2,tRe022_2,tIm022_2,tRe023_2,tIm023_2,tRe024_2,tIm024_2,tRe025_2,tIm025_2,tRe026_2,tIm026_2,tRe027_2,tIm027_2,tRe028_2,tIm028_2,tRe029_2,tIm029_2,tRe030_2,tIm030_2,tRe031_2,tIm031_2,tRe032_2,tIm032_2; 
-    let tRe001_3,tIm001_3,tRe002_3,tIm002_3,tRe003_3,tIm003_3,tRe004_3,tIm004_3,tRe005_3,tIm005_3,tRe006_3,tIm006_3,tRe007_3,tIm007_3,tRe008_3,tIm008_3,tRe009_3,tIm009_3,tRe010_3,tIm010_3,tRe011_3,tIm011_3,tRe012_3,tIm012_3,tRe013_3,tIm013_3,tRe014_3,tIm014_3,tRe015_3,tIm015_3,tRe016_3,tIm016_3,tRe017_3,tIm017_3,tRe018_3,tIm018_3,tRe019_3,tIm019_3,tRe020_3,tIm020_3,tRe021_3,tIm021_3,tRe022_3,tIm022_3,tRe023_3,tIm023_3,tRe024_3,tIm024_3,tRe025_3,tIm025_3,tRe026_3,tIm026_3,tRe027_3,tIm027_3,tRe028_3,tIm028_3,tRe029_3,tIm029_3,tRe030_3,tIm030_3,tRe031_3,tIm031_3,tRe032_3,tIm032_3; 
-    let tRe001_4,tIm001_4,tRe002_4,tIm002_4,tRe003_4,tIm003_4,tRe004_4,tIm004_4,tRe005_4,tIm005_4,tRe006_4,tIm006_4,tRe007_4,tIm007_4,tRe008_4,tIm008_4,tRe009_4,tIm009_4,tRe010_4,tIm010_4,tRe011_4,tIm011_4,tRe012_4,tIm012_4,tRe013_4,tIm013_4,tRe014_4,tIm014_4,tRe015_4,tIm015_4,tRe016_4,tIm016_4,tRe017_4,tIm017_4,tRe018_4,tIm018_4,tRe019_4,tIm019_4,tRe020_4,tIm020_4,tRe021_4,tIm021_4,tRe022_4,tIm022_4,tRe023_4,tIm023_4,tRe024_4,tIm024_4,tRe025_4,tIm025_4,tRe026_4,tIm026_4,tRe027_4,tIm027_4,tRe028_4,tIm028_4,tRe029_4,tIm029_4,tRe030_4,tIm030_4,tRe031_4,tIm031_4,tRe032_4,tIm032_4; 
-    let tRe001_5,tIm001_5,tRe002_5,tIm002_5,tRe003_5,tIm003_5,tRe004_5,tIm004_5,tRe005_5,tIm005_5,tRe006_5,tIm006_5,tRe007_5,tIm007_5,tRe008_5,tIm008_5,tRe009_5,tIm009_5,tRe010_5,tIm010_5,tRe011_5,tIm011_5,tRe012_5,tIm012_5,tRe013_5,tIm013_5,tRe014_5,tIm014_5,tRe015_5,tIm015_5,tRe016_5,tIm016_5,tRe017_5,tIm017_5,tRe018_5,tIm018_5,tRe019_5,tIm019_5,tRe020_5,tIm020_5,tRe021_5,tIm021_5,tRe022_5,tIm022_5,tRe023_5,tIm023_5,tRe024_5,tIm024_5,tRe025_5,tIm025_5,tRe026_5,tIm026_5,tRe027_5,tIm027_5,tRe028_5,tIm028_5,tRe029_5,tIm029_5,tRe030_5,tIm030_5,tRe031_5,tIm031_5,tRe032_5,tIm032_5; 
-    let tRe001_6,tIm001_6,tRe002_6,tIm002_6,tRe003_6,tIm003_6,tRe004_6,tIm004_6,tRe005_6,tIm005_6,tRe006_6,tIm006_6,tRe007_6,tIm007_6,tRe008_6,tIm008_6,tRe009_6,tIm009_6,tRe010_6,tIm010_6,tRe011_6,tIm011_6,tRe012_6,tIm012_6,tRe013_6,tIm013_6,tRe014_6,tIm014_6,tRe015_6,tIm015_6,tRe016_6,tIm016_6,tRe017_6,tIm017_6,tRe018_6,tIm018_6,tRe019_6,tIm019_6,tRe020_6,tIm020_6,tRe021_6,tIm021_6,tRe022_6,tIm022_6,tRe023_6,tIm023_6,tRe024_6,tIm024_6,tRe025_6,tIm025_6,tRe026_6,tIm026_6,tRe027_6,tIm027_6,tRe028_6,tIm028_6,tRe029_6,tIm029_6,tRe030_6,tIm030_6,tRe031_6,tIm031_6,tRe032_6,tIm032_6; 
+    let tRe001_1,tIm001_1,tRe002_1,tIm002_1,tRe003_1,tIm003_1,tRe004_1,tIm004_1,tRe005_1,tIm005_1,tRe006_1,tIm006_1,tRe007_1,tIm007_1,tRe008_1,tIm008_1,tRe009_1,tIm009_1,tRe010_1,tIm010_1,tRe011_1,tIm011_1,tRe012_1,tIm012_1,tRe013_1,tIm013_1,tRe014_1,tIm014_1,tRe015_1,tIm015_1,tRe016_1,tIm016_1,tRe017_1,tIm017_1,tRe018_1,tIm018_1,tRe019_1,tIm019_1,tRe020_1,tIm020_1,tRe021_1,tIm021_1,tRe022_1,tIm022_1,tRe023_1,tIm023_1,tRe024_1,tIm024_1,tRe025_1,tIm025_1,tRe026_1,tIm026_1,tRe027_1,tIm027_1,tRe028_1,tIm028_1,tRe029_1,tIm029_1,tRe030_1,tIm030_1,tRe031_1,tIm031_1,tRe032_1,tIm032_1,tRe033_1,tIm033_1,tRe034_1,tIm034_1,tRe035_1,tIm035_1,tRe036_1,tIm036_1,tRe037_1,tIm037_1,tRe038_1,tIm038_1,tRe039_1,tIm039_1,tRe040_1,tIm040_1,tRe041_1,tIm041_1,tRe042_1,tIm042_1,tRe043_1,tIm043_1,tRe044_1,tIm044_1,tRe045_1,tIm045_1,tRe046_1,tIm046_1,tRe047_1,tIm047_1,tRe048_1,tIm048_1,tRe049_1,tIm049_1,tRe050_1,tIm050_1,tRe051_1,tIm051_1,tRe052_1,tIm052_1,tRe053_1,tIm053_1,tRe054_1,tIm054_1,tRe055_1,tIm055_1,tRe056_1,tIm056_1,tRe057_1,tIm057_1,tRe058_1,tIm058_1,tRe059_1,tIm059_1,tRe060_1,tIm060_1,tRe061_1,tIm061_1,tRe062_1,tIm062_1,tRe063_1,tIm063_1,tRe064_1,tIm064_1; 
+    let tRe001_2,tIm001_2,tRe002_2,tIm002_2,tRe003_2,tIm003_2,tRe004_2,tIm004_2,tRe005_2,tIm005_2,tRe006_2,tIm006_2,tRe007_2,tIm007_2,tRe008_2,tIm008_2,tRe009_2,tIm009_2,tRe010_2,tIm010_2,tRe011_2,tIm011_2,tRe012_2,tIm012_2,tRe013_2,tIm013_2,tRe014_2,tIm014_2,tRe015_2,tIm015_2,tRe016_2,tIm016_2,tRe017_2,tIm017_2,tRe018_2,tIm018_2,tRe019_2,tIm019_2,tRe020_2,tIm020_2,tRe021_2,tIm021_2,tRe022_2,tIm022_2,tRe023_2,tIm023_2,tRe024_2,tIm024_2,tRe025_2,tIm025_2,tRe026_2,tIm026_2,tRe027_2,tIm027_2,tRe028_2,tIm028_2,tRe029_2,tIm029_2,tRe030_2,tIm030_2,tRe031_2,tIm031_2,tRe032_2,tIm032_2,tRe033_2,tIm033_2,tRe034_2,tIm034_2,tRe035_2,tIm035_2,tRe036_2,tIm036_2,tRe037_2,tIm037_2,tRe038_2,tIm038_2,tRe039_2,tIm039_2,tRe040_2,tIm040_2,tRe041_2,tIm041_2,tRe042_2,tIm042_2,tRe043_2,tIm043_2,tRe044_2,tIm044_2,tRe045_2,tIm045_2,tRe046_2,tIm046_2,tRe047_2,tIm047_2,tRe048_2,tIm048_2,tRe049_2,tIm049_2,tRe050_2,tIm050_2,tRe051_2,tIm051_2,tRe052_2,tIm052_2,tRe053_2,tIm053_2,tRe054_2,tIm054_2,tRe055_2,tIm055_2,tRe056_2,tIm056_2,tRe057_2,tIm057_2,tRe058_2,tIm058_2,tRe059_2,tIm059_2,tRe060_2,tIm060_2,tRe061_2,tIm061_2,tRe062_2,tIm062_2,tRe063_2,tIm063_2,tRe064_2,tIm064_2; 
+    let tRe001_3,tIm001_3,tRe002_3,tIm002_3,tRe003_3,tIm003_3,tRe004_3,tIm004_3,tRe005_3,tIm005_3,tRe006_3,tIm006_3,tRe007_3,tIm007_3,tRe008_3,tIm008_3,tRe009_3,tIm009_3,tRe010_3,tIm010_3,tRe011_3,tIm011_3,tRe012_3,tIm012_3,tRe013_3,tIm013_3,tRe014_3,tIm014_3,tRe015_3,tIm015_3,tRe016_3,tIm016_3,tRe017_3,tIm017_3,tRe018_3,tIm018_3,tRe019_3,tIm019_3,tRe020_3,tIm020_3,tRe021_3,tIm021_3,tRe022_3,tIm022_3,tRe023_3,tIm023_3,tRe024_3,tIm024_3,tRe025_3,tIm025_3,tRe026_3,tIm026_3,tRe027_3,tIm027_3,tRe028_3,tIm028_3,tRe029_3,tIm029_3,tRe030_3,tIm030_3,tRe031_3,tIm031_3,tRe032_3,tIm032_3,tRe033_3,tIm033_3,tRe034_3,tIm034_3,tRe035_3,tIm035_3,tRe036_3,tIm036_3,tRe037_3,tIm037_3,tRe038_3,tIm038_3,tRe039_3,tIm039_3,tRe040_3,tIm040_3,tRe041_3,tIm041_3,tRe042_3,tIm042_3,tRe043_3,tIm043_3,tRe044_3,tIm044_3,tRe045_3,tIm045_3,tRe046_3,tIm046_3,tRe047_3,tIm047_3,tRe048_3,tIm048_3,tRe049_3,tIm049_3,tRe050_3,tIm050_3,tRe051_3,tIm051_3,tRe052_3,tIm052_3,tRe053_3,tIm053_3,tRe054_3,tIm054_3,tRe055_3,tIm055_3,tRe056_3,tIm056_3,tRe057_3,tIm057_3,tRe058_3,tIm058_3,tRe059_3,tIm059_3,tRe060_3,tIm060_3,tRe061_3,tIm061_3,tRe062_3,tIm062_3,tRe063_3,tIm063_3,tRe064_3,tIm064_3; 
+    let tRe001_4,tIm001_4,tRe002_4,tIm002_4,tRe003_4,tIm003_4,tRe004_4,tIm004_4,tRe005_4,tIm005_4,tRe006_4,tIm006_4,tRe007_4,tIm007_4,tRe008_4,tIm008_4,tRe009_4,tIm009_4,tRe010_4,tIm010_4,tRe011_4,tIm011_4,tRe012_4,tIm012_4,tRe013_4,tIm013_4,tRe014_4,tIm014_4,tRe015_4,tIm015_4,tRe016_4,tIm016_4,tRe017_4,tIm017_4,tRe018_4,tIm018_4,tRe019_4,tIm019_4,tRe020_4,tIm020_4,tRe021_4,tIm021_4,tRe022_4,tIm022_4,tRe023_4,tIm023_4,tRe024_4,tIm024_4,tRe025_4,tIm025_4,tRe026_4,tIm026_4,tRe027_4,tIm027_4,tRe028_4,tIm028_4,tRe029_4,tIm029_4,tRe030_4,tIm030_4,tRe031_4,tIm031_4,tRe032_4,tIm032_4,tRe033_4,tIm033_4,tRe034_4,tIm034_4,tRe035_4,tIm035_4,tRe036_4,tIm036_4,tRe037_4,tIm037_4,tRe038_4,tIm038_4,tRe039_4,tIm039_4,tRe040_4,tIm040_4,tRe041_4,tIm041_4,tRe042_4,tIm042_4,tRe043_4,tIm043_4,tRe044_4,tIm044_4,tRe045_4,tIm045_4,tRe046_4,tIm046_4,tRe047_4,tIm047_4,tRe048_4,tIm048_4,tRe049_4,tIm049_4,tRe050_4,tIm050_4,tRe051_4,tIm051_4,tRe052_4,tIm052_4,tRe053_4,tIm053_4,tRe054_4,tIm054_4,tRe055_4,tIm055_4,tRe056_4,tIm056_4,tRe057_4,tIm057_4,tRe058_4,tIm058_4,tRe059_4,tIm059_4,tRe060_4,tIm060_4,tRe061_4,tIm061_4,tRe062_4,tIm062_4,tRe063_4,tIm063_4,tRe064_4,tIm064_4; 
+    let tRe001_5,tIm001_5,tRe002_5,tIm002_5,tRe003_5,tIm003_5,tRe004_5,tIm004_5,tRe005_5,tIm005_5,tRe006_5,tIm006_5,tRe007_5,tIm007_5,tRe008_5,tIm008_5,tRe009_5,tIm009_5,tRe010_5,tIm010_5,tRe011_5,tIm011_5,tRe012_5,tIm012_5,tRe013_5,tIm013_5,tRe014_5,tIm014_5,tRe015_5,tIm015_5,tRe016_5,tIm016_5,tRe017_5,tIm017_5,tRe018_5,tIm018_5,tRe019_5,tIm019_5,tRe020_5,tIm020_5,tRe021_5,tIm021_5,tRe022_5,tIm022_5,tRe023_5,tIm023_5,tRe024_5,tIm024_5,tRe025_5,tIm025_5,tRe026_5,tIm026_5,tRe027_5,tIm027_5,tRe028_5,tIm028_5,tRe029_5,tIm029_5,tRe030_5,tIm030_5,tRe031_5,tIm031_5,tRe032_5,tIm032_5,tRe033_5,tIm033_5,tRe034_5,tIm034_5,tRe035_5,tIm035_5,tRe036_5,tIm036_5,tRe037_5,tIm037_5,tRe038_5,tIm038_5,tRe039_5,tIm039_5,tRe040_5,tIm040_5,tRe041_5,tIm041_5,tRe042_5,tIm042_5,tRe043_5,tIm043_5,tRe044_5,tIm044_5,tRe045_5,tIm045_5,tRe046_5,tIm046_5,tRe047_5,tIm047_5,tRe048_5,tIm048_5,tRe049_5,tIm049_5,tRe050_5,tIm050_5,tRe051_5,tIm051_5,tRe052_5,tIm052_5,tRe053_5,tIm053_5,tRe054_5,tIm054_5,tRe055_5,tIm055_5,tRe056_5,tIm056_5,tRe057_5,tIm057_5,tRe058_5,tIm058_5,tRe059_5,tIm059_5,tRe060_5,tIm060_5,tRe061_5,tIm061_5,tRe062_5,tIm062_5,tRe063_5,tIm063_5,tRe064_5,tIm064_5; 
+    let tRe001_6,tIm001_6,tRe002_6,tIm002_6,tRe003_6,tIm003_6,tRe004_6,tIm004_6,tRe005_6,tIm005_6,tRe006_6,tIm006_6,tRe007_6,tIm007_6,tRe008_6,tIm008_6,tRe009_6,tIm009_6,tRe010_6,tIm010_6,tRe011_6,tIm011_6,tRe012_6,tIm012_6,tRe013_6,tIm013_6,tRe014_6,tIm014_6,tRe015_6,tIm015_6,tRe016_6,tIm016_6,tRe017_6,tIm017_6,tRe018_6,tIm018_6,tRe019_6,tIm019_6,tRe020_6,tIm020_6,tRe021_6,tIm021_6,tRe022_6,tIm022_6,tRe023_6,tIm023_6,tRe024_6,tIm024_6,tRe025_6,tIm025_6,tRe026_6,tIm026_6,tRe027_6,tIm027_6,tRe028_6,tIm028_6,tRe029_6,tIm029_6,tRe030_6,tIm030_6,tRe031_6,tIm031_6,tRe032_6,tIm032_6,tRe033_6,tIm033_6,tRe034_6,tIm034_6,tRe035_6,tIm035_6,tRe036_6,tIm036_6,tRe037_6,tIm037_6,tRe038_6,tIm038_6,tRe039_6,tIm039_6,tRe040_6,tIm040_6,tRe041_6,tIm041_6,tRe042_6,tIm042_6,tRe043_6,tIm043_6,tRe044_6,tIm044_6,tRe045_6,tIm045_6,tRe046_6,tIm046_6,tRe047_6,tIm047_6,tRe048_6,tIm048_6,tRe049_6,tIm049_6,tRe050_6,tIm050_6,tRe051_6,tIm051_6,tRe052_6,tIm052_6,tRe053_6,tIm053_6,tRe054_6,tIm054_6,tRe055_6,tIm055_6,tRe056_6,tIm056_6,tRe057_6,tIm057_6,tRe058_6,tIm058_6,tRe059_6,tIm059_6,tRe060_6,tIm060_6,tRe061_6,tIm061_6,tRe062_6,tIm062_6,tRe063_6,tIm063_6,tRe064_6,tIm064_6; 
+    let tRe001_7,tIm001_7,tRe002_7,tIm002_7,tRe003_7,tIm003_7,tRe004_7,tIm004_7,tRe005_7,tIm005_7,tRe006_7,tIm006_7,tRe007_7,tIm007_7,tRe008_7,tIm008_7,tRe009_7,tIm009_7,tRe010_7,tIm010_7,tRe011_7,tIm011_7,tRe012_7,tIm012_7,tRe013_7,tIm013_7,tRe014_7,tIm014_7,tRe015_7,tIm015_7,tRe016_7,tIm016_7,tRe017_7,tIm017_7,tRe018_7,tIm018_7,tRe019_7,tIm019_7,tRe020_7,tIm020_7,tRe021_7,tIm021_7,tRe022_7,tIm022_7,tRe023_7,tIm023_7,tRe024_7,tIm024_7,tRe025_7,tIm025_7,tRe026_7,tIm026_7,tRe027_7,tIm027_7,tRe028_7,tIm028_7,tRe029_7,tIm029_7,tRe030_7,tIm030_7,tRe031_7,tIm031_7,tRe032_7,tIm032_7,tRe033_7,tIm033_7,tRe034_7,tIm034_7,tRe035_7,tIm035_7,tRe036_7,tIm036_7,tRe037_7,tIm037_7,tRe038_7,tIm038_7,tRe039_7,tIm039_7,tRe040_7,tIm040_7,tRe041_7,tIm041_7,tRe042_7,tIm042_7,tRe043_7,tIm043_7,tRe044_7,tIm044_7,tRe045_7,tIm045_7,tRe046_7,tIm046_7,tRe047_7,tIm047_7,tRe048_7,tIm048_7,tRe049_7,tIm049_7,tRe050_7,tIm050_7,tRe051_7,tIm051_7,tRe052_7,tIm052_7,tRe053_7,tIm053_7,tRe054_7,tIm054_7,tRe055_7,tIm055_7,tRe056_7,tIm056_7,tRe057_7,tIm057_7,tRe058_7,tIm058_7,tRe059_7,tIm059_7,tRe060_7,tIm060_7,tRe061_7,tIm061_7,tRe062_7,tIm062_7,tRe063_7,tIm063_7,tRe064_7,tIm064_7; 
 
 
 
     while(i < (N>>1)*bits){
-        tRe001_1=____F[i];tIm001_1=____F[i];tRe001_2=tRe001_2;tIm001_2=tIm001_2;tRe001_3=tRe001_3;tIm001_3=tIm001_3;tRe001_4=tRe001_4;tIm001_4=tIm001_4;tRe001_5=tRe001_5;tIm001_5=tIm001_5;tRe001_6=tRe001_6;tIm001_6=tIm001_6;
-        tRe002_1=tRe002_1;tIm002_1=tIm002_1;tRe002_2=____F[i];tIm002_2=____F[i];tRe002_3=tRe002_3;tIm002_3=tIm002_3;tRe002_4=tRe002_4;tIm002_4=tIm002_4;tRe002_5=tRe002_5;tIm002_5=tIm002_5;tRe002_6=tRe002_6;tIm002_6=tIm002_6;
-        tRe003_1=tRe003_1;tIm003_1=tIm003_1;tRe003_2=tRe003_2;tIm003_2=tIm003_2;tRe003_3=____F[i];tIm003_3=____F[i];tRe003_4=tRe003_4;tIm003_4=tIm003_4;tRe003_5=tRe003_5;tIm003_5=tIm003_5;tRe003_6=tRe003_6;tIm003_6=tIm003_6;
-        tRe004_1=tRe004_1;tIm004_1=tIm004_1;tRe004_2=tRe004_2;tIm004_2=tIm004_2;tRe004_3=____F[i];tIm004_3=____F[i];tRe004_4=tRe004_4;tIm004_4=tIm004_4;tRe004_5=tRe004_5;tIm004_5=tIm004_5;tRe004_6=tRe004_6;tIm004_6=tIm004_6;
-        tRe005_1=tRe005_1;tIm005_1=tIm005_1;tRe005_2=tRe005_2;tIm005_2=tIm005_2;tRe005_3=tRe005_3;tIm005_3=tIm005_3;tRe005_4=____F[i];tIm005_4=____F[i];tRe005_5=tRe005_5;tIm005_5=tIm005_5;tRe005_6=tRe005_6;tIm005_6=tIm005_6;
-        tRe006_1=tRe006_1;tIm006_1=tIm006_1;tRe006_2=tRe006_2;tIm006_2=tIm006_2;tRe006_3=tRe006_3;tIm006_3=tIm006_3;tRe006_4=____F[i];tIm006_4=____F[i];tRe006_5=tRe006_5;tIm006_5=tIm006_5;tRe006_6=tRe006_6;tIm006_6=tIm006_6;
-        tRe007_1=tRe007_1;tIm007_1=tIm007_1;tRe007_2=tRe007_2;tIm007_2=tIm007_2;tRe007_3=tRe007_3;tIm007_3=tIm007_3;tRe007_4=____F[i];tIm007_4=____F[i];tRe007_5=tRe007_5;tIm007_5=tIm007_5;tRe007_6=tRe007_6;tIm007_6=tIm007_6;
-        tRe008_1=tRe008_1;tIm008_1=tIm008_1;tRe008_2=tRe008_2;tIm008_2=tIm008_2;tRe008_3=tRe008_3;tIm008_3=tIm008_3;tRe008_4=____F[i];tIm008_4=____F[i];tRe008_5=tRe008_5;tIm008_5=tIm008_5;tRe008_6=tRe008_6;tIm008_6=tIm008_6;
-        tRe009_1=tRe009_1;tIm009_1=tIm009_1;tRe009_2=tRe009_2;tIm009_2=tIm009_2;tRe009_3=tRe009_3;tIm009_3=tIm009_3;tRe009_4=tRe009_4;tIm009_4=tIm009_4;tRe009_5=____F[i];tIm009_5=____F[i];tRe009_6=tRe009_6;tIm009_6=tIm009_6;
-        tRe010_1=tRe010_1;tIm010_1=tIm010_1;tRe010_2=tRe010_2;tIm010_2=tIm010_2;tRe010_3=tRe010_3;tIm010_3=tIm010_3;tRe010_4=tRe010_4;tIm010_4=tIm010_4;tRe010_5=____F[i];tIm010_5=____F[i];tRe010_6=tRe010_6;tIm010_6=tIm010_6;
-        tRe011_1=tRe011_1;tIm011_1=tIm011_1;tRe011_2=tRe011_2;tIm011_2=tIm011_2;tRe011_3=tRe011_3;tIm011_3=tIm011_3;tRe011_4=tRe011_4;tIm011_4=tIm011_4;tRe011_5=____F[i];tIm011_5=____F[i];tRe011_6=tRe011_6;tIm011_6=tIm011_6;
-        tRe012_1=tRe012_1;tIm012_1=tIm012_1;tRe012_2=tRe012_2;tIm012_2=tIm012_2;tRe012_3=tRe012_3;tIm012_3=tIm012_3;tRe012_4=tRe012_4;tIm012_4=tIm012_4;tRe012_5=____F[i];tIm012_5=____F[i];tRe012_6=tRe012_6;tIm012_6=tIm012_6;
-        tRe013_1=tRe013_1;tIm013_1=tIm013_1;tRe013_2=tRe013_2;tIm013_2=tIm013_2;tRe013_3=tRe013_3;tIm013_3=tIm013_3;tRe013_4=tRe013_4;tIm013_4=tIm013_4;tRe013_5=____F[i];tIm013_5=____F[i];tRe013_6=tRe013_6;tIm013_6=tIm013_6;
-        tRe014_1=tRe014_1;tIm014_1=tIm014_1;tRe014_2=tRe014_2;tIm014_2=tIm014_2;tRe014_3=tRe014_3;tIm014_3=tIm014_3;tRe014_4=tRe014_4;tIm014_4=tIm014_4;tRe014_5=____F[i];tIm014_5=____F[i];tRe014_6=tRe014_6;tIm014_6=tIm014_6;
-        tRe015_1=tRe015_1;tIm015_1=tIm015_1;tRe015_2=tRe015_2;tIm015_2=tIm015_2;tRe015_3=tRe015_3;tIm015_3=tIm015_3;tRe015_4=tRe015_4;tIm015_4=tIm015_4;tRe015_5=____F[i];tIm015_5=____F[i];tRe015_6=tRe015_6;tIm015_6=tIm015_6;
-        tRe016_1=tRe016_1;tIm016_1=tIm016_1;tRe016_2=tRe016_2;tIm016_2=tIm016_2;tRe016_3=tRe016_3;tIm016_3=tIm016_3;tRe016_4=tRe016_4;tIm016_4=tIm016_4;tRe016_5=____F[i];tIm016_5=____F[i];tRe016_6=tRe016_6;tIm016_6=tIm016_6;
-        tRe017_1=tRe017_1;tIm017_1=tIm017_1;tRe017_2=tRe017_2;tIm017_2=tIm017_2;tRe017_3=tRe017_3;tIm017_3=tIm017_3;tRe017_4=tRe017_4;tIm017_4=tIm017_4;tRe017_5=tRe017_5;tIm017_5=tIm017_5;tRe017_6=____F[i];tIm017_6=____F[i];
-        tRe018_1=tRe018_1;tIm018_1=tIm018_1;tRe018_2=tRe018_2;tIm018_2=tIm018_2;tRe018_3=tRe018_3;tIm018_3=tIm018_3;tRe018_4=tRe018_4;tIm018_4=tIm018_4;tRe018_5=tRe018_5;tIm018_5=tIm018_5;tRe018_6=____F[i];tIm018_6=____F[i];
-        tRe019_1=tRe019_1;tIm019_1=tIm019_1;tRe019_2=tRe019_2;tIm019_2=tIm019_2;tRe019_3=tRe019_3;tIm019_3=tIm019_3;tRe019_4=tRe019_4;tIm019_4=tIm019_4;tRe019_5=tRe019_5;tIm019_5=tIm019_5;tRe019_6=____F[i];tIm019_6=____F[i];
-        tRe020_1=tRe020_1;tIm020_1=tIm020_1;tRe020_2=tRe020_2;tIm020_2=tIm020_2;tRe020_3=tRe020_3;tIm020_3=tIm020_3;tRe020_4=tRe020_4;tIm020_4=tIm020_4;tRe020_5=tRe020_5;tIm020_5=tIm020_5;tRe020_6=____F[i];tIm020_6=____F[i];
-        tRe021_1=tRe021_1;tIm021_1=tIm021_1;tRe021_2=tRe021_2;tIm021_2=tIm021_2;tRe021_3=tRe021_3;tIm021_3=tIm021_3;tRe021_4=tRe021_4;tIm021_4=tIm021_4;tRe021_5=tRe021_5;tIm021_5=tIm021_5;tRe021_6=____F[i];tIm021_6=____F[i];
-        tRe022_1=tRe022_1;tIm022_1=tIm022_1;tRe022_2=tRe022_2;tIm022_2=tIm022_2;tRe022_3=tRe022_3;tIm022_3=tIm022_3;tRe022_4=tRe022_4;tIm022_4=tIm022_4;tRe022_5=tRe022_5;tIm022_5=tIm022_5;tRe022_6=____F[i];tIm022_6=____F[i];
-        tRe023_1=tRe023_1;tIm023_1=tIm023_1;tRe023_2=tRe023_2;tIm023_2=tIm023_2;tRe023_3=tRe023_3;tIm023_3=tIm023_3;tRe023_4=tRe023_4;tIm023_4=tIm023_4;tRe023_5=tRe023_5;tIm023_5=tIm023_5;tRe023_6=____F[i];tIm023_6=____F[i];
-        tRe024_1=tRe024_1;tIm024_1=tIm024_1;tRe024_2=tRe024_2;tIm024_2=tIm024_2;tRe024_3=tRe024_3;tIm024_3=tIm024_3;tRe024_4=tRe024_4;tIm024_4=tIm024_4;tRe024_5=tRe024_5;tIm024_5=tIm024_5;tRe024_6=____F[i];tIm024_6=____F[i];
-        tRe025_1=tRe025_1;tIm025_1=tIm025_1;tRe025_2=tRe025_2;tIm025_2=tIm025_2;tRe025_3=tRe025_3;tIm025_3=tIm025_3;tRe025_4=tRe025_4;tIm025_4=tIm025_4;tRe025_5=tRe025_5;tIm025_5=tIm025_5;tRe025_6=____F[i];tIm025_6=____F[i];
-        tRe026_1=tRe026_1;tIm026_1=tIm026_1;tRe026_2=tRe026_2;tIm026_2=tIm026_2;tRe026_3=tRe026_3;tIm026_3=tIm026_3;tRe026_4=tRe026_4;tIm026_4=tIm026_4;tRe026_5=tRe026_5;tIm026_5=tIm026_5;tRe026_6=____F[i];tIm026_6=____F[i];
-        tRe027_1=tRe027_1;tIm027_1=tIm027_1;tRe027_2=tRe027_2;tIm027_2=tIm027_2;tRe027_3=tRe027_3;tIm027_3=tIm027_3;tRe027_4=tRe027_4;tIm027_4=tIm027_4;tRe027_5=tRe027_5;tIm027_5=tIm027_5;tRe027_6=____F[i];tIm027_6=____F[i];
-        tRe028_1=tRe028_1;tIm028_1=tIm028_1;tRe028_2=tRe028_2;tIm028_2=tIm028_2;tRe028_3=tRe028_3;tIm028_3=tIm028_3;tRe028_4=tRe028_4;tIm028_4=tIm028_4;tRe028_5=tRe028_5;tIm028_5=tIm028_5;tRe028_6=____F[i];tIm028_6=____F[i];
-        tRe029_1=tRe029_1;tIm029_1=tIm029_1;tRe029_2=tRe029_2;tIm029_2=tIm029_2;tRe029_3=tRe029_3;tIm029_3=tIm029_3;tRe029_4=tRe029_4;tIm029_4=tIm029_4;tRe029_5=tRe029_5;tIm029_5=tIm029_5;tRe029_6=____F[i];tIm029_6=____F[i];
-        tRe030_1=tRe030_1;tIm030_1=tIm030_1;tRe030_2=tRe030_2;tIm030_2=tIm030_2;tRe030_3=tRe030_3;tIm030_3=tIm030_3;tRe030_4=tRe030_4;tIm030_4=tIm030_4;tRe030_5=tRe030_5;tIm030_5=tIm030_5;tRe030_6=____F[i];tIm030_6=____F[i];
-        tRe031_1=tRe031_1;tIm031_1=tIm031_1;tRe031_2=tRe031_2;tIm031_2=tIm031_2;tRe031_3=tRe031_3;tIm031_3=tIm031_3;tRe031_4=tRe031_4;tIm031_4=tIm031_4;tRe031_5=tRe031_5;tIm031_5=tIm031_5;tRe031_6=____F[i];tIm031_6=____F[i];
-        tRe032_1=tRe032_1;tIm032_1=tIm032_1;tRe032_2=tRe032_2;tIm032_2=tIm032_2;tRe032_3=tRe032_3;tIm032_3=tIm032_3;tRe032_4=tRe032_4;tIm032_4=tIm032_4;tRe032_5=tRe032_5;tIm032_5=tIm032_5;tRe032_6=____F[i];tIm032_6=____F[i];
+        tRe001_1=____F[i];tIm001_1=____F[i];tRe001_2=tRe001_2;tIm001_2=tIm001_2;tRe001_3=tRe001_3;tIm001_3=tIm001_3;tRe001_4=tRe001_4;tIm001_4=tIm001_4;tRe001_5=tRe001_5;tIm001_5=tIm001_5;tRe001_6=tRe001_6;tIm001_6=tIm001_6;tRe001_7=tRe001_7;tIm001_7=tIm001_7;
+        tRe002_1=tRe002_1;tIm002_1=tIm002_1;tRe002_2=____F[i];tIm002_2=____F[i];tRe002_3=tRe002_3;tIm002_3=tIm002_3;tRe002_4=tRe002_4;tIm002_4=tIm002_4;tRe002_5=tRe002_5;tIm002_5=tIm002_5;tRe002_6=tRe002_6;tIm002_6=tIm002_6;tRe002_7=tRe002_7;tIm002_7=tIm002_7;
+        tRe003_1=tRe003_1;tIm003_1=tIm003_1;tRe003_2=tRe003_2;tIm003_2=tIm003_2;tRe003_3=____F[i];tIm003_3=____F[i];tRe003_4=tRe003_4;tIm003_4=tIm003_4;tRe003_5=tRe003_5;tIm003_5=tIm003_5;tRe003_6=tRe003_6;tIm003_6=tIm003_6;tRe003_7=tRe003_7;tIm003_7=tIm003_7;
+        tRe004_1=tRe004_1;tIm004_1=tIm004_1;tRe004_2=tRe004_2;tIm004_2=tIm004_2;tRe004_3=____F[i];tIm004_3=____F[i];tRe004_4=tRe004_4;tIm004_4=tIm004_4;tRe004_5=tRe004_5;tIm004_5=tIm004_5;tRe004_6=tRe004_6;tIm004_6=tIm004_6;tRe004_7=tRe004_7;tIm004_7=tIm004_7;
+        tRe005_1=tRe005_1;tIm005_1=tIm005_1;tRe005_2=tRe005_2;tIm005_2=tIm005_2;tRe005_3=tRe005_3;tIm005_3=tIm005_3;tRe005_4=____F[i];tIm005_4=____F[i];tRe005_5=tRe005_5;tIm005_5=tIm005_5;tRe005_6=tRe005_6;tIm005_6=tIm005_6;tRe005_7=tRe005_7;tIm005_7=tIm005_7;
+        tRe006_1=tRe006_1;tIm006_1=tIm006_1;tRe006_2=tRe006_2;tIm006_2=tIm006_2;tRe006_3=tRe006_3;tIm006_3=tIm006_3;tRe006_4=____F[i];tIm006_4=____F[i];tRe006_5=tRe006_5;tIm006_5=tIm006_5;tRe006_6=tRe006_6;tIm006_6=tIm006_6;tRe006_7=tRe006_7;tIm006_7=tIm006_7;
+        tRe007_1=tRe007_1;tIm007_1=tIm007_1;tRe007_2=tRe007_2;tIm007_2=tIm007_2;tRe007_3=tRe007_3;tIm007_3=tIm007_3;tRe007_4=____F[i];tIm007_4=____F[i];tRe007_5=tRe007_5;tIm007_5=tIm007_5;tRe007_6=tRe007_6;tIm007_6=tIm007_6;tRe007_7=tRe007_7;tIm007_7=tIm007_7;
+        tRe008_1=tRe008_1;tIm008_1=tIm008_1;tRe008_2=tRe008_2;tIm008_2=tIm008_2;tRe008_3=tRe008_3;tIm008_3=tIm008_3;tRe008_4=____F[i];tIm008_4=____F[i];tRe008_5=tRe008_5;tIm008_5=tIm008_5;tRe008_6=tRe008_6;tIm008_6=tIm008_6;tRe008_7=tRe008_7;tIm008_7=tIm008_7;
+        tRe009_1=tRe009_1;tIm009_1=tIm009_1;tRe009_2=tRe009_2;tIm009_2=tIm009_2;tRe009_3=tRe009_3;tIm009_3=tIm009_3;tRe009_4=tRe009_4;tIm009_4=tIm009_4;tRe009_5=____F[i];tIm009_5=____F[i];tRe009_6=tRe009_6;tIm009_6=tIm009_6;tRe009_7=tRe009_7;tIm009_7=tIm009_7;
+        tRe010_1=tRe010_1;tIm010_1=tIm010_1;tRe010_2=tRe010_2;tIm010_2=tIm010_2;tRe010_3=tRe010_3;tIm010_3=tIm010_3;tRe010_4=tRe010_4;tIm010_4=tIm010_4;tRe010_5=____F[i];tIm010_5=____F[i];tRe010_6=tRe010_6;tIm010_6=tIm010_6;tRe010_7=tRe010_7;tIm010_7=tIm010_7;
+        tRe011_1=tRe011_1;tIm011_1=tIm011_1;tRe011_2=tRe011_2;tIm011_2=tIm011_2;tRe011_3=tRe011_3;tIm011_3=tIm011_3;tRe011_4=tRe011_4;tIm011_4=tIm011_4;tRe011_5=____F[i];tIm011_5=____F[i];tRe011_6=tRe011_6;tIm011_6=tIm011_6;tRe011_7=tRe011_7;tIm011_7=tIm011_7;
+        tRe012_1=tRe012_1;tIm012_1=tIm012_1;tRe012_2=tRe012_2;tIm012_2=tIm012_2;tRe012_3=tRe012_3;tIm012_3=tIm012_3;tRe012_4=tRe012_4;tIm012_4=tIm012_4;tRe012_5=____F[i];tIm012_5=____F[i];tRe012_6=tRe012_6;tIm012_6=tIm012_6;tRe012_7=tRe012_7;tIm012_7=tIm012_7;
+        tRe013_1=tRe013_1;tIm013_1=tIm013_1;tRe013_2=tRe013_2;tIm013_2=tIm013_2;tRe013_3=tRe013_3;tIm013_3=tIm013_3;tRe013_4=tRe013_4;tIm013_4=tIm013_4;tRe013_5=____F[i];tIm013_5=____F[i];tRe013_6=tRe013_6;tIm013_6=tIm013_6;tRe013_7=tRe013_7;tIm013_7=tIm013_7;
+        tRe014_1=tRe014_1;tIm014_1=tIm014_1;tRe014_2=tRe014_2;tIm014_2=tIm014_2;tRe014_3=tRe014_3;tIm014_3=tIm014_3;tRe014_4=tRe014_4;tIm014_4=tIm014_4;tRe014_5=____F[i];tIm014_5=____F[i];tRe014_6=tRe014_6;tIm014_6=tIm014_6;tRe014_7=tRe014_7;tIm014_7=tIm014_7;
+        tRe015_1=tRe015_1;tIm015_1=tIm015_1;tRe015_2=tRe015_2;tIm015_2=tIm015_2;tRe015_3=tRe015_3;tIm015_3=tIm015_3;tRe015_4=tRe015_4;tIm015_4=tIm015_4;tRe015_5=____F[i];tIm015_5=____F[i];tRe015_6=tRe015_6;tIm015_6=tIm015_6;tRe015_7=tRe015_7;tIm015_7=tIm015_7;
+        tRe016_1=tRe016_1;tIm016_1=tIm016_1;tRe016_2=tRe016_2;tIm016_2=tIm016_2;tRe016_3=tRe016_3;tIm016_3=tIm016_3;tRe016_4=tRe016_4;tIm016_4=tIm016_4;tRe016_5=____F[i];tIm016_5=____F[i];tRe016_6=tRe016_6;tIm016_6=tIm016_6;tRe016_7=tRe016_7;tIm016_7=tIm016_7;
+        tRe017_1=tRe017_1;tIm017_1=tIm017_1;tRe017_2=tRe017_2;tIm017_2=tIm017_2;tRe017_3=tRe017_3;tIm017_3=tIm017_3;tRe017_4=tRe017_4;tIm017_4=tIm017_4;tRe017_5=tRe017_5;tIm017_5=tIm017_5;tRe017_6=____F[i];tIm017_6=____F[i];tRe017_7=tRe017_7;tIm017_7=tIm017_7;
+        tRe018_1=tRe018_1;tIm018_1=tIm018_1;tRe018_2=tRe018_2;tIm018_2=tIm018_2;tRe018_3=tRe018_3;tIm018_3=tIm018_3;tRe018_4=tRe018_4;tIm018_4=tIm018_4;tRe018_5=tRe018_5;tIm018_5=tIm018_5;tRe018_6=____F[i];tIm018_6=____F[i];tRe018_7=tRe018_7;tIm018_7=tIm018_7;
+        tRe019_1=tRe019_1;tIm019_1=tIm019_1;tRe019_2=tRe019_2;tIm019_2=tIm019_2;tRe019_3=tRe019_3;tIm019_3=tIm019_3;tRe019_4=tRe019_4;tIm019_4=tIm019_4;tRe019_5=tRe019_5;tIm019_5=tIm019_5;tRe019_6=____F[i];tIm019_6=____F[i];tRe019_7=tRe019_7;tIm019_7=tIm019_7;
+        tRe020_1=tRe020_1;tIm020_1=tIm020_1;tRe020_2=tRe020_2;tIm020_2=tIm020_2;tRe020_3=tRe020_3;tIm020_3=tIm020_3;tRe020_4=tRe020_4;tIm020_4=tIm020_4;tRe020_5=tRe020_5;tIm020_5=tIm020_5;tRe020_6=____F[i];tIm020_6=____F[i];tRe020_7=tRe020_7;tIm020_7=tIm020_7;
+        tRe021_1=tRe021_1;tIm021_1=tIm021_1;tRe021_2=tRe021_2;tIm021_2=tIm021_2;tRe021_3=tRe021_3;tIm021_3=tIm021_3;tRe021_4=tRe021_4;tIm021_4=tIm021_4;tRe021_5=tRe021_5;tIm021_5=tIm021_5;tRe021_6=____F[i];tIm021_6=____F[i];tRe021_7=tRe021_7;tIm021_7=tIm021_7;
+        tRe022_1=tRe022_1;tIm022_1=tIm022_1;tRe022_2=tRe022_2;tIm022_2=tIm022_2;tRe022_3=tRe022_3;tIm022_3=tIm022_3;tRe022_4=tRe022_4;tIm022_4=tIm022_4;tRe022_5=tRe022_5;tIm022_5=tIm022_5;tRe022_6=____F[i];tIm022_6=____F[i];tRe022_7=tRe022_7;tIm022_7=tIm022_7;
+        tRe023_1=tRe023_1;tIm023_1=tIm023_1;tRe023_2=tRe023_2;tIm023_2=tIm023_2;tRe023_3=tRe023_3;tIm023_3=tIm023_3;tRe023_4=tRe023_4;tIm023_4=tIm023_4;tRe023_5=tRe023_5;tIm023_5=tIm023_5;tRe023_6=____F[i];tIm023_6=____F[i];tRe023_7=tRe023_7;tIm023_7=tIm023_7;
+        tRe024_1=tRe024_1;tIm024_1=tIm024_1;tRe024_2=tRe024_2;tIm024_2=tIm024_2;tRe024_3=tRe024_3;tIm024_3=tIm024_3;tRe024_4=tRe024_4;tIm024_4=tIm024_4;tRe024_5=tRe024_5;tIm024_5=tIm024_5;tRe024_6=____F[i];tIm024_6=____F[i];tRe024_7=tRe024_7;tIm024_7=tIm024_7;
+        tRe025_1=tRe025_1;tIm025_1=tIm025_1;tRe025_2=tRe025_2;tIm025_2=tIm025_2;tRe025_3=tRe025_3;tIm025_3=tIm025_3;tRe025_4=tRe025_4;tIm025_4=tIm025_4;tRe025_5=tRe025_5;tIm025_5=tIm025_5;tRe025_6=____F[i];tIm025_6=____F[i];tRe025_7=tRe025_7;tIm025_7=tIm025_7;
+        tRe026_1=tRe026_1;tIm026_1=tIm026_1;tRe026_2=tRe026_2;tIm026_2=tIm026_2;tRe026_3=tRe026_3;tIm026_3=tIm026_3;tRe026_4=tRe026_4;tIm026_4=tIm026_4;tRe026_5=tRe026_5;tIm026_5=tIm026_5;tRe026_6=____F[i];tIm026_6=____F[i];tRe026_7=tRe026_7;tIm026_7=tIm026_7;
+        tRe027_1=tRe027_1;tIm027_1=tIm027_1;tRe027_2=tRe027_2;tIm027_2=tIm027_2;tRe027_3=tRe027_3;tIm027_3=tIm027_3;tRe027_4=tRe027_4;tIm027_4=tIm027_4;tRe027_5=tRe027_5;tIm027_5=tIm027_5;tRe027_6=____F[i];tIm027_6=____F[i];tRe027_7=tRe027_7;tIm027_7=tIm027_7;
+        tRe028_1=tRe028_1;tIm028_1=tIm028_1;tRe028_2=tRe028_2;tIm028_2=tIm028_2;tRe028_3=tRe028_3;tIm028_3=tIm028_3;tRe028_4=tRe028_4;tIm028_4=tIm028_4;tRe028_5=tRe028_5;tIm028_5=tIm028_5;tRe028_6=____F[i];tIm028_6=____F[i];tRe028_7=tRe028_7;tIm028_7=tIm028_7;
+        tRe029_1=tRe029_1;tIm029_1=tIm029_1;tRe029_2=tRe029_2;tIm029_2=tIm029_2;tRe029_3=tRe029_3;tIm029_3=tIm029_3;tRe029_4=tRe029_4;tIm029_4=tIm029_4;tRe029_5=tRe029_5;tIm029_5=tIm029_5;tRe029_6=____F[i];tIm029_6=____F[i];tRe029_7=tRe029_7;tIm029_7=tIm029_7;
+        tRe030_1=tRe030_1;tIm030_1=tIm030_1;tRe030_2=tRe030_2;tIm030_2=tIm030_2;tRe030_3=tRe030_3;tIm030_3=tIm030_3;tRe030_4=tRe030_4;tIm030_4=tIm030_4;tRe030_5=tRe030_5;tIm030_5=tIm030_5;tRe030_6=____F[i];tIm030_6=____F[i];tRe030_7=tRe030_7;tIm030_7=tIm030_7;
+        tRe031_1=tRe031_1;tIm031_1=tIm031_1;tRe031_2=tRe031_2;tIm031_2=tIm031_2;tRe031_3=tRe031_3;tIm031_3=tIm031_3;tRe031_4=tRe031_4;tIm031_4=tIm031_4;tRe031_5=tRe031_5;tIm031_5=tIm031_5;tRe031_6=____F[i];tIm031_6=____F[i];tRe031_7=tRe031_7;tIm031_7=tIm031_7;
+        tRe032_1=tRe032_1;tIm032_1=tIm032_1;tRe032_2=tRe032_2;tIm032_2=tIm032_2;tRe032_3=tRe032_3;tIm032_3=tIm032_3;tRe032_4=tRe032_4;tIm032_4=tIm032_4;tRe032_5=tRe032_5;tIm032_5=tIm032_5;tRe032_6=____F[i];tIm032_6=____F[i];tRe032_7=tRe032_7;tIm032_7=tIm032_7;
+        tRe033_1=tRe033_1;tIm033_1=tIm033_1;tRe033_2=tRe033_2;tIm033_2=tIm033_2;tRe033_3=tRe033_3;tIm033_3=tIm033_3;tRe033_4=tRe033_4;tIm033_4=tIm033_4;tRe033_5=tRe033_5;tIm033_5=tIm033_5;tRe033_6=tRe033_6;tIm033_6=tIm033_6;tRe033_7=____F[i];tIm033_7=____F[i];
+        tRe034_1=tRe034_1;tIm034_1=tIm034_1;tRe034_2=tRe034_2;tIm034_2=tIm034_2;tRe034_3=tRe034_3;tIm034_3=tIm034_3;tRe034_4=tRe034_4;tIm034_4=tIm034_4;tRe034_5=tRe034_5;tIm034_5=tIm034_5;tRe034_6=tRe034_6;tIm034_6=tIm034_6;tRe034_7=____F[i];tIm034_7=____F[i];
+        tRe035_1=tRe035_1;tIm035_1=tIm035_1;tRe035_2=tRe035_2;tIm035_2=tIm035_2;tRe035_3=tRe035_3;tIm035_3=tIm035_3;tRe035_4=tRe035_4;tIm035_4=tIm035_4;tRe035_5=tRe035_5;tIm035_5=tIm035_5;tRe035_6=tRe035_6;tIm035_6=tIm035_6;tRe035_7=____F[i];tIm035_7=____F[i];
+        tRe036_1=tRe036_1;tIm036_1=tIm036_1;tRe036_2=tRe036_2;tIm036_2=tIm036_2;tRe036_3=tRe036_3;tIm036_3=tIm036_3;tRe036_4=tRe036_4;tIm036_4=tIm036_4;tRe036_5=tRe036_5;tIm036_5=tIm036_5;tRe036_6=tRe036_6;tIm036_6=tIm036_6;tRe036_7=____F[i];tIm036_7=____F[i];
+        tRe037_1=tRe037_1;tIm037_1=tIm037_1;tRe037_2=tRe037_2;tIm037_2=tIm037_2;tRe037_3=tRe037_3;tIm037_3=tIm037_3;tRe037_4=tRe037_4;tIm037_4=tIm037_4;tRe037_5=tRe037_5;tIm037_5=tIm037_5;tRe037_6=tRe037_6;tIm037_6=tIm037_6;tRe037_7=____F[i];tIm037_7=____F[i];
+        tRe038_1=tRe038_1;tIm038_1=tIm038_1;tRe038_2=tRe038_2;tIm038_2=tIm038_2;tRe038_3=tRe038_3;tIm038_3=tIm038_3;tRe038_4=tRe038_4;tIm038_4=tIm038_4;tRe038_5=tRe038_5;tIm038_5=tIm038_5;tRe038_6=tRe038_6;tIm038_6=tIm038_6;tRe038_7=____F[i];tIm038_7=____F[i];
+        tRe039_1=tRe039_1;tIm039_1=tIm039_1;tRe039_2=tRe039_2;tIm039_2=tIm039_2;tRe039_3=tRe039_3;tIm039_3=tIm039_3;tRe039_4=tRe039_4;tIm039_4=tIm039_4;tRe039_5=tRe039_5;tIm039_5=tIm039_5;tRe039_6=tRe039_6;tIm039_6=tIm039_6;tRe039_7=____F[i];tIm039_7=____F[i];
+        tRe040_1=tRe040_1;tIm040_1=tIm040_1;tRe040_2=tRe040_2;tIm040_2=tIm040_2;tRe040_3=tRe040_3;tIm040_3=tIm040_3;tRe040_4=tRe040_4;tIm040_4=tIm040_4;tRe040_5=tRe040_5;tIm040_5=tIm040_5;tRe040_6=tRe040_6;tIm040_6=tIm040_6;tRe040_7=____F[i];tIm040_7=____F[i];
+        tRe041_1=tRe041_1;tIm041_1=tIm041_1;tRe041_2=tRe041_2;tIm041_2=tIm041_2;tRe041_3=tRe041_3;tIm041_3=tIm041_3;tRe041_4=tRe041_4;tIm041_4=tIm041_4;tRe041_5=tRe041_5;tIm041_5=tIm041_5;tRe041_6=tRe041_6;tIm041_6=tIm041_6;tRe041_7=____F[i];tIm041_7=____F[i];
+        tRe042_1=tRe042_1;tIm042_1=tIm042_1;tRe042_2=tRe042_2;tIm042_2=tIm042_2;tRe042_3=tRe042_3;tIm042_3=tIm042_3;tRe042_4=tRe042_4;tIm042_4=tIm042_4;tRe042_5=tRe042_5;tIm042_5=tIm042_5;tRe042_6=tRe042_6;tIm042_6=tIm042_6;tRe042_7=____F[i];tIm042_7=____F[i];
+        tRe043_1=tRe043_1;tIm043_1=tIm043_1;tRe043_2=tRe043_2;tIm043_2=tIm043_2;tRe043_3=tRe043_3;tIm043_3=tIm043_3;tRe043_4=tRe043_4;tIm043_4=tIm043_4;tRe043_5=tRe043_5;tIm043_5=tIm043_5;tRe043_6=tRe043_6;tIm043_6=tIm043_6;tRe043_7=____F[i];tIm043_7=____F[i];
+        tRe044_1=tRe044_1;tIm044_1=tIm044_1;tRe044_2=tRe044_2;tIm044_2=tIm044_2;tRe044_3=tRe044_3;tIm044_3=tIm044_3;tRe044_4=tRe044_4;tIm044_4=tIm044_4;tRe044_5=tRe044_5;tIm044_5=tIm044_5;tRe044_6=tRe044_6;tIm044_6=tIm044_6;tRe044_7=____F[i];tIm044_7=____F[i];
+        tRe045_1=tRe045_1;tIm045_1=tIm045_1;tRe045_2=tRe045_2;tIm045_2=tIm045_2;tRe045_3=tRe045_3;tIm045_3=tIm045_3;tRe045_4=tRe045_4;tIm045_4=tIm045_4;tRe045_5=tRe045_5;tIm045_5=tIm045_5;tRe045_6=tRe045_6;tIm045_6=tIm045_6;tRe045_7=____F[i];tIm045_7=____F[i];
+        tRe046_1=tRe046_1;tIm046_1=tIm046_1;tRe046_2=tRe046_2;tIm046_2=tIm046_2;tRe046_3=tRe046_3;tIm046_3=tIm046_3;tRe046_4=tRe046_4;tIm046_4=tIm046_4;tRe046_5=tRe046_5;tIm046_5=tIm046_5;tRe046_6=tRe046_6;tIm046_6=tIm046_6;tRe046_7=____F[i];tIm046_7=____F[i];
+        tRe047_1=tRe047_1;tIm047_1=tIm047_1;tRe047_2=tRe047_2;tIm047_2=tIm047_2;tRe047_3=tRe047_3;tIm047_3=tIm047_3;tRe047_4=tRe047_4;tIm047_4=tIm047_4;tRe047_5=tRe047_5;tIm047_5=tIm047_5;tRe047_6=tRe047_6;tIm047_6=tIm047_6;tRe047_7=____F[i];tIm047_7=____F[i];
+        tRe048_1=tRe048_1;tIm048_1=tIm048_1;tRe048_2=tRe048_2;tIm048_2=tIm048_2;tRe048_3=tRe048_3;tIm048_3=tIm048_3;tRe048_4=tRe048_4;tIm048_4=tIm048_4;tRe048_5=tRe048_5;tIm048_5=tIm048_5;tRe048_6=tRe048_6;tIm048_6=tIm048_6;tRe048_7=____F[i];tIm048_7=____F[i];
+        tRe049_1=tRe049_1;tIm049_1=tIm049_1;tRe049_2=tRe049_2;tIm049_2=tIm049_2;tRe049_3=tRe049_3;tIm049_3=tIm049_3;tRe049_4=tRe049_4;tIm049_4=tIm049_4;tRe049_5=tRe049_5;tIm049_5=tIm049_5;tRe049_6=tRe049_6;tIm049_6=tIm049_6;tRe049_7=____F[i];tIm049_7=____F[i];
+        tRe050_1=tRe050_1;tIm050_1=tIm050_1;tRe050_2=tRe050_2;tIm050_2=tIm050_2;tRe050_3=tRe050_3;tIm050_3=tIm050_3;tRe050_4=tRe050_4;tIm050_4=tIm050_4;tRe050_5=tRe050_5;tIm050_5=tIm050_5;tRe050_6=tRe050_6;tIm050_6=tIm050_6;tRe050_7=____F[i];tIm050_7=____F[i];
+        tRe051_1=tRe051_1;tIm051_1=tIm051_1;tRe051_2=tRe051_2;tIm051_2=tIm051_2;tRe051_3=tRe051_3;tIm051_3=tIm051_3;tRe051_4=tRe051_4;tIm051_4=tIm051_4;tRe051_5=tRe051_5;tIm051_5=tIm051_5;tRe051_6=tRe051_6;tIm051_6=tIm051_6;tRe051_7=____F[i];tIm051_7=____F[i];
+        tRe052_1=tRe052_1;tIm052_1=tIm052_1;tRe052_2=tRe052_2;tIm052_2=tIm052_2;tRe052_3=tRe052_3;tIm052_3=tIm052_3;tRe052_4=tRe052_4;tIm052_4=tIm052_4;tRe052_5=tRe052_5;tIm052_5=tIm052_5;tRe052_6=tRe052_6;tIm052_6=tIm052_6;tRe052_7=____F[i];tIm052_7=____F[i];
+        tRe053_1=tRe053_1;tIm053_1=tIm053_1;tRe053_2=tRe053_2;tIm053_2=tIm053_2;tRe053_3=tRe053_3;tIm053_3=tIm053_3;tRe053_4=tRe053_4;tIm053_4=tIm053_4;tRe053_5=tRe053_5;tIm053_5=tIm053_5;tRe053_6=tRe053_6;tIm053_6=tIm053_6;tRe053_7=____F[i];tIm053_7=____F[i];
+        tRe054_1=tRe054_1;tIm054_1=tIm054_1;tRe054_2=tRe054_2;tIm054_2=tIm054_2;tRe054_3=tRe054_3;tIm054_3=tIm054_3;tRe054_4=tRe054_4;tIm054_4=tIm054_4;tRe054_5=tRe054_5;tIm054_5=tIm054_5;tRe054_6=tRe054_6;tIm054_6=tIm054_6;tRe054_7=____F[i];tIm054_7=____F[i];
+        tRe055_1=tRe055_1;tIm055_1=tIm055_1;tRe055_2=tRe055_2;tIm055_2=tIm055_2;tRe055_3=tRe055_3;tIm055_3=tIm055_3;tRe055_4=tRe055_4;tIm055_4=tIm055_4;tRe055_5=tRe055_5;tIm055_5=tIm055_5;tRe055_6=tRe055_6;tIm055_6=tIm055_6;tRe055_7=____F[i];tIm055_7=____F[i];
+        tRe056_1=tRe056_1;tIm056_1=tIm056_1;tRe056_2=tRe056_2;tIm056_2=tIm056_2;tRe056_3=tRe056_3;tIm056_3=tIm056_3;tRe056_4=tRe056_4;tIm056_4=tIm056_4;tRe056_5=tRe056_5;tIm056_5=tIm056_5;tRe056_6=tRe056_6;tIm056_6=tIm056_6;tRe056_7=____F[i];tIm056_7=____F[i];
+        tRe057_1=tRe057_1;tIm057_1=tIm057_1;tRe057_2=tRe057_2;tIm057_2=tIm057_2;tRe057_3=tRe057_3;tIm057_3=tIm057_3;tRe057_4=tRe057_4;tIm057_4=tIm057_4;tRe057_5=tRe057_5;tIm057_5=tIm057_5;tRe057_6=tRe057_6;tIm057_6=tIm057_6;tRe057_7=____F[i];tIm057_7=____F[i];
+        tRe058_1=tRe058_1;tIm058_1=tIm058_1;tRe058_2=tRe058_2;tIm058_2=tIm058_2;tRe058_3=tRe058_3;tIm058_3=tIm058_3;tRe058_4=tRe058_4;tIm058_4=tIm058_4;tRe058_5=tRe058_5;tIm058_5=tIm058_5;tRe058_6=tRe058_6;tIm058_6=tIm058_6;tRe058_7=____F[i];tIm058_7=____F[i];
+        tRe059_1=tRe059_1;tIm059_1=tIm059_1;tRe059_2=tRe059_2;tIm059_2=tIm059_2;tRe059_3=tRe059_3;tIm059_3=tIm059_3;tRe059_4=tRe059_4;tIm059_4=tIm059_4;tRe059_5=tRe059_5;tIm059_5=tIm059_5;tRe059_6=tRe059_6;tIm059_6=tIm059_6;tRe059_7=____F[i];tIm059_7=____F[i];
+        tRe060_1=tRe060_1;tIm060_1=tIm060_1;tRe060_2=tRe060_2;tIm060_2=tIm060_2;tRe060_3=tRe060_3;tIm060_3=tIm060_3;tRe060_4=tRe060_4;tIm060_4=tIm060_4;tRe060_5=tRe060_5;tIm060_5=tIm060_5;tRe060_6=tRe060_6;tIm060_6=tIm060_6;tRe060_7=____F[i];tIm060_7=____F[i];
+        tRe061_1=tRe061_1;tIm061_1=tIm061_1;tRe061_2=tRe061_2;tIm061_2=tIm061_2;tRe061_3=tRe061_3;tIm061_3=tIm061_3;tRe061_4=tRe061_4;tIm061_4=tIm061_4;tRe061_5=tRe061_5;tIm061_5=tIm061_5;tRe061_6=tRe061_6;tIm061_6=tIm061_6;tRe061_7=____F[i];tIm061_7=____F[i];
+        tRe062_1=tRe062_1;tIm062_1=tIm062_1;tRe062_2=tRe062_2;tIm062_2=tIm062_2;tRe062_3=tRe062_3;tIm062_3=tIm062_3;tRe062_4=tRe062_4;tIm062_4=tIm062_4;tRe062_5=tRe062_5;tIm062_5=tIm062_5;tRe062_6=tRe062_6;tIm062_6=tIm062_6;tRe062_7=____F[i];tIm062_7=____F[i];
+        tRe063_1=tRe063_1;tIm063_1=tIm063_1;tRe063_2=tRe063_2;tIm063_2=tIm063_2;tRe063_3=tRe063_3;tIm063_3=tIm063_3;tRe063_4=tRe063_4;tIm063_4=tIm063_4;tRe063_5=tRe063_5;tIm063_5=tIm063_5;tRe063_6=tRe063_6;tIm063_6=tIm063_6;tRe063_7=____F[i];tIm063_7=____F[i];
+        tRe064_1=tRe064_1;tIm064_1=tIm064_1;tRe064_2=tRe064_2;tIm064_2=tIm064_2;tRe064_3=tRe064_3;tIm064_3=tIm064_3;tRe064_4=tRe064_4;tIm064_4=tIm064_4;tRe064_5=tRe064_5;tIm064_5=tIm064_5;tRe064_6=tRe064_6;tIm064_6=tIm064_6;tRe064_7=____F[i];tIm064_7=____F[i];
         
 
-        i+=192;
+        i+=448;
 
         // Power 1
         twiddlelizer(out, tRe001_1,tIm001_1, eReI1, eImI1, oReI1, oImI1);
@@ -963,6 +996,38 @@ function fftComplexInPlace_seq(out) {
         twiddlelizer(out, tRe030_1,tIm030_1, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe031_1,tIm031_1, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe032_1,tIm032_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe033_1,tIm033_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe034_1,tIm034_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe035_1,tIm035_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe036_1,tIm036_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe037_1,tIm037_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe038_1,tIm038_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe039_1,tIm039_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe040_1,tIm040_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe041_1,tIm041_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe042_1,tIm042_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe043_1,tIm043_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe044_1,tIm044_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe045_1,tIm045_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe046_1,tIm046_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe047_1,tIm047_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe048_1,tIm048_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe049_1,tIm049_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe050_1,tIm050_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe051_1,tIm051_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe052_1,tIm052_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe053_1,tIm053_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe054_1,tIm054_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe055_1,tIm055_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe056_1,tIm056_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe057_1,tIm057_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe058_1,tIm058_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe059_1,tIm059_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe060_1,tIm060_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe061_1,tIm061_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe062_1,tIm062_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe063_1,tIm063_1, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe064_1,tIm064_1, eReI1, eImI1, oReI1, oImI1);
 
         // Power 2
         twiddlelizer(out, tRe001_2,tIm001_2, eReI1, eImI1, oReI1, oImI1);
@@ -997,6 +1062,38 @@ function fftComplexInPlace_seq(out) {
         twiddlelizer(out, tRe030_2,tIm030_2, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe031_2,tIm031_2, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe032_2,tIm032_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe033_2,tIm033_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe034_2,tIm034_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe035_2,tIm035_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe036_2,tIm036_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe037_2,tIm037_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe038_2,tIm038_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe039_2,tIm039_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe040_2,tIm040_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe041_2,tIm041_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe042_2,tIm042_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe043_2,tIm043_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe044_2,tIm044_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe045_2,tIm045_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe046_2,tIm046_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe047_2,tIm047_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe048_2,tIm048_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe049_2,tIm049_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe050_2,tIm050_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe051_2,tIm051_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe052_2,tIm052_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe053_2,tIm053_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe054_2,tIm054_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe055_2,tIm055_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe056_2,tIm056_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe057_2,tIm057_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe058_2,tIm058_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe059_2,tIm059_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe060_2,tIm060_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe061_2,tIm061_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe062_2,tIm062_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe063_2,tIm063_2, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe064_2,tIm064_2, eReI1, eImI1, oReI1, oImI1);
 
         // Power 3
         twiddlelizer(out, tRe001_3,tIm001_3, eReI1, eImI1, oReI1, oImI1);
@@ -1031,6 +1128,38 @@ function fftComplexInPlace_seq(out) {
         twiddlelizer(out, tRe030_3,tIm030_3, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe031_3,tIm031_3, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe032_3,tIm032_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe033_3,tIm033_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe034_3,tIm034_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe035_3,tIm035_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe036_3,tIm036_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe037_3,tIm037_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe038_3,tIm038_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe039_3,tIm039_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe040_3,tIm040_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe041_3,tIm041_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe042_3,tIm042_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe043_3,tIm043_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe044_3,tIm044_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe045_3,tIm045_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe046_3,tIm046_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe047_3,tIm047_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe048_3,tIm048_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe049_3,tIm049_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe050_3,tIm050_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe051_3,tIm051_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe052_3,tIm052_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe053_3,tIm053_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe054_3,tIm054_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe055_3,tIm055_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe056_3,tIm056_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe057_3,tIm057_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe058_3,tIm058_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe059_3,tIm059_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe060_3,tIm060_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe061_3,tIm061_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe062_3,tIm062_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe063_3,tIm063_3, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe064_3,tIm064_3, eReI1, eImI1, oReI1, oImI1);
 
         // Power 4
         twiddlelizer(out, tRe001_4,tIm001_4, eReI1, eImI1, oReI1, oImI1);
@@ -1065,6 +1194,38 @@ function fftComplexInPlace_seq(out) {
         twiddlelizer(out, tRe030_4,tIm030_4, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe031_4,tIm031_4, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe032_4,tIm032_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe033_4,tIm033_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe034_4,tIm034_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe035_4,tIm035_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe036_4,tIm036_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe037_4,tIm037_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe038_4,tIm038_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe039_4,tIm039_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe040_4,tIm040_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe041_4,tIm041_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe042_4,tIm042_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe043_4,tIm043_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe044_4,tIm044_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe045_4,tIm045_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe046_4,tIm046_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe047_4,tIm047_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe048_4,tIm048_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe049_4,tIm049_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe050_4,tIm050_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe051_4,tIm051_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe052_4,tIm052_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe053_4,tIm053_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe054_4,tIm054_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe055_4,tIm055_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe056_4,tIm056_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe057_4,tIm057_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe058_4,tIm058_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe059_4,tIm059_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe060_4,tIm060_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe061_4,tIm061_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe062_4,tIm062_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe063_4,tIm063_4, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe064_4,tIm064_4, eReI1, eImI1, oReI1, oImI1);
 
         // Power 5
         twiddlelizer(out, tRe001_5,tIm001_5, eReI1, eImI1, oReI1, oImI1);
@@ -1099,6 +1260,38 @@ function fftComplexInPlace_seq(out) {
         twiddlelizer(out, tRe030_5,tIm030_5, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe031_5,tIm031_5, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe032_5,tIm032_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe033_5,tIm033_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe034_5,tIm034_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe035_5,tIm035_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe036_5,tIm036_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe037_5,tIm037_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe038_5,tIm038_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe039_5,tIm039_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe040_5,tIm040_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe041_5,tIm041_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe042_5,tIm042_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe043_5,tIm043_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe044_5,tIm044_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe045_5,tIm045_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe046_5,tIm046_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe047_5,tIm047_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe048_5,tIm048_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe049_5,tIm049_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe050_5,tIm050_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe051_5,tIm051_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe052_5,tIm052_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe053_5,tIm053_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe054_5,tIm054_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe055_5,tIm055_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe056_5,tIm056_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe057_5,tIm057_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe058_5,tIm058_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe059_5,tIm059_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe060_5,tIm060_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe061_5,tIm061_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe062_5,tIm062_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe063_5,tIm063_5, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe064_5,tIm064_5, eReI1, eImI1, oReI1, oImI1);
 
         // Power 6
         twiddlelizer(out, tRe001_6,tIm001_6, eReI1, eImI1, oReI1, oImI1);
@@ -1133,6 +1326,104 @@ function fftComplexInPlace_seq(out) {
         twiddlelizer(out, tRe030_6,tIm030_6, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe031_6,tIm031_6, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe032_6,tIm032_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe033_6,tIm033_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe034_6,tIm034_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe035_6,tIm035_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe036_6,tIm036_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe037_6,tIm037_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe038_6,tIm038_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe039_6,tIm039_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe040_6,tIm040_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe041_6,tIm041_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe042_6,tIm042_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe043_6,tIm043_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe044_6,tIm044_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe045_6,tIm045_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe046_6,tIm046_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe047_6,tIm047_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe048_6,tIm048_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe049_6,tIm049_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe050_6,tIm050_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe051_6,tIm051_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe052_6,tIm052_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe053_6,tIm053_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe054_6,tIm054_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe055_6,tIm055_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe056_6,tIm056_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe057_6,tIm057_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe058_6,tIm058_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe059_6,tIm059_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe060_6,tIm060_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe061_6,tIm061_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe062_6,tIm062_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe063_6,tIm063_6, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe064_6,tIm064_6, eReI1, eImI1, oReI1, oImI1);
+
+        // Power 7
+        twiddlelizer(out, tRe001_7,tIm001_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe002_7,tIm002_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe003_7,tIm003_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe004_7,tIm004_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe005_7,tIm005_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe006_7,tIm006_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe007_7,tIm007_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe008_7,tIm008_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe009_7,tIm009_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe010_7,tIm010_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe011_7,tIm011_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe012_7,tIm012_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe013_7,tIm013_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe014_7,tIm014_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe015_7,tIm015_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe016_7,tIm016_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe017_7,tIm017_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe018_7,tIm018_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe019_7,tIm019_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe020_7,tIm020_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe021_7,tIm021_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe022_7,tIm022_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe023_7,tIm023_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe024_7,tIm024_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe025_7,tIm025_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe026_7,tIm026_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe027_7,tIm027_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe028_7,tIm028_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe029_7,tIm029_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe030_7,tIm030_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe031_7,tIm031_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe032_7,tIm032_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe033_7,tIm033_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe034_7,tIm034_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe035_7,tIm035_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe036_7,tIm036_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe037_7,tIm037_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe038_7,tIm038_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe039_7,tIm039_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe040_7,tIm040_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe041_7,tIm041_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe042_7,tIm042_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe043_7,tIm043_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe044_7,tIm044_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe045_7,tIm045_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe046_7,tIm046_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe047_7,tIm047_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe048_7,tIm048_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe049_7,tIm049_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe050_7,tIm050_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe051_7,tIm051_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe052_7,tIm052_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe053_7,tIm053_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe054_7,tIm054_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe055_7,tIm055_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe056_7,tIm056_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe057_7,tIm057_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe058_7,tIm058_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe059_7,tIm059_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe060_7,tIm060_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe061_7,tIm061_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe062_7,tIm062_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe063_7,tIm063_7, eReI1, eImI1, oReI1, oImI1);
+        twiddlelizer(out, tRe064_7,tIm064_7, eReI1, eImI1, oReI1, oImI1);
 
     }
 
@@ -1172,10 +1463,10 @@ function fftComplexInPlace_seq(out) {
 
 
 
-// Power 4 -> 5200
-// Power 5 -> 
+// Power 4 ->
+// Power 5 -> 5200 
 // Power 6 -> 5000
-// Power 7 -> 5000
+// Power 7 -> 
 
 
 function eff(N){
