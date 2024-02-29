@@ -952,7 +952,8 @@ function fftComplexInPlace_seq(out) {
     let tRe7, tIm7, eReI7, eImI7, oReI7, oImI7;
     let tRe8, tIm8, eReI8, eImI8, oReI8, oImI8;
 
-    while(i < 2*N*bits){
+    //2 * 64 * 6 = 768
+    while(i < 2*N*bits){ 
         if(i==0){
           tRe1 = factors[idx_LKUP[i++]]; tIm1 = factors[idx_LKUP[i++]]; eReI1 = idx_LKUP[i++]; eImI1 = idx_LKUP[i++]; oReI1 = idx_LKUP[i++]; oImI1 = idx_LKUP[i++];
           tRe2 = factors[idx_LKUP[i++]]; tIm2 = factors[idx_LKUP[i++]]; eReI2 = idx_LKUP[i++]; eImI2 = idx_LKUP[i++]; oReI2 = idx_LKUP[i++]; oImI2 = idx_LKUP[i++];
@@ -1067,13 +1068,40 @@ function fftComplexInPlace_seq(out) {
           tRe15d = factors[i];   tIm15d = factors[i];    // 14
           tRe16d = factors[i];   tIm16d = factors[i];    // 15
 
-          // 2  / (2 * 2 * 2)  =  1/4
-          // 4  / (2 * 3 * 4)  =  1/6
-          // 8  / (2 * 4 * 8)  =  1/8
-          // 16 / (2 * 5 * 16) =  1/10      *  
+
+          // loop len per N
+          // N=2  -> (2 * 2 * 2)  = 8
+          // N=4  -> (2 * 3 * 4)  = 24
+          // N=8  -> (2 * 4 * 8)  = 64
+          // N=16 -> (2 * 5 * 16) = 160
+          // N=32 -> (2 * 6 * 32) = 384
+          // N=64 -> (2 * 7 * 64) = 768
+          
+          //2 + 4 + 8 + 16 + 32 + 64 + 128 + 256
+          //(array accesses = i++ jumps)
+
+          // Iterations for N = 64
+          // 768 (loop len) /   2 (array accesses) =  384    <- power 1 structure --  (2*1) =    2 twiddles per iteration
+          // 768 (loop len) /   6 (array accesses) =  128    <- power 2 structure --  (4*2) =    8 twiddles per iteration
+          // 768 (loop len) /  14 (array accesses) = ~54     <- power 3 structure --  (8*3) =   24 twiddles per iteration 
+          // 768 (loop len) /  30 (array accesses) = ~25     <- power 4 structure -- (16*4) =   64 twiddles per iteration
+          // 768 (loop len) /  62 (array accesses) = ~12     <- power 5 structure -- (32*5) =  160 twiddles per iteration 
+          // 768 (loop len) / 126 (array accesses) = ~6      <- power 6 structure -- (64*6) =  384 twiddles per iteration 
+          // 768 (loop len) / 254 (array accesses) = ~3      <- power 6 structure --(128*7) =  896 twiddles per iteration 
+          // 768 (loop len) / 510 (array accesses) = ~1.5    <- power 6 structure --(256*8) = 2048 twiddles per iteration 
+
+          // Array Accesses PER Twiddles for N = 64    (Must be as low as possible for Efficency)
+          // ps 1 -> 768  / 768    =  1.00
+          // ps 2 -> 768  / 1024   =  0.75
+          // ps 3 -> 768  /~1296   =  0.59
+          // ps 4 -> 768  /~1600   =  0.48
+          // ps 5 -> 768  /~1920   =  0.40
+          // ps 6 -> 768  /~2304   =  0.33
+          // ps 7 -> 768  /~2688   =  0.28
+          // ps 8 -> 768  /~3072   =  0.25
 
         //}else{
-          i += 2+4+8+16; // factor 8
+          i += 2+4+8+16+32; // 62
         //}
         
         //power 1
@@ -1096,6 +1124,30 @@ function fftComplexInPlace_seq(out) {
 
     return out;
 }
+
+
+function eff(){
+   const map = [];
+   let sum = 0;
+   for(let j = 0; j<16; j++){
+      sum += 2<<j;
+      map[j] = sum;
+   }
+
+   let looplen = 2 * (Math.log2(N)+1) * N;
+
+   for(let p = 1; p<=16; p++){
+        const iterations = looplen / map[p-1];
+        const t_per_it = 2<<(p-1) * p;
+        //const twiddles = t_per_it * iterations;
+        //const ratio = iterations / twiddles;
+        const ratio =  1 / t_per_it;
+        console.log("ps -> ",ratio.toFixed(2), "Twiddles Per Iteration ->",t_per_it);
+   }
+}
+
+eff();
+
 
 
 function fftComplexInPlace_flexi(out) {
