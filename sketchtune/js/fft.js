@@ -892,6 +892,7 @@ function fftComplexInPlace_seq_4(out) {
     let tRe001_5,tIm001_5,tRe002_5,tIm002_5,tRe003_5,tIm003_5,tRe004_5,tIm004_5,tRe005_5,tIm005_5,tRe006_5,tIm006_5,tRe007_5,tIm007_5,tRe008_5,tIm008_5,tRe009_5,tIm009_5,tRe010_5,tIm010_5,tRe011_5,tIm011_5,tRe012_5,tIm012_5,tRe013_5,tIm013_5,tRe014_5,tIm014_5,tRe015_5,tIm015_5,tRe016_5,tIm016_5; 
 
     let eRe, eIm, oRe, oIm, t_oRe, t_oIm;
+    let eReI = 0, eImI = 0, oReI = 0, oImI = 0;
 
     while(i < (N>>1)*bits){
         its++; accs+=32;
