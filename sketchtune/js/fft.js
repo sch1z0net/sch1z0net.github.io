@@ -943,6 +943,23 @@ function fftComplexInPlace_seq(out) {
     let tRe15d, tIm15d;
     let tRe16d, tIm16d;
 
+    let tRe01e, tIm01e;
+    let tRe02e, tIm02e;
+    let tRe03e, tIm03e;
+    let tRe04e, tIm04e;
+    let tRe05e, tIm05e;
+    let tRe06e, tIm06e;
+    let tRe07e, tIm07e;
+    let tRe08e, tIm08e;
+    let tRe09e, tIm09e;
+    let tRe10e, tIm10e;
+    let tRe11e, tIm11e;
+    let tRe12e, tIm12e;
+    let tRe13e, tIm13e;
+    let tRe14e, tIm14e;
+    let tRe15e, tIm15e;
+    let tRe16e, tIm16e;
+
     let tRe1, tIm1, eReI1, eImI1, oReI1, oImI1;
     let tRe2, tIm2, eReI2, eImI2, oReI2, oImI2;
     let tRe3, tIm3, eReI3, eImI3, oReI3, oImI3;
@@ -990,14 +1007,14 @@ function fftComplexInPlace_seq(out) {
           tRe06a = tRe01a;       tIm06a = tIm01a;        // 0
           tRe07a = tRe01a;       tIm07a = tIm01a;        // 0
           tRe08a = tRe01a;       tIm08a = tIm01a;        // 0
-          /*tRe09a = tRe01a;       tIm09a = tRe01a;        // 0
+          tRe09a = tRe01a;       tIm09a = tRe01a;        // 0
           tRe10a = tRe01a;       tIm10a = tIm01a;        // 0
           tRe11a = tRe01a;       tIm11a = tIm01a;        // 0
           tRe12a = tRe01a;       tIm12a = tIm01a;        // 0
           tRe13a = tRe01a;       tIm13a = tIm01a;        // 0
           tRe14a = tRe01a;       tIm14a = tIm01a;        // 0
           tRe15a = tRe01a;       tIm15a = tIm01a;        // 0
-          tRe16a = tRe01a;       tIm16a = tIm01a;        // 0*/
+          tRe16a = tRe01a;       tIm16a = tIm01a;        // 0
           // Power 2
           tRe01b = tRe01a;       tIm01b = tIm01a;        // 0
           tRe02b = fac[i];       tIm02b = fac[i];        // 1  new array access
@@ -1007,14 +1024,14 @@ function fftComplexInPlace_seq(out) {
           tRe06b = tRe02a;       tIm06b = tIm02b;        // 1 
           tRe07b = tRe01a;       tIm07b = tIm01a;        // 0
           tRe08b = tRe02b;       tIm08b = tIm02b;        // 1
-          /*tRe09b = tRe01a;       tIm09b = tIm01a;        // 0
+          tRe09b = tRe01a;       tIm09b = tIm01a;        // 0
           tRe10b = tRe02b;       tIm10b = tIm02b;        // 1  new array access
           tRe11b = tRe01a;       tIm11b = tIm01a;        // 0
           tRe12b = tRe02b;       tIm12b = tIm02b;        // 1
           tRe13b = tRe01a;       tIm13b = tIm01a;        // 0
           tRe14b = tRe02a;       tIm14b = tIm02b;        // 1 
           tRe15b = tRe01a;       tIm15b = tIm01a;        // 0
-          tRe16b = tRe02b;       tIm16b = tIm02b;        // 1*/
+          tRe16b = tRe02b;       tIm16b = tIm02b;        // 1
           // Power 3
           tRe01c = tRe01a;       tIm01c = tIm01a;        // 0
           tRe02c = tRe02b;       tIm02c = tIm02b;        // 1
@@ -1024,14 +1041,14 @@ function fftComplexInPlace_seq(out) {
           tRe06c = tRe02b;       tIm06c = tIm02b;        // 1
           tRe07c = tRe03c;       tIm07c = tIm03c;        // 2
           tRe08c = tRe04c;       tIm08c = tIm04c;        // 3
-          /*tRe09c = tRe01a;       tIm09c = tIm01a;        // 0
+          tRe09c = tRe01a;       tIm09c = tIm01a;        // 0
           tRe10c = tRe02b;       tIm10c = tIm02b;        // 1
           tRe11c = tRe03c;       tIm11c = tIm03c;        // 2
           tRe12c = tRe04c;       tIm12c = tIm04c;        // 3
           tRe13c = tRe01a;       tIm13c = tIm01a;        // 0
           tRe14c = tRe02b;       tIm14c = tIm02b;        // 1
           tRe15c = tRe03c;       tIm15c = tIm03c;        // 2
-          tRe16c = tRe04c;       tIm16c = tIm04c;        // 3*/
+          tRe16c = tRe04c;       tIm16c = tIm04c;        // 3
           // Power 4
           tRe01d = tRe01a;       tIm01d = tIm01a;        // 0
           tRe02d = tRe02b;       tIm02d = tIm02b;        // 1
@@ -1041,31 +1058,31 @@ function fftComplexInPlace_seq(out) {
           tRe06d = fac[i];       tIm06d = fac[i];       // 5  new array access
           tRe07d = fac[i];       tIm07d = fac[i];       // 6  new array access
           tRe08d = fac[i];       tIm08d = fac[i];       // 7  new array access
-          /*tRe09d = tRe01a;       tIm09d = tIm01a;        // 0
+          tRe09d = tRe01a;       tIm09d = tIm01a;        // 0
           tRe10d = tRe02b;       tIm10d = tIm02b;        // 1
           tRe11d = tRe03c;       tIm11d = tIm03c;        // 2 
           tRe12d = tRe04c;       tIm12d = tIm04c;        // 3 
           tRe13d = tRe05d;       tIm13d = tIm05d;        // 4 
           tRe14d = tRe06d;       tIm14d = tIm06d;        // 5
           tRe15d = tRe07d;       tIm15d = tIm07d;        // 6
-          tRe16d = tRe08d;       tIm16d = tIm08d;        // 7*/
+          tRe16d = tRe08d;       tIm16d = tIm08d;        // 7
           // Power 5
-          /*tRe01d = tRe01a;       tIm01d = tIm01a;        // 0
-          tRe02d = tRe02b;       tIm02d = tIm02b;        // 1
-          tRe03d = tRe03c;       tIm03d = tIm03c;        // 2 
-          tRe04d = tRe04c;       tIm04d = tIm04c;        // 3 
-          tRe05d = tRe05d;       tIm05d = tIm05d;        // 4  new array access
-          tRe06d = tRe06d;       tIm06d = tIm06d;        // 5  new array access
-          tRe07d = tRe07d;       tIm07d = tIm07d;        // 6  new array access
-          tRe08d = tRe08d;       tIm08d = tIm08d;        // 7  new array access
-          tRe09d = fac[i];       tIm09d = fac[i];        // 8
-          tRe10d = fac[i];       tIm10d = fac[i];        // 9
-          tRe11d = fac[i];       tIm11d = fac[i];        // 10
-          tRe12d = fac[i];       tIm12d = fac[i];        // 11
-          tRe13d = fac[i];       tIm13d = fac[i];        // 12
-          tRe14d = fac[i];       tIm14d = fac[i];        // 13
-          tRe15d = fac[i];       tIm15d = fac[i];        // 14
-          tRe16d = fac[i];       tIm16d = fac[i];        // 15*/
+          tRe01e = tRe01a;       tIm01e = tIm01a;        // 0
+          tRe02e = tRe02b;       tIm02e = tIm02b;        // 1
+          tRe03e = tRe03c;       tIm03e = tIm03c;        // 2 
+          tRe04e = tRe04c;       tIm04e = tIm04c;        // 3 
+          tRe05e = tRe05d;       tIm05e = tIm05d;        // 4  new array access
+          tRe06e = tRe06d;       tIm06e = tIm06d;        // 5  new array access
+          tRe07e = tRe07d;       tIm07e = tIm07d;        // 6  new array access
+          tRe08e = tRe08d;       tIm08e = tIm08d;        // 7  new array access
+          tRe09e = fac[i];       tIm09e = fac[i];        // 8
+          tRe10e = fac[i];       tIm10e = fac[i];        // 9
+          tRe11e = fac[i];       tIm11e = fac[i];        // 10
+          tRe12e = fac[i];       tIm12e = fac[i];        // 11
+          tRe13e = fac[i];       tIm13e = fac[i];        // 12
+          tRe14e = fac[i];       tIm14e = fac[i];        // 13
+          tRe15e = fac[i];       tIm15e = fac[i];        // 14
+          tRe16e = fac[i];       tIm16e = fac[i];        // 15
 
 
           // loop len per N
@@ -1100,7 +1117,7 @@ function fftComplexInPlace_seq(out) {
           // ps 8 -> 768  /~3072   =  0.25
 
         //}else{
-          i += 16; // 32
+          i += 32;
         //}
         
         //power 1
@@ -1123,6 +1140,9 @@ function fftComplexInPlace_seq(out) {
 
     return out;
 }
+// Power 4 -> 4000ms
+// Power 5 -> 4000ms
+
 
 function eff(N){
    const max_p = 8;
