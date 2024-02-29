@@ -750,7 +750,6 @@ let INDEX_LOOKUP_128  = index_lookup(128);
 let INDEX_LOOKUP_256  = index_lookup(256);
 let INDEX_LOOKUP_512  = index_lookup(512);
 let INDEX_LOOKUP_1024 = index_lookup(1024);
-let INDEX_LOOKUP_1024 = index_lookup(1024);
 let INDEX_LOOKUP_2048 = index_lookup(2048);
 let INDEX_LOOKUP_4096 = index_lookup(4096);
 
@@ -898,7 +897,7 @@ function fftComplexInPlace_seq(out) {
         }else{
           i += 8 * 6; // factor 8
         }
-
+        
         twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
         twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
