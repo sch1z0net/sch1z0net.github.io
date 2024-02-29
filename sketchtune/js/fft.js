@@ -1126,7 +1126,7 @@ function fftComplexInPlace_seq(out) {
 }
 
 
-function eff(){
+function eff(N){
    const map = [];
    let sum = 0;
    for(let j = 0; j<16; j++){
@@ -1136,17 +1136,19 @@ function eff(){
 
    let looplen = 2 * (Math.log2(N)+1) * N;
 
+   console.log("Efficiency For N=",N); 
    for(let p = 1; p<=16; p++){
         const iterations = looplen / map[p-1];
         const t_per_it = 2<<(p-1) * p;
-        //const twiddles = t_per_it * iterations;
-        //const ratio = iterations / twiddles;
+        const twiddles = t_per_it * iterations;
         const ratio =  1 / t_per_it;
-        console.log("ps -> ",ratio.toFixed(2), "Twiddles Per Iteration ->",t_per_it);
+        console.log("ps -> ",ratio.toFixed(2), "Twiddles Per Iteration ->",t_per_it,"Iterations ->",iterations);
    }
 }
 
-eff();
+eff(512);
+eff(1024);
+eff(2048);
 
 
 
