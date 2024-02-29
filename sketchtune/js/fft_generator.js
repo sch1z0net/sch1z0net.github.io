@@ -27,7 +27,7 @@ function tRe_(r,c){
         f_start += f_lines;
     }
     if( r>=f_start && r<(f_start+f_lines) ){
-        res = "____F(i)";
+        res = "____F[i]";
     }else{
         res = "tRe"+d(r)+"_"+c;
     }
@@ -57,7 +57,7 @@ function print_code(power){
     
     let line = "";
     for(let c = 1; c<=cols; c++){
-        line += "let ";
+        line += "    let ";
         for(let r = 1; r<=rows; r++){
             line += tRe(r,c)+",";
             line += tIm(r,c);
