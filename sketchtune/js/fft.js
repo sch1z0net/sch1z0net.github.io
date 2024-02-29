@@ -800,7 +800,10 @@ function fftComplexInPlace_seq(out) {
           eImI = idx_LKUP[i++];
           oReI = idx_LKUP[i++];
           oImI = idx_LKUP[i++];
+        }else{
+          i+=6;
         }
+
         // Get current values
         const eRe  = out[eReI];
         const eIm  = out[eImI];
