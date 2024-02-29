@@ -82,9 +82,9 @@ function print_code(power){
     line += "\n\n";
 
     for(let c = 1; c<=cols; c++){
-        line += "        // Power "+c;
+        line += "        // Power "+c+"\n";
         for(let r = 1; r<=rows; r++){
-             line += "        twiddlelizer(out, "+tRe(r,c)+","+tIm(r,c)+", eReI1, eImI1, oReI1, oImI1);"
+             line += "        twiddlelizer(out, "+tRe(r,c)+","+tIm(r,c)+", eReI1, eImI1, oReI1, oImI1);\n"
         }
         line += "\n";
     }
