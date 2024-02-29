@@ -890,8 +890,8 @@ function fftComplexInPlace_seq(out) {
     let tRe001_4,tIm001_4,tRe002_4,tIm002_4,tRe003_4,tIm003_4,tRe004_4,tIm004_4,tRe005_4,tIm005_4,tRe006_4,tIm006_4,tRe007_4,tIm007_4,tRe008_4,tIm008_4,tRe009_4,tIm009_4,tRe010_4,tIm010_4,tRe011_4,tIm011_4,tRe012_4,tIm012_4,tRe013_4,tIm013_4,tRe014_4,tIm014_4,tRe015_4,tIm015_4,tRe016_4,tIm016_4; 
     let tRe001_5,tIm001_5,tRe002_5,tIm002_5,tRe003_5,tIm003_5,tRe004_5,tIm004_5,tRe005_5,tIm005_5,tRe006_5,tIm006_5,tRe007_5,tIm007_5,tRe008_5,tIm008_5,tRe009_5,tIm009_5,tRe010_5,tIm010_5,tRe011_5,tIm011_5,tRe012_5,tIm012_5,tRe013_5,tIm013_5,tRe014_5,tIm014_5,tRe015_5,tIm015_5,tRe016_5,tIm016_5; 
 
-
     let its = 0, accs = 0;
+    console.log("N = ",N," looplen = ",(N>>1)*bits);
     while(i < (N>>1)*bits){
         its++; accs+=32;
 
