@@ -21,9 +21,9 @@ function tIm(r,c){  return "tIm"+d(r)+"_"+c;  }
 function print_code(power){
     const rows = (2<<(power-2));
     const cols  = power;
-
+    
+    let line = "";
     for(let r = 1; r<=rows; r++){
-        const line = "";
         for(let c = 1; c<=cols; c++){
             line += tRe(r,c)+"="+tRe(r,c)+"; ";
             line += tIm(r,c)+"="+tIm(r,c)+"; ";
