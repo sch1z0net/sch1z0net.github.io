@@ -962,7 +962,7 @@ function fftComplexInPlace_seq(out) {
         twiddlelizer(out, tRe031_1,tIm031_1, eReI1, eImI1, oReI1, oImI1);        
         twiddlelizer(out, tRe032_1,tIm032_1, eReI1, eImI1, oReI1, oImI1);
         // Power 2        
-        /*twiddlelizer(out, tRe001_2,tIm001_2, eReI1, eImI1, oReI1, oImI1);        
+        twiddlelizer(out, tRe001_2,tIm001_2, eReI1, eImI1, oReI1, oImI1);        
         twiddlelizer(out, tRe002_2,tIm002_2, eReI1, eImI1, oReI1, oImI1);        
         twiddlelizer(out, tRe003_2,tIm003_2, eReI1, eImI1, oReI1, oImI1);        
         twiddlelizer(out, tRe004_2,tIm004_2, eReI1, eImI1, oReI1, oImI1);        
@@ -1125,7 +1125,7 @@ function fftComplexInPlace_seq(out) {
         twiddlelizer(out, tRe029_6,tIm029_6, eReI1, eImI1, oReI1, oImI1);        
         twiddlelizer(out, tRe030_6,tIm030_6, eReI1, eImI1, oReI1, oImI1);        
         twiddlelizer(out, tRe031_6,tIm031_6, eReI1, eImI1, oReI1, oImI1);        
-        twiddlelizer(out, tRe032_6,tIm032_6, eReI1, eImI1, oReI1, oImI1);*/
+        twiddlelizer(out, tRe032_6,tIm032_6, eReI1, eImI1, oReI1, oImI1);
     }
 
     return out;
