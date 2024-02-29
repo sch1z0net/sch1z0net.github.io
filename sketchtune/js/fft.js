@@ -952,7 +952,6 @@ function fftComplexInPlace_seq(out) {
     let tRe7, tIm7, eReI7, eImI7, oReI7, oImI7;
     let tRe8, tIm8, eReI8, eImI8, oReI8, oImI8;
 
-    //2 * 64 * 6 = 768
     while(i < 2*N*bits){ 
         if(i==0){
           tRe1 = factors[idx_LKUP[i++]]; tIm1 = factors[idx_LKUP[i++]]; eReI1 = idx_LKUP[i++]; eImI1 = idx_LKUP[i++]; oReI1 = idx_LKUP[i++]; oImI1 = idx_LKUP[i++];
