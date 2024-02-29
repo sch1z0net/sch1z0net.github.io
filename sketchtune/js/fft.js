@@ -1005,7 +1005,7 @@ function fftComplexInPlace_seq_4(out) {
         twiddlelizer(out, tRe016_5,tIm016_5, eReI1, eImI1, oReI1, oImI1);
 
     }
-    console.log("Iterations: ",its,"\tAccesses",accs);
+    //console.log("Iterations: ",its,"\tAccesses",accs);
 
     return out;
 }
@@ -1173,7 +1173,7 @@ function fftComplexInPlace_seq_5(out) {
         twiddlelizer(out, tRe016_5,tIm016_5, eReI1, eImI1, oReI1, oImI1);
 
     }
-    console.log("Iterations: ",its,"\tAccesses",accs);
+    //console.log("Iterations: ",its,"\tAccesses",accs);
 
     return out;
 }
@@ -1474,7 +1474,7 @@ function fftComplexInPlace_seq_6(out) {
         twiddlelizer(out, tRe032_6,tIm032_6, eReI1, eImI1, oReI1, oImI1);
 
     }
-    console.log("Iterations: ",its,"\tAccesses",accs);
+    //console.log("Iterations: ",its,"\tAccesses",accs);
 
     return out;
 }
@@ -2066,7 +2066,7 @@ function fftComplexInPlace_seq_7(out) {
         twiddlelizer(out, tRe064_7,tIm064_7, eReI1, eImI1, oReI1, oImI1);
 
     }
-    console.log("Iterations: ",its,"\tAccesses",accs);
+    //console.log("Iterations: ",its,"\tAccesses",accs);
 
     return out;
 }
