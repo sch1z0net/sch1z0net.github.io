@@ -79,6 +79,15 @@ function print_code(power){
     }
     line += "\n\n";
     line += "        i+="+skips+";";
+    line += "\n\n";
+
+    for(let c = 1; c<=cols; c++){
+        line += "        // Power "+c;
+        for(let r = 1; r<=rows; r++){
+             line += "        twiddlelizer(out, "+tRe(r,c)+","+tIm(r,c)+", eReI1, eImI1, oReI1, oImI1);"
+        }
+        line += "\n";
+    }
 
     line += "    }"; 
 
