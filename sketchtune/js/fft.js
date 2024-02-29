@@ -891,6 +891,8 @@ function fftComplexInPlace_seq(out) {
     let tRe001_5,tIm001_5,tRe002_5,tIm002_5,tRe003_5,tIm003_5,tRe004_5,tIm004_5,tRe005_5,tIm005_5,tRe006_5,tIm006_5,tRe007_5,tIm007_5,tRe008_5,tIm008_5,tRe009_5,tIm009_5,tRe010_5,tIm010_5,tRe011_5,tIm011_5,tRe012_5,tIm012_5,tRe013_5,tIm013_5,tRe014_5,tIm014_5,tRe015_5,tIm015_5,tRe016_5,tIm016_5; 
 
     let its = 0, accs = 0;
+    2304
+    256*
     console.log("N = ",N," looplen = ",(N>>1)*bits);
     while(i < (N>>1)*bits){
         its++; accs+=32;
@@ -1070,7 +1072,7 @@ function eff_p(){
 function eff(N){
    const max_p = 8;
    let sum = 0;
-   let bits = (Math.log2(N)+1);
+   let bits = Math.log2(N);
 
    let looplen = (N>>1)*bits;
    console.log("Efficiency For N=",N); 
