@@ -848,18 +848,18 @@ function fftComplexInPlace_seq(out) {
     const N = out.length/2;
     const bits = Math.log2(N);
 
-    let factors;
-    if(N ==    4){ factors = LOOKUP_RADIX2_4;    }
-    if(N ==    8){ factors = LOOKUP_RADIX2_8;    }
-    if(N ==   16){ factors = LOOKUP_RADIX2_16;   }
-    if(N ==   32){ factors = LOOKUP_RADIX2_32;   }
-    if(N ==   64){ factors = LOOKUP_RADIX2_64;   }
-    if(N ==  128){ factors = LOOKUP_RADIX2_128;  }
-    if(N ==  256){ factors = LOOKUP_RADIX2_256;  }
-    if(N ==  512){ factors = LOOKUP_RADIX2_512;  }
-    if(N == 1024){ factors = LOOKUP_RADIX2_1024; }
-    if(N == 2048){ factors = LOOKUP_RADIX2_2048; }
-    if(N == 4096){ factors = LOOKUP_RADIX2_4096; }
+    let fac;
+    if(N ==    4){ fac = LOOKUP_RADIX2_4;    }
+    if(N ==    8){ fac = LOOKUP_RADIX2_8;    }
+    if(N ==   16){ fac = LOOKUP_RADIX2_16;   }
+    if(N ==   32){ fac = LOOKUP_RADIX2_32;   }
+    if(N ==   64){ fac = LOOKUP_RADIX2_64;   }
+    if(N ==  128){ fac = LOOKUP_RADIX2_128;  }
+    if(N ==  256){ fac = LOOKUP_RADIX2_256;  }
+    if(N ==  512){ fac = LOOKUP_RADIX2_512;  }
+    if(N == 1024){ fac = LOOKUP_RADIX2_1024; }
+    if(N == 2048){ fac = LOOKUP_RADIX2_2048; }
+    if(N == 4096){ fac = LOOKUP_RADIX2_4096; }
 
     let idx_LKUP; 
     if(N ==   4){ idx_LKUP = INDEX_LOOKUP_4;    }
@@ -954,14 +954,14 @@ function fftComplexInPlace_seq(out) {
 
     while(i < 2*N*bits){ 
         if(i==0){
-          tRe1 = factors[idx_LKUP[i++]]; tIm1 = factors[idx_LKUP[i++]]; eReI1 = idx_LKUP[i++]; eImI1 = idx_LKUP[i++]; oReI1 = idx_LKUP[i++]; oImI1 = idx_LKUP[i++];
-          tRe2 = factors[idx_LKUP[i++]]; tIm2 = factors[idx_LKUP[i++]]; eReI2 = idx_LKUP[i++]; eImI2 = idx_LKUP[i++]; oReI2 = idx_LKUP[i++]; oImI2 = idx_LKUP[i++];
-          tRe3 = factors[idx_LKUP[i++]]; tIm3 = factors[idx_LKUP[i++]]; eReI3 = idx_LKUP[i++]; eImI3 = idx_LKUP[i++]; oReI3 = idx_LKUP[i++]; oImI3 = idx_LKUP[i++];
-          tRe4 = factors[idx_LKUP[i++]]; tIm4 = factors[idx_LKUP[i++]]; eReI4 = idx_LKUP[i++]; eImI4 = idx_LKUP[i++]; oReI4 = idx_LKUP[i++]; oImI4 = idx_LKUP[i++];
-          tRe5 = factors[idx_LKUP[i++]]; tIm5 = factors[idx_LKUP[i++]]; eReI5 = idx_LKUP[i++]; eImI5 = idx_LKUP[i++]; oReI5 = idx_LKUP[i++]; oImI5 = idx_LKUP[i++];
-          tRe6 = factors[idx_LKUP[i++]]; tIm6 = factors[idx_LKUP[i++]]; eReI6 = idx_LKUP[i++]; eImI6 = idx_LKUP[i++]; oReI6 = idx_LKUP[i++]; oImI6 = idx_LKUP[i++];
-          tRe7 = factors[idx_LKUP[i++]]; tIm7 = factors[idx_LKUP[i++]]; eReI7 = idx_LKUP[i++]; eImI7 = idx_LKUP[i++]; oReI7 = idx_LKUP[i++]; oImI7 = idx_LKUP[i++];
-          tRe8 = factors[idx_LKUP[i++]]; tIm8 = factors[idx_LKUP[i++]]; eReI8 = idx_LKUP[i++]; eImI8 = idx_LKUP[i++]; oReI8 = idx_LKUP[i++]; oImI8 = idx_LKUP[i++];
+          tRe1 = fac[idx_LKUP[i++]]; tIm1 = fac[idx_LKUP[i++]]; eReI1 = idx_LKUP[i++]; eImI1 = idx_LKUP[i++]; oReI1 = idx_LKUP[i++]; oImI1 = idx_LKUP[i++];
+          tRe2 = fac[idx_LKUP[i++]]; tIm2 = fac[idx_LKUP[i++]]; eReI2 = idx_LKUP[i++]; eImI2 = idx_LKUP[i++]; oReI2 = idx_LKUP[i++]; oImI2 = idx_LKUP[i++];
+          tRe3 = fac[idx_LKUP[i++]]; tIm3 = fac[idx_LKUP[i++]]; eReI3 = idx_LKUP[i++]; eImI3 = idx_LKUP[i++]; oReI3 = idx_LKUP[i++]; oImI3 = idx_LKUP[i++];
+          tRe4 = fac[idx_LKUP[i++]]; tIm4 = fac[idx_LKUP[i++]]; eReI4 = idx_LKUP[i++]; eImI4 = idx_LKUP[i++]; oReI4 = idx_LKUP[i++]; oImI4 = idx_LKUP[i++];
+          tRe5 = fac[idx_LKUP[i++]]; tIm5 = fac[idx_LKUP[i++]]; eReI5 = idx_LKUP[i++]; eImI5 = idx_LKUP[i++]; oReI5 = idx_LKUP[i++]; oImI5 = idx_LKUP[i++];
+          tRe6 = fac[idx_LKUP[i++]]; tIm6 = fac[idx_LKUP[i++]]; eReI6 = idx_LKUP[i++]; eImI6 = idx_LKUP[i++]; oReI6 = idx_LKUP[i++]; oImI6 = idx_LKUP[i++];
+          tRe7 = fac[idx_LKUP[i++]]; tIm7 = fac[idx_LKUP[i++]]; eReI7 = idx_LKUP[i++]; eImI7 = idx_LKUP[i++]; oReI7 = idx_LKUP[i++]; oImI7 = idx_LKUP[i++];
+          tRe8 = fac[idx_LKUP[i++]]; tIm8 = fac[idx_LKUP[i++]]; eReI8 = idx_LKUP[i++]; eImI8 = idx_LKUP[i++]; oReI8 = idx_LKUP[i++]; oImI8 = idx_LKUP[i++];
         }
 
         //  For N = 8, the indices must look like this after each iteration
@@ -1037,10 +1037,10 @@ function fftComplexInPlace_seq(out) {
           tRe02d = tRe02b;       tIm02d = tIm02b;        // 1
           tRe03d = tRe03c;       tIm03d = tIm03c;        // 2 
           tRe04d = tRe04c;       tIm04d = tIm04c;        // 3 
-          tRe05d = fac[i];       tIm05d = fact[i];       // 4  new array access
-          tRe06d = fac[i];       tIm06d = fact[i];       // 5  new array access
-          tRe07d = fac[i];       tIm07d = fact[i];       // 6  new array access
-          tRe08d = fac[i];       tIm08d = fact[i];       // 7  new array access
+          tRe05d = fac[i];       tIm05d = fac[i];       // 4  new array access
+          tRe06d = fac[i];       tIm06d = fac[i];       // 5  new array access
+          tRe07d = fac[i];       tIm07d = fac[i];       // 6  new array access
+          tRe08d = fac[i];       tIm08d = fac[i];       // 7  new array access
           /*tRe09d = tRe01a;       tIm09d = tIm01a;        // 0
           tRe10d = tRe02b;       tIm10d = tIm02b;        // 1
           tRe11d = tRe03c;       tIm11d = tIm03c;        // 2 
