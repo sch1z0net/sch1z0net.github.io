@@ -967,8 +967,8 @@ function fftComplexInPlace_seq_4(out) {
 */
 
             console.log( "-----------------------------" );
-
-            if( (i+4) % (z) == 0 ){ s += z; }
+            //if( (i+4) % (z) == 0 ){ s += z; }
+            if( (i+1) % (z) == 0 ){ s += z; }
         }
     }
     //console.log("Iterations: ",its,"\tAccesses",accs);
