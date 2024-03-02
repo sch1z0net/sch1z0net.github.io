@@ -883,11 +883,13 @@ function fftComplexInPlace_seq_4(out) {
     let x3Re, x3Im, x3ReI = 0, x3ImI = 0;
     let t_x1Re, t_x1Im, t_x3Re, t_x3Im;
 
+
+
     let r = 16;
     for(let p = 0; p < bits; p++){
         let d = 1<<(2*p);  
         r >>= (2*p);
-        for(let i = 0, i < N; i+=4){
+        for(let i = 0; i < N; i+=4){
             tRe000_1=____F[i];tIm000_1=____F[i];
             tRe001_1=tRe000_1;tIm001_1=tIm000_1;
 
