@@ -887,10 +887,11 @@ function fftComplexInPlace_seq_4(out) {
 
     let r = N;
     for(let p = 0; p < (bits>>1); p++){
-        let d = 1<<(2*p);     // 1    4    16
+        let d = 1<<(2*p);     // 1       4        16
         r = r >> (2*p);
-        let z = d*4;          // 1*4  4*4  16*4   
+        let z = d*4;          // 1*4=4   4*4=16   16*4=64 
         let s = 0;
+        let j = 0;
         console.log( "########################################" );
         for(let i = 0; i < N; i+=4){
             tRe000_1=____F[i];tIm000_1=____F[i];
@@ -899,45 +900,46 @@ function fftComplexInPlace_seq_4(out) {
             tRe000_2=tRe000_1;tIm000_2=tIm000_1;
             tRe001_2=____F[i];tIm001_2=____F[i];
 
-            j = (0%(d));
             x0Re = out[(s + j + d*0)*2+0]; x0Im = out[(s + j + d*0)*2+1];  //x0 
             x1Re = out[(s + j + d*1)*2+0]; x1Im = out[(s + j + d*1)*2+1];  //x1
             x2Re = out[(s + j + d*2)*2+0]; x2Im = out[(s + j + d*2)*2+1];  //x2 
             x3Re = out[(s + j + d*3)*2+0]; x3Im = out[(s + j + d*3)*2+1];  //x3
             out[(0+i)*2+0] = x0Re + (x1Re * tRe000_1 - x1Im * tIm000_1) + ((x2Re + x3Re * tRe000_1 - x3Im * tIm000_1)*tRe000_2 - ((x2Im + x3Re * tIm000_1 + x3Im * tRe000_1)*tIm000_2));  //x0re 
             out[(0+i)*2+1] = x0Im + (x1Re * tIm000_1 + x1Im * tRe000_1) + ((x2Re + x3Re * tRe000_1 - x3Im * tIm000_1)*tIm000_2 + ((x2Im + x3Re * tIm000_1 + x3Im * tRe000_1)*tRe000_2));  //x0im  //Twiddlelizer
-            
             console.log( (s + j + d*0), (s + j + d*1), (s + j + d*2), (s + j + d*3) );
+            j += 1; j = j%d;
 
-            j = (1%(d));
+
             x0Re = out[(s + j + d*0)*2+0]; x0Im = out[(s + j + d*0)*2+1];  //x0 
             x1Re = out[(s + j + d*1)*2+0]; x1Im = out[(s + j + d*1)*2+1];  //x1
             x2Re = out[(s + j + d*2)*2+0]; x2Im = out[(s + j + d*2)*2+1];  //x2 
             x3Re = out[(s + j + d*3)*2+0]; x3Im = out[(s + j + d*3)*2+1];  //x3
             out[(1+i)*2+0] = x0Re - (x1Re * tRe000_1 - x1Im * tIm000_1) - ((x2Re - x3Re * tRe000_1 - x3Im * tIm000_1)*tRe001_2 - ((x2Im - x3Re * tIm000_1 + x3Im * tRe000_1)*tIm001_2));  //x1re 
             out[(1+i)*2+1] = x0Im - (x1Re * tIm000_1 + x1Im * tRe000_1) - ((x2Re - x3Re * tRe000_1 - x3Im * tIm000_1)*tIm001_2 + ((x2Im - x3Re * tIm000_1 + x3Im * tRe000_1)*tRe001_2));  //x1im  //Twiddlelizer
-            
             console.log( (s + j + d*0), (s + j + d*1), (s + j + d*2), (s + j + d*3) );
+            j += 1; j = j%d;
 
-            j = (2%(d));
+
             x0Re = out[(s + j + d*0)*2+0]; x0Im = out[(s + j + d*0)*2+1];  //x0 
             x1Re = out[(s + j + d*1)*2+0]; x1Im = out[(s + j + d*1)*2+1];  //x1
             x2Re = out[(s + j + d*2)*2+0]; x2Im = out[(s + j + d*2)*2+1];  //x2 
             x3Re = out[(s + j + d*3)*2+0]; x3Im = out[(s + j + d*3)*2+1];  //x3
             out[(2+i)*2+0] = x0Re + (x1Re * tRe000_1 - x1Im * tIm000_1) + ((x2Re + x3Re * tRe000_1 - x3Im * tIm000_1)*tRe000_2 - ((x2Im + x3Re * tIm000_1 + x3Im * tRe000_1)*tIm000_2));  //x2re 
             out[(2+i)*2+1] = x0Im + (x1Re * tIm000_1 + x1Im * tRe000_1) + ((x2Re + x3Re * tRe000_1 - x3Im * tIm000_1)*tIm000_2 + ((x2Im + x3Re * tIm000_1 + x3Im * tRe000_1)*tRe000_2));  //x2im  //Twiddlelizer
-            
             console.log( (s + j + d*0), (s + j + d*1), (s + j + d*2), (s + j + d*3) );
+            j += 1; j = j%d;
 
-            j = (3%(d));
+
             x0Re = out[(s + j + d*0)*2+0]; x0Im = out[(s + j + d*0)*2+1];  //x0 
             x1Re = out[(s + j + d*1)*2+0]; x1Im = out[(s + j + d*1)*2+1];  //x1
             x2Re = out[(s + j + d*2)*2+0]; x2Im = out[(s + j + d*2)*2+1];  //x2 
             x3Re = out[(s + j + d*3)*2+0]; x3Im = out[(s + j + d*3)*2+1];  //x3
             out[(3+i)*2+0] = x0Re - (x1Re * tRe000_1 - x1Im * tIm000_1) - ((x2Re - x3Re * tRe000_1 - x3Im * tIm000_1)*tRe001_2 - ((x2Im - x3Re * tIm000_1 + x3Im * tRe000_1)*tIm001_2));  //x3re 
             out[(3+i)*2+1] = x0Im - (x1Re * tIm000_1 + x1Im * tRe000_1) - ((x2Re - x3Re * tRe000_1 - x3Im * tIm000_1)*tIm001_2 + ((x2Im - x3Re * tIm000_1 + x3Im * tRe000_1)*tRe001_2));  //x3im  //Twiddlelizer
-        
             console.log( (s + j + d*0), (s + j + d*1), (s + j + d*2), (s + j + d*3) );
+            j += 1; j = j%d;
+
+
             console.log( "-----------------------------" );
 
             if( (i+4) % (z) == 0 ){ s += z; }
