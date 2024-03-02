@@ -885,10 +885,11 @@ function fftComplexInPlace_seq_4(out) {
 
 
 
-    let r = N;
+    let r = N; let s = 0;
     for(let p = 0; p < (bits>>1); p++){
         let d = 1<<(2*p);  //1 4 16
         r = r >> (2*p);
+        let z = 4<<(2*p);
         console.log( "########################################" );
         for(let i = 0; i < N; i+=4){
             tRe000_1=____F[i];tIm000_1=____F[i];
@@ -897,7 +898,8 @@ function fftComplexInPlace_seq_4(out) {
             tRe000_2=tRe000_1;tIm000_2=tIm000_1;
             tRe001_2=____F[i];tIm001_2=____F[i];
 
-            s = (i%r);
+            
+            if( i % (z) == 0 ){ s += z; }
 
             j = (0%(d));
             x0Re = out[(s + j + d*0)*2+0]; x0Im = out[(s + j + d*0)*2+1];  //x0 
