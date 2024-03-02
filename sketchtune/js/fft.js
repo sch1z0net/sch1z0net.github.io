@@ -1469,13 +1469,14 @@ function fftComplexInPlaceRADIX4(complexInput) {
     if(N == 4096){ map = bitReversalMap4096.get(N);}
 
     // Perform bit reversal
-    const out = new Float32Array(N*2);
+    /*const out = new Float32Array(N*2);
     for (let i = 0; i < N; i++) {
         out[i*2  ] = input[map[i]*2  ];
         out[i*2+1] = input[map[i]*2+1];
     }
 
-    return fftComplexInPlace(out);
+    return fftComplexInPlace(out);*/
+    return fftComplexInPlace(input);
 }
 
 
