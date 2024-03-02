@@ -898,7 +898,7 @@ function fftComplexInPlace_seq_4(out) {
         let size2 = 2<<(p2-1);  //  4 // 16 // 64 //
         let ji = 0;
         console.log( "########################################" );
-        for(let i = 0; i < N; i+=1){
+        for(let i = 0; i < N; i+=4){
             j2 = ji%size1; j1 = ji%(size1/2); ji++;
             tRe_1  = Math.cos((2 * Math.PI * j1) / size1);
             tIm_1  = Math.sin((2 * Math.PI * j1) / size1);
@@ -985,7 +985,7 @@ function fftComplexInPlace_seq_4(out) {
 
             console.log( "-----------------------------" );
             //if( (i+4) % (z) == 0 ){ s += z; }
-            if( (i+1) % (z) == 0 ){ s += z; }
+            if( (i+4) % (z) == 0 ){ s += z; }
         }
     }
     //console.log("Iterations: ",its,"\tAccesses",accs);
