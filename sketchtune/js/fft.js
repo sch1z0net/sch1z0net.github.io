@@ -898,7 +898,7 @@ function fftComplexInPlace_seq_4(out) {
         let size2 = 2<<(p2-1);  //  4 // 16 // 64 //
         let ji = 0;
         console.log( "########################################" );
-        for(let i = 0; i < N; i+=4){
+        for(let i = 0; i < N; i+=1){
             j2 = ji%size1; j1 = ji%(size1/2); ji++;
             tRe_1  = Math.cos((2 * Math.PI * j1) / size1);
             tIm_1  = Math.sin((2 * Math.PI * j1) / size1);
@@ -909,13 +909,13 @@ function fftComplexInPlace_seq_4(out) {
             x1Re = out[(s + k + d*1)*2+0]; x1Im = out[(s + k + d*1)*2+1];
             x2Re = out[(s + k + d*2)*2+0]; x2Im = out[(s + k + d*2)*2+1];
             x3Re = out[(s + k + d*3)*2+0]; x3Im = out[(s + k + d*3)*2+1];
-            // 0
+
             out[(0+i)*2+0] = x0Re + (x1Re * tRe_1 - x1Im * tIm_1) + ((x2Re + x3Re * tRe_1 - x3Im * tIm_1)*tRe_2 - ((x2Im + x3Re * tIm_1 + x3Im * tRe_1)*tIm_2)); 
             out[(0+i)*2+1] = x0Im + (x1Re * tIm_1 + x1Im * tRe_1) + ((x2Re + x3Re * tRe_1 - x3Im * tIm_1)*tIm_2 + ((x2Im + x3Re * tIm_1 + x3Im * tRe_1)*tRe_2));
-            //console.log( (s + k + d*0), (s + k + d*1), (s + k + d*2), (s + k + d*3) );
+            console.log( (s + k + d*0), (s + k + d*1), (s + k + d*2), (s + k + d*3) );
             console.log( j1, j2 );
             k += 1; k = k%d;
-
+/*
             j2 = ji%size1; j1 = ji%(size1/2); ji++;
             tRe_1  = Math.cos((2 * Math.PI * j1) / size1);
             tIm_1  = Math.sin((2 * Math.PI * j1) / size1);
@@ -926,7 +926,7 @@ function fftComplexInPlace_seq_4(out) {
             x1Re = out[(s + k + d*1)*2+0]; x1Im = out[(s + k + d*1)*2+1];
             x2Re = out[(s + k + d*2)*2+0]; x2Im = out[(s + k + d*2)*2+1];
             x3Re = out[(s + k + d*3)*2+0]; x3Im = out[(s + k + d*3)*2+1]; 
-            // 1 
+
             out[(1+i)*2+0] = x0Re - (x1Re * tRe_1 - x1Im * tIm_1) - ((x2Re - x3Re * tRe_1 - x3Im * tIm_1)*tRe_2 - ((x2Im - x3Re * tIm_1 + x3Im * tRe_1)*tIm_2)); 
             out[(1+i)*2+1] = x0Im - (x1Re * tIm_1 + x1Im * tRe_1) - ((x2Re - x3Re * tRe_1 - x3Im * tIm_1)*tIm_2 + ((x2Im - x3Re * tIm_1 + x3Im * tRe_1)*tRe_2));
             //console.log( (s + k + d*0), (s + k + d*1), (s + k + d*2), (s + k + d*3) );
@@ -964,7 +964,7 @@ function fftComplexInPlace_seq_4(out) {
             //console.log( (s + k + d*0), (s + k + d*1), (s + k + d*2), (s + k + d*3) );
             console.log( j1, j2 );
             k += 1; k = k%d;
-
+*/
 
             console.log( "-----------------------------" );
 
@@ -1469,14 +1469,13 @@ function fftComplexInPlaceRADIX4(complexInput) {
     if(N == 4096){ map = bitReversalMap4096.get(N);}
 
     // Perform bit reversal
-    /*const out = new Float32Array(N*2);
+    const out = new Float32Array(N*2);
     for (let i = 0; i < N; i++) {
         out[i*2  ] = input[map[i]*2  ];
         out[i*2+1] = input[map[i]*2+1];
     }
 
-    return fftComplexInPlace(out);*/
-    return fftComplexInPlace(input);
+    return fftComplexInPlace(out);
 }
 
 
