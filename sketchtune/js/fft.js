@@ -872,9 +872,6 @@ function fftComplexInPlace_seq_4(out) {
     if(N ==2048){ idx_LKUP = INDEX_LOOKUP_2048; }  
     if(N ==4096){ idx_LKUP = INDEX_LOOKUP_4096; } 
 
-    let i = 0;
-
-
     let its = 0, accs = 0;
 
     let tRe000_1,tIm000_1,tRe001_1,tIm001_1;
