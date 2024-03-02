@@ -877,10 +877,11 @@ function fftComplexInPlace_seq_4(out) {
     let tRe000_1,tIm000_1,tRe001_1,tIm001_1;
     let tRe000_2,tIm000_2,tRe001_2,tIm001_2;
 
-    let x0Re, x0Im, x0ReI = 0, x0ImI = 0;
-    let x1Re, x1Im, x1ReI = 0, x1ImI = 0;
-    let x2Re, x2Im, x2ReI = 0, x2ImI = 0;
-    let x3Re, x3Im, x3ReI = 0, x3ImI = 0;
+    let x0aRe, x0aIm; let x1aRe, x1aIm; let x2aRe, x2aIm; let x3aRe, x3aIm;
+    let x0bRe, x0bIm; let x1bRe, x1bIm; let x2bRe, x2bIm; let x3bRe, x3bIm;
+    let x0cRe, x0cIm; let x1cRe, x1cIm; let x2cRe, x2cIm; let x3cRe, x3cIm;
+    let x0dRe, x0dIm; let x1dRe, x1dIm; let x2dRe, x2dIm; let x3dRe, x3dIm;
+
     let t_x1Re, t_x1Im, t_x3Re, t_x3Im;
 
 
