@@ -887,7 +887,7 @@ function fftComplexInPlace_seq_4(out) {
 
     let r = 16;
     for(let p = 0; p < bits; p++){
-        let d = 1<<(2*p);  
+        let d = 1<<(2*p);  //1 4 16
         r = r >> (2*p);
         console.log( "########################################" );
         for(let i = 0; i < N; i+=4){
@@ -899,7 +899,7 @@ function fftComplexInPlace_seq_4(out) {
 
             s = (i%r);
 
-            j = (0%(i));
+            j = (0%(d));
             x0Re = out[(s + j + d*0)*2+0]; x0Im = out[(s + j + d*0)*2+1];  //x0 
             x1Re = out[(s + j + d*1)*2+0]; x1Im = out[(s + j + d*1)*2+1];  //x1
             x2Re = out[(s + j + d*2)*2+0]; x2Im = out[(s + j + d*2)*2+1];  //x2 
@@ -909,7 +909,7 @@ function fftComplexInPlace_seq_4(out) {
             
             console.log( (s + j + d*0), (s + j + d*1), (s + j + d*2), (s + j + d*3) );
 
-            j = (1%(i));
+            j = (1%(d));
             x0Re = out[(s + j + d*0)*2+0]; x0Im = out[(s + j + d*0)*2+1];  //x0 
             x1Re = out[(s + j + d*1)*2+0]; x1Im = out[(s + j + d*1)*2+1];  //x1
             x2Re = out[(s + j + d*2)*2+0]; x2Im = out[(s + j + d*2)*2+1];  //x2 
@@ -919,7 +919,7 @@ function fftComplexInPlace_seq_4(out) {
             
             console.log( (s + j + d*0), (s + j + d*1), (s + j + d*2), (s + j + d*3) );
 
-            j = (2%(i));
+            j = (2%(d));
             x0Re = out[(s + j + d*0)*2+0]; x0Im = out[(s + j + d*0)*2+1];  //x0 
             x1Re = out[(s + j + d*1)*2+0]; x1Im = out[(s + j + d*1)*2+1];  //x1
             x2Re = out[(s + j + d*2)*2+0]; x2Im = out[(s + j + d*2)*2+1];  //x2 
@@ -929,7 +929,7 @@ function fftComplexInPlace_seq_4(out) {
             
             console.log( (s + j + d*0), (s + j + d*1), (s + j + d*2), (s + j + d*3) );
 
-            j = (3%(i));
+            j = (3%(d));
             x0Re = out[(s + j + d*0)*2+0]; x0Im = out[(s + j + d*0)*2+1];  //x0 
             x1Re = out[(s + j + d*1)*2+0]; x1Im = out[(s + j + d*1)*2+1];  //x1
             x2Re = out[(s + j + d*2)*2+0]; x2Im = out[(s + j + d*2)*2+1];  //x2 
