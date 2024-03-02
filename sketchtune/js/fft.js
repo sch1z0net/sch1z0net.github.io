@@ -1991,7 +1991,7 @@ console.log(computeInverseFFT(computeFFT(signal3)));
 
 //console.log(computeFFT(signal1));
 
-console.log(fftRealInPlace_ref(signal1));
-console.log(fftRealInPlaceRADIX4(signal1,4));
+console.log(fftRealInPlace_ref(signal3));
+console.log(fftRealInPlaceRADIX4(signal3,4));
 
 
