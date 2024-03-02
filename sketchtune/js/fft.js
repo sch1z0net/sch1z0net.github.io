@@ -885,7 +885,7 @@ function fftComplexInPlace_seq_4(out) {
 
 
 
-    let r = 16;
+    let r = N;
     for(let p = 0; p < (bits>>1); p++){
         let d = 1<<(2*p);  //1 4 16
         r = r >> (2*p);
