@@ -927,10 +927,6 @@ function fftComplexInPlace_seq_4(out) {
             k += 1; k = k%d;
 
             j2 = ji%size1; j1 = ji%(size1/2); ji++;
-            tRe_1  = Math.cos((2 * Math.PI * j1) / size1);
-            tIm_1  = Math.sin((2 * Math.PI * j1) / size1);
-            tRe_2  = Math.cos((2 * Math.PI * j2) / size2);
-            tIm_2  = Math.sin((2 * Math.PI * j2) / size2);
 
             out[(1+i)*2+0] = xM1Re - ((xM3Re)*tRe_2 - ((xM3Im)*tIm_2)); // x1re
             out[(1+i)*2+1] = xM1Im - ((xM3Re)*tIm_2 + ((xM3Im)*tRe_2)); // x1im
@@ -939,15 +935,6 @@ function fftComplexInPlace_seq_4(out) {
             k += 1; k = k%d;
 
             j2 = ji%size1; j1 = ji%(size1/2); ji++;
-            tRe_1  = Math.cos((2 * Math.PI * j1) / size1);
-            tIm_1  = Math.sin((2 * Math.PI * j1) / size1);
-            tRe_2  = Math.cos((2 * Math.PI * j2) / size2);
-            tIm_2  = Math.sin((2 * Math.PI * j2) / size2);
-
-            xM0Re = x0Re + (x1Re * tRe_1 - x1Im * tIm_1);
-            xM0Im = x0Im + (x1Re * tIm_1 + x1Im * tRe_1);
-            xM2Re = x2Re + (x3Re * tRe_1 - x3Im * tIm_1);
-            xM2Im = x2Im + (x3Re * tIm_1 + x3Im * tRe_1);
 
             out[(2+i)*2+0] = xM0Re + ((xM2Re)*tRe_2 - ((xM2Im)*tIm_2)); // x2re
             out[(2+i)*2+1] = xM0Im + ((xM2Re)*tIm_2 + ((xM2Im)*tRe_2)); // x2im
@@ -956,15 +943,6 @@ function fftComplexInPlace_seq_4(out) {
             k += 1; k = k%d;
 
             j2 = ji%size1; j1 = ji%(size1/2); ji++;
-            tRe_1  = Math.cos((2 * Math.PI * j1) / size1);
-            tIm_1  = Math.sin((2 * Math.PI * j1) / size1);
-            tRe_2  = Math.cos((2 * Math.PI * j2) / size2);
-            tIm_2  = Math.sin((2 * Math.PI * j2) / size2);
-
-            xM1Re = x0Re - (x1Re * tRe_1 - x1Im * tIm_1);
-            xM1Im = x0Im - (x1Re * tIm_1 + x1Im * tRe_1);
-            xM3Re = x2Re - (x3Re * tRe_1 - x3Im * tIm_1);
-            xM3Im = x2Im - (x3Re * tIm_1 + x3Im * tRe_1);
 
             out[(3+i)*2+0] = xM1Re - ((xM3Re)*tRe_2 - ((xM3Im)*tIm_2)); // x3re
             out[(3+i)*2+1] = xM1Im - ((xM3Re)*tIm_2 + ((xM3Im)*tRe_2)); // x3im
