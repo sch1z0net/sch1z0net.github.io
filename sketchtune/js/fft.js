@@ -877,11 +877,8 @@ function fftComplexInPlace_seq_4(out) {
 
     let its = 0, accs = 0;
 
-    let tRe001_1,tIm001_1,tRe002_1,tIm002_1,tRe003_1,tIm003_1,tRe004_1,tIm004_1,tRe005_1,tIm005_1,tRe006_1,tIm006_1,tRe007_1,tIm007_1,tRe008_1,tIm008_1,tRe009_1,tIm009_1,tRe010_1,tIm010_1,tRe011_1,tIm011_1,tRe012_1,tIm012_1,tRe013_1,tIm013_1,tRe014_1,tIm014_1,tRe015_1,tIm015_1,tRe016_1,tIm016_1; 
-    let tRe001_2,tIm001_2,tRe002_2,tIm002_2,tRe003_2,tIm003_2,tRe004_2,tIm004_2,tRe005_2,tIm005_2,tRe006_2,tIm006_2,tRe007_2,tIm007_2,tRe008_2,tIm008_2,tRe009_2,tIm009_2,tRe010_2,tIm010_2,tRe011_2,tIm011_2,tRe012_2,tIm012_2,tRe013_2,tIm013_2,tRe014_2,tIm014_2,tRe015_2,tIm015_2,tRe016_2,tIm016_2; 
-    let tRe001_3,tIm001_3,tRe002_3,tIm002_3,tRe003_3,tIm003_3,tRe004_3,tIm004_3,tRe005_3,tIm005_3,tRe006_3,tIm006_3,tRe007_3,tIm007_3,tRe008_3,tIm008_3,tRe009_3,tIm009_3,tRe010_3,tIm010_3,tRe011_3,tIm011_3,tRe012_3,tIm012_3,tRe013_3,tIm013_3,tRe014_3,tIm014_3,tRe015_3,tIm015_3,tRe016_3,tIm016_3; 
-    let tRe001_4,tIm001_4,tRe002_4,tIm002_4,tRe003_4,tIm003_4,tRe004_4,tIm004_4,tRe005_4,tIm005_4,tRe006_4,tIm006_4,tRe007_4,tIm007_4,tRe008_4,tIm008_4,tRe009_4,tIm009_4,tRe010_4,tIm010_4,tRe011_4,tIm011_4,tRe012_4,tIm012_4,tRe013_4,tIm013_4,tRe014_4,tIm014_4,tRe015_4,tIm015_4,tRe016_4,tIm016_4; 
-    let tRe001_5,tIm001_5,tRe002_5,tIm002_5,tRe003_5,tIm003_5,tRe004_5,tIm004_5,tRe005_5,tIm005_5,tRe006_5,tIm006_5,tRe007_5,tIm007_5,tRe008_5,tIm008_5,tRe009_5,tIm009_5,tRe010_5,tIm010_5,tRe011_5,tIm011_5,tRe012_5,tIm012_5,tRe013_5,tIm013_5,tRe014_5,tIm014_5,tRe015_5,tIm015_5,tRe016_5,tIm016_5; 
+    let tRe000_1,tIm000_1,tRe001_1,tIm001_1;
+    let tRe000_2,tIm000_2,tRe001_2,tIm001_2;
 
     let x0Re, x0Im, x0ReI = 0, x0ImI = 0;
     let x1Re, x1Im, x1ReI = 0, x1ImI = 0;
@@ -889,106 +886,87 @@ function fftComplexInPlace_seq_4(out) {
     let x3Re, x3Im, x3ReI = 0, x3ImI = 0;
     let t_x1Re, t_x1Im, t_x3Re, t_x3Im;
 
-    while(i < (N>>1)*bits){
-        its++; accs+=32;
-        tRe001_1=____F[i];tIm001_1=____F[i];tRe001_2=tRe001_2;tIm001_2=tIm001_2;tRe001_3=tRe001_3;tIm001_3=tIm001_3;tRe001_4=tRe001_4;tIm001_4=tIm001_4;tRe001_5=tRe001_5;tIm001_5=tIm001_5;
-        tRe002_1=tRe002_1;tIm002_1=tIm002_1;tRe002_2=____F[i];tIm002_2=____F[i];tRe002_3=tRe002_3;tIm002_3=tIm002_3;tRe002_4=tRe002_4;tIm002_4=tIm002_4;tRe002_5=tRe002_5;tIm002_5=tIm002_5;
-        tRe003_1=tRe003_1;tIm003_1=tIm003_1;tRe003_2=tRe003_2;tIm003_2=tIm003_2;tRe003_3=____F[i];tIm003_3=____F[i];tRe003_4=tRe003_4;tIm003_4=tIm003_4;tRe003_5=tRe003_5;tIm003_5=tIm003_5;
-        tRe004_1=tRe004_1;tIm004_1=tIm004_1;tRe004_2=tRe004_2;tIm004_2=tIm004_2;tRe004_3=____F[i];tIm004_3=____F[i];tRe004_4=tRe004_4;tIm004_4=tIm004_4;tRe004_5=tRe004_5;tIm004_5=tIm004_5;
-        tRe005_1=tRe005_1;tIm005_1=tIm005_1;tRe005_2=tRe005_2;tIm005_2=tIm005_2;tRe005_3=tRe005_3;tIm005_3=tIm005_3;tRe005_4=____F[i];tIm005_4=____F[i];tRe005_5=tRe005_5;tIm005_5=tIm005_5;
-        tRe006_1=tRe006_1;tIm006_1=tIm006_1;tRe006_2=tRe006_2;tIm006_2=tIm006_2;tRe006_3=tRe006_3;tIm006_3=tIm006_3;tRe006_4=____F[i];tIm006_4=____F[i];tRe006_5=tRe006_5;tIm006_5=tIm006_5;
-        tRe007_1=tRe007_1;tIm007_1=tIm007_1;tRe007_2=tRe007_2;tIm007_2=tIm007_2;tRe007_3=tRe007_3;tIm007_3=tIm007_3;tRe007_4=____F[i];tIm007_4=____F[i];tRe007_5=tRe007_5;tIm007_5=tIm007_5;
-        tRe008_1=tRe008_1;tIm008_1=tIm008_1;tRe008_2=tRe008_2;tIm008_2=tIm008_2;tRe008_3=tRe008_3;tIm008_3=tIm008_3;tRe008_4=____F[i];tIm008_4=____F[i];tRe008_5=tRe008_5;tIm008_5=tIm008_5;
-        tRe009_1=tRe009_1;tIm009_1=tIm009_1;tRe009_2=tRe009_2;tIm009_2=tIm009_2;tRe009_3=tRe009_3;tIm009_3=tIm009_3;tRe009_4=tRe009_4;tIm009_4=tIm009_4;tRe009_5=____F[i];tIm009_5=____F[i];
-        tRe010_1=tRe010_1;tIm010_1=tIm010_1;tRe010_2=tRe010_2;tIm010_2=tIm010_2;tRe010_3=tRe010_3;tIm010_3=tIm010_3;tRe010_4=tRe010_4;tIm010_4=tIm010_4;tRe010_5=____F[i];tIm010_5=____F[i];
-        tRe011_1=tRe011_1;tIm011_1=tIm011_1;tRe011_2=tRe011_2;tIm011_2=tIm011_2;tRe011_3=tRe011_3;tIm011_3=tIm011_3;tRe011_4=tRe011_4;tIm011_4=tIm011_4;tRe011_5=____F[i];tIm011_5=____F[i];
-        tRe012_1=tRe012_1;tIm012_1=tIm012_1;tRe012_2=tRe012_2;tIm012_2=tIm012_2;tRe012_3=tRe012_3;tIm012_3=tIm012_3;tRe012_4=tRe012_4;tIm012_4=tIm012_4;tRe012_5=____F[i];tIm012_5=____F[i];
-        tRe013_1=tRe013_1;tIm013_1=tIm013_1;tRe013_2=tRe013_2;tIm013_2=tIm013_2;tRe013_3=tRe013_3;tIm013_3=tIm013_3;tRe013_4=tRe013_4;tIm013_4=tIm013_4;tRe013_5=____F[i];tIm013_5=____F[i];
-        tRe014_1=tRe014_1;tIm014_1=tIm014_1;tRe014_2=tRe014_2;tIm014_2=tIm014_2;tRe014_3=tRe014_3;tIm014_3=tIm014_3;tRe014_4=tRe014_4;tIm014_4=tIm014_4;tRe014_5=____F[i];tIm014_5=____F[i];
-        tRe015_1=tRe015_1;tIm015_1=tIm015_1;tRe015_2=tRe015_2;tIm015_2=tIm015_2;tRe015_3=tRe015_3;tIm015_3=tIm015_3;tRe015_4=tRe015_4;tIm015_4=tIm015_4;tRe015_5=____F[i];tIm015_5=____F[i];
-        tRe016_1=tRe016_1;tIm016_1=tIm016_1;tRe016_2=tRe016_2;tIm016_2=tIm016_2;tRe016_3=tRe016_3;tIm016_3=tIm016_3;tRe016_4=tRe016_4;tIm016_4=tIm016_4;tRe016_5=____F[i];tIm016_5=____F[i];
+    let r = 16;
+    for(let p = 0; p < bits; p++){
+        let d = 1<<(2*p);  
+        let r >>= (2*p);
+        for(let i = 0, i < N; i+=4){
+            tRe000_1=____F[i];tIm000_1=____F[i];
+            tRe001_1=tRe000_1;tIm001_1=tIm000_1;
+
+            tRe000_2=tRe000_1;tIm000_2=tIm000_1;
+            tRe001_2=____F[i];tIm001_2=____F[i];
+
+            s = (i%r);
+
+            j = (0%(i));
+            x0Re = out[(s + j + d*0)*2+0]; x0Im = out[(s + j + d*0)*2+1];  //x0 
+            x1Re = out[(s + j + d*1)*2+0]; x1Im = out[(s + j + d*1)*2+1];  //x1
+            x2Re = out[(s + j + d*2)*2+0]; x2Im = out[(s + j + d*2)*2+1];  //x2 
+            x3Re = out[(s + j + d*3)*2+0]; x3Im = out[(s + j + d*3)*2+1];  //x3
+            out[(0+i)*2+0] = x0Re + (x1Re * tRe000_1 - x1Im * tIm000_1) + ((x2Re + x3Re * tRe000_1 - x3Im * tIm000_1)*tRe000_2 - ((x2Im + x3Re * tIm000_1 + x3Im * tRe000_1)*tIm000_2));  //x0re 
+            out[(0+i)*2+1] = x0Im + (x1Re * tIm000_1 + x1Im * tRe000_1) + ((x2Re + x3Re * tRe000_1 - x3Im * tIm000_1)*tIm000_2 + ((x2Im + x3Re * tIm000_1 + x3Im * tRe000_1)*tRe000_2));  //x0im  //Twiddlelizer
+            
+            console.log( (s + j + d*0), (s + j + d*1), (s + j + d*2), (s + j + d*3) );
+
+            j = (1%(i));
+            x0Re = out[(s + j + d*0)*2+0]; x0Im = out[(s + j + d*0)*2+1];  //x0 
+            x1Re = out[(s + j + d*1)*2+0]; x1Im = out[(s + j + d*1)*2+1];  //x1
+            x2Re = out[(s + j + d*2)*2+0]; x2Im = out[(s + j + d*2)*2+1];  //x2 
+            x3Re = out[(s + j + d*3)*2+0]; x3Im = out[(s + j + d*3)*2+1];  //x3
+            out[(1+i)*2+0] = x0Re - (x1Re * tRe000_1 - x1Im * tIm000_1) - ((x2Re - x3Re * tRe000_1 - x3Im * tIm000_1)*tRe001_2 - ((x2Im - x3Re * tIm000_1 + x3Im * tRe000_1)*tIm001_2));  //x1re 
+            out[(1+i)*2+1] = x0Im - (x1Re * tIm000_1 + x1Im * tRe000_1) - ((x2Re - x3Re * tRe000_1 - x3Im * tIm000_1)*tIm001_2 + ((x2Im - x3Re * tIm000_1 + x3Im * tRe000_1)*tRe001_2));  //x1im  //Twiddlelizer
+            
+            console.log( (s + j + d*0), (s + j + d*1), (s + j + d*2), (s + j + d*3) );
+
+            j = (2%(i));
+            x0Re = out[(s + j + d*0)*2+0]; x0Im = out[(s + j + d*0)*2+1];  //x0 
+            x1Re = out[(s + j + d*1)*2+0]; x1Im = out[(s + j + d*1)*2+1];  //x1
+            x2Re = out[(s + j + d*2)*2+0]; x2Im = out[(s + j + d*2)*2+1];  //x2 
+            x3Re = out[(s + j + d*3)*2+0]; x3Im = out[(s + j + d*3)*2+1];  //x3
+            out[(2+i)*2+0] = x0Re + (x1Re * tRe000_1 - x1Im * tIm000_1) + ((x2Re + x3Re * tRe000_1 - x3Im * tIm000_1)*tRe000_2 - ((x2Im + x3Re * tIm000_1 + x3Im * tRe000_1)*tIm000_2));  //x2re 
+            out[(2+i)*2+1] = x0Im + (x1Re * tIm000_1 + x1Im * tRe000_1) + ((x2Re + x3Re * tRe000_1 - x3Im * tIm000_1)*tIm000_2 + ((x2Im + x3Re * tIm000_1 + x3Im * tRe000_1)*tRe000_2));  //x2im  //Twiddlelizer
+            
+            console.log( (s + j + d*0), (s + j + d*1), (s + j + d*2), (s + j + d*3) );
+
+            j = (3%(i));
+            x0Re = out[(s + j + d*0)*2+0]; x0Im = out[(s + j + d*0)*2+1];  //x0 
+            x1Re = out[(s + j + d*1)*2+0]; x1Im = out[(s + j + d*1)*2+1];  //x1
+            x2Re = out[(s + j + d*2)*2+0]; x2Im = out[(s + j + d*2)*2+1];  //x2 
+            x3Re = out[(s + j + d*3)*2+0]; x3Im = out[(s + j + d*3)*2+1];  //x3
+            out[(3+i)*2+0] = x0Re - (x1Re * tRe000_1 - x1Im * tIm000_1) - ((x2Re - x3Re * tRe000_1 - x3Im * tIm000_1)*tRe001_2 - ((x2Im - x3Re * tIm000_1 + x3Im * tRe000_1)*tIm001_2));  //x3re 
+            out[(3+i)*2+1] = x0Im - (x1Re * tIm000_1 + x1Im * tRe000_1) - ((x2Re - x3Re * tRe000_1 - x3Im * tIm000_1)*tIm001_2 + ((x2Im - x3Re * tIm000_1 + x3Im * tRe000_1)*tRe001_2));  //x3im  //Twiddlelizer
         
-        i+=160;
-
-        for(let p = 1; p <= 5; p++){
-        /*
-        //Radix 2
-        x0Re  = out[x0ReI];  x0Im  = out[x0ImI];  //x0 
-        x1Re  = out[x1ReI];  x1Im  = out[x1ImI];  //x1
-        x2Re  = out[x2ReI];  x2Im  = out[x2ImI];  //x2 
-        x3Re  = out[x3ReI];  x3Im  = out[x3ImI];  //x3
-
-        t_x1Re = x1Re * tRe001_1 - x1Im * tIm001_1; 
-        t_x1Im = x1Re * tIm001_1 + x1Im * tRe001_1; 
-        out[x0ReI] = (x0Re + t_x1Re);  out[x0ImI] = (x0Im + t_x1Im);  //x0
-        out[x1ReI] = (x0Re - t_x1Re);  out[x1ImI] = (x0Im - t_x1Im);  //x1
-
-        t_x3Re = x3Re * tRe001_1 - x3Im * tIm001_1; 
-        t_x3Im = x3Re * tIm001_1 + x1Im * tRe001_1; 
-        out[x2ReI] = (x2Re + t_x3Re);  out[x2ImI] = (x2Im + t_x3Im);  //x2
-        out[x3ReI] = (x2Re - t_x3Re);  out[x3ImI] = (x2Im - t_x3Im);  //x3*/
-
-
-        //Radix 4
-        x0Re  = out[x0ReI];  x0Im  = out[x0ImI];  //x0 
-        x1Re  = out[x1ReI];  x1Im  = out[x1ImI];  //x1
-        x2Re  = out[x2ReI];  x2Im  = out[x2ImI];  //x2 
-        x3Re  = out[x3ReI];  x3Im  = out[x3ImI];  //x3
-
-        t_x1Re = x1Re * tRe001_1 - x1Im * tIm001_1; 
-        t_x1Im = x1Re * tIm001_1 + x1Im * tRe001_1; 
-        t_x3Re = x3Re * tRe001_1 - x3Im * tIm001_1; 
-        t_x3Im = x3Re * tIm001_1 + x1Im * tRe001_1; 
-
-        t_x1Re = x1Re * tRe001_1 - x1Im * tIm001_1; 
-        t_x1Im = x1Re * tIm001_1 + x1Im * tRe001_1; 
-        t_x3Re = x3Re * tRe001_1 - x3Im * tIm001_1; 
-        t_x3Im = x3Re * tIm001_1 + x1Im * tRe001_1; 
-
-        // Intermediate step for x0
-        let x0Re_mid   = (x0Re + t_x1Re); x0Im_mid   = (x0Im + t_x1Im);
-        let t_x2Re_mid = (x2Re - t_x3Re); t_x2Im_mid = (x2Im - t_x3Im);
-        // Intermediate step for x1
-        let x1Re_mid   = (x0Re + t_x1Re); x1Im_mid   = (x0Im + t_x1Im);
-        let t_x3Re_mid = (x2Re - t_x3Re); t_x3Im_mid = (x2Im - t_x3Im);
-        // Intermediate step for x2
-        let x2Re_mid   = (x2Re + t_x3Re); x1Im_mid   = (x2Im + t_x3Im);
-        let t_x0Re_mid = (x0Re - t_x1Re); t_x3Im_mid = (x0Im - t_x1Im);
-        // Intermediate step for x3
-        let x3Re_mid   = (x2Re + t_x3Re); x1Im_mid   = (x2Im + t_x3Im);
-        let t_x1Re_mid = (x0Re - t_x1Re); t_x3Im_mid = (x0Im - t_x1Im);
-
-        out[x0ReI] = (x0Re_mid + t_x2Re_mid);  out[x0ImI] = (x0Im_mid + t_x2Im_mid);  //x0  //Twiddlelizer
-        out[x1ReI] = (x1Re_mid - t_x3Re_mid);  out[x1ImI] = (x1Im_mid - t_x3Im_mid);  //x1  //Twiddlelizer
-        out[x2ReI] = (x2Re_mid + t_x0Re_mid);  out[x2ImI] = (x2Im_mid + t_x0Im_mid);  //x2  //Twiddlelizer
-        out[x3ReI] = (x3Re_mid - t_x1Re_mid);  out[x3ImI] = (x3Im_mid - t_x1Im_mid);  //x3  //Twiddlelizer
-
+            console.log( (s + j + d*0), (s + j + d*1), (s + j + d*2), (s + j + d*3) );
+            console.log( "-----------------------------" );
         }
-
+        console.log( "########################################" );
     }
     //console.log("Iterations: ",its,"\tAccesses",accs);
 
     return out;
 }
 
-        //  For N = 16, the indices must look like this after each iteration
+        //  For N = 8, the indices must look like this after each iteration
         //  
-        //  power = 1          power = 2          power = 3           power = 4
-        //  size = 2           size = 4           size = 8            size = 16
-        //  half = 1           half = 2           half = 4            half =  8
-        //  ev  j odd          ev  j odd       _  ev  j odd           ev  j odd 
-        // _0   0   1          0   0   2      |   0   0   4            0  0   8  
-        //  2   0   3         _1   1   3      |h  1   1   5            1  1   9  
-        //  4   0   5          4   0   6      |   2   2   6            2  2  10  
-        //  6   0   7          5   1   7      |_ _3   3   7            3  3  11  
-        // (8)  0   9         (8)  0  10         (8)  0  12           (4) 4  12   <---- circled index start = 4
-        // 10   0  11          9   1  11          9   1  13            5  5  13  
-        // 12   0  13         12   0  14         10   2  14            6  6  14  
-        // 14   0  15         13   1  15         11   3  15           _7  7  15  
-        //  
-        // ratio = 4          ratio = 2           ratio = 1          ratio = 1/2       (N/b) -> 1  2  4 ..... 8
-        // _block = 2         _block = 4          _block = 8         _block = 16       1 is a special case, map it to 1/2 and the rest to 1
-        // max_bn =16/2       max_bn =16/4        max_bn = 16/2      max_bn = 16/4     therefor: c = (N/2) * (2-((N/b) & 1))/2  
+        //  power = 1          power = 2         power = 3       
+        //  size = 2           size = 4          size = 8
+        //  half = 1           half = 2          half = 4
+        //  ev  j odd          ev  j odd         ev  j odd
+        // _0   0   1          0   0   2         0   0   4
+        //  2   0   3         _1   1   3         1   1   5
+        // (4)  0   5         (4)  0   6        (2)  2   6
+        //  6   0   7          5   1   7        _3   3   7
+        //    
+        // _block = 2         _block = 4         _block = 8      
+        // max_bn =8/2        max_bn =8/4        max_bn =8/2
+
+
+
+
+
+
+
 
 
 
@@ -1134,9 +1112,9 @@ function fftComplexInPlace_flexi(out) {
         //  power = 1          power = 2      
         //  size = 2           size = 4  
         //  half = 1           half = 2  
-        //  ev  odd            ev odd     
-        // _0     1            0    2     
-        // (2)    3           _(1)  3     
+        //  ev  j odd          ev  j odd     
+        // _0   0   1          0   0   2     
+        // (2)  0   3         _(1) 1   3     
         //    
         // _block = 2         _block = 4    
         // max_bn =4/2        max_bn =4/4   
@@ -1802,7 +1780,7 @@ function compareFFTResults(array1, array2) {
 
 /****************** TEST SPEED *******************/ 
 
-measureTime(512,4);
+//measureTime(512,4);
 //measureTime(512,5);
 //measureTime(512,6);
 //measureTime(512,7);
@@ -1843,4 +1821,8 @@ console.log(computeInverseFFT(computeFFT(signal3)));
 */
 
 //console.log(computeFFT(signal1));
+
+
+fftRealInPlaceRADIX4(signal3,4);
+
 
