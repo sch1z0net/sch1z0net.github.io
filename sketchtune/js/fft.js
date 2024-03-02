@@ -1824,6 +1824,6 @@ console.log(computeInverseFFT(computeFFT(signal3)));
 //console.log(computeFFT(signal1));
 
 
-fftRealInPlaceRADIX4(signal3,4);
+fftRealInPlaceRADIX4(testData64,4);
 
 
