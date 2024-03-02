@@ -1445,9 +1445,10 @@ function fftRealInPlaceRADIX4(realInput,type) {
 
     // Perform bit reversal
     const inputBR = new Float32Array(N);
-    for (let i = 0; i < N; i++) {
+    /*for (let i = 0; i < N; i++) {
         inputBR[i] = input[map[i]];
-    }
+    }*/
+    inputBR = input;
 
     // Convert the real-valued input to a complex-valued Float32Array
     const complexOut = new Float32Array(N * 2);
