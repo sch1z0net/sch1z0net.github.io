@@ -888,7 +888,8 @@ function fftComplexInPlace_seq_4(out) {
     let r = 16;
     for(let p = 0; p < bits; p++){
         let d = 1<<(2*p);  
-        r >>= (2*p);
+        r = r >> (2*p);
+        console.log( "########################################" );
         for(let i = 0; i < N; i+=4){
             tRe000_1=____F[i];tIm000_1=____F[i];
             tRe001_1=tRe000_1;tIm001_1=tIm000_1;
@@ -939,7 +940,6 @@ function fftComplexInPlace_seq_4(out) {
             console.log( (s + j + d*0), (s + j + d*1), (s + j + d*2), (s + j + d*3) );
             console.log( "-----------------------------" );
         }
-        console.log( "########################################" );
     }
     //console.log("Iterations: ",its,"\tAccesses",accs);
 
@@ -1052,10 +1052,12 @@ function eff(N){
    }
 }
 
+/*
 eff_p();
 eff(512);
 eff(1024);
 eff(2048);
+*/
 
 function fftComplexInPlace_flexi(out) {
     const N = out.length / 2;
