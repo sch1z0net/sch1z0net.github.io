@@ -927,7 +927,7 @@ function fftComplexInPlace_seq_4(out) {
             k += 1; k = k%d;
 
             
-            sign2 = (ji < size1) ? 1 : -1;
+            sign2 = (ji%size1 < size1) ? 1 : -1;
             j2 = ji%size1; j1 = ji%(size1/2); ji++;
             tRe_1  = Math.cos((2 * Math.PI * j1) / size1);
             tIm_1  = Math.sin((2 * Math.PI * j1) / size1);          
@@ -947,7 +947,7 @@ function fftComplexInPlace_seq_4(out) {
             //console.log( j1, j2 );
             console.log(sign1, sign2);
 
-            sign2 = (ji < size1) ? 1 : -1;
+            sign2 = (ji%size1 < size1) ? 1 : -1;
             j2 = ji%size1; j1 = ji%(size1/2); ji++;
             tRe_1  = Math.cos((2 * Math.PI * j1) / size1);
             tIm_1  = Math.sin((2 * Math.PI * j1) / size1);
@@ -966,7 +966,7 @@ function fftComplexInPlace_seq_4(out) {
             //console.log( j1, j2 );
             console.log(sign1, sign2);
 
-            sign2 = (ji < size1) ? 1 : -1;
+            sign2 = (ji%size1 < size1) ? 1 : -1;
             j2 = ji%size1; j1 = ji%(size1/2); ji++;
             tRe_1  = Math.cos((2 * Math.PI * j1) / size1);
             tIm_1  = Math.sin((2 * Math.PI * j1) / size1);
@@ -985,7 +985,7 @@ function fftComplexInPlace_seq_4(out) {
             //console.log( j1, j2 );
             console.log(sign1, sign2);  
 
-            sign2 = (ji < size1) ? 1 : -1;
+            sign2 = (ji%size1 < size1) ? 1 : -1;
             j2 = ji%size1; j1 = ji%(size1/2); ji++;
             tRe_1  = Math.cos((2 * Math.PI * j1) / size1);
             tIm_1  = Math.sin((2 * Math.PI * j1) / size1);
