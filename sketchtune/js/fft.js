@@ -944,8 +944,7 @@ function fftComplexInPlace_seq_4(out) {
             out[(0+i)*2+0] = xM0Re + ((xM2Re)*tRe_2 - ((xM2Im)*tIm_2)) * sign2; // x0re //even 
             out[(0+i)*2+1] = xM0Im + ((xM2Re)*tIm_2 + ((xM2Im)*tRe_2)) * sign2; // x0im
 
-            //console.log( j1, j2 );
-            console.log(sign1, sign2);
+            console.log( j1, j2 ,"   -   ",sign1, sign2);
 
             sign2 = (ji%size2 < size1) ? 1 : -1;
             j2 = ji%size1; j1 = ji%(size1/2); ji++;
@@ -963,8 +962,7 @@ function fftComplexInPlace_seq_4(out) {
             out[(1+i)*2+0] = xM1Re + ((xM3Re)*tRe_2 - ((xM3Im)*tIm_2)) * sign2; // x1re //even
             out[(1+i)*2+1] = xM1Im + ((xM3Re)*tIm_2 + ((xM3Im)*tRe_2)) * sign2; // x1im
 
-            //console.log( j1, j2 );
-            console.log(sign1, sign2);
+            console.log( j1, j2 ,"   -   ",sign1, sign2);
 
             sign2 = (ji%size2 < size1) ? 1 : -1;
             j2 = ji%size1; j1 = ji%(size1/2); ji++;
@@ -982,8 +980,7 @@ function fftComplexInPlace_seq_4(out) {
             out[(2+i)*2+0] = xM0Re + ((xM2Re)*tRe_2 - ((xM2Im)*tIm_2)) * sign2; // x2re //odd
             out[(2+i)*2+1] = xM0Im + ((xM2Re)*tIm_2 + ((xM2Im)*tRe_2)) * sign2; // x2im
 
-            //console.log( j1, j2 );
-            console.log(sign1, sign2);  
+            console.log( j1, j2 ,"   -   ",sign1, sign2);
 
             sign2 = (ji%size2 < size1) ? 1 : -1;
             j2 = ji%size1; j1 = ji%(size1/2); ji++;
@@ -1001,8 +998,7 @@ function fftComplexInPlace_seq_4(out) {
             out[(3+i)*2+0] = xM1Re + ((xM3Re)*tRe_2 - ((xM3Im)*tIm_2)) * sign2; // x3re /odd
             out[(3+i)*2+1] = xM1Im + ((xM3Re)*tIm_2 + ((xM3Im)*tRe_2)) * sign2; // x3im
 
-            //console.log( j1, j2 );
-            console.log(sign1, sign2);
+            console.log( j1, j2 ,"   -   ",sign1, sign2);
             
             console.log( "-----------------------------" );
             //if( (i+4) % (z) == 0 ){ s += z; }
