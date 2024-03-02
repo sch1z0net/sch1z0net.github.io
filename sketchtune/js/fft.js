@@ -904,7 +904,8 @@ function fftComplexInPlace_seq_4(out) {
             x1Re = out[(s + k + d*1)*2+0]; x1Im = out[(s + k + d*1)*2+1];
             x2Re = out[(s + k + d*2)*2+0]; x2Im = out[(s + k + d*2)*2+1];
             x3Re = out[(s + k + d*3)*2+0]; x3Im = out[(s + k + d*3)*2+1];
-            
+            console.log( (s + k + d*0), (s + k + d*1), (s + k + d*2), (s + k + d*3) );
+
             sign = (ji < size1) ? 1 : -1;
             j2 = ji%size1; j1 = ji%(size1/2); ji++;
             tRe_1  = Math.cos((2 * Math.PI * j1) / size1);
@@ -924,7 +925,7 @@ function fftComplexInPlace_seq_4(out) {
             
             out[(0+i)*2+0] = xM0Re + ((xM2Re)*tRe_2 - ((xM2Im)*tIm_2)) * sign; // x0re
             out[(0+i)*2+1] = xM0Im + ((xM2Re)*tIm_2 + ((xM2Im)*tRe_2)) * sign; // x0im
-            //console.log( (s + k + d*0), (s + k + d*1), (s + k + d*2), (s + k + d*3) );
+
             //console.log( j1, j2 );
             k += 1; k = k%d;
 
