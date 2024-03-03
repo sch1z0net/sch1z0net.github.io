@@ -955,6 +955,7 @@ function fftComplexInPlace_seq_4(out) {
             console.log((sign2c<0)?"-":"+" , 2+i, " -> ", (sign1c<0)?"-":"+" , i_c0 , i_c1 , i_c2 , i_c3 );
             console.log((sign2d<0)?"-":"+" , 3+i, " -> ", (sign1d<0)?"-":"+" , i_d0 , i_d1 , i_d2 , i_d3 );
             */
+
             if(i<size1){   
                                                                 //########    +00\\  |+04\\  |-08\\  |-12\\  |
             x0aRe = out[(i_a0)*2+0]; x0aIm = out[(i_a0)*2+1];   //########       00  |   00  |   00  |   00  |
@@ -1048,6 +1049,7 @@ function fftComplexInPlace_seq_4(out) {
             //if( (i+4) % (z) == 0 ){ s += z; }
             if( (i+4) % (z) == 0 ){ s += z; }
         }
+        console.log(out);
     }
     //console.log("Iterations: ",its,"\tAccesses",accs);
 
