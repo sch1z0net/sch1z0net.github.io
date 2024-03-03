@@ -940,6 +940,8 @@ function fftComplexInPlace_seq_4(out) {
             xM2Re = x2aRe + (x3aRe * tRe_1 - x3aIm * tIm_1) * sign1; //even
             xM2Im = x2aIm + (x3aRe * tIm_1 + x3aIm * tRe_1) * sign1;
 
+            if(p==1){ console.log((0+i), xM0Re, xM0Im); }
+            if(p==1){ console.log((0+i+4), xM2Re, xM2Im); }
             
             out[(0+i)*2+0] = xM0Re + ((xM2Re)*tRe_2 - ((xM2Im)*tIm_2)) * sign2; // x0re //even 
             out[(0+i)*2+1] = xM0Im + ((xM2Re)*tIm_2 + ((xM2Im)*tRe_2)) * sign2; // x0im
@@ -959,6 +961,9 @@ function fftComplexInPlace_seq_4(out) {
             xM3Re = x2bRe + (x3bRe * tRe_1 - x3bIm * tIm_1) * sign1; //even
             xM3Im = x2bIm + (x3bRe * tIm_1 + x3bIm * tRe_1) * sign1;
 
+            if(p==1){ console.log((0+i+1), xM1Re, xM1Im); }
+            if(p==1){ console.log((0+i+1+4), xM3Re, xM3Im); }
+
             out[(1+i)*2+0] = xM1Re + ((xM3Re)*tRe_2 - ((xM3Im)*tIm_2)) * sign2; // x1re //even
             out[(1+i)*2+1] = xM1Im + ((xM3Re)*tIm_2 + ((xM3Im)*tRe_2)) * sign2; // x1im
 
@@ -977,6 +982,9 @@ function fftComplexInPlace_seq_4(out) {
             xM2Re = x2cRe + (x3cRe * tRe_1 - x3cIm * tIm_1) * sign1; //even
             xM2Im = x2cIm + (x3cRe * tIm_1 + x3cIm * tRe_1) * sign1;
             
+            if(p==1){ console.log((0+i), xM0Re, xM0Im); }
+            if(p==1){ console.log((0+i+4), xM2Re, xM2Im); }
+
             out[(2+i)*2+0] = xM0Re + ((xM2Re)*tRe_2 - ((xM2Im)*tIm_2)) * sign2; // x2re //odd
             out[(2+i)*2+1] = xM0Im + ((xM2Re)*tIm_2 + ((xM2Im)*tRe_2)) * sign2; // x2im
 
@@ -995,15 +1003,22 @@ function fftComplexInPlace_seq_4(out) {
             xM3Re = x2dRe + (x3dRe * tRe_1 - x3dIm * tIm_1) * sign1; //even
             xM3Im = x2dIm + (x3dRe * tIm_1 + x3dIm * tRe_1) * sign1;
 
+            if(p==1){ console.log((0+i+1), xM1Re, xM1Im); }
+            if(p==1){ console.log((0+i+1+4), xM3Re, xM3Im); }
+
             out[(3+i)*2+0] = xM1Re + ((xM3Re)*tRe_2 - ((xM3Im)*tIm_2)) * sign2; // x3re /odd
             out[(3+i)*2+1] = xM1Im + ((xM3Re)*tIm_2 + ((xM3Im)*tRe_2)) * sign2; // x3im
 
             //console.log( j1, j2 ,"   -   ",sign1, sign2);
 
-            /*console.log((0+i), out[(0+i)*2+0], out[(0+i)*2+1]);
+            if(p==0){
+            console.log((0+i), out[(0+i)*2+0], out[(0+i)*2+1]);
             console.log((1+i), out[(1+i)*2+0], out[(1+i)*2+1]);
             console.log((2+i), out[(2+i)*2+0], out[(2+i)*2+1]);
-            console.log((3+i), out[(3+i)*2+0], out[(3+i)*2+1]);*/
+            console.log((3+i), out[(3+i)*2+0], out[(3+i)*2+1]);
+            }
+
+
 
             console.log( "-----------------------------" );
             //if( (i+4) % (z) == 0 ){ s += z; }
@@ -1461,10 +1476,10 @@ function fftRealInPlaceRADIX4(realInput,type) {
     
 
     // Perform bit reversal
-    /*const inputBR = new Float32Array(N);
+    const inputBR = new Float32Array(N);
     for (let i = 0; i < N; i++) {
         inputBR[i] = input[map[i]];
-    }*/
+    }
     const inputBR = input;
 
     // Convert the real-valued input to a complex-valued Float32Array
@@ -1689,8 +1704,8 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
                 out[oddIndex  * 2    ] = eRe - t_oRe;
                 out[oddIndex  * 2 + 1] = eIm - t_oIm;
 
-                if(size==4||size==16){ console.log(evenIndex, out[evenIndex * 2], out[evenIndex * 2 + 1]) };
-                if(size==4||size==16){ console.log(oddIndex,  out[oddIndex * 2],  out[oddIndex * 2 + 1]) };
+                if(size==4||size==8){ console.log(evenIndex, out[evenIndex * 2], out[evenIndex * 2 + 1]) };
+                if(size==4||size==8){ console.log(oddIndex,  out[oddIndex * 2],  out[oddIndex * 2 + 1]) };
 
                 //console.log("**** EV.RE",evenIndex,(eRe + t_oRe).toFixed(2),"<- EV.RE",evenIndex,"+ (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","EV.IM",evenIndex,(eIm + t_oIm).toFixed(2),"<- EV.IM",evenIndex,"+ (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
                 //console.log("**** OD.RE",oddIndex ,(eRe - t_oRe).toFixed(2),"<- EV.RE",evenIndex,"- (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","OD.IM",oddIndex ,(eIm - t_oIm).toFixed(2),"<- EV.IM",evenIndex,"- (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
