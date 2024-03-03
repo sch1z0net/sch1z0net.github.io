@@ -875,6 +875,9 @@ function fftComplexInPlace_seq_4(out) {
     let its = 0, accs = 0;
 
 
+    for(let i=0; i<16; i++){
+        console.log("INIT:",i," -> ", out[i*2], out[i*2+1]); 
+    }
 
 
     let x0aRe, x0aIm; let x1aRe, x1aIm; let x2aRe, x2aIm; let x3aRe, x3aIm;
@@ -1765,6 +1768,10 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
     }
 
     let js = [];
+
+    for(let i=0; i<16; i++){
+        console.log("INIT:",i," -> ", out[i*2], out[i*2+1]); 
+    }
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
         const halfSize = size / 2;
