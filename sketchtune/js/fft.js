@@ -1741,7 +1741,9 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
                 //console.log("**** OD.RE",oddIndex ,(eRe - t_oRe).toFixed(2),"<- EV.RE",evenIndex,"- (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","OD.IM",oddIndex ,(eIm - t_oIm).toFixed(2),"<- EV.IM",evenIndex,"- (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
             }
         }
-        if(size==4){ console.log("after P2:", out); }
+        if(size==4){ 
+            console.log("after P2:", out[5*2], out[5*2+1]); 
+        }
         //console.log("size:"+size, output);
         //console.log("size:"+size, js);
         js = [];
