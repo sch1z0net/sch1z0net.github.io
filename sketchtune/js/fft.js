@@ -983,6 +983,7 @@ function fftComplexInPlace_seq_4(out) {
                 x1cRe = out[(i_c1)*2+0]; x1cIm = out[(i_c1)*2+1];   //########      +06  |  -06  |  +06  |  -06  |
                 x2cRe = out[(i_c2)*2+0]; x2cIm = out[(i_c2)*2+1];   //########       10  |   10  |   10  |   10  |
                 x3cRe = out[(i_c3)*2+0]; x3cIm = out[(i_c3)*2+1];   //########      +14  |  -14  |  +14  |  -14  |
+            }
             if(!x_d_read){
                 x_d_read = true;    
                                                                     //########    +03\\  |+07\\  |-11\\  |-15\\  |
