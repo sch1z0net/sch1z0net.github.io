@@ -1013,8 +1013,8 @@ function fftComplexInPlace_seq_4(out) {
              ///////////////////////////////// i = 12
              // 12 <- 12 13  |||
              // 14 <- 14 15  |||
-             console.log((0%size1+i),       ".re =", "[",i_a0,"].re ",(sign1a<0)?"-":"+"," ([",i_a1,"].re * t[",j1a,"].re - [",i_a1,"].im * t[",j1a,"].im ) <-> ", "{",x0aRe.toFixed(2),"}",(sign1a<0)?"-":"+","({",x1aRe.toFixed(2),"} * t{",tRe_1a.toFixed(2),"} - {",x1aIm.toFixed(2),"} * {",tIm_1a.toFixed(2),"} ) = ",xM0ReA.toFixed(2));
-             console.log((0%size1+i)+size1, ".re =", "[",i_a2,"].re ",(sign1a<0)?"-":"+"," ([",i_a3,"].re * t[",j1a,"].re - [",i_a3,"].im * t[",j1a,"].im ) <-> ", "{",x2aRe.toFixed(2),"}",(sign1a<0)?"-":"+","({",x3aRe.toFixed(2),"} * t{",tRe_1a.toFixed(2),"} - {",x3aIm.toFixed(2),"} * {",tIm_1a.toFixed(2),"} ) = ",xM2ReA.toFixed(2)); 
+             console.log(i+0,"--->", (0%size1+i)%N,       ".re =", "[",i_a0,"].re ",(sign1a<0)?"-":"+"," ([",i_a1,"].re * t[",j1a,"].re - [",i_a1,"].im * t[",j1a,"].im ) <-> ", "{",x0aRe.toFixed(2),"}",(sign1a<0)?"-":"+","({",x1aRe.toFixed(2),"} * t{",tRe_1a.toFixed(2),"} - {",x1aIm.toFixed(2),"} * {",tIm_1a.toFixed(2),"} ) = ",xM0ReA.toFixed(2));
+             console.log(i+0,"--->", (0%size1+i)+size1%N, ".re =", "[",i_a2,"].re ",(sign1a<0)?"-":"+"," ([",i_a3,"].re * t[",j1a,"].re - [",i_a3,"].im * t[",j1a,"].im ) <-> ", "{",x2aRe.toFixed(2),"}",(sign1a<0)?"-":"+","({",x3aRe.toFixed(2),"} * t{",tRe_1a.toFixed(2),"} - {",x3aIm.toFixed(2),"} * {",tIm_1a.toFixed(2),"} ) = ",xM2ReA.toFixed(2)); 
 
              // size = 2     ||| size = 8
              ///////////////////////////////// i = 0
@@ -1029,8 +1029,8 @@ function fftComplexInPlace_seq_4(out) {
              ///////////////////////////////// i = 12
              // 13 <- 12 13  |||
              // 15 <- 14 15  |||
-             console.log((1%size1+i),       ".re =", "[",i_b0,"].re ",(sign1b<0)?"-":"+"," ([",i_b1,"].re * t[",j1b,"].re - [",i_b1,"].im * t[",j1b,"].im ) <-> ", "{",x0bRe.toFixed(2),"}",(sign1b<0)?"-":"+","({",x1bRe.toFixed(2),"} * t{",tRe_1b.toFixed(2),"} - {",x1bIm.toFixed(2),"} * {",tIm_1b.toFixed(2),"} ) = ",xM1ReB.toFixed(2));
-             console.log((1%size1+i)+size1, ".re =", "[",i_b2,"].re ",(sign1b<0)?"-":"+"," ([",i_b3,"].re * t[",j1b,"].re - [",i_b3,"].im * t[",j1b,"].im ) <-> ", "{",x2bRe.toFixed(2),"}",(sign1b<0)?"-":"+","({",x3bRe.toFixed(2),"} * t{",tRe_1b.toFixed(2),"} - {",x3bIm.toFixed(2),"} * {",tIm_1b.toFixed(2),"} ) = ",xM3ReB.toFixed(2));  
+             console.log(i+1,"--->", (1%size1+i)%N,       ".re =", "[",i_b0,"].re ",(sign1b<0)?"-":"+"," ([",i_b1,"].re * t[",j1b,"].re - [",i_b1,"].im * t[",j1b,"].im ) <-> ", "{",x0bRe.toFixed(2),"}",(sign1b<0)?"-":"+","({",x1bRe.toFixed(2),"} * t{",tRe_1b.toFixed(2),"} - {",x1bIm.toFixed(2),"} * {",tIm_1b.toFixed(2),"} ) = ",xM1ReB.toFixed(2));
+             console.log(i+1,"--->", (1%size1+i)+size1%N, ".re =", "[",i_b2,"].re ",(sign1b<0)?"-":"+"," ([",i_b3,"].re * t[",j1b,"].re - [",i_b3,"].im * t[",j1b,"].im ) <-> ", "{",x2bRe.toFixed(2),"}",(sign1b<0)?"-":"+","({",x3bRe.toFixed(2),"} * t{",tRe_1b.toFixed(2),"} - {",x3bIm.toFixed(2),"} * {",tIm_1b.toFixed(2),"} ) = ",xM3ReB.toFixed(2));  
              
              // size = 2     ||| size = 8
              ///////////////////////////////// i = 0
@@ -1040,16 +1040,16 @@ function fftComplexInPlace_seq_4(out) {
              // 04 <- 04 05  |||  06 <-  02  06
              // 06 <- 06 07  |||  14 <-  10  14
              ///////////////////////////////// i = 8
-             // 08 <- 08 09  |||
+             // 08 <- 08 09  |||    
              // 10 <- 10 11  |||
              ///////////////////////////////// i = 12
              // 12 <- 12 13  |||
              // 14 <- 14 15  |||
-             console.log((2%size1+i),       ".re =", "[",i_c0,"].re ",(sign1c<0)?"-":"+"," ([",i_c1,"].re * t[",j1c,"].re - [",i_c1,"].im * t[",j1c,"].im ) <-> ", "{",x0cRe.toFixed(2),"}",(sign1c<0)?"-":"+","({",x1cRe.toFixed(2),"} * t{",tRe_1c.toFixed(2),"} - {",x1cIm.toFixed(2),"} * {",tIm_1c.toFixed(2),"} ) = ",xM0ReC.toFixed(2));  
-             console.log((2%size1+i)+size1, ".re =", "[",i_c2,"].re ",(sign1c<0)?"-":"+"," ([",i_c3,"].re * t[",j1c,"].re - [",i_c3,"].im * t[",j1c,"].im ) <-> ", "{",x2cRe.toFixed(2),"}",(sign1c<0)?"-":"+","({",x3cRe.toFixed(2),"} * t{",tRe_1c.toFixed(2),"} - {",x3cIm.toFixed(2),"} * {",tIm_1c.toFixed(2),"} ) = ",xM2ReC.toFixed(2));
+             console.log(i+2,"--->", (2%size1+i)%N,       ".re =", "[",i_c0,"].re ",(sign1c<0)?"-":"+"," ([",i_c1,"].re * t[",j1c,"].re - [",i_c1,"].im * t[",j1c,"].im ) <-> ", "{",x0cRe.toFixed(2),"}",(sign1c<0)?"-":"+","({",x1cRe.toFixed(2),"} * t{",tRe_1c.toFixed(2),"} - {",x1cIm.toFixed(2),"} * {",tIm_1c.toFixed(2),"} ) = ",xM0ReC.toFixed(2));  
+             console.log(i+2,"--->", (2%size1+i)+size1%N, ".re =", "[",i_c2,"].re ",(sign1c<0)?"-":"+"," ([",i_c3,"].re * t[",j1c,"].re - [",i_c3,"].im * t[",j1c,"].im ) <-> ", "{",x2cRe.toFixed(2),"}",(sign1c<0)?"-":"+","({",x3cRe.toFixed(2),"} * t{",tRe_1c.toFixed(2),"} - {",x3cIm.toFixed(2),"} * {",tIm_1c.toFixed(2),"} ) = ",xM2ReC.toFixed(2));
 
              // size = 2     ||| size = 8
-             /////////////////////////////////
+             ///////////////////////////////// i = 0
              // 01 <- 00 01  |||  03 <-  03  07
              // 03 <- 02 03  |||  11 <-  11  15
              ///////////////////////////////// i = 4
@@ -1061,8 +1061,8 @@ function fftComplexInPlace_seq_4(out) {
              ///////////////////////////////// i = 12
              // 13 <- 12 13  |||
              // 15 <- 14 15  |||
-             console.log((3%size1+i),       ".re =", "[",i_d0,"].re ",(sign1d<0)?"-":"+"," ([",i_d1,"].re * t[",j1d,"].re - [",i_d1,"].im * t[",j1d,"].im ) <-> ", "{",x0dRe.toFixed(2),"}",(sign1d<0)?"-":"+","({",x1dRe.toFixed(2),"} * t{",tRe_1d.toFixed(2),"} - {",x1dIm.toFixed(2),"} * {",tIm_1d.toFixed(2),"} ) = ",xM1ReD.toFixed(2)); 
-             console.log((3%size1+i)+size1, ".re =", "[",i_d2,"].re ",(sign1d<0)?"-":"+"," ([",i_d3,"].re * t[",j1d,"].re - [",i_d3,"].im * t[",j1d,"].im ) <-> ", "{",x2dRe.toFixed(2),"}",(sign1d<0)?"-":"+","({",x3dRe.toFixed(2),"} * t{",tRe_1d.toFixed(2),"} - {",x3dIm.toFixed(2),"} * {",tIm_1d.toFixed(2),"} ) = ",xM3ReD.toFixed(2)); 
+             console.log(i+3,"--->", (3%size1+i)%N,       ".re =", "[",i_d0,"].re ",(sign1d<0)?"-":"+"," ([",i_d1,"].re * t[",j1d,"].re - [",i_d1,"].im * t[",j1d,"].im ) <-> ", "{",x0dRe.toFixed(2),"}",(sign1d<0)?"-":"+","({",x1dRe.toFixed(2),"} * t{",tRe_1d.toFixed(2),"} - {",x1dIm.toFixed(2),"} * {",tIm_1d.toFixed(2),"} ) = ",xM1ReD.toFixed(2)); 
+             console.log(i+3,"--->", (3%size1+i)+size1%N, ".re =", "[",i_d2,"].re ",(sign1d<0)?"-":"+"," ([",i_d3,"].re * t[",j1d,"].re - [",i_d3,"].im * t[",j1d,"].im ) <-> ", "{",x2dRe.toFixed(2),"}",(sign1d<0)?"-":"+","({",x3dRe.toFixed(2),"} * t{",tRe_1d.toFixed(2),"} - {",x3dIm.toFixed(2),"} * {",tIm_1d.toFixed(2),"} ) = ",xM3ReD.toFixed(2)); 
 
 
             out[(0+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2a - ((xM2ImA)*tIm_2a)) * sign2a;
