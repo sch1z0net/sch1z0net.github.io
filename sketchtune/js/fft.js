@@ -1480,7 +1480,6 @@ function fftRealInPlaceRADIX4(realInput,type) {
     for (let i = 0; i < N; i++) {
         inputBR[i] = input[map[i]];
     }
-    const inputBR = input;
 
     // Convert the real-valued input to a complex-valued Float32Array
     const complexOut = new Float32Array(N * 2);
