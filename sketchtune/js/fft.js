@@ -1727,9 +1727,9 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
                 out[oddIndex  * 2    ] = eRe - t_oRe;
                 out[oddIndex  * 2 + 1] = eIm - t_oIm;
 
-                if(size==8){ console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} + ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[evenIndex * 2]).toFixed(2); };
+                if(size==8){ console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} + ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[evenIndex * 2].toFixed(2)); };
                 //if(size==8){ console.log(evenIndex, ".im =", "[",evenIndex,"].im + ([",oddIndex,"].re * t[",j,"].im + [",oddIndex,"].im * t[",j,"].re )"); };
-                if(size==8){ console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",oRe.toFixed(2),"} - ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[oddIndex * 2]).toFixed(2); };
+                if(size==8){ console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",oRe.toFixed(2),"} - ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[oddIndex * 2].toFixed(2)); };
                 //if(size==8){ console.log(oddIndex,  ".im =", "[",evenIndex,"].im - ([",oddIndex,"].re * t[",j,"].im + [",oddIndex,"].im * t[",j,"].re )"); };
 
                 //if(size==8){ console.log(size, evenIndex, out[evenIndex * 2], out[evenIndex * 2 + 1]) };
