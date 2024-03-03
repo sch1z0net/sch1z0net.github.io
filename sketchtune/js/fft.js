@@ -977,14 +977,16 @@ function fftComplexInPlace_seq_4(out) {
                 x2bRe = out[(i_b2)*2+0]; x2bIm = out[(i_b2)*2+1];   //########       09  |   09  |   09  |   09  |
                 x3bRe = out[(i_b3)*2+0]; x3bIm = out[(i_b3)*2+1];   //########      +13  |  -13  |  +13  |  -13  |
             }
-            x0cRe = x0aRe; x0cIm = x0aIm; 
-            x1cRe = x1aRe; x1cIm = x1aIm; 
-            x2cRe = x2aRe; x2cIm = x2aIm; 
-            x3cRe = x3aRe; x3cIm = x3aIm; 
-            x0dRe = x0bRe; x0dIm = x0bIm; 
-            x1dRe = x1bRe; x1dIm = x1bIm; 
-            x2dRe = x2bRe; x2dIm = x2bIm; 
-            x3dRe = x3bRe; x3dIm = x3bIm; 
+            if(size1 == 2){
+              x0cRe = x0aRe; x0cIm = x0aIm; 
+              x1cRe = x1aRe; x1cIm = x1aIm; 
+              x2cRe = x2aRe; x2cIm = x2aIm; 
+              x3cRe = x3aRe; x3cIm = x3aIm; 
+              x0dRe = x0bRe; x0dIm = x0bIm; 
+              x1dRe = x1bRe; x1dIm = x1bIm; 
+              x2dRe = x2bRe; x2dIm = x2bIm; 
+              x3dRe = x3bRe; x3dIm = x3bIm;
+            } 
             if((jk++)%size2 < size1){
                                                                     //########    +02\\  |+06\\  |-10\\  |-14\\  |
                 x0cRe = out[(i_c0)*2+0]; x0cIm = out[(i_c0)*2+1];   //########       02  |   02  |   02  |   02  |
