@@ -1049,7 +1049,7 @@ function fftComplexInPlace_seq_4(out) {
             //if( (i+4) % (z) == 0 ){ s += z; }
             if( (i+4) % (z) == 0 ){ s += z; }
         }
-        console.log(out);
+        if(p==0){ console.log("after P2:", out); }
     }
     //console.log("Iterations: ",its,"\tAccesses",accs);
 
@@ -1741,6 +1741,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
                 //console.log("**** OD.RE",oddIndex ,(eRe - t_oRe).toFixed(2),"<- EV.RE",evenIndex,"- (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","OD.IM",oddIndex ,(eIm - t_oIm).toFixed(2),"<- EV.IM",evenIndex,"- (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
             }
         }
+        if(size==4){ console.log("after P2:", out); }
         //console.log("size:"+size, output);
         //console.log("size:"+size, js);
         js = [];
