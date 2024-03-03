@@ -901,30 +901,36 @@ function fftComplexInPlace_seq_4(out) {
         let c = 0;
         console.log( "########################################" );
         for(let i = 0; i < N; i+=4){
-            //console.log( (s + k + d*0), (s + k + d*1), (s + k + d*2), (s + k + d*3) );
-            x0aRe = out[(s + k + d*0)*2+0]; x0aIm = out[(s + k + d*0)*2+1]; 
-            x1aRe = out[(s + k + d*1)*2+0]; x1aIm = out[(s + k + d*1)*2+1];
-            x2aRe = out[(s + k + d*2)*2+0]; x2aIm = out[(s + k + d*2)*2+1];
-            x3aRe = out[(s + k + d*3)*2+0]; x3aIm = out[(s + k + d*3)*2+1];
-            k += 1; k = k%d;
-            //console.log( (s + k + d*0), (s + k + d*1), (s + k + d*2), (s + k + d*3) );
-            x0bRe = out[(s + k + d*0)*2+0]; x0bIm = out[(s + k + d*0)*2+1]; 
-            x1bRe = out[(s + k + d*1)*2+0]; x1bIm = out[(s + k + d*1)*2+1];
-            x2bRe = out[(s + k + d*2)*2+0]; x2bIm = out[(s + k + d*2)*2+1];
-            x3bRe = out[(s + k + d*3)*2+0]; x3bIm = out[(s + k + d*3)*2+1];
-            k += 1; k = k%d;
-            //console.log( (s + k + d*0), (s + k + d*1), (s + k + d*2), (s + k + d*3) );
-            x0cRe = out[(s + k + d*0)*2+0]; x0cIm = out[(s + k + d*0)*2+1]; 
-            x1cRe = out[(s + k + d*1)*2+0]; x1cIm = out[(s + k + d*1)*2+1];
-            x2cRe = out[(s + k + d*2)*2+0]; x2cIm = out[(s + k + d*2)*2+1];
-            x3cRe = out[(s + k + d*3)*2+0]; x3cIm = out[(s + k + d*3)*2+1];
-            k += 1; k = k%d;
-            //console.log( (s + k + d*0), (s + k + d*1), (s + k + d*2), (s + k + d*3) );
-            x0dRe = out[(s + k + d*0)*2+0]; x0dIm = out[(s + k + d*0)*2+1]; 
-            x1dRe = out[(s + k + d*1)*2+0]; x1dIm = out[(s + k + d*1)*2+1];
-            x2dRe = out[(s + k + d*2)*2+0]; x2dIm = out[(s + k + d*2)*2+1];
-            x3dRe = out[(s + k + d*3)*2+0]; x3dIm = out[(s + k + d*3)*2+1];
-            k += 1; k = k%d;
+            let k_a = k; k += 1; k = k%d;
+            let k_b = k; k += 1; k = k%d; 
+            let k_c = k; k += 1; k = k%d;
+            let k_d = k; k += 1; k = k%d;
+                              
+            console.log(0+i, " -> ", (s + k_a + d*0) , (s + k_a + d*1) , (s + k_a + d*2) , (s + k_a + d*3) );
+            console.log(1+i, " -> ", (s + k_b + d*0) , (s + k_b + d*1) , (s + k_b + d*2) , (s + k_b + d*3) );
+            console.log(2+i, " -> ", (s + k_c + d*0) , (s + k_c + d*1) , (s + k_c + d*2) , (s + k_c + d*3) );
+            console.log(3+i, " -> ", (s + k_d + d*0) , (s + k_d + d*1) , (s + k_d + d*2) , (s + k_d + d*3) );
+
+                                                                                  //########    +00\\  |+04\\  |-08\\  |-12\\  |
+            x0aRe = out[(s + k_a + d*0)*2+0]; x0aIm = out[(s + k_a + d*0)*2+1];   //########       00  |   00  |   00  |   00  |
+            x1aRe = out[(s + k_a + d*1)*2+0]; x1aIm = out[(s + k_a + d*1)*2+1];   //########       04  |   04  |   04  |   04  |
+            x2aRe = out[(s + k_a + d*2)*2+0]; x2aIm = out[(s + k_a + d*2)*2+1];   //########       08  |   08  |   08  |   08  |
+            x3aRe = out[(s + k_a + d*3)*2+0]; x3aIm = out[(s + k_a + d*3)*2+1];   //########       12  |   12  |   12  |   12  |
+                                                                                  //########    +01\\  |+05\\  |-09\\  |-13\\  |
+            x0bRe = out[(s + k_b + d*0)*2+0]; x0bIm = out[(s + k_b + d*0)*2+1];   //########       01  |   01  |   01  |   01  |
+            x1bRe = out[(s + k_b + d*1)*2+0]; x1bIm = out[(s + k_b + d*1)*2+1];   //########       05  |   05  |   05  |   05  |
+            x2bRe = out[(s + k_b + d*2)*2+0]; x2bIm = out[(s + k_b + d*2)*2+1];   //########       09  |   09  |   09  |   09  |
+            x3bRe = out[(s + k_b + d*3)*2+0]; x3bIm = out[(s + k_b + d*3)*2+1];   //########       13  |   13  |   13  |   13  |
+                                                                                  //########    +02\\  |+06\\  |-10\\  |-14\\  |
+            x0cRe = out[(s + k_c + d*0)*2+0]; x0cIm = out[(s + k_c + d*0)*2+1];   //########       02  |   02  |   02  |   02  |
+            x1cRe = out[(s + k_c + d*1)*2+0]; x1cIm = out[(s + k_c + d*1)*2+1];   //########       06  |   06  |   06  |   06  |
+            x2cRe = out[(s + k_c + d*2)*2+0]; x2cIm = out[(s + k_c + d*2)*2+1];   //########       10  |   10  |   10  |   10  |
+            x3cRe = out[(s + k_c + d*3)*2+0]; x3cIm = out[(s + k_c + d*3)*2+1];   //########       14  |   14  |   14  |   14  |
+                                                                                  //########    +03\\  |+07\\  |-11\\  |-15\\  |
+            x0dRe = out[(s + k_d + d*0)*2+0]; x0dIm = out[(s + k_d + d*0)*2+1];   //########       03  |   03  |   03  |   03  | 
+            x1dRe = out[(s + k_d + d*1)*2+0]; x1dIm = out[(s + k_d + d*1)*2+1];   //########       07  |   07  |   07  |   07  |
+            x2dRe = out[(s + k_d + d*2)*2+0]; x2dIm = out[(s + k_d + d*2)*2+1];   //########       11  |   11  |   11  |   11  |
+            x3dRe = out[(s + k_d + d*3)*2+0]; x3dIm = out[(s + k_d + d*3)*2+1];   //########       15  |   15  |   15  |   15  |
 
             
             sign2 = (ji%size2 < size1) ? 1 : -1;
@@ -934,18 +940,18 @@ function fftComplexInPlace_seq_4(out) {
             tRe_2  = Math.cos((2 * Math.PI * j2) / size2);
             tIm_2  = Math.sin((2 * Math.PI * j2) / size2);
             
-            sign1 = (jj%size1 < (size1>>1)) ? 1 : -1; jj++;
-            xM0Re = x0aRe + (x1aRe * tRe_1 - x1aIm * tIm_1) * sign1; //even
-            xM0Im = x0aIm + (x1aRe * tIm_1 + x1aIm * tRe_1) * sign1;
-            xM2Re = x2aRe + (x3aRe * tRe_1 - x3aIm * tIm_1) * sign1; //even
-            xM2Im = x2aIm + (x3aRe * tIm_1 + x3aIm * tRe_1) * sign1;
+            sign1 = (jj%size1 < (size1>>1)) ? 1 : -1; jj++;          //#################    +00\\\\\\\\\\\\\  |+04\\\\\\\\\\\\\  |-08\\\\\\\\\\\\\  |-12\\\\\\\\\\\\\                                
+            xM0Re = x0aRe + (x1aRe * tRe_1 - x1aIm * tIm_1) * sign1; //#################        00 <- 00 +04  |    04 <- 00 -04  |    00 <- 00 +04  |    04 <- 00 -04
+            xM0Im = x0aIm + (x1aRe * tIm_1 + x1aIm * tRe_1) * sign1; //#################              x0  x1  |          x0  x1  |          x0  x1  |          x0  x1                    
+            xM2Re = x2aRe + (x3aRe * tRe_1 - x3aIm * tIm_1) * sign1; //#################        08 <- 08 +12  |    12 <- 08 -12  |    08 <- 08 +12  |    12 <- 08 -12 
+            xM2Im = x2aIm + (x3aRe * tIm_1 + x3aIm * tRe_1) * sign1; //#################              x2  x3  |          x2  x3  |          x2  x3  |          x2  x3
 
-            if(p==1){ console.log(8, (0+i), xM0Re, xM0Im); }
+            if(p==1){ console.log(8, (0+i),       xM0Re, xM0Im); }
             if(p==1){ console.log(8, (0+i+size1), xM2Re, xM2Im); }
             
-            out[(0+i)*2+0] = xM0Re + ((xM2Re)*tRe_2 - ((xM2Im)*tIm_2)) * sign2; // x0re //even 
-            out[(0+i)*2+1] = xM0Im + ((xM2Re)*tIm_2 + ((xM2Im)*tRe_2)) * sign2; // x0im
-
+            out[(0+i)*2+0] = xM0Re + ((xM2Re)*tRe_2 - ((xM2Im)*tIm_2)) * sign2;
+            out[(0+i)*2+1] = xM0Im + ((xM2Re)*tIm_2 + ((xM2Im)*tRe_2)) * sign2;     
+ 
             //console.log( j1, j2 ,"   -   ",sign1, sign2);
 
             sign2 = (ji%size2 < size1) ? 1 : -1;
@@ -955,17 +961,17 @@ function fftComplexInPlace_seq_4(out) {
             tRe_2  = Math.cos((2 * Math.PI * j2) / size2);
             tIm_2  = Math.sin((2 * Math.PI * j2) / size2);
 
-            sign1 = (jj%size1 < (size1>>1)) ? 1 : -1; jj++;
-            xM1Re = x0bRe + (x1bRe * tRe_1 - x1bIm * tIm_1) * sign1; //even
-            xM1Im = x0bIm + (x1bRe * tIm_1 + x1bIm * tRe_1) * sign1;
-            xM3Re = x2bRe + (x3bRe * tRe_1 - x3bIm * tIm_1) * sign1; //even
-            xM3Im = x2bIm + (x3bRe * tIm_1 + x3bIm * tRe_1) * sign1;
+            sign1 = (jj%size1 < (size1>>1)) ? 1 : -1; jj++;          //                     +01\\\\\\\\\\\\\  |+05\\\\\\\\\\\\\  |-09\\\\\\\\\\\\\  |-13\\\\\\\\\\\\\   
+            xM1Re = x0bRe + (x1bRe * tRe_1 - x1bIm * tIm_1) * sign1; //                         01 <- 01 +05  |    05 <- 01 -05  |    01 <- 01 +05  |    05 <- 01 -05
+            xM1Im = x0bIm + (x1bRe * tIm_1 + x1bIm * tRe_1) * sign1; //                                       |                  |                  |                
+            xM3Re = x2bRe + (x3bRe * tRe_1 - x3bIm * tIm_1) * sign1; //                         09 <- 09 +13  |    13 <- 09 -13  |    09 <- 09 +13  |    13 <- 09 -13 
+            xM3Im = x2bIm + (x3bRe * tIm_1 + x3bIm * tRe_1) * sign1; 
 
-            if(p==1){ console.log(8, (0+i+1), xM1Re, xM1Im); }
+            if(p==1){ console.log(8, (0+i+1),       xM1Re, xM1Im); }
             if(p==1){ console.log(8, (0+i+1+size1), xM3Re, xM3Im); }
 
-            out[(1+i)*2+0] = xM1Re + ((xM3Re)*tRe_2 - ((xM3Im)*tIm_2)) * sign2; // x1re //even
-            out[(1+i)*2+1] = xM1Im + ((xM3Re)*tIm_2 + ((xM3Im)*tRe_2)) * sign2; // x1im
+            out[(1+i)*2+0] = xM1Re + ((xM3Re)*tRe_2 - ((xM3Im)*tIm_2)) * sign2; // x1re //even  1
+            out[(1+i)*2+1] = xM1Im + ((xM3Re)*tIm_2 + ((xM3Im)*tRe_2)) * sign2; // x1im         
 
             //console.log( j1, j2 ,"   -   ",sign1, sign2);
 
