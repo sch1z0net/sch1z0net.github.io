@@ -903,7 +903,7 @@ function fftComplexInPlace_seq_4(out) {
         let x_b_read = false;
         let x_c_read = false;
         let x_d_read = false;
-        console.log( "########################################" );
+        console.log( "-size "+size1+"########################################" );
         for(let i = 0; i < N; i+=4){
             let k_a = k; k += 1; k = k%d;
             let k_b = k; k += 1; k = k%d; 
