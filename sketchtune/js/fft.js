@@ -940,8 +940,8 @@ function fftComplexInPlace_seq_4(out) {
             xM2Re = x2aRe + (x3aRe * tRe_1 - x3aIm * tIm_1) * sign1; //even
             xM2Im = x2aIm + (x3aRe * tIm_1 + x3aIm * tRe_1) * sign1;
 
-            if(p==1){ console.log(p+1, (0+i), xM0Re, xM0Im); }
-            if(p==1){ console.log(p+1, (0+i+size2), xM2Re, xM2Im); }
+            if(p==1){ console.log(8, (0+i), xM0Re, xM0Im); }
+            if(p==1){ console.log(8, (0+i+size2), xM2Re, xM2Im); }
             
             out[(0+i)*2+0] = xM0Re + ((xM2Re)*tRe_2 - ((xM2Im)*tIm_2)) * sign2; // x0re //even 
             out[(0+i)*2+1] = xM0Im + ((xM2Re)*tIm_2 + ((xM2Im)*tRe_2)) * sign2; // x0im
@@ -961,8 +961,8 @@ function fftComplexInPlace_seq_4(out) {
             xM3Re = x2bRe + (x3bRe * tRe_1 - x3bIm * tIm_1) * sign1; //even
             xM3Im = x2bIm + (x3bRe * tIm_1 + x3bIm * tRe_1) * sign1;
 
-            if(p==1){ console.log(p+1, (0+i+1), xM1Re, xM1Im); }
-            if(p==1){ console.log(p+1, (0+i+1+size2), xM3Re, xM3Im); }
+            if(p==1){ console.log(8, (0+i+1), xM1Re, xM1Im); }
+            if(p==1){ console.log(8, (0+i+1+size2), xM3Re, xM3Im); }
 
             out[(1+i)*2+0] = xM1Re + ((xM3Re)*tRe_2 - ((xM3Im)*tIm_2)) * sign2; // x1re //even
             out[(1+i)*2+1] = xM1Im + ((xM3Re)*tIm_2 + ((xM3Im)*tRe_2)) * sign2; // x1im
@@ -982,8 +982,8 @@ function fftComplexInPlace_seq_4(out) {
             xM2Re = x2cRe + (x3cRe * tRe_1 - x3cIm * tIm_1) * sign1; //even
             xM2Im = x2cIm + (x3cRe * tIm_1 + x3cIm * tRe_1) * sign1;
             
-            if(p==1){ console.log(p+1, (0+i), xM0Re, xM0Im); }
-            if(p==1){ console.log(p+1, (0+i+size2), xM2Re, xM2Im); }
+            if(p==1){ console.log(8, (0+i), xM0Re, xM0Im); }
+            if(p==1){ console.log(8, (0+i+size2), xM2Re, xM2Im); }
 
             out[(2+i)*2+0] = xM0Re + ((xM2Re)*tRe_2 - ((xM2Im)*tIm_2)) * sign2; // x2re //odd
             out[(2+i)*2+1] = xM0Im + ((xM2Re)*tIm_2 + ((xM2Im)*tRe_2)) * sign2; // x2im
@@ -1003,8 +1003,8 @@ function fftComplexInPlace_seq_4(out) {
             xM3Re = x2dRe + (x3dRe * tRe_1 - x3dIm * tIm_1) * sign1; //even
             xM3Im = x2dIm + (x3dRe * tIm_1 + x3dIm * tRe_1) * sign1;
 
-            if(p==1){ console.log(p+1, (0+i+1), xM1Re, xM1Im); }
-            if(p==1){ console.log(p+1, (0+i+1+size2), xM3Re, xM3Im); }
+            if(p==1){ console.log(8, (0+i+1), xM1Re, xM1Im); }
+            if(p==1){ console.log(8, (0+i+1+size2), xM3Re, xM3Im); }
 
             out[(3+i)*2+0] = xM1Re + ((xM3Re)*tRe_2 - ((xM3Im)*tIm_2)) * sign2; // x3re /odd
             out[(3+i)*2+1] = xM1Im + ((xM3Re)*tIm_2 + ((xM3Im)*tRe_2)) * sign2; // x3im
@@ -1012,10 +1012,10 @@ function fftComplexInPlace_seq_4(out) {
             //console.log( j1, j2 ,"   -   ",sign1, sign2);
 
             if(p==1){
-            console.log(p+1, (0+i), out[(0+i)*2+0], out[(0+i)*2+1]);
-            console.log(p+1, (1+i), out[(1+i)*2+0], out[(1+i)*2+1]);
-            console.log(p+1, (2+i), out[(2+i)*2+0], out[(2+i)*2+1]);
-            console.log(p+1, (3+i), out[(3+i)*2+0], out[(3+i)*2+1]);
+            console.log(16, (0+i), out[(0+i)*2+0], out[(0+i)*2+1]);
+            console.log(16, (1+i), out[(1+i)*2+0], out[(1+i)*2+1]);
+            console.log(16, (2+i), out[(2+i)*2+0], out[(2+i)*2+1]);
+            console.log(16, (3+i), out[(3+i)*2+0], out[(3+i)*2+1]);
             }
 
 
@@ -1674,7 +1674,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
         const halfSize = size / 2;
         // Get FFT factors with caching
         const factors = computeFFTFactorsWithCache(size);
-        //console.log("-size "+size+"-------------------------------------------------------------------------------------------------");
+        console.log("-size "+size+"-------------------------------------------------------------------------------------------------");
         for (let i = 0; i < N; i += size) {
             for (let j = 0; j < halfSize; j++) {
                 js.push(j);
