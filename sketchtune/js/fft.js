@@ -1000,10 +1000,10 @@ function fftComplexInPlace_seq_4(out) {
 
             //console.log( j1, j2 ,"   -   ",sign1, sign2);
 
-            console.log((0+i), out[(0+i)*2+0], out[(0+i)*2+1]);
+            /*console.log((0+i), out[(0+i)*2+0], out[(0+i)*2+1]);
             console.log((1+i), out[(1+i)*2+0], out[(1+i)*2+1]);
             console.log((2+i), out[(2+i)*2+0], out[(2+i)*2+1]);
-            console.log((3+i), out[(3+i)*2+0], out[(3+i)*2+1]);
+            console.log((3+i), out[(3+i)*2+0], out[(3+i)*2+1]);*/
 
             console.log( "-----------------------------" );
             //if( (i+4) % (z) == 0 ){ s += z; }
@@ -1461,10 +1461,11 @@ function fftRealInPlaceRADIX4(realInput,type) {
     
 
     // Perform bit reversal
-    const inputBR = new Float32Array(N);
+    /*const inputBR = new Float32Array(N);
     for (let i = 0; i < N; i++) {
         inputBR[i] = input[map[i]];
-    }
+    }*/
+    const inputBR = input;
 
     // Convert the real-valued input to a complex-valued Float32Array
     const complexOut = new Float32Array(N * 2);
