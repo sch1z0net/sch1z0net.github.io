@@ -1001,7 +1001,7 @@ function fftComplexInPlace_seq_4(out) {
               xM3ImD = x2dIm + (x3dRe * tIm_1d + x3dIm * tRe_1d) * sign1d;
             }
 
-            if(p==1&&i<size1){ 
+            if(i<size1){ 
              console.log((0+i)%size1,       ".re =", "[",i_a0,"].re ",(sign1a<0)?"-":"+"," ([",i_a1,"].re * t[",j1a,"].re - [",i_a1,"].im * t[",j1a,"].im ) <-> ", "{",x0aRe.toFixed(2),"}",(sign1a<0)?"-":"+","({",x1aRe.toFixed(2),"} * t{",tRe_1a.toFixed(2),"} - {",x1aIm.toFixed(2),"} * {",tIm_1a.toFixed(2),"} ) = ",xM0ReA.toFixed(2));
              console.log((0+i)%size1+size1, ".re =", "[",i_a2,"].re ",(sign1a<0)?"-":"+"," ([",i_a3,"].re * t[",j1a,"].re - [",i_a3,"].im * t[",j1a,"].im ) <-> ", "{",x2aRe.toFixed(2),"}",(sign1a<0)?"-":"+","({",x3aRe.toFixed(2),"} * t{",tRe_1a.toFixed(2),"} - {",x3aIm.toFixed(2),"} * {",tIm_1a.toFixed(2),"} ) = ",xM2ReA.toFixed(2));
              console.log((1+i)%size1,       ".re =", "[",i_b0,"].re ",(sign1b<0)?"-":"+"," ([",i_b1,"].re * t[",j1b,"].re - [",i_b1,"].im * t[",j1b,"].im ) <-> ", "{",x0bRe.toFixed(2),"}",(sign1b<0)?"-":"+","({",x1bRe.toFixed(2),"} * t{",tRe_1b.toFixed(2),"} - {",x1bIm.toFixed(2),"} * {",tIm_1b.toFixed(2),"} ) = ",xM1ReB.toFixed(2));
@@ -1733,9 +1733,9 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
                 out[oddIndex  * 2    ] = eRe - t_oRe;
                 out[oddIndex  * 2 + 1] = eIm - t_oIm;
 
-                if(size==8){ console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} + ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[evenIndex * 2].toFixed(2)); };
+                console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} + ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[evenIndex * 2].toFixed(2)); 
                 //if(size==8){ console.log(evenIndex, ".im =", "[",evenIndex,"].im + ([",oddIndex,"].re * t[",j,"].im + [",oddIndex,"].im * t[",j,"].re )"); };
-                if(size==8){ console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",oRe.toFixed(2),"} - ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[oddIndex * 2].toFixed(2)); };
+                console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",oRe.toFixed(2),"} - ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[oddIndex * 2].toFixed(2));
                 //if(size==8){ console.log(oddIndex,  ".im =", "[",evenIndex,"].im - ([",oddIndex,"].re * t[",j,"].im + [",oddIndex,"].im * t[",j,"].re )"); };
 
                 //if(size==8){ console.log(size, evenIndex, out[evenIndex * 2], out[evenIndex * 2 + 1]) };
