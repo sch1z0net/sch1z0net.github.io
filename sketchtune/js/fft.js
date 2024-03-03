@@ -949,7 +949,7 @@ function fftComplexInPlace_seq_4(out) {
             let tRe_2d  = Math.cos((2 * Math.PI * j2d) / size2);
             let tIm_2d  = Math.sin((2 * Math.PI * j2d) / size2);
 
-            /*                  
+            /*
             console.log((sign2a<0)?"-":"+" , 0+i, " -> ", (sign1a<0)?"-":"+" , i_a0 , i_a1 , i_a2 , i_a3 );
             console.log((sign2b<0)?"-":"+" , 1+i, " -> ", (sign1b<0)?"-":"+" , i_b0 , i_b1 , i_b2 , i_b3 );
             console.log((sign2c<0)?"-":"+" , 2+i, " -> ", (sign1c<0)?"-":"+" , i_c0 , i_c1 , i_c2 , i_c3 );
@@ -1000,6 +1000,18 @@ function fftComplexInPlace_seq_4(out) {
               xM3ImD = x2dIm + (x3dRe * tIm_1d + x3dIm * tRe_1d) * sign1d;
             }
 
+            if(p==1&&i<size1){ 
+             console.log((0+i)%size1,       ".re =", "[",i_a0,"].re ",(sign1a<0)?"-":"+"," ([",i_a1,"].re * t[",j1a,"].re - [",i_a1,"].im * t[",j1a,"].im ) = ",xM0ReA);
+             console.log((0+i)%size1+size1, ".re =", "[",i_a2,"].re ",(sign1a<0)?"-":"+"," ([",i_a3,"].re * t[",j1a,"].re - [",i_a3,"].im * t[",j1a,"].im ) = ",xM2ReA);
+             console.log((1+i)%size1,       ".re =", "[",i_b0,"].re ",(sign1b<0)?"-":"+"," ([",i_b1,"].re * t[",j1b,"].re - [",i_b1,"].im * t[",j1b,"].im ) = ",xM1ReB);   
+             console.log((1+i)%size1+size1, ".re =", "[",i_b2,"].re ",(sign1b<0)?"-":"+"," ([",i_b3,"].re * t[",j1b,"].re - [",i_b3,"].im * t[",j1b,"].im ) = ",xM3ReB);
+             console.log((2+i)%size1,       ".re =", "[",i_c0,"].re ",(sign1c<0)?"-":"+"," ([",i_c1,"].re * t[",j1c,"].re - [",i_c1,"].im * t[",j1c,"].im ) = ",xM0ReC);   
+             console.log((2+i)%size1+size1, ".re =", "[",i_c2,"].re ",(sign1c<0)?"-":"+"," ([",i_c3,"].re * t[",j1c,"].re - [",i_c3,"].im * t[",j1c,"].im ) = ",xM2ReC);
+             console.log((3+i)%size1,       ".re =", "[",i_d0,"].re ",(sign1d<0)?"-":"+"," ([",i_d1,"].re * t[",j1d,"].re - [",i_d1,"].im * t[",j1d,"].im ) = ",xM1ReD); 
+             console.log((3+i)%size1+size1, ".re =", "[",i_d2,"].re ",(sign1d<0)?"-":"+"," ([",i_d3,"].re * t[",j1d,"].re - [",i_d3,"].im * t[",j1d,"].im ) = ",xM3ReB); 
+            };
+
+
             out[(0+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2a - ((xM2ImA)*tIm_2a)) * sign2a;
             out[(0+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2a + ((xM2ImA)*tRe_2a)) * sign2a; 
             out[(1+i)*2+0] = xM1ReB + ((xM3ReB)*tRe_2b - ((xM3ImB)*tIm_2b)) * sign2b;
@@ -1008,15 +1020,6 @@ function fftComplexInPlace_seq_4(out) {
             out[(2+i)*2+1] = xM0ImC + ((xM2ReC)*tIm_2c + ((xM2ImC)*tRe_2c)) * sign2c;
             out[(3+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2d - ((xM3ImD)*tIm_2d)) * sign2d;
             out[(3+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2d + ((xM3ImD)*tRe_2d)) * sign2d;
-
-            if(p==1&&i<size1){ console.log((0+i)%size1,       ".re =", "[",i_a0,"].re ",(sign1a<0)?"-":"+"," ([",i_a1,"].re * t[",j1a,"].re - [",i_a1,"].im * t[",j1a,"].im )"); };
-            if(p==1&&i<size1){ console.log((0+i)%size1+size1, ".re =", "[",i_a2,"].re ",(sign1a<0)?"-":"+"," ([",i_a3,"].re * t[",j1a,"].re - [",i_a3,"].im * t[",j1a,"].im )"); };
-            if(p==1&&i<size1){ console.log((1+i)%size1,       ".re =", "[",i_b0,"].re ",(sign1b<0)?"-":"+"," ([",i_b1,"].re * t[",j1b,"].re - [",i_b1,"].im * t[",j1b,"].im )"); };   
-            if(p==1&&i<size1){ console.log((1+i)%size1+size1, ".re =", "[",i_b2,"].re ",(sign1b<0)?"-":"+"," ([",i_b3,"].re * t[",j1b,"].re - [",i_b3,"].im * t[",j1b,"].im )"); };
-            if(p==1&&i<size1){ console.log((2+i)%size1,       ".re =", "[",i_c0,"].re ",(sign1c<0)?"-":"+"," ([",i_c1,"].re * t[",j1c,"].re - [",i_c1,"].im * t[",j1c,"].im )"); };   
-            if(p==1&&i<size1){ console.log((2+i)%size1+size1, ".re =", "[",i_c2,"].re ",(sign1c<0)?"-":"+"," ([",i_c3,"].re * t[",j1c,"].re - [",i_c3,"].im * t[",j1c,"].im )"); };
-            if(p==1&&i<size1){ console.log((3+i)%size1,       ".re =", "[",i_d0,"].re ",(sign1d<0)?"-":"+"," ([",i_d1,"].re * t[",j1d,"].re - [",i_d1,"].im * t[",j1d,"].im )"); };  
-            if(p==1&&i<size1){ console.log((3+i)%size1+size1, ".re =", "[",i_d2,"].re ",(sign1d<0)?"-":"+"," ([",i_d3,"].re * t[",j1d,"].re - [",i_d3,"].im * t[",j1d,"].im )"); };
 
 /*
             if(p==1){ console.log(8, (0+i),       xM0Re, xM0Im); }
@@ -1724,9 +1727,9 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
                 out[oddIndex  * 2    ] = eRe - t_oRe;
                 out[oddIndex  * 2 + 1] = eIm - t_oIm;
 
-                if(size==8){ console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im )"); };
+                if(size==8){ console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) = ",out[evenIndex * 2    ]); };
                 //if(size==8){ console.log(evenIndex, ".im =", "[",evenIndex,"].im + ([",oddIndex,"].re * t[",j,"].im + [",oddIndex,"].im * t[",j,"].re )"); };
-                if(size==8){ console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im )"); };
+                if(size==8){ console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) = ",out[oddIndex  * 2    ]); };
                 //if(size==8){ console.log(oddIndex,  ".im =", "[",evenIndex,"].im - ([",oddIndex,"].re * t[",j,"].im + [",oddIndex,"].im * t[",j,"].re )"); };
 
                 //if(size==8){ console.log(size, evenIndex, out[evenIndex * 2], out[evenIndex * 2 + 1]) };
