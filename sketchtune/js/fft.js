@@ -956,7 +956,7 @@ function fftComplexInPlace_seq_4(out) {
             console.log((sign2d<0)?"-":"+" , 3+i, " -> ", (sign1d<0)?"-":"+" , i_d0 , i_d1 , i_d2 , i_d3 );
             */
 
-            if(i<size1){   
+            if(i<size1){
                                                                 //########    +00\\  |+04\\  |-08\\  |-12\\  |
             x0aRe = out[(i_a0)*2+0]; x0aIm = out[(i_a0)*2+1];   //########       00  |   00  |   00  |   00  |
             x1aRe = out[(i_a1)*2+0]; x1aIm = out[(i_a1)*2+1];   //########      +04  |  -04  |  +04  |  -04  |
@@ -1049,7 +1049,11 @@ function fftComplexInPlace_seq_4(out) {
             //if( (i+4) % (z) == 0 ){ s += z; }
             if( (i+4) % (z) == 0 ){ s += z; }
         }
-        if(p==0){ console.log("after P2:", out); }
+        if(p==0){ 
+            for(let i=0; i<16; i++){
+                console.log("after P2:",i," -> ", out[i*2], out[i*2+1]); 
+            }
+        }
     }
     //console.log("Iterations: ",its,"\tAccesses",accs);
 
@@ -1742,7 +1746,9 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
             }
         }
         if(size==4){ 
-            console.log("after P2:", out[5*2], out[5*2+1]); 
+            for(let i=0; i<16; i++){
+                console.log("after P2:",i," -> ", out[i*2], out[i*2+1]); 
+            }
         }
         //console.log("size:"+size, output);
         //console.log("size:"+size, js);
