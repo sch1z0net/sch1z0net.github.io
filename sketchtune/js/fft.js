@@ -982,8 +982,8 @@ function fftComplexInPlace_seq_4(out) {
             out[(0+i)*2+0] = xM0Re + ((xM2Re)*tRe_2a - ((xM2Im)*tIm_2a)) * sign2a;
             out[(0+i)*2+1] = xM0Im + ((xM2Re)*tIm_2a + ((xM2Im)*tRe_2a)) * sign2a; 
 
-            if(p==1){ console.log("xM0", ".re =", "[",i_a0,"].re ",(sign1a<0)?"-":"+"," ([",i_a1,"].re * t[",j1a,"].re - [",i_a1,"].im * t[",j1a,"].im )"); };
-            if(p==1){ console.log("xM0", ".im =", "[",i_a0,"].im ",(sign1a<0)?"-":"+"," ([",i_a1,"].re * t[",j1a,"].im + [",i_a1,"].im * t[",j1a,"].re )"); };
+            if(p==1){ console.log((0+i)%size1, ".re =", "[",i_a0,"].re ",(sign1a<0)?"-":"+"," ([",i_a1,"].re * t[",j1a,"].re - [",i_a1,"].im * t[",j1a,"].im )"); };
+            //if(p==1){ console.log("xM0", ".im =", "[",i_a0,"].im ",(sign1a<0)?"-":"+"," ([",i_a1,"].re * t[",j1a,"].im + [",i_a1,"].im * t[",j1a,"].re )"); };
 
                                                                         //                     +01\\\\\\\\\\\\\  |+05\\\\\\\\\\\\\  |-09\\\\\\\\\\\\\  |-13\\\\\\\\\\\\\   
             xM1Re = x0bRe + (x1bRe * tRe_1b - x1bIm * tIm_1b) * sign1b; //                         01 <- 01 +05  |    05 <- 01 -05  |    01 <- 01 +05  |    05 <- 01 -05
@@ -991,7 +991,9 @@ function fftComplexInPlace_seq_4(out) {
             xM3Re = x2bRe + (x3bRe * tRe_1b - x3bIm * tIm_1b) * sign1b; //                         09 <- 09 +13  |    13 <- 09 -13  |    09 <- 09 +13  |    13 <- 09 -13 
             xM3Im = x2bIm + (x3bRe * tIm_1b + x3bIm * tRe_1b) * sign1b; 
             out[(1+i)*2+0] = xM1Re + ((xM3Re)*tRe_2b - ((xM3Im)*tIm_2b)) * sign2b;
-            out[(1+i)*2+1] = xM1Im + ((xM3Re)*tIm_2b + ((xM3Im)*tRe_2b)) * sign2b;    
+            out[(1+i)*2+1] = xM1Im + ((xM3Re)*tIm_2b + ((xM3Im)*tRe_2b)) * sign2b; 
+
+            if(p==1){ console.log((1+i)%size1, ".re =", "[",i_b0,"].re ",(sign1b<0)?"-":"+"," ([",i_b1,"].re * t[",j1b,"].re - [",i_b1,"].im * t[",j1b,"].im )"); };   
 
             xM0Re = x0cRe + (x1cRe * tRe_1c - x1cIm * tIm_1c) * sign1c;
             xM0Im = x0cIm + (x1cRe * tIm_1c + x1cIm * tRe_1c) * sign1c; 
@@ -1000,12 +1002,16 @@ function fftComplexInPlace_seq_4(out) {
             out[(2+i)*2+0] = xM0Re + ((xM2Re)*tRe_2c - ((xM2Im)*tIm_2c)) * sign2c;
             out[(2+i)*2+1] = xM0Im + ((xM2Re)*tIm_2c + ((xM2Im)*tRe_2c)) * sign2c;
 
+            if(p==1){ console.log((2+i)%size1, ".re =", "[",i_c0,"].re ",(sign1c<0)?"-":"+"," ([",i_c1,"].re * t[",j1c,"].re - [",i_c1,"].im * t[",j1c,"].im )"); };   
+
             xM1Re = x0dRe + (x1dRe * tRe_1d - x1dIm * tIm_1d) * sign1d;
             xM1Im = x0dIm + (x1dRe * tIm_1d + x1dIm * tRe_1d) * sign1d;
             xM3Re = x2dRe + (x3dRe * tRe_1d - x3dIm * tIm_1d) * sign1d;
             xM3Im = x2dIm + (x3dRe * tIm_1d + x3dIm * tRe_1d) * sign1d;
             out[(3+i)*2+0] = xM1Re + ((xM3Re)*tRe_2d - ((xM3Im)*tIm_2d)) * sign2d;
             out[(3+i)*2+1] = xM1Im + ((xM3Re)*tIm_2d + ((xM3Im)*tRe_2d)) * sign2d;
+
+            if(p==1){ console.log((3+i)%size1, ".re =", "[",i_d0,"].re ",(sign1c<0)?"-":"+"," ([",i_d1,"].re * t[",j1d,"].re - [",i_d1,"].im * t[",j1d,"].im )"); };  
 
 /*
             if(p==1){ console.log(8, (0+i),       xM0Re, xM0Im); }
@@ -1714,9 +1720,9 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
                 out[oddIndex  * 2 + 1] = eIm - t_oIm;
 
                 if(size==8){ console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im )"); };
-                if(size==8){ console.log(evenIndex, ".im =", "[",evenIndex,"].im + ([",oddIndex,"].re * t[",j,"].im + [",oddIndex,"].im * t[",j,"].re )"); };
+                //if(size==8){ console.log(evenIndex, ".im =", "[",evenIndex,"].im + ([",oddIndex,"].re * t[",j,"].im + [",oddIndex,"].im * t[",j,"].re )"); };
                 if(size==8){ console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im )"); };
-                if(size==8){ console.log(oddIndex,  ".im =", "[",evenIndex,"].im - ([",oddIndex,"].re * t[",j,"].im + [",oddIndex,"].im * t[",j,"].re )"); };
+                //if(size==8){ console.log(oddIndex,  ".im =", "[",evenIndex,"].im - ([",oddIndex,"].re * t[",j,"].im + [",oddIndex,"].im * t[",j,"].re )"); };
 
                 //if(size==8){ console.log(size, evenIndex, out[evenIndex * 2], out[evenIndex * 2 + 1]) };
                 //if(size==8){ console.log(size, oddIndex,  out[oddIndex * 2],  out[oddIndex * 2 + 1]) };
