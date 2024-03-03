@@ -941,7 +941,7 @@ function fftComplexInPlace_seq_4(out) {
             xM2Im = x2aIm + (x3aRe * tIm_1 + x3aIm * tRe_1) * sign1;
 
             if(p==1){ console.log(8, (0+i), xM0Re, xM0Im); }
-            if(p==1){ console.log(8, (0+i+size2), xM2Re, xM2Im); }
+            if(p==1){ console.log(8, (0+i+size1), xM2Re, xM2Im); }
             
             out[(0+i)*2+0] = xM0Re + ((xM2Re)*tRe_2 - ((xM2Im)*tIm_2)) * sign2; // x0re //even 
             out[(0+i)*2+1] = xM0Im + ((xM2Re)*tIm_2 + ((xM2Im)*tRe_2)) * sign2; // x0im
@@ -962,7 +962,7 @@ function fftComplexInPlace_seq_4(out) {
             xM3Im = x2bIm + (x3bRe * tIm_1 + x3bIm * tRe_1) * sign1;
 
             if(p==1){ console.log(8, (0+i+1), xM1Re, xM1Im); }
-            if(p==1){ console.log(8, (0+i+1+size2), xM3Re, xM3Im); }
+            if(p==1){ console.log(8, (0+i+1+size1), xM3Re, xM3Im); }
 
             out[(1+i)*2+0] = xM1Re + ((xM3Re)*tRe_2 - ((xM3Im)*tIm_2)) * sign2; // x1re //even
             out[(1+i)*2+1] = xM1Im + ((xM3Re)*tIm_2 + ((xM3Im)*tRe_2)) * sign2; // x1im
@@ -983,7 +983,7 @@ function fftComplexInPlace_seq_4(out) {
             xM2Im = x2cIm + (x3cRe * tIm_1 + x3cIm * tRe_1) * sign1;
             
             if(p==1){ console.log(8, (0+i), xM0Re, xM0Im); }
-            if(p==1){ console.log(8, (0+i+size2), xM2Re, xM2Im); }
+            if(p==1){ console.log(8, (0+i+size1), xM2Re, xM2Im); }
 
             out[(2+i)*2+0] = xM0Re + ((xM2Re)*tRe_2 - ((xM2Im)*tIm_2)) * sign2; // x2re //odd
             out[(2+i)*2+1] = xM0Im + ((xM2Re)*tIm_2 + ((xM2Im)*tRe_2)) * sign2; // x2im
@@ -1004,7 +1004,7 @@ function fftComplexInPlace_seq_4(out) {
             xM3Im = x2dIm + (x3dRe * tIm_1 + x3dIm * tRe_1) * sign1;
 
             if(p==1){ console.log(8, (0+i+1), xM1Re, xM1Im); }
-            if(p==1){ console.log(8, (0+i+1+size2), xM3Re, xM3Im); }
+            if(p==1){ console.log(8, (0+i+1+size1), xM3Re, xM3Im); }
 
             out[(3+i)*2+0] = xM1Re + ((xM3Re)*tRe_2 - ((xM3Im)*tIm_2)) * sign2; // x3re /odd
             out[(3+i)*2+1] = xM1Im + ((xM3Re)*tIm_2 + ((xM3Im)*tRe_2)) * sign2; // x3im
@@ -2019,8 +2019,8 @@ console.log(computeInverseFFT(computeFFT(signal3)));
 
 //console.log(computeFFT(signal1));
 
-console.log(fftRealInPlace_ref(signal1));
-console.log(fftRealInPlaceRADIX4(signal1,4));
+//console.log(fftRealInPlace_ref(signal1));
+//console.log(fftRealInPlaceRADIX4(signal1,4));
 
 console.log(fftRealInPlace_ref(signal3));
 console.log(fftRealInPlaceRADIX4(signal3,4));
