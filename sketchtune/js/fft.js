@@ -900,7 +900,7 @@ function fftComplexInPlace_seq_4(out) {
         let p2 = (p*2+1)+1;     //  2 //  4 //  6 //
         let size1 = 2<<(p1-1);  //  2 //  8 // 32 //
         let size2 = 2<<(p2-1);  //  4 // 16 // 64 //
-        let ji = 0; let jj = 0;
+        let ji = 0; let jj = 0; let jk = 0;
         let c = 0;
         let x_a_read = false;
         let x_b_read = false;
@@ -963,32 +963,32 @@ function fftComplexInPlace_seq_4(out) {
             console.log((sign2d<0)?"-":"+" , 3+i, " -> ", (sign1d<0)?"-":"+" , i_d0 , i_d1 , i_d2 , i_d3 );
             */
 
-            if(!x_a_read){
-                x_a_read = true;
+            if(jk%size2 < size1){
+                jk++;
                                                                     //########    +00\\  |+04\\  |-08\\  |-12\\  |
                 x0aRe = out[(i_a0)*2+0]; x0aIm = out[(i_a0)*2+1];   //########       00  |   00  |   00  |   00  |
                 x1aRe = out[(i_a1)*2+0]; x1aIm = out[(i_a1)*2+1];   //########      +04  |  -04  |  +04  |  -04  |
                 x2aRe = out[(i_a2)*2+0]; x2aIm = out[(i_a2)*2+1];   //########       08  |   08  |   08  |   08  |
                 x3aRe = out[(i_a3)*2+0]; x3aIm = out[(i_a3)*2+1];   //########      +12  |  -12  |  +12  |  -12  |
             }
-            if(!x_b_read){
-                x_b_read = true;
+            if(jk%size2 < size1){
+                jk++;
                                                                     //########    +01\\  |+05\\  |-09\\  |-13\\  |
                 x0bRe = out[(i_b0)*2+0]; x0bIm = out[(i_b0)*2+1];   //########       01  |   01  |   01  |   01  |
                 x1bRe = out[(i_b1)*2+0]; x1bIm = out[(i_b1)*2+1];   //########      +05  |  -05  |  +05  |  -05  |
                 x2bRe = out[(i_b2)*2+0]; x2bIm = out[(i_b2)*2+1];   //########       09  |   09  |   09  |   09  |
                 x3bRe = out[(i_b3)*2+0]; x3bIm = out[(i_b3)*2+1];   //########      +13  |  -13  |  +13  |  -13  |
             }
-            if(!x_c_read){
-                x_c_read = true;
+            if(jk%size2 < size1){
+                jk++;
                                                                     //########    +02\\  |+06\\  |-10\\  |-14\\  |
                 x0cRe = out[(i_c0)*2+0]; x0cIm = out[(i_c0)*2+1];   //########       02  |   02  |   02  |   02  |
                 x1cRe = out[(i_c1)*2+0]; x1cIm = out[(i_c1)*2+1];   //########      +06  |  -06  |  +06  |  -06  |
                 x2cRe = out[(i_c2)*2+0]; x2cIm = out[(i_c2)*2+1];   //########       10  |   10  |   10  |   10  |
                 x3cRe = out[(i_c3)*2+0]; x3cIm = out[(i_c3)*2+1];   //########      +14  |  -14  |  +14  |  -14  |
             }
-            if(!x_d_read){
-                x_d_read = true;    
+            if(jk%size2 < size1){
+                jk++;
                                                                     //########    +03\\  |+07\\  |-11\\  |-15\\  |
                 x0dRe = out[(i_d0)*2+0]; x0dIm = out[(i_d0)*2+1];   //########       03  |   03  |   03  |   03  | 
                 x1dRe = out[(i_d1)*2+0]; x1dIm = out[(i_d1)*2+1];   //########      +07  |  -07  |  +07  |  -07  |
@@ -1016,20 +1016,20 @@ function fftComplexInPlace_seq_4(out) {
               xM1ImD = x0dIm + (x1dRe * tIm_1d + x1dIm * tRe_1d) * sign1d;
               xM3ReD = x2dRe + (x3dRe * tRe_1d - x3dIm * tIm_1d) * sign1d;
               xM3ImD = x2dIm + (x3dRe * tIm_1d + x3dIm * tRe_1d) * sign1d;
-            
+
              // size = 2     ||| size = 8
              ///////////////////////////////// i = 0
              // 00 <- 00 01  |||  00 <-  00 +04          -> xM0ReA
              // 02 <- 02 03  |||  08 <-  08 +12          -> xM2ReA
              ///////////////////////////////// i = 4
-             // 04 <- 04 05  |||  04 <-  00 +04          
-             // 06 <- 06 07  |||  12 <-  08 +12          
+             // 04 <- 04 05  |||  04 <-  00 +04          -> xM0ReA          
+             // 06 <- 06 07  |||  12 <-  08 +12          -> xM2ReA          
              ///////////////////////////////// i = 8
-             // 08 <- 08 09  |||                         
-             // 10 <- 10 11  |||
+             // 08 <- 08 09  |||                         -> xM0ReA (skip writing)       
+             // 10 <- 10 11  |||                         -> xM2ReA (skip writing)  
              ///////////////////////////////// i = 12
-             // 12 <- 12 13  |||
-             // 14 <- 14 15  |||
+             // 12 <- 12 13  |||                         -> xM0ReA (skip writing)  
+             // 14 <- 14 15  |||                         -> xM2ReA (skip writing)  
              console.log((i+0).toString().padStart(2),"--->", ((0%size1+i)%N).toString().padStart(2),       ".re =", "[",i_a0.toString().padStart(2),"].re ",(sign1a<0)?"-":"+"," ([",i_a1.toString().padStart(2),"].re * t[",j1a.toString().padStart(2),"].re - [",i_a1.toString().padStart(2),"].im * t[",j1a.toString().padStart(2),"].im ) <-> ", "{",x0aRe.toFixed(2),"}",(sign1a<0)?"-":"+","({",x1aRe.toFixed(2),"} * t{",tRe_1a.toFixed(2),"} - {",x1aIm.toFixed(2),"} * {",tIm_1a.toFixed(2),"} ) = ",xM0ReA.toFixed(2));
              console.log((i+0).toString().padStart(2),"--->", ((0%size1+i)+size1%N).toString().padStart(2), ".re =", "[",i_a2.toString().padStart(2),"].re ",(sign1a<0)?"-":"+"," ([",i_a3.toString().padStart(2),"].re * t[",j1a.toString().padStart(2),"].re - [",i_a3.toString().padStart(2),"].im * t[",j1a.toString().padStart(2),"].im ) <-> ", "{",x2aRe.toFixed(2),"}",(sign1a<0)?"-":"+","({",x3aRe.toFixed(2),"} * t{",tRe_1a.toFixed(2),"} - {",x3aIm.toFixed(2),"} * {",tIm_1a.toFixed(2),"} ) = ",xM2ReA.toFixed(2)); 
 
