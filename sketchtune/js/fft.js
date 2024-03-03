@@ -980,7 +980,11 @@ function fftComplexInPlace_seq_4(out) {
             xM2Re = x2aRe + (x3aRe * tRe_1a - x3aIm * tIm_1a) * sign1a; //#################        08 <- 08 +12  |    12 <- 08 -12  |    08 <- 08 +12  |    12 <- 08 -12 
             xM2Im = x2aIm + (x3aRe * tIm_1a + x3aIm * tRe_1a) * sign1a; //#################              x2  x3  |          x2  x3  |          x2  x3  |          x2  x3
             out[(0+i)*2+0] = xM0Re + ((xM2Re)*tRe_2a - ((xM2Im)*tIm_2a)) * sign2a;
-            out[(0+i)*2+1] = xM0Im + ((xM2Re)*tIm_2a + ((xM2Im)*tRe_2a)) * sign2a;      
+            out[(0+i)*2+1] = xM0Im + ((xM2Re)*tIm_2a + ((xM2Im)*tRe_2a)) * sign2a; 
+
+            if(p==1){ console.log("xM0", ".re =", "[",i_a0,"].re ",(sign1a<0)?"-":"+"," ([",i_a1,"].re * t[",j1a,"].re - [",i_a1,"].im * t[",j1a,"].im )"); };
+            if(p==1){ console.log("xM0", ".im =", "[",i_a0,"].im ",(sign1a<0)?"-":"+"," ([",i_a1,"].re * t[",j1a,"].im + [",i_a1,"].im * t[",j1a,"].re )"); };
+
                                                                         //                     +01\\\\\\\\\\\\\  |+05\\\\\\\\\\\\\  |-09\\\\\\\\\\\\\  |-13\\\\\\\\\\\\\   
             xM1Re = x0bRe + (x1bRe * tRe_1b - x1bIm * tIm_1b) * sign1b; //                         01 <- 01 +05  |    05 <- 01 -05  |    01 <- 01 +05  |    05 <- 01 -05
             xM1Im = x0bIm + (x1bRe * tIm_1b + x1bIm * tRe_1b) * sign1b; //                                       |                  |                  |                
@@ -1003,14 +1007,17 @@ function fftComplexInPlace_seq_4(out) {
             out[(3+i)*2+0] = xM1Re + ((xM3Re)*tRe_2d - ((xM3Im)*tIm_2d)) * sign2d;
             out[(3+i)*2+1] = xM1Im + ((xM3Re)*tIm_2d + ((xM3Im)*tRe_2d)) * sign2d;
 
+/*
             if(p==1){ console.log(8, (0+i),       xM0Re, xM0Im); }
             if(p==1){ console.log(8, (1+i),       xM1Re, xM1Im); }
             if(p==1){ console.log(8, (2+i),       xM0Re, xM0Im); }
             if(p==1){ console.log(8, (3+i),       xM1Re, xM1Im); }
+
             if(p==1){ console.log(8, (0+i+size1), xM2Re, xM2Im); }
             if(p==1){ console.log(8, (1+i+size1), xM3Re, xM3Im); }
             if(p==1){ console.log(8, (2+i+size1), xM2Re, xM2Im); }
             if(p==1){ console.log(8, (3+i+size1), xM3Re, xM3Im); }
+*/
             
             /*
             if(p==1){
