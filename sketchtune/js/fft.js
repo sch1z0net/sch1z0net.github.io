@@ -1703,8 +1703,8 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
                 out[oddIndex  * 2    ] = eRe - t_oRe;
                 out[oddIndex  * 2 + 1] = eIm - t_oIm;
 
-                if(size==4||size==8){ console.log(size, evenIndex, out[evenIndex * 2], out[evenIndex * 2 + 1]) };
-                if(size==4||size==8){ console.log(size, oddIndex,  out[oddIndex * 2],  out[oddIndex * 2 + 1]) };
+                if(size==8||size==16){ console.log(size, evenIndex, out[evenIndex * 2], out[evenIndex * 2 + 1]) };
+                if(size==8||size==16){ console.log(size, oddIndex,  out[oddIndex * 2],  out[oddIndex * 2 + 1]) };
 
                 //console.log("**** EV.RE",evenIndex,(eRe + t_oRe).toFixed(2),"<- EV.RE",evenIndex,"+ (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","EV.IM",evenIndex,(eIm + t_oIm).toFixed(2),"<- EV.IM",evenIndex,"+ (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
                 //console.log("**** OD.RE",oddIndex ,(eRe - t_oRe).toFixed(2),"<- EV.RE",evenIndex,"- (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","OD.IM",oddIndex ,(eIm - t_oIm).toFixed(2),"<- EV.IM",evenIndex,"- (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
