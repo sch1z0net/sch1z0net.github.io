@@ -1004,52 +1004,52 @@ function fftComplexInPlace_seq_4(out) {
             // %4  < 2
             // %16 < 8
             // %64 < 32
-            if((jk)%size2 < size1){
+            if((jk)%size2 < size1/2){
                                                                     //########    +00\\  |+04\\  |-08\\  |-12\\  |
-              if((jk)%size1 < size1/2){
-                console.log(jk);
+              //if((jk)%size1 < size1/2){
+                //console.log(jk);
                 x0aRe = out[(i_a0)*2+0]; x0aIm = out[(i_a0)*2+1];   //########       00  |   00  |   00  |   00  |
                 x1aRe = out[(i_a1)*2+0]; x1aIm = out[(i_a1)*2+1];   //########      +04  |  -04  |  +04  |  -04  |
-              }
+              //}
                 x2aRe = out[(i_a2)*2+0]; x2aIm = out[(i_a2)*2+1];   //########       08  |   08  |   08  |   08  |
                 x3aRe = out[(i_a3)*2+0]; x3aIm = out[(i_a3)*2+1];   //########      +12  |  -12  |  +12  |  -12  |
             }
 
             jk++;
 
-            if((jk)%size2 < size1){
+            if((jk)%size2 < size1/2){
                                                                     //########    +01\\  |+05\\  |-09\\  |-13\\  |
-              if((jk)%size1 < size1/2){
+              //if((jk)%size1 < size1/2){
                 console.log(jk);
                 x0bRe = out[(i_b0)*2+0]; x0bIm = out[(i_b0)*2+1];   //########       01  |   01  |   01  |   01  |
                 x1bRe = out[(i_b1)*2+0]; x1bIm = out[(i_b1)*2+1];   //########      +05  |  -05  |  +05  |  -05  |
-              }
+              //}
                 x2bRe = out[(i_b2)*2+0]; x2bIm = out[(i_b2)*2+1];   //########       09  |   09  |   09  |   09  |
                 x3bRe = out[(i_b3)*2+0]; x3bIm = out[(i_b3)*2+1];   //########      +13  |  -13  |  +13  |  -13  |
             }
 
             jk++;
 
-            if((jk)%size2 < size1){
+            if((jk)%size2 < size1/2){
                                                                     //########    +02\\  |+06\\  |-10\\  |-14\\  |
-              if((jk)%size1 < size1/2){
-                console.log(jk);
+              //if((jk)%size1 < size1/2){
+                //console.log(jk);
                 x0cRe = out[(i_c0)*2+0]; x0cIm = out[(i_c0)*2+1];   //########       02  |   02  |   02  |   02  |
                 x1cRe = out[(i_c1)*2+0]; x1cIm = out[(i_c1)*2+1];   //########      +06  |  -06  |  +06  |  -06  |
-              }
+              //}
                 x2cRe = out[(i_c2)*2+0]; x2cIm = out[(i_c2)*2+1];   //########       10  |   10  |   10  |   10  |
                 x3cRe = out[(i_c3)*2+0]; x3cIm = out[(i_c3)*2+1];   //########      +14  |  -14  |  +14  |  -14  |
             }
 
             jk++;
 
-            if((jk)%size2 < size1){
+            if((jk)%size2 < size1/2){
                                                                     //########    +03\\  |+07\\  |-11\\  |-15\\  |
-              if((jk)%size1 < size1/2){
-                console.log(jk);
+              //if((jk)%size1 < size1/2){
+                //console.log(jk);
                 x0dRe = out[(i_d0)*2+0]; x0dIm = out[(i_d0)*2+1];   //########       03  |   03  |   03  |   03  | 
                 x1dRe = out[(i_d1)*2+0]; x1dIm = out[(i_d1)*2+1];   //########      +07  |  -07  |  +07  |  -07  |
-              }
+              //}
                 x2dRe = out[(i_d2)*2+0]; x2dIm = out[(i_d2)*2+1];   //########       11  |   11  |   11  |   11  |
                 x3dRe = out[(i_d3)*2+0]; x3dIm = out[(i_d3)*2+1];   //########      +15  |  -15  |  +15  |  -15  |
             }
