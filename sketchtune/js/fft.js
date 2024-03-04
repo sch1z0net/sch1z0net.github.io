@@ -1074,9 +1074,6 @@ function fftComplexInPlace_seq_4(out) {
              ///////////////////////////////// i = 12
              // 12 <- 12 13  |||                         -> xM0ReA (skip writing)  
              // 14 <- 14 15  |||                         -> xM2ReA (skip writing)  
-
-             if( i % size2 == 0 ){  w += size2; } 
-
              console.log((i+0).toString().padStart(2),"--->", ((i+0)%size1 + w).toString().padStart(2),         ".re =", "[",i_a0.toString().padStart(2),"].re ",(sign1a<0)?"-":"+"," ([",i_a1.toString().padStart(2),"].re * t[",j1a.toString().padStart(2),"].re - [",i_a1.toString().padStart(2),"].im * t[",j1a.toString().padStart(2),"].im ) <-> ", "{",x0aRe.toFixed(2),"}",(sign1a<0)?"-":"+","({",x1aRe.toFixed(2),"} * t{",tRe_1a.toFixed(2),"} - {",x1aIm.toFixed(2),"} * {",tIm_1a.toFixed(2),"} ) = ",xM0ReA.toFixed(2));
              console.log((i+0).toString().padStart(2),"--->", ((i+0)%size1 + w + size1).toString().padStart(2), ".re =", "[",i_a2.toString().padStart(2),"].re ",(sign1a<0)?"-":"+"," ([",i_a3.toString().padStart(2),"].re * t[",j1a.toString().padStart(2),"].re - [",i_a3.toString().padStart(2),"].im * t[",j1a.toString().padStart(2),"].im ) <-> ", "{",x2aRe.toFixed(2),"}",(sign1a<0)?"-":"+","({",x3aRe.toFixed(2),"} * t{",tRe_1a.toFixed(2),"} - {",x3aIm.toFixed(2),"} * {",tIm_1a.toFixed(2),"} ) = ",xM2ReA.toFixed(2)); 
              
@@ -1171,6 +1168,7 @@ function fftComplexInPlace_seq_4(out) {
 
             //console.log( "-----------------------------" );
             if( (i+4) % (z) == 0 ){ s += z; }
+            if( i % size2 == 0 ){  w += size2; } 
         }
         
         for(let i=0; i<N; i++){
