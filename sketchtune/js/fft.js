@@ -1863,7 +1863,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
             }
         }
         if(true){ 
-            for(let i=0; i<16; i++){
+            for(let i=0; i<N; i++){
                 console.log("after size: ",size," : ",i," -> ", out[i*2], out[i*2+1]); 
             }
         }
