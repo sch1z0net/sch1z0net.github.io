@@ -919,7 +919,7 @@ function fftComplexInPlace_seq_4(out) {
             jk = i;
             jj = i;
             ji = i;
-            k = i;
+            k = i%d;
             w = i;
             s = i;
 
