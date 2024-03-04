@@ -1038,9 +1038,10 @@ function fftComplexInPlace_seq_4(out) {
              // 14 <- 14 15  |||                         -> xM2ReA (skip writing)  
              //console.log((i+0).toString().padStart(2),"--->", (((0+i)%size1)%N).toString().padStart(2),         ".re =", "[",i_a0.toString().padStart(2),"].re ",(sign1a<0)?"-":"+"," ([",i_a1.toString().padStart(2),"].re * t[",j1a.toString().padStart(2),"].re - [",i_a1.toString().padStart(2),"].im * t[",j1a.toString().padStart(2),"].im ) <-> ", "{",x0aRe.toFixed(2),"}",(sign1a<0)?"-":"+","({",x1aRe.toFixed(2),"} * t{",tRe_1a.toFixed(2),"} - {",x1aIm.toFixed(2),"} * {",tIm_1a.toFixed(2),"} ) = ",xM0ReA.toFixed(2));
              //console.log((i+0).toString().padStart(2),"--->", ((((0+i)%size1)+size1)%N).toString().padStart(2), ".re =", "[",i_a2.toString().padStart(2),"].re ",(sign1a<0)?"-":"+"," ([",i_a3.toString().padStart(2),"].re * t[",j1a.toString().padStart(2),"].re - [",i_a3.toString().padStart(2),"].im * t[",j1a.toString().padStart(2),"].im ) <-> ", "{",x2aRe.toFixed(2),"}",(sign1a<0)?"-":"+","({",x3aRe.toFixed(2),"} * t{",tRe_1a.toFixed(2),"} - {",x3aIm.toFixed(2),"} * {",tIm_1a.toFixed(2),"} ) = ",xM2ReA.toFixed(2)); 
-             console.log((i+0).toString().padStart(2),"--->", (((0+i)%size1)%N).toString().padStart(2),         ".re",xM0ReA.toFixed(2));
-             console.log((i+0).toString().padStart(2),"--->", ((((0+i)%size1)+size1)%N).toString().padStart(2), ".re",xM2ReA.toFixed(2)); 
+             console.log((i+0).toString().padStart(2),"--->", xM0ReA.toFixed(2), (sign1a<0)?"-":"+","(",xM2ReA.toFixed(2),"*",tRe_2a.toFixed(2),"-",xM2ImA.toFixed(2),"*",tIm_2a.toFixed(2),")");
              
+             out[(0+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2a - ((xM2ImA)*tIm_2a)) * sign2a;
+             out[(0+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2a + ((xM2ImA)*tRe_2a)) * sign2a; 
 
              // size = 2     ||| size = 8
              ///////////////////////////////// i = 0
@@ -1055,9 +1056,10 @@ function fftComplexInPlace_seq_4(out) {
              ///////////////////////////////// i = 12
              // 13 <- 12 13  |||
              // 15 <- 14 15  |||
-             console.log((i+1).toString().padStart(2),"--->", (((1+i)%size1)%N).toString().padStart(2),         ".re =", "[",i_b0.toString().padStart(2),"].re ",(sign1b<0)?"-":"+"," ([",i_b1.toString().padStart(2),"].re * t[",j1b.toString().padStart(2),"].re - [",i_b1.toString().padStart(2),"].im * t[",j1b.toString().padStart(2),"].im ) <-> ", "{",x0bRe.toFixed(2),"}",(sign1b<0)?"-":"+","({",x1bRe.toFixed(2),"} * t{",tRe_1b.toFixed(2),"} - {",x1bIm.toFixed(2),"} * {",tIm_1b.toFixed(2),"} ) = ",xM1ReB.toFixed(2));
-             console.log((i+1).toString().padStart(2),"--->", ((((1+i)%size1)+size1)%N).toString().padStart(2), ".re =", "[",i_b2.toString().padStart(2),"].re ",(sign1b<0)?"-":"+"," ([",i_b3.toString().padStart(2),"].re * t[",j1b.toString().padStart(2),"].re - [",i_b3.toString().padStart(2),"].im * t[",j1b.toString().padStart(2),"].im ) <-> ", "{",x2bRe.toFixed(2),"}",(sign1b<0)?"-":"+","({",x3bRe.toFixed(2),"} * t{",tRe_1b.toFixed(2),"} - {",x3bIm.toFixed(2),"} * {",tIm_1b.toFixed(2),"} ) = ",xM3ReB.toFixed(2));  
-             
+             //console.log((i+1).toString().padStart(2),"--->", (((1+i)%size1)%N).toString().padStart(2),         ".re =", "[",i_b0.toString().padStart(2),"].re ",(sign1b<0)?"-":"+"," ([",i_b1.toString().padStart(2),"].re * t[",j1b.toString().padStart(2),"].re - [",i_b1.toString().padStart(2),"].im * t[",j1b.toString().padStart(2),"].im ) <-> ", "{",x0bRe.toFixed(2),"}",(sign1b<0)?"-":"+","({",x1bRe.toFixed(2),"} * t{",tRe_1b.toFixed(2),"} - {",x1bIm.toFixed(2),"} * {",tIm_1b.toFixed(2),"} ) = ",xM1ReB.toFixed(2));
+             //console.log((i+1).toString().padStart(2),"--->", ((((1+i)%size1)+size1)%N).toString().padStart(2), ".re =", "[",i_b2.toString().padStart(2),"].re ",(sign1b<0)?"-":"+"," ([",i_b3.toString().padStart(2),"].re * t[",j1b.toString().padStart(2),"].re - [",i_b3.toString().padStart(2),"].im * t[",j1b.toString().padStart(2),"].im ) <-> ", "{",x2bRe.toFixed(2),"}",(sign1b<0)?"-":"+","({",x3bRe.toFixed(2),"} * t{",tRe_1b.toFixed(2),"} - {",x3bIm.toFixed(2),"} * {",tIm_1b.toFixed(2),"} ) = ",xM3ReB.toFixed(2));  
+             console.log((i+1).toString().padStart(2),"--->", xM1ReB.toFixed(2), (sign1b<0)?"-":"+","(",xM3ReB.toFixed(2),"*",tRe_2b.toFixed(2),"-",xM3ImB.toFixed(2),"*",tIm_2b.toFixed(2),")");
+
              // size = 2     ||| size = 8
              ///////////////////////////////// i = 0
              // 00 <- 00 01  |||  02 <-  02  06
@@ -1071,8 +1073,9 @@ function fftComplexInPlace_seq_4(out) {
              ///////////////////////////////// i = 12
              // 12 <- 12 13  |||
              // 14 <- 14 15  |||
-             console.log((i+2).toString().padStart(2),"--->", (((2+i)%size1)%N).toString().padStart(2),         ".re =", "[",i_c0.toString().padStart(2),"].re ",(sign1c<0)?"-":"+"," ([",i_c1.toString().padStart(2),"].re * t[",j1c.toString().padStart(2),"].re - [",i_c1.toString().padStart(2),"].im * t[",j1c.toString().padStart(2),"].im ) <-> ", "{",x0cRe.toFixed(2),"}",(sign1c<0)?"-":"+","({",x1cRe.toFixed(2),"} * t{",tRe_1c.toFixed(2),"} - {",x1cIm.toFixed(2),"} * {",tIm_1c.toFixed(2),"} ) = ",xM0ReC.toFixed(2));  
-             console.log((i+2).toString().padStart(2),"--->", ((((2+i)%size1)+size1)%N).toString().padStart(2), ".re =", "[",i_c2.toString().padStart(2),"].re ",(sign1c<0)?"-":"+"," ([",i_c3.toString().padStart(2),"].re * t[",j1c.toString().padStart(2),"].re - [",i_c3.toString().padStart(2),"].im * t[",j1c.toString().padStart(2),"].im ) <-> ", "{",x2cRe.toFixed(2),"}",(sign1c<0)?"-":"+","({",x3cRe.toFixed(2),"} * t{",tRe_1c.toFixed(2),"} - {",x3cIm.toFixed(2),"} * {",tIm_1c.toFixed(2),"} ) = ",xM2ReC.toFixed(2));
+             //console.log((i+2).toString().padStart(2),"--->", (((2+i)%size1)%N).toString().padStart(2),         ".re =", "[",i_c0.toString().padStart(2),"].re ",(sign1c<0)?"-":"+"," ([",i_c1.toString().padStart(2),"].re * t[",j1c.toString().padStart(2),"].re - [",i_c1.toString().padStart(2),"].im * t[",j1c.toString().padStart(2),"].im ) <-> ", "{",x0cRe.toFixed(2),"}",(sign1c<0)?"-":"+","({",x1cRe.toFixed(2),"} * t{",tRe_1c.toFixed(2),"} - {",x1cIm.toFixed(2),"} * {",tIm_1c.toFixed(2),"} ) = ",xM0ReC.toFixed(2));  
+             //console.log((i+2).toString().padStart(2),"--->", ((((2+i)%size1)+size1)%N).toString().padStart(2), ".re =", "[",i_c2.toString().padStart(2),"].re ",(sign1c<0)?"-":"+"," ([",i_c3.toString().padStart(2),"].re * t[",j1c.toString().padStart(2),"].re - [",i_c3.toString().padStart(2),"].im * t[",j1c.toString().padStart(2),"].im ) <-> ", "{",x2cRe.toFixed(2),"}",(sign1c<0)?"-":"+","({",x3cRe.toFixed(2),"} * t{",tRe_1c.toFixed(2),"} - {",x3cIm.toFixed(2),"} * {",tIm_1c.toFixed(2),"} ) = ",xM2ReC.toFixed(2));
+             console.log((i+0).toString().padStart(2),"--->", xM0ReC.toFixed(2), (sign1c<0)?"-":"+","(",xM2ReC.toFixed(2),"*",tRe_2c.toFixed(2),"-",xM2ImC.toFixed(2),"*",tIm_2c.toFixed(2),")");
 
              // size = 2     ||| size = 8
              ///////////////////////////////// i = 0
@@ -1087,9 +1090,9 @@ function fftComplexInPlace_seq_4(out) {
              ///////////////////////////////// i = 12
              // 13 <- 12 13  |||
              // 15 <- 14 15  |||
-             console.log((i+3).toString().padStart(2),"--->", (((3+i)%size1)%N).toString().padStart(2),         ".re =", "[",i_d0.toString().padStart(2),"].re ",(sign1d<0)?"-":"+"," ([",i_d1.toString().padStart(2),"].re * t[",j1d.toString().padStart(2),"].re - [",i_d1.toString().padStart(2),"].im * t[",j1d.toString().padStart(2),"].im ) <-> ", "{",x0dRe.toFixed(2),"}",(sign1d<0)?"-":"+","({",x1dRe.toFixed(2),"} * t{",tRe_1d.toFixed(2),"} - {",x1dIm.toFixed(2),"} * {",tIm_1d.toFixed(2),"} ) = ",xM1ReD.toFixed(2)); 
-             console.log((i+3).toString().padStart(2),"--->", ((((3+i)%size1)+size1)%N).toString().padStart(2), ".re =", "[",i_d2.toString().padStart(2),"].re ",(sign1d<0)?"-":"+"," ([",i_d3.toString().padStart(2),"].re * t[",j1d.toString().padStart(2),"].re - [",i_d3.toString().padStart(2),"].im * t[",j1d.toString().padStart(2),"].im ) <-> ", "{",x2dRe.toFixed(2),"}",(sign1d<0)?"-":"+","({",x3dRe.toFixed(2),"} * t{",tRe_1d.toFixed(2),"} - {",x3dIm.toFixed(2),"} * {",tIm_1d.toFixed(2),"} ) = ",xM3ReD.toFixed(2)); 
-
+             //console.log((i+3).toString().padStart(2),"--->", (((3+i)%size1)%N).toString().padStart(2),         ".re =", "[",i_d0.toString().padStart(2),"].re ",(sign1d<0)?"-":"+"," ([",i_d1.toString().padStart(2),"].re * t[",j1d.toString().padStart(2),"].re - [",i_d1.toString().padStart(2),"].im * t[",j1d.toString().padStart(2),"].im ) <-> ", "{",x0dRe.toFixed(2),"}",(sign1d<0)?"-":"+","({",x1dRe.toFixed(2),"} * t{",tRe_1d.toFixed(2),"} - {",x1dIm.toFixed(2),"} * {",tIm_1d.toFixed(2),"} ) = ",xM1ReD.toFixed(2)); 
+             //console.log((i+3).toString().padStart(2),"--->", ((((3+i)%size1)+size1)%N).toString().padStart(2), ".re =", "[",i_d2.toString().padStart(2),"].re ",(sign1d<0)?"-":"+"," ([",i_d3.toString().padStart(2),"].re * t[",j1d.toString().padStart(2),"].re - [",i_d3.toString().padStart(2),"].im * t[",j1d.toString().padStart(2),"].im ) <-> ", "{",x2dRe.toFixed(2),"}",(sign1d<0)?"-":"+","({",x3dRe.toFixed(2),"} * t{",tRe_1d.toFixed(2),"} - {",x3dIm.toFixed(2),"} * {",tIm_1d.toFixed(2),"} ) = ",xM3ReD.toFixed(2)); 
+             console.log((i+1).toString().padStart(2),"--->", xM1ReD.toFixed(2), (sign1d<0)?"-":"+","(",xM3ReD.toFixed(2),"*",tRe_2d.toFixed(2),"-",xM3ImD.toFixed(2),"*",tIm_2d.toFixed(2),")");
 
             out[(0+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2a - ((xM2ImA)*tIm_2a)) * sign2a;
             out[(0+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2a + ((xM2ImA)*tRe_2a)) * sign2a; 
@@ -1806,10 +1809,10 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
                 out[oddIndex  * 2    ] = eRe - t_oRe;
                 out[oddIndex  * 2 + 1] = eIm - t_oIm;
 
-                if(size==2||size==8){ console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} + ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[evenIndex * 2].toFixed(2)); }
-                if(size==2||size==8){ console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} - ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[oddIndex * 2].toFixed(2)); }
-                //if(size==4||size==16){ console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} + ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[evenIndex * 2].toFixed(2)); }
-                //if(size==4||size==16){ console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} - ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[oddIndex * 2].toFixed(2)); }
+                //if(size==2||size==8){ console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} + ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[evenIndex * 2].toFixed(2)); }
+                //if(size==2||size==8){ console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} - ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[oddIndex * 2].toFixed(2)); }
+                if(size==16){ console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} + ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[evenIndex * 2].toFixed(2)); }
+                if(size==16){ console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} - ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[oddIndex * 2].toFixed(2)); }
 
                 //console.log("**** EV.RE",evenIndex,(eRe + t_oRe).toFixed(2),"<- EV.RE",evenIndex,"+ (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","EV.IM",evenIndex,(eIm + t_oIm).toFixed(2),"<- EV.IM",evenIndex,"+ (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
                 //console.log("**** OD.RE",oddIndex ,(eRe - t_oRe).toFixed(2),"<- EV.RE",evenIndex,"- (OD.RE",oddIndex,"* TW.RE",j,"- OD.IM",oddIndex,"* TW.IM",j,")","|||||||","OD.IM",oddIndex ,(eIm - t_oIm).toFixed(2),"<- EV.IM",evenIndex,"- (OD.RE",oddIndex,"* TW.IM",j,"+ OD.IM",oddIndex,"* TW.RE",j,")");
