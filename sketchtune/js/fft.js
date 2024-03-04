@@ -1007,7 +1007,7 @@ function fftComplexInPlace_seq_4(out) {
             if((jk)%size2 < size1/2){
                                                                     //########    +00\\  |+04\\  |-08\\  |-12\\  |
               //if((jk)%size1 < size1/2){
-                //console.log(jk);
+                console.log(jk);
                 x0aRe = out[(i_a0)*2+0]; x0aIm = out[(i_a0)*2+1];   //########       00  |   00  |   00  |   00  |
                 x1aRe = out[(i_a1)*2+0]; x1aIm = out[(i_a1)*2+1];   //########      +04  |  -04  |  +04  |  -04  |
               //}
@@ -1033,7 +1033,7 @@ function fftComplexInPlace_seq_4(out) {
             if((jk)%size2 < size1/2){
                                                                     //########    +02\\  |+06\\  |-10\\  |-14\\  |
               //if((jk)%size1 < size1/2){
-                //console.log(jk);
+                console.log(jk);
                 x0cRe = out[(i_c0)*2+0]; x0cIm = out[(i_c0)*2+1];   //########       02  |   02  |   02  |   02  |
                 x1cRe = out[(i_c1)*2+0]; x1cIm = out[(i_c1)*2+1];   //########      +06  |  -06  |  +06  |  -06  |
               //}
@@ -1046,7 +1046,7 @@ function fftComplexInPlace_seq_4(out) {
             if((jk)%size2 < size1/2){
                                                                     //########    +03\\  |+07\\  |-11\\  |-15\\  |
               //if((jk)%size1 < size1/2){
-                //console.log(jk);
+                console.log(jk);
                 x0dRe = out[(i_d0)*2+0]; x0dIm = out[(i_d0)*2+1];   //########       03  |   03  |   03  |   03  | 
                 x1dRe = out[(i_d1)*2+0]; x1dIm = out[(i_d1)*2+1];   //########      +07  |  -07  |  +07  |  -07  |
               //}
