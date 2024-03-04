@@ -1209,7 +1209,7 @@ function fftComplexInPlace_seq_4(out) {
 
 
             //console.log( "-----------------------------" );
-            if( (i+4) % (z) == 0 ){ s += z; }
+            if( (i) % (z) == 0 ){ s += z; }
             if( (i+4) % size2 == 0 ){  w += size2; } 
           }
         } 
