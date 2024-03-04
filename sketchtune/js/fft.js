@@ -1028,17 +1028,6 @@ function fftComplexInPlace_seq_4(out) {
 
             jk++;
 
-            if(size1 == 2){
-              x0cRe = x0aRe; x0cIm = x0aIm; 
-              x1cRe = x1aRe; x1cIm = x1aIm; 
-              x2cRe = x2aRe; x2cIm = x2aIm; 
-              x3cRe = x3aRe; x3cIm = x3aIm; 
-              x0dRe = x0bRe; x0dIm = x0bIm; 
-              x1dRe = x1bRe; x1dIm = x1bIm; 
-              x2dRe = x2bRe; x2dIm = x2bIm; 
-              x3dRe = x3bRe; x3dIm = x3bIm;
-            } 
-
             if((jk)%size2 < size1){
                                                                     //########    +02\\  |+06\\  |-10\\  |-14\\  |
               if((jk)%size1 < size1/2){
@@ -1062,6 +1051,23 @@ function fftComplexInPlace_seq_4(out) {
             }
 
             jk++;
+
+            if(size1 == 2){
+              x0bRe = x0aRe; x0bIm = x0aIm;  
+              x1bRe = x1aRe; x1bIm = x1aIm;  
+              x0dRe = x0cRe; x0dIm = x0cIm;  
+              x1dRe = x1cRe; x1dIm = x1cIm;                  
+            }
+            if(size1 == 2){
+              x0cRe = x0aRe; x0cIm = x0aIm; 
+              x1cRe = x1aRe; x1cIm = x1aIm; 
+              x2cRe = x2aRe; x2cIm = x2aIm; 
+              x3cRe = x3aRe; x3cIm = x3aIm; 
+              x0dRe = x0bRe; x0dIm = x0bIm; 
+              x1dRe = x1bRe; x1dIm = x1bIm; 
+              x2dRe = x2bRe; x2dIm = x2bIm; 
+              x3dRe = x3bRe; x3dIm = x3bIm;
+            } 
 
                                                                            //#################    +00\\\\\\\\\\\\\  |+04\\\\\\\\\\\\\  |-08\\\\\\\\\\\\\  |-12\\\\\\\\\\\\\                                
               xM0ReA = x0aRe + (x1aRe * tRe_1a - x1aIm * tIm_1a) * sign1a; //#################        00 <- 00 +04  |    04 <- 00 -04  |    00 <- 00 +04  |    04 <- 00 -04
