@@ -1102,10 +1102,10 @@ function fftComplexInPlace_seq_4(out) {
              out[(3+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2d - ((xM3ImD)*tIm_2d)) * sign2d;
              out[(3+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2d + ((xM3ImD)*tRe_2d)) * sign2d;
 
-             console.log((i+0).toString().padStart(2),"--->", xM0ReA.toFixed(2), (sign1a<0)?"-":"+","(",xM2ReA.toFixed(2),"*",tRe_2a.toFixed(2),"-",xM2ImA.toFixed(2),"*",tIm_2a.toFixed(2),") = ", out[(0+i)*2+0]);
-             console.log((i+1).toString().padStart(2),"--->", xM1ReB.toFixed(2), (sign1b<0)?"-":"+","(",xM3ReB.toFixed(2),"*",tRe_2b.toFixed(2),"-",xM3ImB.toFixed(2),"*",tIm_2b.toFixed(2),") = ", out[(1+i)*2+0]);
-             console.log((i+2).toString().padStart(2),"--->", xM0ReC.toFixed(2), (sign1c<0)?"-":"+","(",xM2ReC.toFixed(2),"*",tRe_2c.toFixed(2),"-",xM2ImC.toFixed(2),"*",tIm_2c.toFixed(2),") = ", out[(2+i)*2+0]);
-             console.log((i+3).toString().padStart(2),"--->", xM1ReD.toFixed(2), (sign1d<0)?"-":"+","(",xM3ReD.toFixed(2),"*",tRe_2d.toFixed(2),"-",xM3ImD.toFixed(2),"*",tIm_2d.toFixed(2),") = ", out[(3+i)*2+0]);
+             console.log((i+0).toString().padStart(2),"--->", xM0ReA.toFixed(2), (sign2a<0)?"-":"+","(",xM2ReA.toFixed(2),"*",tRe_2a.toFixed(2),"-",xM2ImA.toFixed(2),"*",tIm_2a.toFixed(2),") = ", out[(0+i)*2+0]);
+             console.log((i+1).toString().padStart(2),"--->", xM1ReB.toFixed(2), (sign2b<0)?"-":"+","(",xM3ReB.toFixed(2),"*",tRe_2b.toFixed(2),"-",xM3ImB.toFixed(2),"*",tIm_2b.toFixed(2),") = ", out[(1+i)*2+0]);
+             console.log((i+2).toString().padStart(2),"--->", xM0ReC.toFixed(2), (sign2c<0)?"-":"+","(",xM2ReC.toFixed(2),"*",tRe_2c.toFixed(2),"-",xM2ImC.toFixed(2),"*",tIm_2c.toFixed(2),") = ", out[(2+i)*2+0]);
+             console.log((i+3).toString().padStart(2),"--->", xM1ReD.toFixed(2), (sign2d<0)?"-":"+","(",xM3ReD.toFixed(2),"*",tRe_2d.toFixed(2),"-",xM3ImD.toFixed(2),"*",tIm_2d.toFixed(2),") = ", out[(3+i)*2+0]);
 
 
 /*
