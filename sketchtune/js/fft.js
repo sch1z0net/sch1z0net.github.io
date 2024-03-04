@@ -1718,7 +1718,7 @@ function precalculateFFTFactorsRADIX2(N) {
         factors[i * 2 + 1] = Math.sin(angle1); // Sine of angle1
     }
 
-    return new Float32Array(factors);
+    return new Float64Array(factors);
 }
 
 // Function to compute FFT factors with caching
