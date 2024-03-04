@@ -1622,13 +1622,13 @@ function fftRealInPlaceRADIX4(realInput,type) {
     
 
     // Perform bit reversal
-    const inputBR = new Float32Array(N);
+    const inputBR = new Float64Array(N);
     for (let i = 0; i < N; i++) {
         inputBR[i] = input[map[i]];
     }
 
     // Convert the real-valued input to a complex-valued Float32Array
-    const complexOut = new Float32Array(N * 2);
+    const complexOut = new Float64Array(N * 2);
     for (let i = 0; i < N; i++) {
         complexOut[i * 2] = inputBR[i];
         complexOut[i * 2 + 1] = 0; // Imaginary part is set to 0
@@ -1893,7 +1893,7 @@ function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     const elapsedTime1 = endTime1 - startTime;
     console.log(`FFT - FFTSIZE: Elapsed time: ${elapsedTime1} milliseconds`);*/
 
-    const paddedInput = new Float32Array(FFT_SIZE).fill(0);
+    const paddedInput = new Float64Array(FFT_SIZE).fill(0);
     inputSignal.forEach((value, index) => paddedInput[index] = value); // Store real part in even indices
 
     /*const endTime2 = performance.now();
