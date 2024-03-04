@@ -892,13 +892,14 @@ function fftComplexInPlace_seq_4(out) {
     console.log();
     console.log();
     console.log();
-    let r = N;
+    let r = N; //64
     for(let p = 0; p < (bits>>1); p++){
         let d = 1<<(2*p);
-        r = r >> (2*p); // 16  4
+        r = r >> (2*p);         //  64    16    4
         let z = d*4;
         let s = 0;
         let k = 0;
+                                //  0     1     2   
         let p1 = (p*2)+1;       //  1 //  3 //  5 //
         let p2 = (p*2+1)+1;     //  2 //  4 //  6 //
         let size1 = 2<<(p1-1);  //  2 //  8 // 32 //
@@ -911,7 +912,10 @@ function fftComplexInPlace_seq_4(out) {
         let x_c_read = false;
         let x_d_read = false;
         console.log( "-size "+size2+"########################################" );
-        for(let i = 0; i < N; i+=4){
+        for(let b = 0; b < r*4; b+=r){
+          for(let i_ = 0; i_ < 4; i_++){
+            let i = b + i_*(size2/4);
+
             let k_a = k; k += 1; k = k%d;
             let k_b = k; k += 1; k = k%d; 
             let k_c = k; k += 1; k = k%d;
@@ -1200,11 +1204,14 @@ function fftComplexInPlace_seq_4(out) {
             //console.log( "-----------------------------" );
             if( (i+4) % (z) == 0 ){ s += z; }
             if( (i+4) % size2 == 0 ){  w += size2; } 
-        }
+          }
+        } 
         
+        /*
         for(let i=0; i<N; i++){
              console.log("after size ",size2," : ",i," -> ", out[i*2], out[i*2+1]); 
-        }
+        }*/
+
     }
     return out;
 }
