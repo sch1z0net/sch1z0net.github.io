@@ -1058,9 +1058,13 @@ function fftComplexInPlace_seq_4(out) {
 
             if(size1 == 2){
               x0bRe = x0aRe; x0bIm = x0aIm;  
-              x1bRe = x1aRe; x1bIm = x1aIm;  
+              x1bRe = x1aRe; x1bIm = x1aIm; 
+              x2bRe = x2aRe; x2bIm = x2aIm;  
+              x3bRe = x3aRe; x3bIm = x3aIm;               
               x0dRe = x0cRe; x0dIm = x0cIm;  
-              x1dRe = x1cRe; x1dIm = x1cIm;                  
+              x1dRe = x1cRe; x1dIm = x1cIm;  
+              x2dRe = x2cRe; x2dIm = x2cIm;  
+              x3dRe = x3cRe; x3dIm = x3cIm;                  
             }
             if(size1 == 2){
               x0cRe = x0aRe; x0cIm = x0aIm; 
