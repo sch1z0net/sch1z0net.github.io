@@ -895,7 +895,8 @@ function fftComplexInPlace_seq_4(out) {
     let r = N; //64
     for(let p = 0; p < (bits>>1); p++){
         let d = 1<<(2*p);
-        r = r >> (2*p);         //  64    16    4
+        r = (p == 0 ? (r >> 2) : (r >> 2*p));         //  16    16    4
+        let r_ = (p == 0 ? 4 : 4<<(p-1));             //   4    4    16
         let z = d*4;
         let s = 0;
         let k = 0;
@@ -914,7 +915,7 @@ function fftComplexInPlace_seq_4(out) {
         console.log( "-size "+size2+"########################################" );
         for(let b = 0; b < r*4; b+=r){
           for(let i_ = 0; i_ < 4; i_++){
-            let i = b + i_*(size2/4);
+            let i = b + i_*r_;
 
             let k_a = k; k += 1; k = k%d;
             let k_b = k; k += 1; k = k%d; 
