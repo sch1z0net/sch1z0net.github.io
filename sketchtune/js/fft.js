@@ -1168,7 +1168,7 @@ function fftComplexInPlace_seq_4(out) {
 
             //console.log( "-----------------------------" );
             if( (i+4) % (z) == 0 ){ s += z; }
-            if( i % size2 == 0 ){  w += size2; } 
+            if( (i+4) % size2 == 0 ){  w += size2; } 
         }
         
         for(let i=0; i<N; i++){
