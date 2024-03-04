@@ -1800,7 +1800,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
     }
 
     // Perform bit reversal
-    const out = new Float32Array(N * 2);
+    const out = new Float64Array(N * 2);
     let brs = [];
     for (let i = 0; i < N; i++) {
         const reversedIndex = bitReverse(i, bits);
