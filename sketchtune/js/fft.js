@@ -936,6 +936,38 @@ function fftComplexInPlace_seq_4(out) {
             let j2c = ji%size1; let j1c = ji%(size1/2); ji++;
             let j2d = ji%size1; let j1d = ji%(size1/2); ji++;
 
+
+
+            let angle_1a = (2 * Math.PI * j1a) / size1;
+            let angle_2a = (2 * Math.PI * j2a) / size2;
+            let angle_1b = (2 * Math.PI * j1b) / size1;
+            let angle_2b = (2 * Math.PI * j2b) / size2;
+            let angle_1c = (2 * Math.PI * j1c) / size1;
+            let angle_2c = (2 * Math.PI * j2c) / size2;
+            let angle_1d = (2 * Math.PI * j1d) / size1;
+            let angle_2d = (2 * Math.PI * j2d) / size2;
+
+            let tRe_1a  = Math.cos(angle_1a);
+            let tIm_1a  = Math.sin(angle_1a);          
+            let tRe_2a  = Math.cos(angle_2a);
+            let tIm_2a  = Math.sin(angle_2a);
+
+            let tRe_1b  = Math.cos(angle_1b);
+            let tIm_1b  = Math.sin(angle_1b);          
+            let tRe_2b  = Math.cos(angle_2b);
+            let tIm_2b  = Math.sin(angle_2b);
+
+            let tRe_1c  = Math.cos(angle_1c);
+            let tIm_1c  = Math.sin(angle_1c);          
+            let tRe_2c  = Math.cos(angle_2c);
+            let tIm_2c  = Math.sin(angle_2c);
+
+            let tRe_1d  = Math.cos(angle_1d);
+            let tIm_1d  = Math.sin(angle_1d);          
+            let tRe_2d  = Math.cos(angle_2d);
+            let tIm_2d  = Math.sin(angle_2d);
+
+/*
             let tRe_1a  = Math.cos((2 * Math.PI * j1a) / size1);
             let tIm_1a  = Math.sin((2 * Math.PI * j1a) / size1);          
             let tRe_2a  = Math.cos((2 * Math.PI * j2a) / size2);
@@ -955,6 +987,8 @@ function fftComplexInPlace_seq_4(out) {
             let tIm_1d  = Math.sin((2 * Math.PI * j1d) / size1);
             let tRe_2d  = Math.cos((2 * Math.PI * j2d) / size2);
             let tIm_2d  = Math.sin((2 * Math.PI * j2d) / size2);
+*/
+
 
             /*
             console.log((sign2a<0)?"-":"+" , 0+i, " -> ", (sign1a<0)?"-":"+" , i_a0 , i_a1 , i_a2 , i_a3 );
