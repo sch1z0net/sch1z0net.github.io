@@ -921,7 +921,7 @@ function fftComplexInPlace_seq_4(out) {
             ji = i;
             k = i%d;
             w = i;
-            s = i;
+            s = i%d;
 
             let k_a = k; k += 1; k = k%d;
             let k_b = k; k += 1; k = k%d; 
