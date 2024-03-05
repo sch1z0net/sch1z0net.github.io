@@ -954,7 +954,7 @@ function fftComplexInPlace_seq_4(out) {
         let ji = 0; let jj = 0; let jk = 0;
         let c = 0;
         let w = 0;
-
+        
         console.log( "-size "+size2+"########################################" );
         for(let b = 0; b < r*ts; b+=r){
           k = 0;
@@ -965,17 +965,17 @@ function fftComplexInPlace_seq_4(out) {
             jj = i;
             ji = i;
             w = 0;
-
+            
             let k_a = k; k += 1; k = k%d;
             let k_b = k; k += 1; k = k%d; 
             let k_c = k; k += 1; k = k%d;
             let k_d = k; k += 1; k = k%d;
-
+            
             let i_a0 = (s + k_a + d*0); let i_a1 = (s + k_a + d*1); let i_a2 = (s + k_a + d*2); let i_a3 = (s + k_a + d*3);
             let i_b0 = (s + k_b + d*0); let i_b1 = (s + k_b + d*1); let i_b2 = (s + k_b + d*2); let i_b3 = (s + k_b + d*3);
             let i_c0 = (s + k_c + d*0); let i_c1 = (s + k_c + d*1); let i_c2 = (s + k_c + d*2); let i_c3 = (s + k_c + d*3);
             let i_d0 = (s + k_d + d*0); let i_d1 = (s + k_d + d*1); let i_d2 = (s + k_d + d*2); let i_d3 = (s + k_d + d*3);
-
+            
             let sign2a = (jj%size2 < size1)      ? 1 : -1;
             let sign1a = (jj%size1 < (size1>>1)) ? 1 : -1; 
             jj++; 
@@ -988,7 +988,7 @@ function fftComplexInPlace_seq_4(out) {
             let sign2d = (jj%size2 < size1)      ? 1 : -1;
             let sign1d = (jj%size1 < (size1>>1)) ? 1 : -1; 
             jj++;
-
+            
             let j2a = ji%size1; let j1a = ji%(size1/2); ji++;
             let j2b = ji%size1; let j1b = ji%(size1/2); ji++;
             let j2c = ji%size1; let j1c = ji%(size1/2); ji++;
@@ -2249,7 +2249,7 @@ const signal4 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.
 const signal5 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
 
 
-console.log("256:  ",compareFFTResults(fftRealInPlace_ref(testData256),fftRealInPlaceRADIX4(testData256,4)));
+console.log("256:  ",compareFFTResults(fftRealInPlace_ref(testData64),fftRealInPlaceRADIX4(testData64,4)));
 
 /*
 console.log(signal1);
