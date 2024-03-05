@@ -902,13 +902,17 @@ function fftComplexInPlace_seq_4(out) {
         //   p =       0     1     2     3
         //N=4   ->     4-               
         //N=16  ->     8-    4          
-        //N=64  ->     16-   4     4     
-        //N=256 ->     
-        if( p == 0 ){ 
-           r = 2<<steps;
+        //N=64  ->     16-  16     4     
+        //N=256 ->   
+        let r = 4;  
+        if(N == 16){ 
+            if(p==0){ r = 8; }
+            if(p==1){ r = 4; }
         }
-        if( p >= 1 ){ 
-           r = 4;
+        if(N == 64){
+            if(p==0){ r = 16; }
+            if(p==1){ r = 16; }
+            if(p==2){ r = 4; }
         }
 
         //N=4   ->     -
@@ -917,11 +921,11 @@ function fftComplexInPlace_seq_4(out) {
         //N=256 ->    
         let r_ = 4;  
         if(N == 16){ 
-            if(p==1){
-                 r_ = 8;
-            }
+            if(p==0){ r_ = 4; }
+            if(p==1){ r_ = 8; }
         }
         if(N == 64){
+            if(p==0){ r_ = 4; }
             if(p==1){ r_ = 4; }
             if(p==2){ r_ = 16; }
         }
