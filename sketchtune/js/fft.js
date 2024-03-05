@@ -2267,5 +2267,7 @@ console.log(fftRealInPlaceRADIX4(signal3,4));
 console.log(fftRealInPlace_ref(signal5));
 console.log(fftRealInPlaceRADIX4(signal5,4));*/
 
-console.log("256:  ",compareFFTResults(fftRealInPlace_ref(testData256),fftRealInPlaceRADIX4(testData256)));
+var res1 = fftRealInPlace_ref(testData256);
+var res2 = fftRealInPlaceRADIX4(testData256);
+console.log("256:  ",compareFFTResults(res1,res2));
 
