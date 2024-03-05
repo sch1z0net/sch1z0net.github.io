@@ -922,11 +922,8 @@ function fftComplexInPlace_seq_4(out) {
             }
         }
         if(N == 64){
-            if(p==1){
-                 r_ = 4;
-            }else{
-                 r_ = 16;
-            }
+            if(p==1){ r_ = 4; }
+            if(p==2){ r_ = 16; }
         }
 
         let z = d*4;
@@ -940,10 +937,7 @@ function fftComplexInPlace_seq_4(out) {
         let ji = 0; let jj = 0; let jk = 0;
         let c = 0;
         let w = 0;
-        let x_a_read = false;
-        let x_b_read = false;
-        let x_c_read = false;
-        let x_d_read = false;
+
         console.log( "-size "+size2+"########################################" );
         for(let b = 0; b < r*ts; b+=r){
           k = 0;
