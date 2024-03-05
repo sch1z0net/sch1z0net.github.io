@@ -935,13 +935,13 @@ function fftComplexInPlace_seq_4(out) {
         console.log( "-size "+size2+"########################################" );
         for(let b = 0; b < r*ts; b+=r){
           k = 0;
+          s = b;
           for(let i_ = 0; i_ < ts; i_++){
             let i = b + i_*r_;
             jk = i;
             jj = i;
             ji = i;
             w = 0;
-            s = b;
 
             let k_a = k; k += 1; k = k%d;
             let k_b = k; k += 1; k = k%d; 
