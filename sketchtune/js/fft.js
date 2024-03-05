@@ -917,7 +917,7 @@ function fftComplexInPlace_seq_4(out) {
         if(N == 256){
             if(p==0){ r = 32; }
             if(p==1){ r = 32; }
-            if(p==2){ r = 32; }
+            if(p==2){ r = 4; }
             if(p==3){ r = 4; }
         }
 
@@ -938,7 +938,7 @@ function fftComplexInPlace_seq_4(out) {
         if(N == 256){
             if(p==0){ r_ = 4; }
             if(p==1){ r_ = 4; }
-            if(p==2){ r_ = 4; }
+            if(p==2){ r_ = 32; }
             if(p==3){ r_ = 32; }
         }
 
