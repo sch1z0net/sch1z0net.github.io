@@ -2164,6 +2164,9 @@ const testData512  = generateTestData(512);
 const testData1024 = generateTestData(1024);
 const testData2048 = generateTestData(2048);
 const testData4096 = generateTestData(4096);
+fftRealInPlaceRADIX4(testData16);
+fftRealInPlaceRADIX4(testData64);
+fftRealInPlaceRADIX4(testData256);
 
 // Perform FFT operations
 const performFFTOperations = (fftSize,type) => {
@@ -2267,7 +2270,4 @@ console.log(fftRealInPlaceRADIX4(signal3,4));
 console.log(fftRealInPlace_ref(signal5));
 console.log(fftRealInPlaceRADIX4(signal5,4));*/
 
-//var res1 = fftRealInPlace_ref(testData256);
-console.log(fftRealInPlaceRADIX4(testData256));
-//console.log("256:  ",compareFFTResults(res1,res2));
 
