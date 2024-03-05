@@ -914,6 +914,13 @@ function fftComplexInPlace_seq_4(out) {
             if(p==1){ r = 16; }
             if(p==2){ r = 4; }
         }
+        if(N == 256){
+            if(p==0){ r = 32; }
+            if(p==1){ r = 32; }
+            if(p==2){ r = 32; }
+            if(p==3){ r = 4; }
+        }
+
 
         //N=4   ->     -
         //N=16  ->     -     8    
@@ -928,6 +935,12 @@ function fftComplexInPlace_seq_4(out) {
             if(p==0){ r_ = 4; }
             if(p==1){ r_ = 4; }
             if(p==2){ r_ = 16; }
+        }
+        if(N == 256){
+            if(p==0){ r_ = 4; }
+            if(p==1){ r_ = 4; }
+            if(p==2){ r_ = 4; }
+            if(p==3){ r_ = 32; }
         }
 
         let z = d*4;
@@ -2245,14 +2258,14 @@ console.log(computeInverseFFT(computeFFT(signal3)));
 
 //console.log(computeFFT(signal1));
 
-console.log(fftRealInPlace_ref(signal1));
+/*console.log(fftRealInPlace_ref(signal1));
 console.log(fftRealInPlaceRADIX4(signal1,4));
 
 console.log(fftRealInPlace_ref(signal3));
 console.log(fftRealInPlaceRADIX4(signal3,4));
 
 console.log(fftRealInPlace_ref(signal5));
-console.log(fftRealInPlaceRADIX4(signal5,4));
+console.log(fftRealInPlaceRADIX4(signal5,4));*/
 
-
+console.log("256:  ",compareFFTResults(fftRealInPlace_ref(testData256),fftRealInPlaceRADIX4(testData256)));
 
