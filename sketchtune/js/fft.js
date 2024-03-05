@@ -912,10 +912,20 @@ function fftComplexInPlace_seq_4(out) {
         }
 
         //N=4   ->     -
-        //N=16  ->     -    8    
-        //N=64  ->     -    4   16   
+        //N=16  ->     -     8    
+        //N=64  ->     -     4    16   
         //N=256 ->    
-        let r_ = (p == 0 ? 4 : 8);  
+        let r_ = 4;  
+        if(p==1){ 
+            if(N == 16){
+                 r_ = 8;
+            }
+            if(N == 64){
+                 r_ = 4;
+            }else{
+                 r_ = 16;
+            }
+        }
 
         let z = d*4;
         let s = 0;
