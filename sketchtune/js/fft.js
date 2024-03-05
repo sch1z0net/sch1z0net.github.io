@@ -892,14 +892,23 @@ function fftComplexInPlace_seq_4(out) {
     console.log();
     console.log();
     console.log();
-    let r = N; //64
-    let steps = (bits>>1);
-    //let ts = steps == 1 ? 1 : 4;
-    let ts = 1 << (steps-1); //  1 2 4
+    let r = N; //64          // 4 16 64
+    let steps = (bits>>1);   
+    let ts = 1 << (steps-1); // 1  2  4
     for(let p = 0; p < steps; p++){
         let d = 1<<(2*p);
-        r = (p == 0 ? (r >> 2) : (r >> 2*(p-1)));     //  16    16    4
-        let r_ = (p == 0 ? 4 : 4<<2*(p-1));           //   4    4    16
+        
+        //   p =      0     1    2    3
+        //N=4   ->     -
+        //N=16  ->     -    8
+        //N=64  ->     -   16    4
+        //N=256 ->     -   32   16    4
+        r = (p == 0 ? (r >> 2) : (N/(ts)) );
+        //N=4   ->     -
+        //N=16  ->     -    4    
+        //N=64  ->     -    4   16   
+        //N=256 ->     -    4   16   
+        let r_ = (p == 0 ? 4 : 4<<2*(p-1));           
         let z = d*4;
         let s = 0;
         let k = 0;
