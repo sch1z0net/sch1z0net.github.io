@@ -958,7 +958,7 @@ function fftComplexInPlace_seq_4(out) {
         console.log( "-size "+size2+"########################################" );
         for(let b_ = 0; b_ < ts; b_++){
           b = b_*r;  
-          if(N==256 && p== 2 && b_ >= ts/2){ 
+          if(N==256 && p == 2 && b_ >= ts/2){ 
             b = (b_%4)*r + N/2; 
           } 
           k = 0;
@@ -1063,9 +1063,8 @@ function fftComplexInPlace_seq_4(out) {
             // %4  < 1
             // %16 < 4
             // %64 < 16
-            //%256 < 64
-            if((jk)%size2 < size1/2){
-
+            //%256 < 32
+            if((jk)%size2 < r_){
                                                                     //########    +00\\  |+04\\  |-08\\  |-12\\  |
                 x0aRe = out[(i_a0)*2+0]; x0aIm = out[(i_a0)*2+1];   //########       00  |   00  |   00  |   00  |
                 x1aRe = out[(i_a1)*2+0]; x1aIm = out[(i_a1)*2+1];   //########      +04  |  -04  |  +04  |  -04  |
@@ -1076,7 +1075,7 @@ function fftComplexInPlace_seq_4(out) {
 
             jk++;
 
-            if((jk)%size2 < size1/2){
+            if((jk)%size2 < r_){
                                                                     //########    +01\\  |+05\\  |-09\\  |-13\\  |
                 x0bRe = out[(i_b0)*2+0]; x0bIm = out[(i_b0)*2+1];   //########       01  |   01  |   01  |   01  |
                 x1bRe = out[(i_b1)*2+0]; x1bIm = out[(i_b1)*2+1];   //########      +05  |  -05  |  +05  |  -05  |
@@ -1087,7 +1086,7 @@ function fftComplexInPlace_seq_4(out) {
 
             jk++;
 
-            if((jk)%size2 < size1/2){
+            if((jk)%size2 < r_){
                                                                     //########    +02\\  |+06\\  |-10\\  |-14\\  |
                 x0cRe = out[(i_c0)*2+0]; x0cIm = out[(i_c0)*2+1];   //########       02  |   02  |   02  |   02  |
                 x1cRe = out[(i_c1)*2+0]; x1cIm = out[(i_c1)*2+1];   //########      +06  |  -06  |  +06  |  -06  |
@@ -1098,7 +1097,7 @@ function fftComplexInPlace_seq_4(out) {
 
             jk++;
 
-            if((jk)%size2 < size1/2){
+            if((jk)%size2 < r_){
                                                                     //########    +03\\  |+07\\  |-11\\  |-15\\  |
                 x0dRe = out[(i_d0)*2+0]; x0dIm = out[(i_d0)*2+1];   //########       03  |   03  |   03  |   03  | 
                 x1dRe = out[(i_d1)*2+0]; x1dIm = out[(i_d1)*2+1];   //########      +07  |  -07  |  +07  |  -07  |
