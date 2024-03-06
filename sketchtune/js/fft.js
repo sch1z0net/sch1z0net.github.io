@@ -895,6 +895,7 @@ function fftComplexInPlace_seq_4(out) {
     let r = N; //64          // 4   16   64  128
     let steps = (bits>>1);   // 1    2    3    4   
     let ts = 1 << (steps-1); // 1    2    4    8
+    let pre = 0;
     for(let p = 0; p < steps; p++){
         let d = 1<<(2*p);    // 1    4   16   64
         
@@ -1037,28 +1038,33 @@ function fftComplexInPlace_seq_4(out) {
             let tRe_2d  = Math.cos(angle_2d);
             let tIm_2d  = Math.sin(angle_2d);
 */
+            
+            let tRe_1a  = ____F[pre+(2*j1a+0)];
+            let tIm_1a  = ____F[pre+(2*j1a+1)];          
+            let tRe_2a  = ____F[pre+(2*j2a+0)]; 
+            let tIm_2a  = ____F[pre+(2*j2a+1)];
 
-            let tRe_1a  = ____F[j1a];
-            let tIm_1a  = ____F[j1a];          
-            let tRe_2a  = ____F[j1a]; 
-            let tIm_2a  = ____F[j1a];
+            let tRe_1b  = ____F[pre+(2*j1b+0)];
+            let tIm_1b  = ____F[pre+(2*j1b+1)];          
+            let tRe_2b  = ____F[pre+(2*j2b+0)]; 
+            let tIm_2b  = ____F[pre+(2*j2b+1)];
 
-            let tRe_1b  = ____F[j1a];
-            let tIm_1b  = ____F[j1a];         
-            let tRe_2b  = ____F[j1a];
-            let tIm_2b  = ____F[j1a]; 
+            let tRe_1c  = ____F[pre+(2*j1c+0)];
+            let tIm_1c  = ____F[pre+(2*j1c+1)];          
+            let tRe_2c  = ____F[pre+(2*j2c+0)]; 
+            let tIm_2c  = ____F[pre+(2*j2c+1)];
 
-            let tRe_1c  = ____F[j1a]; 
-            let tIm_1c  = ____F[j1a];      
-            let tRe_2c  = ____F[j1a];
-            let tIm_2c  = ____F[j1a]; 
+            let tRe_1d  = ____F[pre+(2*j1d+0)];
+            let tIm_1d  = ____F[pre+(2*j1d+1)];          
+            let tRe_2d  = ____F[pre+(2*j2d+0)]; 
+            let tIm_2d  = ____F[pre+(2*j2d+1)];
 
-            let tRe_1d  = ____F[j1a]; 
-            let tIm_1d  = ____F[j1a];           
-            let tRe_2d  = ____F[j1a]; 
-            let tIm_2d  = ____F[j1a];
-
-
+        //N=2   - pre =  0: [ re, im ]
+        //N=4   - pre =  2: [ re, im, re, im ]
+        //N=8   - pre =  6: [ re, im, re, im, re, im, re, im ]  
+        //N=16  - pre = 14: [ re, im, re, im, re, im, re, im, re, im, re, im, re, im, re, im ] 
+        //....
+    
 
 
 
@@ -1244,7 +1250,8 @@ function fftComplexInPlace_seq_4(out) {
             if( (i) % size2 == 0 ){  w += size2; } 
           }
         } 
-        
+        pre += (2 << p);
+
         
         /*for(let i=0; i<N; i++){
              console.log("after size ",size2," : ",i," -> ", out[i*2], out[i*2+1]); 
