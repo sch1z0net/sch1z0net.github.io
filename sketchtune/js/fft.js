@@ -958,7 +958,7 @@ function fftComplexInPlace_seq_4(out) {
         
         console.log( "-size "+size2+"########################################" );
         for(let b_ = 0; b_ < ts; b_++){
-          if(b_ >= ts/2){ b_s = N/2; }
+          if(N==256 && p== 2 && b_ >= ts/2){ b_s = N/2; }
           let b = b_*r+b_s;  
           k = 0;
           s = b;
