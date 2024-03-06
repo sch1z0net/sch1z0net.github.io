@@ -962,7 +962,7 @@ function fftComplexInPlace_seq_4(out) {
             b = (b_%4)*r + N/2; 
           } 
           s = b;
-          
+          let k = p==0 ? 1 : r_;
           for(let i_ = 0; i_ < ts; i_++){
             let i = b + i_*r_;
             jk = i;
@@ -978,10 +978,10 @@ function fftComplexInPlace_seq_4(out) {
             let i_d0 = (s + k_d + d*0); let i_d1 = (s + k_d + d*1); let i_d2 = (s + k_d + d*2); let i_d3 = (s + k_d + d*3);
             */
 
-            let i_a0 = (i + (r_%size2)*0); let i_a1 = (i + (r_%size2)*1); let i_a2 = (i + (r_%size2)*2); let i_a3 = (i + (r_%size2)*3);
-            let i_b0 = (i + (r_%size2)*0); let i_b1 = (i + (r_%size2)*1); let i_b2 = (i + (r_%size2)*2); let i_b3 = (i + (r_%size2)*3);
-            let i_c0 = (i + (r_%size2)*0); let i_c1 = (i + (r_%size2)*1); let i_c2 = (i + (r_%size2)*2); let i_c3 = (i + (r_%size2)*3);
-            let i_d0 = (i + (r_%size2)*0); let i_d1 = (i + (r_%size2)*1); let i_d2 = (i + (r_%size2)*2); let i_d3 = (i + (r_%size2)*3);
+            let i_a0 = (i + (k)*0); let i_a1 = (i + (k)*1); let i_a2 = (i + (k)*2); let i_a3 = (i + (k)*3);
+            let i_b0 = (i + (k)*0); let i_b1 = (i + (k)*1); let i_b2 = (i + (k)*2); let i_b3 = (i + (k)*3);
+            let i_c0 = (i + (k)*0); let i_c1 = (i + (k)*1); let i_c2 = (i + (k)*2); let i_c3 = (i + (k)*3);
+            let i_d0 = (i + (k)*0); let i_d1 = (i + (k)*1); let i_d2 = (i + (k)*2); let i_d3 = (i + (k)*3);
             
             let sign2a = (jj%size2 < size1)      ? 1 : -1;
             let sign1a = (jj%size1 < (size1>>1)) ? 1 : -1; 
