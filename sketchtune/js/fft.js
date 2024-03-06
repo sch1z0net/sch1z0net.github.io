@@ -955,6 +955,8 @@ function fftComplexInPlace_seq_4(out) {
         let c = 0;
         let w = 0;
         let b = 0;
+
+        let jm = (2<<(p));
         console.log( "-size "+size2+"########################################" );
         for(let b_ = 0; b_ < ts; b_++){
           b = b_*r;  
@@ -1002,10 +1004,10 @@ function fftComplexInPlace_seq_4(out) {
             let j2c = ji%size1; let j1c = ji%(size1/2); ji++;
             let j2d = ji%size1; let j1d = ji%(size1/2); ji++;*/
 
-            let j2a = (ji+0)%size1; let j1a = (ji+0)%(size1/2);
-            let j2b = (ji+1)%size1; let j1b = (ji+1)%(size1/2);
-            let j2c = (ji+2)%size1; let j1c = (ji+2)%(size1/2);
-            let j2d = (ji+3)%size1; let j1d = (ji+3)%(size1/2);
+            let j2a = (ji+0)%jm; let j1a = (ji+0)%(jm>>1);
+            let j2b = (ji+1)%jm; let j1b = (ji+1)%(jm>>1);
+            let j2c = (ji+2)%jm; let j1c = (ji+2)%(jm>>1);
+            let j2d = (ji+3)%jm; let j1d = (ji+3)%(jm>>1);
 
 
 
