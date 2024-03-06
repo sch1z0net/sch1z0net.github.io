@@ -973,7 +973,7 @@ function fftComplexInPlace_seq_4(out) {
                 if(i_<(ts/2)){ 
                     i = b + (i_*32)*2; 
                 }else{ 
-                    i = b + (((i_%4)+1)*32)*1; 
+                    i = b + 32+((i_%4)*32)*2; 
                 }
             }
             jk = i;
