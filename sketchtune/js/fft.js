@@ -911,13 +911,13 @@ function fftComplexInPlace_seq_4(out) {
         }
         if(N == 64){
             if(p==0){ r = 16; }
-            if(p==1){ r = 8; }
+            if(p==1){ r = 16; }
             if(p==2){ r = 4; }
         }
         if(N == 256){
             if(p==0){ r = 32; }
             if(p==1){ r = 32; }
-            if(p==2){ r = 32; }
+            if(p==2){ r = 4; }
             if(p==3){ r = 4; }
         }
 
@@ -927,19 +927,19 @@ function fftComplexInPlace_seq_4(out) {
         //N=256 ->    
         let r_ = 4;  
         if(N == 16){ 
-            if(p==0){ r_ = 4; } //4
-            if(p==1){ r_ = 8; } //8
+            if(p==0){ r_ = 4; }  
+            if(p==1){ r_ = 8; }
         }
         if(N == 64){
-            if(p==0){ r_ = 4; } //4
-            if(p==1){ r_ = 8; } //8
-            if(p==2){ r_ = 16; }//16
+            if(p==0){ r_ = 4; } 
+            if(p==1){ r_ = 4; }
+            if(p==2){ r_ = 16; }   
         }
         if(N == 256){
-            if(p==0){ r_ = 4; } //4
-            if(p==1){ r_ = 4; } //8
-            if(p==2){ r_ = 4; } //16
-            if(p==3){ r_ = 32; }//32
+            if(p==0){ r_ = 4; }
+            if(p==1){ r_ = 4; }
+            if(p==2){ r_ = 16; }    
+            if(p==3){ r_ = 32; }
         }
 
 
@@ -954,11 +954,15 @@ function fftComplexInPlace_seq_4(out) {
         let ji = 0; let jj = 0; let jk = 0;
         let c = 0;
         let w = 0;
+        let b_s = 0;
         
         console.log( "-size "+size2+"########################################" );
-        for(let b = 0; b < r*ts; b+=r){
+        for(let b_ = 0; b_ < ts; b_++){
+          if(b_ >= ts/2){ b_s = N/2; }
+          let b = b_*r+b_s;  
           k = 0;
           s = b;
+
           for(let i_ = 0; i_ < ts; i_++){
             let i = b + i_*r_;
             jk = i;
