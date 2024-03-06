@@ -1002,10 +1002,10 @@ function fftComplexInPlace_seq_4(out) {
             let j2c = ji%size1; let j1c = ji%(size1/2); ji++;
             let j2d = ji%size1; let j1d = ji%(size1/2); ji++;*/
 
-            let j2a = ji%size1; let j1a = ji; ji++;
-            let j2b = ji%size1; let j1b = ji; ji++;
-            let j2c = ji%size1; let j1c = ji; ji++;
-            let j2d = ji%size1; let j1d = ji; ji++;
+            let j2a = ji%size1; let j1a = ji+0;
+            let j2b = ji%size1; let j1b = ji+1;
+            let j2c = ji%size1; let j1c = ji+2;
+            let j2d = ji%size1; let j1d = ji+3;
 
 
 
