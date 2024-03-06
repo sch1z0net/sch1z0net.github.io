@@ -956,7 +956,7 @@ function fftComplexInPlace_seq_4(out) {
         let w = 0;
         let b = 0;
 
-        let jm = (2<<(p));     //   2     4     8
+        let jm = (2<<(p*2));     //   2     4     8
         console.log( "-size "+size2+"########################################" );
         for(let b_ = 0; b_ < ts; b_++){
           b = b_*r;  
