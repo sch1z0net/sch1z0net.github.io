@@ -970,8 +970,11 @@ function fftComplexInPlace_seq_4(out) {
           for(let i_ = 0; i_ < ts; i_++){
             let i = b + i_*r_;
             if(N == 256 && p == 3){
-                if(i_<(ts/2)){ i = b + ((i_*r_)%128)*2; }
-                else{ i = b + ((i_*r_)%128)*1; }
+                if(i_<(ts/2)){ 
+                    i = b + (i_*32)*2; 
+                }else{ 
+                    i = b + (((i_%4)+1)*32)*1; 
+                }
             }
             jk = i;
             jj = i;
