@@ -2186,6 +2186,7 @@ const testData4096 = generateTestData(4096);
 // Perform FFT operations
 const performFFTOperations = (fftSize,type) => {
     let testData;
+    if(fftSize ==  256){ testData = testData256; }
     if(fftSize ==  512){ testData = testData512; } 
     if(fftSize == 1024){ testData = testData1024; } 
     if(fftSize == 2048){ testData = testData2048; } 
