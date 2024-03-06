@@ -967,9 +967,8 @@ function fftComplexInPlace_seq_4(out) {
           s = b;
           let k = p==0 ? 1 : (1<<(2*p));
 
-          //let ji = 0;//4*(b_%(1<<p));
-
           for(let i_ = 0; i_ < ts; i_++){
+            let u = (N == 256 && p== 3 && i_<ts/2) ? 2 : 1;
             let i = b + i_*r_;
             jk = i;
             jj = i;
