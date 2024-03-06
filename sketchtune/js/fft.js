@@ -889,9 +889,9 @@ function fftComplexInPlace_seq_4(out) {
     let xM0ReC, xM0ImC; let xM2ReC, xM2ImC;
     let xM1ReD, xM1ImD; let xM3ReD, xM3ImD;
 
-    console.log();
-    console.log();
-    console.log();
+    //console.log();
+    //console.log();
+    //console.log();
     let r = N; //64          // 4   16   64  128
     let steps = (bits>>1);   // 1    2    3    4   
     let ts = 1 << (steps-1); // 1    2    4    8
