@@ -1038,25 +1038,25 @@ function fftComplexInPlace_seq_4(out) {
             let tIm_2d  = Math.sin(angle_2d);
 */
 
-            let tRe_1a  = ____F(j1a);
-            let tIm_1a  = ____F(j1a);          
-            let tRe_2a  = ____F(j1a); 
-            let tIm_2a  = ____F(j1a); 
+            let tRe_1a  = ____F[j1a];
+            let tIm_1a  = ____F[j1a];          
+            let tRe_2a  = ____F[j1a]; 
+            let tIm_2a  = ____F[j1a];
 
-            let tRe_1b  = ____F(j1a); 
-            let tIm_1b  = ____F(j1a);          
-            let tRe_2b  = ____F(j1a); 
-            let tIm_2b  = ____F(j1a); 
+            let tRe_1b  = ____F[j1a];
+            let tIm_1b  = ____F[j1a];         
+            let tRe_2b  = ____F[j1a];
+            let tIm_2b  = ____F[j1a]; 
 
-            let tRe_1c  = ____F(j1a); 
-            let tIm_1c  = ____F(j1a);          
-            let tRe_2c  = ____F(j1a); 
-            let tIm_2c  = ____F(j1a); 
+            let tRe_1c  = ____F[j1a]; 
+            let tIm_1c  = ____F[j1a];      
+            let tRe_2c  = ____F[j1a];
+            let tIm_2c  = ____F[j1a]; 
 
-            let tRe_1d  = ____F(j1a); 
-            let tIm_1d  = ____F(j1a);           
-            let tRe_2d  = ____F(j1a); 
-            let tIm_2d  = ____F(j1a); 
+            let tRe_1d  = ____F[j1a]; 
+            let tIm_1d  = ____F[j1a];           
+            let tRe_2d  = ____F[j1a]; 
+            let tIm_2d  = ____F[j1a];
 
 
 
