@@ -1000,11 +1000,6 @@ function fftComplexInPlace_seq_4(out) {
             let sign2d = (jj%size2 < size1)      ? 1 : -1;
             let sign1d = (jj%size1 < (size1>>1)) ? 1 : -1; 
             jj++;
-            
-            /*let j2a = ji%size1; let j1a = ji%(size1/2); ji++;
-            let j2b = ji%size1; let j1b = ji%(size1/2); ji++;
-            let j2c = ji%size1; let j1c = ji%(size1/2); ji++;
-            let j2d = ji%size1; let j1d = ji%(size1/2); ji++;*/
 
             let j2a = ji%size1+(i%jm2); let j1a = ji%(size1/2)+(i%jm1); ji++;
             let j2b = ji%size1+(i%jm2); let j1b = ji%(size1/2)+(i%jm1); ji++;
@@ -1012,7 +1007,7 @@ function fftComplexInPlace_seq_4(out) {
             let j2d = ji%size1+(i%jm2); let j1d = ji%(size1/2)+(i%jm1); ji++;
 
 
-
+/*
             let angle_1a = (2 * Math.PI * j1a) / size1;
             let angle_2a = (2 * Math.PI * j2a) / size2;
             let angle_1b = (2 * Math.PI * j1b) / size1;
@@ -1041,28 +1036,32 @@ function fftComplexInPlace_seq_4(out) {
             let tIm_1d  = Math.sin(angle_1d);          
             let tRe_2d  = Math.cos(angle_2d);
             let tIm_2d  = Math.sin(angle_2d);
-
-/*
-            let tRe_1a  = Math.cos((2 * Math.PI * j1a) / size1);
-            let tIm_1a  = Math.sin((2 * Math.PI * j1a) / size1);          
-            let tRe_2a  = Math.cos((2 * Math.PI * j2a) / size2);
-            let tIm_2a  = Math.sin((2 * Math.PI * j2a) / size2);
-
-            let tRe_1b  = Math.cos((2 * Math.PI * j1b) / size1);
-            let tIm_1b  = Math.sin((2 * Math.PI * j1b) / size1);
-            let tRe_2b  = Math.cos((2 * Math.PI * j2b) / size2);
-            let tIm_2b  = Math.sin((2 * Math.PI * j2b) / size2);
-
-            let tRe_1c  = Math.cos((2 * Math.PI * j1c) / size1);
-            let tIm_1c  = Math.sin((2 * Math.PI * j1c) / size1);
-            let tRe_2c  = Math.cos((2 * Math.PI * j2c) / size2);
-            let tIm_2c  = Math.sin((2 * Math.PI * j2c) / size2);
-
-            let tRe_1d  = Math.cos((2 * Math.PI * j1d) / size1);
-            let tIm_1d  = Math.sin((2 * Math.PI * j1d) / size1);
-            let tRe_2d  = Math.cos((2 * Math.PI * j2d) / size2);
-            let tIm_2d  = Math.sin((2 * Math.PI * j2d) / size2);
 */
+
+            let tRe_1a  = ____F(j1a);
+            let tIm_1a  = ____F(j1a);          
+            let tRe_2a  = ____F(j1a); 
+            let tIm_2a  = ____F(j1a); 
+
+            let tRe_1b  = ____F(j1a); 
+            let tIm_1b  = ____F(j1a);          
+            let tRe_2b  = ____F(j1a); 
+            let tIm_2b  = ____F(j1a); 
+
+            let tRe_1c  = ____F(j1a); 
+            let tIm_1c  = ____F(j1a);          
+            let tRe_2c  = ____F(j1a); 
+            let tIm_2c  = ____F(j1a); 
+
+            let tRe_1d  = ____F(j1a); 
+            let tIm_1d  = ____F(j1a);           
+            let tRe_2d  = ____F(j1a); 
+            let tIm_2d  = ____F(j1a); 
+
+
+
+
+
 
 
             /*
@@ -1237,28 +1236,7 @@ function fftComplexInPlace_seq_4(out) {
              //console.log(size2, (i+1).toString().padStart(2),"--->", xM1ReB.toFixed(2), (sign2b<0)?"-":"+","(",xM3ReB.toFixed(2),"*",tRe_2b.toFixed(2), j2b,"-",xM3ImB.toFixed(2),"*",tIm_2b.toFixed(2),") = ", out[(1+i)*2+0].toFixed(2));
              //console.log(size2, (i+2).toString().padStart(2),"--->", xM0ReC.toFixed(2), (sign2c<0)?"-":"+","(",xM2ReC.toFixed(2),"*",tRe_2c.toFixed(2), j2c,"-",xM2ImC.toFixed(2),"*",tIm_2c.toFixed(2),") = ", out[(2+i)*2+0].toFixed(2));
              //console.log(size2, (i+3).toString().padStart(2),"--->", xM1ReD.toFixed(2), (sign2d<0)?"-":"+","(",xM3ReD.toFixed(2),"*",tRe_2d.toFixed(2), j2d,"-",xM3ImD.toFixed(2),"*",tIm_2d.toFixed(2),") = ", out[(3+i)*2+0].toFixed(2));
-             
 
-/*
-            if(p==1){ console.log(8, (0+i),       xM0Re, xM0Im); }
-            if(p==1){ console.log(8, (1+i),       xM1Re, xM1Im); }
-            if(p==1){ console.log(8, (2+i),       xM0Re, xM0Im); }
-            if(p==1){ console.log(8, (3+i),       xM1Re, xM1Im); }
-
-            if(p==1){ console.log(8, (0+i+size1), xM2Re, xM2Im); }
-            if(p==1){ console.log(8, (1+i+size1), xM3Re, xM3Im); }
-            if(p==1){ console.log(8, (2+i+size1), xM2Re, xM2Im); }
-            if(p==1){ console.log(8, (3+i+size1), xM3Re, xM3Im); }
-*/
-            
-            /*
-            if(p==1){
-            console.log(16, (0+i), out[(0+i)*2+0], out[(0+i)*2+1]);
-            console.log(16, (1+i), out[(1+i)*2+0], out[(1+i)*2+1]);
-            console.log(16, (2+i), out[(2+i)*2+0], out[(2+i)*2+1]);
-            console.log(16, (3+i), out[(3+i)*2+0], out[(3+i)*2+1]);
-            }
-            */
 
 
             //console.log( "-----------------------------" );
