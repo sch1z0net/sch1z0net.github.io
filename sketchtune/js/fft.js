@@ -1075,7 +1075,7 @@ function fftComplexInPlace_seq_4(out) {
 
             jk++;
 
-            if((jk)%size2 < r_r_*2){
+            if((jk)%size2 < r_*2){
                                                                     //########    +01\\  |+05\\  |-09\\  |-13\\  |
                 x0bRe = out[(i_b0)*2+0]; x0bIm = out[(i_b0)*2+1];   //########       01  |   01  |   01  |   01  |
                 x1bRe = out[(i_b1)*2+0]; x1bIm = out[(i_b1)*2+1];   //########      +05  |  -05  |  +05  |  -05  |
