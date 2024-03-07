@@ -943,6 +943,7 @@ function fftComplexInPlace_seq_4(out) {
             let sign1d = ((i+3)%s1 < s0) ? 1 : -1; 
             */
             
+            /*
             let j2a = (0)%s1+(i%s1); let j1a = (0)%(s0)+(i%s0);
             let j2b = (1)%s1+(i%s1); let j1b = (1)%(s0)+(i%s0);
             let j2c = (2)%s1+(i%s1); let j1c = (2)%(s0)+(i%s0);
@@ -956,6 +957,7 @@ function fftComplexInPlace_seq_4(out) {
             tIm_1c  = tIm_1a;
             tRe_1d  = tRe_1a;
             tIm_1d  = tIm_1a;
+            */
 
             /*if(p > 0){
                 tRe_1b  = ____F[pre1+(2*j1b+0)];
@@ -966,7 +968,7 @@ function fftComplexInPlace_seq_4(out) {
                 tIm_1d  = ____F[pre1+(2*j1d+1)]; 
             }*/
             
-
+            /*
             tRe_2a  = ____F[pre2+(2*j2a+0)]; 
             tIm_2a  = ____F[pre2+(2*j2a+1)];
             tRe_2b  = ____F[pre2+(2*j2b+0)]; 
@@ -975,6 +977,7 @@ function fftComplexInPlace_seq_4(out) {
             tIm_2c  = tIm_2a;
             tRe_2d  = tRe_2b;
             tIm_2d  = tIm_2b;
+            */
 
             /*if(p > 0){        
                 tRe_2b  = ____F[pre2+(2*j2b+0)]; 
