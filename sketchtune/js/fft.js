@@ -848,44 +848,8 @@ let ts    = 8;           // 1    2    4    8
 let tsq   = 64;
 
 function fftComplexInPlace_seq_4(out) {
-    const N = 256;
-
-    /*
-    let ____F;
-    if(N ==    4){ ____F = LOOKUP_RADIX2_4;    }
-    if(N ==    8){ ____F = LOOKUP_RADIX2_8;    }
-    if(N ==   16){ ____F = LOOKUP_RADIX2_16;   }
-    if(N ==   32){ ____F = LOOKUP_RADIX2_32;   }
-    if(N ==   64){ ____F = LOOKUP_RADIX2_64;   }
-    if(N ==  128){ ____F = LOOKUP_RADIX2_128;  }
-    if(N ==  256){ ____F = LOOKUP_RADIX2_256;  }
-    if(N ==  512){ ____F = LOOKUP_RADIX2_512;  }
-    if(N == 1024){ ____F = LOOKUP_RADIX2_1024; }
-    if(N == 2048){ ____F = LOOKUP_RADIX2_2048; }
-    if(N == 4096){ ____F = LOOKUP_RADIX2_4096; }
-    */
-
-    /*
-    let idx_LKUP; 
-    if(N ==   4){ idx_LKUP = INDEX_LOOKUP_4;    }
-    if(N ==   8){ idx_LKUP = INDEX_LOOKUP_8;    }
-    if(N ==  16){ idx_LKUP = INDEX_LOOKUP_16;   }
-    if(N ==  32){ idx_LKUP = INDEX_LOOKUP_32;   }
-    if(N ==  64){ idx_LKUP = INDEX_LOOKUP_64;   }
-    if(N == 128){ idx_LKUP = INDEX_LOOKUP_128;  }
-    if(N == 256){ idx_LKUP = INDEX_LOOKUP_256;  }
-    if(N == 512){ idx_LKUP = INDEX_LOOKUP_512;  }
-    if(N ==1024){ idx_LKUP = INDEX_LOOKUP_1024; }
-    if(N ==2048){ idx_LKUP = INDEX_LOOKUP_2048; }  
-    if(N ==4096){ idx_LKUP = INDEX_LOOKUP_4096; } 
-    */
-
-    /*for(let i=0; i<16; i++){
-        console.log("INIT:",i," -> ", out[i*2], out[i*2+1]); 
-    }*/
     
 
-    /*
     let x0aRe, x0aIm; let x1aRe, x1aIm; let x2aRe, x2aIm; let x3aRe, x3aIm;
     let x0bRe, x0bIm; let x1bRe, x1bIm; let x2bRe, x2bIm; let x3bRe, x3bIm;
     let x0cRe, x0cIm; let x1cRe, x1cIm; let x2cRe, x2cIm; let x3cRe, x3cIm;
@@ -903,7 +867,7 @@ function fftComplexInPlace_seq_4(out) {
     let tRe_2b; let tIm_2b;
     let tRe_2c; let tIm_2c;    
     let tRe_2d; let tIm_2d;
-    */
+    
 
     //let pre1 = 0;
     //let pre2 = 2;
@@ -929,16 +893,23 @@ function fftComplexInPlace_seq_4(out) {
         */
 
         //console.log( "-size "+size2+"########################################" );
-        for(let b_ = 0; b_ < tsq; b_++){
-            // let i = b + i_*r_;
-            // /*
-            // if(p == 3){
-            //     if(i_<(ts/2)){ 
-            //         i = b +  0+((i_%4)*32)*2; 
-            //     }else{ 
-            //         i = b + 32+((i_%4)*32)*2; 
-            //     }
-            // }*/
+        for(let b_ = 0; b_ < ts; b_++){
+          b = b_*r;  
+          if(N==256 && p == 2 && b_ >= ts/2){ 
+            b = (b_%4)*r + N/2; 
+          } 
+          s = b;
+          let k = p==0 ? 1 : (1<<(2*p));  //  1  4  16  64
+
+          for(let i_ = 0; i_ < ts; i_++){
+            let i = b + i_*r_;
+            if(N == 256 && p == 3){
+                if(i_<(ts/2)){ 
+                    i = b +  0+((i_%4)*32)*2; 
+                }else{ 
+                    i = b + 32+((i_%4)*32)*2; 
+                }
+            }
 
             // let i_a0 = (i + 0 + (k)*0); let i_a1 = (i + 0 + (k)*1); let i_a2 = (i + 0 + (k)*2); let i_a3 = (i + 0 + (k)*3);
             // let i_b0 = (i + 1 + (k)*0); let i_b1 = (i + 1 + (k)*1); let i_b2 = (i + 1 + (k)*2); let i_b3 = (i + 1 + (k)*3);
@@ -1095,7 +1066,7 @@ function fftComplexInPlace_seq_4(out) {
 
 
             // //console.log( "-----------------------------" );
-          
+          }
         } 
         //pre1 += (2 << 2*p) + (2 << 2*p+1);
         //pre2 += (2 << 2*p+1) + (2 << 2*p+2);
