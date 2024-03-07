@@ -887,12 +887,12 @@ function fftComplexInPlace_seq_4(out) {
     for(let i_ = 0; i_ < tsq; i_++){
           let i = i_ * 4;
 
-          x0aRe = out[(i+0)*2+0];  x0aIm = out[(i+0)*2+1]; // is 0
-          x1aRe = out[(i+1)*2+0];  x1aIm = out[(i+1)*2+1]; // is 0
-          x2aRe = out[(i+2)*2+0];  x2aIm = out[(i+2)*2+1]; // is 0
-          x3aRe = out[(i+3)*2+0];  x3aIm = out[(i+3)*2+1]; // is 0
+          x0aRe = out[(i+0)*2+0]; // x0aIm = out[(i+0)*2+1]; // is 0
+          x1aRe = out[(i+1)*2+0]; // x1aIm = out[(i+1)*2+1]; // is 0
+          x2aRe = out[(i+2)*2+0]; // x2aIm = out[(i+2)*2+1]; // is 0
+          x3aRe = out[(i+3)*2+0]; // x3aIm = out[(i+3)*2+1]; // is 0
           
-          
+          /*
           xM0ReA = x0aRe + (x1aRe * tRe_1a - x1aIm * tIm_1a);  // x0aRe + x1aRe
           xM0ImA = x0aIm + (x1aRe * tIm_1a + x1aIm * tRe_1a);  // is 0                  
           xM2ReA = x2aRe + (x3aRe * tRe_1a - x3aIm * tIm_1a);  // x2aRe + x3aRe
@@ -902,11 +902,12 @@ function fftComplexInPlace_seq_4(out) {
           xM1ImB = x0aIm - (x1aRe * tIm_1a + x1aIm * tRe_1a);  // is 0
           xM3ReB = x2aRe - (x3aRe * tRe_1a - x3aIm * tIm_1a);  // x2aRe - x3aRe
           xM3ImB = x2aIm - (x3aRe * tIm_1a + x3aIm * tRe_1a);  // is 0
-          
-          //xM0ReA = x0aRe + x1aRe;            
-          //xM2ReA = x2aRe + x3aRe;   
-          //xM1ReB = x0aRe - x1aRe;
-          //xM3ReB = x2aRe - x3aRe;
+          */
+
+          xM0ReA = x0aRe + x1aRe;            
+          xM2ReA = x2aRe + x3aRe;   
+          xM1ReB = x0aRe - x1aRe;
+          xM3ReB = x2aRe - x3aRe;
 
           /*
           out[(0+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2a - ((xM2ImA)*tIm_2a));
@@ -919,7 +920,7 @@ function fftComplexInPlace_seq_4(out) {
           out[(3+i)*2+1] = xM1ImB - ((xM3ReB)*tIm_2b + ((xM3ImB)*tRe_2b));
           */
 
-          out[(0+i)*2+0] =   xM0ReA + (xM2ReA*tRe_2a - xM2ImA*tIm_2a);
+          out[(0+i)*2+0] =   xM0ReA + xM2ReA;
           //out[(0+i)*2+1] =   0; 
           out[(1+i)*2+0] =   xM1ReB; // correct
           out[(1+i)*2+1] =   xM3ReB;
