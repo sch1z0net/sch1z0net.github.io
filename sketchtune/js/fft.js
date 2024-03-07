@@ -980,25 +980,22 @@ function fftComplexInPlace_seq_4(out) {
                     i = b + 32+((i_%4)*32)*2; 
                 }
             }
-            jk = i;
-            jj = i;
 
             let ji = 0;
-            let jl = (i % (4<<p)); // 4  8  16  32
 
             let i_a0 = (i + 0 + (k)*0); let i_a1 = (i + 0 + (k)*1); let i_a2 = (i + 0 + (k)*2); let i_a3 = (i + 0 + (k)*3);
             let i_b0 = (i + 1 + (k)*0); let i_b1 = (i + 1 + (k)*1); let i_b2 = (i + 1 + (k)*2); let i_b3 = (i + 1 + (k)*3);
             let i_c0 = (i + 2 + (k)*0); let i_c1 = (i + 2 + (k)*1); let i_c2 = (i + 2 + (k)*2); let i_c3 = (i + 2 + (k)*3);
             let i_d0 = (i + 3 + (k)*0); let i_d1 = (i + 3 + (k)*1); let i_d2 = (i + 3 + (k)*2); let i_d3 = (i + 3 + (k)*3);
             
-            let sign2a = ((jj+0)%size2 < size1)      ? 1 : -1;
-            let sign1a = ((jj+0)%size1 < (size1>>1)) ? 1 : -1; 
-            let sign2b = ((jj+1)%size2 < size1)      ? 1 : -1;
-            let sign1b = ((jj+1)%size1 < (size1>>1)) ? 1 : -1; 
-            let sign2c = ((jj+2)%size2 < size1)      ? 1 : -1;
-            let sign1c = ((jj+2)%size1 < (size1>>1)) ? 1 : -1; 
-            let sign2d = ((jj+3)%size2 < size1)      ? 1 : -1;
-            let sign1d = ((jj+3)%size1 < (size1>>1)) ? 1 : -1; 
+            let sign2a = ((i+0)%size2 < size1)      ? 1 : -1;
+            let sign1a = ((i+0)%size1 < (size1>>1)) ? 1 : -1; 
+            let sign2b = ((i+1)%size2 < size1)      ? 1 : -1;
+            let sign1b = ((i+1)%size1 < (size1>>1)) ? 1 : -1; 
+            let sign2c = ((i+2)%size2 < size1)      ? 1 : -1;
+            let sign1c = ((i+2)%size1 < (size1>>1)) ? 1 : -1; 
+            let sign2d = ((i+3)%size2 < size1)      ? 1 : -1;
+            let sign1d = ((i+3)%size1 < (size1>>1)) ? 1 : -1; 
 
             let j2a = ji%size1+(i%jm2); let j1a = ji%(size1/2)+(i%jm1); ji++;
             let j2b = ji%size1+(i%jm2); let j1b = ji%(size1/2)+(i%jm1); ji++;
