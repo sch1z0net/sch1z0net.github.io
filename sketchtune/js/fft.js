@@ -897,10 +897,10 @@ function fftComplexInPlace_seq_4(out) {
           xM2ReA = x2aRe + (x3aRe * tRe_1a - x3aIm * tIm_1a);
           xM2ImA = x2aIm + (x3aRe * tIm_1a + x3aIm * tRe_1a);
           
-          xM1ReB = x0bRe - (x1bRe * tRe_1b - x1bIm * tIm_1b);
-          xM1ImB = x0bIm - (x1bRe * tIm_1b + x1bIm * tRe_1b);
-          xM3ReB = x2bRe - (x3bRe * tRe_1b - x3bIm * tIm_1b);
-          xM3ImB = x2bIm - (x3bRe * tIm_1b + x3bIm * tRe_1b); 
+          xM1ReB = x0aRe - (x1aRe * tRe_1a - x1aIm * tIm_1a);
+          xM1ImB = x0aIm - (x1aRe * tIm_1a + x1aIm * tRe_1a);
+          xM3ReB = x2aRe - (x3aRe * tRe_1a - x3aIm * tIm_1a);
+          xM3ImB = x2aIm - (x3aRe * tIm_1a + x3aIm * tRe_1a); 
 
           out[(0+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2a - ((xM2ImA)*tIm_2a));
           out[(0+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2a + ((xM2ImA)*tRe_2a)); 
@@ -2478,7 +2478,7 @@ function compareFFTResults(array1, array2) {
 
 /****************** TEST SPEED *******************/ 
 
-measureTime(256,4);
+//measureTime(256,4);
 //measureTime(512,5);
 //measureTime(512,6);
 //measureTime(512,7);
