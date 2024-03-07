@@ -892,7 +892,7 @@ function fftComplexInPlace_seq_4(out) {
         let k = p==0 ? 1 : (1<<(2*p));  //  1  4  16  64
 
         //console.log( "-size "+size2+"########################################" );
-        for(let b_ = 0; b_ < ts; b_++){
+        /*for(let b_ = 0; b_ < ts; b_++){
           b = b_*r;  
           if(N==256 && p == 2 && b_ >= ts/2){ 
             b = (b_%4)*r + N/2; 
@@ -900,15 +900,17 @@ function fftComplexInPlace_seq_4(out) {
           s = b;
           let k = p==0 ? 1 : (1<<(2*p));  //  1  4  16  64
 
-          for(let i_ = 0; i_ < ts; i_++){
-            let i = b + i_*r_;
-            if(N == 256 && p == 3){
+          for(let i_ = 0; i_ < ts; i_++){*/
+
+        for(let i_ = 0; i_ < tsq; i_++){
+            let i = b + i_;//*r_;
+            /*if(N == 256 && p == 3){
                 if(i_<(ts/2)){ 
                     i = b +  0+((i_%4)*32)*2; 
                 }else{ 
                     i = b + 32+((i_%4)*32)*2; 
                 }
-            }
+            }*/
 
             let i_a0 = (i + 0 + (k)*0); let i_a1 = (i + 0 + (k)*1); let i_a2 = (i + 0 + (k)*2); let i_a3 = (i + 0 + (k)*3);
             let i_b0 = (i + 1 + (k)*0); let i_b1 = (i + 1 + (k)*1); let i_b2 = (i + 1 + (k)*2); let i_b3 = (i + 1 + (k)*3);
@@ -1075,7 +1077,7 @@ function fftComplexInPlace_seq_4(out) {
              console.log("after size ",size2," : ",i," -> ", out[i*2], out[i*2+1]); 
         }*/
 
-    }
+    //}
     return out;
 }
 
