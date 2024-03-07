@@ -929,7 +929,7 @@ function fftComplexInPlace_seq_4(out) {
         */
 
         //console.log( "-size "+size2+"########################################" );
-        for(let b_ = 0; b_ < tsq; b_++){
+        for(let b_ = 0; b_ < tsq/2; b_++){
             // let i = b + i_*r_;
             // /*
             // if(p == 3){
