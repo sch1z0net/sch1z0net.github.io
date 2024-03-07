@@ -1023,14 +1023,14 @@ function fftComplexInPlace_seq_4(out) {
             tRe_1d  = tRe_1a;
             tIm_1d  = tIm_1a;
 
-            if(p > 0){
+            /*if(p > 0){
                 tRe_1b  = ____F[pre1+(2*j1b+0)];
                 tIm_1b  = ____F[pre1+(2*j1b+1)];  
                 tRe_1c  = ____F[pre1+(2*j1c+0)];
                 tIm_1c  = ____F[pre1+(2*j1c+1)]; 
                 tRe_1d  = ____F[pre1+(2*j1d+0)];
                 tIm_1d  = ____F[pre1+(2*j1d+1)]; 
-            }
+            }*/
 
             tRe_2a  = ____F[pre2+(2*j2a+0)]; 
             tIm_2a  = ____F[pre2+(2*j2a+1)];
@@ -1041,14 +1041,14 @@ function fftComplexInPlace_seq_4(out) {
             tRe_2d  = tRe_2b;
             tIm_2d  = tIm_2b;
 
-            if(p > 0){        
+            /*if(p > 0){        
                 tRe_2b  = ____F[pre2+(2*j2b+0)]; 
                 tIm_2b  = ____F[pre2+(2*j2b+1)];
                 tRe_2c  = ____F[pre2+(2*j2c+0)]; 
                 tIm_2c  = ____F[pre2+(2*j2c+1)];        
                 tRe_2d  = ____F[pre2+(2*j2d+0)]; 
                 tIm_2d  = ____F[pre2+(2*j2d+1)];
-            }
+            }*/
 
 
             /*
