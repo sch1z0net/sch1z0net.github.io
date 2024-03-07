@@ -847,9 +847,6 @@ let steps = 4;           // 1    2    3    4
 let ts    = 8;           // 1    2    4    8
 let tsq   = 64;
 
-function fftComplexInPlace_seq_4(out) {
-    
-
     let x0aRe, x0aIm; let x1aRe, x1aIm; let x2aRe, x2aIm; let x3aRe, x3aIm;
     let x0bRe, x0bIm; let x1bRe, x1bIm; let x2bRe, x2bIm; let x3bRe, x3bIm;
     let x0cRe, x0cIm; let x1cRe, x1cIm; let x2cRe, x2cIm; let x3cRe, x3cIm;
@@ -867,8 +864,8 @@ function fftComplexInPlace_seq_4(out) {
     let tRe_2b; let tIm_2b;
     let tRe_2c; let tIm_2c;    
     let tRe_2d; let tIm_2d;
-    
 
+function fftComplexInPlace_seq_4(out) {
     let pre1 = 0;
     let pre2 = 2;
     let s = 1;
