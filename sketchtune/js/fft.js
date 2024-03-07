@@ -1036,7 +1036,7 @@ function fftComplexInPlace_seq_4(out) {
           xM3ImD = x2dIm - Tx3dIm; 
 
           out[( 4+i)*2+0] = xM0ReA - xM2ImA; 
-          //out[( 4+i)*2+1] = x2aRe + x3aRe;
+          out[( 4+i)*2+1] = xM2ReA;
           out[( 5+i)*2+0] = xM1ReB + ((xM3ReB)*tRe_2f - ((xM3ImB)*tIm_2f));
           out[( 5+i)*2+1] = xM1ImB + ((xM3ReB)*tIm_2f + ((xM3ImB)*tRe_2f)); 
           out[( 6+i)*2+0] = x0cRe  + (x2cRe*tRe_2g);
@@ -1045,7 +1045,7 @@ function fftComplexInPlace_seq_4(out) {
           out[( 7+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2h + ((xM3ImD)*tRe_2h));
 
           out[(12+i)*2+0] = xM0ReA + xM2ImA;
-          //out[(12+i)*2+1] = 0;
+          out[(12+i)*2+1] = - xM2ReA;
           out[(13+i)*2+0] = xM1ReB - ((xM3ReB)*tRe_2f - ((xM3ImB)*tIm_2f));
           out[(13+i)*2+1] = xM1ImB - ((xM3ReB)*tIm_2f + ((xM3ImB)*tRe_2f)); 
           out[(14+i)*2+0] = x0cRe  - (x2cRe*tRe_2g);
@@ -2374,6 +2374,7 @@ function fftComplexInPlace_ref(complexInput, fftFactorLookup = null) {
 
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
+        if(size > 16){ break; }
         const halfSize = size / 2;
         // Get FFT factors with caching
         const factors = computeFFTFactorsWithCache(size);
@@ -2784,7 +2785,7 @@ const signal4 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.
 const signal5 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
 
 
-//console.log("256:  ",compareFFTResults(fftRealInPlace_ref(testData256),fftRealInPlaceRADIX4(testData256,4)));
+console.log("256:  ",compareFFTResults(fftRealInPlace_ref(testData256),fftRealInPlaceRADIX4(testData256,4)));
 
 /*
 console.log(signal1);
