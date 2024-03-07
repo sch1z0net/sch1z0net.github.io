@@ -1242,8 +1242,8 @@ function fftComplexInPlace_seq_4(out) {
             if( (i) % size2 == 0 ){  w += size2; } 
           }
         } 
-        pre1 += (2 << p) + (2 << p+1);
-        pre2 += (2 << p+1) + (2 << p+2);
+        pre1 += (2 << 2*p) + (2 << 2*p+1);
+        pre2 += (2 << 2*p+1) + (2 << 2*p+2);
 
         
         /*for(let i=0; i<N; i++){
