@@ -1909,7 +1909,7 @@ function fftComplexInPlace_flexi(out) {
 
 
 /******************** WRAPPER *******************************************************/
-let map = bitReversalMap256.get(N);
+let map = bitReversalMap256.get(256);
 function fftRealInPlaceRADIX4(realInput,type) {
     const N = realInput.length;
     const bits = Math.log2(N);
