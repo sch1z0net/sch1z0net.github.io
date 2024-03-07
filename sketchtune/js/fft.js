@@ -1234,7 +1234,7 @@ function fftComplexInPlace_seq_4(out) {
              console.log("after size ",size2," : ",i," -> ", out[i*2], out[i*2+1]); 
         }*/
 
-    //}
+    }
     return out;
 }
 
