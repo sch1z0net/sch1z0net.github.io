@@ -1122,65 +1122,47 @@ function fftComplexInPlace_seq_4(out) {
 
             tRe_1a  = ____F[pre1+(2*j1a+0)];
             tIm_1a  = ____F[pre1+(2*j1a+1)];
-            tRe_1b  = tRe_1a;
-            tIm_1b  = tIm_1a;
-            tRe_1c  = tRe_1a;
-            tIm_1c  = tIm_1a;
-            tRe_1d  = tRe_1a;
-            tIm_1d  = tIm_1a;
-            
-
-            if(p > 0){
-                tRe_1b  = ____F[pre1+(2*j1b+0)];
-                tIm_1b  = ____F[pre1+(2*j1b+1)];  
-                tRe_1c  = ____F[pre1+(2*j1c+0)];
-                tIm_1c  = ____F[pre1+(2*j1c+1)]; 
-                tRe_1d  = ____F[pre1+(2*j1d+0)];
-                tIm_1d  = ____F[pre1+(2*j1d+1)]; 
-            }
-            
-            
+            tRe_1b  = ____F[pre1+(2*j1b+0)];
+            tIm_1b  = ____F[pre1+(2*j1b+1)];  
+            tRe_1c  = ____F[pre1+(2*j1c+0)];
+            tIm_1c  = ____F[pre1+(2*j1c+1)]; 
+            tRe_1d  = ____F[pre1+(2*j1d+0)];
+            tIm_1d  = ____F[pre1+(2*j1d+1)]; 
+        
             tRe_2a  = ____F[pre2+(2*j2a+0)]; 
             tIm_2a  = ____F[pre2+(2*j2a+1)];
             tRe_2b  = ____F[pre2+(2*j2b+0)]; 
+            tIm_2b  = ____F[pre2+(2*j2b+1)];     
+            tRe_2b  = ____F[pre2+(2*j2b+0)]; 
             tIm_2b  = ____F[pre2+(2*j2b+1)];
-            tRe_2c  = tRe_2a;
-            tIm_2c  = tIm_2a;
-            tRe_2d  = tRe_2b;
-            tIm_2d  = tIm_2b;
+            tRe_2c  = ____F[pre2+(2*j2c+0)]; 
+            tIm_2c  = ____F[pre2+(2*j2c+1)];        
+            tRe_2d  = ____F[pre2+(2*j2d+0)]; 
+            tIm_2d  = ____F[pre2+(2*j2d+1)];
             
-
-            if(p > 0){        
-                tRe_2b  = ____F[pre2+(2*j2b+0)]; 
-                tIm_2b  = ____F[pre2+(2*j2b+1)];
-                tRe_2c  = ____F[pre2+(2*j2c+0)]; 
-                tIm_2c  = ____F[pre2+(2*j2c+1)];        
-                tRe_2d  = ____F[pre2+(2*j2d+0)]; 
-                tIm_2d  = ____F[pre2+(2*j2d+1)];
-            }
 
             
             if((i_%4) == 0){
-                                                                    //########    +00\\  |+04\\  |-08\\  |-12\\  |
-                x0aRe = out[(i_a0)*2+0]; x0aIm = out[(i_a0)*2+1];   //########       00  |   00  |   00  |   00  |
-                x1aRe = out[(i_a1)*2+0]; x1aIm = out[(i_a1)*2+1];   //########      +04  |  -04  |  +04  |  -04  |
-                x2aRe = out[(i_a2)*2+0]; x2aIm = out[(i_a2)*2+1];   //########       08  |   08  |   08  |   08  |
-                x3aRe = out[(i_a3)*2+0]; x3aIm = out[(i_a3)*2+1];   //########      +12  |  -12  |  +12  |  -12  |
-                                                                    //########    +01\\  |+05\\  |-09\\  |-13\\  |
-                x0bRe = out[(i_b0)*2+0]; x0bIm = out[(i_b0)*2+1];   //########       01  |   01  |   01  |   01  |
-                x1bRe = out[(i_b1)*2+0]; x1bIm = out[(i_b1)*2+1];   //########      +05  |  -05  |  +05  |  -05  |
-                x2bRe = out[(i_b2)*2+0]; x2bIm = out[(i_b2)*2+1];   //########       09  |   09  |   09  |   09  |
-                x3bRe = out[(i_b3)*2+0]; x3bIm = out[(i_b3)*2+1];   //########      +13  |  -13  |  +13  |  -13  |
-                                                                    //########    +02\\  |+06\\  |-10\\  |-14\\  |
-                x0cRe = out[(i_c0)*2+0]; x0cIm = out[(i_c0)*2+1];   //########       02  |   02  |   02  |   02  |
-                x1cRe = out[(i_c1)*2+0]; x1cIm = out[(i_c1)*2+1];   //########      +06  |  -06  |  +06  |  -06  |
-                x2cRe = out[(i_c2)*2+0]; x2cIm = out[(i_c2)*2+1];   //########       10  |   10  |   10  |   10  |
-                x3cRe = out[(i_c3)*2+0]; x3cIm = out[(i_c3)*2+1];   //########      +14  |  -14  |  +14  |  -14  |
-                                                                    //########    +03\\  |+07\\  |-11\\  |-15\\  |
-                x0dRe = out[(i_d0)*2+0]; x0dIm = out[(i_d0)*2+1];   //########       03  |   03  |   03  |   03  | 
-                x1dRe = out[(i_d1)*2+0]; x1dIm = out[(i_d1)*2+1];   //########      +07  |  -07  |  +07  |  -07  |
-                x2dRe = out[(i_d2)*2+0]; x2dIm = out[(i_d2)*2+1];   //########       11  |   11  |   11  |   11  |
-                x3dRe = out[(i_d3)*2+0]; x3dIm = out[(i_d3)*2+1];   //########      +15  |  -15  |  +15  |  -15  |
+                                                                   
+                x0aRe = out[(i_a0)*2+0]; x0aIm = out[(i_a0)*2+1]; 
+                x1aRe = out[(i_a1)*2+0]; x1aIm = out[(i_a1)*2+1];
+                x2aRe = out[(i_a2)*2+0]; x2aIm = out[(i_a2)*2+1];
+                x3aRe = out[(i_a3)*2+0]; x3aIm = out[(i_a3)*2+1];
+                                                                
+                x0bRe = out[(i_b0)*2+0]; x0bIm = out[(i_b0)*2+1];
+                x1bRe = out[(i_b1)*2+0]; x1bIm = out[(i_b1)*2+1];
+                x2bRe = out[(i_b2)*2+0]; x2bIm = out[(i_b2)*2+1];
+                x3bRe = out[(i_b3)*2+0]; x3bIm = out[(i_b3)*2+1];
+                                                                 
+                x0cRe = out[(i_c0)*2+0]; x0cIm = out[(i_c0)*2+1];
+                x1cRe = out[(i_c1)*2+0]; x1cIm = out[(i_c1)*2+1];
+                x2cRe = out[(i_c2)*2+0]; x2cIm = out[(i_c2)*2+1];
+                x3cRe = out[(i_c3)*2+0]; x3cIm = out[(i_c3)*2+1];
+                                                                 
+                x0dRe = out[(i_d0)*2+0]; x0dIm = out[(i_d0)*2+1];
+                x1dRe = out[(i_d1)*2+0]; x1dIm = out[(i_d1)*2+1];
+                x2dRe = out[(i_d2)*2+0]; x2dIm = out[(i_d2)*2+1];
+                x3dRe = out[(i_d3)*2+0]; x3dIm = out[(i_d3)*2+1];
             }
 
                                                                                                         
