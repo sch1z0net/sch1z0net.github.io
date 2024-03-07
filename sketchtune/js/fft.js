@@ -859,6 +859,7 @@ function fftComplexInPlace_seq_4(out) {
     if(N == 2048){ ____F = LOOKUP_RADIX2_2048; }
     if(N == 4096){ ____F = LOOKUP_RADIX2_4096; }
 
+    /*
     let idx_LKUP; 
     if(N ==   4){ idx_LKUP = INDEX_LOOKUP_4;    }
     if(N ==   8){ idx_LKUP = INDEX_LOOKUP_8;    }
@@ -871,6 +872,7 @@ function fftComplexInPlace_seq_4(out) {
     if(N ==1024){ idx_LKUP = INDEX_LOOKUP_1024; }
     if(N ==2048){ idx_LKUP = INDEX_LOOKUP_2048; }  
     if(N ==4096){ idx_LKUP = INDEX_LOOKUP_4096; } 
+    */
 
     let its = 0, accs = 0;
 
