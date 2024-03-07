@@ -929,20 +929,22 @@ function fftComplexInPlace_seq_4(out) {
 
         //console.log( "-size "+size2+"########################################" );
         for(let b_ = 0; b_ < ts; b_++){
-          b = b_*r;  
-          if(N==256 && p == 2 && b_ >= ts/2){ 
+          b = b_*r; 
+
+          if(p == 2 && b_ >= ts/2){ 
             b = (b_%4)*r + N/2; 
           } 
 
           for(let i_ = 0; i_ < ts; i_++){
             let i = b + i_*r_;
-            if(N == 256 && p == 3){
+            /*
+            if(p == 3){
                 if(i_<(ts/2)){ 
                     i = b +  0+((i_%4)*32)*2; 
                 }else{ 
                     i = b + 32+((i_%4)*32)*2; 
                 }
-            }
+            }*/
 
             let i_a0 = (i + 0 + (k)*0); let i_a1 = (i + 0 + (k)*1); let i_a2 = (i + 0 + (k)*2); let i_a3 = (i + 0 + (k)*3);
             let i_b0 = (i + 1 + (k)*0); let i_b1 = (i + 1 + (k)*1); let i_b2 = (i + 1 + (k)*2); let i_b3 = (i + 1 + (k)*3);
@@ -1080,73 +1082,6 @@ function fftComplexInPlace_seq_4(out) {
               xM3ReD = x2dRe + (x3dRe * tRe_1d - x3dIm * tIm_1d) * sign1d;
               xM3ImD = x2dIm + (x3dRe * tIm_1d + x3dIm * tRe_1d) * sign1d;
             */
-
-             // size = 2     ||| size = 8
-             ///////////////////////////////// i = 0
-             // 00 <- 00 01  |||  00 <-  00 +04          -> xM0ReA
-             // 02 <- 02 03  |||  08 <-  08 +12          -> xM2ReA
-             ///////////////////////////////// i = 4                            
-             // 04 <- 04 05  |||  04 <-  00 +04          -> xM0ReA          
-             // 06 <- 06 07  |||  12 <-  08 +12          -> xM2ReA          
-             ///////////////////////////////// i = 8                             
-             // 08 <- 08 09  |||                         -> xM0ReA (skip writing)       
-             // 10 <- 10 11  |||                         -> xM2ReA (skip writing)  
-             ///////////////////////////////// i = 12
-             // 12 <- 12 13  |||                         -> xM0ReA (skip writing)  
-             // 14 <- 14 15  |||                         -> xM2ReA (skip writing)  
-             //console.log(size1, (i+0).toString().padStart(2),"--->", ((i+0)%size1 + w).toString().padStart(2),         ".re =", "[",i_a0.toString().padStart(2),"].re ",(sign1a<0)?"-":"+"," ([",i_a1.toString().padStart(2),"].re * t[",j1a.toString().padStart(2),"].re - [",i_a1.toString().padStart(2),"].im * t[",j1a.toString().padStart(2),"].im ) <-> ", "{",x0aRe.toFixed(2),"}",(sign1a<0)?"-":"+","({",x1aRe.toFixed(2),"} * t{",tRe_1a.toFixed(2),"} - {",x1aIm.toFixed(2),"} * {",tIm_1a.toFixed(2),"} ) = ",xM0ReA.toFixed(2));
-             //console.log(size1, (i+0).toString().padStart(2),"--->", ((i+0)%size1 + w + size1).toString().padStart(2), ".re =", "[",i_a2.toString().padStart(2),"].re ",(sign1a<0)?"-":"+"," ([",i_a3.toString().padStart(2),"].re * t[",j1a.toString().padStart(2),"].re - [",i_a3.toString().padStart(2),"].im * t[",j1a.toString().padStart(2),"].im ) <-> ", "{",x2aRe.toFixed(2),"}",(sign1a<0)?"-":"+","({",x3aRe.toFixed(2),"} * t{",tRe_1a.toFixed(2),"} - {",x3aIm.toFixed(2),"} * {",tIm_1a.toFixed(2),"} ) = ",xM2ReA.toFixed(2)); 
-             
-             // size = 2     ||| size = 8
-             ///////////////////////////////// i = 0
-             // 01 <- 00 01  |||  01 <-  01  05          -> xM1ReB
-             // 03 <- 02 03  |||  09 <-  09  13          -> xM3ReB
-             ///////////////////////////////// i = 4
-             // 05 <- 04 05  |||  05 <-  01  05
-             // 07 <- 06 07  |||  13 <-  09  13
-             ///////////////////////////////// i = 8
-             // 09 <- 08 09  |||
-             // 11 <- 10 11  |||
-             ///////////////////////////////// i = 12
-             // 13 <- 12 13  |||
-             // 15 <- 14 15  |||
-             //console.log(size1, (i+1).toString().padStart(2),"--->", ((i+1)%size1 + w).toString().padStart(2),         ".re =", "[",i_b0.toString().padStart(2),"].re ",(sign1b<0)?"-":"+"," ([",i_b1.toString().padStart(2),"].re * t[",j1b.toString().padStart(2),"].re - [",i_b1.toString().padStart(2),"].im * t[",j1b.toString().padStart(2),"].im ) <-> ", "{",x0bRe.toFixed(2),"}",(sign1b<0)?"-":"+","({",x1bRe.toFixed(2),"} * t{",tRe_1b.toFixed(2),"} - {",x1bIm.toFixed(2),"} * {",tIm_1b.toFixed(2),"} ) = ",xM1ReB.toFixed(2));
-             //console.log(size1, (i+1).toString().padStart(2),"--->", ((i+1)%size1 + w + size1).toString().padStart(2), ".re =", "[",i_b2.toString().padStart(2),"].re ",(sign1b<0)?"-":"+"," ([",i_b3.toString().padStart(2),"].re * t[",j1b.toString().padStart(2),"].re - [",i_b3.toString().padStart(2),"].im * t[",j1b.toString().padStart(2),"].im ) <-> ", "{",x2bRe.toFixed(2),"}",(sign1b<0)?"-":"+","({",x3bRe.toFixed(2),"} * t{",tRe_1b.toFixed(2),"} - {",x3bIm.toFixed(2),"} * {",tIm_1b.toFixed(2),"} ) = ",xM3ReB.toFixed(2));  
-             
-
-             // size = 2     ||| size = 8
-             ///////////////////////////////// i = 0
-             // 00 <- 00 01  |||  02 <-  02  06
-             // 02 <- 02 03  |||  10 <-  10  14
-             ///////////////////////////////// i = 4
-             // 04 <- 04 05  |||  06 <-  02  06
-             // 06 <- 06 07  |||  14 <-  10  14
-             ///////////////////////////////// i = 8
-             // 08 <- 08 09  |||    
-             // 10 <- 10 11  |||
-             ///////////////////////////////// i = 12
-             // 12 <- 12 13  |||
-             // 14 <- 14 15  |||
-             //console.log(size1, (i+2).toString().padStart(2),"--->", ((i+2)%size1 + w).toString().padStart(2),         ".re =", "[",i_c0.toString().padStart(2),"].re ",(sign1c<0)?"-":"+"," ([",i_c1.toString().padStart(2),"].re * t[",j1c.toString().padStart(2),"].re - [",i_c1.toString().padStart(2),"].im * t[",j1c.toString().padStart(2),"].im ) <-> ", "{",x0cRe.toFixed(2),"}",(sign1c<0)?"-":"+","({",x1cRe.toFixed(2),"} * t{",tRe_1c.toFixed(2),"} - {",x1cIm.toFixed(2),"} * {",tIm_1c.toFixed(2),"} ) = ",xM0ReC.toFixed(2));  
-             //console.log(size1, (i+2).toString().padStart(2),"--->", ((i+2)%size1 + w + size1).toString().padStart(2), ".re =", "[",i_c2.toString().padStart(2),"].re ",(sign1c<0)?"-":"+"," ([",i_c3.toString().padStart(2),"].re * t[",j1c.toString().padStart(2),"].re - [",i_c3.toString().padStart(2),"].im * t[",j1c.toString().padStart(2),"].im ) <-> ", "{",x2cRe.toFixed(2),"}",(sign1c<0)?"-":"+","({",x3cRe.toFixed(2),"} * t{",tRe_1c.toFixed(2),"} - {",x3cIm.toFixed(2),"} * {",tIm_1c.toFixed(2),"} ) = ",xM2ReC.toFixed(2));
-
-
-             // size = 2     ||| size = 8
-             ///////////////////////////////// i = 0
-             // 01 <- 00 01  |||  03 <-  03  07
-             // 03 <- 02 03  |||  11 <-  11  15
-             ///////////////////////////////// i = 4
-             // 05 <- 04 05  |||  07 <-  03  07
-             // 07 <- 06 07  |||  15 <-  11  15
-             ///////////////////////////////// i = 8
-             // 09 <- 08 09  |||
-             // 11 <- 10 11  |||
-             ///////////////////////////////// i = 12
-             // 13 <- 12 13  |||
-             // 15 <- 14 15  |||
-             //console.log(size1, (i+3).toString().padStart(2),"--->", ((i+3)%size1 + w).toString().padStart(2),         ".re =", "[",i_d0.toString().padStart(2),"].re ",(sign1d<0)?"-":"+"," ([",i_d1.toString().padStart(2),"].re * t[",j1d.toString().padStart(2),"].re - [",i_d1.toString().padStart(2),"].im * t[",j1d.toString().padStart(2),"].im ) <-> ", "{",x0dRe.toFixed(2),"}",(sign1d<0)?"-":"+","({",x1dRe.toFixed(2),"} * t{",tRe_1d.toFixed(2),"} - {",x1dIm.toFixed(2),"} * {",tIm_1d.toFixed(2),"} ) = ",xM1ReD.toFixed(2)); 
-             //console.log(size1, (i+3).toString().padStart(2),"--->", ((i+3)%size1 + w + size1).toString().padStart(2), ".re =", "[",i_d2.toString().padStart(2),"].re ",(sign1d<0)?"-":"+"," ([",i_d3.toString().padStart(2),"].re * t[",j1d.toString().padStart(2),"].re - [",i_d3.toString().padStart(2),"].im * t[",j1d.toString().padStart(2),"].im ) <-> ", "{",x2dRe.toFixed(2),"}",(sign1d<0)?"-":"+","({",x3dRe.toFixed(2),"} * t{",tRe_1d.toFixed(2),"} - {",x3dIm.toFixed(2),"} * {",tIm_1d.toFixed(2),"} ) = ",xM3ReD.toFixed(2)); 
-             
 
              out[(0+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2a - ((xM2ImA)*tIm_2a)) * sign2a;
              out[(0+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2a + ((xM2ImA)*tRe_2a)) * sign2a; 
