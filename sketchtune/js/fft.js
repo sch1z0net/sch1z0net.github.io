@@ -1910,9 +1910,13 @@ function fftComplexInPlace_flexi(out) {
 
 /******************** WRAPPER *******************************************************/
 let map = bitReversalMap256.get(256);
+const N = 256;
+const bits = 8;
+const inputBR = new Float64Array(N);
+const complexOut = new Float64Array(N * 2);
 function fftRealInPlaceRADIX4(realInput,type) {
-    const N = realInput.length;
-    const bits = Math.log2(N);
+    //const N = realInput.length;
+    //const bits = Math.log2(N);
     
     if (N !== nextPowerOf2(N)) {
         console.error("FFT FRAME must have power of 2");
@@ -1938,13 +1942,13 @@ function fftRealInPlaceRADIX4(realInput,type) {
     */
 
     // Perform bit reversal
-    const inputBR = new Float64Array(N);
+    //const inputBR = new Float64Array(N);
     for (let i = 0; i < N; i++) {
         inputBR[i] = input[map[i]];
     }
 
     // Convert the real-valued input to a complex-valued Float32Array
-    const complexOut = new Float64Array(N * 2);
+    //const complexOut = new Float64Array(N * 2);
     for (let i = 0; i < N; i++) {
         complexOut[i * 2] = inputBR[i];
         complexOut[i * 2 + 1] = 0; // Imaginary part is set to 0
