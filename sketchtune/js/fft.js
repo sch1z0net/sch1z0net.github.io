@@ -928,14 +928,7 @@ function fftComplexInPlace_seq_4(out) {
         let k = p==0 ? 1 : (1<<(2*p));  //  1  4  16  64
 
         //console.log( "-size "+size2+"########################################" );
-        for(let b_ = 0; b_ < ts; b_++){
-          b = b_*r; 
-
-          if(p == 2 && b_ >= ts/2){ 
-            b = (b_%4)*r + N/2; 
-          } 
-
-          for(let i_ = 0; i_ < ts; i_++){
+        for(let b_ = 0; b_ < ts*ts; b_++){
             // let i = b + i_*r_;
             // /*
             // if(p == 3){
@@ -1101,7 +1094,7 @@ function fftComplexInPlace_seq_4(out) {
 
 
             // //console.log( "-----------------------------" );
-          }
+          
         } 
         pre1 += (2 << 2*p) + (2 << 2*p+1);
         pre2 += (2 << 2*p+1) + (2 << 2*p+2);
