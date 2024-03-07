@@ -919,13 +919,13 @@ function fftComplexInPlace_seq_4(out) {
           out[(3+i)*2+1] = xM1ImB - ((xM3ReB)*tIm_2b + ((xM3ImB)*tRe_2b));
           */
 
-          out[(0+i)*2+0] =   xM0ReA + xM2ReA;
+          out[(0+i)*2+0] =   xM0ReA + (xM2ReA*tRe_2a - xM2ImA*tIm_2a);
           //out[(0+i)*2+1] =   0; 
-          out[(1+i)*2+0] =   xM1ReB; 
+          out[(1+i)*2+0] =   xM1ReB; // correct
           out[(1+i)*2+1] =   xM3ReB;
           out[(2+i)*2+0] =   xM0ReA - xM2ReA;
           //out[(2+i)*2+1] =   0; 
-          out[(3+i)*2+0] =   xM1ReB
+          out[(3+i)*2+0] =   xM1ReB; // correct
           out[(3+i)*2+1] = - xM3ReB;
 
           console.log((0+i), out[(0+i)*2+0], 0);
