@@ -945,8 +945,9 @@ function fftComplexInPlace_seq_4(out) {
             if(p==3){ r_ = 32; }
         }
 
-        let size1 = 2<<(p*2+0);  //  2 //  8 // 32 // 128
-        let size2 = 2<<(p*2+1);  //  4 // 16 // 64 //
+        let s2 = 2<<(p*2+1);  //  4 // 16 // 64 //
+        let s1 = 2<<(p*2+0);  //  2 //  8 // 32 // 128
+        let s0 = s1>>1;
         let b = 0;
 
         let jm2 = size1;       //   2     8     32
@@ -976,19 +977,20 @@ function fftComplexInPlace_seq_4(out) {
             let i_c0 = (i + 2 + (k)*0); let i_c1 = (i + 2 + (k)*1); let i_c2 = (i + 2 + (k)*2); let i_c3 = (i + 2 + (k)*3);
             let i_d0 = (i + 3 + (k)*0); let i_d1 = (i + 3 + (k)*1); let i_d2 = (i + 3 + (k)*2); let i_d3 = (i + 3 + (k)*3);
             
-            let sign2a = ((i+0)%size2 < size1)      ? 1 : -1;
-            let sign1a = ((i+0)%size1 < (size1>>1)) ? 1 : -1; 
-            let sign2b = ((i+1)%size2 < size1)      ? 1 : -1;
-            let sign1b = ((i+1)%size1 < (size1>>1)) ? 1 : -1; 
-            let sign2c = ((i+2)%size2 < size1)      ? 1 : -1;
-            let sign1c = ((i+2)%size1 < (size1>>1)) ? 1 : -1; 
-            let sign2d = ((i+3)%size2 < size1)      ? 1 : -1;
-            let sign1d = ((i+3)%size1 < (size1>>1)) ? 1 : -1; 
+            let sign2a = ((i+0)%s2 < s1) ? 1 : -1;
+            let sign1a = ((i+0)%s1 < s0) ? 1 : -1; 
+            let sign2b = ((i+1)%s2 < s1) ? 1 : -1;
+            let sign1b = ((i+1)%s1 < s0) ? 1 : -1; 
+            let sign2c = ((i+2)%s2 < s1) ? 1 : -1;
+            let sign1c = ((i+2)%s1 < s0) ? 1 : -1; 
+            let sign2d = ((i+3)%s2 < s1) ? 1 : -1;
+            let sign1d = ((i+3)%s1 < s0) ? 1 : -1; 
 
-            let j2a = (0)%size1+(i%jm2); let j1a = (0)%(size1/2)+(i%jm1);
-            let j2b = (1)%size1+(i%jm2); let j1b = (1)%(size1/2)+(i%jm1);
-            let j2c = (2)%size1+(i%jm2); let j1c = (2)%(size1/2)+(i%jm1);
-            let j2d = (3)%size1+(i%jm2); let j1d = (3)%(size1/2)+(i%jm1);
+            
+            let j2a = (0)%s1+(i%s1); let j1a = (0)%(s0)+(i%s0);
+            let j2b = (1)%s1+(i%s1); let j1b = (1)%(s0)+(i%s0);
+            let j2c = (2)%s1+(i%s1); let j1c = (2)%(s0)+(i%s0);
+            let j2d = (3)%s1+(i%s1); let j1d = (3)%(s0)+(i%s0);
 
             tRe_1a  = ____F[pre1+(2*j1a+0)];
             tIm_1a  = ____F[pre1+(2*j1a+1)];
