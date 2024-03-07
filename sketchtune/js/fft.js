@@ -943,12 +943,13 @@ function fftComplexInPlace_seq_4(out) {
             let sign1d = ((i+3)%s1 < s0) ? 1 : -1; 
             
             
-            /*
+            
             let j2a = (0)%s1+(i%s1); let j1a = (0)%(s0)+(i%s0);
             let j2b = (1)%s1+(i%s1); let j1b = (1)%(s0)+(i%s0);
             let j2c = (2)%s1+(i%s1); let j1c = (2)%(s0)+(i%s0);
             let j2d = (3)%s1+(i%s1); let j1d = (3)%(s0)+(i%s0);
 
+            /*
             tRe_1a  = ____F[pre1+(2*j1a+0)];
             tIm_1a  = ____F[pre1+(2*j1a+1)];
             tRe_1b  = tRe_1a;
