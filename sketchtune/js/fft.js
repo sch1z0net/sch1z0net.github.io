@@ -925,11 +925,13 @@ function fftComplexInPlace_seq_4(out) {
                 }
             }*/
 
+            /*
             let i_a0 = (i + 0 + (k)*0); let i_a1 = (i + 0 + (k)*1); let i_a2 = (i + 0 + (k)*2); let i_a3 = (i + 0 + (k)*3);
             let i_b0 = (i + 1 + (k)*0); let i_b1 = (i + 1 + (k)*1); let i_b2 = (i + 1 + (k)*2); let i_b3 = (i + 1 + (k)*3);
             let i_c0 = (i + 2 + (k)*0); let i_c1 = (i + 2 + (k)*1); let i_c2 = (i + 2 + (k)*2); let i_c3 = (i + 2 + (k)*3);
             let i_d0 = (i + 3 + (k)*0); let i_d1 = (i + 3 + (k)*1); let i_d2 = (i + 3 + (k)*2); let i_d3 = (i + 3 + (k)*3);
-            
+            */
+
             /*
             let sign2a = ((i+0)%s2 < s1) ? 1 : -1;
             let sign1a = ((i+0)%s1 < s0) ? 1 : -1; 
@@ -963,6 +965,7 @@ function fftComplexInPlace_seq_4(out) {
                 tRe_1d  = ____F[pre1+(2*j1d+0)];
                 tIm_1d  = ____F[pre1+(2*j1d+1)]; 
             }*/
+            
 
             tRe_2a  = ____F[pre2+(2*j2a+0)]; 
             tIm_2a  = ____F[pre2+(2*j2a+1)];
@@ -982,7 +985,7 @@ function fftComplexInPlace_seq_4(out) {
                 tIm_2d  = ____F[pre2+(2*j2d+1)];
             }*/
 
-            
+            /*
             if(p==0 || (i_%4) == 0){
                                                                     //########    +00\\  |+04\\  |-08\\  |-12\\  |
                 x0aRe = out[(i_a0)*2+0]; x0aIm = out[(i_a0)*2+1];   //########       00  |   00  |   00  |   00  |
@@ -990,7 +993,7 @@ function fftComplexInPlace_seq_4(out) {
                 x2aRe = out[(i_a2)*2+0]; x2aIm = out[(i_a2)*2+1];   //########       08  |   08  |   08  |   08  |
                 x3aRe = out[(i_a3)*2+0]; x3aIm = out[(i_a3)*2+1];   //########      +12  |  -12  |  +12  |  -12  |
                 //console.log( "(i_a0)",(i_a0),"(i_a1)",(i_a1),"(i_a2)",(i_a2),"(i_a3)",(i_a3) ); 
-            }
+            }*/
             
             /*
             if(p>0 && (i_%4) == 0){
@@ -1025,6 +1028,7 @@ function fftComplexInPlace_seq_4(out) {
             }
             */
 
+            /*
             if(true){
             //if(size1 == 2){
               x0bRe = x0aRe; x0bIm = x0aIm;  
@@ -1039,7 +1043,7 @@ function fftComplexInPlace_seq_4(out) {
               x1dRe = x1bRe; x1dIm = x1bIm; 
               x2dRe = x2bRe; x2dIm = x2bIm; 
               x3dRe = x3bRe; x3dIm = x3bIm;
-            } 
+            } */
 
             /*                                                                                             
               xM0ReA = x0aRe + (x1aRe * tRe_1a - x1aIm * tIm_1a) * sign1a;
