@@ -869,13 +869,10 @@ function fftComplexInPlace_seq_4(out) {
     let tRe_2d; let tIm_2d;
     
 
-    let pre1 = 0;
-    let pre2 = 2;
-    let s = 1;
-    let k = 0;
 
-
+    /////////////////////////////////////////////
     // P = 0
+    //
     //tRe_1a  = ____F[0]; // 1
     //tIm_1a  = ____F[1]; // 0
 
@@ -930,7 +927,9 @@ function fftComplexInPlace_seq_4(out) {
           out[(3+i)*2+1] = - xM3ReB;
     } 
 
+    /////////////////////////////////////////////
     // P = 1
+    //
     //tRe_1a  = ____F[6+(0*2+0)]; // 1
     //tIm_1a  = ____F[6+(0*2+1)]; // 0
     tRe_1b  = ____F[6+(1*2+0)];
@@ -1002,13 +1001,6 @@ function fftComplexInPlace_seq_4(out) {
           xM3ReB = x2bRe + Tx3bRe;
           xM3ImB = x2bIm + Tx3bIm; 
 
-          /*
-          xM0ReC = x0cRe;
-          xM0ImC = x1cRe;  
-          xM2ReC = x2cRe;
-          xM2ImC = x3cRe;
-          */
-
           xM1ReD = x0dRe + Tx1dRe;
           xM1ImD = x0dIm + Tx1dIm;
           xM3ReD = x2dRe + Tx3dRe;
@@ -1041,15 +1033,6 @@ function fftComplexInPlace_seq_4(out) {
           xM3ReB = x2bRe - Tx3bRe;
           xM3ImB = x2bIm - Tx3bIm; 
 
-          //let Tx0cRe = 0;
-          //let Tx0cIm = x1cRe;
-          //let Tx2cRe = 0;
-          //let Tx2cIm = x3cRe;
-          //xM0ReC = x0cRe;
-          //xM0ImC = - x1cRe;  
-          //xM2ReC = x2cRe;
-          //xM2ImC = - x3cRe;
-
           xM1ReD = x0dRe - Tx1dRe;
           xM1ImD = x0dIm - Tx1dIm;
           xM3ReD = x2dRe - Tx3dRe;
@@ -1076,354 +1059,182 @@ function fftComplexInPlace_seq_4(out) {
 
 
 
-    /*
-    for(let i_ = 0; i_ < tsq; i_+=4){
-          let i = i_ * 4;
-
-          x0aRe = out[(i+ 0)*2+0]; x0aIm = out[(i+ 0)*2+1];
-          x1aRe = out[(i+ 4)*2+0]; x1aIm = out[(i+ 4)*2+1];
-          x2aRe = out[(i+ 8)*2+0]; x2aIm = out[(i+ 8)*2+1];
-          x3aRe = out[(i+12)*2+0]; x3aIm = out[(i+12)*2+1];
-
-          x0bRe = out[(i+ 1)*2+0]; x0bIm = out[(i+ 1)*2+1];
-          x1bRe = out[(i+ 5)*2+0]; x1bIm = out[(i+ 5)*2+1];
-          x2bRe = out[(i+ 9)*2+0]; x2bIm = out[(i+ 9)*2+1];
-          x3bRe = out[(i+13)*2+0]; x3bIm = out[(i+13)*2+1];
-
-          x0cRe = out[(i+ 2)*2+0]; x0cIm = out[(i+ 2)*2+1];
-          x1cRe = out[(i+ 6)*2+0]; x1cIm = out[(i+ 6)*2+1];
-          x2cRe = out[(i+10)*2+0]; x2cIm = out[(i+10)*2+1];
-          x3cRe = out[(i+14)*2+0]; x3cIm = out[(i+14)*2+1];
-
-          x0dRe = out[(i+ 3)*2+0]; x0dIm = out[(i+ 3)*2+1];
-          x1dRe = out[(i+ 7)*2+0]; x1dIm = out[(i+ 7)*2+1];
-          x2dRe = out[(i+11)*2+0]; x2dIm = out[(i+11)*2+1];
-          x3dRe = out[(i+15)*2+0]; x3dIm = out[(i+15)*2+1];
-
-          let Tx0aRe = (x1aRe * tRe_1a - x1aIm * tIm_1a);
-          let Tx0aIm = (x1aRe * tIm_1a + x1aIm * tRe_1a);
-          let Tx2aRe = (x3aRe * tRe_1a - x3aIm * tIm_1a);
-          let Tx2aIm = (x3aRe * tIm_1a + x3aIm * tRe_1a);
-
-          let Tx1bRe = (x1bRe * tRe_1b - x1bIm * tIm_1b);
-          let Tx1bIm = (x1bRe * tIm_1b + x1bIm * tRe_1b);
-          let Tx3bRe = (x3bRe * tRe_1b - x3bIm * tIm_1b);
-          let Tx3bIm = (x3bRe * tIm_1b + x3bIm * tRe_1b);
-
-          let Tx0cRe = (x1cRe * tRe_1c - x1cIm * tIm_1c);
-          let Tx0cIm = (x1cRe * tIm_1c + x1cIm * tRe_1c);
-          let Tx2cRe = (x3cRe * tRe_1c - x3cIm * tIm_1c);
-          let Tx2cIm = (x3cRe * tIm_1c + x3cIm * tRe_1c);
-
-          let Tx1dRe = (x1dRe * tRe_1d - x1dIm * tIm_1d);
-          let Tx1dIm = (x1dRe * tIm_1d + x1dIm * tRe_1d);
-          let Tx3dRe = (x3dRe * tRe_1d - x3dIm * tIm_1d);
-          let Tx3dIm = (x3dRe * tIm_1d + x3dIm * tRe_1d);
-
-          xM0ReA = x0aRe + Tx0aRe;
-          xM0ImA = x0aIm + Tx0aIm;                  
-          xM2ReA = x2aRe + Tx2aRe;
-          xM2ImA = x2aIm + Tx2aIm;
-          
-          xM1ReB = x0bRe + Tx1bRe;
-          xM1ImB = x0bIm + Tx1bIm; 
-          xM3ReB = x2bRe + Tx3bRe;
-          xM3ImB = x2bIm + Tx3bIm; 
-          
-          xM0ReC = x0cRe + Tx0cRe;
-          xM0ImC = x0cIm + Tx0cIm;  
-          xM2ReC = x2cRe + Tx2cRe;
-          xM2ImC = x2cIm + Tx2cIm;
-          
-          xM1ReD = x0dRe + Tx1dRe;
-          xM1ImD = x0dIm + Tx1dIm;
-          xM3ReD = x2dRe + Tx3dRe;
-          xM3ImD = x2dIm + Tx3dIm; 
-
-          out[( 0+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2a - ((xM2ImA)*tIm_2a));
-          out[( 0+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2a + ((xM2ImA)*tRe_2a)); 
-          out[( 1+i)*2+0] = xM1ReB + ((xM3ReB)*tRe_2b - ((xM3ImB)*tIm_2b));
-          out[( 1+i)*2+1] = xM1ImB + ((xM3ReB)*tIm_2b + ((xM3ImB)*tRe_2b)); 
-          out[( 2+i)*2+0] = xM0ReC + ((xM2ReC)*tRe_2c - ((xM2ImC)*tIm_2c));
-          out[( 2+i)*2+1] = xM0ImC + ((xM2ReC)*tIm_2c + ((xM2ImC)*tRe_2c));
-          out[( 3+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2d - ((xM3ImD)*tIm_2d));
-          out[( 3+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2d + ((xM3ImD)*tRe_2d));
-
-          out[( 8+i)*2+0] = xM0ReA - ((xM2ReA)*tRe_2a - ((xM2ImA)*tIm_2a));
-          out[( 8+i)*2+1] = xM0ImA - ((xM2ReA)*tIm_2a + ((xM2ImA)*tRe_2a)); 
-          out[( 9+i)*2+0] = xM1ReB - ((xM3ReB)*tRe_2b - ((xM3ImB)*tIm_2b));
-          out[( 9+i)*2+1] = xM1ImB - ((xM3ReB)*tIm_2b + ((xM3ImB)*tRe_2b)); 
-          out[(10+i)*2+0] = xM0ReC - ((xM2ReC)*tRe_2c - ((xM2ImC)*tIm_2c));
-          out[(10+i)*2+1] = xM0ImC - ((xM2ReC)*tIm_2c + ((xM2ImC)*tRe_2c));
-          out[(11+i)*2+0] = xM1ReD - ((xM3ReD)*tRe_2d - ((xM3ImD)*tIm_2d));
-          out[(11+i)*2+1] = xM1ImD - ((xM3ReD)*tIm_2d + ((xM3ImD)*tRe_2d));
-
-          xM0ReA = x0aRe - Tx0aRe;
-          xM0ImA = x0aIm - Tx0aIm;                  
-          xM2ReA = x2aRe - Tx2aRe;
-          xM2ImA = x2aIm - Tx2aIm;
-          
-          xM1ReB = x0bRe - Tx1bRe;
-          xM1ImB = x0bIm - Tx1bIm; 
-          xM3ReB = x2bRe - Tx3bRe;
-          xM3ImB = x2bIm - Tx3bIm; 
-          
-          xM0ReC = x0cRe - Tx0cRe;
-          xM0ImC = x0cIm - Tx0cIm;  
-          xM2ReC = x2cRe - Tx2cRe;
-          xM2ImC = x2cIm - Tx2cIm;
-          
-          xM1ReD = x0dRe - Tx1dRe;
-          xM1ImD = x0dIm - Tx1dIm;
-          xM3ReD = x2dRe - Tx3dRe;
-          xM3ImD = x2dIm - Tx3dIm; 
-
-          out[( 4+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2e - ((xM2ImA)*tIm_2e)); 
-          out[( 4+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2e + ((xM2ImA)*tRe_2e)); 
-          out[( 5+i)*2+0] = xM1ReB + ((xM3ReB)*tRe_2f - ((xM3ImB)*tIm_2f));
-          out[( 5+i)*2+1] = xM1ImB + ((xM3ReB)*tIm_2f + ((xM3ImB)*tRe_2f)); 
-          out[( 6+i)*2+0] = xM0ReC + ((xM2ReC)*tRe_2g - ((xM2ImC)*tIm_2g));
-          out[( 6+i)*2+1] = xM0ImC + ((xM2ReC)*tIm_2g + ((xM2ImC)*tRe_2g));
-          out[( 7+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2h - ((xM3ImD)*tIm_2h));
-          out[( 7+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2h + ((xM3ImD)*tRe_2h));
-
-          out[(12+i)*2+0] = xM0ReA - ((xM2ReA)*tRe_2e - ((xM2ImA)*tIm_2e));
-          out[(12+i)*2+1] = xM0ImA - ((xM2ReA)*tIm_2e + ((xM2ImA)*tRe_2e)); 
-          out[(13+i)*2+0] = xM1ReB - ((xM3ReB)*tRe_2f - ((xM3ImB)*tIm_2f));
-          out[(13+i)*2+1] = xM1ImB - ((xM3ReB)*tIm_2f + ((xM3ImB)*tRe_2f)); 
-          out[(14+i)*2+0] = xM0ReC - ((xM2ReC)*tRe_2g - ((xM2ImC)*tIm_2g));
-          out[(14+i)*2+1] = xM0ImC - ((xM2ReC)*tIm_2g + ((xM2ImC)*tRe_2g));
-          out[(15+i)*2+0] = xM1ReD - ((xM3ReD)*tRe_2h - ((xM3ImD)*tIm_2h));
-          out[(15+i)*2+1] = xM1ImD - ((xM3ReD)*tIm_2h + ((xM3ImD)*tRe_2h));
-    }*/
-
-
-
-
-
-
-
-
-
-
-
-    // for(let p = 1, s0 = 1, s1 = 2, s2 = 4; p < steps; p++, s0 <<= 2, s1 <<= 2, s2 <<= 2) {
-    // //for (let p = 0; p < steps; p++, s <<= 2) {
+    let pre1 = 30;
+    let pre2 = 62;
+    let s = 1;
+    let k = 0;
+    for(let p = 2, s0 = 16, s1 = 32, s2 = 64; p < steps; p++, s0 <<= 2, s1 <<= 2, s2 <<= 2) {
         
-    //     /*
-    //     let r = 4;  
-    //         if(p==0){ r = 32; }
-    //         if(p==1){ r = 32; }
-    //         if(p==2){ r = 4; }
-    //         if(p==3){ r = 4; }
+        let r = 4;  
+            if(p==2){ r = 4; }
+            if(p==3){ r = 4; }
 
-    //     let r_ = 4;  
-    //         if(p==0){ r_ = 4; }
-    //         if(p==1){ r_ = 4; }
-    //         if(p==2){ r_ = 16; }    
-    //         if(p==3){ r_ = 32; }
+        let r_ = 4;  
+            if(p==2){ r_ = 16; }    
+            if(p==3){ r_ = 32; }
 
-    //     let b = 0;
-    //     */
+        let b = 0;
 
-    //     //let k = p==0 ? 1 : (1<<(2*p));  //  1  4  16  64
+        let k = p==0 ? 1 : (1<<(2*p));  //  1  4  16  64
 
-    //     //console.log( "-size "+size2+"########################################" );
-    //     /*for(let b_ = 0; b_ < ts; b_++){
-    //       b = b_*r;  
-    //       if(N==256 && p == 2 && b_ >= ts/2){ 
-    //         b = (b_%4)*r + N/2; 
-    //       } 
-    //       s = b;
-    //       let k = p==0 ? 1 : (1<<(2*p));  //  1  4  16  64
+        //console.log( "-size "+size2+"########################################" );
+        for(let b_ = 0; b_ < ts; b_++){
+          b = b_*r;  
+          if(N==256 && p == 2 && b_ >= ts/2){ 
+            b = (b_%4)*r + N/2; 
+          } 
+          s = b;
+          let k = p==0 ? 1 : (1<<(2*p));  //  1  4  16  64
 
-    //       for(let i_ = 0; i_ < ts; i_++){*/
+          for(let i_ = 0; i_ < ts; i_++){
+            let i = b + i_ * r_;
+            if(p == 3){
+                if(i_<(ts/2)){ 
+                    i = b +  0+((i_%4)*32)*2; 
+                }else{ 
+                    i = b + 32+((i_%4)*32)*2; 
+                }
+            }
 
-    //     for(let i_ = 0; i_ < tsq; i_++){
-    //         let i = i_;//b + i_ * r_;
-    //         /*if(N == 256 && p == 3){
-    //             if(i_<(ts/2)){ 
-    //                 i = b +  0+((i_%4)*32)*2; 
-    //             }else{ 
-    //                 i = b + 32+((i_%4)*32)*2; 
-    //             }
-    //         }*/
-
-    //         /*
-    //         let i_a0 = (i + 0 + (k)*0); let i_a1 = (i + 0 + (k)*1); let i_a2 = (i + 0 + (k)*2); let i_a3 = (i + 0 + (k)*3);
-    //         let i_b0 = (i + 1 + (k)*0); let i_b1 = (i + 1 + (k)*1); let i_b2 = (i + 1 + (k)*2); let i_b3 = (i + 1 + (k)*3);
-    //         let i_c0 = (i + 2 + (k)*0); let i_c1 = (i + 2 + (k)*1); let i_c2 = (i + 2 + (k)*2); let i_c3 = (i + 2 + (k)*3);
-    //         let i_d0 = (i + 3 + (k)*0); let i_d1 = (i + 3 + (k)*1); let i_d2 = (i + 3 + (k)*2); let i_d3 = (i + 3 + (k)*3);
-    //         */
+        
+            let i_a0 = (i + 0 + (k)*0); let i_a1 = (i + 0 + (k)*1); let i_a2 = (i + 0 + (k)*2); let i_a3 = (i + 0 + (k)*3);
+            let i_b0 = (i + 1 + (k)*0); let i_b1 = (i + 1 + (k)*1); let i_b2 = (i + 1 + (k)*2); let i_b3 = (i + 1 + (k)*3);
+            let i_c0 = (i + 2 + (k)*0); let i_c1 = (i + 2 + (k)*1); let i_c2 = (i + 2 + (k)*2); let i_c3 = (i + 2 + (k)*3);
+            let i_d0 = (i + 3 + (k)*0); let i_d1 = (i + 3 + (k)*1); let i_d2 = (i + 3 + (k)*2); let i_d3 = (i + 3 + (k)*3);
+            
 
             
-    //         let sign2a = ((i+0)%s2 < s1) ? 1 : -1;
-    //         let sign1a = ((i+0)%s1 < s0) ? 1 : -1; 
-    //         let sign2b = ((i+1)%s2 < s1) ? 1 : -1;
-    //         let sign1b = ((i+1)%s1 < s0) ? 1 : -1; 
-    //         let sign2c = ((i+2)%s2 < s1) ? 1 : -1;
-    //         let sign1c = ((i+2)%s1 < s0) ? 1 : -1; 
-    //         let sign2d = ((i+3)%s2 < s1) ? 1 : -1;
-    //         let sign1d = ((i+3)%s1 < s0) ? 1 : -1; 
+            let sign2a = ((i+0)%s2 < s1) ? 1 : -1;
+            let sign1a = ((i+0)%s1 < s0) ? 1 : -1; 
+            let sign2b = ((i+1)%s2 < s1) ? 1 : -1;
+            let sign1b = ((i+1)%s1 < s0) ? 1 : -1; 
+            let sign2c = ((i+2)%s2 < s1) ? 1 : -1;
+            let sign1c = ((i+2)%s1 < s0) ? 1 : -1; 
+            let sign2d = ((i+3)%s2 < s1) ? 1 : -1;
+            let sign1d = ((i+3)%s1 < s0) ? 1 : -1; 
             
             
             
-    //         let j2a = (0)%s1+(i%s1); let j1a = (0)%(s0)+(i%s0);
-    //         let j2b = (1)%s1+(i%s1); let j1b = (1)%(s0)+(i%s0);
-    //         let j2c = (2)%s1+(i%s1); let j1c = (2)%(s0)+(i%s0);
-    //         let j2d = (3)%s1+(i%s1); let j1d = (3)%(s0)+(i%s0);
+            let j2a = (0)%s1+(i%s1); let j1a = (0)%(s0)+(i%s0);
+            let j2b = (1)%s1+(i%s1); let j1b = (1)%(s0)+(i%s0);
+            let j2c = (2)%s1+(i%s1); let j1c = (2)%(s0)+(i%s0);
+            let j2d = (3)%s1+(i%s1); let j1d = (3)%(s0)+(i%s0);
 
-    //         tRe_1a  = ____F[pre1+(2*j1a+0)];
-    //         tIm_1a  = ____F[pre1+(2*j1a+1)];
-    //         tRe_1b  = tRe_1a;
-    //         tIm_1b  = tIm_1a;
-    //         tRe_1c  = tRe_1a;
-    //         tIm_1c  = tIm_1a;
-    //         tRe_1d  = tRe_1a;
-    //         tIm_1d  = tIm_1a;
+            tRe_1a  = ____F[pre1+(2*j1a+0)];
+            tIm_1a  = ____F[pre1+(2*j1a+1)];
+            tRe_1b  = tRe_1a;
+            tIm_1b  = tIm_1a;
+            tRe_1c  = tRe_1a;
+            tIm_1c  = tIm_1a;
+            tRe_1d  = tRe_1a;
+            tIm_1d  = tIm_1a;
             
 
-    //         /*if(p > 0){
-    //             tRe_1b  = ____F[pre1+(2*j1b+0)];
-    //             tIm_1b  = ____F[pre1+(2*j1b+1)];  
-    //             tRe_1c  = ____F[pre1+(2*j1c+0)];
-    //             tIm_1c  = ____F[pre1+(2*j1c+1)]; 
-    //             tRe_1d  = ____F[pre1+(2*j1d+0)];
-    //             tIm_1d  = ____F[pre1+(2*j1d+1)]; 
-    //         }*/
+            if(p > 0){
+                tRe_1b  = ____F[pre1+(2*j1b+0)];
+                tIm_1b  = ____F[pre1+(2*j1b+1)];  
+                tRe_1c  = ____F[pre1+(2*j1c+0)];
+                tIm_1c  = ____F[pre1+(2*j1c+1)]; 
+                tRe_1d  = ____F[pre1+(2*j1d+0)];
+                tIm_1d  = ____F[pre1+(2*j1d+1)]; 
+            }
             
-    //         /*
-    //         tRe_2a  = ____F[pre2+(2*j2a+0)]; 
-    //         tIm_2a  = ____F[pre2+(2*j2a+1)];
-    //         tRe_2b  = ____F[pre2+(2*j2b+0)]; 
-    //         tIm_2b  = ____F[pre2+(2*j2b+1)];
-    //         tRe_2c  = tRe_2a;
-    //         tIm_2c  = tIm_2a;
-    //         tRe_2d  = tRe_2b;
-    //         tIm_2d  = tIm_2b;
-    //         */
-
-    //         /*if(p > 0){        
-    //             tRe_2b  = ____F[pre2+(2*j2b+0)]; 
-    //             tIm_2b  = ____F[pre2+(2*j2b+1)];
-    //             tRe_2c  = ____F[pre2+(2*j2c+0)]; 
-    //             tIm_2c  = ____F[pre2+(2*j2c+1)];        
-    //             tRe_2d  = ____F[pre2+(2*j2d+0)]; 
-    //             tIm_2d  = ____F[pre2+(2*j2d+1)];
-    //         }*/
-
-    //         /*
-    //         if(p==0 || (i_%4) == 0){
-    //                                                                 //########    +00\\  |+04\\  |-08\\  |-12\\  |
-    //             x0aRe = out[(i_a0)*2+0]; x0aIm = out[(i_a0)*2+1];   //########       00  |   00  |   00  |   00  |
-    //             x1aRe = out[(i_a1)*2+0]; x1aIm = out[(i_a1)*2+1];   //########      +04  |  -04  |  +04  |  -04  |
-    //             x2aRe = out[(i_a2)*2+0]; x2aIm = out[(i_a2)*2+1];   //########       08  |   08  |   08  |   08  |
-    //             x3aRe = out[(i_a3)*2+0]; x3aIm = out[(i_a3)*2+1];   //########      +12  |  -12  |  +12  |  -12  |
-    //             //console.log( "(i_a0)",(i_a0),"(i_a1)",(i_a1),"(i_a2)",(i_a2),"(i_a3)",(i_a3) ); 
-    //         }*/
             
-    //         /*
-    //         if(p>0 && (i_%4) == 0){
-    //                                                                 //########    +01\\  |+05\\  |-09\\  |-13\\  |
-    //             x0bRe = out[(i_b0)*2+0]; x0bIm = out[(i_b0)*2+1];   //########       01  |   01  |   01  |   01  |
-    //             x1bRe = out[(i_b1)*2+0]; x1bIm = out[(i_b1)*2+1];   //########      +05  |  -05  |  +05  |  -05  |
-    //             x2bRe = out[(i_b2)*2+0]; x2bIm = out[(i_b2)*2+1];   //########       09  |   09  |   09  |   09  |
-    //             x3bRe = out[(i_b3)*2+0]; x3bIm = out[(i_b3)*2+1];   //########      +13  |  -13  |  +13  |  -13  |
-    //             //console.log( "(i_b0)",(i_b0),"(i_b1)",(i_b1),"(i_b2)",(i_b2),"(i_b3)",(i_b3) ); 
-    //         }
+            tRe_2a  = ____F[pre2+(2*j2a+0)]; 
+            tIm_2a  = ____F[pre2+(2*j2a+1)];
+            tRe_2b  = ____F[pre2+(2*j2b+0)]; 
+            tIm_2b  = ____F[pre2+(2*j2b+1)];
+            tRe_2c  = tRe_2a;
+            tIm_2c  = tIm_2a;
+            tRe_2d  = tRe_2b;
+            tIm_2d  = tIm_2b;
+            
 
-    //         jk++;
+            if(p > 0){        
+                tRe_2b  = ____F[pre2+(2*j2b+0)]; 
+                tIm_2b  = ____F[pre2+(2*j2b+1)];
+                tRe_2c  = ____F[pre2+(2*j2c+0)]; 
+                tIm_2c  = ____F[pre2+(2*j2c+1)];        
+                tRe_2d  = ____F[pre2+(2*j2d+0)]; 
+                tIm_2d  = ____F[pre2+(2*j2d+1)];
+            }
 
-    //         if(p>0 && (i_%4) == 0){
-    //                                                                 //########    +02\\  |+06\\  |-10\\  |-14\\  |
-    //             x0cRe = out[(i_c0)*2+0]; x0cIm = out[(i_c0)*2+1];   //########       02  |   02  |   02  |   02  |
-    //             x1cRe = out[(i_c1)*2+0]; x1cIm = out[(i_c1)*2+1];   //########      +06  |  -06  |  +06  |  -06  |
-    //             x2cRe = out[(i_c2)*2+0]; x2cIm = out[(i_c2)*2+1];   //########       10  |   10  |   10  |   10  |
-    //             x3cRe = out[(i_c3)*2+0]; x3cIm = out[(i_c3)*2+1];   //########      +14  |  -14  |  +14  |  -14  |
-    //             //console.log( "(i_c0)",(i_c0),"(i_c1)",(i_c1),"(i_c2)",(i_c2),"(i_c3)",(i_c3) ); 
-    //         }
+            
+            if((i_%4) == 0){
+                                                                    //########    +00\\  |+04\\  |-08\\  |-12\\  |
+                x0aRe = out[(i_a0)*2+0]; x0aIm = out[(i_a0)*2+1];   //########       00  |   00  |   00  |   00  |
+                x1aRe = out[(i_a1)*2+0]; x1aIm = out[(i_a1)*2+1];   //########      +04  |  -04  |  +04  |  -04  |
+                x2aRe = out[(i_a2)*2+0]; x2aIm = out[(i_a2)*2+1];   //########       08  |   08  |   08  |   08  |
+                x3aRe = out[(i_a3)*2+0]; x3aIm = out[(i_a3)*2+1];   //########      +12  |  -12  |  +12  |  -12  |
+                                                                    //########    +01\\  |+05\\  |-09\\  |-13\\  |
+                x0bRe = out[(i_b0)*2+0]; x0bIm = out[(i_b0)*2+1];   //########       01  |   01  |   01  |   01  |
+                x1bRe = out[(i_b1)*2+0]; x1bIm = out[(i_b1)*2+1];   //########      +05  |  -05  |  +05  |  -05  |
+                x2bRe = out[(i_b2)*2+0]; x2bIm = out[(i_b2)*2+1];   //########       09  |   09  |   09  |   09  |
+                x3bRe = out[(i_b3)*2+0]; x3bIm = out[(i_b3)*2+1];   //########      +13  |  -13  |  +13  |  -13  |
+                                                                    //########    +02\\  |+06\\  |-10\\  |-14\\  |
+                x0cRe = out[(i_c0)*2+0]; x0cIm = out[(i_c0)*2+1];   //########       02  |   02  |   02  |   02  |
+                x1cRe = out[(i_c1)*2+0]; x1cIm = out[(i_c1)*2+1];   //########      +06  |  -06  |  +06  |  -06  |
+                x2cRe = out[(i_c2)*2+0]; x2cIm = out[(i_c2)*2+1];   //########       10  |   10  |   10  |   10  |
+                x3cRe = out[(i_c3)*2+0]; x3cIm = out[(i_c3)*2+1];   //########      +14  |  -14  |  +14  |  -14  |
+                                                                    //########    +03\\  |+07\\  |-11\\  |-15\\  |
+                x0dRe = out[(i_d0)*2+0]; x0dIm = out[(i_d0)*2+1];   //########       03  |   03  |   03  |   03  | 
+                x1dRe = out[(i_d1)*2+0]; x1dIm = out[(i_d1)*2+1];   //########      +07  |  -07  |  +07  |  -07  |
+                x2dRe = out[(i_d2)*2+0]; x2dIm = out[(i_d2)*2+1];   //########       11  |   11  |   11  |   11  |
+                x3dRe = out[(i_d3)*2+0]; x3dIm = out[(i_d3)*2+1];   //########      +15  |  -15  |  +15  |  -15  |
+            }
 
-    //         jk++;
-
-    //         if(p>0 && (i_%4) == 0){
-    //                                                                 //########    +03\\  |+07\\  |-11\\  |-15\\  |
-    //             x0dRe = out[(i_d0)*2+0]; x0dIm = out[(i_d0)*2+1];   //########       03  |   03  |   03  |   03  | 
-    //             x1dRe = out[(i_d1)*2+0]; x1dIm = out[(i_d1)*2+1];   //########      +07  |  -07  |  +07  |  -07  |
-    //             x2dRe = out[(i_d2)*2+0]; x2dIm = out[(i_d2)*2+1];   //########       11  |   11  |   11  |   11  |
-    //             x3dRe = out[(i_d3)*2+0]; x3dIm = out[(i_d3)*2+1];   //########      +15  |  -15  |  +15  |  -15  |
-    //             //console.log( "(i_d0)",(i_d0),"(i_d1)",(i_d1),"(i_d2)",(i_d2),"(i_d3)",(i_d3) ); 
-    //         }
-    //         */
-
-    //         /*
-    //         if(true){
-    //         //if(size1 == 2){
-    //           x0bRe = x0aRe; x0bIm = x0aIm;  
-    //           x1bRe = x1aRe; x1bIm = x1aIm; 
-    //           x2bRe = x2aRe; x2bIm = x2aIm;  
-    //           x3bRe = x3aRe; x3bIm = x3aIm;                              
-    //           x0cRe = x0aRe; x0cIm = x0aIm; 
-    //           x1cRe = x1aRe; x1cIm = x1aIm; 
-    //           x2cRe = x2aRe; x2cIm = x2aIm; 
-    //           x3cRe = x3aRe; x3cIm = x3aIm; 
-    //           x0dRe = x0bRe; x0dIm = x0bIm; 
-    //           x1dRe = x1bRe; x1dIm = x1bIm; 
-    //           x2dRe = x2bRe; x2dIm = x2bIm; 
-    //           x3dRe = x3bRe; x3dIm = x3bIm;
-    //         } */
-
-    //         /*                                                                                             
-    //           xM0ReA = x0aRe + (x1aRe * tRe_1a - x1aIm * tIm_1a) * sign1a;
-    //           xM0ImA = x0aIm + (x1aRe * tIm_1a + x1aIm * tRe_1a) * sign1a;                    
-    //           xM2ReA = x2aRe + (x3aRe * tRe_1a - x3aIm * tIm_1a) * sign1a;
-    //           xM2ImA = x2aIm + (x3aRe * tIm_1a + x3aIm * tRe_1a) * sign1a;
+                                                                                                        
+              xM0ReA = x0aRe + (x1aRe * tRe_1a - x1aIm * tIm_1a) * sign1a;
+              xM0ImA = x0aIm + (x1aRe * tIm_1a + x1aIm * tRe_1a) * sign1a;                    
+              xM2ReA = x2aRe + (x3aRe * tRe_1a - x3aIm * tIm_1a) * sign1a;
+              xM2ImA = x2aIm + (x3aRe * tIm_1a + x3aIm * tRe_1a) * sign1a;
               
-    //           xM1ReB = x0bRe + (x1bRe * tRe_1b - x1bIm * tIm_1b) * sign1b; 
-    //           xM1ImB = x0bIm + (x1bRe * tIm_1b + x1bIm * tRe_1b) * sign1b; 
-    //           xM3ReB = x2bRe + (x3bRe * tRe_1b - x3bIm * tIm_1b) * sign1b; 
-    //           xM3ImB = x2bIm + (x3bRe * tIm_1b + x3bIm * tRe_1b) * sign1b; 
+              xM1ReB = x0bRe + (x1bRe * tRe_1b - x1bIm * tIm_1b) * sign1b; 
+              xM1ImB = x0bIm + (x1bRe * tIm_1b + x1bIm * tRe_1b) * sign1b; 
+              xM3ReB = x2bRe + (x3bRe * tRe_1b - x3bIm * tIm_1b) * sign1b; 
+              xM3ImB = x2bIm + (x3bRe * tIm_1b + x3bIm * tRe_1b) * sign1b; 
               
-    //           xM0ReC = x0cRe + (x1cRe * tRe_1c - x1cIm * tIm_1c) * sign1c;
-    //           xM0ImC = x0cIm + (x1cRe * tIm_1c + x1cIm * tRe_1c) * sign1c; 
-    //           xM2ReC = x2cRe + (x3cRe * tRe_1c - x3cIm * tIm_1c) * sign1c;
-    //           xM2ImC = x2cIm + (x3cRe * tIm_1c + x3cIm * tRe_1c) * sign1c;
+              xM0ReC = x0cRe + (x1cRe * tRe_1c - x1cIm * tIm_1c) * sign1c;
+              xM0ImC = x0cIm + (x1cRe * tIm_1c + x1cIm * tRe_1c) * sign1c; 
+              xM2ReC = x2cRe + (x3cRe * tRe_1c - x3cIm * tIm_1c) * sign1c;
+              xM2ImC = x2cIm + (x3cRe * tIm_1c + x3cIm * tRe_1c) * sign1c;
               
-    //           xM1ReD = x0dRe + (x1dRe * tRe_1d - x1dIm * tIm_1d) * sign1d;
-    //           xM1ImD = x0dIm + (x1dRe * tIm_1d + x1dIm * tRe_1d) * sign1d;
-    //           xM3ReD = x2dRe + (x3dRe * tRe_1d - x3dIm * tIm_1d) * sign1d;
-    //           xM3ImD = x2dIm + (x3dRe * tIm_1d + x3dIm * tRe_1d) * sign1d;
-    //         */
+              xM1ReD = x0dRe + (x1dRe * tRe_1d - x1dIm * tIm_1d) * sign1d;
+              xM1ImD = x0dIm + (x1dRe * tIm_1d + x1dIm * tRe_1d) * sign1d;
+              xM3ReD = x2dRe + (x3dRe * tRe_1d - x3dIm * tIm_1d) * sign1d;
+              xM3ImD = x2dIm + (x3dRe * tIm_1d + x3dIm * tRe_1d) * sign1d;
+            
 
-    //          /*
-    //          out[(0+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2a - ((xM2ImA)*tIm_2a)) * sign2a;
-    //          out[(0+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2a + ((xM2ImA)*tRe_2a)) * sign2a; 
-    //          out[(1+i)*2+0] = xM1ReB + ((xM3ReB)*tRe_2b - ((xM3ImB)*tIm_2b)) * sign2b;
-    //          out[(1+i)*2+1] = xM1ImB + ((xM3ReB)*tIm_2b + ((xM3ImB)*tRe_2b)) * sign2b; 
-    //          out[(2+i)*2+0] = xM0ReC + ((xM2ReC)*tRe_2c - ((xM2ImC)*tIm_2c)) * sign2c;
-    //          out[(2+i)*2+1] = xM0ImC + ((xM2ReC)*tIm_2c + ((xM2ImC)*tRe_2c)) * sign2c;
-    //          out[(3+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2d - ((xM3ImD)*tIm_2d)) * sign2d;
-    //          out[(3+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2d + ((xM3ImD)*tRe_2d)) * sign2d;
-    //          */
              
-    //          //console.log(size2, (i+0).toString().padStart(2),"--->", xM0ReA.toFixed(2), (sign2a<0)?"-":"+","(",xM2ReA.toFixed(2),"*",tRe_2a.toFixed(2), j2a,"-",xM2ImA.toFixed(2),"*",tIm_2a.toFixed(2),") = ", out[(0+i)*2+0].toFixed(2));
-    //          //console.log(size2, (i+1).toString().padStart(2),"--->", xM1ReB.toFixed(2), (sign2b<0)?"-":"+","(",xM3ReB.toFixed(2),"*",tRe_2b.toFixed(2), j2b,"-",xM3ImB.toFixed(2),"*",tIm_2b.toFixed(2),") = ", out[(1+i)*2+0].toFixed(2));
-    //          //console.log(size2, (i+2).toString().padStart(2),"--->", xM0ReC.toFixed(2), (sign2c<0)?"-":"+","(",xM2ReC.toFixed(2),"*",tRe_2c.toFixed(2), j2c,"-",xM2ImC.toFixed(2),"*",tIm_2c.toFixed(2),") = ", out[(2+i)*2+0].toFixed(2));
-    //          //console.log(size2, (i+3).toString().padStart(2),"--->", xM1ReD.toFixed(2), (sign2d<0)?"-":"+","(",xM3ReD.toFixed(2),"*",tRe_2d.toFixed(2), j2d,"-",xM3ImD.toFixed(2),"*",tIm_2d.toFixed(2),") = ", out[(3+i)*2+0].toFixed(2));
+             out[(0+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2a - ((xM2ImA)*tIm_2a)) * sign2a;
+             out[(0+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2a + ((xM2ImA)*tRe_2a)) * sign2a; 
+             out[(1+i)*2+0] = xM1ReB + ((xM3ReB)*tRe_2b - ((xM3ImB)*tIm_2b)) * sign2b;
+             out[(1+i)*2+1] = xM1ImB + ((xM3ReB)*tIm_2b + ((xM3ImB)*tRe_2b)) * sign2b; 
+             out[(2+i)*2+0] = xM0ReC + ((xM2ReC)*tRe_2c - ((xM2ImC)*tIm_2c)) * sign2c;
+             out[(2+i)*2+1] = xM0ImC + ((xM2ReC)*tIm_2c + ((xM2ImC)*tRe_2c)) * sign2c;
+             out[(3+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2d - ((xM3ImD)*tIm_2d)) * sign2d;
+             out[(3+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2d + ((xM3ImD)*tRe_2d)) * sign2d;
+             
+             
+             //console.log(size2, (i+0).toString().padStart(2),"--->", xM0ReA.toFixed(2), (sign2a<0)?"-":"+","(",xM2ReA.toFixed(2),"*",tRe_2a.toFixed(2), j2a,"-",xM2ImA.toFixed(2),"*",tIm_2a.toFixed(2),") = ", out[(0+i)*2+0].toFixed(2));
+             //console.log(size2, (i+1).toString().padStart(2),"--->", xM1ReB.toFixed(2), (sign2b<0)?"-":"+","(",xM3ReB.toFixed(2),"*",tRe_2b.toFixed(2), j2b,"-",xM3ImB.toFixed(2),"*",tIm_2b.toFixed(2),") = ", out[(1+i)*2+0].toFixed(2));
+             //console.log(size2, (i+2).toString().padStart(2),"--->", xM0ReC.toFixed(2), (sign2c<0)?"-":"+","(",xM2ReC.toFixed(2),"*",tRe_2c.toFixed(2), j2c,"-",xM2ImC.toFixed(2),"*",tIm_2c.toFixed(2),") = ", out[(2+i)*2+0].toFixed(2));
+             //console.log(size2, (i+3).toString().padStart(2),"--->", xM1ReD.toFixed(2), (sign2d<0)?"-":"+","(",xM3ReD.toFixed(2),"*",tRe_2d.toFixed(2), j2d,"-",xM3ImD.toFixed(2),"*",tIm_2d.toFixed(2),") = ", out[(3+i)*2+0].toFixed(2));
 
 
 
-    //         // //console.log( "-----------------------------" );
-    //       }
-    //     } 
-    //     //pre1 += (2 << 2*p) + (2 << 2*p+1);
-    //     //pre2 += (2 << 2*p+1) + (2 << 2*p+2);
+            // //console.log( "-----------------------------" );
+          }
+        } 
+        pre1 += (2 << 2*p) + (2 << 2*p+1);
+        pre2 += (2 << 2*p+1) + (2 << 2*p+2);
 
         
-    //     /*for(let i=0; i<N; i++){
-    //          console.log("after size ",size2," : ",i," -> ", out[i*2], out[i*2+1]); 
-    //     }*/
+        /*for(let i=0; i<N; i++){
+             console.log("after size ",size2," : ",i," -> ", out[i*2], out[i*2+1]); 
+        }*/
 
-    // //}
+    //}
     return out;
 }
 
