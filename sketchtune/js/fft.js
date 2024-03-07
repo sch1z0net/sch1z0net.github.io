@@ -1114,7 +1114,7 @@ function fftComplexInPlace_seq_4(out) {
     tIm_2p  = ____F[62+(15*2+1)];
 
     let s = 0;
-    for(let i_ = 0; i_ < tsq; i_++){
+    for(let i_ = 0; i_ < tsq; i_+=4){
           let i = s + i_ * 16;
           if((i_+ 1) % 8 == 0){ s += 4; };
           if((i_+ 1) % 32 == 0){ s = 128; };
