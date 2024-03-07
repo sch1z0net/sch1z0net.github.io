@@ -842,10 +842,13 @@ function fftComplexInPlace_seq(out) {
     return out;
 }*/
 
+let ____F = LOOKUP_RADIX2_256;
+
 function fftComplexInPlace_seq_4(out) {
     const N = out.length/2;
     const bits = Math.log2(N);
 
+    /*
     let ____F;
     if(N ==    4){ ____F = LOOKUP_RADIX2_4;    }
     if(N ==    8){ ____F = LOOKUP_RADIX2_8;    }
@@ -858,6 +861,7 @@ function fftComplexInPlace_seq_4(out) {
     if(N == 1024){ ____F = LOOKUP_RADIX2_1024; }
     if(N == 2048){ ____F = LOOKUP_RADIX2_2048; }
     if(N == 4096){ ____F = LOOKUP_RADIX2_4096; }
+    */
 
     /*
     let idx_LKUP; 
