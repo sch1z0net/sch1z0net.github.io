@@ -878,14 +878,12 @@ function fftComplexInPlace_seq_4(out) {
     if(N ==4096){ idx_LKUP = INDEX_LOOKUP_4096; } 
     */
 
-    let its = 0, accs = 0;
-
-
     /*for(let i=0; i<16; i++){
         console.log("INIT:",i," -> ", out[i*2], out[i*2+1]); 
     }*/
     
-    
+
+    /*
     let x0aRe, x0aIm; let x1aRe, x1aIm; let x2aRe, x2aIm; let x3aRe, x3aIm;
     let x0bRe, x0bIm; let x1bRe, x1bIm; let x2bRe, x2bIm; let x3bRe, x3bIm;
     let x0cRe, x0cIm; let x1cRe, x1cIm; let x2cRe, x2cIm; let x3cRe, x3cIm;
@@ -903,6 +901,7 @@ function fftComplexInPlace_seq_4(out) {
     let tRe_2b; let tIm_2b;
     let tRe_2c; let tIm_2c;    
     let tRe_2d; let tIm_2d;
+    */
 
     let r = N; //64          // 4   16   64  128
     let steps = (bits>>1);   // 1    2    3    4   
