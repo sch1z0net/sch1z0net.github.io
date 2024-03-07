@@ -1052,12 +1052,7 @@ function fftComplexInPlace_seq_4(out) {
                 tIm_2d  = ____F[pre2+(2*j2d+1)];
             }*/
 
-
-            
-            // %4  < 1
-            // %16 < 4
-            // %64 < 16
-            //%256 < 32
+            /*
             if(p==0 || (i_%4) == 0){
                                                                     //########    +00\\  |+04\\  |-08\\  |-12\\  |
                 x0aRe = out[(i_a0)*2+0]; x0aIm = out[(i_a0)*2+1];   //########       00  |   00  |   00  |   00  |
@@ -1099,10 +1094,11 @@ function fftComplexInPlace_seq_4(out) {
                 x3dRe = out[(i_d3)*2+0]; x3dIm = out[(i_d3)*2+1];   //########      +15  |  -15  |  +15  |  -15  |
                 //console.log( "(i_d0)",(i_d0),"(i_d1)",(i_d1),"(i_d2)",(i_d2),"(i_d3)",(i_d3) ); 
             }
-
+            */
             jk++;
 
-            if(size1 == 2){
+            if(true){
+            //if(size1 == 2){
               x0bRe = x0aRe; x0bIm = x0aIm;  
               x1bRe = x1aRe; x1bIm = x1aIm; 
               x2bRe = x2aRe; x2bIm = x2aIm;  
