@@ -136,7 +136,7 @@ function precalculateFFTFactorsRADIX2flattened(maxSampleLength) {
         //....
     }
 
-    return new Float32Array(factors);
+    return new Float64Array(factors);
 }
 /*
 // Compute FFT factors with caching (optimized for Radix-4 FFT)
