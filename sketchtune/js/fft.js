@@ -1015,6 +1015,14 @@ function fftComplexInPlace_seq_4(out) {
 
 
 
+
+
+
+
+
+
+
+
     // for(let p = 1, s0 = 1, s1 = 2, s2 = 4; p < steps; p++, s0 <<= 2, s1 <<= 2, s2 <<= 2) {
     // //for (let p = 0; p < steps; p++, s <<= 2) {
         
@@ -2626,7 +2634,7 @@ console.log(computeInverseFFT(computeFFT(signal3)));
 //console.log(computeFFT(signal1));
 
 
-//console.log(fftRealInPlace_ref(testData256));
-//console.log(fftRealInPlaceRADIX4(testData256,4));
+console.log(fftRealInPlace_ref(testData256));
+console.log(fftRealInPlaceRADIX4(testData256,4));
 
 
