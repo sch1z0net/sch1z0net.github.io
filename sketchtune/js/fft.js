@@ -996,18 +996,14 @@ function fftComplexInPlace_seq_4(out) {
             let i_c0 = (i + 2 + (k)*0); let i_c1 = (i + 2 + (k)*1); let i_c2 = (i + 2 + (k)*2); let i_c3 = (i + 2 + (k)*3);
             let i_d0 = (i + 3 + (k)*0); let i_d1 = (i + 3 + (k)*1); let i_d2 = (i + 3 + (k)*2); let i_d3 = (i + 3 + (k)*3);
             
-            let sign2a = (jj%size2 < size1)      ? 1 : -1;
-            let sign1a = (jj%size1 < (size1>>1)) ? 1 : -1; 
-            jj++; 
-            let sign2b = (jj%size2 < size1)      ? 1 : -1;
-            let sign1b = (jj%size1 < (size1>>1)) ? 1 : -1; 
-            jj++;
-            let sign2c = (jj%size2 < size1)      ? 1 : -1;
-            let sign1c = (jj%size1 < (size1>>1)) ? 1 : -1; 
-            jj++;
-            let sign2d = (jj%size2 < size1)      ? 1 : -1;
-            let sign1d = (jj%size1 < (size1>>1)) ? 1 : -1; 
-            jj++;
+            let sign2a = ((jj+0)%size2 < size1)      ? 1 : -1;
+            let sign1a = ((jj+0)%size1 < (size1>>1)) ? 1 : -1; 
+            let sign2b = ((jj+1)%size2 < size1)      ? 1 : -1;
+            let sign1b = ((jj+1)%size1 < (size1>>1)) ? 1 : -1; 
+            let sign2c = ((jj+2)%size2 < size1)      ? 1 : -1;
+            let sign1c = ((jj+2)%size1 < (size1>>1)) ? 1 : -1; 
+            let sign2d = ((jj+3)%size2 < size1)      ? 1 : -1;
+            let sign1d = ((jj+3)%size1 < (size1>>1)) ? 1 : -1; 
 
             let j2a = ji%size1+(i%jm2); let j1a = ji%(size1/2)+(i%jm1); ji++;
             let j2b = ji%size1+(i%jm2); let j1b = ji%(size1/2)+(i%jm1); ji++;
@@ -1051,12 +1047,6 @@ function fftComplexInPlace_seq_4(out) {
             }*/
 
 
-            /*
-            console.log((sign2a<0)?"-":"+" , 0+i, " -> ", (sign1a<0)?"-":"+" , i_a0 , i_a1 , i_a2 , i_a3 );
-            console.log((sign2b<0)?"-":"+" , 1+i, " -> ", (sign1b<0)?"-":"+" , i_b0 , i_b1 , i_b2 , i_b3 );
-            console.log((sign2c<0)?"-":"+" , 2+i, " -> ", (sign1c<0)?"-":"+" , i_c0 , i_c1 , i_c2 , i_c3 );
-            console.log((sign2d<0)?"-":"+" , 3+i, " -> ", (sign1d<0)?"-":"+" , i_d0 , i_d1 , i_d2 , i_d3 );
-            */
             
             // %4  < 1
             // %16 < 4
