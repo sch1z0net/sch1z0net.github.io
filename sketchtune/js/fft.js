@@ -950,8 +950,8 @@ function fftComplexInPlace_seq_4(out) {
         let s0 = s1>>1;
         let b = 0;
 
-        let jm2 = size1;       //   2     8     32
-        let jm1 = size1>>1;    //   1     4     16
+        let jm2 = s1;       //   2     8     32
+        let jm1 = s1>>1;    //   1     4     16
 
         let k = p==0 ? 1 : (1<<(2*p));  //  1  4  16  64
 
