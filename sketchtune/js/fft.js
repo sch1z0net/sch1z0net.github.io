@@ -948,7 +948,6 @@ function fftComplexInPlace_seq_4(out) {
 
 
         let z = d*4;
-        let k = 0;
                                 //  0     1     2   
         let p1 = (p*2)+1;       //  1 //  3 //  5 //
         let p2 = (p*2+1)+1;     //  2 //  4 //  6 //
