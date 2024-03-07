@@ -890,10 +890,10 @@ function fftComplexInPlace_seq_4(out) {
     let x0bRe, x0bIm; let x1bRe, x1bIm; let x2bRe, x2bIm; let x3bRe, x3bIm;
     let x0cRe, x0cIm; let x1cRe, x1cIm; let x2cRe, x2cIm; let x3cRe, x3cIm;
     let x0dRe, x0dIm; let x1dRe, x1dIm; let x2dRe, x2dIm; let x3dRe, x3dIm;
-    let xM0ReA, xM0ImA; let xM2ReA, xM2ImA;
-    let xM1ReB, xM1ImB; let xM3ReB, xM3ImB;
-    let xM0ReC, xM0ImC; let xM2ReC, xM2ImC;
-    let xM1ReD, xM1ImD; let xM3ReD, xM3ImD;
+    let xM0ReA = 0; let xM0ImA = 0; let xM2ReA = 0; let xM2ImA = 0;
+    let xM1ReB = 0; let xM1ImB = 0; let xM3ReB = 0; let xM3ImB = 0;
+    let xM0ReC = 0; let xM0ImC = 0; let xM2ReC = 0; let xM2ImC = 0;
+    let xM1ReD = 0; let xM1ImD = 0; let xM3ReD = 0; let xM3ImD = 0;
 
     let tRe_1a; let tIm_1a;    
     let tRe_1b; let tIm_1b;
@@ -912,12 +912,6 @@ function fftComplexInPlace_seq_4(out) {
     for(let p = 0; p < steps; p++){
         let d = 1<<(2*p);    // 1    4   16   64
         
-        //             4    16    64   256
-        //   p =       0     1     2     3
-        //N=4   ->     4-               
-        //N=16  ->     8-    4          
-        //N=64  ->     16-  16     4     
-        //N=256 ->   
         let r = 4;  
         if(N == 16){ 
             if(p==0){ r = 8; }
@@ -935,10 +929,6 @@ function fftComplexInPlace_seq_4(out) {
             if(p==3){ r = 4; }
         }
 
-        //N=4   ->     -
-        //N=16  ->     -     8    
-        //N=64  ->     -     4    16   
-        //N=256 ->    
         let r_ = 4;  
         if(N == 16){ 
             if(p==0){ r_ = 4; }  
@@ -1113,11 +1103,11 @@ function fftComplexInPlace_seq_4(out) {
               x3dRe = x3bRe; x3dIm = x3bIm;
             } 
 
-                                                                           //#################    +00\\\\\\\\\\\\\  |+04\\\\\\\\\\\\\  |-08\\\\\\\\\\\\\  |-12\\\\\\\\\\\\\                                
-              xM0ReA = x0aRe + (x1aRe * tRe_1a - x1aIm * tIm_1a) * sign1a; //#################        00 <- 00 +04  |    04 <- 00 -04  |    00 <- 00 +04  |    04 <- 00 -04
-              xM0ImA = x0aIm + (x1aRe * tIm_1a + x1aIm * tRe_1a) * sign1a; //#################              x0  x1  |          x0  x1  |          x0  x1  |          x0  x1                    
-              xM2ReA = x2aRe + (x3aRe * tRe_1a - x3aIm * tIm_1a) * sign1a; //#################        08 <- 08 +12  |    12 <- 08 -12  |    08 <- 08 +12  |    12 <- 08 -12 
-              xM2ImA = x2aIm + (x3aRe * tIm_1a + x3aIm * tRe_1a) * sign1a; //#################              x2  x3  |          x2  x3  |          x2  x3  |          x2  x3
+            /*                                                                                             
+              xM0ReA = x0aRe + (x1aRe * tRe_1a - x1aIm * tIm_1a) * sign1a;
+              xM0ImA = x0aIm + (x1aRe * tIm_1a + x1aIm * tRe_1a) * sign1a;                    
+              xM2ReA = x2aRe + (x3aRe * tRe_1a - x3aIm * tIm_1a) * sign1a;
+              xM2ImA = x2aIm + (x3aRe * tIm_1a + x3aIm * tRe_1a) * sign1a;
               
               xM1ReB = x0bRe + (x1bRe * tRe_1b - x1bIm * tIm_1b) * sign1b; 
               xM1ImB = x0bIm + (x1bRe * tIm_1b + x1bIm * tRe_1b) * sign1b; 
@@ -1133,7 +1123,8 @@ function fftComplexInPlace_seq_4(out) {
               xM1ImD = x0dIm + (x1dRe * tIm_1d + x1dIm * tRe_1d) * sign1d;
               xM3ReD = x2dRe + (x3dRe * tRe_1d - x3dIm * tIm_1d) * sign1d;
               xM3ImD = x2dIm + (x3dRe * tIm_1d + x3dIm * tRe_1d) * sign1d;
-             
+            */
+
              // size = 2     ||| size = 8
              ///////////////////////////////// i = 0
              // 00 <- 00 01  |||  00 <-  00 +04          -> xM0ReA
