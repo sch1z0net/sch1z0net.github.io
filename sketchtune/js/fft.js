@@ -909,8 +909,7 @@ function fftComplexInPlace_seq_4(out) {
     let ts = 1 << (steps-1); // 1    2    4    8
     let pre1 = 0;
     let pre2 = 2;
-    for(let p = 0; p < steps; p++){
-
+    for(let p = 0, s0 = 1, s1 = 2, s2 = 4; p < steps; p++, s1 <<= 2, s0 = s1>>1, s2 = s1<<1) {
         let r = 4;  
         if(N == 16){ 
             if(p==0){ r = 8; }
@@ -945,9 +944,6 @@ function fftComplexInPlace_seq_4(out) {
             if(p==3){ r_ = 32; }
         }
 
-        let s2 = 2<<(p*2+1);  //  4 // 16 // 64 //
-        let s1 = 2<<(p*2+0);  //  2 //  8 // 32 // 128
-        let s0 = s1>>1;
         let b = 0;
 
         let jm2 = s1;       //   2     8     32
