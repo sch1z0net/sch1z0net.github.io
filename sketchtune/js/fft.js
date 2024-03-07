@@ -981,8 +981,6 @@ function fftComplexInPlace_seq_4(out) {
                 }
             }
 
-            let ji = 0;
-
             let i_a0 = (i + 0 + (k)*0); let i_a1 = (i + 0 + (k)*1); let i_a2 = (i + 0 + (k)*2); let i_a3 = (i + 0 + (k)*3);
             let i_b0 = (i + 1 + (k)*0); let i_b1 = (i + 1 + (k)*1); let i_b2 = (i + 1 + (k)*2); let i_b3 = (i + 1 + (k)*3);
             let i_c0 = (i + 2 + (k)*0); let i_c1 = (i + 2 + (k)*1); let i_c2 = (i + 2 + (k)*2); let i_c3 = (i + 2 + (k)*3);
@@ -997,10 +995,10 @@ function fftComplexInPlace_seq_4(out) {
             let sign2d = ((i+3)%size2 < size1)      ? 1 : -1;
             let sign1d = ((i+3)%size1 < (size1>>1)) ? 1 : -1; 
 
-            let j2a = ji%size1+(i%jm2); let j1a = ji%(size1/2)+(i%jm1); ji++;
-            let j2b = ji%size1+(i%jm2); let j1b = ji%(size1/2)+(i%jm1); ji++;
-            let j2c = ji%size1+(i%jm2); let j1c = ji%(size1/2)+(i%jm1); ji++;
-            let j2d = ji%size1+(i%jm2); let j1d = ji%(size1/2)+(i%jm1); ji++;
+            let j2a = (0)%size1+(i%jm2); let j1a = (0)%(size1/2)+(i%jm1);
+            let j2b = (1)%size1+(i%jm2); let j1b = (1)%(size1/2)+(i%jm1);
+            let j2c = (2)%size1+(i%jm2); let j1c = (2)%(size1/2)+(i%jm1);
+            let j2d = (3)%size1+(i%jm2); let j1d = (3)%(size1/2)+(i%jm1);
 
             tRe_1a  = ____F[pre1+(2*j1a+0)];
             tIm_1a  = ____F[pre1+(2*j1a+1)];
