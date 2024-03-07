@@ -910,7 +910,7 @@ function fftComplexInPlace_seq_4(out) {
     let pre1 = 0;
     let pre2 = 2;
     for(let p = 0; p < steps; p++){
-        
+
         let r = 4;  
         if(N == 16){ 
             if(p==0){ r = 8; }
@@ -944,11 +944,11 @@ function fftComplexInPlace_seq_4(out) {
             if(p==2){ r_ = 16; }    
             if(p==3){ r_ = 32; }
         }
-                                //  0     1     2   
-        let p1 = (p*2)+1;       //  1 //  3 //  5 //
-        let p2 = (p*2+1)+1;     //  2 //  4 //  6 //
-        let size1 = 2<<(p1-1);  //  2 //  8 // 32 // 128
-        let size2 = 2<<(p2-1);  //  4 // 16 // 64 //
+                                 //  0     1     2   
+        let p1 = (p*2)+1;        //  1 //  3 //  5 //
+        let p2 = (p*2+1)+1;      //  2 //  4 //  6 //
+        let size1 = 2<<(p*2+0);  //  2 //  8 // 32 // 128
+        let size2 = 2<<(p*2+1);  //  4 // 16 // 64 //
         let b = 0;
 
         let jm2 = (1<<(p*2+1));    //   2     8     32
@@ -1038,7 +1038,6 @@ function fftComplexInPlace_seq_4(out) {
                 //console.log( "(i_a0)",(i_a0),"(i_a1)",(i_a1),"(i_a2)",(i_a2),"(i_a3)",(i_a3) ); 
             }
             
-            jk++;
             /*
             if(p>0 && (i_%4) == 0){
                                                                     //########    +01\\  |+05\\  |-09\\  |-13\\  |
@@ -1071,7 +1070,6 @@ function fftComplexInPlace_seq_4(out) {
                 //console.log( "(i_d0)",(i_d0),"(i_d1)",(i_d1),"(i_d2)",(i_d2),"(i_d3)",(i_d3) ); 
             }
             */
-            jk++;
 
             if(true){
             //if(size1 == 2){
