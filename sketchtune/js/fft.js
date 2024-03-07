@@ -932,7 +932,7 @@ function fftComplexInPlace_seq_4(out) {
             let i_d0 = (i + 3 + (k)*0); let i_d1 = (i + 3 + (k)*1); let i_d2 = (i + 3 + (k)*2); let i_d3 = (i + 3 + (k)*3);
             */
 
-            /*
+            
             let sign2a = ((i+0)%s2 < s1) ? 1 : -1;
             let sign1a = ((i+0)%s1 < s0) ? 1 : -1; 
             let sign2b = ((i+1)%s2 < s1) ? 1 : -1;
@@ -941,7 +941,7 @@ function fftComplexInPlace_seq_4(out) {
             let sign1c = ((i+2)%s1 < s0) ? 1 : -1; 
             let sign2d = ((i+3)%s2 < s1) ? 1 : -1;
             let sign1d = ((i+3)%s1 < s0) ? 1 : -1; 
-            */
+            
             
             /*
             let j2a = (0)%s1+(i%s1); let j1a = (0)%(s0)+(i%s0);
