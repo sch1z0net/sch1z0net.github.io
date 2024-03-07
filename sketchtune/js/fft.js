@@ -944,13 +944,13 @@ function fftComplexInPlace_seq_4(out) {
             if(p==2){ r_ = 16; }    
             if(p==3){ r_ = 32; }
         }
-                                 //  0     1     2   
+
         let size1 = 2<<(p*2+0);  //  2 //  8 // 32 // 128
         let size2 = 2<<(p*2+1);  //  4 // 16 // 64 //
         let b = 0;
 
-        let jm2 = (1<<(p*2+1));    //   2     8     32
-        let jm1 = (1<<(p*2+0));    //   1     4     16
+        let jm2 = size1;       //   2     8     32
+        let jm1 = size1>>1;    //   1     4     16
 
         let k = p==0 ? 1 : (1<<(2*p));  //  1  4  16  64
 
