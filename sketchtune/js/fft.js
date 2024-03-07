@@ -922,17 +922,12 @@ function fftComplexInPlace_seq_4(out) {
 
           out[(0+i)*2+0] =   xM0ReA + xM2ReA;
           //out[(0+i)*2+1] =   0; 
-          out[(1+i)*2+0] =   xM1ReB; // correct
+          out[(1+i)*2+0] =   xM1ReB;
           out[(1+i)*2+1] =   xM3ReB;
           out[(2+i)*2+0] =   xM0ReA - xM2ReA;
           //out[(2+i)*2+1] =   0; 
-          out[(3+i)*2+0] =   xM1ReB; // correct
+          out[(3+i)*2+0] =   xM1ReB;
           out[(3+i)*2+1] = - xM3ReB;
-
-          console.log((0+i), out[(0+i)*2+0], 0);
-          console.log((1+i), out[(1+i)*2+0], out[(1+i)*2+1]);
-          console.log((2+i), out[(2+i)*2+0], 0);
-          console.log((3+i), out[(3+i)*2+0], out[(3+i)*2+1]);
     } 
 
     // P = 1
@@ -2649,7 +2644,7 @@ function compareFFTResults(array1, array2) {
 
 /****************** TEST SPEED *******************/ 
 
-//measureTime(256,4);
+measureTime(256,4);
 //measureTime(512,5);
 //measureTime(512,6);
 //measureTime(512,7);
