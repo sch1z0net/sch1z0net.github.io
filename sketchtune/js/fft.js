@@ -912,6 +912,8 @@ function fftComplexInPlace_seq_4(out) {
           out[(3+i)*2+1] = xM1ImB - ((xM3ReB)*tIm_2b + ((xM3ImB)*tRe_2b));
     } 
 
+    console.log(out);
+
     // P = 1
     tRe_1a  = ____F[6+(0*2+0)];
     tIm_1a  = ____F[6+(0*2+1)];
