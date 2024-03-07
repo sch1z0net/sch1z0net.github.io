@@ -910,34 +910,34 @@ function fftComplexInPlace_seq_4(out) {
                 }
             }
 
-            // let i_a0 = (i + 0 + (k)*0); let i_a1 = (i + 0 + (k)*1); let i_a2 = (i + 0 + (k)*2); let i_a3 = (i + 0 + (k)*3);
-            // let i_b0 = (i + 1 + (k)*0); let i_b1 = (i + 1 + (k)*1); let i_b2 = (i + 1 + (k)*2); let i_b3 = (i + 1 + (k)*3);
-            // let i_c0 = (i + 2 + (k)*0); let i_c1 = (i + 2 + (k)*1); let i_c2 = (i + 2 + (k)*2); let i_c3 = (i + 2 + (k)*3);
-            // let i_d0 = (i + 3 + (k)*0); let i_d1 = (i + 3 + (k)*1); let i_d2 = (i + 3 + (k)*2); let i_d3 = (i + 3 + (k)*3);
+            let i_a0 = (i + 0 + (k)*0); let i_a1 = (i + 0 + (k)*1); let i_a2 = (i + 0 + (k)*2); let i_a3 = (i + 0 + (k)*3);
+            let i_b0 = (i + 1 + (k)*0); let i_b1 = (i + 1 + (k)*1); let i_b2 = (i + 1 + (k)*2); let i_b3 = (i + 1 + (k)*3);
+            let i_c0 = (i + 2 + (k)*0); let i_c1 = (i + 2 + (k)*1); let i_c2 = (i + 2 + (k)*2); let i_c3 = (i + 2 + (k)*3);
+            let i_d0 = (i + 3 + (k)*0); let i_d1 = (i + 3 + (k)*1); let i_d2 = (i + 3 + (k)*2); let i_d3 = (i + 3 + (k)*3);
             
-            // let sign2a = ((i+0)%s2 < s1) ? 1 : -1;
-            // let sign1a = ((i+0)%s1 < s0) ? 1 : -1; 
-            // let sign2b = ((i+1)%s2 < s1) ? 1 : -1;
-            // let sign1b = ((i+1)%s1 < s0) ? 1 : -1; 
-            // let sign2c = ((i+2)%s2 < s1) ? 1 : -1;
-            // let sign1c = ((i+2)%s1 < s0) ? 1 : -1; 
-            // let sign2d = ((i+3)%s2 < s1) ? 1 : -1;
-            // let sign1d = ((i+3)%s1 < s0) ? 1 : -1; 
+            let sign2a = ((i+0)%s2 < s1) ? 1 : -1;
+            let sign1a = ((i+0)%s1 < s0) ? 1 : -1; 
+            let sign2b = ((i+1)%s2 < s1) ? 1 : -1;
+            let sign1b = ((i+1)%s1 < s0) ? 1 : -1; 
+            let sign2c = ((i+2)%s2 < s1) ? 1 : -1;
+            let sign1c = ((i+2)%s1 < s0) ? 1 : -1; 
+            let sign2d = ((i+3)%s2 < s1) ? 1 : -1;
+            let sign1d = ((i+3)%s1 < s0) ? 1 : -1; 
 
             
-            // let j2a = (0)%s1+(i%s1); let j1a = (0)%(s0)+(i%s0);
-            // let j2b = (1)%s1+(i%s1); let j1b = (1)%(s0)+(i%s0);
-            // let j2c = (2)%s1+(i%s1); let j1c = (2)%(s0)+(i%s0);
-            // let j2d = (3)%s1+(i%s1); let j1d = (3)%(s0)+(i%s0);
+            let j2a = (0)%s1+(i%s1); let j1a = (0)%(s0)+(i%s0);
+            let j2b = (1)%s1+(i%s1); let j1b = (1)%(s0)+(i%s0);
+            let j2c = (2)%s1+(i%s1); let j1c = (2)%(s0)+(i%s0);
+            let j2d = (3)%s1+(i%s1); let j1d = (3)%(s0)+(i%s0);
 
-            // tRe_1a  = ____F[pre1+(2*j1a+0)];
-            // tIm_1a  = ____F[pre1+(2*j1a+1)];
-            // tRe_1b  = tRe_1a;
-            // tIm_1b  = tIm_1a;
-            // tRe_1c  = tRe_1a;
-            // tIm_1c  = tIm_1a;
-            // tRe_1d  = tRe_1a;
-            // tIm_1d  = tIm_1a;
+            tRe_1a  = ____F[pre1+(2*j1a+0)];
+            tIm_1a  = ____F[pre1+(2*j1a+1)];
+            tRe_1b  = tRe_1a;
+            tIm_1b  = tIm_1a;
+            tRe_1c  = tRe_1a;
+            tIm_1c  = tIm_1a;
+            tRe_1d  = tRe_1a;
+            tIm_1d  = tIm_1a;
 
             // /*if(p > 0){
             //     tRe_1b  = ____F[pre1+(2*j1b+0)];
