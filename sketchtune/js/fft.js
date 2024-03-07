@@ -948,7 +948,6 @@ function fftComplexInPlace_seq_4(out) {
 
 
         let z = d*4;
-        let s = 0;
         let k = 0;
                                 //  0     1     2   
         let p1 = (p*2)+1;       //  1 //  3 //  5 //
@@ -962,14 +961,15 @@ function fftComplexInPlace_seq_4(out) {
 
         let jm2 = (1<<(p*2+1));    //   2     8     32
         let jm1 = (1<<(p*2+0));    //   1     4     16
+
+        let k = p==0 ? 1 : (1<<(2*p));  //  1  4  16  64
+
         //console.log( "-size "+size2+"########################################" );
         for(let b_ = 0; b_ < ts; b_++){
           b = b_*r;  
           if(N==256 && p == 2 && b_ >= ts/2){ 
             b = (b_%4)*r + N/2; 
           } 
-          s = b;
-          let k = p==0 ? 1 : (1<<(2*p));  //  1  4  16  64
 
           for(let i_ = 0; i_ < ts; i_++){
             let i = b + i_*r_;
@@ -982,7 +982,6 @@ function fftComplexInPlace_seq_4(out) {
             }
             jk = i;
             jj = i;
-            w = 0;
 
             let ji = 0;
             let jl = (i % (4<<p)); // 4  8  16  32
@@ -1192,14 +1191,14 @@ function fftComplexInPlace_seq_4(out) {
              //console.log(size1, (i+3).toString().padStart(2),"--->", ((i+3)%size1 + w + size1).toString().padStart(2), ".re =", "[",i_d2.toString().padStart(2),"].re ",(sign1d<0)?"-":"+"," ([",i_d3.toString().padStart(2),"].re * t[",j1d.toString().padStart(2),"].re - [",i_d3.toString().padStart(2),"].im * t[",j1d.toString().padStart(2),"].im ) <-> ", "{",x2dRe.toFixed(2),"}",(sign1d<0)?"-":"+","({",x3dRe.toFixed(2),"} * t{",tRe_1d.toFixed(2),"} - {",x3dIm.toFixed(2),"} * {",tIm_1d.toFixed(2),"} ) = ",xM3ReD.toFixed(2)); 
              
 
-             out[(0+i)*2+0] = 0; //xM0ReA + ((xM2ReA)*tRe_2a - ((xM2ImA)*tIm_2a)) * sign2a;
-             out[(0+i)*2+1] = 0; //xM0ImA + ((xM2ReA)*tIm_2a + ((xM2ImA)*tRe_2a)) * sign2a; 
-             out[(1+i)*2+0] = 0; //xM1ReB + ((xM3ReB)*tRe_2b - ((xM3ImB)*tIm_2b)) * sign2b;
-             out[(1+i)*2+1] = 0; //xM1ImB + ((xM3ReB)*tIm_2b + ((xM3ImB)*tRe_2b)) * sign2b; 
-             out[(2+i)*2+0] = 0; //xM0ReC + ((xM2ReC)*tRe_2c - ((xM2ImC)*tIm_2c)) * sign2c;
-             out[(2+i)*2+1] = 0; //xM0ImC + ((xM2ReC)*tIm_2c + ((xM2ImC)*tRe_2c)) * sign2c;
-             out[(3+i)*2+0] = 0; //xM1ReD + ((xM3ReD)*tRe_2d - ((xM3ImD)*tIm_2d)) * sign2d;
-             out[(3+i)*2+1] = 0; //xM1ImD + ((xM3ReD)*tIm_2d + ((xM3ImD)*tRe_2d)) * sign2d;
+             out[(0+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2a - ((xM2ImA)*tIm_2a)) * sign2a;
+             out[(0+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2a + ((xM2ImA)*tRe_2a)) * sign2a; 
+             out[(1+i)*2+0] = xM1ReB + ((xM3ReB)*tRe_2b - ((xM3ImB)*tIm_2b)) * sign2b;
+             out[(1+i)*2+1] = xM1ImB + ((xM3ReB)*tIm_2b + ((xM3ImB)*tRe_2b)) * sign2b; 
+             out[(2+i)*2+0] = xM0ReC + ((xM2ReC)*tRe_2c - ((xM2ImC)*tIm_2c)) * sign2c;
+             out[(2+i)*2+1] = xM0ImC + ((xM2ReC)*tIm_2c + ((xM2ImC)*tRe_2c)) * sign2c;
+             out[(3+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2d - ((xM3ImD)*tIm_2d)) * sign2d;
+             out[(3+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2d + ((xM3ImD)*tRe_2d)) * sign2d;
 
              
              //console.log(size2, (i+0).toString().padStart(2),"--->", xM0ReA.toFixed(2), (sign2a<0)?"-":"+","(",xM2ReA.toFixed(2),"*",tRe_2a.toFixed(2), j2a,"-",xM2ImA.toFixed(2),"*",tIm_2a.toFixed(2),") = ", out[(0+i)*2+0].toFixed(2));
@@ -1210,8 +1209,6 @@ function fftComplexInPlace_seq_4(out) {
 
 
             //console.log( "-----------------------------" );
-            if( (i) % (z) == 0 ){ s += z; }
-            if( (i) % size2 == 0 ){  w += size2; } 
           }
         } 
         pre1 += (2 << 2*p) + (2 << 2*p+1);
