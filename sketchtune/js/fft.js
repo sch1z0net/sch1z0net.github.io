@@ -1481,25 +1481,25 @@ function fftComplexInPlace_seq_4(out) {
 
 
 
-          x0aRe = out[(16+ i+ 0)*2+0]; x0aIm = out[(16+ i+ 0)*2+1];
-          x1aRe = out[(16+ i+16)*2+0]; x1aIm = out[(16+ i+16)*2+1];
-          x2aRe = out[(16+ i+32)*2+0]; x2aIm = out[(16+ i+32)*2+1];
-          x3aRe = out[(16+ i+48)*2+0]; x3aIm = out[(16+ i+48)*2+1];
+          x0aRe = out[(i+ 0)*2+0]; x0aIm = out[(i+ 0)*2+1];
+          x1aRe = out[(i+16)*2+0]; x1aIm = out[(i+16)*2+1];
+          x2aRe = out[(i+32)*2+0]; x2aIm = out[(i+32)*2+1];
+          x3aRe = out[(i+48)*2+0]; x3aIm = out[(i+48)*2+1];
           
-          x0bRe = out[(16+ i+ 1)*2+0]; x0bIm = out[(16+ i+ 1)*2+1];
-          x1bRe = out[(16+ i+17)*2+0]; x1bIm = out[(16+ i+17)*2+1];
-          x2bRe = out[(16+ i+33)*2+0]; x2bIm = out[(16+ i+33)*2+1];
-          x3bRe = out[(16+ i+49)*2+0]; x3bIm = out[(16+ i+49)*2+1];
+          x0bRe = out[(i+ 1)*2+0]; x0bIm = out[(i+ 1)*2+1];
+          x1bRe = out[(i+17)*2+0]; x1bIm = out[(i+17)*2+1];
+          x2bRe = out[(i+33)*2+0]; x2bIm = out[(i+33)*2+1];
+          x3bRe = out[(i+49)*2+0]; x3bIm = out[(i+49)*2+1];
           
-          x0cRe = out[(16+ i+ 2)*2+0]; x0cIm = out[(16+ i+ 2)*2+1];
-          x1cRe = out[(16+ i+18)*2+0]; x1cIm = out[(16+ i+18)*2+1];
-          x2cRe = out[(16+ i+34)*2+0]; x2cIm = out[(16+ i+34)*2+1];
-          x3cRe = out[(16+ i+50)*2+0]; x3cIm = out[(16+ i+50)*2+1];
+          x0cRe = out[(i+ 2)*2+0]; x0cIm = out[(i+ 2)*2+1];
+          x1cRe = out[(i+18)*2+0]; x1cIm = out[(i+18)*2+1];
+          x2cRe = out[(i+34)*2+0]; x2cIm = out[(i+34)*2+1];
+          x3cRe = out[(i+50)*2+0]; x3cIm = out[(i+50)*2+1];
           
-          x0dRe = out[(16+ i+ 3)*2+0]; x0dIm = out[(16+ i+ 3)*2+1];
-          x1dRe = out[(16+ i+19)*2+0]; x1dIm = out[(16+ i+19)*2+1];
-          x2dRe = out[(16+ i+35)*2+0]; x2dIm = out[(16+ i+35)*2+1];
-          x3dRe = out[(16+ i+51)*2+0]; x3dIm = out[(16+ i+51)*2+1];
+          x0dRe = out[(i+ 3)*2+0]; x0dIm = out[(i+ 3)*2+1];
+          x1dRe = out[(i+19)*2+0]; x1dIm = out[(i+19)*2+1];
+          x2dRe = out[(i+35)*2+0]; x2dIm = out[(i+35)*2+1];
+          x3dRe = out[(i+51)*2+0]; x3dIm = out[(i+51)*2+1];
 
           Tx0aRe = (x1aRe * tRe_1a - x1aIm * tIm_1a);
           Tx0aIm = (x1aRe * tIm_1a + x1aIm * tRe_1a);
