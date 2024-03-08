@@ -1184,7 +1184,6 @@ function fftComplexInPlace_seq_4(out) {
           x2dRe = out[(i+35)*2+0]; x2dIm = out[(i+35)*2+1];
           x3dRe = out[(i+51)*2+0]; x3dIm = out[(i+51)*2+1];
 
-          
           let Tx0aRe = x1aRe;
           let Tx0aIm = x1aIm;
           let Tx2aRe = x3aRe;
