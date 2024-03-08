@@ -1274,7 +1274,7 @@ function fftComplexInPlace_seq_4(out) {
           //out[(16+i)*2+1] = xM0ImA + ((xM2ReA)*1       + ((xM2ImA)*0      )); 
           out[(16+i)*2+0] =   (x0aRe - x1aRe) - (x2aIm - x3aIm);
           out[(16+i)*2+1] =          - x1aIm  + (x2aRe - x3aRe); 
-          out[(17+i)*2+0] = xM1ReB + ((xM3ReB)* -tRe_2p  - ((xM3ImB)*  tRe_2b_));
+          out[(17+i)*2+0] = xM1ReB + ((xM3ReB)* -tRe_2p  - ((xM3ImB)*  tRe_2b ));
           out[(17+i)*2+1] = xM1ImB + ((xM3ReB)*  tRe_2b  + ((xM3ImB)* -tRe_2p )); 
           out[(18+i)*2+0] = xM0ReC + ((xM2ReC)* -tRe_2o  - ((xM2ImC)*  tRe_2c ));
           out[(18+i)*2+1] = xM0ImC + ((xM2ReC)*  tRe_2c  + ((xM2ImC)* -tRe_2o )); 
