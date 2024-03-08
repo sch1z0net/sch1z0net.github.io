@@ -3363,11 +3363,11 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
 
             }
         }
-        /*if(true){ 
+        if(true){ 
             for(let i=0; i<N; i++){
                 console.log("after size: ",size," : ",i," -> ", out[i*2], out[i*2+1]); 
             }
-        }*/
+        }
         //console.log("size:"+size, output);
         //console.log("size:"+size, js);
         js = [];
