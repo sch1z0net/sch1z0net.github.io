@@ -1063,8 +1063,8 @@ function fftComplexInPlace_seq_4(out) {
     /////////////////////////////////////////////
     // P = 2
     //
-    tRe_1a   = ____F[30+(0*2+0)];
-    tIm_1a   = ____F[30+(0*2+1)];
+    //tRe_1a   = ____F[30+(0*2+0)]; // 1
+    //tIm_1a   = ____F[30+(0*2+1)]; // 0
     tRe_1b   = ____F[30+(1*2+0)];
     tIm_1b   = ____F[30+(1*2+1)];
     tRe_1c   = ____F[30+(2*2+0)];
@@ -1079,8 +1079,8 @@ function fftComplexInPlace_seq_4(out) {
     tIm_1g   = ____F[30+(6*2+1)];
     tRe_1h   = ____F[30+(7*2+0)];
     tIm_1h   = ____F[30+(7*2+1)];
-    tRe_1i   = ____F[30+(8*2+0)];
-    tIm_1i   = ____F[30+(8*2+1)];
+    //tRe_1i   = ____F[30+(8*2+0)]; // 0
+    //tIm_1i   = ____F[30+(8*2+1)]; // 1
     tRe_1j   = ____F[30+(9*2+0)];
     tIm_1j   = ____F[30+(9*2+1)];
     tRe_1k   = ____F[30+(10*2+0)];
@@ -1164,7 +1164,7 @@ function fftComplexInPlace_seq_4(out) {
     for(let i_ = 0; i_ < tsq; i_+=16){
           let i = i_ * 4;
 
-          x0aRe = out[(i+ 0)*2+0]; x0aIm = out[(i+ 0)*2+1];
+          x0aRe = out[(i+ 0)*2+0]; //x0aIm = out[(i+ 0)*2+1]; //0
           x1aRe = out[(i+16)*2+0]; x1aIm = out[(i+16)*2+1];
           x2aRe = out[(i+32)*2+0]; x2aIm = out[(i+32)*2+1];
           x3aRe = out[(i+48)*2+0]; x3aIm = out[(i+48)*2+1];
@@ -1184,10 +1184,17 @@ function fftComplexInPlace_seq_4(out) {
           x2dRe = out[(i+35)*2+0]; x2dIm = out[(i+35)*2+1];
           x3dRe = out[(i+51)*2+0]; x3dIm = out[(i+51)*2+1];
 
-          let Tx0aRe = (x1aRe * tRe_1a - x1aIm * tIm_1a);
-          let Tx0aIm = (x1aRe * tIm_1a + x1aIm * tRe_1a);
-          let Tx2aRe = (x3aRe * tRe_1a - x3aIm * tIm_1a);
-          let Tx2aIm = (x3aRe * tIm_1a + x3aIm * tRe_1a);
+          
+          let Tx0aRe = x1aRe;
+          let Tx0aIm = x1aIm;
+          let Tx2aRe = x3aRe;
+          let Tx2aIm = x3aIm;
+          /*
+          let Tx0aRe = (x1aRe * 1 - x1aIm * 0);
+          let Tx0aIm = (x1aRe * 0 + x1aIm * 1);
+          let Tx2aRe = (x3aRe * 1 - x3aIm * 0);
+          let Tx2aIm = (x3aRe * 0 + x3aIm * 1);
+          */
 
           let Tx1bRe = (x1bRe * tRe_1b - x1bIm * tIm_1b);
           let Tx1bIm = (x1bRe * tIm_1b + x1bIm * tRe_1b);
@@ -1205,7 +1212,7 @@ function fftComplexInPlace_seq_4(out) {
           let Tx3dIm = (x3dRe * tIm_1d + x3dIm * tRe_1d);
 
           xM0ReA = x0aRe + Tx0aRe;
-          xM0ImA = x0aIm + Tx0aIm; 
+          xM0ImA = 0 + Tx0aIm; 
           xM2ReA = x2aRe + Tx2aRe;
           xM2ImA = x2aIm + Tx2aIm; 
           
@@ -1243,7 +1250,7 @@ function fftComplexInPlace_seq_4(out) {
           out[(35+i)*2+1] = xM1ImD - ((xM3ReD)*tIm_2d + ((xM3ImD)*tRe_2d));
 
           xM0ReA = x0aRe - Tx0aRe;
-          xM0ImA = x0aIm - Tx0aIm; 
+          xM0ImA = 0 - Tx0aIm; 
           xM2ReA = x2aRe - Tx2aRe;
           xM2ImA = x2aIm - Tx2aIm; 
           
@@ -1396,7 +1403,7 @@ function fftComplexInPlace_seq_4(out) {
           out[(55+i)*2+0] = xM1ReD - ((xM3ReD)*tRe_2h_ - ((xM3ImD)*tIm_2h_));
           out[(55+i)*2+1] = xM1ImD - ((xM3ReD)*tIm_2h_ + ((xM3ImD)*tRe_2h_)); 
 
-          x0aRe = out[(8+ i+ 0)*2+0]; x0aIm = out[(8+ i+ 0)*2+1];
+          x0aRe = out[(8+ i+ 0)*2+0]; //x0aIm = out[(8+ i+ 0)*2+1]; // 0
           x1aRe = out[(8+ i+16)*2+0]; x1aIm = out[(8+ i+16)*2+1];
           x2aRe = out[(8+ i+32)*2+0]; x2aIm = out[(8+ i+32)*2+1];
           x3aRe = out[(8+ i+48)*2+0]; x3aIm = out[(8+ i+48)*2+1];
@@ -1416,10 +1423,16 @@ function fftComplexInPlace_seq_4(out) {
           x2dRe = out[(8+ i+35)*2+0]; x2dIm = out[(8+ i+35)*2+1];
           x3dRe = out[(8+ i+51)*2+0]; x3dIm = out[(8+ i+51)*2+1];
 
-          Tx0aRe = (x1aRe * tRe_1i - x1aIm * tIm_1i);
-          Tx0aIm = (x1aRe * tIm_1i + x1aIm * tRe_1i);
-          Tx2aRe = (x3aRe * tRe_1i - x3aIm * tIm_1i);
-          Tx2aIm = (x3aRe * tIm_1i + x3aIm * tRe_1i);
+          Tx0aRe = - x1aIm;
+          Tx0aIm =   x1aRe;
+          Tx2aRe = - x3aIm;
+          Tx2aIm =   x3aRe;
+          /*
+          Tx0aRe = (x1aRe * 0 - x1aIm * 1);
+          Tx0aIm = (x1aRe * 1 + x1aIm * 0);
+          Tx2aRe = (x3aRe * 0 - x3aIm * 1);
+          Tx2aIm = (x3aRe * 1 + x3aIm * 0);
+          */
 
           Tx1bRe = (x1bRe * tRe_1j - x1bIm * tIm_1j);
           Tx1bIm = (x1bRe * tIm_1j + x1bIm * tRe_1j);
@@ -1437,7 +1450,7 @@ function fftComplexInPlace_seq_4(out) {
           Tx3dIm = (x3dRe * tIm_1l + x3dIm * tRe_1l);
 
           xM0ReA = x0aRe + Tx0aRe;
-          xM0ImA = x0aIm + Tx0aIm; 
+          xM0ImA = 0 + Tx0aIm; 
           xM2ReA = x2aRe + Tx2aRe;
           xM2ImA = x2aIm + Tx2aIm; 
           
@@ -1475,7 +1488,7 @@ function fftComplexInPlace_seq_4(out) {
           out[(43+i)*2+1] = xM1ImD - ((xM3ReD)*tIm_2l + ((xM3ImD)*tRe_2l));  
 
           xM0ReA = x0aRe - Tx0aRe;
-          xM0ImA = x0aIm - Tx0aIm; 
+          xM0ImA = 0 - Tx0aIm; 
           xM2ReA = x2aRe - Tx2aRe;
           xM2ImA = x2aIm - Tx2aIm; 
           
@@ -1628,6 +1641,486 @@ function fftComplexInPlace_seq_4(out) {
           out[(63+i)*2+0] = xM1ReD - ((xM3ReD)*tRe_2p_ - ((xM3ImD)*tIm_2p_));
           out[(63+i)*2+1] = xM1ImD - ((xM3ReD)*tIm_2p_ + ((xM3ImD)*tRe_2p_)); 
     }
+
+
+
+    // for(let i_ = 0; i_ < tsq; i_+=16){
+    //       let i = i_ * 4;
+
+    //       x0aRe = out[(i+ 0)*2+0]; x0aIm = out[(i+ 0)*2+1];
+    //       x1aRe = out[(i+16)*2+0]; x1aIm = out[(i+16)*2+1];
+    //       x2aRe = out[(i+32)*2+0]; x2aIm = out[(i+32)*2+1];
+    //       x3aRe = out[(i+48)*2+0]; x3aIm = out[(i+48)*2+1];
+          
+    //       x0bRe = out[(i+ 1)*2+0]; x0bIm = out[(i+ 1)*2+1];
+    //       x1bRe = out[(i+17)*2+0]; x1bIm = out[(i+17)*2+1];
+    //       x2bRe = out[(i+33)*2+0]; x2bIm = out[(i+33)*2+1];
+    //       x3bRe = out[(i+49)*2+0]; x3bIm = out[(i+49)*2+1];
+          
+    //       x0cRe = out[(i+ 2)*2+0]; x0cIm = out[(i+ 2)*2+1];
+    //       x1cRe = out[(i+18)*2+0]; x1cIm = out[(i+18)*2+1];
+    //       x2cRe = out[(i+34)*2+0]; x2cIm = out[(i+34)*2+1];
+    //       x3cRe = out[(i+50)*2+0]; x3cIm = out[(i+50)*2+1];
+          
+    //       x0dRe = out[(i+ 3)*2+0]; x0dIm = out[(i+ 3)*2+1];
+    //       x1dRe = out[(i+19)*2+0]; x1dIm = out[(i+19)*2+1];
+    //       x2dRe = out[(i+35)*2+0]; x2dIm = out[(i+35)*2+1];
+    //       x3dRe = out[(i+51)*2+0]; x3dIm = out[(i+51)*2+1];
+
+    //       let Tx0aRe = (x1aRe * tRe_1a - x1aIm * tIm_1a);
+    //       let Tx0aIm = (x1aRe * tIm_1a + x1aIm * tRe_1a);
+    //       let Tx2aRe = (x3aRe * tRe_1a - x3aIm * tIm_1a);
+    //       let Tx2aIm = (x3aRe * tIm_1a + x3aIm * tRe_1a);
+
+    //       let Tx1bRe = (x1bRe * tRe_1b - x1bIm * tIm_1b);
+    //       let Tx1bIm = (x1bRe * tIm_1b + x1bIm * tRe_1b);
+    //       let Tx3bRe = (x3bRe * tRe_1b - x3bIm * tIm_1b);
+    //       let Tx3bIm = (x3bRe * tIm_1b + x3bIm * tRe_1b);
+
+    //       let Tx0cRe = (x1cRe * tRe_1c - x1cIm * tIm_1c);
+    //       let Tx0cIm = (x1cRe * tIm_1c + x1cIm * tRe_1c);
+    //       let Tx2cRe = (x3cRe * tRe_1c - x3cIm * tIm_1c);
+    //       let Tx2cIm = (x3cRe * tIm_1c + x3cIm * tRe_1c);
+
+    //       let Tx1dRe = (x1dRe * tRe_1d - x1dIm * tIm_1d);
+    //       let Tx1dIm = (x1dRe * tIm_1d + x1dIm * tRe_1d);
+    //       let Tx3dRe = (x3dRe * tRe_1d - x3dIm * tIm_1d);
+    //       let Tx3dIm = (x3dRe * tIm_1d + x3dIm * tRe_1d);
+
+    //       xM0ReA = x0aRe + Tx0aRe;
+    //       xM0ImA = x0aIm + Tx0aIm; 
+    //       xM2ReA = x2aRe + Tx2aRe;
+    //       xM2ImA = x2aIm + Tx2aIm; 
+          
+    //       xM1ReB = x0bRe + Tx1bRe;
+    //       xM1ImB = x0bIm + Tx1bIm;  
+    //       xM3ReB = x2bRe + Tx3bRe;
+    //       xM3ImB = x2bIm + Tx3bIm; 
+
+    //       xM0ReC = x0cRe + Tx0cRe;
+    //       xM0ImC = x0cIm + Tx0cIm; 
+    //       xM2ReC = x2cRe + Tx2cRe;
+    //       xM2ImC = x2cIm + Tx2cIm; 
+
+    //       xM1ReD = x0dRe + Tx1dRe;
+    //       xM1ImD = x0dIm + Tx1dIm; 
+    //       xM3ReD = x2dRe + Tx3dRe;
+    //       xM3ImD = x2dIm + Tx3dIm; 
+
+    //       out[( 0+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2a - ((xM2ImA)*tIm_2a));
+    //       out[( 0+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2a + ((xM2ImA)*tRe_2a)); 
+    //       out[( 1+i)*2+0] = xM1ReB + ((xM3ReB)*tRe_2b - ((xM3ImB)*tIm_2b));
+    //       out[( 1+i)*2+1] = xM1ImB + ((xM3ReB)*tIm_2b + ((xM3ImB)*tRe_2b)); 
+    //       out[( 2+i)*2+0] = xM0ReC + ((xM2ReC)*tRe_2c - ((xM2ImC)*tIm_2c));
+    //       out[( 2+i)*2+1] = xM0ImC + ((xM2ReC)*tIm_2c + ((xM2ImC)*tRe_2c)); 
+    //       out[( 3+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2d - ((xM3ImD)*tIm_2d));
+    //       out[( 3+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2d + ((xM3ImD)*tRe_2d));  
+
+    //       out[(32+i)*2+0] = xM0ReA - ((xM2ReA)*tRe_2a - ((xM2ImA)*tIm_2a));
+    //       out[(32+i)*2+1] = xM0ImA - ((xM2ReA)*tIm_2a + ((xM2ImA)*tRe_2a)); 
+    //       out[(33+i)*2+0] = xM1ReB - ((xM3ReB)*tRe_2b - ((xM3ImB)*tIm_2b));
+    //       out[(33+i)*2+1] = xM1ImB - ((xM3ReB)*tIm_2b + ((xM3ImB)*tRe_2b)); 
+    //       out[(34+i)*2+0] = xM0ReC - ((xM2ReC)*tRe_2c - ((xM2ImC)*tIm_2c));
+    //       out[(34+i)*2+1] = xM0ImC - ((xM2ReC)*tIm_2c + ((xM2ImC)*tRe_2c)); 
+    //       out[(35+i)*2+0] = xM1ReD - ((xM3ReD)*tRe_2d - ((xM3ImD)*tIm_2d));
+    //       out[(35+i)*2+1] = xM1ImD - ((xM3ReD)*tIm_2d + ((xM3ImD)*tRe_2d));
+
+    //       xM0ReA = x0aRe - Tx0aRe;
+    //       xM0ImA = x0aIm - Tx0aIm; 
+    //       xM2ReA = x2aRe - Tx2aRe;
+    //       xM2ImA = x2aIm - Tx2aIm; 
+          
+    //       xM1ReB = x0bRe - Tx1bRe;
+    //       xM1ImB = x0bIm - Tx1bIm;  
+    //       xM3ReB = x2bRe - Tx3bRe;
+    //       xM3ImB = x2bIm - Tx3bIm; 
+
+    //       xM0ReC = x0cRe - Tx0cRe;
+    //       xM0ImC = x0cIm - Tx0cIm; 
+    //       xM2ReC = x2cRe - Tx2cRe;
+    //       xM2ImC = x2cIm - Tx2cIm; 
+
+    //       xM1ReD = x0dRe - Tx1dRe;
+    //       xM1ImD = x0dIm - Tx1dIm; 
+    //       xM3ReD = x2dRe - Tx3dRe;
+    //       xM3ImD = x2dIm - Tx3dIm;
+
+    //       out[(16+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2a_ - ((xM2ImA)*tIm_2a_));
+    //       out[(16+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2a_ + ((xM2ImA)*tRe_2a_)); 
+    //       out[(17+i)*2+0] = xM1ReB + ((xM3ReB)*tRe_2b_ - ((xM3ImB)*tIm_2b_));
+    //       out[(17+i)*2+1] = xM1ImB + ((xM3ReB)*tIm_2b_ + ((xM3ImB)*tRe_2b_)); 
+    //       out[(18+i)*2+0] = xM0ReC + ((xM2ReC)*tRe_2c_ - ((xM2ImC)*tIm_2c_));
+    //       out[(18+i)*2+1] = xM0ImC + ((xM2ReC)*tIm_2c_ + ((xM2ImC)*tRe_2c_)); 
+    //       out[(19+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2d_ - ((xM3ImD)*tIm_2d_));
+    //       out[(19+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2d_ + ((xM3ImD)*tRe_2d_));  
+
+    //       out[(48+i)*2+0] = xM0ReA - ((xM2ReA)*tRe_2a_ - ((xM2ImA)*tIm_2a_));
+    //       out[(48+i)*2+1] = xM0ImA - ((xM2ReA)*tIm_2a_ + ((xM2ImA)*tRe_2a_)); 
+    //       out[(49+i)*2+0] = xM1ReB - ((xM3ReB)*tRe_2b_ - ((xM3ImB)*tIm_2b_));
+    //       out[(49+i)*2+1] = xM1ImB - ((xM3ReB)*tIm_2b_ + ((xM3ImB)*tRe_2b_)); 
+    //       out[(50+i)*2+0] = xM0ReC - ((xM2ReC)*tRe_2c_ - ((xM2ImC)*tIm_2c_));
+    //       out[(50+i)*2+1] = xM0ImC - ((xM2ReC)*tIm_2c_ + ((xM2ImC)*tRe_2c_)); 
+    //       out[(51+i)*2+0] = xM1ReD - ((xM3ReD)*tRe_2d_ - ((xM3ImD)*tIm_2d_));
+    //       out[(51+i)*2+1] = xM1ImD - ((xM3ReD)*tIm_2d_ + ((xM3ImD)*tRe_2d_));
+
+    //       x0aRe = out[(4+ i+ 0)*2+0]; x0aIm = out[(4+ i+ 0)*2+1];
+    //       x1aRe = out[(4+ i+16)*2+0]; x1aIm = out[(4+ i+16)*2+1];
+    //       x2aRe = out[(4+ i+32)*2+0]; x2aIm = out[(4+ i+32)*2+1];
+    //       x3aRe = out[(4+ i+48)*2+0]; x3aIm = out[(4+ i+48)*2+1];
+          
+    //       x0bRe = out[(4+ i+ 1)*2+0]; x0bIm = out[(4+ i+ 1)*2+1];
+    //       x1bRe = out[(4+ i+17)*2+0]; x1bIm = out[(4+ i+17)*2+1];
+    //       x2bRe = out[(4+ i+33)*2+0]; x2bIm = out[(4+ i+33)*2+1];
+    //       x3bRe = out[(4+ i+49)*2+0]; x3bIm = out[(4+ i+49)*2+1];
+          
+    //       x0cRe = out[(4+ i+ 2)*2+0]; x0cIm = out[(4+ i+ 2)*2+1];
+    //       x1cRe = out[(4+ i+18)*2+0]; x1cIm = out[(4+ i+18)*2+1];
+    //       x2cRe = out[(4+ i+34)*2+0]; x2cIm = out[(4+ i+34)*2+1];
+    //       x3cRe = out[(4+ i+50)*2+0]; x3cIm = out[(4+ i+50)*2+1];
+          
+    //       x0dRe = out[(4+ i+ 3)*2+0]; x0dIm = out[(4+ i+ 3)*2+1];
+    //       x1dRe = out[(4+ i+19)*2+0]; x1dIm = out[(4+ i+19)*2+1];
+    //       x2dRe = out[(4+ i+35)*2+0]; x2dIm = out[(4+ i+35)*2+1];
+    //       x3dRe = out[(4+ i+51)*2+0]; x3dIm = out[(4+ i+51)*2+1];
+
+    //       Tx0aRe = (x1aRe * tRe_1e - x1aIm * tIm_1e);
+    //       Tx0aIm = (x1aRe * tIm_1e + x1aIm * tRe_1e);
+    //       Tx2aRe = (x3aRe * tRe_1e - x3aIm * tIm_1e);
+    //       Tx2aIm = (x3aRe * tIm_1e + x3aIm * tRe_1e);
+
+    //       Tx1bRe = (x1bRe * tRe_1f - x1bIm * tIm_1f);
+    //       Tx1bIm = (x1bRe * tIm_1f + x1bIm * tRe_1f);
+    //       Tx3bRe = (x3bRe * tRe_1f - x3bIm * tIm_1f);
+    //       Tx3bIm = (x3bRe * tIm_1f + x3bIm * tRe_1f);
+
+    //       Tx0cRe = (x1cRe * tRe_1g - x1cIm * tIm_1g);
+    //       Tx0cIm = (x1cRe * tIm_1g + x1cIm * tRe_1g);
+    //       Tx2cRe = (x3cRe * tRe_1g - x3cIm * tIm_1g);
+    //       Tx2cIm = (x3cRe * tIm_1g + x3cIm * tRe_1g);
+
+    //       Tx1dRe = (x1dRe * tRe_1h - x1dIm * tIm_1h);
+    //       Tx1dIm = (x1dRe * tIm_1h + x1dIm * tRe_1h);
+    //       Tx3dRe = (x3dRe * tRe_1h - x3dIm * tIm_1h);
+    //       Tx3dIm = (x3dRe * tIm_1h + x3dIm * tRe_1h);
+
+    //       xM0ReA = x0aRe + Tx0aRe;
+    //       xM0ImA = x0aIm + Tx0aIm; 
+    //       xM2ReA = x2aRe + Tx2aRe;
+    //       xM2ImA = x2aIm + Tx2aIm; 
+          
+    //       xM1ReB = x0bRe + Tx1bRe;
+    //       xM1ImB = x0bIm + Tx1bIm;  
+    //       xM3ReB = x2bRe + Tx3bRe;
+    //       xM3ImB = x2bIm + Tx3bIm; 
+
+    //       xM0ReC = x0cRe + Tx0cRe;
+    //       xM0ImC = x0cIm + Tx0cIm; 
+    //       xM2ReC = x2cRe + Tx2cRe;
+    //       xM2ImC = x2cIm + Tx2cIm; 
+
+    //       xM1ReD = x0dRe + Tx1dRe;
+    //       xM1ImD = x0dIm + Tx1dIm; 
+    //       xM3ReD = x2dRe + Tx3dRe;
+    //       xM3ImD = x2dIm + Tx3dIm; 
+
+    //       out[( 4+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2e - ((xM2ImA)*tIm_2e));
+    //       out[( 4+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2e + ((xM2ImA)*tRe_2e)); 
+    //       out[( 5+i)*2+0] = xM1ReB + ((xM3ReB)*tRe_2f - ((xM3ImB)*tIm_2f));
+    //       out[( 5+i)*2+1] = xM1ImB + ((xM3ReB)*tIm_2f + ((xM3ImB)*tRe_2f)); 
+    //       out[( 6+i)*2+0] = xM0ReC + ((xM2ReC)*tRe_2g - ((xM2ImC)*tIm_2g));
+    //       out[( 6+i)*2+1] = xM0ImC + ((xM2ReC)*tIm_2g + ((xM2ImC)*tRe_2g)); 
+    //       out[( 7+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2h - ((xM3ImD)*tIm_2h));
+    //       out[( 7+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2h + ((xM3ImD)*tRe_2h));
+
+    //       out[(36+i)*2+0] = xM0ReA - ((xM2ReA)*tRe_2e - ((xM2ImA)*tIm_2e));
+    //       out[(36+i)*2+1] = xM0ImA - ((xM2ReA)*tIm_2e + ((xM2ImA)*tRe_2e)); 
+    //       out[(37+i)*2+0] = xM1ReB - ((xM3ReB)*tRe_2f - ((xM3ImB)*tIm_2f));
+    //       out[(37+i)*2+1] = xM1ImB - ((xM3ReB)*tIm_2f + ((xM3ImB)*tRe_2f)); 
+    //       out[(38+i)*2+0] = xM0ReC - ((xM2ReC)*tRe_2g - ((xM2ImC)*tIm_2g));
+    //       out[(38+i)*2+1] = xM0ImC - ((xM2ReC)*tIm_2g + ((xM2ImC)*tRe_2g)); 
+    //       out[(39+i)*2+0] = xM1ReD - ((xM3ReD)*tRe_2h - ((xM3ImD)*tIm_2h));
+    //       out[(39+i)*2+1] = xM1ImD - ((xM3ReD)*tIm_2h + ((xM3ImD)*tRe_2h)); 
+
+    //       xM0ReA = x0aRe - Tx0aRe;
+    //       xM0ImA = x0aIm - Tx0aIm; 
+    //       xM2ReA = x2aRe - Tx2aRe;
+    //       xM2ImA = x2aIm - Tx2aIm; 
+          
+    //       xM1ReB = x0bRe - Tx1bRe;
+    //       xM1ImB = x0bIm - Tx1bIm;  
+    //       xM3ReB = x2bRe - Tx3bRe;
+    //       xM3ImB = x2bIm - Tx3bIm; 
+
+    //       xM0ReC = x0cRe - Tx0cRe;
+    //       xM0ImC = x0cIm - Tx0cIm; 
+    //       xM2ReC = x2cRe - Tx2cRe;
+    //       xM2ImC = x2cIm - Tx2cIm; 
+
+    //       xM1ReD = x0dRe - Tx1dRe;
+    //       xM1ImD = x0dIm - Tx1dIm; 
+    //       xM3ReD = x2dRe - Tx3dRe;
+    //       xM3ImD = x2dIm - Tx3dIm; 
+
+    //       out[(20+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2e_ - ((xM2ImA)*tIm_2e_));
+    //       out[(20+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2e_ + ((xM2ImA)*tRe_2e_)); 
+    //       out[(21+i)*2+0] = xM1ReB + ((xM3ReB)*tRe_2f_ - ((xM3ImB)*tIm_2f_));
+    //       out[(21+i)*2+1] = xM1ImB + ((xM3ReB)*tIm_2f_ + ((xM3ImB)*tRe_2f_)); 
+    //       out[(22+i)*2+0] = xM0ReC + ((xM2ReC)*tRe_2g_ - ((xM2ImC)*tIm_2g_));
+    //       out[(22+i)*2+1] = xM0ImC + ((xM2ReC)*tIm_2g_ + ((xM2ImC)*tRe_2g_)); 
+    //       out[(23+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2h_ - ((xM3ImD)*tIm_2h_));
+    //       out[(23+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2h_ + ((xM3ImD)*tRe_2h_));
+
+    //       out[(52+i)*2+0] = xM0ReA - ((xM2ReA)*tRe_2e_ - ((xM2ImA)*tIm_2e_));
+    //       out[(52+i)*2+1] = xM0ImA - ((xM2ReA)*tIm_2e_ + ((xM2ImA)*tRe_2e_)); 
+    //       out[(53+i)*2+0] = xM1ReB - ((xM3ReB)*tRe_2f_ - ((xM3ImB)*tIm_2f_));
+    //       out[(53+i)*2+1] = xM1ImB - ((xM3ReB)*tIm_2f_ + ((xM3ImB)*tRe_2f_)); 
+    //       out[(54+i)*2+0] = xM0ReC - ((xM2ReC)*tRe_2g_ - ((xM2ImC)*tIm_2g_));
+    //       out[(54+i)*2+1] = xM0ImC - ((xM2ReC)*tIm_2g_ + ((xM2ImC)*tRe_2g_)); 
+    //       out[(55+i)*2+0] = xM1ReD - ((xM3ReD)*tRe_2h_ - ((xM3ImD)*tIm_2h_));
+    //       out[(55+i)*2+1] = xM1ImD - ((xM3ReD)*tIm_2h_ + ((xM3ImD)*tRe_2h_)); 
+
+    //       x0aRe = out[(8+ i+ 0)*2+0]; x0aIm = out[(8+ i+ 0)*2+1];
+    //       x1aRe = out[(8+ i+16)*2+0]; x1aIm = out[(8+ i+16)*2+1];
+    //       x2aRe = out[(8+ i+32)*2+0]; x2aIm = out[(8+ i+32)*2+1];
+    //       x3aRe = out[(8+ i+48)*2+0]; x3aIm = out[(8+ i+48)*2+1];
+          
+    //       x0bRe = out[(8+ i+ 1)*2+0]; x0bIm = out[(8+ i+ 1)*2+1];
+    //       x1bRe = out[(8+ i+17)*2+0]; x1bIm = out[(8+ i+17)*2+1];
+    //       x2bRe = out[(8+ i+33)*2+0]; x2bIm = out[(8+ i+33)*2+1];
+    //       x3bRe = out[(8+ i+49)*2+0]; x3bIm = out[(8+ i+49)*2+1];
+          
+    //       x0cRe = out[(8+ i+ 2)*2+0]; x0cIm = out[(8+ i+ 2)*2+1];
+    //       x1cRe = out[(8+ i+18)*2+0]; x1cIm = out[(8+ i+18)*2+1];
+    //       x2cRe = out[(8+ i+34)*2+0]; x2cIm = out[(8+ i+34)*2+1];
+    //       x3cRe = out[(8+ i+50)*2+0]; x3cIm = out[(8+ i+50)*2+1];
+          
+    //       x0dRe = out[(8+ i+ 3)*2+0]; x0dIm = out[(8+ i+ 3)*2+1];
+    //       x1dRe = out[(8+ i+19)*2+0]; x1dIm = out[(8+ i+19)*2+1];
+    //       x2dRe = out[(8+ i+35)*2+0]; x2dIm = out[(8+ i+35)*2+1];
+    //       x3dRe = out[(8+ i+51)*2+0]; x3dIm = out[(8+ i+51)*2+1];
+
+    //       Tx0aRe = (x1aRe * tRe_1i - x1aIm * tIm_1i);
+    //       Tx0aIm = (x1aRe * tIm_1i + x1aIm * tRe_1i);
+    //       Tx2aRe = (x3aRe * tRe_1i - x3aIm * tIm_1i);
+    //       Tx2aIm = (x3aRe * tIm_1i + x3aIm * tRe_1i);
+
+    //       Tx1bRe = (x1bRe * tRe_1j - x1bIm * tIm_1j);
+    //       Tx1bIm = (x1bRe * tIm_1j + x1bIm * tRe_1j);
+    //       Tx3bRe = (x3bRe * tRe_1j - x3bIm * tIm_1j);
+    //       Tx3bIm = (x3bRe * tIm_1j + x3bIm * tRe_1j);
+
+    //       Tx0cRe = (x1cRe * tRe_1k - x1cIm * tIm_1k);
+    //       Tx0cIm = (x1cRe * tIm_1k + x1cIm * tRe_1k);
+    //       Tx2cRe = (x3cRe * tRe_1k - x3cIm * tIm_1k);
+    //       Tx2cIm = (x3cRe * tIm_1k + x3cIm * tRe_1k);
+
+    //       Tx1dRe = (x1dRe * tRe_1l - x1dIm * tIm_1l);
+    //       Tx1dIm = (x1dRe * tIm_1l + x1dIm * tRe_1l);
+    //       Tx3dRe = (x3dRe * tRe_1l - x3dIm * tIm_1l);
+    //       Tx3dIm = (x3dRe * tIm_1l + x3dIm * tRe_1l);
+
+    //       xM0ReA = x0aRe + Tx0aRe;
+    //       xM0ImA = x0aIm + Tx0aIm; 
+    //       xM2ReA = x2aRe + Tx2aRe;
+    //       xM2ImA = x2aIm + Tx2aIm; 
+          
+    //       xM1ReB = x0bRe + Tx1bRe;
+    //       xM1ImB = x0bIm + Tx1bIm;  
+    //       xM3ReB = x2bRe + Tx3bRe;
+    //       xM3ImB = x2bIm + Tx3bIm; 
+
+    //       xM0ReC = x0cRe + Tx0cRe;
+    //       xM0ImC = x0cIm + Tx0cIm; 
+    //       xM2ReC = x2cRe + Tx2cRe;
+    //       xM2ImC = x2cIm + Tx2cIm; 
+
+    //       xM1ReD = x0dRe + Tx1dRe;
+    //       xM1ImD = x0dIm + Tx1dIm; 
+    //       xM3ReD = x2dRe + Tx3dRe;
+    //       xM3ImD = x2dIm + Tx3dIm; 
+
+    //       out[( 8+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2i - ((xM2ImA)*tIm_2i));
+    //       out[( 8+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2i + ((xM2ImA)*tRe_2i)); 
+    //       out[( 9+i)*2+0] = xM1ReB + ((xM3ReB)*tRe_2j - ((xM3ImB)*tIm_2j));
+    //       out[( 9+i)*2+1] = xM1ImB + ((xM3ReB)*tIm_2j + ((xM3ImB)*tRe_2j)); 
+    //       out[(10+i)*2+0] = xM0ReC + ((xM2ReC)*tRe_2k - ((xM2ImC)*tIm_2k));
+    //       out[(10+i)*2+1] = xM0ImC + ((xM2ReC)*tIm_2k + ((xM2ImC)*tRe_2k)); 
+    //       out[(11+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2l - ((xM3ImD)*tIm_2l));
+    //       out[(11+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2l + ((xM3ImD)*tRe_2l));
+
+    //       out[(40+i)*2+0] = xM0ReA - ((xM2ReA)*tRe_2i - ((xM2ImA)*tIm_2i));
+    //       out[(40+i)*2+1] = xM0ImA - ((xM2ReA)*tIm_2i + ((xM2ImA)*tRe_2i)); 
+    //       out[(41+i)*2+0] = xM1ReB - ((xM3ReB)*tRe_2j - ((xM3ImB)*tIm_2j));
+    //       out[(41+i)*2+1] = xM1ImB - ((xM3ReB)*tIm_2j + ((xM3ImB)*tRe_2j)); 
+    //       out[(42+i)*2+0] = xM0ReC - ((xM2ReC)*tRe_2k - ((xM2ImC)*tIm_2k));
+    //       out[(42+i)*2+1] = xM0ImC - ((xM2ReC)*tIm_2k + ((xM2ImC)*tRe_2k)); 
+    //       out[(43+i)*2+0] = xM1ReD - ((xM3ReD)*tRe_2l - ((xM3ImD)*tIm_2l));
+    //       out[(43+i)*2+1] = xM1ImD - ((xM3ReD)*tIm_2l + ((xM3ImD)*tRe_2l));  
+
+    //       xM0ReA = x0aRe - Tx0aRe;
+    //       xM0ImA = x0aIm - Tx0aIm; 
+    //       xM2ReA = x2aRe - Tx2aRe;
+    //       xM2ImA = x2aIm - Tx2aIm; 
+          
+    //       xM1ReB = x0bRe - Tx1bRe;
+    //       xM1ImB = x0bIm - Tx1bIm;  
+    //       xM3ReB = x2bRe - Tx3bRe;
+    //       xM3ImB = x2bIm - Tx3bIm; 
+
+    //       xM0ReC = x0cRe - Tx0cRe;
+    //       xM0ImC = x0cIm - Tx0cIm; 
+    //       xM2ReC = x2cRe - Tx2cRe;
+    //       xM2ImC = x2cIm - Tx2cIm; 
+
+    //       xM1ReD = x0dRe - Tx1dRe;
+    //       xM1ImD = x0dIm - Tx1dIm; 
+    //       xM3ReD = x2dRe - Tx3dRe;
+    //       xM3ImD = x2dIm - Tx3dIm; 
+
+    //       out[(24+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2i_ - ((xM2ImA)*tIm_2i_));
+    //       out[(24+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2i_ + ((xM2ImA)*tRe_2i_)); 
+    //       out[(25+i)*2+0] = xM1ReB + ((xM3ReB)*tRe_2j_ - ((xM3ImB)*tIm_2j_));
+    //       out[(25+i)*2+1] = xM1ImB + ((xM3ReB)*tIm_2j_ + ((xM3ImB)*tRe_2j_)); 
+    //       out[(26+i)*2+0] = xM0ReC + ((xM2ReC)*tRe_2k_ - ((xM2ImC)*tIm_2k_));
+    //       out[(26+i)*2+1] = xM0ImC + ((xM2ReC)*tIm_2k_ + ((xM2ImC)*tRe_2k_)); 
+    //       out[(27+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2l_ - ((xM3ImD)*tIm_2l_));
+    //       out[(27+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2l_ + ((xM3ImD)*tRe_2l_));
+
+    //       out[(56+i)*2+0] = xM0ReA - ((xM2ReA)*tRe_2i_ - ((xM2ImA)*tIm_2i_));
+    //       out[(56+i)*2+1] = xM0ImA - ((xM2ReA)*tIm_2i_ + ((xM2ImA)*tRe_2i_)); 
+    //       out[(57+i)*2+0] = xM1ReB - ((xM3ReB)*tRe_2j_ - ((xM3ImB)*tIm_2j_));
+    //       out[(57+i)*2+1] = xM1ImB - ((xM3ReB)*tIm_2j_ + ((xM3ImB)*tRe_2j_)); 
+    //       out[(58+i)*2+0] = xM0ReC - ((xM2ReC)*tRe_2k_ - ((xM2ImC)*tIm_2k_));
+    //       out[(58+i)*2+1] = xM0ImC - ((xM2ReC)*tIm_2k_ + ((xM2ImC)*tRe_2k_)); 
+    //       out[(59+i)*2+0] = xM1ReD - ((xM3ReD)*tRe_2l_ - ((xM3ImD)*tIm_2l_));
+    //       out[(59+i)*2+1] = xM1ImD - ((xM3ReD)*tIm_2l_ + ((xM3ImD)*tRe_2l_)); 
+
+    //       x0aRe = out[(12+ i+ 0)*2+0]; x0aIm = out[(12+ i+ 0)*2+1];
+    //       x1aRe = out[(12+ i+16)*2+0]; x1aIm = out[(12+ i+16)*2+1];
+    //       x2aRe = out[(12+ i+32)*2+0]; x2aIm = out[(12+ i+32)*2+1];
+    //       x3aRe = out[(12+ i+48)*2+0]; x3aIm = out[(12+ i+48)*2+1];
+          
+    //       x0bRe = out[(12+ i+ 1)*2+0]; x0bIm = out[(12+ i+ 1)*2+1];
+    //       x1bRe = out[(12+ i+17)*2+0]; x1bIm = out[(12+ i+17)*2+1];
+    //       x2bRe = out[(12+ i+33)*2+0]; x2bIm = out[(12+ i+33)*2+1];
+    //       x3bRe = out[(12+ i+49)*2+0]; x3bIm = out[(12+ i+49)*2+1];
+          
+    //       x0cRe = out[(12+ i+ 2)*2+0]; x0cIm = out[(12+ i+ 2)*2+1];
+    //       x1cRe = out[(12+ i+18)*2+0]; x1cIm = out[(12+ i+18)*2+1];
+    //       x2cRe = out[(12+ i+34)*2+0]; x2cIm = out[(12+ i+34)*2+1];
+    //       x3cRe = out[(12+ i+50)*2+0]; x3cIm = out[(12+ i+50)*2+1];
+          
+    //       x0dRe = out[(12+ i+ 3)*2+0]; x0dIm = out[(12+ i+ 3)*2+1];
+    //       x1dRe = out[(12+ i+19)*2+0]; x1dIm = out[(12+ i+19)*2+1];
+    //       x2dRe = out[(12+ i+35)*2+0]; x2dIm = out[(12+ i+35)*2+1];
+    //       x3dRe = out[(12+ i+51)*2+0]; x3dIm = out[(12+ i+51)*2+1];
+
+    //       Tx0aRe = (x1aRe * tRe_1m - x1aIm * tIm_1m);
+    //       Tx0aIm = (x1aRe * tIm_1m + x1aIm * tRe_1m);
+    //       Tx2aRe = (x3aRe * tRe_1m - x3aIm * tIm_1m);
+    //       Tx2aIm = (x3aRe * tIm_1m + x3aIm * tRe_1m);
+
+    //       Tx1bRe = (x1bRe * tRe_1n - x1bIm * tIm_1n);
+    //       Tx1bIm = (x1bRe * tIm_1n + x1bIm * tRe_1n);
+    //       Tx3bRe = (x3bRe * tRe_1n - x3bIm * tIm_1n);
+    //       Tx3bIm = (x3bRe * tIm_1n + x3bIm * tRe_1n);
+
+    //       Tx0cRe = (x1cRe * tRe_1o - x1cIm * tIm_1o);
+    //       Tx0cIm = (x1cRe * tIm_1o + x1cIm * tRe_1o);
+    //       Tx2cRe = (x3cRe * tRe_1o - x3cIm * tIm_1o);
+    //       Tx2cIm = (x3cRe * tIm_1o + x3cIm * tRe_1o);
+
+    //       Tx1dRe = (x1dRe * tRe_1p - x1dIm * tIm_1p);
+    //       Tx1dIm = (x1dRe * tIm_1p + x1dIm * tRe_1p);
+    //       Tx3dRe = (x3dRe * tRe_1p - x3dIm * tIm_1p);
+    //       Tx3dIm = (x3dRe * tIm_1p + x3dIm * tRe_1p);
+
+    //       xM0ReA = x0aRe + Tx0aRe;
+    //       xM0ImA = x0aIm + Tx0aIm; 
+    //       xM2ReA = x2aRe + Tx2aRe;
+    //       xM2ImA = x2aIm + Tx2aIm; 
+          
+    //       xM1ReB = x0bRe + Tx1bRe;
+    //       xM1ImB = x0bIm + Tx1bIm;  
+    //       xM3ReB = x2bRe + Tx3bRe;
+    //       xM3ImB = x2bIm + Tx3bIm; 
+
+    //       xM0ReC = x0cRe + Tx0cRe;
+    //       xM0ImC = x0cIm + Tx0cIm; 
+    //       xM2ReC = x2cRe + Tx2cRe;
+    //       xM2ImC = x2cIm + Tx2cIm; 
+
+    //       xM1ReD = x0dRe + Tx1dRe;
+    //       xM1ImD = x0dIm + Tx1dIm; 
+    //       xM3ReD = x2dRe + Tx3dRe;
+    //       xM3ImD = x2dIm + Tx3dIm; 
+
+    //       out[(12+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2m - ((xM2ImA)*tIm_2m));
+    //       out[(12+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2m + ((xM2ImA)*tRe_2m)); 
+    //       out[(13+i)*2+0] = xM1ReB + ((xM3ReB)*tRe_2n - ((xM3ImB)*tIm_2n));
+    //       out[(13+i)*2+1] = xM1ImB + ((xM3ReB)*tIm_2n + ((xM3ImB)*tRe_2n)); 
+    //       out[(14+i)*2+0] = xM0ReC + ((xM2ReC)*tRe_2o - ((xM2ImC)*tIm_2o));
+    //       out[(14+i)*2+1] = xM0ImC + ((xM2ReC)*tIm_2o + ((xM2ImC)*tRe_2o)); 
+    //       out[(15+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2p - ((xM3ImD)*tIm_2p));
+    //       out[(15+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2p + ((xM3ImD)*tRe_2p));
+
+    //       out[(44+i)*2+0] = xM0ReA - ((xM2ReA)*tRe_2m - ((xM2ImA)*tIm_2m));
+    //       out[(44+i)*2+1] = xM0ImA - ((xM2ReA)*tIm_2m + ((xM2ImA)*tRe_2m)); 
+    //       out[(45+i)*2+0] = xM1ReB - ((xM3ReB)*tRe_2n - ((xM3ImB)*tIm_2n));
+    //       out[(45+i)*2+1] = xM1ImB - ((xM3ReB)*tIm_2n + ((xM3ImB)*tRe_2n)); 
+    //       out[(46+i)*2+0] = xM0ReC - ((xM2ReC)*tRe_2o - ((xM2ImC)*tIm_2o));
+    //       out[(46+i)*2+1] = xM0ImC - ((xM2ReC)*tIm_2o + ((xM2ImC)*tRe_2o)); 
+    //       out[(47+i)*2+0] = xM1ReD - ((xM3ReD)*tRe_2p - ((xM3ImD)*tIm_2p));
+    //       out[(47+i)*2+1] = xM1ImD - ((xM3ReD)*tIm_2p + ((xM3ImD)*tRe_2p)); 
+
+    //       xM0ReA = x0aRe - Tx0aRe;
+    //       xM0ImA = x0aIm - Tx0aIm; 
+    //       xM2ReA = x2aRe - Tx2aRe;
+    //       xM2ImA = x2aIm - Tx2aIm; 
+          
+    //       xM1ReB = x0bRe - Tx1bRe;
+    //       xM1ImB = x0bIm - Tx1bIm;  
+    //       xM3ReB = x2bRe - Tx3bRe;
+    //       xM3ImB = x2bIm - Tx3bIm; 
+
+    //       xM0ReC = x0cRe - Tx0cRe;
+    //       xM0ImC = x0cIm - Tx0cIm; 
+    //       xM2ReC = x2cRe - Tx2cRe;
+    //       xM2ImC = x2cIm - Tx2cIm; 
+
+    //       xM1ReD = x0dRe - Tx1dRe;
+    //       xM1ImD = x0dIm - Tx1dIm; 
+    //       xM3ReD = x2dRe - Tx3dRe;
+    //       xM3ImD = x2dIm - Tx3dIm; 
+
+    //       out[(28+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2m_ - ((xM2ImA)*tIm_2m_));
+    //       out[(28+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2m_ + ((xM2ImA)*tRe_2m_)); 
+    //       out[(29+i)*2+0] = xM1ReB + ((xM3ReB)*tRe_2n_ - ((xM3ImB)*tIm_2n_));
+    //       out[(29+i)*2+1] = xM1ImB + ((xM3ReB)*tIm_2n_ + ((xM3ImB)*tRe_2n_)); 
+    //       out[(30+i)*2+0] = xM0ReC + ((xM2ReC)*tRe_2o_ - ((xM2ImC)*tIm_2o_));
+    //       out[(30+i)*2+1] = xM0ImC + ((xM2ReC)*tIm_2o_ + ((xM2ImC)*tRe_2o_)); 
+    //       out[(31+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2p_ - ((xM3ImD)*tIm_2p_));
+    //       out[(31+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2p_ + ((xM3ImD)*tRe_2p_));
+
+    //       out[(60+i)*2+0] = xM0ReA - ((xM2ReA)*tRe_2m_ - ((xM2ImA)*tIm_2m_));
+    //       out[(60+i)*2+1] = xM0ImA - ((xM2ReA)*tIm_2m_ + ((xM2ImA)*tRe_2m_)); 
+    //       out[(61+i)*2+0] = xM1ReB - ((xM3ReB)*tRe_2n_ - ((xM3ImB)*tIm_2n_));
+    //       out[(61+i)*2+1] = xM1ImB - ((xM3ReB)*tIm_2n_ + ((xM3ImB)*tRe_2n_)); 
+    //       out[(62+i)*2+0] = xM0ReC - ((xM2ReC)*tRe_2o_ - ((xM2ImC)*tIm_2o_));
+    //       out[(62+i)*2+1] = xM0ImC - ((xM2ReC)*tIm_2o_ + ((xM2ImC)*tRe_2o_)); 
+    //       out[(63+i)*2+0] = xM1ReD - ((xM3ReD)*tRe_2p_ - ((xM3ImD)*tIm_2p_));
+    //       out[(63+i)*2+1] = xM1ImD - ((xM3ReD)*tIm_2p_ + ((xM3ImD)*tRe_2p_)); 
+    // }
+
+
+
+
+
+
+
+
+
+
 
 
 
