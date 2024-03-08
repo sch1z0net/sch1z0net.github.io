@@ -1521,25 +1521,25 @@ function fftComplexInPlace_seq_4(out) {
           Tx3dRe = (x3dRe * tRe_1d - x3dIm * tIm_1d);
           Tx3dIm = (x3dRe * tIm_1d + x3dIm * tRe_1d);
 
-          xM0ReA = x0aRe - Tx0aRe;
-          xM0ImA = x0aIm - Tx0aIm; 
-          xM2ReA = x2aRe - Tx2aRe;
-          xM2ImA = x2aIm - Tx2aIm; 
+          xM0ReA = x0aRe + Tx0aRe;
+          xM0ImA = x0aIm + Tx0aIm; 
+          xM2ReA = x2aRe + Tx2aRe;
+          xM2ImA = x2aIm + Tx2aIm; 
           
-          xM1ReB = x0bRe - Tx1bRe;
-          xM1ImB = x0bIm - Tx1bIm;  
-          xM3ReB = x2bRe - Tx3bRe;
-          xM3ImB = x2bIm - Tx3bIm; 
+          xM1ReB = x0bRe + Tx1bRe;
+          xM1ImB = x0bIm + Tx1bIm;  
+          xM3ReB = x2bRe + Tx3bRe;
+          xM3ImB = x2bIm + Tx3bIm; 
 
-          xM0ReC = x0cRe - Tx0cRe;
-          xM0ImC = x0cIm - Tx0cIm; 
-          xM2ReC = x2cRe - Tx2cRe;
-          xM2ImC = x2cIm - Tx2cIm; 
+          xM0ReC = x0cRe + Tx0cRe;
+          xM0ImC = x0cIm + Tx0cIm; 
+          xM2ReC = x2cRe + Tx2cRe;
+          xM2ImC = x2cIm + Tx2cIm; 
 
-          xM1ReD = x0dRe - Tx1dRe;
-          xM1ImD = x0dIm - Tx1dIm; 
-          xM3ReD = x2dRe - Tx3dRe;
-          xM3ImD = x2dIm - Tx3dIm; 
+          xM1ReD = x0dRe + Tx1dRe;
+          xM1ImD = x0dIm + Tx1dIm; 
+          xM3ReD = x2dRe + Tx3dRe;
+          xM3ImD = x2dIm + Tx3dIm; 
 
           out[(16+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2a_ - ((xM2ImA)*tIm_2a_));
           out[(16+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2a_ + ((xM2ImA)*tRe_2a_)); 
