@@ -1536,15 +1536,15 @@ function fftComplexInPlace_seq_4(out) {
           xM3ReB =  x2dRe_0 + Tx3bRe;
           xM3ImB = -x2dIm_0 + Tx3bIm; 
 
-          xM0ReC = x0cRe_12 + Tx0cRe;
-          xM0ImC = x0cIm_12 + Tx0cIm; 
-          xM2ReC = x2cRe_12 + Tx2cRe;
-          xM2ImC = x2cIm_12 + Tx2cIm; 
+          xM0ReC =  x0cRe_0 + Tx0cRe;
+          xM0ImC = -x0cIm_0 + Tx0cIm; 
+          xM2ReC =  x2cRe_0 + Tx2cRe;
+          xM2ImC = -x2cIm_0 + Tx2cIm; 
 
-          xM1ReD = x0dRe_12 + Tx1dRe;
-          xM1ImD = x0dIm_12 + Tx1dIm; 
-          xM3ReD = x2dRe_12 + Tx3dRe;
-          xM3ImD = x2dIm_12 + Tx3dIm; 
+          xM1ReD =  x0bRe_0 + Tx1dRe;
+          xM1ImD = -x0bIm_0 + Tx1dIm;  
+          xM3ReD =  x2bRe_0 + Tx3dRe;
+          xM3ImD = -x2bIm_0 + Tx3dIm; 
 
           resReA = xM0ReA + ((xM2ReA)*  tRe_2m - ((xM2ImA)*  tRe_2e));  
           resImA = xM0ImA + ((xM2ReA)*  tRe_2e + ((xM2ImA)*  tRe_2m)); 
@@ -1574,25 +1574,25 @@ function fftComplexInPlace_seq_4(out) {
           out[(52+i)*2+1] = - resImA;
 
 
-          xM0ReA = x0aRe_12 - Tx0aRe;
-          xM0ImA = x0aIm_12 - Tx0aIm; 
-          xM2ReA = x2aRe_12 - Tx2aRe;
-          xM2ImA = x2aIm_12 - Tx2aIm; 
+          xM0ReA =  x0aRe_4 - Tx0aRe;
+          xM0ImA = -x0aIm_4 - Tx0aIm; 
+          xM2ReA =  x2aRe_4 - Tx2aRe;
+          xM2ImA = -x2aIm_4 - Tx2aIm; 
           
           xM1ReB =  x0dRe_0 - Tx1bRe;
           xM1ImB = -x0dIm_0 - Tx1bIm;  
           xM3ReB =  x2dRe_0 - Tx3bRe;
           xM3ImB = -x2dIm_0 - Tx3bIm; 
 
-          xM0ReC = x0cRe_12 - Tx0cRe;
-          xM0ImC = x0cIm_12 - Tx0cIm; 
-          xM2ReC = x2cRe_12 - Tx2cRe;
-          xM2ImC = x2cIm_12 - Tx2cIm; 
+          xM0ReC =  x0cRe_0 - Tx0cRe;
+          xM0ImC = -x0cIm_0 - Tx0cIm; 
+          xM2ReC =  x2cRe_0 - Tx2cRe;
+          xM2ImC = -x2cIm_0 - Tx2cIm; 
 
-          xM1ReD = x0dRe_12 - Tx1dRe;
-          xM1ImD = x0dIm_12 - Tx1dIm; 
-          xM3ReD = x2dRe_12 - Tx3dRe;
-          xM3ImD = x2dIm_12 - Tx3dIm; 
+          xM1ReD =  x0bRe_0 - Tx1dRe;
+          xM1ImD = -x0bIm_0 - Tx1dIm;  
+          xM3ReD =  x2bRe_0 - Tx3dRe;
+          xM3ImD = -x2bIm_0 - Tx3dIm; 
 
           resReA = xM0ReA + ((xM2ReA)* -tRe_2e  - ((xM2ImA)*  tRe_2m ));
           resImA = xM0ImA + ((xM2ReA)*  tRe_2m  + ((xM2ImA)* -tRe_2e ));
