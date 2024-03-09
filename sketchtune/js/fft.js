@@ -964,17 +964,16 @@ function fftComplexInPlace_seq_4(out) {
           x3cRe = out[i*2 + 28];
 
           let Tx1bRe = (x1bRe * tRe_1b - x1bIm * tRe_1b);
-          let Tx1bIm = (x1bRe * tRe_1b + x1bIm * tRe_1b);
           xM1ReB = x0bRe  + Tx1bRe;
-          xM1ImB = x0bIm  + Tx1bIm; 
           xM1ReD = x0bRe  - Tx1bRe;
+          let Tx1bIm = (x1bRe * tRe_1b + x1bIm * tRe_1b);
+          xM1ImB = x0bIm  + Tx1bIm; 
           xM1ImD = Tx1bIm - x0bIm;
-
           let Tx3bRe = (x3bRe * tRe_1b - x3bIm * tRe_1b);
-          let Tx3bIm = (x3bRe * tRe_1b + x3bIm * tRe_1b);
           xM3ReB = x2bRe  + Tx3bRe;
-          xM3ImB = x2bIm  + Tx3bIm; 
           xM3ReD = x2bRe  - Tx3bRe;
+          let Tx3bIm = (x3bRe * tRe_1b + x3bIm * tRe_1b);
+          xM3ImB = x2bIm  + Tx3bIm; 
           xM3ImD = Tx3bIm - x2bIm; 
 
           resReB_s = xM1ReB + ((xM3ReB)*tRe_2b - ((xM3ImB)*tRe_2d));
