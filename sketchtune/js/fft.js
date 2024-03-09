@@ -939,7 +939,7 @@ function fftComplexInPlace_seq_4(out) {
     tIm_2d  = tRe_2b;
 
     for(let i = 0; i < tsq; i+=16){
-
+/*
           x0aRe = out[i*2     ];
           x0bRe = out[i*2 +  2]; 
           x0bIm = out[i*2 +  3];
@@ -1028,7 +1028,7 @@ function fftComplexInPlace_seq_4(out) {
           out[i*2 +  23] = resImD;
 
           out[i*2 +  24] =   xM0ReA;
-          out[i*2 +  25] = - xM2ReA;
+          out[i*2 +  25] = - xM2ReA;*/
     }
 
 
@@ -3237,7 +3237,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
     }*/
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
-        if(size > 16){ break; }
+        if(size > 4){ break; }
         const halfSize = size / 2;
         // Get FFT factors with caching
         const factors = computeFFTFactorsWithCache(size);
