@@ -914,22 +914,21 @@ function fftComplexInPlace_seq_4(out) {
           x2aRe = out[(i+2)*2+0];
           x3aRe = out[(i+3)*2+0];
 
-
-          xM0ReA = x0aRe + x1aRe;            
+          /*xM0ReA = x0aRe + x1aRe;            
           xM2ReA = x2aRe + x3aRe;   
           xM1ReB = x0aRe - x1aRe;
-          xM3ReB = x2aRe - x3aRe;
+          xM3ReB = x2aRe - x3aRe;*/
 
-          out[(0+i)*2+0] =   xM0ReA + xM2ReA;
+          out[(0+i)*2+0] =   x0aRe + x1aRe + x2aRe + x3aRe;
           //out[(0+i)*2+1] =   0; 
-          out[(1+i)*2+0] =   xM1ReB;
-          out[(1+i)*2+1] =   xM3ReB;
-          out[(2+i)*2+0] =   xM0ReA - xM2ReA;
+          out[(1+i)*2+0] =   x0aRe - x1aRe;
+          out[(1+i)*2+1] =   x2aRe - x3aRe;
+          out[(2+i)*2+0] =   x0aRe + x1aRe - x2aRe - x3aRe;
           //out[(2+i)*2+1] =   0; 
-          out[(3+i)*2+0] =   xM1ReB;
-          out[(3+i)*2+1] = - xM3ReB;
+          out[(3+i)*2+0] =   x0aRe - x1aRe;
+          out[(3+i)*2+1] = - x2aRe + x3aRe;
     } 
-    
+
 
     /////////////////////////////////////////////
     // P = 1
