@@ -920,14 +920,6 @@ function fftComplexInPlace_seq_4(out) {
 
           out[i*2  +  6] =   x0aRe - x1aRe;
           out[i*2  +  7] = - x2aRe + x3aRe;
-
-          if(true){
-            console.log( i*2    , out[i*2      ].toFixed(2), i*2 + 1, out[i*2  +  1].toFixed(2)); 
-            console.log( i*2 + 2, out[i*2  +  2].toFixed(2), i*2 + 3, out[i*2  +  3].toFixed(2));
-            console.log( i*2 + 4, out[i*2  +  4].toFixed(2), i*2 + 5, out[i*2  +  5].toFixed(2)); 
-            console.log( i*2 + 6, out[i*2  +  6].toFixed(2), i*2 + 7, out[i*2  +  7].toFixed(2));
-          }
-
     } 
 
 
@@ -3485,7 +3477,7 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 /********************************* TESTING PERFORMANCE ****************************************/
 
 // Define the number of FFT operations to perform
-const numOperations = 10000; // You can adjust this number based on your requirements
+const numOperations = 20000; // You can adjust this number based on your requirements
 
 // Generate test data as Float32Array
 const generateTestData = (size) => {
@@ -3558,7 +3550,7 @@ function compareFFTResults(array1, array2) {
 
 /****************** TEST SPEED *******************/ 
 
-//measureTime(256,4);
+measureTime(256,4);
 //measureTime(512,5);
 //measureTime(512,6);
 //measureTime(512,7);
