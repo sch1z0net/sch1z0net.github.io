@@ -984,35 +984,31 @@ function fftComplexInPlace_seq_4(out) {
           x1cRe = out[(i+ 6)*2+0];
           x2cRe = out[(i+10)*2+0];
           x3cRe = out[(i+14)*2+0];
+          
 
-          x0dRe = x0bRe;           x0dIm = -x0bIm;
-          x1dRe = x1bRe;           x1dIm = -x1bIm;
-          x2dRe = x2bRe;           x2dIm = -x2bIm;
-          x3dRe = x3bRe;           x3dIm = -x3bIm;
+          let Tx1bRe = (x1bRe * tRe_1b - x1bIm * tRe_1b);
+          let Tx1bIm = (x1bRe * tRe_1b + x1bIm * tRe_1b);
+          let Tx3bRe = (x3bRe * tRe_1b - x3bIm * tRe_1b);
+          let Tx3bIm = (x3bRe * tRe_1b + x3bIm * tRe_1b);
 
-          let Tx1bRe = (x1bRe * tRe_1b - x1bIm * tIm_1b);
-          let Tx1bIm = (x1bRe * tIm_1b + x1bIm * tRe_1b);
-          let Tx3bRe = (x3bRe * tRe_1b - x3bIm * tIm_1b);
-          let Tx3bIm = (x3bRe * tIm_1b + x3bIm * tRe_1b);
-
-          let Tx1dRe = (x1dRe * tRe_1d - x1dIm * tIm_1d);
-          let Tx1dIm = (x1dRe * tIm_1d + x1dIm * tRe_1d);
-          let Tx3dRe = (x3dRe * tRe_1d - x3dIm * tIm_1d);
-          let Tx3dIm = (x3dRe * tIm_1d + x3dIm * tRe_1d);
+          let Tx1dRe = (x1bRe * tRe_1d - -x1bIm * tRe_1b);
+          let Tx1dIm = (x1bRe * tRe_1b + -x1bIm * tRe_1d);
+          let Tx3dRe = (x3bRe * tRe_1d - -x3bIm * tRe_1b);
+          let Tx3dIm = (x3bRe * tRe_1b + -x3bIm * tRe_1d);
 
 
-          xM0ReA =  x0aRe + x1aRe;               
-          xM2ReA =  x2aRe + x3aRe;
+          xM0ReA = x0aRe + x1aRe;               
+          xM2ReA = x2aRe + x3aRe;
           
           xM1ReB = x0bRe + Tx1bRe;
           xM1ImB = x0bIm + Tx1bIm; 
           xM3ReB = x2bRe + Tx3bRe;
           xM3ImB = x2bIm + Tx3bIm; 
 
-          xM1ReD = x0dRe + Tx1dRe;
-          xM1ImD = x0dIm + Tx1dIm;
-          xM3ReD = x2dRe + Tx3dRe;
-          xM3ImD = x2dIm + Tx3dIm; 
+          xM1ReD = x0bRe + Tx1dRe;
+          xM1ImD =-x0bIm + Tx1dIm;
+          xM3ReD = x2bRe + Tx3dRe;
+          xM3ImD =-x2bIm + Tx3dIm; 
 
           out[( 0+i)*2+0] = xM0ReA + xM2ReA; 
           //out[( 0+i)*2+1] = 0; 
