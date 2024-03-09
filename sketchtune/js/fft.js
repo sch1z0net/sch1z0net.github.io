@@ -1260,6 +1260,7 @@ function fftComplexInPlace_seq_4(out) {
           out[( 3+i)*2+0] = xM1ReD_0 + ((xM3ReD_0)*  tRe_2d - ((xM3ImD_0)*  tRe_2n));
           out[( 3+i)*2+1] = xM1ImD_0 + ((xM3ReD_0)*  tRe_2n + ((xM3ImD_0)*  tRe_2d));  
 
+
           //out[(32+i)*2+0] = xM0ReA - ((xM2ReA)*1      - ((xM2ImA)*0     ));
           //out[(32+i)*2+1] = xM0ImA - ((xM2ReA)*0      + ((xM2ImA)*1     )); 
           out[(32+i)*2+0] = (x0aRe_0 + x1aRe_0) - (x2aRe_0 + x3aRe_0);
@@ -1268,7 +1269,7 @@ function fftComplexInPlace_seq_4(out) {
           out[(33+i)*2+1] = xM1ImB_0 - ((xM3ReB_0)*  tRe_2p + ((xM3ImB_0)*  tRe_2b)); 
           out[(34+i)*2+0] = xM0ReC_0 - ((xM2ReC_0)*  tRe_2c - ((xM2ImC_0)*  tRe_2o));
           out[(34+i)*2+1] = xM0ImC_0 - ((xM2ReC_0)*  tRe_2o + ((xM2ImC_0)*  tRe_2c)); 
-          out[(35+i)*2+0] = xM1ReD_0 - ((xM3ReD_0)*  tRe_2d - ((xM3ImD_0)*  tRe_2n));
+          out[(35+i)*2+0] = xM1ReD_0 - ((xM3ReD_0)*  tRe_2d - ((xM3ImD_0)*  tRe_2n)); // out[(29+i)*2+0] = xM1ReD_0 - ((xM3ReD_0)*  tRe_2d - ((xM3ImD_0)*  tRe_2n));
           out[(35+i)*2+1] = xM1ImD_0 - ((xM3ReD_0)*  tRe_2n + ((xM3ImD_0)*  tRe_2d));
 
           //xM0ReA = x0aRe - x1aRe;
@@ -1649,13 +1650,13 @@ function fftComplexInPlace_seq_4(out) {
           xM3ReD =  xM3ReB_0;
           xM3ImD = -xM3ImB_0;    
 
-          out[(28+i)*2+0] = xM0ReA + ((xM2ReA)* -tRe_2e  - ((xM2ImA)*  tRe_2m ));
+          out[(28+i)*2+0] = out[(36+i)*2+0];
           out[(28+i)*2+1] = xM0ImA + ((xM2ReA)*  tRe_2m  + ((xM2ImA)* -tRe_2e )); 
-          out[(29+i)*2+0] = xM1ReB + ((xM3ReB)* -tRe_2d  - ((xM3ImB)*  tRe_2n ));
+          out[(29+i)*2+0] = out[(35+i)*2+0];
           out[(29+i)*2+1] = xM1ImB + ((xM3ReB)*  tRe_2n  + ((xM3ImB)* -tRe_2d )); 
-          out[(30+i)*2+0] = xM0ReC + ((xM2ReC)* -tRe_2c  - ((xM2ImC)*  tRe_2o ));
+          out[(30+i)*2+0] = out[(34+i)*2+0];
           out[(30+i)*2+1] = xM0ImC + ((xM2ReC)*  tRe_2o  + ((xM2ImC)* -tRe_2c ));
-          out[(31+i)*2+0] = xM1ReD + ((xM3ReD)* -tRe_2b  - ((xM3ImD)*  tRe_2p ));  
+          out[(31+i)*2+0] = out[(33+i)*2+0]; 
           out[(31+i)*2+1] = xM1ImD + ((xM3ReD)*  tRe_2p  + ((xM3ImD)* -tRe_2b ));
 
           out[(60+i)*2+0] = xM0ReA - ((xM2ReA)* -tRe_2e  - ((xM2ImA)*  tRe_2m ));
