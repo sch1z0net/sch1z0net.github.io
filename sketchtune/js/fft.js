@@ -1314,17 +1314,17 @@ function fftComplexInPlace_seq_4(out) {
           x2aRe_4 = out[(4+ i+32)*2+0]; x2aIm_4 = out[(4+ i+32)*2+1];
           x3aRe_4 = out[(4+ i+48)*2+0]; x3aIm_4 = out[(4+ i+48)*2+1];
           
-          x0bRe_4 = out[(4+ i+ 1)*2+0]; x0bIm_4 = out[(4+ i+ 1)*2+1]; //-----
+          x0bRe_4 = out[(4+ i+ 1)*2+0]; x0bIm_4 = out[(4+ i+ 1)*2+1]; //-----> 11
           x1bRe_4 = out[(4+ i+17)*2+0]; x1bIm_4 = out[(4+ i+17)*2+1];
           x2bRe_4 = out[(4+ i+33)*2+0]; x2bIm_4 = out[(4+ i+33)*2+1];
           x3bRe_4 = out[(4+ i+49)*2+0]; x3bIm_4 = out[(4+ i+49)*2+1];
           
-          x0cRe_4 = out[(4+ i+ 2)*2+0]; x0cIm_4 = out[(4+ i+ 2)*2+1]; //-----
+          x0cRe_4 = out[(4+ i+ 2)*2+0]; x0cIm_4 = out[(4+ i+ 2)*2+1]; //-----> 10
           x1cRe_4 = out[(4+ i+18)*2+0]; x1cIm_4 = out[(4+ i+18)*2+1];
           x2cRe_4 = out[(4+ i+34)*2+0]; x2cIm_4 = out[(4+ i+34)*2+1];
           x3cRe_4 = out[(4+ i+50)*2+0]; x3cIm_4 = out[(4+ i+50)*2+1];
           
-          x0dRe_4 = out[(4+ i+ 3)*2+0]; x0dIm_4 = out[(4+ i+ 3)*2+1]; //-----
+          x0dRe_4 = out[(4+ i+ 3)*2+0]; x0dIm_4 = out[(4+ i+ 3)*2+1]; //-----> 9
           x1dRe_4 = out[(4+ i+19)*2+0]; x1dIm_4 = out[(4+ i+19)*2+1];
           x2dRe_4 = out[(4+ i+35)*2+0]; x2dIm_4 = out[(4+ i+35)*2+1];
           x3dRe_4 = out[(4+ i+51)*2+0]; x3dIm_4 = out[(4+ i+51)*2+1];
@@ -1430,17 +1430,17 @@ function fftComplexInPlace_seq_4(out) {
           x2aRe_8 = out[(8+ i+32)*2+0]; x2aIm_8 = out[(8+ i+32)*2+1];
           x3aRe_8 = out[(8+ i+48)*2+0]; x3aIm_8 = out[(8+ i+48)*2+1];
           
-          x0bRe_8 = x0dRe_0;            x0bIm_8 = -x0dIm_0;            
+          x0bRe_8 = x0dRe_4;            x0bIm_8 = -x0dIm_4;            
           x1bRe_8 = out[(8+ i+17)*2+0]; x1bIm_8 = out[(8+ i+17)*2+1];
           x2bRe_8 = out[(8+ i+33)*2+0]; x2bIm_8 = out[(8+ i+33)*2+1];
           x3bRe_8 = out[(8+ i+49)*2+0]; x3bIm_8 = out[(8+ i+49)*2+1];
 
-          x0cRe_8 = x0cRe_0;            x0cIm_8 = -x0cIm_0;             
+          x0cRe_8 = x0cRe_4;            x0cIm_8 = -x0cIm_4;             
           x1cRe_8 = out[(8+ i+18)*2+0]; x1cIm_8 = out[(8+ i+18)*2+1];
           x2cRe_8 = out[(8+ i+34)*2+0]; x2cIm_8 = out[(8+ i+34)*2+1];
           x3cRe_8 = out[(8+ i+50)*2+0]; x3cIm_8 = out[(8+ i+50)*2+1];
           
-          x0dRe_8 = x0bRe_0;            x0dIm_8 = -x0bIm_0;            
+          x0dRe_8 = x0bRe_4;            x0dIm_8 = -x0bIm_4;            
           x1dRe_8 = out[(8+ i+19)*2+0]; x1dIm_8 = out[(8+ i+19)*2+1];
           x2dRe_8 = out[(8+ i+35)*2+0]; x2dIm_8 = out[(8+ i+35)*2+1];
           x3dRe_8 = out[(8+ i+51)*2+0]; x3dIm_8 = out[(8+ i+51)*2+1];
