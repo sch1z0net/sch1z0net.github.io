@@ -1083,7 +1083,7 @@ function fftComplexInPlace_seq_4(out) {
 
     for(let i_ = 0; i_ < tsq; i_+=16){
           let i = i_ * 4;
-
+/*
           x0aRe_0 = out[(i+ 0)*2+0]; //x0aIm = out[(i+ 0)*2+1]; //0 //-----> 16
           x1aRe_0 = out[(i+16)*2+0]; x1aIm_0 = 0;
           x2aRe_0 = out[(i+32)*2+0]; x2aIm_0 = out[(i+32)*2+1];
@@ -1572,6 +1572,7 @@ function fftComplexInPlace_seq_4(out) {
           out[(35+i)*2+1] = - resImB; 
           out[(36+i)*2+0] =   resReA;
           out[(36+i)*2+1] = - resImA;
+          */
     }
 
 
