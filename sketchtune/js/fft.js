@@ -889,6 +889,10 @@ function fftComplexInPlace_seq_4(out) {
     let tRe_2c; let tIm_2c;    
     let tRe_2d; let tIm_2d;
     
+    let resReA; let resImA;
+    let resReB; let resImB;
+    let resReC; let resImC;
+    let resReD; let resImD;
 
 
     /////////////////////////////////////////////
@@ -1092,31 +1096,6 @@ function fftComplexInPlace_seq_4(out) {
     tRe_1f   = ____F[30+(5*2+0)];
     tRe_1g   = ____F[30+(6*2+0)];
     tRe_1h   = ____F[30+(7*2+0)];
-    //tRe_1i   = ____F[30+(8*2+0)]; // 0
-    /*tRe_1j   = -tRe_1h; //____F[30+(9*2+0)];
-    tRe_1k   = -tRe_1g; //____F[30+(10*2+0)];
-    tRe_1l   = -tRe_1f; //____F[30+(11*2+0)];
-    tRe_1m   = -tRe_1e; //____F[30+(12*2+0)];
-    tRe_1n   = -tRe_1d; //____F[30+(13*2+0)];
-    tRe_1o   = -tRe_1c; //____F[30+(14*2+0)];
-    tRe_1p   = -tRe_1b; //____F[30+(15*2+0)];
-
-    //tIm_1a   = ____F[30+(0*2+1)]; // 0
-    tIm_1b   = tRe_1h; //____F[30+(1*2+1)];
-    tIm_1c   = tRe_1g; //____F[30+(2*2+1)];
-    tIm_1d   = tRe_1f; //____F[30+(3*2+1)];
-    tIm_1e   = tRe_1e; //____F[30+(4*2+1)];
-    tIm_1f   = tRe_1d; //____F[30+(5*2+1)];
-    tIm_1g   = tRe_1c; //____F[30+(6*2+1)]
-    tIm_1h   = tRe_1b; //____F[30+(7*2+1)];
-    //tIm_1i   = ____F[30+(8*2+1)]; // 1
-    tIm_1j   = tRe_1b; //____F[30+(9*2+1)];
-    tIm_1k   = tRe_1c; //____F[30+(10*2+1)];
-    tIm_1l   = tRe_1d; //____F[30+(11*2+1)];
-    tIm_1m   = tRe_1e; //____F[30+(12*2+1)];
-    tIm_1n   = tRe_1f; //____F[30+(13*2+1)];
-    tIm_1o   = tRe_1g; //____F[30+(14*2+1)];
-    tIm_1p   = tRe_1h; //____F[30+(15*2+1)];*/
 
     //tRe_2a   = ____F[62+(0*2+0)]; // 1
     tRe_2b   = ____F[62+(1*2+0)]; 
@@ -1134,61 +1113,10 @@ function fftComplexInPlace_seq_4(out) {
     tRe_2n   = ____F[62+(13*2+0)]; 
     tRe_2o   = ____F[62+(14*2+0)]; 
     tRe_2p   = ____F[62+(15*2+0)]; 
-    /*
-    //tRe_2a_  = ____F[62+(16*2+0)]; // 0
-    tRe_2b_  = -tRe_2p; //____F[62+(17*2+0)]; 
-    tRe_2c_  = -tRe_2o; //____F[62+(18*2+0)]; 
-    tRe_2d_  = -tRe_2n; //____F[62+(19*2+0)]; 
-    tRe_2e_  = -tRe_2m; //____F[62+(20*2+0)];
-    tRe_2f_  = -tRe_2l; //____F[62+(21*2+0)]; 
-    tRe_2g_  = -tRe_2k; //____F[62+(22*2+0)]; 
-    tRe_2h_  = -tRe_2j; //____F[62+(23*2+0)]; 
-    tRe_2i_  = -tRe_2i; //____F[62+(24*2+0)];
-    tRe_2j_  = -tRe_2h; //____F[62+(25*2+0)]; 
-    tRe_2k_  = -tRe_2g; //____F[62+(26*2+0)]; 
-    tRe_2l_  = -tRe_2f; //____F[62+(27*2+0)]; 
-    tRe_2m_  = -tRe_2e; //____F[62+(28*2+0)];
-    tRe_2n_  = -tRe_2d; //____F[62+(29*2+0)]; 
-    tRe_2o_  = -tRe_2c; //____F[62+(30*2+0)]; 
-    tRe_2p_  = -tRe_2b; //____F[62+(31*2+0)]; 
-
-    //tIm_2a   = ____F[62+(0*2+1)]; // 0
-    tIm_2b   = tRe_2p; //____F[62+(1*2+1)];
-    tIm_2c   = tRe_2o; //____F[62+(2*2+1)];
-    tIm_2d   = tRe_2n; //____F[62+(3*2+1)];
-    tIm_2e   = tRe_2m; //____F[62+(4*2+1)];
-    tIm_2f   = tRe_2l; //____F[62+(5*2+1)];
-    tIm_2g   = tRe_2k; //____F[62+(6*2+1)];
-    tIm_2h   = tRe_2j; //____F[62+(7*2+1)];
-    tIm_2i   = tRe_2i; //____F[62+(8*2+1)];
-    tIm_2j   = tRe_2h; //____F[62+(9*2+1)];
-    tIm_2k   = tRe_2g; //____F[62+(10*2+1)];
-    tIm_2l   = tRe_2f; //____F[62+(11*2+1)];
-    tIm_2m   = tRe_2e; //____F[62+(12*2+1)];
-    tIm_2n   = tRe_2d; //____F[62+(13*2+1)];
-    tIm_2o   = tRe_2c; //____F[62+(14*2+1)];
-    tIm_2p   = tRe_2b; //____F[62+(15*2+1)];
-    //tIm_2a_  = ____F[62+(16*2+1)]; // 1
-    tIm_2b_  =  tRe_2b; //____F[62+(17*2+1)];
-    tIm_2c_  =  tRe_2c; //____F[62+(18*2+1)];
-    tIm_2d_  =  tRe_2d; //____F[62+(19*2+1)];
-    tIm_2e_  =  tRe_2e; //____F[62+(20*2+1)];
-    tIm_2f_  =  tRe_2f; //____F[62+(21*2+1)];
-    tIm_2g_  =  tRe_2g; //____F[62+(22*2+1)];
-    tIm_2h_  =  tRe_2h; //____F[62+(23*2+1)];
-    tIm_2i_  =  tRe_2i; //____F[62+(24*2+1)];
-    tIm_2j_  =  tRe_2j; //____F[62+(25*2+1)];
-    tIm_2k_  =  tRe_2k; //____F[62+(26*2+1)];
-    tIm_2l_  =  tRe_2l; //____F[62+(27*2+1)];
-    tIm_2m_  =  tRe_2m; //____F[62+(28*2+1)];
-    tIm_2n_  =  tRe_2n; //____F[62+(29*2+1)]; 
-    tIm_2o_  =  tRe_2o; //____F[62+(30*2+1)];
-    tIm_2p_  =  tRe_2p; //____F[62+(31*2+1)];
-    */
 
     for(let i_ = 0; i_ < tsq; i_+=16){
           let i = i_ * 4;
-/*
+
           x0aRe_0 = out[(i+ 0)*2+0]; //x0aIm = out[(i+ 0)*2+1]; //0 //-----> 16
           x1aRe_0 = out[(i+16)*2+0]; x1aIm_0 = 0;
           x2aRe_0 = out[(i+32)*2+0]; x2aIm_0 = out[(i+32)*2+1];
@@ -1463,15 +1391,33 @@ function fftComplexInPlace_seq_4(out) {
           xM3ReD = x2dRe_8 - Tx3dRe;
           xM3ImD = x2dIm_8 - Tx3dIm; 
 
-          out[(24+i)*2+0] = xM0ReA + ((xM2ReA)* -tRe_2i  - ((xM2ImA)*  tRe_2i ));
-          out[(24+i)*2+1] = xM0ImA + ((xM2ReA)*  tRe_2i  + ((xM2ImA)* -tRe_2i )); 
-          out[(25+i)*2+0] = xM1ReB + ((xM3ReB)* -tRe_2h  - ((xM3ImB)*  tRe_2j ));
-          out[(25+i)*2+1] = xM1ImB + ((xM3ReB)*  tRe_2j  + ((xM3ImB)* -tRe_2h )); 
-          out[(26+i)*2+0] = xM0ReC + ((xM2ReC)* -tRe_2g  - ((xM2ImC)*  tRe_2k ));
-          out[(26+i)*2+1] = xM0ImC + ((xM2ReC)*  tRe_2k  + ((xM2ImC)* -tRe_2g )); 
-          out[(27+i)*2+0] = xM1ReD + ((xM3ReD)* -tRe_2f  - ((xM3ImD)*  tRe_2l ));
-          out[(27+i)*2+1] = xM1ImD + ((xM3ReD)*  tRe_2l  + ((xM3ImD)* -tRe_2f ));
+          resReA = xM0ReA + ((xM2ReA)* -tRe_2i  - ((xM2ImA)*  tRe_2i ));
+          resImA = xM0ImA + ((xM2ReA)*  tRe_2i  + ((xM2ImA)* -tRe_2i ));
+          resReB = xM1ReB + ((xM3ReB)* -tRe_2h  - ((xM3ImB)*  tRe_2j ));
+          resImB = xM1ImB + ((xM3ReB)*  tRe_2j  + ((xM3ImB)* -tRe_2h ));
+          resReC = xM0ReC + ((xM2ReC)* -tRe_2g  - ((xM2ImC)*  tRe_2k ));
+          resImC = xM0ImC + ((xM2ReC)*  tRe_2k  + ((xM2ImC)* -tRe_2g )); 
+          resReD = xM1ReD + ((xM3ReD)* -tRe_2f  - ((xM3ImD)*  tRe_2l ));
+          resImD = xM1ImD + ((xM3ReD)*  tRe_2l  + ((xM3ImD)* -tRe_2f ));
+
+          out[(24+i)*2+0] =   resReA;
+          out[(24+i)*2+1] =   resImA; 
+          out[(25+i)*2+0] =   resReB;
+          out[(25+i)*2+1] =   resImB;
+          out[(26+i)*2+0] =   resReC;
+          out[(26+i)*2+1] =   resImC;
+          out[(27+i)*2+0] =   resReD;
+          out[(27+i)*2+1] =   resImD;
           
+          out[(37+i)*2+0] =   resReA;
+          out[(37+i)*2+1] = - resImA;
+          out[(38+i)*2+0] =   resReB;
+          out[(38+i)*2+1] = - resImB;
+          out[(39+i)*2+0] =   resReC;
+          out[(39+i)*2+1] = - resImC; 
+          out[(40+i)*2+0] =   resReD;
+          out[(40+i)*2+1] = - resImD;
+
           x0bRe_12 = x0dRe_0;             x0bIm_12 = -x0dIm_0;
           x1bRe_12 = x1dRe_0;             x1bIm_12 = -x1dIm_0; 
           x2bRe_12 = x2dRe_0;             x2bIm_12 = -x2dIm_0; 
@@ -1556,35 +1502,35 @@ function fftComplexInPlace_seq_4(out) {
           xM3ReD = x2dRe_12 - Tx3dRe;
           xM3ImD = x2dIm_12 - Tx3dIm; 
 
-          out[(28+i)*2+0] = xM0ReA + ((xM2ReA)* -tRe_2e  - ((xM2ImA)*  tRe_2m ));
-          out[(28+i)*2+1] = xM0ImA + ((xM2ReA)*  tRe_2m  + ((xM2ImA)* -tRe_2e )); 
-          out[(29+i)*2+0] = xM1ReB + ((xM3ReB)* -tRe_2d  - ((xM3ImB)*  tRe_2n ));
-          out[(29+i)*2+1] = xM1ImB + ((xM3ReB)*  tRe_2n  + ((xM3ImB)* -tRe_2d )); 
-          out[(30+i)*2+0] = xM0ReC + ((xM2ReC)* -tRe_2c  - ((xM2ImC)*  tRe_2o ));
-          out[(30+i)*2+1] = xM0ImC + ((xM2ReC)*  tRe_2o  + ((xM2ImC)* -tRe_2c ));
-          out[(31+i)*2+0] = xM1ReD + ((xM3ReD)* -tRe_2b  - ((xM3ImD)*  tRe_2p ));
-          out[(31+i)*2+1] = xM1ImD + ((xM3ReD)*  tRe_2p  + ((xM3ImD)* -tRe_2b ));
+          resReA = xM0ReA + ((xM2ReA)* -tRe_2e  - ((xM2ImA)*  tRe_2m ));
+          resImA = xM0ImA + ((xM2ReA)*  tRe_2m  + ((xM2ImA)* -tRe_2e ));
+          resReB = xM1ReB + ((xM3ReB)* -tRe_2d  - ((xM3ImB)*  tRe_2n ));
+          resImB = xM1ImB + ((xM3ReB)*  tRe_2n  + ((xM3ImB)* -tRe_2d ));
+          resReC = xM0ReC + ((xM2ReC)* -tRe_2c  - ((xM2ImC)*  tRe_2o ));
+          resImC = xM0ImC + ((xM2ReC)*  tRe_2o  + ((xM2ImC)* -tRe_2c ));
+          resReD = xM1ReD + ((xM3ReD)* -tRe_2b  - ((xM3ImD)*  tRe_2p ));
+          resImD = xM1ImD + ((xM3ReD)*  tRe_2p  + ((xM3ImD)* -tRe_2b ));
+
+          out[(28+i)*2+0] = resReA;
+          out[(28+i)*2+1] = resImA; 
+          out[(29+i)*2+0] = resReB;
+          out[(29+i)*2+1] = resImB; 
+          out[(30+i)*2+0] = resReC;
+          out[(30+i)*2+1] = resImC;
+          out[(31+i)*2+0] = resReD;
+          out[(31+i)*2+1] = resImD;
+
+          out[(33+i)*2+0] =   resReD;
+          out[(33+i)*2+1] = - resImD;
+          out[(34+i)*2+0] =   resReC;
+          out[(34+i)*2+1] = - resImC;
+          out[(35+i)*2+0] =   resReB;
+          out[(35+i)*2+1] = - resImB; 
+          out[(36+i)*2+0] =   resReA;
+          out[(36+i)*2+1] = - resImA;
 
 
 
-          out[(33+i)*2+0] =   out[(31+i)*2+0];
-          out[(33+i)*2+1] = - out[(31+i)*2+1];
-          out[(34+i)*2+0] =   out[(30+i)*2+0];
-          out[(34+i)*2+1] = - out[(30+i)*2+1];
-          out[(35+i)*2+0] =   out[(29+i)*2+0];
-          out[(35+i)*2+1] = - out[(29+i)*2+1]; 
-
-          out[(36+i)*2+0] =   out[(28+i)*2+0];
-          out[(36+i)*2+1] = - out[(28+i)*2+1];
-          out[(37+i)*2+0] =   out[(27+i)*2+0];
-          out[(37+i)*2+1] = - out[(27+i)*2+1];
-          out[(38+i)*2+0] =   out[(26+i)*2+0];
-          out[(38+i)*2+1] = - out[(26+i)*2+1];
-          out[(39+i)*2+0] =   out[(25+i)*2+0];
-          out[(39+i)*2+1] = - out[(25+i)*2+1];  
-
-          out[(40+i)*2+0] =   out[(24+i)*2+0];
-          out[(40+i)*2+1] = - out[(24+i)*2+1];
           out[(41+i)*2+0] =   out[(23+i)*2+0];
           out[(41+i)*2+1] = - out[(23+i)*2+1];
           out[(42+i)*2+0] =   out[(22+i)*2+0];
@@ -1636,7 +1582,6 @@ function fftComplexInPlace_seq_4(out) {
           out[(62+i)*2+1] = - out[(2+i)*2+1];
           out[(63+i)*2+0] =   out[(1+i)*2+0];
           out[(63+i)*2+1] = - out[(1+i)*2+1];
-          */
     }
 
 
