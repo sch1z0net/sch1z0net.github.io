@@ -960,19 +960,11 @@ function fftComplexInPlace_seq_4(out) {
           out[i*2 +  24] = x0aRe - x1aRe;
           out[i*2 +  25] = x3aRe - x2aRe;
 
-          //xM1ReB = x0bRe  + x1bRe * tRe_1b - x1bIm * tRe_1b;
-          //xM1ImB = x0bIm  + x1bRe * tRe_1b + x1bIm * tRe_1b; 
-          //xM3ReB = x2bRe  + x3bRe * tRe_1b - x3bIm * tRe_1b;
-          //xM3ImB = x2bIm  + x3bRe * tRe_1b + x3bIm * tRe_1b; 
+
           resReB = x0bRe  + x1bRe * tRe_1b - x1bIm * tRe_1b + (x2bRe  + x3bRe * tRe_1b - x3bIm * tRe_1b)* tRe_2b - (x2bIm  + x3bRe * tRe_1b + x3bIm * tRe_1b)* tRe_2d;    out[i*2 +  2]  =   resReB;   out[i*2 +  30] =   resReB;
           resImB = x0bIm  + x1bRe * tRe_1b + x1bIm * tRe_1b + (x2bRe  + x3bRe * tRe_1b - x3bIm * tRe_1b)* tRe_2d + (x2bIm  + x3bRe * tRe_1b + x3bIm * tRe_1b)* tRe_2b;    out[i*2 +  3]  =   resImB;   out[i*2 +  31] = - resImB;
           resReC = x0cRe  + x2cRe * tRe_2c - x3cRe * tRe_2c;                                                                                                              out[i*2 +  4]  =   resReC;   out[i*2 +  28] =   resReC;
           resImC = x1cRe  + x2cRe * tRe_2c + x3cRe * tRe_2c;                                                                                                              out[i*2 +  5]  =   resImC;   out[i*2 +  29] = - resImC;
-
-          //xM1ReD = x0bRe  - x1bRe * tRe_1b + x1bIm * tRe_1b;
-          //xM1ImD = x1bRe * tRe_1b + x1bIm * tRe_1b - x0bIm;
-          //xM3ReD = x2bRe  - x3bRe * tRe_1b + x3bIm * tRe_1b;
-          //xM3ImD = x3bRe * tRe_1b + x3bIm * tRe_1b - x2bIm; 
           resReD = x0bRe  - x1bRe * tRe_1b + x1bIm * tRe_1b + (x2bRe  - x3bRe * tRe_1b + x3bIm * tRe_1b)* tRe_2d - (x3bRe * tRe_1b + x3bIm * tRe_1b - x2bIm)*tRe_2b;      out[i*2 +  6]  =   resReD;   out[i*2 +  26] =   resReD;
           resImD = x1bRe * tRe_1b + x1bIm * tRe_1b - x0bIm  + (x2bRe  - x3bRe * tRe_1b + x3bIm * tRe_1b)* tRe_2b + (x3bRe * tRe_1b + x3bIm * tRe_1b - x2bIm)*tRe_2d;      out[i*2 +  7]  =   resImD;   out[i*2 +  27] = - resImD; 
 
