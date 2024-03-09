@@ -980,15 +980,15 @@ function fftComplexInPlace_seq_4(out) {
           x2bRe = out[(i+ 9)*2+0]; x2bIm = out[(i+ 9)*2+1];
           x3bRe = out[(i+13)*2+0]; x3bIm = out[(i+13)*2+1];
 
-          x0cRe = out[(i+ 2)*2+0];
-          x1cRe = out[(i+ 6)*2+0];
-          x2cRe = out[(i+10)*2+0];
-          x3cRe = out[(i+14)*2+0];
+          x0cRe = out[(i+ 2)*2+0]; //x0cIm = out[(i+ 2)*2+1];  //OLDxM0ReA - OLDxM2ReA
+          x1cRe = out[(i+ 6)*2+0]; //x1cIm = out[(i+ 6)*2+1];  //OLDxM0ReA - OLDxM2ReA
+          x2cRe = out[(i+10)*2+0]; //x2cIm = out[(i+10)*2+1];  //OLDxM0ReA - OLDxM2ReA
+          x3cRe = out[(i+14)*2+0]; //x3cIm = out[(i+14)*2+1];  //OLDxM0ReA - OLDxM2ReA
 
-          x0dRe = x0bRe;           x0dIm = -x0bIm;
-          x1dRe = x1bRe;           x1dIm = -x1bIm;
-          x2dRe = x2bRe;           x2dIm = -x2bIm;
-          x3dRe = x3bRe;           x3dIm = -x0bIm;
+          x0dRe = out[(i+ 3)*2+0]; x0dIm = out[(i+ 3)*2+1]; // OLDxM1ReB   -OLDxM3ReB
+          x1dRe = out[(i+ 7)*2+0]; x1dIm = out[(i+ 7)*2+1]; // OLDxM1ReB   -OLDxM3ReB
+          x2dRe = out[(i+11)*2+0]; x2dIm = out[(i+11)*2+1]; // OLDxM1ReB   -OLDxM3ReB
+          x3dRe = out[(i+15)*2+0]; x3dIm = out[(i+15)*2+1]; // OLDxM1ReB   -OLDxM3ReB
 
           let Tx1bRe = (x1bRe * tRe_1b - x1bIm * tIm_1b);
           let Tx1bIm = (x1bRe * tIm_1b + x1bIm * tRe_1b);
