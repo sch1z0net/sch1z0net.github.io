@@ -990,10 +990,10 @@ function fftComplexInPlace_seq_4(out) {
           let Tx3bRe = (x3bRe * tRe_1b - x3bIm * tRe_1b);
           let Tx3bIm = (x3bRe * tRe_1b + x3bIm * tRe_1b);
 
-          let Tx1dRe = -(x1bRe * tRe_1b - x1bIm * tRe_1b);
-          let Tx1dIm =  (x1bRe * tRe_1b + x1bIm * tRe_1b);
-          let Tx3dRe = -(x3bRe * tRe_1b - x3bIm * tRe_1b);
-          let Tx3dIm =  (x3bRe * tRe_1b + x3bIm *  tRe_1b);
+          let Tx1dRe = (x1bRe * tRe_1d - -x1bIm * tRe_1b);
+          let Tx1dIm = (x1bRe * tRe_1b + -x1bIm * tRe_1d);
+          let Tx3dRe = (x3bRe * tRe_1d - -x3bIm * tRe_1b);
+          let Tx3dIm = (x3bRe * tRe_1b + -x3bIm * tRe_1d);
 
 
           xM0ReA = x0aRe + x1aRe;               
