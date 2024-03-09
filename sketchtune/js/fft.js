@@ -1315,14 +1315,14 @@ function fftComplexInPlace_seq_4(out) {
           out[(23+i)*2+0] =   resReD;
           out[(23+i)*2+1] =   resImD; 
 
-          out[(41+i)*2+0] =   resReA;
-          out[(41+i)*2+1] = - resImA;
-          out[(42+i)*2+0] =   resReB;
-          out[(42+i)*2+1] = - resImB;
-          out[(43+i)*2+0] =   resReC;
-          out[(43+i)*2+1] = - resImC; 
-          out[(44+i)*2+0] =   resReD;
-          out[(44+i)*2+1] = - resImD;
+          out[(41+i)*2+0] =   resReD;
+          out[(41+i)*2+1] = - resImD;
+          out[(42+i)*2+0] =   resReC;
+          out[(42+i)*2+1] = - resImC;
+          out[(43+i)*2+0] =   resReB;
+          out[(43+i)*2+1] = - resImB; 
+          out[(44+i)*2+0] =   resReA;
+          out[(44+i)*2+1] = - resImA;
 
           x0aRe_8 = out[(8+ i+ 0)*2+0]; //x0aIm = out[(8+ i+ 0)*2+1]; // 0   //turning point
           x1aRe_8 = out[(8+ i+16)*2+0]; x1aIm_8 = out[(8+ i+16)*2+1];        //turning point
@@ -1383,7 +1383,6 @@ function fftComplexInPlace_seq_4(out) {
           out[( 8+i)*2+1] = xM0ImA + ((xM2ReA)*  tRe_2i + ((xM2ImA)*  tRe_2i)); 
           out[( 9+i)*2+0] = xM1ReB + ((xM3ReB)*  tRe_2j - ((xM3ImB)*  tRe_2h));
           out[( 9+i)*2+1] = xM1ImB + ((xM3ReB)*  tRe_2h + ((xM3ImB)*  tRe_2j)); 
-
           out[(10+i)*2+0] = xM0ReC + ((xM2ReC)*  tRe_2k - ((xM2ImC)*  tRe_2g));
           out[(10+i)*2+1] = xM0ImC + ((xM2ReC)*  tRe_2g + ((xM2ImC)*  tRe_2k)); 
           out[(11+i)*2+0] = xM1ReD + ((xM3ReD)*  tRe_2l - ((xM3ImD)*  tRe_2f));
@@ -1427,14 +1426,14 @@ function fftComplexInPlace_seq_4(out) {
           out[(27+i)*2+0] =   resReD;
           out[(27+i)*2+1] =   resImD;
           
-          out[(37+i)*2+0] =   resReA;
-          out[(37+i)*2+1] = - resImA;
-          out[(38+i)*2+0] =   resReB;
-          out[(38+i)*2+1] = - resImB;
-          out[(39+i)*2+0] =   resReC;
-          out[(39+i)*2+1] = - resImC; 
-          out[(40+i)*2+0] =   resReD;
-          out[(40+i)*2+1] = - resImD;
+          out[(37+i)*2+0] =   resReD;
+          out[(37+i)*2+1] = - resImD;
+          out[(38+i)*2+0] =   resReC;
+          out[(38+i)*2+1] = - resImC;
+          out[(39+i)*2+0] =   resReB;
+          out[(39+i)*2+1] = - resImB; 
+          out[(40+i)*2+0] =   resReA;
+          out[(40+i)*2+1] = - resImA;
 
           x0bRe_12 = x0dRe_0;             x0bIm_12 = -x0dIm_0;
           x1bRe_12 = x1dRe_0;             x1bIm_12 = -x1dIm_0; 
