@@ -989,10 +989,6 @@ function fftComplexInPlace_seq_4(out) {
           let Tx1bIm = (x1bRe * tRe_1b + x1bIm * tRe_1b);
           let Tx3bRe = (x3bRe * tRe_1b - x3bIm * tRe_1b);
           let Tx3bIm = (x3bRe * tRe_1b + x3bIm * tRe_1b);
-
-
-          xM0ReA = x0aRe + x1aRe;               
-          xM2ReA = x2aRe + x3aRe;
           
           xM1ReB = x0bRe + Tx1bRe;
           xM1ImB = x0bIm + Tx1bIm; 
@@ -1004,44 +1000,61 @@ function fftComplexInPlace_seq_4(out) {
           xM3ReD = x2bRe + -Tx3bRe;
           xM3ImD =-x2bIm +  Tx3bIm; 
 
+          resReB = xM1ReB + ((xM3ReB)*tRe_2b - ((xM3ImB)*tRe_2d));
+          resImB = xM1ImB + ((xM3ReB)*tRe_2d + ((xM3ImB)*tRe_2b));
+          resReC = x0cRe  + ((x2cRe)*tRe_2c - ((x3cRe)*tRe_2c));
+          resImC = x1cRe  + ((x2cRe)*tRe_2c + ((x3cRe)*tRe_2c));
+          resReD = xM1ReD + ((xM3ReD)*tRe_2d - ((xM3ImD)*tRe_2b));
+          resImD = xM1ImD + ((xM3ReD)*tRe_2b + ((xM3ImD)*tRe_2d));
+
+          out[( 1+i)*2+0] = resReB;
+          out[( 1+i)*2+1] = resImB; 
+          out[( 2+i)*2+0] = resReC;
+          out[( 2+i)*2+1] = resImC;
+          out[( 3+i)*2+0] = resReD;
+          out[( 3+i)*2+1] = resImD; 
+
+          out[(13+i)*2+0] =   resReD;
+          out[(13+i)*2+1] = - resImD;
+          out[(14+i)*2+0] =   resReC;
+          out[(14+i)*2+1] = - resImC;
+          out[(15+i)*2+0] =   resReB;
+          out[(15+i)*2+1] = - resImB;
+
+          resReB = xM1ReB - ((xM3ReB)*tRe_2b - ((xM3ImB)*tRe_2d));
+          resImB = xM1ImB - ((xM3ReB)*tRe_2d + ((xM3ImB)*tRe_2b));
+          resReC = x0cRe  - ((x2cRe)*tRe_2c - ((x3cRe)*tRe_2c));
+          resImC = x1cRe  - ((x2cRe)*tRe_2c + ((x3cRe)*tRe_2c));
+          resReD = xM1ReD - ((xM3ReD)*tRe_2d - ((xM3ImD)*tRe_2b));
+          resImD = xM1ImD - ((xM3ReD)*tRe_2b + ((xM3ImD)*tRe_2d));
+
+          out[( 9+i)*2+0] = resReB;
+          out[( 9+i)*2+1] = resImB; 
+          out[(10+i)*2+0] = resReC;
+          out[(10+i)*2+1] = resImC;
+          out[(11+i)*2+0] = resReD;
+          out[(11+i)*2+1] = resImD;
+
+          out[( 5+i)*2+0] =   resReD;
+          out[( 5+i)*2+1] = - resImD;
+          out[( 6+i)*2+0] =   resReC;
+          out[( 6+i)*2+1] = - resImC;
+          out[( 7+i)*2+0] =   resReB;
+          out[( 7+i)*2+1] = - resImB;
+
+          xM0ReA = x0aRe + x1aRe;               
+          xM2ReA = x2aRe + x3aRe;
           out[( 0+i)*2+0] = xM0ReA + xM2ReA; 
           //out[( 0+i)*2+1] = 0; 
-          out[( 1+i)*2+0] = xM1ReB + ((xM3ReB)*tRe_2b - ((xM3ImB)*tRe_2d));
-          out[( 1+i)*2+1] = xM1ImB + ((xM3ReB)*tRe_2d + ((xM3ImB)*tRe_2b)); 
-          out[( 2+i)*2+0] = x0cRe  + ((x2cRe)*tRe_2c - ((x3cRe)*tRe_2c));
-          out[( 2+i)*2+1] = x1cRe  + ((x2cRe)*tRe_2c + ((x3cRe)*tRe_2c));
-          out[( 3+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2d - ((xM3ImD)*tRe_2b));
-          out[( 3+i)*2+1] = xM1ImD + ((xM3ReD)*tRe_2b + ((xM3ImD)*tRe_2d));
-
           out[( 8+i)*2+0] = xM0ReA - xM2ReA;
           //out[( 8+i)*2+1] = 0;
-          out[( 9+i)*2+0] = xM1ReB - ((xM3ReB)*tRe_2b - ((xM3ImB)*tRe_2d));
-          out[( 9+i)*2+1] = xM1ImB - ((xM3ReB)*tRe_2d + ((xM3ImB)*tRe_2b)); 
-          out[(10+i)*2+0] = x0cRe  - ((x2cRe)*tRe_2c - ((x3cRe)*tRe_2c));
-          out[(10+i)*2+1] = x1cRe  - ((x2cRe)*tRe_2c + ((x3cRe)*tRe_2c));
-          out[(11+i)*2+0] = xM1ReD - ((xM3ReD)*tRe_2d - ((xM3ImD)*tRe_2b));
-          out[(11+i)*2+1] = xM1ImD - ((xM3ReD)*tRe_2b + ((xM3ImD)*tRe_2d));
 
           xM0ReA = x0aRe - x1aRe;              
           xM2ReA = x2aRe - x3aRe;
-
           out[( 4+i)*2+0] =   xM0ReA; 
-          out[( 4+i)*2+1] =   xM2ReA; 
-          out[( 5+i)*2+0] =   out[(11+i)*2+0];
-          out[( 5+i)*2+1] = - out[(11+i)*2+1];
-          out[( 6+i)*2+0] =   out[(10+i)*2+0];
-          out[( 6+i)*2+1] = - out[(10+i)*2+1];
-          out[( 7+i)*2+0] =   out[(9+i)*2+0];
-          out[( 7+i)*2+1] = - out[(9+i)*2+1];
-
+          out[( 4+i)*2+1] =   xM2ReA;
           out[(12+i)*2+0] =   xM0ReA;
           out[(12+i)*2+1] = - xM2ReA; 
-          out[(13+i)*2+0] =   out[( 3+i)*2+0];
-          out[(13+i)*2+1] = - out[( 3+i)*2+1]; 
-          out[(14+i)*2+0] =   out[( 2+i)*2+0];
-          out[(14+i)*2+1] = - out[( 2+i)*2+1];
-          out[(15+i)*2+0] =   out[( 1+i)*2+0];
-          out[(15+i)*2+1] = - out[( 1+i)*2+1];
     }
 
 
