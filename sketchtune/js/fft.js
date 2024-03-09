@@ -979,9 +979,11 @@ function fftComplexInPlace_seq_4(out) {
           x1bRe = out[(i+ 5)*2+0]; x1bIm = out[(i+ 5)*2+1];
           x2bRe = out[(i+ 9)*2+0]; x2bIm = out[(i+ 9)*2+1];
           x3bRe = out[(i+13)*2+0]; x3bIm = out[(i+13)*2+1];
-          
-          x0cRe = out[(i+ 2)*2+0];
-          x2cRe = out[(i+10)*2+0];
+
+          x0cRe = out[(i+ 2)*2+0]; //x0cIm = out[(i+ 2)*2+1];  //OLDxM0ReA - OLDxM2ReA
+          x1cRe = out[(i+ 6)*2+0]; //x1cIm = out[(i+ 6)*2+1];  //OLDxM0ReA - OLDxM2ReA
+          x2cRe = out[(i+10)*2+0]; //x2cIm = out[(i+10)*2+1];  //OLDxM0ReA - OLDxM2ReA
+          x3cRe = out[(i+14)*2+0]; //x3cIm = out[(i+14)*2+1];  //OLDxM0ReA - OLDxM2ReA
 
 
           let Tx1bRe = (x1bRe * tRe_1b -  x1bIm * tIm_1b);
@@ -1012,8 +1014,8 @@ function fftComplexInPlace_seq_4(out) {
           //out[( 0+i)*2+1] = 0; 
           out[( 1+i)*2+0] = xM1ReB + ((xM3ReB)*tRe_2b - ((xM3ImB)*tRe_2d));
           out[( 1+i)*2+1] = xM1ImB + ((xM3ReB)*tRe_2d + ((xM3ImB)*tRe_2b)); 
-          out[( 2+i)*2+0] = x0cRe  + ((x2cRe)*tRe_2c  - ((x2cRe)*tRe_2c));
-          out[( 2+i)*2+1] = x0cIm  + ((x2cRe)*tRe_2c  + ((x2cRe)*tRe_2c));
+          out[( 2+i)*2+0] = x0cRe  + ((x2cRe)*tRe_2c - ((x3cRe)*tIm_2c));
+          out[( 2+i)*2+1] = x1cRe  + ((x2cRe)*tIm_2c + ((x3cRe)*tRe_2c));
           out[( 3+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2d - ((xM3ImD)*tIm_2d));
           out[( 3+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2d + ((xM3ImD)*tRe_2d));
 
@@ -1021,8 +1023,8 @@ function fftComplexInPlace_seq_4(out) {
           //out[( 8+i)*2+1] = 0;
           out[( 9+i)*2+0] = xM1ReB - ((xM3ReB)*tRe_2b - ((xM3ImB)*tIm_2b));
           out[( 9+i)*2+1] = xM1ImB - ((xM3ReB)*tIm_2b + ((xM3ImB)*tRe_2b)); 
-          out[(10+i)*2+0] = x0cRe  - ((x2cRe)*tRe_2c  - ((x2cRe)*tRe_2c));
-          out[(10+i)*2+1] = x0cIm  - ((x2cRe)*tRe_2c  + ((x2cRe)*tRe_2c));
+          out[(10+i)*2+0] = x0cRe  - ((x2cRe)*tRe_2c - ((x3cRe)*tIm_2c));
+          out[(10+i)*2+1] = x1cRe  - ((x2cRe)*tIm_2c + ((x3cRe)*tRe_2c));
           out[(11+i)*2+0] = xM1ReD - ((xM3ReD)*tRe_2d - ((xM3ImD)*tIm_2d));
           out[(11+i)*2+1] = xM1ImD - ((xM3ReD)*tIm_2d + ((xM3ImD)*tRe_2d));
 
