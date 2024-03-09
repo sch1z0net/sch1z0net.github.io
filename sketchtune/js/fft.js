@@ -854,7 +854,7 @@ function fftComplexInPlace_seq_4(out) {
     let x0bRe, x0bIm; let x1bRe, x1bIm; let x2bRe, x2bIm; let x3bRe, x3bIm;
     let x0cRe, x0cIm; let x1cRe, x1cIm; let x2cRe, x2cIm; let x3cRe, x3cIm;
     let x0dRe, x0dIm; let x1dRe, x1dIm; let x2dRe, x2dIm; let x3dRe, x3dIm;
-    let x0aRe_0, x0aIm_0; let x1aRe_0, x1aIm_0; let x2aRe_0, x2aIm_0; let x3aRe_0, x3aIm_0;
+    /*let x0aRe_0, x0aIm_0; let x1aRe_0, x1aIm_0; let x2aRe_0, x2aIm_0; let x3aRe_0, x3aIm_0;
     let x0bRe_0, x0bIm_0; let x1bRe_0, x1bIm_0; let x2bRe_0, x2bIm_0; let x3bRe_0, x3bIm_0;
     let x0cRe_0, x0cIm_0; let x1cRe_0, x1cIm_0; let x2cRe_0, x2cIm_0; let x3cRe_0, x3cIm_0;
     let x0dRe_0, x0dIm_0; let x1dRe_0, x1dIm_0; let x2dRe_0, x2dIm_0; let x3dRe_0, x3dIm_0;
@@ -869,7 +869,7 @@ function fftComplexInPlace_seq_4(out) {
     let x0aRe_12, x0aIm_12; let x1aRe_12, x1aIm_12; let x2aRe_12, x2aIm_12; let x3aRe_12, x3aIm_12;
     let x0bRe_12, x0bIm_12; let x1bRe_12, x1bIm_12; let x2bRe_12, x2bIm_12; let x3bRe_12, x3bIm_12;
     let x0cRe_12, x0cIm_12; let x1cRe_12, x1cIm_12; let x2cRe_12, x2cIm_12; let x3cRe_12, x3cIm_12;
-    let x0dRe_12, x0dIm_12; let x1dRe_12, x1dIm_12; let x2dRe_12, x2dIm_12; let x3dRe_12, x3dIm_12;
+    let x0dRe_12, x0dIm_12; let x1dRe_12, x1dIm_12; let x2dRe_12, x2dIm_12; let x3dRe_12, x3dIm_12;*/
 
     let xM0ReA = 0; let xM0ImA = 0; let xM2ReA = 0; let xM2ImA = 0;
     let xM1ReB = 0; let xM1ImB = 0; let xM3ReB = 0; let xM3ImB = 0;
