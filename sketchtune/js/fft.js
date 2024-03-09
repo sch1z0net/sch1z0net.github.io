@@ -909,24 +909,24 @@ function fftComplexInPlace_seq_4(out) {
     for(let i_ = 0; i_ < tsq; i_++){
           let i = i_ * 4;
 
-          x0aRe = out[(i+0)*2+0];
-          x1aRe = out[(i+1)*2+0];
-          x2aRe = out[(i+2)*2+0];
-          x3aRe = out[(i+3)*2+0];
+          x0aRe = out[i*2    ];
+          x1aRe = out[i*2 + 2];
+          x2aRe = out[i*2 + 4];
+          x3aRe = out[i*2 + 6];
 
           /*xM0ReA = x0aRe + x1aRe;            
           xM2ReA = x2aRe + x3aRe;   
           xM1ReB = x0aRe - x1aRe;
           xM3ReB = x2aRe - x3aRe;*/
 
-          out[(0+i)*2+0] =   x0aRe + x1aRe + x2aRe + x3aRe;
+          out[i*2      ] =   x0aRe + x1aRe + x2aRe + x3aRe;
           //out[(0+i)*2+1] =   0; 
-          out[(1+i)*2+0] =   x0aRe - x1aRe;
-          out[(1+i)*2+1] =   x2aRe - x3aRe;
-          out[(2+i)*2+0] =   x0aRe + x1aRe - x2aRe - x3aRe;
+          out[i*2  +  2] =   x0aRe - x1aRe;
+          out[i*2  +  3] =   x2aRe - x3aRe;
+          out[i*2  +  4] =   x0aRe + x1aRe - x2aRe - x3aRe;
           //out[(2+i)*2+1] =   0; 
-          out[(3+i)*2+0] =   x0aRe - x1aRe;
-          out[(3+i)*2+1] = - x2aRe + x3aRe;
+          out[i*2  +  5] =   x0aRe - x1aRe;
+          out[i*2  +  6] = - x2aRe + x3aRe;
     } 
 
 
