@@ -1408,25 +1408,28 @@ function fftComplexInPlace_seq_4(out) {
           out[(55+i)*2+0] = xM1ReD - ((xM3ReD)* -tRe_2j  - ((xM3ImD)*  tRe_2h ));
           out[(55+i)*2+1] = xM1ImD - ((xM3ReD)*  tRe_2h  + ((xM3ImD)* -tRe_2j )); 
 
-          x0aRe = out[(8+ i+ 0)*2+0]; //x0aIm = out[(8+ i+ 0)*2+1]; // 0
-          x1aRe = out[(8+ i+16)*2+0]; x1aIm = out[(8+ i+16)*2+1];
-          x2aRe = out[(8+ i+32)*2+0]; x2aIm = out[(8+ i+32)*2+1];
-          x3aRe = out[(8+ i+48)*2+0]; x3aIm = out[(8+ i+48)*2+1];
-          
-          x0bRe = x0dRe;              x0bIm = -x0dIm;             //x0bRe = out[(8+ i+ 1)*2+0]; x0bIm = out[(8+ i+ 1)*2+1]; //<------
-          x1bRe = out[(8+ i+17)*2+0]; x1bIm = out[(8+ i+17)*2+1];
-          x2bRe = out[(8+ i+33)*2+0]; x2bIm = out[(8+ i+33)*2+1];
-          x3bRe = out[(8+ i+49)*2+0]; x3bIm = out[(8+ i+49)*2+1];
+          x0dRe = x0bRe;              x0dIm = -x0bIm;             //x0dRe = out[(8+ i+ 3)*2+0]; x0dIm = out[(8+ i+ 3)*2+1];
+          x1dRe = out[(8+ i+19)*2+0]; x1dIm = out[(8+ i+19)*2+1];
+          x2dRe = out[(8+ i+35)*2+0]; x2dIm = out[(8+ i+35)*2+1];
+          x3dRe = out[(8+ i+51)*2+0]; x3dIm = out[(8+ i+51)*2+1];
 
           x0cRe = x0cRe;              x0cIm = -x0cIm;             //x0cRe = out[(8+ i+ 2)*2+0]; x0cIm = out[(8+ i+ 2)*2+1];
           x1cRe = out[(8+ i+18)*2+0]; x1cIm = out[(8+ i+18)*2+1];
           x2cRe = out[(8+ i+34)*2+0]; x2cIm = out[(8+ i+34)*2+1];
           x3cRe = out[(8+ i+50)*2+0]; x3cIm = out[(8+ i+50)*2+1];
+
+          x0bRe = x0dRe;              x0bIm = -x0dIm;             //x0bRe = out[(8+ i+ 1)*2+0]; x0bIm = out[(8+ i+ 1)*2+1]; //<------
+          x1bRe = out[(8+ i+17)*2+0]; x1bIm = out[(8+ i+17)*2+1];
+          x2bRe = out[(8+ i+33)*2+0]; x2bIm = out[(8+ i+33)*2+1];
+          x3bRe = out[(8+ i+49)*2+0]; x3bIm = out[(8+ i+49)*2+1];
+
+          x0aRe = out[(8+ i+ 0)*2+0]; //x0aIm = out[(8+ i+ 0)*2+1]; // 0
+          x1aRe = out[(8+ i+16)*2+0]; x1aIm = out[(8+ i+16)*2+1];
+          x2aRe = out[(8+ i+32)*2+0]; x2aIm = out[(8+ i+32)*2+1];
+          x3aRe = out[(8+ i+48)*2+0]; x3aIm = out[(8+ i+48)*2+1];
+
+
           
-          x0dRe = out[(8+ i+ 3)*2+0]; x0dIm = out[(8+ i+ 3)*2+1]; //x0dRe = out[(8+ i+ 3)*2+0]; x0dIm = out[(8+ i+ 3)*2+1];
-          x1dRe = out[(8+ i+19)*2+0]; x1dIm = out[(8+ i+19)*2+1];
-          x2dRe = out[(8+ i+35)*2+0]; x2dIm = out[(8+ i+35)*2+1];
-          x3dRe = out[(8+ i+51)*2+0]; x3dIm = out[(8+ i+51)*2+1];
 
           Tx0aRe = - x1aIm;
           Tx0aIm =   x1aRe;
