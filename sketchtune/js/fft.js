@@ -920,6 +920,14 @@ function fftComplexInPlace_seq_4(out) {
 
           out[i*2  +  6] =   x0aRe - x1aRe;
           out[i*2  +  7] = - x2aRe + x3aRe;
+
+          if(true){
+            console.log( i*2    , out[i*2      ].toFixed(2), i*2 + 1, out[i*2  +  1].toFixed(2)); 
+            console.log( i*2 + 2, out[i*2  +  2].toFixed(2), i*2 + 3, out[i*2  +  3].toFixed(2));
+            console.log( i*2 + 4, out[i*2  +  4].toFixed(2), i*2 + 5, out[i*2  +  5].toFixed(2)); 
+            console.log( i*2 + 6, out[i*2  +  6].toFixed(2), i*2 + 7, out[i*2  +  7].toFixed(2));
+          }
+
     } 
 
 
