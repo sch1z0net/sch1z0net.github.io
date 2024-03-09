@@ -918,8 +918,8 @@ function fftComplexInPlace_seq_4(out) {
           out[i*2  +  3] =   x2aRe - x3aRe;
           out[i*2  +  4] =   x0aRe + x1aRe - x2aRe - x3aRe;
           //out[(2+i)*2+1] =   0; 
-          out[i*2  +  5] =   x0aRe - x1aRe;
-          out[i*2  +  6] = - x2aRe + x3aRe;
+          out[i*2  +  6] =   x0aRe - x1aRe;
+          out[i*2  +  7] = - x2aRe + x3aRe;
     } 
 
 
