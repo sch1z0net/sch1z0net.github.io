@@ -961,18 +961,18 @@ function fftComplexInPlace_seq_4(out) {
     tIm_1d  =   tRe_1b;
 
     tRe_2b  = ____F[14+(1*2+0)]; 
-    tIm_2b  = ____F[14+(1*2+1)];
     tRe_2c  = ____F[14+(2*2+0)]; 
-    tIm_2c  = ____F[14+(2*2+1)];
-    tRe_2d  = ____F[14+(3*2+0)]; 
-    tIm_2d  = ____F[14+(3*2+1)];
+    tRe_2d  = ____F[14+(3*2+0)];
+    tIm_2b  = tRe_2d; 
+    tIm_2c  = tRe_2c;
+    tIm_2d  = tRe_2b;
 
-    tRe_2f  = ____F[14+(5*2+0)]; 
-    tIm_2f  = ____F[14+(5*2+1)];
-    tRe_2g  = ____F[14+(6*2+0)]; 
-    tIm_2g  = ____F[14+(6*2+1)];
-    tRe_2h  = ____F[14+(7*2+0)]; 
-    tIm_2h  = ____F[14+(7*2+1)];
+    tRe_2f  =  tRe_2d; 
+    tIm_2f  = -tRe_2d;
+    tRe_2g  =  tRe_2c; 
+    tIm_2g  = -tRe_2c;
+    tRe_2h  =  tRe_2b;
+    tIm_2h  = -tRe_2b;
 
     for(let i_ = 0; i_ < tsq; i_+=4){
           let i = i_ * 4;
