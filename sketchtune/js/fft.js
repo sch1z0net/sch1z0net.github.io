@@ -927,16 +927,10 @@ function fftComplexInPlace_seq_4(out) {
     // P = 1
     //
     tRe_1b  = ____F[6+(1*2+0)];
-    tIm_1b  =   tRe_1b;
-    tRe_1d  = - tRe_1b;
-    tIm_1d  =   tRe_1b;
 
     tRe_2b  = ____F[14+(1*2+0)]; 
     tRe_2c  = ____F[14+(2*2+0)]; 
     tRe_2d  = ____F[14+(3*2+0)];
-    tIm_2b  = tRe_2d; 
-    tIm_2c  = tRe_2c;
-    tIm_2d  = tRe_2b;
 
     for(let i = 0; i < tsq*4; i+=16){
           x0aRe = out[i*2     ];
@@ -959,18 +953,14 @@ function fftComplexInPlace_seq_4(out) {
           x3bIm = out[i*2 + 27];
           x3cRe = out[i*2 + 28];
 
-          let Tx1bRe = (x1bRe * tRe_1b - x1bIm * tRe_1b);
-          let Tx1bIm = (x1bRe * tRe_1b + x1bIm * tRe_1b);
-          xM1ReB = x0bRe  + Tx1bRe;
-          xM1ImB = x0bIm  + Tx1bIm; 
-          xM1ReD = x0bRe  - Tx1bRe;
+          xM1ReB = x0bRe  + (x1bRe * tRe_1b - x1bIm * tRe_1b);
+          xM1ImB = x0bIm  + (x1bRe * tRe_1b + x1bIm * tRe_1b); 
+          xM1ReD = x0bRe  - (x1bRe * tRe_1b - x1bIm * tRe_1b);
           xM1ImD = Tx1bIm - x0bIm;
 
-          let Tx3bRe = (x3bRe * tRe_1b - x3bIm * tRe_1b);
-          let Tx3bIm = (x3bRe * tRe_1b + x3bIm * tRe_1b);
-          xM3ReB = x2bRe  + Tx3bRe;
-          xM3ImB = x2bIm  + Tx3bIm; 
-          xM3ReD = x2bRe  - Tx3bRe;
+          xM3ReB = x2bRe  + (x3bRe * tRe_1b - x3bIm * tRe_1b);
+          xM3ImB = x2bIm  + (x3bRe * tRe_1b + x3bIm * tRe_1b); 
+          xM3ReD = x2bRe  - (x3bRe * tRe_1b - x3bIm * tRe_1b);
           xM3ImD = Tx3bIm - x2bIm; 
 
           resReB = xM1ReB + ((xM3ReB)*tRe_2b - ((xM3ImB)*tRe_2d));
