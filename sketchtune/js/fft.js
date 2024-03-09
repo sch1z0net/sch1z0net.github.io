@@ -994,6 +994,9 @@ function fftComplexInPlace_seq_4(out) {
           resReD = xM1ReD - ((xM3ReD)*tRe_2d - ((xM3ImD)*tRe_2b));
           resImD = xM1ImD - ((xM3ReD)*tRe_2b + ((xM3ImD)*tRe_2d));
 
+
+          xM0ReA = x0aRe - x1aRe;              
+          xM2ReA = x2aRe - x3aRe;
           out[i*2 +   8] =   x0aRe - x1aRe; 
           out[i*2 +   9] =   x2aRe - x3aRe;
 
@@ -1012,7 +1015,7 @@ function fftComplexInPlace_seq_4(out) {
           out[i*2 +  23] = resImD;
 
           out[i*2 +  24] =   x0aRe - x1aRe;
-          out[i*2 +  25] = - x2aRe - x3aRe;
+          out[i*2 +  25] =   x3aRe - x2aRe;
     }
 
 
