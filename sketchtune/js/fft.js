@@ -1297,14 +1297,32 @@ function fftComplexInPlace_seq_4(out) {
           xM3ReD = x2dRe_4 - Tx3dRe;
           xM3ImD = x2dIm_4 - Tx3dIm; 
 
-          out[(20+i)*2+0] = xM0ReA + ((xM2ReA)* -tRe_2m  - ((xM2ImA)*  tRe_2e ));
-          out[(20+i)*2+1] = xM0ImA + ((xM2ReA)*  tRe_2e  + ((xM2ImA)* -tRe_2m )); 
-          out[(21+i)*2+0] = xM1ReB + ((xM3ReB)* -tRe_2l  - ((xM3ImB)*  tRe_2f ));
-          out[(21+i)*2+1] = xM1ImB + ((xM3ReB)*  tRe_2f  + ((xM3ImB)* -tRe_2l )); 
-          out[(22+i)*2+0] = xM0ReC + ((xM2ReC)* -tRe_2k  - ((xM2ImC)*  tRe_2g ));
-          out[(22+i)*2+1] = xM0ImC + ((xM2ReC)*  tRe_2g  + ((xM2ImC)* -tRe_2k )); 
-          out[(23+i)*2+0] = xM1ReD + ((xM3ReD)* -tRe_2j  - ((xM3ImD)*  tRe_2h ));
-          out[(23+i)*2+1] = xM1ImD + ((xM3ReD)*  tRe_2h  + ((xM3ImD)* -tRe_2j ));
+          resReA = xM0ReA + ((xM2ReA)* -tRe_2m  - ((xM2ImA)*  tRe_2e ));
+          resImA = xM0ImA + ((xM2ReA)*  tRe_2e  + ((xM2ImA)* -tRe_2m )); 
+          resReB = xM1ReB + ((xM3ReB)* -tRe_2l  - ((xM3ImB)*  tRe_2f ));
+          resImB = xM1ImB + ((xM3ReB)*  tRe_2f  + ((xM3ImB)* -tRe_2l )); 
+          resReC = xM0ReC + ((xM2ReC)* -tRe_2k  - ((xM2ImC)*  tRe_2g ));
+          resImC = xM0ImC + ((xM2ReC)*  tRe_2g  + ((xM2ImC)* -tRe_2k )); 
+          resReD = xM1ReD + ((xM3ReD)* -tRe_2j  - ((xM3ImD)*  tRe_2h ));
+          resImD = xM1ImD + ((xM3ReD)*  tRe_2h  + ((xM3ImD)* -tRe_2j ));
+
+          out[(20+i)*2+0] =   resReA;
+          out[(20+i)*2+1] =   resImA; 
+          out[(21+i)*2+0] =   resReB; 
+          out[(21+i)*2+1] =   resImB;
+          out[(22+i)*2+0] =   resReC;
+          out[(22+i)*2+1] =   resImC;
+          out[(23+i)*2+0] =   resReD;
+          out[(23+i)*2+1] =   resImD; 
+
+          out[(41+i)*2+0] =   resReA;
+          out[(41+i)*2+1] = - resImA;
+          out[(42+i)*2+0] =   resReB;
+          out[(42+i)*2+1] = - resImB;
+          out[(43+i)*2+0] =   resReC;
+          out[(43+i)*2+1] = - resImC; 
+          out[(44+i)*2+0] =   resReD;
+          out[(44+i)*2+1] = - resImD;
 
           x0aRe_8 = out[(8+ i+ 0)*2+0]; //x0aIm = out[(8+ i+ 0)*2+1]; // 0   //turning point
           x1aRe_8 = out[(8+ i+16)*2+0]; x1aIm_8 = out[(8+ i+16)*2+1];        //turning point
@@ -1530,16 +1548,6 @@ function fftComplexInPlace_seq_4(out) {
           out[(36+i)*2+1] = - resImA;
 
 
-
-          out[(41+i)*2+0] =   out[(23+i)*2+0];
-          out[(41+i)*2+1] = - out[(23+i)*2+1];
-          out[(42+i)*2+0] =   out[(22+i)*2+0];
-          out[(42+i)*2+1] = - out[(22+i)*2+1];
-          out[(43+i)*2+0] =   out[(21+i)*2+0];
-          out[(43+i)*2+1] = - out[(21+i)*2+1];  
-
-          out[(44+i)*2+0] =   out[(20+i)*2+0];
-          out[(44+i)*2+1] = - out[(20+i)*2+1];
           out[(45+i)*2+0] =   out[(19+i)*2+0];
           out[(45+i)*2+1] = - out[(19+i)*2+1];
           out[(46+i)*2+0] =   out[(18+i)*2+0];
