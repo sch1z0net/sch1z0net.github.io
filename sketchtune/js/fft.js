@@ -1232,8 +1232,8 @@ function fftComplexInPlace_seq_4(out) {
           //out[( 0+i)*2+1] = xM0ImA + ((xM2ReA)*0      + ((xM2ImA)*1     )); 
           out[( 0+i)*2+0] = (x0aRe + x1aRe) + (x2aRe + x3aRe);
           out[( 0+i)*2+1] =          x1aIm  + (x2aIm + x3aIm); 
-          out[( 1+i)*2+0] = xM1ReB + ((xM3ReB)*  tRe_2b - ((xM3ImB)*  tRe_2p));
-          out[( 1+i)*2+1] = xM1ImB + ((xM3ReB)*  tRe_2p + ((xM3ImB)*  tRe_2b)); 
+          out[( 1+i)*2+0] = xM1ReB + ((xM3ReB)*  tRe_2b - ((xM3ImB)*  tRe_2p)); //
+          out[( 1+i)*2+1] = xM1ImB + ((xM3ReB)*  tRe_2p + ((xM3ImB)*  tRe_2b)); //
           out[( 2+i)*2+0] = xM0ReC + ((xM2ReC)*  tRe_2c - ((xM2ImC)*  tRe_2o));
           out[( 2+i)*2+1] = xM0ImC + ((xM2ReC)*  tRe_2o + ((xM2ImC)*  tRe_2c)); 
           out[( 3+i)*2+0] = xM1ReD + ((xM3ReD)*  tRe_2d - ((xM3ImD)*  tRe_2n));
@@ -1297,17 +1297,17 @@ function fftComplexInPlace_seq_4(out) {
           x2aRe = out[(4+ i+32)*2+0]; x2aIm = out[(4+ i+32)*2+1];
           x3aRe = out[(4+ i+48)*2+0]; x3aIm = out[(4+ i+48)*2+1];
           
-          x0bRe = out[(4+ i+ 1)*2+0]; x0bIm = out[(4+ i+ 1)*2+1];
+          x0bRe = out[(4+ i+ 1)*2+0]; x0bIm = out[(4+ i+ 1)*2+1]; //<----
           x1bRe = out[(4+ i+17)*2+0]; x1bIm = out[(4+ i+17)*2+1];
           x2bRe = out[(4+ i+33)*2+0]; x2bIm = out[(4+ i+33)*2+1];
           x3bRe = out[(4+ i+49)*2+0]; x3bIm = out[(4+ i+49)*2+1];
           
-          x0cRe = out[(4+ i+ 2)*2+0]; x0cIm = out[(4+ i+ 2)*2+1];
+          x0cRe = out[(4+ i+ 2)*2+0]; x0cIm = out[(4+ i+ 2)*2+1]; //<----
           x1cRe = out[(4+ i+18)*2+0]; x1cIm = out[(4+ i+18)*2+1];
           x2cRe = out[(4+ i+34)*2+0]; x2cIm = out[(4+ i+34)*2+1];
           x3cRe = out[(4+ i+50)*2+0]; x3cIm = out[(4+ i+50)*2+1];
           
-          x0dRe = out[(4+ i+ 3)*2+0]; x0dIm = out[(4+ i+ 3)*2+1];
+          x0dRe = out[(4+ i+ 3)*2+0]; x0dIm = out[(4+ i+ 3)*2+1]; //<----
           x1dRe = out[(4+ i+19)*2+0]; x1dIm = out[(4+ i+19)*2+1];
           x2dRe = out[(4+ i+35)*2+0]; x2dIm = out[(4+ i+35)*2+1];
           x3dRe = out[(4+ i+51)*2+0]; x3dIm = out[(4+ i+51)*2+1];
@@ -1413,17 +1413,17 @@ function fftComplexInPlace_seq_4(out) {
           x2aRe = out[(8+ i+32)*2+0]; x2aIm = out[(8+ i+32)*2+1];
           x3aRe = out[(8+ i+48)*2+0]; x3aIm = out[(8+ i+48)*2+1];
           
-          x0bRe = out[(8+ i+ 1)*2+0]; x0bIm = out[(8+ i+ 1)*2+1];
+          x0bRe = x0dRe;              x0bIm = -x0dIm;             //x0bRe = out[(8+ i+ 1)*2+0]; x0bIm = out[(8+ i+ 1)*2+1]; //<------
           x1bRe = out[(8+ i+17)*2+0]; x1bIm = out[(8+ i+17)*2+1];
           x2bRe = out[(8+ i+33)*2+0]; x2bIm = out[(8+ i+33)*2+1];
           x3bRe = out[(8+ i+49)*2+0]; x3bIm = out[(8+ i+49)*2+1];
-          
-          x0cRe = out[(8+ i+ 2)*2+0]; x0cIm = out[(8+ i+ 2)*2+1];
+
+          x0cRe = x0cRe;              x0cIm = -x0cIm;             //x0cRe = out[(8+ i+ 2)*2+0]; x0cIm = out[(8+ i+ 2)*2+1];
           x1cRe = out[(8+ i+18)*2+0]; x1cIm = out[(8+ i+18)*2+1];
           x2cRe = out[(8+ i+34)*2+0]; x2cIm = out[(8+ i+34)*2+1];
           x3cRe = out[(8+ i+50)*2+0]; x3cIm = out[(8+ i+50)*2+1];
           
-          x0dRe = out[(8+ i+ 3)*2+0]; x0dIm = out[(8+ i+ 3)*2+1];
+          x0dRe = x0bRe;              x0dIm = -x0bIm;             //x0dRe = out[(8+ i+ 3)*2+0]; x0dIm = out[(8+ i+ 3)*2+1];
           x1dRe = out[(8+ i+19)*2+0]; x1dIm = out[(8+ i+19)*2+1];
           x2dRe = out[(8+ i+35)*2+0]; x2dIm = out[(8+ i+35)*2+1];
           x3dRe = out[(8+ i+51)*2+0]; x3dIm = out[(8+ i+51)*2+1];
@@ -1613,29 +1613,32 @@ function fftComplexInPlace_seq_4(out) {
           xM2ReA = x2aRe - Tx2aRe;
           xM2ImA = x2aIm - Tx2aIm; 
           
-          xM1ReB = x0bRe - Tx1bRe;
-          xM1ImB = x0bIm - Tx1bIm;  
-          xM3ReB = x2bRe - Tx3bRe;
-          xM3ImB = x2bIm - Tx3bIm; 
+          xM1ReB = x0bRe - Tx1bRe; // x0bRe - (x1bRe * -tRe_1d - x1bIm *  tRe_1f)
+          xM1ImB = x0bIm - Tx1bIm; // x0bIm - (x1bIm * -tRe_1d + x1bRe *  tRe_1f)
+          xM3ReB = x2bRe - Tx3bRe; // x2bRe - (x3bRe * -tRe_1d - x3bIm *  tRe_1f)
+          xM3ImB = x2bIm - Tx3bIm; // x2bIm - (x3bIm * -tRe_1d + x3bRe *  tRe_1f)
 
           xM0ReC = x0cRe - Tx0cRe;
           xM0ImC = x0cIm - Tx0cIm; 
           xM2ReC = x2cRe - Tx2cRe;
           xM2ImC = x2cIm - Tx2cIm; 
 
-          xM1ReD = x0dRe - Tx1dRe;
-          xM1ImD = x0dIm - Tx1dIm; 
-          xM3ReD = x2dRe - Tx3dRe;
-          xM3ImD = x2dIm - Tx3dIm; 
+          xM1ReD = x0dRe - Tx1dRe; // x0dRe - (x1dRe * -tRe_1b - x1dIm *  tRe_1h)
+          xM1ImD = x0dIm - Tx1dIm; // x0dIm - (x1dIm * -tRe_1b + x1dRe *  tRe_1h) 
+          xM3ReD = x2dRe - Tx3dRe; // x2dRe - (x3dRe * -tRe_1b - x3dIm *  tRe_1h)
+          xM3ImD = x2dIm - Tx3dIm; // x2dIm - (x3dIm * -tRe_1b + x3dRe *  tRe_1h)
 
           out[(28+i)*2+0] = xM0ReA + ((xM2ReA)* -tRe_2e  - ((xM2ImA)*  tRe_2m ));
           out[(28+i)*2+1] = xM0ImA + ((xM2ReA)*  tRe_2m  + ((xM2ImA)* -tRe_2e )); 
           out[(29+i)*2+0] = xM1ReB + ((xM3ReB)* -tRe_2d  - ((xM3ImB)*  tRe_2n ));
           out[(29+i)*2+1] = xM1ImB + ((xM3ReB)*  tRe_2n  + ((xM3ImB)* -tRe_2d )); 
           out[(30+i)*2+0] = xM0ReC + ((xM2ReC)* -tRe_2c  - ((xM2ImC)*  tRe_2o ));
-          out[(30+i)*2+1] = xM0ImC + ((xM2ReC)*  tRe_2o  + ((xM2ImC)* -tRe_2c )); 
-          out[(31+i)*2+0] = xM1ReD + ((xM3ReD)* -tRe_2b  - ((xM3ImD)*  tRe_2p ));
-          out[(31+i)*2+1] = xM1ImD + ((xM3ReD)*  tRe_2p  + ((xM3ImD)* -tRe_2b ));
+          out[(30+i)*2+1] = xM0ImC + ((xM2ReC)*  tRe_2o  + ((xM2ImC)* -tRe_2c ));
+
+          //out[( 1+i)*2+0] = xM1ReB + ((xM3ReB)*  tRe_2b - ((xM3ImB)*  tRe_2p)); // x0bRe   +   x1bRe*tRe_1d   +   x1bIm*tRe_1f  + (x2bRe*tRe_2b + x3bRe*tRe_1d*tRe_2b + x3bIm*tRe_1f*tRe_2b)    - x2bIm*tRe_2p - x3bIm*tRe_1d*tRe_2p + x3bRe*tRe_1f*tRe_2p
+          //out[( 1+i)*2+1] = xM1ImB + ((xM3ReB)*  tRe_2p + ((xM3ImB)*  tRe_2b)); // 
+          out[(31+i)*2+0] = xM1ReD + ((xM3ReD)* -tRe_2b  - ((xM3ImD)*  tRe_2p )); // x0dRe   +   x1dRe*tRe_1b   +   x1dIm*tRe_1h  - (x2bRe*tRe_2b + x3bRe*tRe_1d*tRe_2b + x3bIm*tRe_1f*tRe_2b)    - x2bIm*tRe_2p - x3bIm*tRe_1d*tRe_2p + x3bRe*tRe_1f*tRe_2p
+          out[(31+i)*2+1] = xM1ImD + ((xM3ReD)*  tRe_2p  + ((xM3ImD)* -tRe_2b )); //
 
           out[(60+i)*2+0] = xM0ReA - ((xM2ReA)* -tRe_2e  - ((xM2ImA)*  tRe_2m ));
           out[(60+i)*2+1] = xM0ImA - ((xM2ReA)*  tRe_2m  + ((xM2ImA)* -tRe_2e )); 
