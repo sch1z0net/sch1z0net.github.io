@@ -981,8 +981,10 @@ function fftComplexInPlace_seq_4(out) {
           resReD = xM1ReD + ((xM3ReD)*tRe_2d - ((xM3ImD)*tRe_2b));
           resImD = xM1ImD + ((xM3ReD)*tRe_2b + ((xM3ImD)*tRe_2d));
 
-          out[i*2      ] = x0aRe + x1aRe + x2aRe + x3aRe; 
-          out[i*2 +  16] = x0aRe + x1aRe - x2aRe - x3aRe;
+          xM0ReA = x0aRe + x1aRe;               
+          xM2ReA = x2aRe + x3aRe;
+          out[i*2      ] = xM0ReA + xM2ReA; 
+          out[i*2 +  16] = xM0ReA - xM2ReA;
 
           out[i*2 +  2] = resReB;
           out[i*2 +  3] = resImB; 
@@ -1006,8 +1008,10 @@ function fftComplexInPlace_seq_4(out) {
           resImD = xM1ImD - ((xM3ReD)*tRe_2b + ((xM3ImD)*tRe_2d));
 
 
-          out[i*2 +   8] =   x0aRe - x1aRe; 
-          out[i*2 +   9] =   x2aRe - x3aRe;
+          xM0ReA = x0aRe - x1aRe;              
+          xM2ReA = x2aRe - x3aRe;
+          out[i*2 +   8] =   xM0ReA; 
+          out[i*2 +   9] =   xM2ReA;
 
           out[i*2 +  10] =   resReD;
           out[i*2 +  11] = - resImD;
@@ -1023,8 +1027,8 @@ function fftComplexInPlace_seq_4(out) {
           out[i*2 +  22] = resReD;
           out[i*2 +  23] = resImD;
 
-          out[i*2 +  24] =   x0aRe - x1aRe;
-          out[i*2 +  25] =   x3aRe - x2aRe;
+          out[i*2 +  24] =   xM0ReA;
+          out[i*2 +  25] = - xM2ReA;
     }
 
 
@@ -3233,7 +3237,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
     }*/
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
-        if(size > 16){ break; }
+        if(size > 32){ break; }
         const halfSize = size / 2;
         // Get FFT factors with caching
         const factors = computeFFTFactorsWithCache(size);
