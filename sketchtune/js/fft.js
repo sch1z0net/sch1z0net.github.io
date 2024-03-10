@@ -2746,6 +2746,6 @@ console.log(computeInverseFFT(computeFFT(signal3)));
 
 
 //console.log(fftRealInPlace_ref(testData256));
-//console.log(fftRealInPlaceRADIX4(testData256,4));
+console.log(fftRealInPlaceRADIX4(testData256,4));
 
 
