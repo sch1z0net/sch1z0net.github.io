@@ -850,14 +850,14 @@ let tsq   = 64;
 
 
 
-let tRe_1b  = ____F[6+(1*2+0)];
+let t1Re_1b  = ____F[6+(1*2+0)];
 
-let tRe_2b  = ____F[14+(1*2+0)]; 
-let tRe_2c  = ____F[14+(2*2+0)]; 
-let tRe_2d  = ____F[14+(3*2+0)];
+let t1Re_2b  = ____F[14+(1*2+0)]; 
+let t1Re_2c  = ____F[14+(2*2+0)]; 
+let t1Re_2d  = ____F[14+(3*2+0)];
 
-let tRe_1b2b = tRe_1b * tRe_2b;
-let tRe_1b2d = tRe_1b * tRe_2d;
+let t1Re_1b2b = t1Re_1b * t1Re_2b;
+let t1Re_1b2d = t1Re_1b * t1Re_2d;
 
 function fftComplexInPlace_seq_4(out) {
     
@@ -939,8 +939,8 @@ function fftComplexInPlace_seq_4(out) {
           let x3bIm = out[idx + 27];
           let x3cRe = out[idx + 28];
 
-          let x2cRe_tRe_2c = x2cRe * tRe_2c;
-          let x3cRe_tRe_2c = x3cRe * tRe_2c;
+          let x2cRe_tRe_2c = x2cRe * t1Re_2c;
+          let x3cRe_tRe_2c = x3cRe * t1Re_2c;
 
           let resReC1 = x0cRe + x2cRe_tRe_2c - x3cRe_tRe_2c;
           let resImC1 = x1cRe + x2cRe_tRe_2c + x3cRe_tRe_2c;  
@@ -952,18 +952,18 @@ function fftComplexInPlace_seq_4(out) {
           let x3dif = (x3bRe-x3bIm);
           let x3sum = (x3bRe+x3bIm);
 
-          let x1dif_tRe_1b = x1dif * tRe_1b;
-          let x1sum_tRe_1b = x1sum * tRe_1b;
+          let x1dif_tRe_1b = x1dif * t1Re_1b;
+          let x1sum_tRe_1b = x1sum * t1Re_1b;
           
-          let x3dif_tRe_1b2b = x3dif * tRe_1b2b;
-          let x3dif_tRe_1b2d = x3dif * tRe_1b2d;
-          let x3sum_tRe_1b2b = x3sum * tRe_1b2b;
-          let x3sum_tRe_1b2d = x3sum * tRe_1b2d;
+          let x3dif_tRe_1b2b = x3dif * t1Re_1b2b;
+          let x3dif_tRe_1b2d = x3dif * t1Re_1b2d;
+          let x3sum_tRe_1b2b = x3sum * t1Re_1b2b;
+          let x3sum_tRe_1b2d = x3sum * t1Re_1b2d;
 
-          let tempReB = (x3dif_tRe_1b2b - x3sum_tRe_1b2d + x2bRe*tRe_2b - x2bIm*tRe_2d);
-          let tempImB = (x3dif_tRe_1b2d + x3sum_tRe_1b2b + x2bRe*tRe_2d + x2bIm*tRe_2b);
-          let tempReD = (x3dif_tRe_1b2d + x3sum_tRe_1b2b - x2bRe*tRe_2d - x2bIm*tRe_2b);
-          let tempImD = (x3dif_tRe_1b2b - x3sum_tRe_1b2d - x2bRe*tRe_2b + x2bIm*tRe_2d);
+          let tempReB = (x3dif_tRe_1b2b - x3sum_tRe_1b2d + x2bRe*t1Re_2b - x2bIm*t1Re_2d);
+          let tempImB = (x3dif_tRe_1b2d + x3sum_tRe_1b2b + x2bRe*t1Re_2d + x2bIm*t1Re_2b);
+          let tempReD = (x3dif_tRe_1b2d + x3sum_tRe_1b2b - x2bRe*t1Re_2d - x2bIm*t1Re_2b);
+          let tempImD = (x3dif_tRe_1b2b - x3sum_tRe_1b2d - x2bRe*t1Re_2b + x2bIm*t1Re_2d);
 
           let resReB1 = x0bRe  + x1dif_tRe_1b + tempReB;     
           let resReB2 = x0bRe  + x1dif_tRe_1b - tempReB;     
