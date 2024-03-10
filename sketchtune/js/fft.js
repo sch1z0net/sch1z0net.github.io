@@ -842,13 +842,7 @@ function fftComplexInPlace_seq(out) {
     return out;
 }*/
 
-let ____F = LOOKUP_RADIX2_256;
-let steps = 4;           // 1    2    3    4   
-let ts    = 8;           // 1    2    4    8
-let tsq   = 64;
-
-
-
+let ____F = LOOKUP_RADIX2_1024;
 
 let t1Re_1b  = ____F[6+(1*2+0)];
 
