@@ -1350,12 +1350,7 @@ function fftComplexInPlace_seq_4(out) {
 
     for(let b_ = 0; b_ < ts; b_++){
         b = b_*r;  
-        if(N==256 && p == 2 && b_ >= ts/2){ 
-            b = (b_%4)*r + N/2; 
-        } 
         s = b;
-        let k = p==0 ? 1 : (1<<(2*p));  //  1  4  16  64
-
         for(let i_ = 0; i_ < ts; i_++){
             let i = b + i_ * r_;
             if(i_<(ts/2)){  i = b +  0+((i_%4)*32)*2; 
