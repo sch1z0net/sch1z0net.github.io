@@ -964,13 +964,20 @@ function fftComplexInPlace_seq_4(out) {
           let x3bIm = out[idx + 27];
           let x3cRe = out[idx + 28];
 
+          out[idx      ] = x0aRe + x1aRe + x2aRe + x3aRe; 
+          out[idx +   8] = x0aRe - x1aRe;  
+          out[idx +   9] = x2aRe - x3aRe;      
+          out[idx +  16] = x0aRe + x1aRe - x2aRe - x3aRe;
+          out[idx +  24] = x0aRe - x1aRe;
+          out[idx +  25] = x3aRe - x2aRe;  
+
           let x2cRe_tRe_2c = x2cRe * t1Re_2c;
           let x3cRe_tRe_2c = x3cRe * t1Re_2c;
 
-          let resReC1 = x0cRe + x2cRe_tRe_2c - x3cRe_tRe_2c;
-          let resImC1 = x1cRe + x2cRe_tRe_2c + x3cRe_tRe_2c;  
-          let resReC2 = x0cRe - x2cRe_tRe_2c + x3cRe_tRe_2c;  
-          let resImC2 = x1cRe - x2cRe_tRe_2c - x3cRe_tRe_2c;  
+          let resReC1 = x0cRe + x2cRe_tRe_2c - x3cRe_tRe_2c; out[idx +   4] =   resReC1; out[idx +  28] =   resReC1;
+          let resImC1 = x1cRe + x2cRe_tRe_2c + x3cRe_tRe_2c; out[idx +   5] =   resImC1; out[idx +  29] = - resImC1;
+          let resReC2 = x0cRe - x2cRe_tRe_2c + x3cRe_tRe_2c; out[idx +  12] =   resReC2; out[idx +  20] =   resReC2;
+          let resImC2 = x1cRe - x2cRe_tRe_2c - x3cRe_tRe_2c; out[idx +  13] = - resImC2; out[idx +  21] =   resImC2;  
 
           let x1dif = (x1bRe-x1bIm);
           let x1sum = (x1bRe+x1bIm);
@@ -990,46 +997,15 @@ function fftComplexInPlace_seq_4(out) {
           let tempReD = (x3dif_tRe_1b2d + x3sum_tRe_1b2b - x2bRe*t1Re_2d - x2bIm*t1Re_2b);
           let tempImD = (x3dif_tRe_1b2b - x3sum_tRe_1b2d - x2bRe*t1Re_2b + x2bIm*t1Re_2d);
 
-          let resReB1 = x0bRe  + x1dif_tRe_1b + tempReB;     
-          let resReB2 = x0bRe  + x1dif_tRe_1b - tempReB;     
-          let resReD1 = x0bRe  - x1dif_tRe_1b - tempReD;     
-          let resReD2 = x0bRe  - x1dif_tRe_1b + tempReD;     
+          let resReB1 = x0bRe  + x1dif_tRe_1b + tempReB;     out[idx +   2] =   resReB1; out[idx +  30] =   resReB1;  
+          let resReB2 = x0bRe  + x1dif_tRe_1b - tempReB;     out[idx +  14] =   resReB2; out[idx +  18] =   resReB2;
+          let resReD1 = x0bRe  - x1dif_tRe_1b - tempReD;     out[idx +   6] =   resReD1; out[idx +  26] =   resReD1; 
+          let resReD2 = x0bRe  - x1dif_tRe_1b + tempReD;     out[idx +  10] =   resReD2; out[idx +  22] =   resReD2;
 
-          let resImB1 = x0bIm  + x1sum_tRe_1b + tempImB;     
-          let resImB2 = x0bIm  + x1sum_tRe_1b - tempImB;     
-          let resImD1 =-x0bIm  + x1sum_tRe_1b - tempImD;     
-          let resImD2 =-x0bIm  + x1sum_tRe_1b + tempImD;     
-
-          out[idx      ] = x0aRe + x1aRe + x2aRe + x3aRe; 
-          out[idx +   2] =   resReB1;   
-          out[idx +   3] =   resImB1; 
-          out[idx +   4] =   resReC1; 
-          out[idx +   5] =   resImC1;   
-          out[idx +   6] =   resReD1;   
-          out[idx +   7] =   resImD1; 
-          out[idx +   8] = x0aRe - x1aRe;  
-          out[idx +   9] = x2aRe - x3aRe; 
-          out[idx +  10] =   resReD2;   
-          out[idx +  11] = - resImD2; 
-          out[idx +  12] =   resReC2;    
-          out[idx +  13] = - resImC2;    
-          out[idx +  14] =   resReB2;   
-          out[idx +  15] = - resImB2;  
-          out[idx +  16] = x0aRe + x1aRe - x2aRe - x3aRe;
-          out[idx +  18] =   resReB2;
-          out[idx +  19] =   resImB2;
-          out[idx +  20] =   resReC2;
-          out[idx +  21] =   resImC2; 
-          out[idx +  22] =   resReD2;
-          out[idx +  23] =   resImD2;
-          out[idx +  24] = x0aRe - x1aRe;
-          out[idx +  25] = x3aRe - x2aRe;  
-          out[idx +  26] =   resReD1;
-          out[idx +  27] = - resImD1; 
-          out[idx +  28] =   resReC1;
-          out[idx +  29] = - resImC1;
-          out[idx +  30] =   resReB1;
-          out[idx +  31] = - resImB1;
+          let resImB1 = x0bIm  + x1sum_tRe_1b + tempImB;     out[idx +   3] =   resImB1; out[idx +  31] = - resImB1;  
+          let resImB2 = x0bIm  + x1sum_tRe_1b - tempImB;     out[idx +  15] = - resImB2; out[idx +  19] =   resImB2;
+          let resImD1 =-x0bIm  + x1sum_tRe_1b - tempImD;     out[idx +   7] =   resImD1; out[idx +  27] = - resImD1; 
+          let resImD2 =-x0bIm  + x1sum_tRe_1b + tempImD;     out[idx +  11] = - resImD2; out[idx +  23] =   resImD2;  
     }
 
 
