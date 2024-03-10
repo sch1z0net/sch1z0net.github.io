@@ -902,24 +902,7 @@ function fftComplexInPlace_seq_4(out) {
     // P = 0
     //
 
-    for (var i = 64, idx = 0; i>=0; i--, idx += 8) {
-          x0aRe = out[idx    ];
-          x1aRe = out[idx + 2];
-          x2aRe = out[idx + 4];
-          x3aRe = out[idx + 6];
-
-          out[idx      ] =   x0aRe + x1aRe + x2aRe + x3aRe;
-
-          out[idx  +  2] =   x0aRe - x1aRe;
-          out[idx  +  3] =   x2aRe - x3aRe;
-          out[idx  +  4] =   x0aRe + x1aRe - x2aRe - x3aRe;
-
-          out[idx  +  6] =   x0aRe - x1aRe; 
-          out[idx  +  7] = - x2aRe + x3aRe;
-    }
-
-/*
-    for(let idx = 0; idx < tsq*8; idx+=8){
+    for(let idx = 0; idx < 512; idx+=8){
           x0aRe = out[idx    ];
           x1aRe = out[idx + 2];
           x2aRe = out[idx + 4];
@@ -934,14 +917,13 @@ function fftComplexInPlace_seq_4(out) {
           out[idx  +  6] =   x0aRe - x1aRe; 
           out[idx  +  7] = - x2aRe + x3aRe;
     } 
-*/
 
 
     /////////////////////////////////////////////
     // P = 1
     //
 
-    for(let idx = 0; idx < tsq*8; idx+=32){
+    for(let idx = 0; idx < 512; idx+=32){
           x0aRe = out[idx     ];
           x0bRe = out[idx +  2]; 
           x0bIm = out[idx +  3];
