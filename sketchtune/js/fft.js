@@ -1387,8 +1387,8 @@ function fftComplexInPlace_seq_4(out) {
             const oddPartRe  = out[oddIndex * 2];
             const oddPartIm  = out[oddIndex * 2 + 1];
 
-            const twiddleRe = ____F[126 + (j * 2 + 0)];
-            const twiddleIm = ____F[126 + (j * 2 + 1)];
+            const twiddleRe = ____F[254 + (j * 2 + 0)];
+            const twiddleIm = ____F[254 + (j * 2 + 1)];
 
             const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
             const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
