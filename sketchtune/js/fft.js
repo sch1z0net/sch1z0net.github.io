@@ -891,11 +891,6 @@ function fftComplexInPlace_seq_4(out) {
     let xM1ReB_0 = 0; let xM1ImB_0 = 0; let xM3ReB_0 = 0; let xM3ImB_0 = 0;
     let xM0ReC_0 = 0; let xM0ImC_0 = 0; let xM2ReC_0 = 0; let xM2ImC_0 = 0;
     let xM1ReD_0 = 0; let xM1ImD_0 = 0; let xM3ReD_0 = 0; let xM3ImD_0 = 0;*/
-    
-    let resReA; let resImA;
-    let resReB; let resImB;
-    let resReC; let resImC;
-    let resReD; let resImD;
 
 
     /////////////////////////////////////////////
