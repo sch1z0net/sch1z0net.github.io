@@ -933,6 +933,7 @@ function fftComplexInPlace_seq_4(out) {
     tRe_2d  = ____F[14+(3*2+0)];
 
     tRe_1b2b = tRe_1b * tRe_2b;
+    tRe_1b2d = tRe_1b * tRe_2d;
 
     for(let i = 0; i < tsq*4; i+=16){
           x0aRe = out[i*2     ];
