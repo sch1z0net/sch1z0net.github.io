@@ -2499,7 +2499,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
     }*/
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
-        if(size > 64){ break; }
+        //if(size > 64){ break; }
         const halfSize = size / 2;
         // Get FFT factors with caching
         const factors = computeFFTFactorsWithCache(size);
