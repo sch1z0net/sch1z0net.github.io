@@ -1041,25 +1041,25 @@ function fftComplexInPlace_seq_4(out) {
 
     for(let i = 0; i < tsq; i+=64){
 
-          x0aRe_0 = out[(i+ 0)*2+0]; //x0aIm = out[(i+ 0)*2+1]; //0 //-----> 16
-          x1aRe_0 = out[(i+16)*2+0]; x1aIm_0 = 0;
-          x2aRe_0 = out[(i+32)*2+0]; x2aIm_0 = out[(i+32)*2+1];
-          x3aRe_0 = out[(i+48)*2+0]; x3aIm_0 = out[(i+48)*2+1];
+          let x0aRe_0 = out[(i+ 0)*2+0]; //x0aIm = out[(i+ 0)*2+1]; //0 //-----> 16
+          let x1aRe_0 = out[(i+16)*2+0]; let x1aIm_0 = 0;
+          let x2aRe_0 = out[(i+32)*2+0]; let x2aIm_0 = out[(i+32)*2+1];
+          let x3aRe_0 = out[(i+48)*2+0]; let x3aIm_0 = out[(i+48)*2+1];
           
-          x0bRe_0 = out[(i+ 1)*2+0]; x0bIm_0 = out[(i+ 1)*2+1]; //-----> 15
-          x1bRe_0 = out[(i+17)*2+0]; x1bIm_0 = out[(i+17)*2+1];
-          x2bRe_0 = out[(i+33)*2+0]; x2bIm_0 = out[(i+33)*2+1];
-          x3bRe_0 = out[(i+49)*2+0]; x3bIm_0 = out[(i+49)*2+1];
+          let x0bRe_0 = out[(i+ 1)*2+0]; let x0bIm_0 = out[(i+ 1)*2+1]; //-----> 15
+          let x1bRe_0 = out[(i+17)*2+0]; let x1bIm_0 = out[(i+17)*2+1];
+          let x2bRe_0 = out[(i+33)*2+0]; let x2bIm_0 = out[(i+33)*2+1];
+          let x3bRe_0 = out[(i+49)*2+0]; let x3bIm_0 = out[(i+49)*2+1];
           
-          x0cRe_0 = out[(i+ 2)*2+0]; x0cIm_0 = out[(i+ 2)*2+1]; //-----> 14
-          x1cRe_0 = out[(i+18)*2+0]; x1cIm_0 = out[(i+18)*2+1];
-          x2cRe_0 = out[(i+34)*2+0]; x2cIm_0 = out[(i+34)*2+1];
-          x3cRe_0 = out[(i+50)*2+0]; x3cIm_0 = out[(i+50)*2+1];
+          let x0cRe_0 = out[(i+ 2)*2+0]; let x0cIm_0 = out[(i+ 2)*2+1]; //-----> 14
+          let x1cRe_0 = out[(i+18)*2+0]; let x1cIm_0 = out[(i+18)*2+1];
+          let x2cRe_0 = out[(i+34)*2+0]; let x2cIm_0 = out[(i+34)*2+1];
+          let x3cRe_0 = out[(i+50)*2+0]; let x3cIm_0 = out[(i+50)*2+1];
           
-          x0dRe_0 = out[(i+ 3)*2+0]; x0dIm_0 = out[(i+ 3)*2+1]; //-----> 13
-          x1dRe_0 = out[(i+19)*2+0]; x1dIm_0 = out[(i+19)*2+1];
-          x2dRe_0 = out[(i+35)*2+0]; x2dIm_0 = out[(i+35)*2+1];
-          x3dRe_0 = out[(i+51)*2+0]; x3dIm_0 = out[(i+51)*2+1];
+          let x0dRe_0 = out[(i+ 3)*2+0]; let x0dIm_0 = out[(i+ 3)*2+1]; //-----> 13
+          let x1dRe_0 = out[(i+19)*2+0]; let x1dIm_0 = out[(i+19)*2+1];
+          let x2dRe_0 = out[(i+35)*2+0]; let x2dIm_0 = out[(i+35)*2+1];
+          let x3dRe_0 = out[(i+51)*2+0]; let x3dIm_0 = out[(i+51)*2+1];
 
 
           let Tx1bRe = (x1bRe_0 * t2Re_1b - x1bIm_0 * t2Re_1h);
