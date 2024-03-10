@@ -1328,8 +1328,8 @@ function fftComplexInPlace_seq_4(out) {
                 out[oddIndex  * 2 + 1] = evenPartIm - twiddledOddIm;
             }
             for (let j = 0; j < quarterSize; j++) {
-                const evenIndex = 64 + j;
-                const oddIndex  = 64 + j + halfSize;
+                const evenIndex = 128 + j;
+                const oddIndex  = 128 + j + halfSize;
 
                 // Combine results of even and odd parts in place
                 out[evenIndex * 2    ] = out[256 - (evenIndex * 2     )]
