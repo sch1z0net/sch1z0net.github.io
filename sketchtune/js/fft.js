@@ -986,7 +986,7 @@ function fftComplexInPlace_seq_4(out) {
           let tempReD = (x3dif_tRe_1b2d + x3sum_tRe_1b2b - x2bRe*tRe_2d - x2bIm*tRe_2b);
           let tempImD = (x3dif_tRe_1b2b - x3sum_tRe_1b2d - x2bRe*tRe_2b + x2bIm*tRe_2d);
 
-          console.log(x1dif_tRe_1b.toFixed(3), x1sum_tRe_1b.toFixed(3), x3dif_tRe_1b2b.toFixed(3), x3dif_tRe_1b2b.toFixed(3), x3sum_tRe_1b2b.toFixed(3), x3sum_tRe_1b2d.toFixed(3), tempReB.toFixed(3), tempImB.toFixed(3), tempReD.toFixed(3), tempImD.toFixed(3));
+          console.log(x1dif_tRe_1b.toFixed(3), x1sum_tRe_1b.toFixed(3), x3dif_tRe_1b2b.toFixed(3), x3dif_tRe_1b2d.toFixed(3), x3sum_tRe_1b2b.toFixed(3), x3sum_tRe_1b2d.toFixed(3), tempReB.toFixed(3), tempImB.toFixed(3), tempReD.toFixed(3), tempImD.toFixed(3));
 
           resReB = x0bRe  + x1dif_tRe_1b + tempReB;     out[i*2 +  2]  =   resReB;   out[i*2 +  30] =   resReB;
           resReB = x0bRe  + x1dif_tRe_1b - tempReB;     out[i*2 +  14] =   resReB;   out[i*2 +  18] =   resReB;
