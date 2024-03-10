@@ -2200,8 +2200,8 @@ function fftComplexInPlace_flexi(out) {
 
 /******************** WRAPPER *******************************************************/
 let map = bitReversalMap256.get(256);
-const N = 256;
-const bits = 8;
+const N = 1024;
+const bits = 10;
 const inputBR = new Float64Array(N);
 const complexOut = new Float64Array(N * 2);
 function fftRealInPlaceRADIX4(realInput,type) {
