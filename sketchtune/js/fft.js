@@ -932,7 +932,7 @@ function fftComplexInPlace_seq_4(out) {
 
           let x2aRe = out[idx + 4];
           out[idx  +  4] =  x0aRe + x1aRe - x2aRe - x3aRe; 
-          
+
           out[idx      ] =  x0aRe + x1aRe + x2aRe + x3aRe;
           out[idx  +  3] =  x2aRe - x3aRe; 
           out[idx  +  7] = -x2aRe + x3aRe;
@@ -3329,6 +3329,10 @@ function compareFFTResults(array1, array2) {
 
 /****************** TEST SPEED *******************/ 
 
+measureTime(256,4);
+measureTime(256,4);
+measureTime(256,4);
+measureTime(256,4);
 measureTime(256,4);
 //measureTime(512,5);
 //measureTime(512,6);
