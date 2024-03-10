@@ -905,7 +905,7 @@ function fftComplexInPlace_seq_4(out) {
     // P = 1  -> 16
     //
 
-    for(let idx = 0; idx < 512; idx+=32){
+    for(let idx = 0; idx < 2048; idx+=32){
           let x0aRe = out[idx     ];
           let x0bRe = out[idx +  2]; 
           let x0bIm = out[idx +  3];
