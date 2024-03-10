@@ -925,19 +925,18 @@ function fftComplexInPlace_seq_4(out) {
     for(let idx = 0; idx < 512; idx+=8){
           let x0aRe = out[idx    ];
           let x1aRe = out[idx + 2];
-          out[idx  +  2] =   x0aRe - x1aRe;
-          out[idx  +  6] =   x0aRe - x1aRe; 
-          let temp1 = x0aRe + x1aRe;
-
           let x2aRe = out[idx + 4];
           let x3aRe = out[idx + 6];
-          out[idx  +  3] =   x2aRe - x3aRe;
-          out[idx  +  7] =   x3aRe - x2aRe;
+
+          let temp1 = x0aRe + x1aRe;
           let temp2 = x2aRe + x3aRe;
-          
           out[idx      ] =   temp1 + temp2;
           out[idx  +  4] =   temp1 - temp2;
 
+          out[idx  +  2] =   x0aRe - x1aRe;
+          out[idx  +  3] =   x2aRe - x3aRe;
+          out[idx  +  6] =   x0aRe - x1aRe; 
+          out[idx  +  7] = - x2aRe + x3aRe;
     } 
 
 
