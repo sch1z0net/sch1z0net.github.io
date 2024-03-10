@@ -944,13 +944,6 @@ function fftComplexInPlace_seq_4(out) {
           x3bIm = out[i*2 + 27];
           x3cRe = out[i*2 + 28];
 
-          out[i*2      ] = x0aRe + x1aRe + x2aRe + x3aRe; 
-          out[i*2 +   8] = x0aRe - x1aRe; 
-          out[i*2 +   9] = x2aRe - x3aRe; 
-          out[i*2 +  16] = x0aRe + x1aRe - x2aRe - x3aRe;
-          out[i*2 +  24] = x0aRe - x1aRe;
-          out[i*2 +  25] = x3aRe - x2aRe;
-
           let resReC1 = x0cRe  + x2cRe * tRe_2c - x3cRe * tRe_2c;
           let resImC1 = x1cRe  + x2cRe * tRe_2c + x3cRe * tRe_2c;  
           let resReC2 = x0cRe  - x2cRe * tRe_2c + x3cRe * tRe_2c;  
@@ -984,24 +977,30 @@ function fftComplexInPlace_seq_4(out) {
           let resImD1 =-x0bIm  + x1sum_tRe_1b - tempImD;     
           let resImD2 =-x0bIm  + x1sum_tRe_1b + tempImD;     
 
+          out[i*2      ] = x0aRe + x1aRe + x2aRe + x3aRe; 
           out[i*2 +  2]  =   resReB1;   
           out[i*2 +  3]  =   resImB1; 
           out[i*2 +  4]  =   resReC1; 
           out[i*2 +  5]  =   resImC1;   
           out[i*2 +  6]  =   resReD1;   
-          out[i*2 +  7]  =   resImD1;   
+          out[i*2 +  7]  =   resImD1; 
+          out[i*2 +   8] = x0aRe - x1aRe;  
+          out[i*2 +   9] = x2aRe - x3aRe; 
           out[i*2 +  10] =   resReD2;   
           out[i*2 +  11] = - resImD2; 
           out[i*2 +  12] =   resReC2;    
           out[i*2 +  13] = - resImC2;    
           out[i*2 +  14] =   resReB2;   
-          out[i*2 +  15] = - resImB2;   
+          out[i*2 +  15] = - resImB2;  
+          out[i*2 +  16] = x0aRe + x1aRe - x2aRe - x3aRe;
           out[i*2 +  18] =   resReB2;
           out[i*2 +  19] =   resImB2;
           out[i*2 +  20] =   resReC2;
           out[i*2 +  21] =   resImC2; 
           out[i*2 +  22] =   resReD2;
           out[i*2 +  23] =   resImD2;
+          out[i*2 +  24] = x0aRe - x1aRe;
+          out[i*2 +  25] = x3aRe - x2aRe;  
           out[i*2 +  26] =   resReD1;
           out[i*2 +  27] = - resImD1; 
           out[i*2 +  28] =   resReC1;
