@@ -1340,24 +1340,23 @@ function fftComplexInPlace_seq_4(out) {
     let pre1 = 30;
     let pre2 = 62;
     let s = 1;
-    let k = 0;
     let p = 3, s0 = 32, s1 = 64, s2 = 128; 
         
-        let r  = 4;  
-        let r_ = 32;  
-        let b = 0;
+    let r  = 4;  
+    let r_ = 32;  
+    let b = 0;
 
-        let k = 64; 
+    let k = 64; 
 
-        for(let b_ = 0; b_ < ts; b_++){
-          b = b_*r;  
-          if(N==256 && p == 2 && b_ >= ts/2){ 
+    for(let b_ = 0; b_ < ts; b_++){
+        b = b_*r;  
+        if(N==256 && p == 2 && b_ >= ts/2){ 
             b = (b_%4)*r + N/2; 
-          } 
-          s = b;
-          let k = p==0 ? 1 : (1<<(2*p));  //  1  4  16  64
+        } 
+        s = b;
+        let k = p==0 ? 1 : (1<<(2*p));  //  1  4  16  64
 
-          for(let i_ = 0; i_ < ts; i_++){
+        for(let i_ = 0; i_ < ts; i_++){
             let i = b + i_ * r_;
             if(i_<(ts/2)){  i = b +  0+((i_%4)*32)*2; 
             }else{          i = b + 32+((i_%4)*32)*2; }
@@ -1462,8 +1461,8 @@ function fftComplexInPlace_seq_4(out) {
              out[(3+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2d - ((xM3ImD)*tIm_2d)) * sign2d;
              out[(3+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2d + ((xM3ImD)*tRe_2d)) * sign2d;
              
-          }
         }
+    }
 
     return out;
 }
