@@ -919,7 +919,7 @@ function fftComplexInPlace_seq_4(out) {
 
 
     /////////////////////////////////////////////
-    // P = 0
+    // P = 0  -> 4
     //
 
     for(let idx = 0; idx < 512; idx+=8){
@@ -940,7 +940,7 @@ function fftComplexInPlace_seq_4(out) {
 
 
     /////////////////////////////////////////////
-    // P = 1
+    // P = 1  -> 16
     //
 
     for(let idx = 0; idx < 512; idx+=32){
@@ -1012,7 +1012,7 @@ function fftComplexInPlace_seq_4(out) {
 
 
     /////////////////////////////////////////////
-    // P = 2
+    // P = 2  -> 64
     //
 
     for(let idx = 0; idx < 512; idx+=128){
@@ -1057,7 +1057,6 @@ function fftComplexInPlace_seq_4(out) {
           let x3dRe_4 = out[idx   +110]; let x3dIm_4 = out[idx   +111];
           let x3aRe_8 = out[idx   +112]; let x3aIm_8 = out[idx   +113];        //turning point
 
-
           let T0x1bRe = (x1bRe_0 * t2Re_1b - x1bIm_0 * t2Re_1h);
           let T0x1bIm = (x1bRe_0 * t2Re_1h + x1bIm_0 * t2Re_1b);
           let T0x3bRe = (x3bRe_0 * t2Re_1b - x3bIm_0 * t2Re_1h);
@@ -1072,7 +1071,6 @@ function fftComplexInPlace_seq_4(out) {
           let T0x1dIm = (x1dRe_0 * t2Re_1f + x1dIm_0 * t2Re_1d);
           let T0x3dRe = (x3dRe_0 * t2Re_1d - x3dIm_0 * t2Re_1f);
           let T0x3dIm = (x3dRe_0 * t2Re_1f + x3dIm_0 * t2Re_1d);
-
 
           out[idx       ] =   (x0aRe_0 + x1aRe_0) + (x2aRe_0 + x3aRe_0);
           out[idx  +  64] =   (x0aRe_0 + x1aRe_0) - (x2aRe_0 + x3aRe_0);
@@ -1120,8 +1118,6 @@ function fftComplexInPlace_seq_4(out) {
           let res1ImD = x0dIm_0 - T0x1dIm + ((x2dRe_0 - T0x3dRe)*  t2Re_2d  + ((x2dIm_0 - T0x3dIm)* -t2Re_2n ));  
           out[idx  +  39] =   res1ImD;
           out[idx  +  91] = - res1ImD; 
-
-
 
           let T1x0aRe = (x1aRe_4 * t2Re_1e - x1aIm_4 * t2Re_1e);
           let T1x0aIm = (x1aRe_4 * t2Re_1e + x1aIm_4 * t2Re_1e);
@@ -1192,9 +1188,6 @@ function fftComplexInPlace_seq_4(out) {
           out[idx  +  47] =   res3ImD; 
           out[idx  +  83] = - res3ImD;
 
-
-
-
           let T2x0aRe = - x1aIm_8;
           let T2x0aIm =   x1aRe_8;
           let T2x2aRe = - x3aIm_8;
@@ -1264,7 +1257,6 @@ function fftComplexInPlace_seq_4(out) {
           out[idx  +  55] =   res5ImD;
           out[idx  +  75] = - res5ImD;
 
-
           let T3x0aRe = (x1aRe_4  * -t2Re_1e - -x1aIm_4 *  t2Re_1e);
           let T3x0aIm = (x1aRe_4  *  t2Re_1e + -x1aIm_4 * -t2Re_1e);
           let T3x2aRe = (x3aRe_4  * -t2Re_1e - -x3aIm_4 *  t2Re_1e);
@@ -1333,131 +1325,88 @@ function fftComplexInPlace_seq_4(out) {
           let res7ImD = -x0bIm_0 - T3x1dIm + ((x2bRe_0 - T3x3dRe)*  t2Re_2p  + ((-x2bIm_0 - T3x3dIm)* -t2Re_2b ));
           out[idx  +  63] =   res7ImD;
           out[idx  +  67] = - res7ImD;
-
     }
 
+
+
+    /////////////////////////////////////////////
+    // P = 2.5  -> 128
+    //
+
+                /*
+                const eRe = out[evenIndex * 2];
+                const eIm = out[evenIndex * 2 + 1];
+                const oRe = out[oddIndex * 2];
+                const oIm = out[oddIndex * 2 + 1];
+
+                //const twiddleRe = Math.cos((2 * Math.PI * j) / size);
+                //const twiddleIm = Math.sin((2 * Math.PI * j) / size);
+                const twiddleRe = factors[2 * j    ];
+                const twiddleIm = factors[2 * j + 1];
+
+                //console.log(evenIndex,oddIndex,"-",j);
+
+                // Multiply by twiddle factors
+                const t_oRe = oRe * twiddleRe - oIm * twiddleIm;
+                const t_oIm = oRe * twiddleIm + oIm * twiddleRe;
+
+                // Combine results of even and odd parts in place
+                out[evenIndex * 2    ] = eRe + t_oRe;
+                out[evenIndex * 2 + 1] = eIm + t_oIm;
+                out[oddIndex  * 2    ] = eRe - t_oRe;
+                out[oddIndex  * 2 + 1] = eIm - t_oIm;
+                */
+
+    for(let idx = 0; idx < 512; idx+=256){
+          
+          let x0aRe_0 = out[idx       ];
+          let x0bRe_0 = out[idx   +  2]; let x0bIm_0 = out[idx   +  3];
+          let x0cRe_0 = out[idx   +  4]; let x0cIm_0 = out[idx   +  5];
+          let x0dRe_0 = out[idx   +  6]; let x0dIm_0 = out[idx   +  7];
+          let x0aRe_4 = out[idx   +  8]; let x0aIm_4 = out[idx   +  9];
+          let x0bRe_4 = out[idx   + 10]; let x0bIm_4 = out[idx   + 11];
+          let x0cRe_4 = out[idx   + 12]; let x0cIm_4 = out[idx   + 13];
+          let x0dRe_4 = out[idx   + 14]; let x0dIm_4 = out[idx   + 15];
+          let x0aRe_8 = out[idx   + 16];                                       //turning point
+
+          let x1aRe_0 = out[idx   + 32];
+          let x1bRe_0 = out[idx   + 34]; let x1bIm_0 = out[idx   + 35];
+          let x1cRe_0 = out[idx   + 36]; let x1cIm_0 = out[idx   + 37];
+          let x1dRe_0 = out[idx   + 38]; let x1dIm_0 = out[idx   + 39];
+          let x1aRe_4 = out[idx   + 40]; let x1aIm_4 = out[idx   + 41];
+          let x1bRe_4 = out[idx   + 42]; let x1bIm_4 = out[idx   + 43];
+          let x1cRe_4 = out[idx   + 44]; let x1cIm_4 = out[idx   + 45];
+          let x1dRe_4 = out[idx   + 46]; let x1dIm_4 = out[idx   + 47];
+          let x1aRe_8 = out[idx   + 48]; let x1aIm_8 = out[idx   + 49];        //turning point
+
+          let x2aRe_0 = out[idx   + 64]; let x2aIm_0 = out[idx   + 65];
+          let x2bRe_0 = out[idx   + 66]; let x2bIm_0 = out[idx   + 67];
+          let x2cRe_0 = out[idx   + 68]; let x2cIm_0 = out[idx   + 69];
+          let x2dRe_0 = out[idx   + 70]; let x2dIm_0 = out[idx   + 71];
+          let x2aRe_4 = out[idx   + 72]; let x2aIm_4 = out[idx   + 73];
+          let x2bRe_4 = out[idx   + 74]; let x2bIm_4 = out[idx   + 75];
+          let x2cRe_4 = out[idx   + 76]; let x2cIm_4 = out[idx   + 77];
+          let x2dRe_4 = out[idx   + 78]; let x2dIm_4 = out[idx   + 79];
+          let x2aRe_8 = out[idx   + 80]; let x2aIm_8 = out[idx   + 81];        //turning point
+
+          let x3aRe_0 = out[idx   + 96]; let x3aIm_0 = out[idx   + 97];
+          let x3bRe_0 = out[idx   + 98]; let x3bIm_0 = out[idx   + 99];
+          let x3cRe_0 = out[idx   +100]; let x3cIm_0 = out[idx   +101];
+          let x3dRe_0 = out[idx   +102]; let x3dIm_0 = out[idx   +103];
+          let x3aRe_4 = out[idx   +104]; let x3aIm_4 = out[idx   +105];
+          let x3bRe_4 = out[idx   +106]; let x3bIm_4 = out[idx   +107];
+          let x3cRe_4 = out[idx   +108]; let x3cIm_4 = out[idx   +109];
+          let x3dRe_4 = out[idx   +110]; let x3dIm_4 = out[idx   +111];
+          let x3aRe_8 = out[idx   +112]; let x3aIm_8 = out[idx   +113];        //turning point
+    }
     
-    let pre1 = 30;
-    let pre2 = 62;
-    let s = 1;
-    let p = 3, s0 = 32, s1 = 64, s2 = 128; 
-        
-    let r  = 4;  
-    let r_ = 32;  
-    let b = 0;
 
-    let k = 64; 
 
-    for(let b_ = 0; b_ < ts; b_++){
-        b = b_*r;  
-        s = b;
-        for(let i_ = 0; i_ < ts; i_++){
-            let i = b + i_ * r_;
-            if(i_<(ts/2)){  i = b +  0+((i_%4)*32)*2; 
-            }else{          i = b + 32+((i_%4)*32)*2; }
-        
-            let i_a0 = (i + 0 + (k)*0); let i_a1 = (i + 0 + (k)*1); let i_a2 = (i + 0 + (k)*2); let i_a3 = (i + 0 + (k)*3);
-            let i_b0 = (i + 1 + (k)*0); let i_b1 = (i + 1 + (k)*1); let i_b2 = (i + 1 + (k)*2); let i_b3 = (i + 1 + (k)*3);
-            let i_c0 = (i + 2 + (k)*0); let i_c1 = (i + 2 + (k)*1); let i_c2 = (i + 2 + (k)*2); let i_c3 = (i + 2 + (k)*3);
-            let i_d0 = (i + 3 + (k)*0); let i_d1 = (i + 3 + (k)*1); let i_d2 = (i + 3 + (k)*2); let i_d3 = (i + 3 + (k)*3);
-            
 
-            
-            let sign2a = ((i+0)%s2 < s1) ? 1 : -1;
-            let sign1a = ((i+0)%s1 < s0) ? 1 : -1; 
-            let sign2b = ((i+1)%s2 < s1) ? 1 : -1;
-            let sign1b = ((i+1)%s1 < s0) ? 1 : -1; 
-            let sign2c = ((i+2)%s2 < s1) ? 1 : -1;
-            let sign1c = ((i+2)%s1 < s0) ? 1 : -1; 
-            let sign2d = ((i+3)%s2 < s1) ? 1 : -1;
-            let sign1d = ((i+3)%s1 < s0) ? 1 : -1; 
-            
-            
-            
-            let j2a = (0)%s1+(i%s1); let j1a = (0)%(s0)+(i%s0);
-            let j2b = (1)%s1+(i%s1); let j1b = (1)%(s0)+(i%s0);
-            let j2c = (2)%s1+(i%s1); let j1c = (2)%(s0)+(i%s0);
-            let j2d = (3)%s1+(i%s1); let j1d = (3)%(s0)+(i%s0);
 
-            tRe_1a  = ____F[pre1+(2*j1a+0)];
-            tIm_1a  = ____F[pre1+(2*j1a+1)];
-            tRe_1b  = ____F[pre1+(2*j1b+0)];
-            tIm_1b  = ____F[pre1+(2*j1b+1)];  
-            tRe_1c  = ____F[pre1+(2*j1c+0)];
-            tIm_1c  = ____F[pre1+(2*j1c+1)]; 
-            tRe_1d  = ____F[pre1+(2*j1d+0)];
-            tIm_1d  = ____F[pre1+(2*j1d+1)]; 
-        
-            tRe_2a  = ____F[pre2+(2*j2a+0)]; 
-            tIm_2a  = ____F[pre2+(2*j2a+1)];
-            tRe_2b  = ____F[pre2+(2*j2b+0)]; 
-            tIm_2b  = ____F[pre2+(2*j2b+1)];     
-            tRe_2b  = ____F[pre2+(2*j2b+0)]; 
-            tIm_2b  = ____F[pre2+(2*j2b+1)];
-            tRe_2c  = ____F[pre2+(2*j2c+0)]; 
-            tIm_2c  = ____F[pre2+(2*j2c+1)];        
-            tRe_2d  = ____F[pre2+(2*j2d+0)]; 
-            tIm_2d  = ____F[pre2+(2*j2d+1)];
-            
 
-            
-            if((i_%4) == 0){
-                                                                   
-                x0aRe = out[(i_a0)*2+0]; x0aIm = out[(i_a0)*2+1]; 
-                x1aRe = out[(i_a1)*2+0]; x1aIm = out[(i_a1)*2+1];
-                x2aRe = out[(i_a2)*2+0]; x2aIm = out[(i_a2)*2+1];
-                x3aRe = out[(i_a3)*2+0]; x3aIm = out[(i_a3)*2+1];
-                                                                
-                x0bRe = out[(i_b0)*2+0]; x0bIm = out[(i_b0)*2+1];
-                x1bRe = out[(i_b1)*2+0]; x1bIm = out[(i_b1)*2+1];
-                x2bRe = out[(i_b2)*2+0]; x2bIm = out[(i_b2)*2+1];
-                x3bRe = out[(i_b3)*2+0]; x3bIm = out[(i_b3)*2+1];
-                                                                 
-                x0cRe = out[(i_c0)*2+0]; x0cIm = out[(i_c0)*2+1];
-                x1cRe = out[(i_c1)*2+0]; x1cIm = out[(i_c1)*2+1];
-                x2cRe = out[(i_c2)*2+0]; x2cIm = out[(i_c2)*2+1];
-                x3cRe = out[(i_c3)*2+0]; x3cIm = out[(i_c3)*2+1];
-                                                                 
-                x0dRe = out[(i_d0)*2+0]; x0dIm = out[(i_d0)*2+1];
-                x1dRe = out[(i_d1)*2+0]; x1dIm = out[(i_d1)*2+1];
-                x2dRe = out[(i_d2)*2+0]; x2dIm = out[(i_d2)*2+1];
-                x3dRe = out[(i_d3)*2+0]; x3dIm = out[(i_d3)*2+1];
-            }
 
-                                                                                                        
-              xM0ReA = x0aRe + (x1aRe * tRe_1a - x1aIm * tIm_1a) * sign1a;
-              xM0ImA = x0aIm + (x1aRe * tIm_1a + x1aIm * tRe_1a) * sign1a;                    
-              xM2ReA = x2aRe + (x3aRe * tRe_1a - x3aIm * tIm_1a) * sign1a;
-              xM2ImA = x2aIm + (x3aRe * tIm_1a + x3aIm * tRe_1a) * sign1a;
-              
-              xM1ReB = x0bRe + (x1bRe * tRe_1b - x1bIm * tIm_1b) * sign1b; 
-              xM1ImB = x0bIm + (x1bRe * tIm_1b + x1bIm * tRe_1b) * sign1b; 
-              xM3ReB = x2bRe + (x3bRe * tRe_1b - x3bIm * tIm_1b) * sign1b; 
-              xM3ImB = x2bIm + (x3bRe * tIm_1b + x3bIm * tRe_1b) * sign1b; 
-              
-              xM0ReC = x0cRe + (x1cRe * tRe_1c - x1cIm * tIm_1c) * sign1c;
-              xM0ImC = x0cIm + (x1cRe * tIm_1c + x1cIm * tRe_1c) * sign1c; 
-              xM2ReC = x2cRe + (x3cRe * tRe_1c - x3cIm * tIm_1c) * sign1c;
-              xM2ImC = x2cIm + (x3cRe * tIm_1c + x3cIm * tRe_1c) * sign1c;
-              
-              xM1ReD = x0dRe + (x1dRe * tRe_1d - x1dIm * tIm_1d) * sign1d;
-              xM1ImD = x0dIm + (x1dRe * tIm_1d + x1dIm * tRe_1d) * sign1d;
-              xM3ReD = x2dRe + (x3dRe * tRe_1d - x3dIm * tIm_1d) * sign1d;
-              xM3ImD = x2dIm + (x3dRe * tIm_1d + x3dIm * tRe_1d) * sign1d;
-            
 
-             
-             out[(0+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2a - ((xM2ImA)*tIm_2a)) * sign2a;
-             out[(0+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2a + ((xM2ImA)*tRe_2a)) * sign2a; 
-             out[(1+i)*2+0] = xM1ReB + ((xM3ReB)*tRe_2b - ((xM3ImB)*tIm_2b)) * sign2b;
-             out[(1+i)*2+1] = xM1ImB + ((xM3ReB)*tIm_2b + ((xM3ImB)*tRe_2b)) * sign2b; 
-             out[(2+i)*2+0] = xM0ReC + ((xM2ReC)*tRe_2c - ((xM2ImC)*tIm_2c)) * sign2c;
-             out[(2+i)*2+1] = xM0ImC + ((xM2ReC)*tIm_2c + ((xM2ImC)*tRe_2c)) * sign2c;
-             out[(3+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2d - ((xM3ImD)*tIm_2d)) * sign2d;
-             out[(3+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2d + ((xM3ImD)*tRe_2d)) * sign2d;
-             
-        }
-    }
 
     return out;
 }
@@ -2494,7 +2443,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
     }*/
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
-        //if(size > 64){ break; }
+        if(size > 128){ break; }
         const halfSize = size / 2;
         // Get FFT factors with caching
         const factors = computeFFTFactorsWithCache(size);
