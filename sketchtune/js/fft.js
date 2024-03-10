@@ -902,7 +902,7 @@ function fftComplexInPlace_seq_4(out) {
     // P = 0
     //
 
-    for(let idx = 0; idx < tsq*4; idx+=8){
+    for(let idx = 0; idx < tsq*8; idx+=8){
           x0aRe = out[idx    ];
           x1aRe = out[idx + 2];
           x2aRe = out[idx + 4];
