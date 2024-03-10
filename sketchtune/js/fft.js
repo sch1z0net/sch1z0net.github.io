@@ -2204,7 +2204,7 @@ const N = 1024;
 const bits = 10;
 const inputBR = new Float64Array(N);
 const complexOut = new Float64Array(N * 2);
-function fftRealInPlaceRADIX4(realInput,type) {
+function fftRealInPlaceRADIX4(realInput) {
     //const N = realInput.length;
     //const bits = Math.log2(N);
     
@@ -2246,7 +2246,7 @@ function fftRealInPlaceRADIX4(realInput,type) {
 
     //return fftComplexInPlace_radix2(complexOut);
     //return fftComplexInPlace_flexi(complexOut);
-    if(type == 4){ return fftComplexInPlace_seq_4(complexOut); }
+    return fftComplexInPlace_seq_4(complexOut);
     //if(type == 5){ return fftComplexInPlace_seq_5(complexOut); }
     //if(type == 6){ return fftComplexInPlace_seq_6(complexOut); }
     //if(type == 7){ return fftComplexInPlace_seq_7(complexOut); }
@@ -2695,7 +2695,7 @@ const testData2048 = generateTestData(2048);
 const testData4096 = generateTestData(4096);
 
 // Perform FFT operations
-const performFFTOperations = (fftSize,type) => {
+const performFFTOperations = (fftSize) => {
     let testData;
     if(fftSize ==  256){ testData = testData256; }
     if(fftSize ==  512){ testData = testData512; } 
@@ -2706,7 +2706,7 @@ const performFFTOperations = (fftSize,type) => {
     // Perform FFT operations numOperations times
     for (let i = 0; i < numOperations; i++) {
         //fftRealInPlace_ref(testData);
-        fftRealInPlaceRADIX4(testData,type);
+        fftRealInPlaceRADIX4(testData);
     }
 
 };
@@ -2782,7 +2782,7 @@ const signal4 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.
 const signal5 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
 
 
-console.log("256:  ",compareFFTResults(fftRealInPlace_ref(testData256),fftRealInPlaceRADIX4(testData256,4)));
+console.log("256:  ",compareFFTResults(fftRealInPlace_ref(testData1024),fftRealInPlaceRADIX4(testData1024)));
 
 /*
 console.log(signal1);
