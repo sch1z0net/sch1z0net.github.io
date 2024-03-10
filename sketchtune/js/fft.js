@@ -885,38 +885,6 @@ let t2Re_2o   = ____F[62+(14*2+0)];
 let t2Re_2p   = ____F[62+(15*2+0)]; 
 
 function fftComplexInPlace_seq_4(out) {
-    
-
-    /*let x0aRe, x0aIm; let x1aRe, x1aIm; let x2aRe, x2aIm; let x3aRe, x3aIm;
-    let x0bRe, x0bIm; let x1bRe, x1bIm; let x2bRe, x2bIm; let x3bRe, x3bIm;
-    let x0cRe, x0cIm; let x1cRe, x1cIm; let x2cRe, x2cIm; let x3cRe, x3cIm;
-    let x0dRe, x0dIm; let x1dRe, x1dIm; let x2dRe, x2dIm; let x3dRe, x3dIm;*/
-    /*let x0aRe_0, x0aIm_0; let x1aRe_0, x1aIm_0; let x2aRe_0, x2aIm_0; let x3aRe_0, x3aIm_0;
-    let x0bRe_0, x0bIm_0; let x1bRe_0, x1bIm_0; let x2bRe_0, x2bIm_0; let x3bRe_0, x3bIm_0;
-    let x0cRe_0, x0cIm_0; let x1cRe_0, x1cIm_0; let x2cRe_0, x2cIm_0; let x3cRe_0, x3cIm_0;
-    let x0dRe_0, x0dIm_0; let x1dRe_0, x1dIm_0; let x2dRe_0, x2dIm_0; let x3dRe_0, x3dIm_0;
-    let x0aRe_4, x0aIm_4; let x1aRe_4, x1aIm_4; let x2aRe_4, x2aIm_4; let x3aRe_4, x3aIm_4;
-    let x0bRe_4, x0bIm_4; let x1bRe_4, x1bIm_4; let x2bRe_4, x2bIm_4; let x3bRe_4, x3bIm_4;
-    let x0cRe_4, x0cIm_4; let x1cRe_4, x1cIm_4; let x2cRe_4, x2cIm_4; let x3cRe_4, x3cIm_4;
-    let x0dRe_4, x0dIm_4; let x1dRe_4, x1dIm_4; let x2dRe_4, x2dIm_4; let x3dRe_4, x3dIm_4;
-    let x0aRe_8, x0aIm_8; let x1aRe_8, x1aIm_8; let x2aRe_8, x2aIm_8; let x3aRe_8, x3aIm_8;
-    let x0bRe_8, x0bIm_8; let x1bRe_8, x1bIm_8; let x2bRe_8, x2bIm_8; let x3bRe_8, x3bIm_8;
-    let x0cRe_8, x0cIm_8; let x1cRe_8, x1cIm_8; let x2cRe_8, x2cIm_8; let x3cRe_8, x3cIm_8;
-    let x0dRe_8, x0dIm_8; let x1dRe_8, x1dIm_8; let x2dRe_8, x2dIm_8; let x3dRe_8, x3dIm_8;
-    let x0aRe_12, x0aIm_12; let x1aRe_12, x1aIm_12; let x2aRe_12, x2aIm_12; let x3aRe_12, x3aIm_12;
-    let x0bRe_12, x0bIm_12; let x1bRe_12, x1bIm_12; let x2bRe_12, x2bIm_12; let x3bRe_12, x3bIm_12;
-    let x0cRe_12, x0cIm_12; let x1cRe_12, x1cIm_12; let x2cRe_12, x2cIm_12; let x3cRe_12, x3cIm_12;
-    let x0dRe_12, x0dIm_12; let x1dRe_12, x1dIm_12; let x2dRe_12, x2dIm_12; let x3dRe_12, x3dIm_12;*/
-
-    /*let xM0ReA = 0; let xM0ImA = 0; let xM2ReA = 0; let xM2ImA = 0;
-    let xM1ReB = 0; let xM1ImB = 0; let xM3ReB = 0; let xM3ImB = 0;
-    let xM0ReC = 0; let xM0ImC = 0; let xM2ReC = 0; let xM2ImC = 0;
-    let xM1ReD = 0; let xM1ImD = 0; let xM3ReD = 0; let xM3ImD = 0;
-    let xM0ReA_0 = 0; let xM0ImA_0 = 0; let xM2ReA_0 = 0; let xM2ImA_0 = 0;
-    let xM1ReB_0 = 0; let xM1ImB_0 = 0; let xM3ReB_0 = 0; let xM3ImB_0 = 0;
-    let xM0ReC_0 = 0; let xM0ImC_0 = 0; let xM2ReC_0 = 0; let xM2ImC_0 = 0;
-    let xM1ReD_0 = 0; let xM1ImD_0 = 0; let xM3ReD_0 = 0; let xM3ImD_0 = 0;*/
-
 
     /////////////////////////////////////////////
     // P = 0  -> 4
@@ -2478,8 +2446,8 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
 
                 //if(size==2||size==8){ console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} + ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[evenIndex * 2].toFixed(2)); }
                 //if(size==2||size==8){ console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} - ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[oddIndex * 2].toFixed(2)); }
-                if(true){ console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} + ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[evenIndex * 2].toFixed(2)); }
-                if(true){ console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} - ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[oddIndex * 2].toFixed(2)); }
+                if(size==128){ console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} + ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[evenIndex * 2].toFixed(2)); }
+                if(size==128){ console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} - ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[oddIndex * 2].toFixed(2)); }
 
             }
         }
