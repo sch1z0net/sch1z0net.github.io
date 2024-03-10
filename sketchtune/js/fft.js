@@ -1289,7 +1289,7 @@ function fftComplexInPlace_seq_4(out) {
           out[idx  +  67] = - res7ImD;
     }
 
-    /*
+    
 
     /////////////////////////////////////////////
     // P = 2.5  -> 128
@@ -1297,7 +1297,6 @@ function fftComplexInPlace_seq_4(out) {
 
         let halfSize    = 64;
         let quarterSize = 32;
-        //for (let i = 0; i < 256; i += 128) {
         for (let j = 0; j < halfSize; j++) {
             const evenIndex = j;
             const oddIndex  = j + halfSize;
@@ -1348,6 +1347,49 @@ function fftComplexInPlace_seq_4(out) {
             out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
         }
 
+        for (let j = 0; j < halfSize; j++) {
+            const evenIndex = 256 + j;
+            const oddIndex  = 256 + j + halfSize;
+
+            const evenPartRe = out[evenIndex * 2];
+            const evenPartIm = out[evenIndex * 2 + 1];
+            const oddPartRe  = out[oddIndex * 2];
+            const oddPartIm  = out[oddIndex * 2 + 1];
+
+            const twiddleRe = ____F[126 + (j * 2 + 0)];
+            const twiddleIm = ____F[126 + (j * 2 + 1)];
+
+            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
+            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
+
+            out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
+            out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+            out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
+            out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
+        }
+
+        for (let j = 0; j < halfSize; j++) {
+            const evenIndex = 384 + j;
+            const oddIndex  = 384 + j + halfSize;
+
+            const evenPartRe = out[evenIndex * 2];
+            const evenPartIm = out[evenIndex * 2 + 1];
+            const oddPartRe  = out[oddIndex * 2];
+            const oddPartIm  = out[oddIndex * 2 + 1];
+
+            const twiddleRe = ____F[126 + (j * 2 + 0)];
+            const twiddleIm = ____F[126 + (j * 2 + 1)];
+
+            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
+            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
+
+            out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
+            out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+            out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
+            out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
+        }
+
+     /*
     /////////////////////////////////////////////
     // P = 3  -> 256
     //
@@ -2425,7 +2467,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
     }*/
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
-        if(size > 64){ break; }
+        if(size > 128){ break; }
         const halfSize = size / 2;
         // Get FFT factors with caching
         const factors = computeFFTFactorsWithCache(size);
