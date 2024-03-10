@@ -919,7 +919,7 @@ function fftComplexInPlace_seq_4(out) {
           out[idx  +  6] =   x0aRe - x1aRe; 
           out[idx  +  7] = - x2aRe + x3aRe;
 
-        i+=8;
+        idx+=8;
     }
 
 /*
