@@ -847,6 +847,18 @@ let steps = 4;           // 1    2    3    4
 let ts    = 8;           // 1    2    4    8
 let tsq   = 64;
 
+
+
+
+let tRe_1b  = ____F[6+(1*2+0)];
+
+let tRe_2b  = ____F[14+(1*2+0)]; 
+let tRe_2c  = ____F[14+(2*2+0)]; 
+let tRe_2d  = ____F[14+(3*2+0)];
+
+let tRe_1b2b = tRe_1b * tRe_2b;
+let tRe_1b2d = tRe_1b * tRe_2d;
+
 function fftComplexInPlace_seq_4(out) {
     
 
@@ -898,13 +910,6 @@ function fftComplexInPlace_seq_4(out) {
     /////////////////////////////////////////////
     // P = 0
     //
-    //tRe_1a  = ____F[0]; // 1
-    //tIm_1a  = ____F[1]; // 0
-
-    //tRe_2a  = ____F[2+(0*2+0)]; // 1
-    //tIm_2a  = ____F[2+(0*2+1)]; // 0
-    //tRe_2b  = ____F[2+(1*2+0)]; // 0 
-    //tIm_2b  = ____F[2+(1*2+1)]; // 1
 
     for(let i = 0; i < tsq*4; i+=4){
           x0aRe = out[i*2    ];
@@ -926,14 +931,6 @@ function fftComplexInPlace_seq_4(out) {
     /////////////////////////////////////////////
     // P = 1
     //
-    tRe_1b  = ____F[6+(1*2+0)];
-
-    tRe_2b  = ____F[14+(1*2+0)]; 
-    tRe_2c  = ____F[14+(2*2+0)]; 
-    tRe_2d  = ____F[14+(3*2+0)];
-
-    tRe_1b2b = tRe_1b * tRe_2b;
-    tRe_1b2d = tRe_1b * tRe_2d;
 
     for(let i = 0; i < tsq*4; i+=16){
           x0aRe = out[i*2     ];
@@ -1016,7 +1013,7 @@ function fftComplexInPlace_seq_4(out) {
 
 
 
-
+/*
     /////////////////////////////////////////////
     // P = 2
     //
