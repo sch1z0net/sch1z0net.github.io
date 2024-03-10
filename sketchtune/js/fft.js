@@ -2193,7 +2193,7 @@ function fftComplexInPlace_flexi(out) {
 
 
 /******************** WRAPPER *******************************************************/
-let map = bitReversalMap256.get(256);
+let map = bitReversalMap1024.get(1024);
 const N = 1024;
 const bits = 10;
 const inputBR = new Float64Array(N);
