@@ -1219,6 +1219,8 @@ function fftComplexInPlace_seq_4(out) {
           out[idx  +  83] = - res3ImD;
 
 
+
+
           let T2x0aRe = - x1aIm_8;
           let T2x0aIm =   x1aRe_8;
           let T2x2aRe = - x3aIm_8;
@@ -1341,21 +1343,21 @@ function fftComplexInPlace_seq_4(out) {
           out[idx  +  73] = - res7ImA;
           let res7ReB =  x0dRe_0 - T3x1bRe + ((x2dRe_0 - T3x3bRe)* -t2Re_2d  - ((-x2dIm_0 - T3x3bIm)*  t2Re_2n ));
           out[idx  +  58] =   res7ReB;
-          out[idx  +  59] =   res7ImB;
-          let res7ImB = -x0dIm_0 - T3x1bIm + ((x2dRe_0 - T3x3bRe)*  t2Re_2n  + ((-x2dIm_0 - T3x3bIm)* -t2Re_2d ));
           out[idx  +  70] =   res7ReB;
+          let res7ImB = -x0dIm_0 - T3x1bIm + ((x2dRe_0 - T3x3bRe)*  t2Re_2n  + ((-x2dIm_0 - T3x3bIm)* -t2Re_2d ));
+          out[idx  +  59] =   res7ImB;
           out[idx  +  71] = - res7ImB; 
           let res7ReC =  x0cRe_0 - T3x0cRe + ((x2cRe_0 - T3x2cRe)* -t2Re_2c  - ((-x2cIm_0 - T3x2cIm)*  t2Re_2o ));
           out[idx  +  60] =   res7ReC;
-          out[idx  +  61] =   res7ImC;
-          let res7ImC = -x0cIm_0 - T3x0cIm + ((x2cRe_0 - T3x2cRe)*  t2Re_2o  + ((-x2cIm_0 - T3x2cIm)* -t2Re_2c ));
           out[idx  +  68] =   res7ReC;
+          let res7ImC = -x0cIm_0 - T3x0cIm + ((x2cRe_0 - T3x2cRe)*  t2Re_2o  + ((-x2cIm_0 - T3x2cIm)* -t2Re_2c ));
+          out[idx  +  61] =   res7ImC;
           out[idx  +  69] = - res7ImC;
           let res7ReD =  x0bRe_0 - T3x1dRe + ((x2bRe_0 - T3x3dRe)* -t2Re_2b  - ((-x2bIm_0 - T3x3dIm)*  t2Re_2p ));
           out[idx  +  62] =   res7ReD;
-          out[idx  +  63] =   res7ImD;
-          let res7ImD = -x0bIm_0 - T3x1dIm + ((x2bRe_0 - T3x3dRe)*  t2Re_2p  + ((-x2bIm_0 - T3x3dIm)* -t2Re_2b ));
           out[idx  +  66] =   res7ReD;
+          let res7ImD = -x0bIm_0 - T3x1dIm + ((x2bRe_0 - T3x3dRe)*  t2Re_2p  + ((-x2bIm_0 - T3x3dIm)* -t2Re_2b ));
+          out[idx  +  63] =   res7ImD;
           out[idx  +  67] = - res7ImD;
 
     }
