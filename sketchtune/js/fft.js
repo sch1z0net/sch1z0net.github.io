@@ -1040,26 +1040,46 @@ function fftComplexInPlace_seq_4(out) {
     //
 
     for(let idx = 0; idx < 512; idx+=128){
-
-          let x0aRe_0 = out[idx       ]; //x0aIm = out[(i+ 0)*2+1]; //0
-          let x1aRe_0 = out[idx   + 32]; let x1aIm_0 = 0;
-          let x2aRe_0 = out[idx   + 64]; let x2aIm_0 = out[idx   + 65];
-          let x3aRe_0 = out[idx   + 96]; let x3aIm_0 = out[idx   + 97];
           
+          let x0aRe_0 = out[idx       ];
           let x0bRe_0 = out[idx   +  2]; let x0bIm_0 = out[idx   +  3];
-          let x1bRe_0 = out[idx   + 34]; let x1bIm_0 = out[idx   + 35];
-          let x2bRe_0 = out[idx   + 66]; let x2bIm_0 = out[idx   + 67];
-          let x3bRe_0 = out[idx   + 98]; let x3bIm_0 = out[idx   + 99];
-          
           let x0cRe_0 = out[idx   +  4]; let x0cIm_0 = out[idx   +  5];
-          let x1cRe_0 = out[idx   + 36]; let x1cIm_0 = out[idx   + 37];
-          let x2cRe_0 = out[idx   + 68]; let x2cIm_0 = out[idx   + 69];
-          let x3cRe_0 = out[idx   +100]; let x3cIm_0 = out[idx   +101];
-          
           let x0dRe_0 = out[idx   +  6]; let x0dIm_0 = out[idx   +  7];
+          let x0aRe_4 = out[idx   +  8]; let x0aIm_4 = out[idx   +  9];
+          let x0bRe_4 = out[idx   + 10]; let x0bIm_4 = out[idx   + 11];
+          let x0cRe_4 = out[idx   + 12]; let x0cIm_4 = out[idx   + 13];
+          let x0dRe_4 = out[idx   + 14]; let x0dIm_4 = out[idx   + 15];
+          let x0aRe_8 = out[idx   + 16];                                       //turning point
+
+          let x1aRe_0 = out[idx   + 32]; let x1aIm_0 = 0;
+          let x1bRe_0 = out[idx   + 34]; let x1bIm_0 = out[idx   + 35];
+          let x1cRe_0 = out[idx   + 36]; let x1cIm_0 = out[idx   + 37];
           let x1dRe_0 = out[idx   + 38]; let x1dIm_0 = out[idx   + 39];
+          let x1aRe_4 = out[idx   + 40]; let x1aIm_4 = out[idx   + 41];
+          let x1bRe_4 = out[idx   + 42]; let x1bIm_4 = out[idx   + 43];
+          let x1cRe_4 = out[idx   + 44]; let x1cIm_4 = out[idx   + 45];
+          let x1dRe_4 = out[idx   + 46]; let x1dIm_4 = out[idx   + 47];
+          let x1aRe_8 = out[idx   + 48]; let x1aIm_8 = out[idx   + 49];        //turning point
+
+          let x2aRe_0 = out[idx   + 64]; let x2aIm_0 = out[idx   + 65];
+          let x2bRe_0 = out[idx   + 66]; let x2bIm_0 = out[idx   + 67];
+          let x2cRe_0 = out[idx   + 68]; let x2cIm_0 = out[idx   + 69];
           let x2dRe_0 = out[idx   + 70]; let x2dIm_0 = out[idx   + 71];
+          let x2aRe_4 = out[idx   + 72]; let x2aIm_4 = out[idx   + 73];
+          let x2bRe_4 = out[idx   + 74]; let x2bIm_4 = out[idx   + 75];
+          let x2cRe_4 = out[idx   + 76]; let x2cIm_4 = out[idx   + 77];
+          let x2dRe_4 = out[idx   + 78]; let x2dIm_4 = out[idx   + 79];
+          let x2aRe_8 = out[idx   + 80]; let x2aIm_8 = out[idx   + 81];        //turning point
+
+          let x3aRe_0 = out[idx   + 96]; let x3aIm_0 = out[idx   + 97];
+          let x3bRe_0 = out[idx   + 98]; let x3bIm_0 = out[idx   + 99];
+          let x3cRe_0 = out[idx   +100]; let x3cIm_0 = out[idx   +101];
           let x3dRe_0 = out[idx   +102]; let x3dIm_0 = out[idx   +103];
+          let x3aRe_4 = out[idx   +104]; let x3aIm_4 = out[idx   +105];
+          let x3bRe_4 = out[idx   +106]; let x3bIm_4 = out[idx   +107];
+          let x3cRe_4 = out[idx   +108]; let x3cIm_4 = out[idx   +109];
+          let x3dRe_4 = out[idx   +110]; let x3dIm_4 = out[idx   +111];
+          let x3aRe_8 = out[idx   +112]; let x3aIm_8 = out[idx   +113];        //turning point
 
 
           let Tx1bRe = (x1bRe_0 * t2Re_1b - x1bIm_0 * t2Re_1h);
@@ -1162,25 +1182,9 @@ function fftComplexInPlace_seq_4(out) {
           out[idx  +  96] =   resReA;
           out[idx  +  97] = - resImA;
 
-          let x0aRe_4 = out[idx   +  8]; let x0aIm_4 = out[idx   +  9];
-          let x1aRe_4 = out[idx   + 40]; let x1aIm_4 = out[idx   + 41];
-          let x2aRe_4 = out[idx   + 72]; let x2aIm_4 = out[idx   + 73];
-          let x3aRe_4 = out[idx   +104]; let x3aIm_4 = out[idx   +105];
-          
-          let x0bRe_4 = out[idx   + 10]; let x0bIm_4 = out[idx   + 11];
-          let x1bRe_4 = out[idx   + 42]; let x1bIm_4 = out[idx   + 43];
-          let x2bRe_4 = out[idx   + 74]; let x2bIm_4 = out[idx   + 75];
-          let x3bRe_4 = out[idx   +106]; let x3bIm_4 = out[idx   +107];
-          
-          let x0cRe_4 = out[idx   + 12]; let x0cIm_4 = out[idx   + 13];
-          let x1cRe_4 = out[idx   + 44]; let x1cIm_4 = out[idx   + 45];
-          let x2cRe_4 = out[idx   + 76]; let x2cIm_4 = out[idx   + 77];
-          let x3cRe_4 = out[idx   +108]; let x3cIm_4 = out[idx   +109];
-          
-          let x0dRe_4 = out[idx   + 14]; let x0dIm_4 = out[idx   + 15];
-          let x1dRe_4 = out[idx   + 46]; let x1dIm_4 = out[idx   + 47];
-          let x2dRe_4 = out[idx   + 78]; let x2dIm_4 = out[idx   + 79];
-          let x3dRe_4 = out[idx   +110]; let x3dIm_4 = out[idx   +111];
+
+
+
 
 
           let Tx0aRe = (x1aRe_4 * t2Re_1e - x1aIm_4 * t2Re_1e);
@@ -1297,10 +1301,10 @@ function fftComplexInPlace_seq_4(out) {
           out[idx  +  88] =   resReA;
           out[idx  +  89] = - resImA;
 
-          let x0aRe_8 = out[idx     +  16]; //x0aIm = out[(8+ i+ 0)*2+1]; // 0       //turning point
-          let x1aRe_8 = out[idx     +  48]; let x1aIm_8 = out[idx     +  49];        //turning point
-          let x2aRe_8 = out[idx     +  80]; let x2aIm_8 = out[idx     +  81];        //turning point
-          let x3aRe_8 = out[idx     + 112]; let x3aIm_8 = out[idx     + 113];        //turning point
+
+
+
+
 
           Tx0aRe = - x1aIm_8;
           Tx0aIm =   x1aRe_8;
