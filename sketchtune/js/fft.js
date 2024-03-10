@@ -890,7 +890,7 @@ function fftComplexInPlace_seq_4(out) {
     // P = 0  -> 4
     //
 
-    for(let idx = 0; idx < 512; idx+=8){
+    for(let idx = 0; idx < 2048; idx+=8){
           let x0aRe = out[idx    ];
           let x1aRe = out[idx + 2];
           out[idx  +  2] =  x0aRe - x1aRe; 
@@ -906,7 +906,7 @@ function fftComplexInPlace_seq_4(out) {
           out[idx  +  7] = -x2aRe + x3aRe;
     } 
 
-
+/*
     /////////////////////////////////////////////
     // P = 1  -> 16
     //
@@ -1337,16 +1337,6 @@ function fftComplexInPlace_seq_4(out) {
             const evenIndex = 128 + j;
             const oddIndex  = 128 + j + halfSize;
 
-            /*
-            if(j > quarterSize){
-              out[evenIndex * 2]     =  out[512 - evenIndex * 2] ;
-              out[evenIndex * 2 + 1] = -out[512 - evenIndex * 2 + 1];
-              out[oddIndex * 2]      =  out[512 - oddIndex * 2];
-              out[oddIndex * 2 + 1]  = -out[512 - oddIndex * 2 + 1];
-              continue;
-            }
-            */
-
             const evenPartRe = out[evenIndex * 2];
             const evenPartIm = out[evenIndex * 2 + 1];
             const oddPartRe  = out[oddIndex * 2];
@@ -1399,8 +1389,7 @@ function fftComplexInPlace_seq_4(out) {
             out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
         }
     
-
-
+    */
 
 
 
@@ -2442,7 +2431,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
     }*/
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
-        //if(size > 128){ break; }
+        if(size > 4){ break; }
         const halfSize = size / 2;
         // Get FFT factors with caching
         const factors = computeFFTFactorsWithCache(size);
@@ -2716,8 +2705,8 @@ const performFFTOperations = (fftSize,type) => {
 
     // Perform FFT operations numOperations times
     for (let i = 0; i < numOperations; i++) {
-        fftRealInPlace_ref(testData);
-        //fftRealInPlaceRADIX4(testData,type);
+        //fftRealInPlace_ref(testData);
+        fftRealInPlaceRADIX4(testData,type);
     }
 
 };
