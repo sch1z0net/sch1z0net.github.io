@@ -2716,7 +2716,8 @@ const performFFTOperations = (fftSize,type) => {
 
     // Perform FFT operations numOperations times
     for (let i = 0; i < numOperations; i++) {
-        fftRealInPlaceRADIX4(testData,type);
+        fftRealInPlace_ref(testData);
+        //fftRealInPlaceRADIX4(testData,type);
     }
 
 };
