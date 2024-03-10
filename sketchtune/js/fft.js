@@ -1304,9 +1304,9 @@ function fftComplexInPlace_seq_4(out) {
         const halfSize    = 64;
         const quarterSize = 32;
         //for (let i = 0; i < 256; i += 128) {
-        for (let j = 0; j < quarterSize; j++) {
+        for (let j = 0; j < halfSize; j++) {
             const evenIndex = j;
-            const oddIndex = j + halfSize;
+            const oddIndex  = j + halfSize;
             const evenPartRe = out[evenIndex * 2];
             const evenPartIm = out[evenIndex * 2 + 1];
             const oddPartRe  = out[oddIndex * 2];
@@ -1322,6 +1322,21 @@ function fftComplexInPlace_seq_4(out) {
             out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
             out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
             out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
+
+            // Mirror the values
+            /*out[(halfSize * 2 - 1 - evenIndex) * 2]     =  out[evenIndex * 2];
+            out[(halfSize * 2 - 1 - evenIndex) * 2 + 1] = -out[evenIndex * 2 + 1];
+            out[(halfSize * 2 - 1 - oddIndex) * 2]      =  out[oddIndex * 2];
+            out[(halfSize * 2 - 1 - oddIndex) * 2 + 1]  = -out[oddIndex * 2 + 1];*/
+        }
+        for (let j = 0; j < halfSize; j++) {
+            const evenIndex = 128 + j;
+            const oddIndex  = 128 + j + halfSize;
+
+            out[evenIndex * 2]     = 0;
+            out[evenIndex * 2 + 1] = 0;
+            out[oddIndex * 2]      = 0;
+            out[oddIndex * 2 + 1]  = 0;
 
             // Mirror the values
             /*out[(halfSize * 2 - 1 - evenIndex) * 2]     =  out[evenIndex * 2];
