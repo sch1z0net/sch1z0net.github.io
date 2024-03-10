@@ -1311,15 +1311,15 @@ function fftComplexInPlace_seq_4(out) {
           Tx3bRe = (x3dRe_4 * -t2Re_1h - -x3dIm_4 *  t2Re_1b);
           Tx3bIm = (x3dRe_4 *  t2Re_1b + -x3dIm_4 * -t2Re_1h);
 
-          Tx0cRe = (x1cRe_8 * -t2Re_1g - x1cIm_8 *  t2Re_1c);
-          Tx0cIm = (x1cRe_8 *  t2Re_1c + x1cIm_8 * -t2Re_1g);
-          Tx2cRe = (x3cRe_8 * -t2Re_1g - x3cIm_8 *  t2Re_1c);
-          Tx2cIm = (x3cRe_8 *  t2Re_1c + x3cIm_8 * -t2Re_1g);
+          Tx0cRe = (x1cRe_4 * -t2Re_1g - -x1cIm_4 *  t2Re_1c);
+          Tx0cIm = (x1cRe_4 *  t2Re_1c + -x1cIm_4 * -t2Re_1g);
+          Tx2cRe = (x3cRe_4 * -t2Re_1g - -x3cIm_4 *  t2Re_1c);
+          Tx2cIm = (x3cRe_4 *  t2Re_1c + -x3cIm_4 * -t2Re_1g);
 
-          Tx1dRe = (x1dRe_8 * -t2Re_1f - x1dIm_8 *  t2Re_1d);
-          Tx1dIm = (x1dRe_8 *  t2Re_1d + x1dIm_8 * -t2Re_1f);
-          Tx3dRe = (x3dRe_8 * -t2Re_1f - x3dIm_8 *  t2Re_1d);
-          Tx3dIm = (x3dRe_8 *  t2Re_1d + x3dIm_8 * -t2Re_1f);
+          Tx1dRe = (x1bRe_4 * -t2Re_1f - -x1bIm_4 *  t2Re_1d);
+          Tx1dIm = (x1bRe_4 *  t2Re_1d + -x1bIm_4 * -t2Re_1f);
+          Tx3dRe = (x3bRe_4 * -t2Re_1f - -x3bIm_4 *  t2Re_1d);
+          Tx3dIm = (x3bRe_4 *  t2Re_1d + -x3bIm_4 * -t2Re_1f);
 
           xM0ReA = x0aRe_8 + Tx0aRe;
           xM0ImA = 0       + Tx0aIm; 
@@ -3212,7 +3212,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
     }*/
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
-        if(size > 16){ break; }
+        if(size > 64){ break; }
         const halfSize = size / 2;
         // Get FFT factors with caching
         const factors = computeFFTFactorsWithCache(size);
