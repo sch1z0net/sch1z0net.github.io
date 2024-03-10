@@ -928,12 +928,13 @@ function fftComplexInPlace_seq_4(out) {
           let x2aRe = out[idx + 4];
           let x3aRe = out[idx + 6];
 
-          out[idx      ] =   x0aRe + x1aRe + x2aRe + x3aRe;
+          let temp1 = x0aRe + x1aRe;
+          let temp2 = x2aRe + x3aRe;
+          out[idx      ] =   temp1 + temp2;
+          out[idx  +  4] =   temp1 - temp2;
 
           out[idx  +  2] =   x0aRe - x1aRe;
           out[idx  +  3] =   x2aRe - x3aRe;
-          out[idx  +  4] =   x0aRe + x1aRe - x2aRe - x3aRe;
-
           out[idx  +  6] =   x0aRe - x1aRe; 
           out[idx  +  7] = - x2aRe + x3aRe;
     } 
