@@ -968,10 +968,10 @@ function fftComplexInPlace_seq_4(out) {
           resReC = x0cRe  - x2cRe * tRe_2c + x3cRe * tRe_2c;                                                                                                              out[i*2 +  12] =   resReC;   out[i*2 +  20] =   resReC;
           resImC = x1cRe  - x2cRe * tRe_2c - x3cRe * tRe_2c;                                                                                                              out[i*2 +  13] = - resImC;   out[i*2 +  21] =   resImC;
 
-          resReB = x0bRe  + x1bRe * tRe_1b - x1bIm * tRe_1b + (x2bRe  + x3bRe * tRe_1b - x3bIm * tRe_1b)* tRe_2b - (x2bIm  + x3bRe * tRe_1b + x3bIm * tRe_1b)* tRe_2d;    out[i*2 +  2]  =   resReB;   out[i*2 +  30] =   resReB;
+          resReB = x0bRe  + (x1bRe-x1bIm) * tRe_1b + (x3bRe-x3bIm) * tRe_1b2b - (x3bRe+x3bIm) * tRe_1b2d - x2bIm*tRe_2d + x2bRe*tRe_2b;                                   out[i*2 +  2]  =   resReB;   out[i*2 +  30] =   resReB;
           resImB = x0bIm  + (x1bRe+x1bIm) * tRe_1b + (x3bRe-x3bIm) * tRe_1b2d + (x3bRe+x3bIm) * tRe_1b2b + x2bIm*tRe_2b + x2bRe*tRe_2d;                                   out[i*2 +  3]  =   resImB;   out[i*2 +  31] = - resImB;
-          resReD = x0bRe  - (x1bRe-x1bIm) * tRe_1b - (x3bRe+x3bIm) * tRe_1b2d - (x3bRe+x3bIm) * tRe_1b2b + x2bIm*tRe_2b + x2bRe*tRe_2d;                                   out[i*2 +  6]  =   resReD;   out[i*2 +  26] =   resReD;
-          resImD =-x0bIm  + (x1bRe+x1bIm) * tRe_1b - (x3bRe-x3bIm) * tRe_1b2b + (x3bRe+x3bIm) * tRe_1b2d - x2bIm*tRe_2d + x2bRe*tRe_2b;                                   out[i*2 +  7]  =   resImD;   out[i*2 +  27] = - resImD; 
+          resReD = x0bRe  - x1bRe * tRe_1b + x1bIm * tRe_1b + (x2bRe  - x3bRe * tRe_1b + x3bIm * tRe_1b)* tRe_2d - (x3bRe * tRe_1b + x3bIm * tRe_1b - x2bIm)*tRe_2b;      out[i*2 +  6]  =   resReD;   out[i*2 +  26] =   resReD;
+          resImD = x1bRe * tRe_1b + x1bIm * tRe_1b - x0bIm  + (x2bRe  - x3bRe * tRe_1b + x3bIm * tRe_1b)* tRe_2b + (x3bRe * tRe_1b + x3bIm * tRe_1b - x2bIm)*tRe_2d;      out[i*2 +  7]  =   resImD;   out[i*2 +  27] = - resImD; 
 
           resReB = x0bRe  + x1bRe * tRe_1b - x1bIm * tRe_1b - (x2bRe  + x3bRe * tRe_1b - x3bIm * tRe_1b)* tRe_2b + (x2bIm  + x3bRe * tRe_1b + x3bIm * tRe_1b)*tRe_2d;     out[i*2 +  14] =   resReB;   out[i*2 +  18] =   resReB;
           resImB = x0bIm  + x1bRe * tRe_1b + x1bIm * tRe_1b - (x2bRe  + x3bRe * tRe_1b - x3bIm * tRe_1b)* tRe_2d - (x2bIm  + x3bRe * tRe_1b + x3bIm * tRe_1b)*tRe_2b;     out[i*2 +  15] = - resImB;   out[i*2 +  19] =   resImB; 
