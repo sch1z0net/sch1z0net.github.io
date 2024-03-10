@@ -1058,8 +1058,6 @@ function fftComplexInPlace_seq_4(out) {
           let x3aRe_8 = out[idx   +112]; let x3aIm_8 = out[idx   +113];        //turning point
 
 
-
-
           let T0x1bRe = (x1bRe_0 * t2Re_1b - x1bIm_0 * t2Re_1h);
           let T0x1bIm = (x1bRe_0 * t2Re_1h + x1bIm_0 * t2Re_1b);
           let T0x3bRe = (x3bRe_0 * t2Re_1b - x3bIm_0 * t2Re_1h);
