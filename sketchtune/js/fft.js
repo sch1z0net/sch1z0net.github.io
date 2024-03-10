@@ -3533,7 +3533,7 @@ function compareFFTResults(array1, array2) {
 
 /****************** TEST SPEED *******************/ 
 
-//measureTime(256,4);
+measureTime(256,4);
 //measureTime(512,5);
 //measureTime(512,6);
 //measureTime(512,7);
