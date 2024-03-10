@@ -963,43 +963,30 @@ function fftComplexInPlace_seq_4(out) {
           out[i*2 +  24] = x0aRe - x1aRe;
           out[i*2 +  25] = x3aRe - x2aRe;
 
-          resReC = x0cRe  + x2cRe * tRe_2c - x3cRe * tRe_2c;                                                                                                              out[i*2 +  4]  =   resReC;   out[i*2 +  28] =   resReC;
-          resImC = x1cRe  + x2cRe * tRe_2c + x3cRe * tRe_2c;                                                                                                              out[i*2 +  5]  =   resImC;   out[i*2 +  29] = - resImC;
-          resReC = x0cRe  - x2cRe * tRe_2c + x3cRe * tRe_2c;                                                                                                              out[i*2 +  12] =   resReC;   out[i*2 +  20] =   resReC;
-          resImC = x1cRe  - x2cRe * tRe_2c - x3cRe * tRe_2c;                                                                                                              out[i*2 +  13] = - resImC;   out[i*2 +  21] =   resImC;
+          resReC = x0cRe  + x2cRe * tRe_2c - x3cRe * tRe_2c;                                                        out[i*2 +  4]  =   resReC;   out[i*2 +  28] =   resReC;
+          resImC = x1cRe  + x2cRe * tRe_2c + x3cRe * tRe_2c;                                                        out[i*2 +  5]  =   resImC;   out[i*2 +  29] = - resImC;
+          resReC = x0cRe  - x2cRe * tRe_2c + x3cRe * tRe_2c;                                                        out[i*2 +  12] =   resReC;   out[i*2 +  20] =   resReC;
+          resImC = x1cRe  - x2cRe * tRe_2c - x3cRe * tRe_2c;                                                        out[i*2 +  13] = - resImC;   out[i*2 +  21] =   resImC;
 
           let x1dif = (x1bRe-x1bIm);
           let x1sum = (x1bRe+x1bIm);
           let x3dif = (x3bRe-x3bIm);
           let x3sum = (x3bRe+x3bIm);
+          
+          let x3dif_tRe_1b2b = x3dif * tRe_1b2b;
+          let x3dif_tRe_1b2d = x3dif * tRe_1b2d;
+          let x3sum_tRe_1b2b = x3sum * tRe_1b2b;
+          let x3sum_tRe_1b2d = x3sum * tRe_1b2d;
 
+          resReB = x0bRe  + x1dif * tRe_1b + x3dif_tRe_1b2b - x3sum_tRe_1b2d + x2bRe*tRe_2b - x2bIm*tRe_2d;     out[i*2 +  2]  =   resReB;   out[i*2 +  30] =   resReB;
+          resImB = x0bIm  + x1sum * tRe_1b + x3dif_tRe_1b2d + x3sum_tRe_1b2b + x2bRe*tRe_2d + x2bIm*tRe_2b;     out[i*2 +  3]  =   resImB;   out[i*2 +  31] = - resImB;
+          resReD = x0bRe  - x1dif * tRe_1b - x3dif_tRe_1b2d - x3sum_tRe_1b2b + x2bRe*tRe_2d + x2bIm*tRe_2b;     out[i*2 +  6]  =   resReD;   out[i*2 +  26] =   resReD;
+          resImD =-x0bIm  + x1sum * tRe_1b - x3dif_tRe_1b2b + x3sum_tRe_1b2d + x2bRe*tRe_2b - x2bIm*tRe_2d;     out[i*2 +  7]  =   resImD;   out[i*2 +  27] = - resImD; 
 
-          resReB = x0bRe  + x1dif * tRe_1b + x3dif * tRe_1b2b - x3sum * tRe_1b2d - x2bIm*tRe_2d + x2bRe*tRe_2b;                                   out[i*2 +  2]  =   resReB;   out[i*2 +  30] =   resReB;
-          resImB = x0bIm  + x1sum * tRe_1b + x3dif * tRe_1b2d + x3sum * tRe_1b2b + x2bIm*tRe_2b + x2bRe*tRe_2d;                                   out[i*2 +  3]  =   resImB;   out[i*2 +  31] = - resImB;
-          resReD = x0bRe  - x1dif * tRe_1b - x3dif * tRe_1b2d - x3sum * tRe_1b2b + x2bIm*tRe_2b + x2bRe*tRe_2d;                                   out[i*2 +  6]  =   resReD;   out[i*2 +  26] =   resReD;
-          resImD =-x0bIm  + x1sum * tRe_1b - x3dif * tRe_1b2b + x3sum * tRe_1b2d - x2bIm*tRe_2d + x2bRe*tRe_2b;                                   out[i*2 +  7]  =   resImD;   out[i*2 +  27] = - resImD; 
-
-          resReB = x0bRe  + x1dif * tRe_1b - x3dif * tRe_1b2b + x3sum * tRe_1b2d - x2bRe*tRe_2b + x2bIm*tRe_2d;                                   out[i*2 +  14] =   resReB;   out[i*2 +  18] =   resReB;
-          resImB = x0bIm  + x1sum * tRe_1b - x3dif * tRe_1b2d - x3sum * tRe_1b2b - x2bRe*tRe_2d - x2bIm*tRe_2b;                                   out[i*2 +  15] = - resImB;   out[i*2 +  19] =   resImB; 
-          resReD = x0bRe  - x1dif * tRe_1b + x3dif * tRe_1b2d + x3sum * tRe_1b2b - x2bRe*tRe_2d - x2bIm*tRe_2b;                                   out[i*2 +  10] =   resReD;   out[i*2 +  22] =   resReD;
-          resImD =-x0bIm  + x1sum * tRe_1b + x3dif * tRe_1b2b - x3sum * tRe_1b2d - x2bRe*tRe_2b + x2bIm*tRe_2d;                                   out[i*2 +  11] = - resImD;   out[i*2 +  23] =   resImD;
-
-          /*
-          resReC = x0cRe  + (x2cRe-x3cRe) * tRe_2c;                                                                                                                       out[i*2 +  4]  =   resReC;   out[i*2 +  28] =   resReC;
-          resImC = x1cRe  + (x2cRe+x3cRe) * tRe_2c;                                                                                                                       out[i*2 +  5]  =   resImC;   out[i*2 +  29] = - resImC;
-          resReC = x0cRe  + (x3cRe-x2cRe) * tRe_2c;                                                                                                                       out[i*2 +  12] =   resReC;   out[i*2 +  20] =   resReC;
-          resImC = x1cRe  - (x2cRe+x3cRe) * tRe_2c;                                                                                                                       out[i*2 +  13] = - resImC;   out[i*2 +  21] =   resImC;
-
-          resReB = x0bRe  + (x1bRe-x1bIm) * tRe_1b + (x3bRe-x3bIm) * tRe_1b2b - (x3bRe+x3bIm) * tRe_1b2d - x2bIm*tRe_2d + x2bRe*tRe_2b;                                 out[i*2 +  2]  =   resReB;   out[i*2 +  30] =   resReB;
-          resImB = x0bIm  + (x1bRe+x1bIm) * tRe_1b + (x3bRe-x3bIm) * tRe_1b2d + (x3bRe+x3bIm) * tRe_1b2b + x2bIm*tRe_2b + x2bRe*tRe_2d;                                 out[i*2 +  3]  =   resImB;   out[i*2 +  31] = - resImB;
-          resReD = x0bRe  - (x1bRe-x1bIm) * tRe_1b - (x3bRe+x3bIm) * tRe_1b2d - (x3bRe+x3bIm) * tRe_1b2b + x2bIm*tRe_2b + x2bRe*tRe_2d;                                 out[i*2 +  6]  =   resReD;   out[i*2 +  26] =   resReD;
-          resImD =-x0bIm  + (x1bRe+x1bIm) * tRe_1b - (x3bRe-x3bIm) * tRe_1b2b + (x3bRe+x3bIm) * tRe_1b2d - x2bIm*tRe_2d + x2bRe*tRe_2b;                                 out[i*2 +  7]  =   resImD;   out[i*2 +  27] = - resImD; 
-
-          resReB = x0bRe  + x1bRe * tRe_1b - x1bIm * tRe_1b - (x2bRe  + x3bRe * tRe_1b - x3bIm * tRe_1b)* tRe_2b + (x2bIm  + x3bRe * tRe_1b + x3bIm * tRe_1b)*tRe_2d;     out[i*2 +  14] =   resReB;   out[i*2 +  18] =   resReB;
-          resImB = x0bIm  + x1bRe * tRe_1b + x1bIm * tRe_1b - (x2bRe  + x3bRe * tRe_1b - x3bIm * tRe_1b)* tRe_2d - (x2bIm  + x3bRe * tRe_1b + x3bIm * tRe_1b)*tRe_2b;     out[i*2 +  15] = - resImB;   out[i*2 +  19] =   resImB; 
-          resReD = x0bRe  - x1bRe * tRe_1b + x1bIm * tRe_1b - (x2bRe  - x3bRe * tRe_1b + x3bIm * tRe_1b)* tRe_2d + (x3bRe * tRe_1b + x3bIm * tRe_1b - x2bIm)*tRe_2b;      out[i*2 +  10] =   resReD;   out[i*2 +  22] =   resReD;
-          resImD = x1bRe * tRe_1b + x1bIm * tRe_1b - x0bIm  - (x2bRe  - x3bRe * tRe_1b + x3bIm * tRe_1b)* tRe_2b - (x3bRe * tRe_1b + x3bIm * tRe_1b - x2bIm)*tRe_2d;      out[i*2 +  11] = - resImD;   out[i*2 +  23] =   resImD;
-          */
+          resReB = x0bRe  + x1dif * tRe_1b - x3dif_tRe_1b2b + x3sum_tRe_1b2d - x2bRe*tRe_2b + x2bIm*tRe_2d;     out[i*2 +  14] =   resReB;   out[i*2 +  18] =   resReB;
+          resImB = x0bIm  + x1sum * tRe_1b - x3dif_tRe_1b2d - x3sum_tRe_1b2b - x2bRe*tRe_2d - x2bIm*tRe_2b;     out[i*2 +  15] = - resImB;   out[i*2 +  19] =   resImB; 
+          resReD = x0bRe  - x1dif * tRe_1b + x3dif_tRe_1b2d + x3sum_tRe_1b2b - x2bRe*tRe_2d - x2bIm*tRe_2b;     out[i*2 +  10] =   resReD;   out[i*2 +  22] =   resReD;
+          resImD =-x0bIm  + x1sum * tRe_1b + x3dif_tRe_1b2b - x3sum_tRe_1b2d - x2bRe*tRe_2b + x2bIm*tRe_2d;     out[i*2 +  11] = - resImD;   out[i*2 +  23] =   resImD;
     }
 
 
