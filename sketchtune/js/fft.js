@@ -1178,7 +1178,7 @@ function fftComplexInPlace_seq_4(out) {
           let x3cRe_4 = out[idx   +108]; let x3cIm_4 = out[idx   +109];
           
           let x0dRe_4 = out[idx   + 14]; let x0dIm_4 = out[idx   + 15];
-          let x1dRe_4 = out[idx   + 46]; let x1dIm_4 = out[idx   + 48];
+          let x1dRe_4 = out[idx   + 46]; let x1dIm_4 = out[idx   + 47];
           let x2dRe_4 = out[idx   + 78]; let x2dIm_4 = out[idx   + 79];
           let x3dRe_4 = out[idx   +110]; let x3dIm_4 = out[idx   +111];
 
