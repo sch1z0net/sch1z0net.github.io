@@ -1368,8 +1368,8 @@ function fftComplexInPlace_seq_4(out) {
     // P = 3  -> 256
     //
 
-        let halfSize    = 128;
-        let quarterSize = 64;
+        halfSize    = 128;
+        quarterSize = 64;
         for (let j = 0; j < halfSize; j++) {
             const evenIndex = j;
             const oddIndex  = j + halfSize;
