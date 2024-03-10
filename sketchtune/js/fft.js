@@ -1487,7 +1487,6 @@ function fftComplexInPlace_seq_4(out) {
           out[idx  + 104] =   resReA;
           out[idx  + 105] = - resImA;
 
-
           xM0ReA =  x0aRe_4 - Tx0aRe;
           xM0ImA = -x0aIm_4 - Tx0aIm; 
           xM2ReA =  x2aRe_4 - Tx2aRe;
