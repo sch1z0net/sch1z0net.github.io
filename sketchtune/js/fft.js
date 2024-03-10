@@ -1331,28 +1331,37 @@ function fftComplexInPlace_seq_4(out) {
             out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
             out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
             out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
-
-            // Mirror the values
-            /*out[(halfSize * 2 - 1 - evenIndex) * 2]     =  out[evenIndex * 2];
-            out[(halfSize * 2 - 1 - evenIndex) * 2 + 1] = -out[evenIndex * 2 + 1];
-            out[(halfSize * 2 - 1 - oddIndex) * 2]      =  out[oddIndex * 2];
-            out[(halfSize * 2 - 1 - oddIndex) * 2 + 1]  = -out[oddIndex * 2 + 1];*/
         }
+
         for (let j = 0; j < halfSize; j++) {
             const evenIndex = 128 + j;
             const oddIndex  = 128 + j + halfSize;
 
-            out[evenIndex * 2]     = 0;
-            out[evenIndex * 2 + 1] = 0;
-            out[oddIndex * 2]      = 0;
-            out[oddIndex * 2 + 1]  = 0;
+            if(j > quarterSize){
+              out[evenIndex * 2]     =  out[512 - evenIndex * 2] ;
+              out[evenIndex * 2 + 1] = -out[512 - evenIndex * 2 + 1];
+              out[oddIndex * 2]      =  out[512 - oddIndex * 2];
+              out[oddIndex * 2 + 1]  = -out[512 - oddIndex * 2 + 1];
+              continue;
+            }
 
-            // Mirror the values
-            /*out[(halfSize * 2 - 1 - evenIndex) * 2]     =  out[evenIndex * 2];
-            out[(halfSize * 2 - 1 - evenIndex) * 2 + 1] = -out[evenIndex * 2 + 1];
-            out[(halfSize * 2 - 1 - oddIndex) * 2]      =  out[oddIndex * 2];
-            out[(halfSize * 2 - 1 - oddIndex) * 2 + 1]  = -out[oddIndex * 2 + 1];*/
+            const evenPartRe = out[evenIndex * 2];
+            const evenPartIm = out[evenIndex * 2 + 1];
+            const oddPartRe  = out[oddIndex * 2];
+            const oddPartIm  = out[oddIndex * 2 + 1];
+
+            const twiddleRe = ____F[126 + (j * 2 + 0)];
+            const twiddleIm = ____F[126 + (j * 2 + 1)];
+
+            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
+            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
+
+            out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
+            out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+            out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
+            out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
         }
+
 
         //}
     
