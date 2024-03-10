@@ -862,10 +862,10 @@ let tRe_1b2d = tRe_1b * tRe_2d;
 function fftComplexInPlace_seq_4(out) {
     
 
-    let x0aRe, x0aIm; let x1aRe, x1aIm; let x2aRe, x2aIm; let x3aRe, x3aIm;
+    /*let x0aRe, x0aIm; let x1aRe, x1aIm; let x2aRe, x2aIm; let x3aRe, x3aIm;
     let x0bRe, x0bIm; let x1bRe, x1bIm; let x2bRe, x2bIm; let x3bRe, x3bIm;
     let x0cRe, x0cIm; let x1cRe, x1cIm; let x2cRe, x2cIm; let x3cRe, x3cIm;
-    let x0dRe, x0dIm; let x1dRe, x1dIm; let x2dRe, x2dIm; let x3dRe, x3dIm;
+    let x0dRe, x0dIm; let x1dRe, x1dIm; let x2dRe, x2dIm; let x3dRe, x3dIm;*/
     /*let x0aRe_0, x0aIm_0; let x1aRe_0, x1aIm_0; let x2aRe_0, x2aIm_0; let x3aRe_0, x3aIm_0;
     let x0bRe_0, x0bIm_0; let x1bRe_0, x1bIm_0; let x2bRe_0, x2bIm_0; let x3bRe_0, x3bIm_0;
     let x0cRe_0, x0cIm_0; let x1cRe_0, x1cIm_0; let x2cRe_0, x2cIm_0; let x3cRe_0, x3cIm_0;
@@ -903,10 +903,10 @@ function fftComplexInPlace_seq_4(out) {
     //
 
     for(let idx = 0; idx < 512; idx+=8){
-          x0aRe = out[idx    ];
-          x1aRe = out[idx + 2];
-          x2aRe = out[idx + 4];
-          x3aRe = out[idx + 6];
+          let x0aRe = out[idx    ];
+          let x1aRe = out[idx + 2];
+          let x2aRe = out[idx + 4];
+          let x3aRe = out[idx + 6];
 
           out[idx      ] =   x0aRe + x1aRe + x2aRe + x3aRe;
 
@@ -924,25 +924,25 @@ function fftComplexInPlace_seq_4(out) {
     //
 
     for(let idx = 0; idx < 512; idx+=32){
-          x0aRe = out[idx     ];
-          x0bRe = out[idx +  2]; 
-          x0bIm = out[idx +  3];
-          x0cRe = out[idx +  4];
+          let x0aRe = out[idx     ];
+          let x0bRe = out[idx +  2]; 
+          let x0bIm = out[idx +  3];
+          let x0cRe = out[idx +  4];
 
-          x1aRe = out[idx +  8];
-          x1bRe = out[idx + 10];
-          x1bIm = out[idx + 11];
-          x1cRe = out[idx + 12];
+          let x1aRe = out[idx +  8];
+          let x1bRe = out[idx + 10];
+          let x1bIm = out[idx + 11];
+          let x1cRe = out[idx + 12];
 
-          x2aRe = out[idx + 16];
-          x2bRe = out[idx + 18];
-          x2bIm = out[idx + 19];
-          x2cRe = out[idx + 20];
+          let x2aRe = out[idx + 16];
+          let x2bRe = out[idx + 18];
+          let x2bIm = out[idx + 19];
+          let x2cRe = out[idx + 20];
 
-          x3aRe = out[idx + 24];
-          x3bRe = out[idx + 26];
-          x3bIm = out[idx + 27];
-          x3cRe = out[idx + 28];
+          let x3aRe = out[idx + 24];
+          let x3bRe = out[idx + 26];
+          let x3bIm = out[idx + 27];
+          let x3cRe = out[idx + 28];
 
           let x2cRe_tRe_2c = x2cRe * tRe_2c;
           let x3cRe_tRe_2c = x3cRe * tRe_2c;
