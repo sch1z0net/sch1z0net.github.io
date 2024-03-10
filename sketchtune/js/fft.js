@@ -1513,14 +1513,14 @@ function fftComplexInPlace_seq_4(out) {
           resReD = xM1ReD + ((xM3ReD)* -t2Re_2b  - ((xM3ImD)*  t2Re_2p ));
           resImD = xM1ImD + ((xM3ReD)*  t2Re_2p  + ((xM3ImD)* -t2Re_2b ));
 
-          out[idx  +  26] =   resReA;
-          out[idx  +  27] =   resImA; 
-          out[idx  +  28] =   resReB;
-          out[idx  +  29] =   resImB; 
-          out[idx  +  30] =   resReC;
-          out[idx  +  31] =   resImC;
-          out[idx  +  32] =   resReD;
-          out[idx  +  33] =   resImD;
+          out[idx  +  24] =   resReA;
+          out[idx  +  25] =   resImA; 
+          out[idx  +  26] =   resReB;
+          out[idx  +  27] =   resImB; 
+          out[idx  +  28] =   resReC;
+          out[idx  +  29] =   resImC;
+          out[idx  +  30] =   resReD;
+          out[idx  +  31] =   resImD;
 
           out[idx  +  66] =   resReD;
           out[idx  +  67] = - resImD;
