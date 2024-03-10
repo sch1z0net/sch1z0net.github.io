@@ -950,6 +950,7 @@ function fftComplexInPlace_seq_4(out) {
           let x0cRe = out[idx +  4];
 
           let x1aRe = out[idx +  8];
+          out[idx +   8] = x0aRe - x1aRe; 
           let x1bRe = out[idx + 10];
           let x1bIm = out[idx + 11];
           let x1cRe = out[idx + 12];
@@ -960,16 +961,15 @@ function fftComplexInPlace_seq_4(out) {
           let x2cRe = out[idx + 20];
 
           let x3aRe = out[idx + 24];
+          out[idx +  24] = x0aRe - x1aRe;
+          out[idx +  25] = x3aRe - x2aRe;  
           let x3bRe = out[idx + 26];
           let x3bIm = out[idx + 27];
           let x3cRe = out[idx + 28];
 
-          out[idx      ] = x0aRe + x1aRe + x2aRe + x3aRe; 
-          out[idx +   8] = x0aRe - x1aRe;  
+          out[idx      ] = x0aRe + x1aRe + x2aRe + x3aRe;  
           out[idx +   9] = x2aRe - x3aRe;      
           out[idx +  16] = x0aRe + x1aRe - x2aRe - x3aRe;
-          out[idx +  24] = x0aRe - x1aRe;
-          out[idx +  25] = x3aRe - x2aRe;  
 
           let x2cRe_tRe_2c = x2cRe * t1Re_2c;
           let x3cRe_tRe_2c = x3cRe * t1Re_2c;
