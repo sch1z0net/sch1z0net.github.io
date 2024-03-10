@@ -963,10 +963,10 @@ function fftComplexInPlace_seq_4(out) {
           out[i*2 +  24] = x0aRe - x1aRe;
           out[i*2 +  25] = x3aRe - x2aRe;
 
-          resReC = x0cRe  + x2cRe * tRe_2c - x3cRe * tRe_2c;                                                        out[i*2 +  4]  =   resReC;   out[i*2 +  28] =   resReC;
-          resImC = x1cRe  + x2cRe * tRe_2c + x3cRe * tRe_2c;                                                        out[i*2 +  5]  =   resImC;   out[i*2 +  29] = - resImC;
-          resReC = x0cRe  - x2cRe * tRe_2c + x3cRe * tRe_2c;                                                        out[i*2 +  12] =   resReC;   out[i*2 +  20] =   resReC;
-          resImC = x1cRe  - x2cRe * tRe_2c - x3cRe * tRe_2c;                                                        out[i*2 +  13] = - resImC;   out[i*2 +  21] =   resImC;
+          resReC = x0cRe  + x2cRe * tRe_2c - x3cRe * tRe_2c;  out[i*2 +  4]  =   resReC;   out[i*2 +  28] =   resReC;
+          resImC = x1cRe  + x2cRe * tRe_2c + x3cRe * tRe_2c;  out[i*2 +  5]  =   resImC;   out[i*2 +  29] = - resImC;
+          resReC = x0cRe  - x2cRe * tRe_2c + x3cRe * tRe_2c;  out[i*2 +  12] =   resReC;   out[i*2 +  20] =   resReC;
+          resImC = x1cRe  - x2cRe * tRe_2c - x3cRe * tRe_2c;  out[i*2 +  13] = - resImC;   out[i*2 +  21] =   resImC;
 
           let x1dif = (x1bRe-x1bIm);
           let x1sum = (x1bRe+x1bIm);
@@ -985,6 +985,8 @@ function fftComplexInPlace_seq_4(out) {
           let tempImB = (x3dif_tRe_1b2d + x3sum_tRe_1b2b + x2bRe*tRe_2d + x2bIm*tRe_2b);
           let tempReD = (x3dif_tRe_1b2d + x3sum_tRe_1b2b - x2bRe*tRe_2d - x2bIm*tRe_2b);
           let tempImD = (x3dif_tRe_1b2b - x3sum_tRe_1b2d - x2bRe*tRe_2b + x2bIm*tRe_2d);
+
+          console.log(x1dif_tRe_1b.toFixed(3), x1sum_tRe_1b.toFixed(3), x3dif_tRe_1b2b.toFixed(3), x3dif_tRe_1b2b.toFixed(3), x3sum_tRe_1b2b.toFixed(3), x3sum_tRe_1b2d.toFixed(3), tempReB.toFixed(3), tempImB.toFixed(3), tempReD.toFixed(3), tempImD.toFixed(3));
 
           resReB = x0bRe  + x1dif_tRe_1b + tempReB;     out[i*2 +  2]  =   resReB;   out[i*2 +  30] =   resReB;
           resReB = x0bRe  + x1dif_tRe_1b - tempReB;     out[i*2 +  14] =   resReB;   out[i*2 +  18] =   resReB;
@@ -3516,7 +3518,7 @@ function compareFFTResults(array1, array2) {
 
 /****************** TEST SPEED *******************/ 
 
-measureTime(256,4);
+//measureTime(256,4);
 //measureTime(512,5);
 //measureTime(512,6);
 //measureTime(512,7);
