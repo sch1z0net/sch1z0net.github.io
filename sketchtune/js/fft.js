@@ -1301,72 +1301,32 @@ function fftComplexInPlace_seq_4(out) {
     // P = 2.5  -> 128
     //
 
-                /*
-                const eRe = out[evenIndex * 2];
-                const eIm = out[evenIndex * 2 + 1];
-                const oRe = out[oddIndex * 2];
-                const oIm = out[oddIndex * 2 + 1];
+        const halfSize = 64;
+        for (let i = 0; i < 256; i += 128) {
+            for (let j = 0; j < halfSize; j++) {
+                const evenIndex = i + j;
+                const oddIndex = i + j + halfSize;
+                const evenPartRe = out[evenIndex * 2    ];
+                const evenPartIm = out[evenIndex * 2 + 1];
+                const oddPartRe  = out[oddIndex  * 2    ];
+                const oddPartIm  = out[oddIndex  * 2 + 1];
 
-                //const twiddleRe = Math.cos((2 * Math.PI * j) / size);
-                //const twiddleIm = Math.sin((2 * Math.PI * j) / size);
-                const twiddleRe = factors[2 * j    ];
-                const twiddleIm = factors[2 * j + 1];
-
-                //console.log(evenIndex,oddIndex,"-",j);
+                const twiddleRe = Math.cos((2 * Math.PI * j) / 128);
+                const twiddleIm = Math.sin((2 * Math.PI * j) / 128);
+                //const twiddleRe = factors[2 * j    ];
+                //const twiddleIm = factors[2 * j + 1];
 
                 // Multiply by twiddle factors
-                const t_oRe = oRe * twiddleRe - oIm * twiddleIm;
-                const t_oIm = oRe * twiddleIm + oIm * twiddleRe;
+                const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
+                const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
 
                 // Combine results of even and odd parts in place
-                out[evenIndex * 2    ] = eRe + t_oRe;
-                out[evenIndex * 2 + 1] = eIm + t_oIm;
-                out[oddIndex  * 2    ] = eRe - t_oRe;
-                out[oddIndex  * 2 + 1] = eIm - t_oIm;
-                */
-
-    for(let idx = 0; idx < 512; idx+=256){
-          
-          let x0aRe_0 = out[idx       ];
-          let x0bRe_0 = out[idx   +  2]; let x0bIm_0 = out[idx   +  3];
-          let x0cRe_0 = out[idx   +  4]; let x0cIm_0 = out[idx   +  5];
-          let x0dRe_0 = out[idx   +  6]; let x0dIm_0 = out[idx   +  7];
-          let x0aRe_4 = out[idx   +  8]; let x0aIm_4 = out[idx   +  9];
-          let x0bRe_4 = out[idx   + 10]; let x0bIm_4 = out[idx   + 11];
-          let x0cRe_4 = out[idx   + 12]; let x0cIm_4 = out[idx   + 13];
-          let x0dRe_4 = out[idx   + 14]; let x0dIm_4 = out[idx   + 15];
-          let x0aRe_8 = out[idx   + 16];                                       //turning point
-
-          let x1aRe_0 = out[idx   + 32];
-          let x1bRe_0 = out[idx   + 34]; let x1bIm_0 = out[idx   + 35];
-          let x1cRe_0 = out[idx   + 36]; let x1cIm_0 = out[idx   + 37];
-          let x1dRe_0 = out[idx   + 38]; let x1dIm_0 = out[idx   + 39];
-          let x1aRe_4 = out[idx   + 40]; let x1aIm_4 = out[idx   + 41];
-          let x1bRe_4 = out[idx   + 42]; let x1bIm_4 = out[idx   + 43];
-          let x1cRe_4 = out[idx   + 44]; let x1cIm_4 = out[idx   + 45];
-          let x1dRe_4 = out[idx   + 46]; let x1dIm_4 = out[idx   + 47];
-          let x1aRe_8 = out[idx   + 48]; let x1aIm_8 = out[idx   + 49];        //turning point
-
-          let x2aRe_0 = out[idx   + 64]; let x2aIm_0 = out[idx   + 65];
-          let x2bRe_0 = out[idx   + 66]; let x2bIm_0 = out[idx   + 67];
-          let x2cRe_0 = out[idx   + 68]; let x2cIm_0 = out[idx   + 69];
-          let x2dRe_0 = out[idx   + 70]; let x2dIm_0 = out[idx   + 71];
-          let x2aRe_4 = out[idx   + 72]; let x2aIm_4 = out[idx   + 73];
-          let x2bRe_4 = out[idx   + 74]; let x2bIm_4 = out[idx   + 75];
-          let x2cRe_4 = out[idx   + 76]; let x2cIm_4 = out[idx   + 77];
-          let x2dRe_4 = out[idx   + 78]; let x2dIm_4 = out[idx   + 79];
-          let x2aRe_8 = out[idx   + 80]; let x2aIm_8 = out[idx   + 81];        //turning point
-
-          let x3aRe_0 = out[idx   + 96]; let x3aIm_0 = out[idx   + 97];
-          let x3bRe_0 = out[idx   + 98]; let x3bIm_0 = out[idx   + 99];
-          let x3cRe_0 = out[idx   +100]; let x3cIm_0 = out[idx   +101];
-          let x3dRe_0 = out[idx   +102]; let x3dIm_0 = out[idx   +103];
-          let x3aRe_4 = out[idx   +104]; let x3aIm_4 = out[idx   +105];
-          let x3bRe_4 = out[idx   +106]; let x3bIm_4 = out[idx   +107];
-          let x3cRe_4 = out[idx   +108]; let x3cIm_4 = out[idx   +109];
-          let x3dRe_4 = out[idx   +110]; let x3dIm_4 = out[idx   +111];
-          let x3aRe_8 = out[idx   +112]; let x3aIm_8 = out[idx   +113];        //turning point
-    }
+                out[evenIndex * 2    ] = evenPartRe + twiddledOddRe;
+                out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+                out[oddIndex  * 2    ] = evenPartRe - twiddledOddRe;
+                out[oddIndex  * 2 + 1] = evenPartIm - twiddledOddIm;
+            }
+        }
     
 
 
