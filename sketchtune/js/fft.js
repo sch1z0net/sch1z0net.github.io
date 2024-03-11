@@ -2188,6 +2188,39 @@ function fftComplexInPlace_seq_4(realInput) {
             out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
         }
 
+    /////////////////////////////////////////////
+    // P = 5  -> 1024
+    //
+
+        for (let j = 0; j < 512; j++) {
+            const evenIndex = j;
+            const oddIndex  = j + 512;
+
+            if(j > 256){
+              out[evenIndex * 2]     =  out[2048 - evenIndex * 2] ;
+              out[evenIndex * 2 + 1] = -out[2048 - evenIndex * 2 + 1];
+              out[oddIndex * 2]      =  out[2048 - oddIndex * 2];
+              out[oddIndex * 2 + 1]  = -out[2048 - oddIndex * 2 + 1];
+              continue;
+            }
+
+            const evenPartRe = out[evenIndex * 2];
+            const evenPartIm = out[evenIndex * 2 + 1];
+            const oddPartRe  = out[oddIndex * 2];
+            const oddPartIm  = out[oddIndex * 2 + 1];
+
+            const twiddleRe = ____F[1022 + (j * 2 + 0)];
+            const twiddleIm = ____F[1022 + (j * 2 + 1)];
+
+            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
+            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
+
+            out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
+            out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+            out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
+            out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
+        }
+
 
     return out;
 }
@@ -2720,7 +2753,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
     }*/
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
-        if(size > 512){ break; }
+        //if(size > 1024){ break; }
         const halfSize = size / 2;
         // Get FFT factors with caching
         const factors = computeFFTFactorsWithCache(size);
