@@ -2135,7 +2135,7 @@ function fftComplexInPlace_seq_4(realInput) {
             out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
             out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
         }
-
+*/
 
     /////////////////////////////////////////////
     // P = 4  -> 512
