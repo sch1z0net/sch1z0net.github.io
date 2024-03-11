@@ -1452,7 +1452,6 @@ function fftComplexInPlace_seq_4(realInput) {
     }
 
     
-/*
     /////////////////////////////////////////////
     // P = 2.5  -> 128
     //
@@ -2037,8 +2036,7 @@ function fftComplexInPlace_seq_4(realInput) {
                 out[idx +  64] =  resRe32_s; 
             }
 
-
-/*
+       /*
         for (let j = quarterSize+1; j < halfSize; j++) {
             let evenIndex = j;
             let oddIndex  = j + halfSize;
@@ -2681,7 +2679,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
     }*/
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
-        if(size > 64){ break; }
+        if(size > 128){ break; }
         const halfSize = size / 2;
         // Get FFT factors with caching
         const factors = computeFFTFactorsWithCache(size);
