@@ -1332,7 +1332,7 @@ function fftComplexInPlace_seq_4(out) {
 
         let h = 64;
         let q = 32;
-        for(let i = 0; i < 1024; i += 128){
+        for(let i = 0; i < 1024; i += 256){
             for (let j = 0; j <= h; j++) {
                 let  eI  = i + j;
                 let  oI  = i + j + h;
