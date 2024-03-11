@@ -945,7 +945,7 @@ let tRe61  = ____F[126 + (122)]; let tIm61  = ____F[126 + (123)];
 let tRe62  = - tRe2;             let tIm62  = ____F[126 + (125)];
 let tRe63  = - tRe1;             let tIm63  = ____F[126 + (127)];*/
 
-let map = bitReversalMap1024.get(512);
+let map = bitReversalMap512.get(512);
 const N = 512;
 const bits = 9;
 /*let map = bitReversalMap1024.get(1024);
