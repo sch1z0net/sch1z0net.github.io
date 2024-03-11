@@ -975,17 +975,15 @@ function fftComplexInPlace_seq_4(realInput) {
     for(let idx = 0; idx < 1024; idx+=4){
           let x0aRe = input[idx    ];
           let x1aRe = input[idx + 1];
-          out[2*idx  +  1] =  x0aRe - x1aRe; 
-
-          let x3aRe = input[idx + 3];
-          out[2*idx  +  6] =  x0aRe - x1aRe; 
-
           let x2aRe = input[idx + 2];
+          let x3aRe = input[idx + 3];
           out[2*idx      ] =  x0aRe + x1aRe + x2aRe + x3aRe;
+          out[2*idx  +  1] =  x0aRe - x1aRe; 
           out[2*idx  +  2] =  0;
           out[2*idx  +  3] =  x2aRe - x3aRe; 
           out[2*idx  +  4] =  x0aRe + x1aRe - x2aRe - x3aRe; 
           out[2*idx  +  5] =  0;
+          out[2*idx  +  6] =  x0aRe - x1aRe; 
           out[2*idx  +  7] = -x2aRe + x3aRe;
     }
 
