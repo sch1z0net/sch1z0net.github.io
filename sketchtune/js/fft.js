@@ -1330,8 +1330,9 @@ function fftComplexInPlace_seq_4(out) {
     // P = 2.5  -> 128
     //
 
+
         let h = 64;
-        for(let i = 0; i < 1024; i += 128){
+        for(let i = 0; i < 1024; i += 256){
             for (let j = 0; j < h; j++) {
                 let  eI  = i + j;
                 let  oI  = i + j + h;
@@ -1354,42 +1355,76 @@ function fftComplexInPlace_seq_4(out) {
             }
 
         }
+        
 
 
 /*
             for(let idx = 0; idx < 1024; idx += 128){
-                let eRe0  = out[idx +    0]; let  eIm0 = out[idx +    1];
-                let eRe1  = out[idx +    2]; let  eIm1 = out[idx +    3];
-                let eRe2  = out[idx +    4]; let  eIm2 = out[idx +    5];
-                let eRe3  = out[idx +    6]; let  eIm3 = out[idx +    7];
-                let eRe4  = out[idx +    8]; let  eIm4 = out[idx +    9];
-                let eRe5  = out[idx +   10]; let  eIm5 = out[idx +   11];
-                let eRe6  = out[idx +   12]; let  eIm6 = out[idx +   13];
-                let eRe7  = out[idx +   14]; let  eIm7 = out[idx +   15];
-                let eRe8  = out[idx +   16]; let  eIm8 = out[idx +   17];
-                let eRe9  = out[idx +   18]; let  eIm9 = out[idx +   19];
-                let eRe10 = out[idx +   20]; let eIm10 = out[idx +   21];
-                let eRe11 = out[idx +   22]; let eIm11 = out[idx +   23];
-                let eRe12 = out[idx +   24]; let eIm12 = out[idx +   25];
-                let eRe13 = out[idx +   26]; let eIm13 = out[idx +   27];
-                let eRe14 = out[idx +   28]; let eIm14 = out[idx +   29];
-                let eRe15 = out[idx +   30]; let eIm15 = out[idx +   31];
-                let eRe16  = out[idx +   32]; let eIm16  = out[idx +   33];
-                let eRe17  = out[idx +   34]; let eIm17  = out[idx +   35];
-                let eRe18  = out[idx +   36]; let eIm18  = out[idx +   37];
-                let eRe19  = out[idx +   38]; let eIm19  = out[idx +   39];
-                let eRe20  = out[idx +   40]; let eIm20  = out[idx +   41];
-                let eRe21  = out[idx +   42]; let eIm21  = out[idx +   43];
-                let eRe22  = out[idx +   44]; let eIm22  = out[idx +   45];
-                let eRe23  = out[idx +   46]; let eIm23  = out[idx +   47];
-                let eRe24  = out[idx +   48]; let eIm24  = out[idx +   49];
-                let eRe25  = out[idx +   50]; let eIm25  = out[idx +   51];
-                let eRe26  = out[idx +   52]; let eIm26  = out[idx +   53];
-                let eRe27  = out[idx +   54]; let eIm27  = out[idx +   55];
-                let eRe28  = out[idx +   56]; let eIm28  = out[idx +   57];
-                let eRe29  = out[idx +   58]; let eIm29  = out[idx +   59];
-                let eRe30  = out[idx +   60]; let eIm30  = out[idx +   61];
-                let eRe31  = out[idx +   62]; let eIm31  = out[idx +   63];
+                let eRe0   = out[idx +    0]; let eIm0  = out[idx +    1];
+                let eRe1   = out[idx +    2]; let eIm1  = out[idx +    3];
+                let eRe2   = out[idx +    4]; let eIm2  = out[idx +    5];
+                let eRe3   = out[idx +    6]; let eIm3  = out[idx +    7];
+                let eRe4   = out[idx +    8]; let eIm4  = out[idx +    9];
+                let eRe5   = out[idx +   10]; let eIm5  = out[idx +   11];
+                let eRe6   = out[idx +   12]; let eIm6  = out[idx +   13];
+                let eRe7   = out[idx +   14]; let eIm7  = out[idx +   15];
+                let eRe8   = out[idx +   16]; let eIm8  = out[idx +   17];
+                let eRe9   = out[idx +   18]; let eIm9  = out[idx +   19];
+                let eRe10  = out[idx +   20]; let eIm10 = out[idx +   21];
+                let eRe11  = out[idx +   22]; let eIm11 = out[idx +   23];
+                let eRe12  = out[idx +   24]; let eIm12 = out[idx +   25];
+                let eRe13  = out[idx +   26]; let eIm13 = out[idx +   27];
+                let eRe14  = out[idx +   28]; let eIm14 = out[idx +   29];
+                let eRe15  = out[idx +   30]; let eIm15 = out[idx +   31];
+                let eRe16  = out[idx +   32]; let eIm16 = out[idx +   33];
+                let eRe17  = out[idx +   34]; let eIm17 = out[idx +   35];
+                let eRe18  = out[idx +   36]; let eIm18 = out[idx +   37];
+                let eRe19  = out[idx +   38]; let eIm19 = out[idx +   39];
+                let eRe20  = out[idx +   40]; let eIm20 = out[idx +   41];
+                let eRe21  = out[idx +   42]; let eIm21 = out[idx +   43];
+                let eRe22  = out[idx +   44]; let eIm22 = out[idx +   45];
+                let eRe23  = out[idx +   46]; let eIm23 = out[idx +   47];
+                let eRe24  = out[idx +   48]; let eIm24 = out[idx +   49];
+                let eRe25  = out[idx +   50]; let eIm25 = out[idx +   51];
+                let eRe26  = out[idx +   52]; let eIm26 = out[idx +   53];
+                let eRe27  = out[idx +   54]; let eIm27 = out[idx +   55];
+                let eRe28  = out[idx +   56]; let eIm28 = out[idx +   57];
+                let eRe29  = out[idx +   58]; let eIm29 = out[idx +   59];
+                let eRe30  = out[idx +   60]; let eIm30 = out[idx +   61];
+                let eRe31  = out[idx +   62]; let eIm31 = out[idx +   63];
+                let eRe32  = out[idx +   64]; let eIm32 = out[idx +   65];
+                let eRe33  = out[idx +   66]; let eIm33 = out[idx +   67];
+                let eRe34  = out[idx +   68]; let eIm34 = out[idx +   69];
+                let eRe35  = out[idx +   70]; let eIm35 = out[idx +   71];
+                let eRe36  = out[idx +   72]; let eIm36 = out[idx +   73];
+                let eRe37  = out[idx +   74]; let eIm37 = out[idx +   75];
+                let eRe38  = out[idx +   76]; let eIm38 = out[idx +   77];
+                let eRe39  = out[idx +   78]; let eIm39 = out[idx +   79];
+                let eRe40  = out[idx +   80]; let eIm40 = out[idx +   81];
+                let eRe41  = out[idx +   82]; let eIm41 = out[idx +   83];
+                let eRe42  = out[idx +   84]; let eIm42 = out[idx +   85];
+                let eRe43  = out[idx +   86]; let eIm43 = out[idx +   87];
+                let eRe44  = out[idx +   88]; let eIm44 = out[idx +   89];
+                let eRe45  = out[idx +   90]; let eIm45 = out[idx +   91];
+                let eRe46  = out[idx +   92]; let eIm46 = out[idx +   93];
+                let eRe47  = out[idx +   94]; let eIm47 = out[idx +   95];
+                let eRe48  = out[idx +   96]; let eIm48 = out[idx +   97];
+                let eRe49  = out[idx +   98]; let eIm49 = out[idx +   99];
+                let eRe50  = out[idx +  100]; let eIm50 = out[idx +  101];
+                let eRe51  = out[idx +  102]; let eIm51 = out[idx +  103];
+                let eRe52  = out[idx +  104]; let eIm52 = out[idx +  105];
+                let eRe53  = out[idx +  106]; let eIm53 = out[idx +  107];
+                let eRe54  = out[idx +  108]; let eIm54 = out[idx +  109];
+                let eRe55  = out[idx +  110]; let eIm55 = out[idx +  111];
+                let eRe56  = out[idx +  112]; let eIm56 = out[idx +  113];
+                let eRe57  = out[idx +  114]; let eIm57 = out[idx +  115];
+                let eRe58  = out[idx +  116]; let eIm58 = out[idx +  117];
+                let eRe59  = out[idx +  118]; let eIm59 = out[idx +  119];
+                let eRe60  = out[idx +  120]; let eIm60 = out[idx +  121];
+                let eRe61  = out[idx +  122]; let eIm61 = out[idx +  123];
+                let eRe62  = out[idx +  124]; let eIm62 = out[idx +  125];
+                let eRe63  = out[idx +  126]; let eIm63 = out[idx +  127];
+
 
                 let oRe0  = out[idx +  128]; let oIm0  = out[idx +  129];
                 let oRe1  = out[idx +  130]; let oIm1  = out[idx +  131];
