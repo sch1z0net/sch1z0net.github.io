@@ -948,7 +948,7 @@ let tRe63  = - tRe1;             let tIm63  = ____F[126 + (127)];*/
 let map = bitReversalMap1024.get(1024);
 const N = 1024;
 const bits = 10;
-const input = new Float64Array(N);
+const inputBR = new Float64Array(N);
 const out = new Float64Array(N * 2);
 function fftComplexInPlace_seq_4(realInput) {
 
@@ -957,7 +957,7 @@ function fftComplexInPlace_seq_4(realInput) {
 
     // Perform bit reversal
     for (let i = 0; i < N; i++) {
-        input[i] = inputCopy[map[i]];
+        inputBR[i] = inputCopy[map[i]];
     }
 
     /*
@@ -973,13 +973,13 @@ function fftComplexInPlace_seq_4(realInput) {
 
     
     for(let idx = 0; idx < 1024; idx+=4){
-          let x0aRe = input[idx    ];
-          let x1aRe = input[idx + 1];
-          let x2aRe = input[idx + 2];
-          let x3aRe = input[idx + 3];
+          let x0aRe = inputBR[idx    ];
+          let x1aRe = inputBR[idx + 1];
+          let x2aRe = inputBR[idx + 2];
+          let x3aRe = inputBR[idx + 3];
           out[2*idx      ] =  x0aRe + x1aRe + x2aRe + x3aRe;
-          out[2*idx  +  1] =  x0aRe - x1aRe; 
-          out[2*idx  +  2] =  0;
+          out[2*idx  +  1] =  0; 
+          out[2*idx  +  2] =  x0aRe - x1aRe;
           out[2*idx  +  3] =  x2aRe - x3aRe; 
           out[2*idx  +  4] =  x0aRe + x1aRe - x2aRe - x3aRe; 
           out[2*idx  +  5] =  0;
