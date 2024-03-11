@@ -1846,8 +1846,6 @@ function fftComplexInPlace_seq_4(out) {
 
                 out[idx +   0] = resRe0_s;
                 out[idx +   1] = resIm0_s;
-                out[idx + 128] = resRe0_d;
-                out[idx + 129] = resIm0_d;
 
                 out[idx +   2] = resRe1_s; 
                 out[idx +   3] = resIm1_s;
@@ -1944,163 +1942,102 @@ function fftComplexInPlace_seq_4(out) {
 
                 out[idx +  64] = resRe32_s; 
                 out[idx +  65] = resIm32_s;
-                out[idx + 192] = resRe32_d;
-                out[idx + 193] = resIm32_d;
 
                 out[idx +  66] = resRe33_s; 
                 out[idx +  67] = resIm33_s;
-                out[idx + 194] = resRe33_d;
-                out[idx + 195] = resIm33_d;
 
                 out[idx +  68] = resRe34_s; 
                 out[idx +  69] = resIm34_s;
-                out[idx + 196] = resRe34_d;
-                out[idx + 197] = resIm34_d;
 
                 out[idx +  70] = resRe35_s; 
                 out[idx +  71] = resIm35_s;
-                out[idx + 198] = resRe35_d;
-                out[idx + 199] = resIm35_d;
 
                 out[idx +  72] = resRe36_s; 
                 out[idx +  73] = resIm36_s;
-                out[idx + 200] = resRe36_d;
-                out[idx + 201] = resIm36_d;
 
                 out[idx +  74] = resRe37_s; 
                 out[idx +  75] = resIm37_s;
-                out[idx + 202] = resRe37_d;
-                out[idx + 203] = resIm37_d;
 
                 out[idx +  76] = resRe38_s; 
                 out[idx +  77] = resIm38_s;
-                out[idx + 204] = resRe38_d;
-                out[idx + 205] = resIm38_d;
 
                 out[idx +  78] = resRe39_s; 
                 out[idx +  79] = resIm39_s;
-                out[idx + 206] = resRe39_d;
-                out[idx + 207] = resIm39_d;
 
                 out[idx +  80] = resRe40_s; 
                 out[idx +  81] = resIm40_s;
-                out[idx + 208] = resRe40_d;
-                out[idx + 209] = resIm40_d;
 
                 out[idx +  82] = resRe41_s; 
                 out[idx +  83] = resIm41_s;
-                out[idx + 210] = resRe41_d;
-                out[idx + 211] = resIm41_d;
 
                 out[idx +  84] = resRe42_s; 
                 out[idx +  85] = resIm42_s;
-                out[idx + 212] = resRe42_d;
-                out[idx + 213] = resIm42_d;
 
                 out[idx +  86] = resRe43_s; 
                 out[idx +  87] = resIm43_s;
-                out[idx + 214] = resRe43_d;
-                out[idx + 215] = resIm43_d;
 
                 out[idx +  88] = resRe44_s; 
                 out[idx +  89] = resIm44_s;
-                out[idx + 216] = resRe44_d;
-                out[idx + 217] = resIm44_d;
 
                 out[idx +  90] = resRe45_s; 
                 out[idx +  91] = resIm45_s;
-                out[idx + 218] = resRe45_d;
-                out[idx + 219] = resIm45_d;
 
                 out[idx +  92] = resRe46_s; 
                 out[idx +  93] = resIm46_s;
-                out[idx + 220] = resRe46_d;
-                out[idx + 221] = resIm46_d;
 
                 out[idx +  94] = resRe47_s; 
                 out[idx +  95] = resIm47_s;
-                out[idx + 222] = resRe47_d;
-                out[idx + 223] = resIm47_d;
 
                 out[idx +  96] = resRe48_s; 
                 out[idx +  97] = resIm48_s;
-                out[idx + 224] = resRe48_d;
-                out[idx + 225] = resIm48_d;
 
                 out[idx +  98] = resRe49_s; 
                 out[idx +  99] = resIm49_s;
-                out[idx + 226] = resRe49_d;
-                out[idx + 227] = resIm49_d;
 
                 out[idx + 100] = resRe50_s; 
                 out[idx + 101] = resIm50_s;
-                out[idx + 228] = resRe50_d;
-                out[idx + 229] = resIm50_d;
 
                 out[idx + 102] = resRe51_s; 
                 out[idx + 103] = resIm51_s;
-                out[idx + 230] = resRe51_d;
-                out[idx + 231] = resIm51_d;
 
                 out[idx + 104] = resRe52_s; 
                 out[idx + 105] = resIm52_s;
-                out[idx + 232] = resRe52_d;
-                out[idx + 233] = resIm52_d;
 
                 out[idx + 106] = resRe53_s; 
                 out[idx + 107] = resIm53_s;
-                out[idx + 234] = resRe53_d;
-                out[idx + 235] = resIm53_d;
 
                 out[idx + 108] = resRe54_s; 
                 out[idx + 109] = resIm54_s;
-                out[idx + 236] = resRe54_d;
-                out[idx + 237] = resIm54_d;
 
                 out[idx + 110] = resRe55_s; 
                 out[idx + 111] = resIm55_s;
-                out[idx + 238] = resRe55_d;
-                out[idx + 239] = resIm55_d;
 
                 out[idx + 112] = resRe56_s; 
                 out[idx + 113] = resIm56_s;
-                out[idx + 240] = resRe56_d;
-                out[idx + 241] = resIm56_d;
 
                 out[idx + 114] = resRe57_s; 
                 out[idx + 115] = resIm57_s;
-                out[idx + 242] = resRe57_d;
-                out[idx + 243] = resIm57_d;
 
                 out[idx + 116] = resRe58_s; 
                 out[idx + 117] = resIm58_s;
-                out[idx + 244] = resRe58_d;
-                out[idx + 245] = resIm58_d;
 
                 out[idx + 118] = resRe59_s; 
                 out[idx + 119] = resIm59_s;
-                out[idx + 246] = resRe59_d;
-                out[idx + 247] = resIm59_d;
 
                 out[idx + 120] = resRe60_s; 
                 out[idx + 121] = resIm60_s;
-                out[idx + 248] = resRe60_d;
-                out[idx + 249] = resIm60_d;
 
                 out[idx + 122] = resRe61_s; 
                 out[idx + 123] = resIm61_s;
-                out[idx + 250] = resRe61_d;
-                out[idx + 251] = resIm61_d;
 
                 out[idx + 124] = resRe62_s; 
                 out[idx + 125] = resIm62_s;
-                out[idx + 252] = resRe62_d;
-                out[idx + 253] = resIm62_d;
 
                 out[idx + 126] = resRe63_s; 
                 out[idx + 127] = resIm63_s;
-                out[idx + 254] = resRe63_d;
-                out[idx + 255] = resIm63_d;
+
+                out[idx + 128] = resRe0_d;
+                out[idx + 129] = resIm0_d;
 
                 out[idx + 130] =  resRe63_s;
                 out[idx + 131] = -resIm63_s;
@@ -2164,6 +2101,70 @@ function fftComplexInPlace_seq_4(out) {
                 out[idx + 189] = -resIm34_s;
                 out[idx + 190] =  resRe33_s;
                 out[idx + 191] = -resIm33_s;
+                out[idx + 192] =  resRe32_s;
+                out[idx + 193] = -resIm32_s;
+                out[idx + 194] =  resRe31_s;
+                out[idx + 195] = -resIm31_s;
+                out[idx + 196] =  resRe30_s;
+                out[idx + 197] = -resIm30_s;
+                out[idx + 198] =  resRe29_s;
+                out[idx + 199] = -resIm29_s;
+                out[idx + 200] =  resRe28_s;
+                out[idx + 201] = -resIm28_s;
+                out[idx + 202] =  resRe27_s;
+                out[idx + 203] = -resIm27_s;
+                out[idx + 204] =  resRe26_s;
+                out[idx + 205] = -resIm26_s;
+                out[idx + 206] =  resRe25_s;
+                out[idx + 207] = -resIm25_s;
+                out[idx + 208] =  resRe24_s;
+                out[idx + 209] = -resIm24_s;
+                out[idx + 210] =  resRe23_s;
+                out[idx + 211] = -resIm23_s;
+                out[idx + 212] =  resRe22_s;
+                out[idx + 213] = -resIm22_s;
+                out[idx + 214] =  resRe21_s;
+                out[idx + 215] = -resIm21_s;
+                out[idx + 216] =  resRe20_s;
+                out[idx + 217] = -resIm20_s;
+                out[idx + 218] =  resRe19_s;
+                out[idx + 219] = -resIm19_s;
+                out[idx + 220] =  resRe18_s;
+                out[idx + 221] = -resIm18_s;
+                out[idx + 222] =  resRe17_s;
+                out[idx + 223] = -resIm17_s;
+                out[idx + 224] =  resRe16_s;
+                out[idx + 225] = -resIm16_s;
+                out[idx + 226] =  resRe15_s;
+                out[idx + 227] = -resIm15_s;
+                out[idx + 228] =  resRe14_s;
+                out[idx + 229] = -resIm14_s;
+                out[idx + 230] =  resRe13_s;
+                out[idx + 231] = -resIm13_s;
+                out[idx + 232] =  resRe12_s;
+                out[idx + 233] = -resIm12_s;
+                out[idx + 234] =  resRe11_s;
+                out[idx + 235] = -resIm11_s;
+                out[idx + 236] =  resRe10_s;
+                out[idx + 237] = -resIm10_s;
+                out[idx + 238] =  resRe9_s;
+                out[idx + 239] = -resIm9_s;
+                out[idx + 240] =  resRe8_s;
+                out[idx + 241] = -resIm8_s;
+                out[idx + 242] =  resRe7_s;
+                out[idx + 243] = -resIm7_s;
+                out[idx + 244] =  resRe6_s;
+                out[idx + 245] = -resIm6_s;
+                out[idx + 246] =  resRe5_s;
+                out[idx + 247] = -resIm5_s;
+                out[idx + 248] =  resRe4_s;
+                out[idx + 249] = -resIm4_s;
+                out[idx + 250] =  resRe3_s;
+                out[idx + 251] = -resIm3_s;
+                out[idx + 252] =  resRe2_s;
+                out[idx + 253] = -resIm2_s;
+                out[idx + 254] =  resRe1_s;
+                out[idx + 255] = -resIm1_s;    
 
             }
 
