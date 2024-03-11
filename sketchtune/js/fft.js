@@ -2035,83 +2035,14 @@ function fftComplexInPlace_seq_4(realInput) {
                 out[idx + 192] =  resRe32_s;
                 out[idx +  64] =  resRe32_s; 
             }
-
-       /*
-        for (let j = quarterSize+1; j < halfSize; j++) {
-            let evenIndex = j;
-            let oddIndex  = j + halfSize;
-
-            out[evenIndex * 2]     =  out[256 - evenIndex * 2] ;
-            out[evenIndex * 2 + 1] = -out[256 - evenIndex * 2 + 1];
-            out[oddIndex * 2]      =  out[256 - oddIndex * 2];
-            out[oddIndex * 2 + 1]  = -out[256 - oddIndex * 2 + 1];
-
-            evenIndex = 128 + j;
-            oddIndex  = 128 + j + halfSize;
-
-            out[evenIndex * 2]     =  out[256 - evenIndex * 2] ;
-            out[evenIndex * 2 + 1] = -out[256 - evenIndex * 2 + 1];
-            out[oddIndex * 2]      =  out[256 - oddIndex * 2];
-            out[oddIndex * 2 + 1]  = -out[256 - oddIndex * 2 + 1];
-
-            evenIndex = 256 + j;
-            oddIndex  = 256 + j + halfSize;
-
-            out[evenIndex * 2]     =  out[512 - evenIndex * 2] ;
-            out[evenIndex * 2 + 1] = -out[512 - evenIndex * 2 + 1];
-            out[oddIndex * 2]      =  out[512 - oddIndex * 2];
-            out[oddIndex * 2 + 1]  = -out[512 - oddIndex * 2 + 1];
-
-            evenIndex = 384 + j;
-            oddIndex  = 384 + j + halfSize;
-
-            out[evenIndex * 2]     =  out[512 - evenIndex * 2] ;
-            out[evenIndex * 2 + 1] = -out[512 - evenIndex * 2 + 1];
-            out[oddIndex * 2]      =  out[512 - oddIndex * 2];
-            out[oddIndex * 2 + 1]  = -out[512 - oddIndex * 2 + 1];
-
-            evenIndex = 512 + j;
-            oddIndex  = 512 + j + halfSize;
-
-            out[evenIndex * 2]     =  out[768 - evenIndex * 2] ;
-            out[evenIndex * 2 + 1] = -out[768 - evenIndex * 2 + 1];
-            out[oddIndex * 2]      =  out[768 - oddIndex * 2];
-            out[oddIndex * 2 + 1]  = -out[768 - oddIndex * 2 + 1];
-
-            evenIndex = 640 + j;
-            oddIndex  = 640 + j + halfSize;
-
-            out[evenIndex * 2]     =  out[768 - evenIndex * 2] ;
-            out[evenIndex * 2 + 1] = -out[768 - evenIndex * 2 + 1];
-            out[oddIndex * 2]      =  out[768 - oddIndex * 2];
-            out[oddIndex * 2 + 1]  = -out[768 - oddIndex * 2 + 1];
-
-            evenIndex = 768 + j;
-            oddIndex  = 768 + j + halfSize;
-
-            out[evenIndex * 2]     =  out[1024 - evenIndex * 2] ;
-            out[evenIndex * 2 + 1] = -out[1024 - evenIndex * 2 + 1];
-            out[oddIndex * 2]      =  out[1024 - oddIndex * 2];
-            out[oddIndex * 2 + 1]  = -out[1024 - oddIndex * 2 + 1];
-
-            evenIndex = 896 + j;
-            oddIndex  = 896 + j + halfSize;
-
-            out[evenIndex * 2]     =  out[1024 - evenIndex * 2] ;
-            out[evenIndex * 2 + 1] = -out[1024 - evenIndex * 2 + 1];
-            out[oddIndex * 2]      =  out[1024 - oddIndex * 2];
-            out[oddIndex * 2 + 1]  = -out[1024 - oddIndex * 2 + 1];
-        }
-*/
         
-
-     /*
+     
     /////////////////////////////////////////////
     // P = 3  -> 256
     //
 
-        halfSize    = 128;
-        quarterSize = 64;
+        halfSize    = 256;
+        quarterSize = 128;
         for (let j = 0; j < halfSize; j++) {
             const evenIndex = j;
             const oddIndex  = j + halfSize;
@@ -2140,12 +2071,6 @@ function fftComplexInPlace_seq_4(realInput) {
             out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
             out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
         }
-    
-    */
-
-
-
-
 
 
     return out;
@@ -2679,7 +2604,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
     }*/
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
-        if(size > 128){ break; }
+        if(size > 256){ break; }
         const halfSize = size / 2;
         // Get FFT factors with caching
         const factors = computeFFTFactorsWithCache(size);
@@ -2719,7 +2644,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
 
             }
         }
-        if(size==128){
+        if(size==256){
             for(let i=0; i<N; i++){
                 console.log("after size: ",size," : ",i," -> ", out[i*2], out[i*2+1]); 
             }
