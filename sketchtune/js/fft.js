@@ -2074,6 +2074,14 @@ function fftComplexInPlace_seq_4(realInput) {
             const evenIndex = 256 + j;
             const oddIndex  = 256 + j + 128;
 
+            if(j > 64){
+              out[evenIndex * 2]     =  out[1024 - evenIndex * 2] ;
+              out[evenIndex * 2 + 1] = -out[1024 - evenIndex * 2 + 1];
+              out[oddIndex * 2]      =  out[1024 - oddIndex * 2];
+              out[oddIndex * 2 + 1]  = -out[1024 - oddIndex * 2 + 1];
+              continue;
+            }
+
             const evenPartRe = out[evenIndex * 2];
             const evenPartIm = out[evenIndex * 2 + 1];
             const oddPartRe  = out[oddIndex * 2];
