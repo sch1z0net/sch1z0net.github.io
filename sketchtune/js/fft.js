@@ -969,7 +969,7 @@ function fftComplexInPlace_seq_4(out) {
           out[idx  +  7] = -x2aRe + x3aRe;
     } */
 
-for (let idx = 0; idx < 2048; idx += 8) {
+for (let idx = 0; idx < 2048; idx += 32) {
     // Unrolled loop iteration 1
     let x0aRe_1 = out[idx];
     let x1aRe_1 = out[idx + 2];
