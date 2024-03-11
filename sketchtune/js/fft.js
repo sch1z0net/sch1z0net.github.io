@@ -1043,7 +1043,7 @@ function fftComplexInPlace_seq_4(realInput) {
     /////////////////////////////////////////////
     // P = 1  -> 16
     //
-
+/*
     for(let idx = 0; idx < 2048; idx+=32){
           let x0aRe = out[idx     ];
           let x0bRe = out[idx +  2]; 
@@ -1132,7 +1132,7 @@ function fftComplexInPlace_seq_4(realInput) {
           out[idx +  23] =   resImD2;  
           out[idx +  11] = - resImD2; 
     }
-
+*/
 /*
     /////////////////////////////////////////////
     // P = 2  -> 64
