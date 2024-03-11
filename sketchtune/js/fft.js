@@ -960,34 +960,36 @@ function fftComplexInPlace_seq_4(realInput) {
         inputBR[i] = input[map[i]];
     }
 
+    /*
     // Convert the real-valued input to a complex-valued Float32Array
     for (let i = 0; i < N; i++) {
         out[i * 2] = inputBR[i];
         out[i * 2 + 1] = 0; // Imaginary part is set to 0
-    }
+    }*/
 
     /////////////////////////////////////////////
     // P = 0  -> 4
     //
 
-    /*
-    for(let idx = 0; idx < 2048; idx+=8){
-          let x0aRe = out[idx    ];
-          let x1aRe = out[idx + 2];
-          out[idx  +  2] =  x0aRe - x1aRe; 
+    
+    for(let idx = 0; idx < 1024; idx+=4){
+          let x0aRe = input[idx    ];
+          let x1aRe = input[idx + 1];
+          out[2*idx  +  1] =  x0aRe - x1aRe; 
 
-          let x3aRe = out[idx + 6];
-          out[idx  +  6] =  x0aRe - x1aRe; 
+          let x3aRe = input[idx + 3];
+          out[2*idx  +  6] =  x0aRe - x1aRe; 
 
-          let x2aRe = out[idx + 4];
-          out[idx  +  4] =  x0aRe + x1aRe - x2aRe - x3aRe; 
+          let x2aRe = input[idx + 2];
+          out[2*idx      ] =  x0aRe + x1aRe + x2aRe + x3aRe;
+          out[2*idx  +  2] =  0;
+          out[2*idx  +  3] =  x2aRe - x3aRe; 
+          out[2*idx  +  4] =  x0aRe + x1aRe - x2aRe - x3aRe; 
+          out[2*idx  +  5] =  0;
+          out[2*idx  +  7] = -x2aRe + x3aRe;
+    }
 
-          out[idx      ] =  x0aRe + x1aRe + x2aRe + x3aRe;
-          out[idx  +  3] =  x2aRe - x3aRe; 
-          out[idx  +  7] = -x2aRe + x3aRe;
-    } */
-
-
+/*
     for (let idx = 0; idx < 2048; idx += 32) {
     // Unrolled loop iteration 1
     let x0aRe_1 = out[idx];
@@ -1037,7 +1039,7 @@ function fftComplexInPlace_seq_4(realInput) {
     out[idx + 24] = x0aRe_4 + x1aRe_4 + x2aRe_4 + x3aRe_4;
     out[idx + 27] = x2aRe_4 - x3aRe_4;
     out[idx + 31] = -x2aRe_4 + x3aRe_4;
-}
+}*/
 
 
     /////////////////////////////////////////////
