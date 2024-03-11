@@ -979,7 +979,8 @@ for (let idx = 0; idx < 2048; idx += 32) {
     out[idx + 2] = x0aRe_1 - x1aRe_1;
     out[idx + 6] = x0aRe_1 - x1aRe_1;
 
-    out[idx] = x0aRe_1 + x1aRe_1 + x2aRe_1 + x3aRe_1;
+    out[idx    ] = x0aRe_1 + x1aRe_1 + x2aRe_1 + x3aRe_1;
+    out[idx + 4] = x0aRe_1 + x1aRe_1 - x2aRe_1 - x3aRe_1; 
     out[idx + 3] = x2aRe_1 - x3aRe_1;
     out[idx + 7] = -x2aRe_1 + x3aRe_1;
 
@@ -992,7 +993,8 @@ for (let idx = 0; idx < 2048; idx += 32) {
     out[idx + 10] = x0aRe_2 - x1aRe_2;
     out[idx + 14] = x0aRe_2 - x1aRe_2;
 
-    out[idx + 8] = x0aRe_2 + x1aRe_2 + x2aRe_2 + x3aRe_2;
+    out[idx +  8] = x0aRe_2 + x1aRe_2 + x2aRe_2 + x3aRe_2;
+    out[idx + 12] = x0aRe_2 + x1aRe_2 - x2aRe_2 - x3aRe_2; 
     out[idx + 11] = x2aRe_2 - x3aRe_2;
     out[idx + 15] = -x2aRe_2 + x3aRe_2;
 
@@ -1006,6 +1008,7 @@ for (let idx = 0; idx < 2048; idx += 32) {
     out[idx + 22] = x0aRe_3 - x1aRe_3;
 
     out[idx + 16] = x0aRe_3 + x1aRe_3 + x2aRe_3 + x3aRe_3;
+    out[idx + 20] = x0aRe_3 + x1aRe_3 - x2aRe_3 - x3aRe_3; 
     out[idx + 19] = x2aRe_3 - x3aRe_3;
     out[idx + 23] = -x2aRe_3 + x3aRe_3;
 
@@ -1019,6 +1022,7 @@ for (let idx = 0; idx < 2048; idx += 32) {
     out[idx + 30] = x0aRe_4 - x1aRe_4;
 
     out[idx + 24] = x0aRe_4 + x1aRe_4 + x2aRe_4 + x3aRe_4;
+    out[idx + 28] = x0aRe_4 + x1aRe_4 - x2aRe_4 - x3aRe_4; 
     out[idx + 27] = x2aRe_4 - x3aRe_4;
     out[idx + 31] = -x2aRe_4 + x3aRe_4;
 }
