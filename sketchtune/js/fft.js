@@ -1905,7 +1905,7 @@ function fftComplexInPlace_seq_4(out) {
                 let resRe63_s = eRe63 + (oRe63 * tRe63 - oIm63 * tIm63);
                 out[idx + 126] =  resRe63_s; 
                 out[idx + 130] =  resRe63_s;
-                let resIm63_s = eRe63 + (oRe63 * tRe63 + oIm63 * tIm63);
+                let resIm63_s = eIm63 + (oRe63 * tIm63 + oIm63 * tRe63);
                 out[idx + 127] =  resIm63_s;
                 out[idx + 131] = -resIm63_s;
             }
