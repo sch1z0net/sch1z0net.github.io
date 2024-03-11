@@ -953,11 +953,11 @@ const out = new Float64Array(N * 2);
 function fftComplexInPlace_seq_4(realInput) {
 
     // Create a copy of the input array
-    const input = realInput.slice();
+    const inputCopy = realInput.slice();
 
     // Perform bit reversal
     for (let i = 0; i < N; i++) {
-        inputBR[i] = input[map[i]];
+        input[i] = inputCopy[map[i]];
     }
 
     /*
