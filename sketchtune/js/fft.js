@@ -2163,11 +2163,6 @@ function fftComplexInPlace_seq_4(out) {
                 out[idx + 127] = resIm63_s; 
                 out[idx + 382] = resRe63_d;
                 out[idx + 383] = resIm63_d;
-
-                out[idx + 128] = resRe64_s;
-                out[idx + 129] = resIm64_s; 
-                out[idx + 384] = resRe64_d;
-                out[idx + 385] = resIm64_d;
             }
 
 
