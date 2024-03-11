@@ -1391,7 +1391,7 @@ function fftComplexInPlace_seq_4(out) {
 
 
 
-            for(let idx = 0; idx < 1024; idx += 256){
+            for(let idx = 0; idx < 2048; idx += 256){
                 let eRe0   = out[idx +    0]; let eIm0  = out[idx +    1];
                 let eRe1   = out[idx +    2]; let eIm1  = out[idx +    3];
                 let eRe2   = out[idx +    4]; let eIm2  = out[idx +    5];
