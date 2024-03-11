@@ -2070,7 +2070,7 @@ function fftComplexInPlace_seq_4(realInput) {
             out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
         }
 
-        for (let j = 0; j < halfSize; j++) {
+        for (let j = 0; j < 128; j++) {
             const evenIndex = 512 + j;
             const oddIndex  = 512 + j + 128;
 
