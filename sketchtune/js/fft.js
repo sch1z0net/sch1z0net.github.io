@@ -1681,16 +1681,6 @@ function fftComplexInPlace_seq_4(out) {
                 let resRe37_d = eRe37 - (oRe37 * tRe37 - oIm37 * tIm37);
                 let resIm37_d = eIm37 - (oRe37 * tIm37 + oIm37 * tRe37);
 
-                let resRe36_s = eRe36 + (oRe36 * tRe36 - oIm36 * tIm36);
-                let resIm36_s = eIm36 + (oRe36 * tIm36 + oIm36 * tRe36);
-                let resRe36_d = eRe36 - (oRe36 * tRe36 - oIm36 * tIm36);
-                let resIm36_d = eIm36 - (oRe36 * tIm36 + oIm36 * tRe36);
-
-                let resRe37_s = eRe37 + (oRe37 * tRe37 - oIm37 * tIm37);
-                let resIm37_s = eIm37 + (oRe37 * tIm37 + oIm37 * tRe37);
-                let resRe37_d = eRe37 - (oRe37 * tRe37 - oIm37 * tIm37);
-                let resIm37_d = eIm37 - (oRe37 * tIm37 + oIm37 * tRe37);
-
                 let resRe38_s = eRe38 + (oRe38 * tRe38 - oIm38 * tIm38);
                 let resIm38_s = eIm38 + (oRe38 * tIm38 + oIm38 * tRe38);
                 let resRe38_d = eRe38 - (oRe38 * tRe38 - oIm38 * tIm38);
@@ -1981,7 +1971,7 @@ function fftComplexInPlace_seq_4(out) {
                 out[idx +  63] = resIm31_s;
                 out[idx + 318] = resRe31_d;
                 out[idx + 319] = resIm31_d;
-                
+
                 out[idx +  64] = resRe32_s;
                 out[idx +  65] = resIm32_s;
                 out[idx + 320] = resRe32_d;
