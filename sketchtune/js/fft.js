@@ -944,6 +944,7 @@ let tRe60  = ____F[126 + (120)]; let tIm60  = ____F[126 + (121)];
 let tRe61  = ____F[126 + (122)]; let tIm61  = ____F[126 + (123)];
 let tRe62  = ____F[126 + (124)]; let tIm62  = ____F[126 + (125)];
 let tRe63  = ____F[126 + (126)]; let tIm63  = ____F[126 + (127)];
+let tRe64  = ____F[126 + (128)]; let tIm64  = ____F[126 + (129)];
 
 function fftComplexInPlace_seq_4(out) {
 
