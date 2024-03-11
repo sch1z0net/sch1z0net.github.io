@@ -2040,10 +2040,18 @@ function fftComplexInPlace_seq_4(realInput) {
     /////////////////////////////////////////////
     // P = 3  -> 256
     //
-    for(let size = 0; size < 2048; size += 256){
-        for (let j = 0; j <= 128; j++) {
-            const evenIndex = size + j;
-            const oddIndex  = size + j + 128;
+
+        for (let j = 0; j < 128; j++) {
+            const evenIndex = j;
+            const oddIndex  = j + 128;
+
+            if(j > 64){
+              out[evenIndex * 2]     =  out[512 - evenIndex * 2] ;
+              out[evenIndex * 2 + 1] = -out[512 - evenIndex * 2 + 1];
+              out[oddIndex * 2]      =  out[512 - oddIndex * 2];
+              out[oddIndex * 2 + 1]  = -out[512 - oddIndex * 2 + 1];
+              continue;
+            }
 
             const evenPartRe = out[evenIndex * 2];
             const evenPartIm = out[evenIndex * 2 + 1];
@@ -2061,7 +2069,124 @@ function fftComplexInPlace_seq_4(realInput) {
             out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
             out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
         }
-    }
+
+        for (let j = 0; j < 128; j++) {
+            const evenIndex = 256 + j;
+            const oddIndex  = 256 + j + 128;
+
+            const evenPartRe = out[evenIndex * 2];
+            const evenPartIm = out[evenIndex * 2 + 1];
+            const oddPartRe  = out[oddIndex * 2];
+            const oddPartIm  = out[oddIndex * 2 + 1];
+
+            const twiddleRe = ____F[254 + (j * 2 + 0)];
+            const twiddleIm = ____F[254 + (j * 2 + 1)];
+
+            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
+            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
+
+            out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
+            out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+            out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
+            out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
+        }
+
+        for (let j = 0; j < 128; j++) {
+            const evenIndex = 512 + j;
+            const oddIndex  = 512 + j + 128;
+
+            const evenPartRe = out[evenIndex * 2];
+            const evenPartIm = out[evenIndex * 2 + 1];
+            const oddPartRe  = out[oddIndex * 2];
+            const oddPartIm  = out[oddIndex * 2 + 1];
+
+            const twiddleRe = ____F[254 + (j * 2 + 0)];
+            const twiddleIm = ____F[254 + (j * 2 + 1)];
+
+            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
+            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
+
+            out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
+            out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+            out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
+            out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
+        }
+
+        for (let j = 0; j < 128; j++) {
+            const evenIndex = 768 + j;
+            const oddIndex  = 768 + j + 128;
+
+            const evenPartRe = out[evenIndex * 2];
+            const evenPartIm = out[evenIndex * 2 + 1];
+            const oddPartRe  = out[oddIndex * 2];
+            const oddPartIm  = out[oddIndex * 2 + 1];
+
+            const twiddleRe = ____F[254 + (j * 2 + 0)];
+            const twiddleIm = ____F[254 + (j * 2 + 1)];
+
+            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
+            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
+
+            out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
+            out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+            out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
+            out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
+        }
+
+
+    /////////////////////////////////////////////
+    // P = 4  -> 512
+    //
+
+        for (let j = 0; j < 256; j++) {
+            const evenIndex = j;
+            const oddIndex  = j + 256;
+
+            if(j > 128){
+              out[evenIndex * 2]     =  out[1024 - evenIndex * 2] ;
+              out[evenIndex * 2 + 1] = -out[1024 - evenIndex * 2 + 1];
+              out[oddIndex * 2]      =  out[1024 - oddIndex * 2];
+              out[oddIndex * 2 + 1]  = -out[1024 - oddIndex * 2 + 1];
+              continue;
+            }
+
+            const evenPartRe = out[evenIndex * 2];
+            const evenPartIm = out[evenIndex * 2 + 1];
+            const oddPartRe  = out[oddIndex * 2];
+            const oddPartIm  = out[oddIndex * 2 + 1];
+
+            const twiddleRe = ____F[510 + (j * 2 + 0)];
+            const twiddleIm = ____F[510 + (j * 2 + 1)];
+
+            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
+            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
+
+            out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
+            out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+            out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
+            out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
+        }
+
+        for (let j = 0; j < 256; j++) {
+            const evenIndex = 512 + j;
+            const oddIndex  = 512 + j + 256;
+
+            const evenPartRe = out[evenIndex * 2];
+            const evenPartIm = out[evenIndex * 2 + 1];
+            const oddPartRe  = out[oddIndex * 2];
+            const oddPartIm  = out[oddIndex * 2 + 1];
+
+            const twiddleRe = ____F[510 + (j * 2 + 0)];
+            const twiddleIm = ____F[510 + (j * 2 + 1)];
+
+            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
+            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
+
+            out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
+            out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+            out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
+            out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
+        }
 
 
     return out;
@@ -2595,7 +2720,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
     }*/
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
-        if(size > 256){ break; }
+        if(size > 512){ break; }
         const halfSize = size / 2;
         // Get FFT factors with caching
         const factors = computeFFTFactorsWithCache(size);
