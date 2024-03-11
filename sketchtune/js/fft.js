@@ -1355,121 +1355,123 @@ function fftComplexInPlace_seq_4(out) {
 */
 
 
+            for(let idx = 0; idx < 1024; idx += 128){
+                let eRe0  = out[idx +    0]; let  eIm0 = out[idx +    1];
+                let eRe1  = out[idx +    2]; let  eIm1 = out[idx +    3];
+                let eRe2  = out[idx +    4]; let  eIm2 = out[idx +    5];
+                let eRe3  = out[idx +    6]; let  eIm3 = out[idx +    7];
+                let eRe4  = out[idx +    8]; let  eIm4 = out[idx +    9];
+                let eRe5  = out[idx +   10]; let  eIm5 = out[idx +   11];
+                let eRe6  = out[idx +   12]; let  eIm6 = out[idx +   13];
+                let eRe7  = out[idx +   14]; let  eIm7 = out[idx +   15];
+                let eRe8  = out[idx +   16]; let  eIm8 = out[idx +   17];
+                let eRe9  = out[idx +   18]; let  eIm9 = out[idx +   19];
+                let eRe10 = out[idx +   20]; let eIm10 = out[idx +   21];
+                let eRe11 = out[idx +   22]; let eIm11 = out[idx +   23];
+                let eRe12 = out[idx +   24]; let eIm12 = out[idx +   25];
+                let eRe13 = out[idx +   26]; let eIm13 = out[idx +   27];
+                let eRe14 = out[idx +   28]; let eIm14 = out[idx +   29];
+                let eRe15 = out[idx +   30]; let eIm15 = out[idx +   31];
 
-                let eRe0  = out[    0]; let  eIm0 = out[    1];
-                let eRe1  = out[    2]; let  eIm1 = out[    3];
-                let eRe2  = out[    4]; let  eIm2 = out[    5];
-                let eRe3  = out[    6]; let  eIm3 = out[    7];
-                let eRe4  = out[    8]; let  eIm4 = out[    9];
-                let eRe5  = out[   10]; let  eIm5 = out[   11];
-                let eRe6  = out[   12]; let  eIm6 = out[   13];
-                let eRe7  = out[   14]; let  eIm7 = out[   15];
-                let eRe8  = out[   16]; let  eIm8 = out[   17];
-                let eRe9  = out[   18]; let  eIm9 = out[   19];
-                let eRe10 = out[   20]; let eIm10 = out[   21];
-                let eRe11 = out[   22]; let eIm11 = out[   23];
-                let eRe12 = out[   24]; let eIm12 = out[   25];
-                let eRe13 = out[   26]; let eIm13 = out[   27];
-                let eRe14 = out[   28]; let eIm14 = out[   29];
-                let eRe15 = out[   30]; let eIm15 = out[   31];
+                let oRe0  = out[idx +  128]; let oIm0  = out[idx +  129];
+                let oRe1  = out[idx +  130]; let oIm1  = out[idx +  131];
+                let oRe2  = out[idx +  132]; let oIm2  = out[idx +  133];
+                let oRe3  = out[idx +  134]; let oIm3  = out[idx +  135];
+                let oRe4  = out[idx +  136]; let oIm4  = out[idx +  137];
+                let oRe5  = out[idx +  138]; let oIm5  = out[idx +  139];
+                let oRe6  = out[idx +  140]; let oIm6  = out[idx +  141];
+                let oRe7  = out[idx +  142]; let oIm7  = out[idx +  143];
+                let oRe8  = out[idx +  144]; let oIm8  = out[idx +  145];
+                let oRe9  = out[idx +  146]; let oIm9  = out[idx +  147];
+                let oRe10 = out[idx +  148]; let oIm10 = out[idx +  149];
+                let oRe11 = out[idx +  150]; let oIm11 = out[idx +  151];
+                let oRe12 = out[idx +  152]; let oIm12 = out[idx +  153];
+                let oRe13 = out[idx +  154]; let oIm13 = out[idx +  155];
+                let oRe14 = out[idx +  156]; let oIm14 = out[idx +  157];
+                let oRe15 = out[idx +  158]; let oIm15 = out[idx +  159];
 
-                let oRe0  = out[  128]; let oIm0  = out[  129];
-                let oRe1  = out[  130]; let oIm1  = out[  131];
-                let oRe2  = out[  132]; let oIm2  = out[  133];
-                let oRe3  = out[  134]; let oIm3  = out[  135];
-                let oRe4  = out[  136]; let oIm4  = out[  137];
-                let oRe5  = out[  138]; let oIm5  = out[  139];
-                let oRe6  = out[  140]; let oIm6  = out[  141];
-                let oRe7  = out[  142]; let oIm7  = out[  143];
-                let oRe8  = out[  144]; let oIm8  = out[  145];
-                let oRe9  = out[  146]; let oIm9  = out[  147];
-                let oRe10 = out[  148]; let oIm10 = out[  149];
-                let oRe11 = out[  150]; let oIm11 = out[  151];
-                let oRe12 = out[  152]; let oIm12 = out[  153];
-                let oRe13 = out[  154]; let oIm13 = out[  155];
-                let oRe14 = out[  156]; let oIm14 = out[  157];
-                let oRe15 = out[  158]; let oIm15 = out[  159];
 
-                out[  0] = eRe0 + (oRe0 * tRe0 - oIm0 * tIm0);
-                out[  1] = eIm0 + (oRe0 * tIm0 + oIm0 * tRe0);
-                out[ 64] = eRe0 - (oRe0 * tRe0 - oIm0 * tIm0);
-                out[ 65] = eIm0 - (oRe0 * tIm0 + oIm0 * tRe0);
+                out[idx +   0] = eRe0 + (oRe0 * tRe0 - oIm0 * tIm0);
+                out[idx +   1] = eIm0 + (oRe0 * tIm0 + oIm0 * tRe0);
+                out[idx +  64] = eRe0 - (oRe0 * tRe0 - oIm0 * tIm0);
+                out[idx +  65] = eIm0 - (oRe0 * tIm0 + oIm0 * tRe0);
 
-                out[  2] = eRe1 + (oRe1 * tRe1 - oIm1 * tIm1);
-                out[  3] = eIm1 + (oRe1 * tIm1 + oIm1 * tRe1);
-                out[ 66] = eRe1 - (oRe1 * tRe1 - oIm1 * tIm1);
-                out[ 67] = eIm1 - (oRe1 * tIm1 + oIm1 * tRe1);
+                out[idx +   2] = eRe1 + (oRe1 * tRe1 - oIm1 * tIm1);
+                out[idx +   3] = eIm1 + (oRe1 * tIm1 + oIm1 * tRe1);
+                out[idx +  66] = eRe1 - (oRe1 * tRe1 - oIm1 * tIm1);
+                out[idx +  67] = eIm1 - (oRe1 * tIm1 + oIm1 * tRe1);
 
-                out[  4] = eRe2 + (oRe2 * tRe2 - oIm2 * tIm2);
-                out[  5] = eIm2 + (oRe2 * tIm2 + oIm2 * tRe2);
-                out[ 68] = eRe2 - (oRe2 * tRe2 - oIm2 * tIm2);
-                out[ 69] = eIm2 - (oRe2 * tIm2 + oIm2 * tRe2);
+                out[idx +   4] = eRe2 + (oRe2 * tRe2 - oIm2 * tIm2);
+                out[idx +   5] = eIm2 + (oRe2 * tIm2 + oIm2 * tRe2);
+                out[idx +  68] = eRe2 - (oRe2 * tRe2 - oIm2 * tIm2);
+                out[idx +  69] = eIm2 - (oRe2 * tIm2 + oIm2 * tRe2);
 
-                out[  6] = eRe3 + (oRe3 * tRe3 - oIm3 * tIm3);
-                out[  7] = eIm3 + (oRe3 * tIm3 + oIm3 * tRe3);
-                out[ 70] = eRe3 - (oRe3 * tRe3 - oIm3 * tIm3);
-                out[ 71] = eIm3 - (oRe3 * tIm3 + oIm3 * tRe3);
+                out[idx +   6] = eRe3 + (oRe3 * tRe3 - oIm3 * tIm3);
+                out[idx +   7] = eIm3 + (oRe3 * tIm3 + oIm3 * tRe3);
+                out[idx +  70] = eRe3 - (oRe3 * tRe3 - oIm3 * tIm3);
+                out[idx +  71] = eIm3 - (oRe3 * tIm3 + oIm3 * tRe3);
 
-                out[  8] = eRe4 + (oRe4 * tRe4 - oIm4 * tIm4);
-                out[  9] = eIm4 + (oRe4 * tIm4 + oIm4 * tRe4);
-                out[ 72] = eRe4 - (oRe4 * tRe4 - oIm4 * tIm4);
-                out[ 73] = eIm4 - (oRe4 * tIm4 + oIm4 * tRe4);
+                out[idx +   8] = eRe4 + (oRe4 * tRe4 - oIm4 * tIm4);
+                out[idx +   9] = eIm4 + (oRe4 * tIm4 + oIm4 * tRe4);
+                out[idx +  72] = eRe4 - (oRe4 * tRe4 - oIm4 * tIm4);
+                out[idx +  73] = eIm4 - (oRe4 * tIm4 + oIm4 * tRe4);
 
-                out[ 10] = eRe5 + (oRe5 * tRe5 - oIm5 * tIm5);
-                out[ 11] = eIm5 + (oRe5 * tIm5 + oIm5 * tRe5);
-                out[ 74] = eRe5 - (oRe5 * tRe5 - oIm5 * tIm5);
-                out[ 75] = eIm5 - (oRe5 * tIm5 + oIm5 * tRe5);
+                out[idx +  10] = eRe5 + (oRe5 * tRe5 - oIm5 * tIm5);
+                out[idx +  11] = eIm5 + (oRe5 * tIm5 + oIm5 * tRe5);
+                out[idx +  74] = eRe5 - (oRe5 * tRe5 - oIm5 * tIm5);
+                out[idx +  75] = eIm5 - (oRe5 * tIm5 + oIm5 * tRe5);
 
-                out[ 12] = eRe6 + (oRe6 * tRe6 - oIm6 * tIm6);
-                out[ 13] = eIm6 + (oRe6 * tIm6 + oIm6 * tRe6);
-                out[ 76] = eRe6 - (oRe6 * tRe6 - oIm6 * tIm6);
-                out[ 77] = eIm6 - (oRe6 * tIm6 + oIm6 * tRe6);
+                out[idx +  12] = eRe6 + (oRe6 * tRe6 - oIm6 * tIm6);
+                out[idx +  13] = eIm6 + (oRe6 * tIm6 + oIm6 * tRe6);
+                out[idx +  76] = eRe6 - (oRe6 * tRe6 - oIm6 * tIm6);
+                out[idx +  77] = eIm6 - (oRe6 * tIm6 + oIm6 * tRe6);
 
-                out[ 14] = eRe7 + (oRe7 * tRe7 - oIm7 * tIm7);
-                out[ 15] = eIm7 + (oRe7 * tIm7 + oIm7 * tRe7);
-                out[ 78] = eRe7 - (oRe7 * tRe7 - oIm7 * tIm7);
-                out[ 79] = eIm7 - (oRe7 * tIm7 + oIm7 * tRe7);
+                out[idx +  14] = eRe7 + (oRe7 * tRe7 - oIm7 * tIm7);
+                out[idx +  15] = eIm7 + (oRe7 * tIm7 + oIm7 * tRe7);
+                out[idx +  78] = eRe7 - (oRe7 * tRe7 - oIm7 * tIm7);
+                out[idx +  79] = eIm7 - (oRe7 * tIm7 + oIm7 * tRe7);
 
-                out[ 16] = eRe8 + (oRe8 * tRe8 - oIm8 * tIm8);
-                out[ 17] = eIm8 + (oRe8 * tIm8 + oIm8 * tRe8);
-                out[ 80] = eRe8 - (oRe8 * tRe8 - oIm8 * tIm8);
-                out[ 81] = eIm8 - (oRe8 * tIm8 + oIm8 * tRe8);
+                out[idx +  16] = eRe8 + (oRe8 * tRe8 - oIm8 * tIm8);
+                out[idx +  17] = eIm8 + (oRe8 * tIm8 + oIm8 * tRe8);
+                out[idx +  80] = eRe8 - (oRe8 * tRe8 - oIm8 * tIm8);
+                out[idx +  81] = eIm8 - (oRe8 * tIm8 + oIm8 * tRe8);
 
-                out[ 18] = eRe9 + (oRe9 * tRe9 - oIm9 * tIm9);
-                out[ 19] = eIm9 + (oRe9 * tIm9 + oIm9 * tRe9);
-                out[ 82] = eRe9 - (oRe9 * tRe9 - oIm9 * tIm9);
-                out[ 83] = eIm9 - (oRe9 * tIm9 + oIm9 * tRe9);
+                out[idx +  18] = eRe9 + (oRe9 * tRe9 - oIm9 * tIm9);
+                out[idx +  19] = eIm9 + (oRe9 * tIm9 + oIm9 * tRe9);
+                out[idx +  82] = eRe9 - (oRe9 * tRe9 - oIm9 * tIm9);
+                out[idx +  83] = eIm9 - (oRe9 * tIm9 + oIm9 * tRe9);
 
-                out[ 20] = eRe10 + (oRe10 * tRe10 - oIm10 * tIm10);
-                out[ 21] = eIm10 + (oRe10 * tIm10 + oIm10 * tRe10);
-                out[ 84] = eRe10 - (oRe10 * tRe10 - oIm10 * tIm10);
-                out[ 85] = eIm10 - (oRe10 * tIm10 + oIm10 * tRe10);
+                out[idx +  20] = eRe10 + (oRe10 * tRe10 - oIm10 * tIm10);
+                out[idx +  21] = eIm10 + (oRe10 * tIm10 + oIm10 * tRe10);
+                out[idx +  84] = eRe10 - (oRe10 * tRe10 - oIm10 * tIm10);
+                out[idx +  85] = eIm10 - (oRe10 * tIm10 + oIm10 * tRe10);
 
-                out[ 22] = eRe11 + (oRe11 * tRe11 - oIm11 * tIm11);
-                out[ 23] = eIm11 + (oRe11 * tIm11 + oIm11 * tRe11);
-                out[ 86] = eRe11 - (oRe11 * tRe11 - oIm11 * tIm11);
-                out[ 87] = eIm11 - (oRe11 * tIm11 + oIm11 * tRe11);
+                out[idx +  22] = eRe11 + (oRe11 * tRe11 - oIm11 * tIm11);
+                out[idx +  23] = eIm11 + (oRe11 * tIm11 + oIm11 * tRe11);
+                out[idx +  86] = eRe11 - (oRe11 * tRe11 - oIm11 * tIm11);
+                out[idx +  87] = eIm11 - (oRe11 * tIm11 + oIm11 * tRe11);
 
-                out[ 24] = eRe12 + (oRe12 * tRe12 - oIm12 * tIm12);
-                out[ 25] = eIm12 + (oRe12 * tIm12 + oIm12 * tRe12);
-                out[ 88] = eRe12 - (oRe12 * tRe12 - oIm12 * tIm12);
-                out[ 89] = eIm12 - (oRe12 * tIm12 + oIm12 * tRe12);
+                out[idx +  24] = eRe12 + (oRe12 * tRe12 - oIm12 * tIm12);
+                out[idx +  25] = eIm12 + (oRe12 * tIm12 + oIm12 * tRe12);
+                out[idx +  88] = eRe12 - (oRe12 * tRe12 - oIm12 * tIm12);
+                out[idx +  89] = eIm12 - (oRe12 * tIm12 + oIm12 * tRe12);
 
-                out[ 26] = eRe13 + (oRe13 * tRe13 - oIm13 * tIm13);
-                out[ 27] = eIm13 + (oRe13 * tIm13 + oIm13 * tRe13);
-                out[ 90] = eRe13 - (oRe13 * tRe13 - oIm13 * tIm13);
-                out[ 91] = eIm13 - (oRe13 * tIm13 + oIm13 * tRe13);
+                out[idx +  26] = eRe13 + (oRe13 * tRe13 - oIm13 * tIm13);
+                out[idx +  27] = eIm13 + (oRe13 * tIm13 + oIm13 * tRe13);
+                out[idx +  90] = eRe13 - (oRe13 * tRe13 - oIm13 * tIm13);
+                out[idx +  91] = eIm13 - (oRe13 * tIm13 + oIm13 * tRe13);
 
-                out[ 28] = eRe14 + (oRe14 * tRe14 - oIm14 * tIm14);
-                out[ 29] = eIm14 + (oRe14 * tIm14 + oIm14 * tRe14);
-                out[ 92] = eRe14 - (oRe14 * tRe14 - oIm14 * tIm14);
-                out[ 93] = eIm14 - (oRe14 * tIm14 + oIm14 * tRe14);
+                out[idx +  28] = eRe14 + (oRe14 * tRe14 - oIm14 * tIm14);
+                out[idx +  29] = eIm14 + (oRe14 * tIm14 + oIm14 * tRe14);
+                out[idx +  92] = eRe14 - (oRe14 * tRe14 - oIm14 * tIm14);
+                out[idx +  93] = eIm14 - (oRe14 * tIm14 + oIm14 * tRe14);
 
-                out[ 30] = eRe15 + (oRe15 * tRe15 - oIm15 * tIm15);
-                out[ 31] = eIm15 + (oRe15 * tIm15 + oIm15 * tRe15);
-                out[ 94] = eRe15 - (oRe15 * tRe15 - oIm15 * tIm15);
-                out[ 95] = eIm15 - (oRe15 * tIm15 + oIm15 * tRe15);
+                out[idx +  30] = eRe15 + (oRe15 * tRe15 - oIm15 * tIm15);
+                out[idx +  31] = eIm15 + (oRe15 * tIm15 + oIm15 * tRe15);
+                out[idx +  94] = eRe15 - (oRe15 * tRe15 - oIm15 * tIm15);
+                out[idx +  95] = eIm15 - (oRe15 * tIm15 + oIm15 * tRe15);
 
+            }
 
 
 
