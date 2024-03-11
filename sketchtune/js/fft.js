@@ -1297,245 +1297,95 @@ function fftComplexInPlace_seq_4(out) {
 
         let halfSize    = 64;
         let quarterSize = 32;
-        for (let j = 0; j <= quarterSize; j++) {
-            const evenIndex = j;
-            const oddIndex  = j + halfSize;
+        for(let i = 0; i < 1024; i += 128)
+            for (let j = 0; j <= quarterSize; j++) {
+                let  evenIndex = i + j;
+                let  oddIndex  = i + j + halfSize;
 
-            const evenPartRe = out[evenIndex * 2];
-            const evenPartIm = out[evenIndex * 2 + 1];
-            const oddPartRe  = out[oddIndex * 2];
-            const oddPartIm  = out[oddIndex * 2 + 1];
+                let  evenPartRe = out[evenIndex * 2];
+                let  evenPartIm = out[evenIndex * 2 + 1];
+                let  oddPartRe  = out[oddIndex * 2];
+                let  oddPartIm  = out[oddIndex * 2 + 1];
 
-            const twiddleRe = ____F[126 + (j * 2 + 0)];
-            const twiddleIm = ____F[126 + (j * 2 + 1)];
+                let  twiddleRe = ____F[126 + (j * 2 + 0)];
+                let  twiddleIm = ____F[126 + (j * 2 + 1)];
 
-            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
-            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
+                let  twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
+                let  twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
 
-            out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
-            out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
-            out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
-            out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
-        }
-
-        for (let j = 0; j < halfSize; j++) {
-            const evenIndex = 128 + j;
-            const oddIndex  = 128 + j + halfSize;
-
-            const evenPartRe = out[evenIndex * 2];
-            const evenPartIm = out[evenIndex * 2 + 1];
-            const oddPartRe  = out[oddIndex * 2];
-            const oddPartIm  = out[oddIndex * 2 + 1];
-
-            const twiddleRe = ____F[126 + (j * 2 + 0)];
-            const twiddleIm = ____F[126 + (j * 2 + 1)];
-
-            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
-            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
-
-            out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
-            out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
-            out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
-            out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
+                out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
+                out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+                out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
+                out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
+            }
         }
 
         for (let j = quarterSize+1; j < halfSize; j++) {
-            const evenIndex = j;
-            const oddIndex  = j + halfSize;
+            let evenIndex = j;
+            let oddIndex  = j + halfSize;
 
             out[evenIndex * 2]     =  out[256 - evenIndex * 2] ;
             out[evenIndex * 2 + 1] = -out[256 - evenIndex * 2 + 1];
             out[oddIndex * 2]      =  out[256 - oddIndex * 2];
             out[oddIndex * 2 + 1]  = -out[256 - oddIndex * 2 + 1];
-        }
 
-        for (let j = quarterSize+1; j < halfSize; j++) {
-            const evenIndex = 128 + j;
-            const oddIndex  = 128 + j + halfSize;
+            evenIndex = 128 + j;
+            oddIndex  = 128 + j + halfSize;
 
             out[evenIndex * 2]     =  out[256 - evenIndex * 2] ;
             out[evenIndex * 2 + 1] = -out[256 - evenIndex * 2 + 1];
             out[oddIndex * 2]      =  out[256 - oddIndex * 2];
             out[oddIndex * 2 + 1]  = -out[256 - oddIndex * 2 + 1];
+
+            evenIndex = 256 + j;
+            oddIndex  = 256 + j + halfSize;
+
+            out[evenIndex * 2]     =  out[512 - evenIndex * 2] ;
+            out[evenIndex * 2 + 1] = -out[512 - evenIndex * 2 + 1];
+            out[oddIndex * 2]      =  out[512 - oddIndex * 2];
+            out[oddIndex * 2 + 1]  = -out[512 - oddIndex * 2 + 1];
+
+            evenIndex = 384 + j;
+            oddIndex  = 384 + j + halfSize;
+
+            out[evenIndex * 2]     =  out[512 - evenIndex * 2] ;
+            out[evenIndex * 2 + 1] = -out[512 - evenIndex * 2 + 1];
+            out[oddIndex * 2]      =  out[512 - oddIndex * 2];
+            out[oddIndex * 2 + 1]  = -out[512 - oddIndex * 2 + 1];
+
+            evenIndex = 512 + j;
+            oddIndex  = 512 + j + halfSize;
+
+            out[evenIndex * 2]     =  out[768 - evenIndex * 2] ;
+            out[evenIndex * 2 + 1] = -out[768 - evenIndex * 2 + 1];
+            out[oddIndex * 2]      =  out[768 - oddIndex * 2];
+            out[oddIndex * 2 + 1]  = -out[768 - oddIndex * 2 + 1];
+
+            evenIndex = 640 + j;
+            oddIndex  = 640 + j + halfSize;
+
+            out[evenIndex * 2]     =  out[768 - evenIndex * 2] ;
+            out[evenIndex * 2 + 1] = -out[768 - evenIndex * 2 + 1];
+            out[oddIndex * 2]      =  out[768 - oddIndex * 2];
+            out[oddIndex * 2 + 1]  = -out[768 - oddIndex * 2 + 1];
+
+            evenIndex = 768 + j;
+            oddIndex  = 768 + j + halfSize;
+
+            out[evenIndex * 2]     =  out[1024 - evenIndex * 2] ;
+            out[evenIndex * 2 + 1] = -out[1024 - evenIndex * 2 + 1];
+            out[oddIndex * 2]      =  out[1024 - oddIndex * 2];
+            out[oddIndex * 2 + 1]  = -out[1024 - oddIndex * 2 + 1];
+
+            evenIndex = 896 + j;
+            oddIndex  = 896 + j + halfSize;
+
+            out[evenIndex * 2]     =  out[1024 - evenIndex * 2] ;
+            out[evenIndex * 2 + 1] = -out[1024 - evenIndex * 2 + 1];
+            out[oddIndex * 2]      =  out[1024 - oddIndex * 2];
+            out[oddIndex * 2 + 1]  = -out[1024 - oddIndex * 2 + 1];
         }
 
-
-
-
-        for (let j = 0; j < halfSize; j++) {
-            const evenIndex = 256 + j;
-            const oddIndex  = 256 + j + halfSize;
-
-            if(j > quarterSize){
-              out[evenIndex * 2]     =  out[512 - evenIndex * 2] ;
-              out[evenIndex * 2 + 1] = -out[512 - evenIndex * 2 + 1];
-              out[oddIndex * 2]      =  out[512 - oddIndex * 2];
-              out[oddIndex * 2 + 1]  = -out[512 - oddIndex * 2 + 1];
-              continue;
-            }
-
-            const evenPartRe = out[evenIndex * 2];
-            const evenPartIm = out[evenIndex * 2 + 1];
-            const oddPartRe  = out[oddIndex * 2];
-            const oddPartIm  = out[oddIndex * 2 + 1];
-
-            const twiddleRe = ____F[126 + (j * 2 + 0)];
-            const twiddleIm = ____F[126 + (j * 2 + 1)];
-
-            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
-            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
-
-            out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
-            out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
-            out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
-            out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
-        }
-
-
-        for (let j = 0; j < halfSize; j++) {
-            const evenIndex = 384 + j;
-            const oddIndex  = 384 + j + halfSize;
-
-            if(j > quarterSize){
-              out[evenIndex * 2]     =  out[512 - evenIndex * 2] ;
-              out[evenIndex * 2 + 1] = -out[512 - evenIndex * 2 + 1];
-              out[oddIndex * 2]      =  out[512 - oddIndex * 2];
-              out[oddIndex * 2 + 1]  = -out[512 - oddIndex * 2 + 1];
-              continue;
-            }
-
-            const evenPartRe = out[evenIndex * 2];
-            const evenPartIm = out[evenIndex * 2 + 1];
-            const oddPartRe  = out[oddIndex * 2];
-            const oddPartIm  = out[oddIndex * 2 + 1];
-
-            const twiddleRe = ____F[126 + (j * 2 + 0)];
-            const twiddleIm = ____F[126 + (j * 2 + 1)];
-
-            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
-            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
-
-            out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
-            out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
-            out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
-            out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
-        }
-
-        for (let j = 0; j < halfSize; j++) {
-            const evenIndex = 512 + j;
-            const oddIndex  = 512 + j + halfSize;
-
-            if(j > quarterSize){
-              out[evenIndex * 2]     =  out[768 - evenIndex * 2] ;
-              out[evenIndex * 2 + 1] = -out[768 - evenIndex * 2 + 1];
-              out[oddIndex * 2]      =  out[768 - oddIndex * 2];
-              out[oddIndex * 2 + 1]  = -out[768 - oddIndex * 2 + 1];
-              continue;
-            }
-
-            const evenPartRe = out[evenIndex * 2];
-            const evenPartIm = out[evenIndex * 2 + 1];
-            const oddPartRe  = out[oddIndex * 2];
-            const oddPartIm  = out[oddIndex * 2 + 1];
-
-            const twiddleRe = ____F[126 + (j * 2 + 0)];
-            const twiddleIm = ____F[126 + (j * 2 + 1)];
-
-            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
-            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
-
-            out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
-            out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
-            out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
-            out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
-        }
-
-        for (let j = 0; j < halfSize; j++) {
-            const evenIndex = 640 + j;
-            const oddIndex  = 640 + j + halfSize;
-
-            if(j > quarterSize){
-              out[evenIndex * 2]     =  out[768 - evenIndex * 2] ;
-              out[evenIndex * 2 + 1] = -out[768 - evenIndex * 2 + 1];
-              out[oddIndex * 2]      =  out[768 - oddIndex * 2];
-              out[oddIndex * 2 + 1]  = -out[768 - oddIndex * 2 + 1];
-              continue;
-            }
-
-            const evenPartRe = out[evenIndex * 2];
-            const evenPartIm = out[evenIndex * 2 + 1];
-            const oddPartRe  = out[oddIndex * 2];
-            const oddPartIm  = out[oddIndex * 2 + 1];
-
-            const twiddleRe = ____F[126 + (j * 2 + 0)];
-            const twiddleIm = ____F[126 + (j * 2 + 1)];
-
-            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
-            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
-
-            out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
-            out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
-            out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
-            out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
-        }
-
-       for (let j = 0; j < halfSize; j++) {
-            const evenIndex = 768 + j;
-            const oddIndex  = 768 + j + halfSize;
-
-            if(j > quarterSize){
-              out[evenIndex * 2]     =  out[1024 - evenIndex * 2] ;
-              out[evenIndex * 2 + 1] = -out[1024 - evenIndex * 2 + 1];
-              out[oddIndex * 2]      =  out[1024 - oddIndex * 2];
-              out[oddIndex * 2 + 1]  = -out[1024 - oddIndex * 2 + 1];
-              continue;
-            }
-
-            const evenPartRe = out[evenIndex * 2];
-            const evenPartIm = out[evenIndex * 2 + 1];
-            const oddPartRe  = out[oddIndex * 2];
-            const oddPartIm  = out[oddIndex * 2 + 1];
-
-            const twiddleRe = ____F[126 + (j * 2 + 0)];
-            const twiddleIm = ____F[126 + (j * 2 + 1)];
-
-            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
-            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
-
-            out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
-            out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
-            out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
-            out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
-        }
-
-        for (let j = 0; j < halfSize; j++) {
-            const evenIndex = 896 + j;
-            const oddIndex  = 896 + j + halfSize;
-
-            if(j > quarterSize){
-              out[evenIndex * 2]     =  out[1024 - evenIndex * 2] ;
-              out[evenIndex * 2 + 1] = -out[1024 - evenIndex * 2 + 1];
-              out[oddIndex * 2]      =  out[1024 - oddIndex * 2];
-              out[oddIndex * 2 + 1]  = -out[1024 - oddIndex * 2 + 1];
-              continue;
-            }
-
-            const evenPartRe = out[evenIndex * 2];
-            const evenPartIm = out[evenIndex * 2 + 1];
-            const oddPartRe  = out[oddIndex * 2];
-            const oddPartIm  = out[oddIndex * 2 + 1];
-
-            const twiddleRe = ____F[126 + (j * 2 + 0)];
-            const twiddleIm = ____F[126 + (j * 2 + 1)];
-
-            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
-            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
-
-            out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
-            out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
-            out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
-            out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
-        }
         
 
      /*
