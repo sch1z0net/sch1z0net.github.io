@@ -1329,7 +1329,7 @@ function fftComplexInPlace_seq_4(out) {
     /////////////////////////////////////////////
     // P = 2.5  -> 128
     //
-/*
+
         let h = 64;
         let q = 32;
         for(let i = 0; i < 1024; i += 128){
@@ -1354,9 +1354,9 @@ function fftComplexInPlace_seq_4(out) {
                 out[oddIndex * 2 + 1]  = eIm - t_oIm;
             }
         }
-*/
 
 
+/*
             for(let idx = 0; idx < 1024; idx += 128){
                 let eRe0  = out[idx +    0]; let  eIm0 = out[idx +    1];
                 let eRe1  = out[idx +    2]; let  eIm1 = out[idx +    3];
@@ -1747,7 +1747,14 @@ function fftComplexInPlace_seq_4(out) {
                 out[idx + 191] = resIm31_d;
 
 
+                
+                out[idx + 64]  = resRe31_s;
+                out[idx + 65]  = resIm31_s;
+                out[idx + 190] = resRe31_d;
+                out[idx + 191] = resIm31_d;
+
             }
+*/
 
 /*
         for (let j = quarterSize+1; j < halfSize; j++) {
