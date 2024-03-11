@@ -1474,7 +1474,7 @@ function fftComplexInPlace_seq_4(out) {
 
 
 
-
+/*
         for (let j = quarterSize+1; j < halfSize; j++) {
             let evenIndex = j;
             let oddIndex  = j + halfSize;
@@ -1540,7 +1540,7 @@ function fftComplexInPlace_seq_4(out) {
             out[oddIndex * 2]      =  out[1024 - oddIndex * 2];
             out[oddIndex * 2 + 1]  = -out[1024 - oddIndex * 2 + 1];
         }
-
+*/
         
 
      /*
