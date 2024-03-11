@@ -949,7 +949,7 @@ let map = bitReversalMap1024.get(1024);
 const N = 1024;
 const bits = 10;
 const inputBR = new Float64Array(N);
-const complexOut = new Float64Array(N * 2);
+const out = new Float64Array(N * 2);
 function fftComplexInPlace_seq_4(realInput) {
 
     // Create a copy of the input array
