@@ -3137,10 +3137,10 @@ function fftRealInPlaceRADIX4(realInput) {
     //const N = realInput.length;
     //const bits = Math.log2(N);
     
-    if (N !== nextPowerOf2(N)) {
+    /*if (N !== nextPowerOf2(N)) {
         console.error("FFT FRAME must have power of 2");
         return;
-    }
+    }*/
     
     // Create a copy of the input array
     const input = realInput.slice();
