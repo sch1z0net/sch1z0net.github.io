@@ -2222,11 +2222,11 @@ function fftComplexInPlace_seq_4(realInput) {
             out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
             out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
             out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
-        }
+        }*/
 
     return out;
 }
-*/
+
 
 //  1  2| 3  4| 5  6
 //------------------  
