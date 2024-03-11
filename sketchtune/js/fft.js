@@ -969,7 +969,7 @@ function fftComplexInPlace_seq_4(out) {
           out[idx  +  7] = -x2aRe + x3aRe;
     } */
 
-for (let idx = 0; idx < 2048; idx += 64) {
+for (let idx = 0; idx < 2048; idx += 128) {
     // Unrolled loop iteration 1
     let x0aRe_1 = out[idx];
     let x1aRe_1 = out[idx + 2];
@@ -1066,7 +1066,105 @@ for (let idx = 0; idx < 2048; idx += 64) {
     out[idx + 56] = x0aRe_8 + x1aRe_8 + x2aRe_8 + x3aRe_8;
     out[idx + 59] = x2aRe_8 - x3aRe_8;
     out[idx + 63] = -x2aRe_8 + x3aRe_8;
+
+    // Unrolled loop iteration 9
+    let x0aRe_9 = out[idx + 64];
+    let x1aRe_9 = out[idx + 66];
+    out[idx + 66] = x0aRe_9 - x1aRe_9;
+    let x3aRe_9 = out[idx + 70];
+    out[idx + 70] = x0aRe_9 - x1aRe_9;
+    let x2aRe_9 = out[idx + 68];
+    out[idx + 68] = x0aRe_9 + x1aRe_9 - x2aRe_9 - x3aRe_9; 
+    out[idx + 64] = x0aRe_9 + x1aRe_9 + x2aRe_9 + x3aRe_9;
+    out[idx + 67] = x2aRe_9 - x3aRe_9;
+    out[idx + 71] = -x2aRe_9 + x3aRe_9;
+
+    // Unrolled loop iteration 10
+    let x0aRe_10 = out[idx + 72];
+    let x1aRe_10 = out[idx + 74];
+    out[idx + 74] = x0aRe_10 - x1aRe_10;
+    let x3aRe_10 = out[idx + 78];
+    out[idx + 78] = x0aRe_10 - x1aRe_10;
+    let x2aRe_10 = out[idx + 76];
+    out[idx + 76] = x0aRe_10 + x1aRe_10 - x2aRe_10 - x3aRe_10; 
+    out[idx + 72] = x0aRe_10 + x1aRe_10 + x2aRe_10 + x3aRe_10;
+    out[idx + 75] = x2aRe_10 - x3aRe_10;
+    out[idx + 79] = -x2aRe_10 + x3aRe_10;
+
+    // Unrolled loop iteration 11
+    let x0aRe_11 = out[idx + 80];
+    let x1aRe_11 = out[idx + 82];
+    out[idx + 82] = x0aRe_11 - x1aRe_11;
+    let x3aRe_11 = out[idx + 86];
+    out[idx + 86] = x0aRe_11 - x1aRe_11;
+    let x2aRe_11 = out[idx + 84];
+    out[idx + 84] = x0aRe_11 + x1aRe_11 - x2aRe_11 - x3aRe_11; 
+    out[idx + 80] = x0aRe_11 + x1aRe_11 + x2aRe_11 + x3aRe_11;
+    out[idx + 83] = x2aRe_11 - x3aRe_11;
+    out[idx + 87] = -x2aRe_11 + x3aRe_11;
+
+    // Unrolled loop iteration 12
+    let x0aRe_12 = out[idx + 88];
+    let x1aRe_12 = out[idx + 90];
+    out[idx + 90] = x0aRe_12 - x1aRe_12;
+    let x3aRe_12 = out[idx + 94];
+    out[idx + 94] = x0aRe_12 - x1aRe_12;
+    let x2aRe_12 = out[idx + 92];
+    out[idx + 92] = x0aRe_12 + x1aRe_12 - x2aRe_12 - x3aRe_12; 
+    out[idx + 88] = x0aRe_12 + x1aRe_12 + x2aRe_12 + x3aRe_12;
+    out[idx + 91] = x2aRe_12 - x3aRe_12;
+    out[idx + 95] = -x2aRe_12 + x3aRe_12;
+
+    // Unrolled loop iteration 13
+    let x0aRe_13 = out[idx + 96];
+    let x1aRe_13 = out[idx + 98];
+    out[idx + 98] = x0aRe_13 - x1aRe_13;
+    let x3aRe_13 = out[idx + 102];
+    out[idx + 102] = x0aRe_13 - x1aRe_13;
+    let x2aRe_13 = out[idx + 100];
+    out[idx + 100] = x0aRe_13 + x1aRe_13 - x2aRe_13 - x3aRe_13; 
+    out[idx + 96] = x0aRe_13 + x1aRe_13 + x2aRe_13 + x3aRe_13;
+    out[idx + 99] = x2aRe_13 - x3aRe_13;
+    out[idx + 103] = -x2aRe_13 + x3aRe_13;
+
+    // Unrolled loop iteration 14
+    let x0aRe_14 = out[idx + 104];
+    let x1aRe_14 = out[idx + 106];
+    out[idx + 106] = x0aRe_14 - x1aRe_14;
+    let x3aRe_14 = out[idx + 110];
+    out[idx + 110] = x0aRe_14 - x1aRe_14;
+    let x2aRe_14 = out[idx + 108];
+    out[idx + 108] = x0aRe_14 + x1aRe_14 - x2aRe_14 - x3aRe_14; 
+    out[idx + 104] = x0aRe_14 + x1aRe_14 + x2aRe_14 + x3aRe_14;
+    out[idx + 107] = x2aRe_14 - x3aRe_14;
+    out[idx + 111] = -x2aRe_14 + x3aRe_14;
+
+    // Unrolled loop iteration 15
+    let x0aRe_15 = out[idx + 112];
+    let x1aRe_15 = out[idx + 114];
+    out[idx + 114] = x0aRe_15 - x1aRe_15;
+    let x3aRe_15 = out[idx + 118];
+    out[idx + 118] = x0aRe_15 - x1aRe_15;
+    let x2aRe_15 = out[idx + 116];
+    out[idx + 116] = x0aRe_15 + x1aRe_15 - x2aRe_15 - x3aRe_15; 
+    out[idx + 112] = x0aRe_15 + x1aRe_15 + x2aRe_15 + x3aRe_15;
+    out[idx + 115] = x2aRe_15 - x3aRe_15;
+    out[idx + 119] = -x2aRe_15 + x3aRe_15;
+
+    // Unrolled loop iteration 16
+    let x0aRe_16 = out[idx + 120];
+    let x1aRe_16 = out[idx + 122];
+    out[idx + 122] = x0aRe_16 - x1aRe_16;
+    let x3aRe_16 = out[idx + 126];
+    out[idx + 126] = x0aRe_16 - x1aRe_16;
+    let x2aRe_16 = out[idx + 124];
+    out[idx + 124] = x0aRe_16 + x1aRe_16 - x2aRe_16 - x3aRe_16; 
+    out[idx + 120] = x0aRe_16 + x1aRe_16 + x2aRe_16 + x3aRe_16;
+    out[idx + 123] = x2aRe_16 - x3aRe_16;
+    out[idx + 127] = -x2aRe_16 + x3aRe_16;
+
 }
+
 
     /////////////////////////////////////////////
     // P = 1  -> 16
