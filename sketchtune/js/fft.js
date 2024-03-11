@@ -1851,8 +1851,6 @@ function fftComplexInPlace_seq_4(out) {
 
                 out[idx +   2] = resRe1_s; 
                 out[idx +   3] = resIm1_s;
-                out[idx + 130] = resRe1_d;
-                out[idx + 131] = resIm1_d;
 
                 out[idx +   4] = resRe2_s; 
                 out[idx +   5] = resIm2_s;
@@ -2163,6 +2161,9 @@ function fftComplexInPlace_seq_4(out) {
                 out[idx + 127] = resIm63_s;
                 out[idx + 254] = resRe63_d;
                 out[idx + 255] = resIm63_d;
+
+                out[idx + 130] =  resRe63_s;
+                out[idx + 131] = -resIm63_s;
             }
 
 
