@@ -948,7 +948,7 @@ let tRe63  = - tRe1;             let tIm63  = ____F[126 + (127)];*/
 let map = bitReversalMap1024.get(1024);
 const N = 1024;
 const bits = 10;
-const inputBR = new Float64Array(N);
+const input = new Float64Array(N);
 const out = new Float64Array(N * 2);
 function fftComplexInPlace_seq_4(realInput) {
 
