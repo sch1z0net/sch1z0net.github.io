@@ -1466,24 +1466,59 @@ function fftComplexInPlace_seq_4(out) {
                 out[idx +   0] = resRe0_s;
                 let resIm0_s = eIm0 + (oRe0 * tIm0 + oIm0 * tRe0);
                 out[idx +   1] = resIm0_s;
+
+
+
                 let resRe1_s = eRe1 + (oRe1 * tRe1 - oIm1 * tIm1);
                 out[idx +   2] =  resRe1_s; 
                 out[idx + 254] =  resRe1_s;
+                let resRe63_s = eRe1 + (oRe1 * tRe63 + oIm1 * tIm63);
+                out[idx + 126] =  resRe63_s; 
+                out[idx + 130] =  resRe63_s;
                 let resIm1_s = eIm1 + (oRe1 * tIm1 + oIm1 * tRe1);
                 out[idx +   3] =  resIm1_s;
                 out[idx + 255] = -resIm1_s;    
+                let resIm63_s = -eIm1 + (oRe1 * tIm63 - oIm1 * tRe63);
+                out[idx + 127] =  resIm63_s;
+                out[idx + 131] = -resIm63_s;
+
                 let resRe2_s = eRe2 + (oRe2 * tRe2 - oIm2 * tIm2);
                 out[idx +   4] =  resRe2_s; 
                 out[idx + 252] =  resRe2_s;
+                let resRe62_s = eRe2 + (oRe2 * tRe62 + oIm2 * tIm62);
+                out[idx + 124] =  resRe62_s; 
+                out[idx + 132] =  resRe62_s;
                 let resIm2_s = eIm2 + (oRe2 * tIm2 + oIm2 * tRe2);
                 out[idx +   5] =  resIm2_s;
                 out[idx + 253] = -resIm2_s;
+                let resIm62_s = -eIm2 + (oRe2 * tIm62 - oIm2 * tRe62);
+                out[idx + 125] =  resIm62_s;
+                out[idx + 133] = -resIm62_s;
+
+
                 let resRe3_s = eRe3 + (oRe3 * tRe3 - oIm3 * tIm3);
                 out[idx +   6] =  resRe3_s; 
                 out[idx + 250] =  resRe3_s;
+                let resRe61_s = eRe3 + (oRe3 * tRe61 + oIm3 * tIm61);
+                out[idx + 122] =  resRe61_s; 
+                out[idx + 134] =  resRe61_s;
                 let resIm3_s = eIm3 + (oRe3 * tIm3 + oIm3 * tRe3);
                 out[idx +   7] =  resIm3_s;
                 out[idx + 251] = -resIm3_s;
+                let resIm61_s = -eIm3 + (oRe3 * tIm61 - oIm3 * tRe61);
+                out[idx + 123] =  resIm61_s;
+                out[idx + 135] = -resIm61_s;
+
+
+
+
+
+
+
+
+
+
+/*
                 let resRe4_s = eRe4 + (oRe4 * tRe4 - oIm4 * tIm4);
                 out[idx +   8] =  resRe4_s; 
                 out[idx + 248] =  resRe4_s;
@@ -1658,8 +1693,9 @@ function fftComplexInPlace_seq_4(out) {
                 let resIm32_s = eIm32 + (oRe32 * tIm32 + oIm32 * tRe32);
                 out[idx +  65] =  resIm32_s;
                 out[idx + 193] = -resIm32_s;
+*/
 
-
+/*
                 let resRe33_s = eRe31 + (oRe31 * tRe33 + oIm31 * tIm33);
                 out[idx +  66] =  resRe33_s; 
                 out[idx + 190] =  resRe33_s;
@@ -1846,7 +1882,7 @@ function fftComplexInPlace_seq_4(out) {
                 let resIm63_s = -eIm1 + (oRe1 * tIm63 - oIm1 * tRe63);
                 out[idx + 127] =  resIm63_s;
                 out[idx + 131] = -resIm63_s;
-
+*/
 
 
 
@@ -3035,8 +3071,8 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
 
                 //if(size==2||size==8){ console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} + ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[evenIndex * 2].toFixed(2)); }
                 //if(size==2||size==8){ console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} - ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[oddIndex * 2].toFixed(2)); }
-                //if(size==128){ console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} + ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[evenIndex * 2].toFixed(2)); }
-                //if(size==128){ console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} - ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[oddIndex * 2].toFixed(2)); }
+                if(size==128){ console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} + ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[evenIndex * 2].toFixed(2)); }
+                if(size==128){ console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} - ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[oddIndex * 2].toFixed(2)); }
 
             }
         }
