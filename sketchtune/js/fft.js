@@ -1333,7 +1333,7 @@ function fftComplexInPlace_seq_4(out) {
         let h = 64;
         let q = 32;
         for(let i = 0; i < 1024; i += 128){
-            for (let j = 0; j <= q; j++) {
+            for (let j = 0; j <= h; j++) {
                 let  eI  = i + j;
                 let  oI  = i + j + h;
 
@@ -1353,26 +1353,7 @@ function fftComplexInPlace_seq_4(out) {
                 out[oI * 2]      = eRe - t_oRe;
                 out[oI * 2 + 1]  = eIm - t_oIm;
             }
-            for (let j = 0; j <= q; j++) {
-                let  eI  = 64 + i + j;
-                let  oI  = 64 + i + j + h;
 
-                let  eRe  = out[eI * 2];
-                let  eIm  = out[eI * 2 + 1];
-                let  oRe  = out[oI * 2];
-                let  oIm  = out[oI * 2 + 1];
-
-                let  tRe = ____F[126 + (j * 2 + 0)];
-                let  tIm = ____F[126 + (j * 2 + 1)];
-
-                let  t_oRe = oRe * tRe - oIm * tIm;
-                let  t_oIm = oRe * tIm + oIm * tRe;
-
-                out[eI * 2]     = eRe + t_oRe;
-                out[eI * 2 + 1] = eIm + t_oIm;
-                out[oI * 2]      = eRe - t_oRe;
-                out[oI * 2 + 1]  = eIm - t_oIm;
-            }
         }
 
 
