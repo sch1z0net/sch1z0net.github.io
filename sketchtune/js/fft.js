@@ -1432,6 +1432,48 @@ function fftComplexInPlace_seq_4(out) {
             out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
             out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
         }
+
+       for (let j = 0; j < halfSize; j++) {
+            const evenIndex = 768 + j;
+            const oddIndex  = 768 + j + halfSize;
+
+            const evenPartRe = out[evenIndex * 2];
+            const evenPartIm = out[evenIndex * 2 + 1];
+            const oddPartRe  = out[oddIndex * 2];
+            const oddPartIm  = out[oddIndex * 2 + 1];
+
+            const twiddleRe = ____F[126 + (j * 2 + 0)];
+            const twiddleIm = ____F[126 + (j * 2 + 1)];
+
+            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
+            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
+
+            out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
+            out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+            out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
+            out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
+        }
+
+        for (let j = 0; j < halfSize; j++) {
+            const evenIndex = 896 + j;
+            const oddIndex  = 896 + j + halfSize;
+
+            const evenPartRe = out[evenIndex * 2];
+            const evenPartIm = out[evenIndex * 2 + 1];
+            const oddPartRe  = out[oddIndex * 2];
+            const oddPartIm  = out[oddIndex * 2 + 1];
+
+            const twiddleRe = ____F[126 + (j * 2 + 0)];
+            const twiddleIm = ____F[126 + (j * 2 + 1)];
+
+            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
+            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
+
+            out[evenIndex * 2]     = evenPartRe + twiddledOddRe;
+            out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+            out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
+            out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
+        }
         
 
      /*
