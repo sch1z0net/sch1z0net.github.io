@@ -945,14 +945,32 @@ let tRe61  = ____F[126 + (122)]; let tIm61  = ____F[126 + (123)];
 let tRe62  = - tRe2;             let tIm62  = ____F[126 + (125)];
 let tRe63  = - tRe1;             let tIm63  = ____F[126 + (127)];*/
 
+let map = bitReversalMap1024.get(1024);
+const N = 1024;
+const bits = 10;
+const inputBR = new Float64Array(N);
+const complexOut = new Float64Array(N * 2);
+function fftComplexInPlace_seq_4(realInput) {
 
-function fftComplexInPlace_seq_4(out) {
+    // Create a copy of the input array
+    const input = realInput.slice();
+
+    // Perform bit reversal
+    for (let i = 0; i < N; i++) {
+        inputBR[i] = input[map[i]];
+    }
+
+    // Convert the real-valued input to a complex-valued Float32Array
+    for (let i = 0; i < N; i++) {
+        out[i * 2] = inputBR[i];
+        out[i * 2 + 1] = 0; // Imaginary part is set to 0
+    }
 
     /////////////////////////////////////////////
     // P = 0  -> 4
     //
 
-/*
+    /*
     for(let idx = 0; idx < 2048; idx+=8){
           let x0aRe = out[idx    ];
           let x1aRe = out[idx + 2];
@@ -968,201 +986,7 @@ function fftComplexInPlace_seq_4(out) {
           out[idx  +  3] =  x2aRe - x3aRe; 
           out[idx  +  7] = -x2aRe + x3aRe;
     } */
-/*
-for (let idx = 0; idx < 2048; idx += 128) {
-    // Unrolled loop iteration 1
-    let x0aRe_1 = out[idx];
-    let x1aRe_1 = out[idx + 2];
-    out[idx + 2] = x0aRe_1 - x1aRe_1;
-    let x3aRe_1 = out[idx + 6];
-    out[idx + 6] = x0aRe_1 - x1aRe_1;
 
-    let x2aRe_1 = out[idx + 4];
-    out[idx + 4] = x0aRe_1 + x1aRe_1 - x2aRe_1 - x3aRe_1; 
-    out[idx + 3] = x2aRe_1 - x3aRe_1;
-    out[idx] = x0aRe_1 + x1aRe_1 + x2aRe_1 + x3aRe_1;
-    out[idx + 7] = -x2aRe_1 + x3aRe_1;
-
-    // Unrolled loop iteration 2
-    let x0aRe_2 = out[idx + 8];
-    let x1aRe_2 = out[idx + 10];
-    out[idx + 10] = x0aRe_2 - x1aRe_2;
-    let x3aRe_2 = out[idx + 14];
-    out[idx + 14] = x0aRe_2 - x1aRe_2;
-    let x2aRe_2 = out[idx + 12];
-    out[idx + 12] = x0aRe_2 + x1aRe_2 - x2aRe_2 - x3aRe_2; 
-    out[idx + 11] = x2aRe_2 - x3aRe_2;
-    out[idx + 8] = x0aRe_2 + x1aRe_2 + x2aRe_2 + x3aRe_2;
-    out[idx + 15] = -x2aRe_2 + x3aRe_2;
-
-    // Unrolled loop iteration 3
-    let x0aRe_3 = out[idx + 16];
-    let x1aRe_3 = out[idx + 18];
-    out[idx + 18] = x0aRe_3 - x1aRe_3;
-    let x3aRe_3 = out[idx + 22];
-    out[idx + 22] = x0aRe_3 - x1aRe_3;
-    let x2aRe_3 = out[idx + 20];
-    out[idx + 20] = x0aRe_3 + x1aRe_3 - x2aRe_3 - x3aRe_3; 
-    out[idx + 16] = x0aRe_3 + x1aRe_3 + x2aRe_3 + x3aRe_3;
-    out[idx + 19] = x2aRe_3 - x3aRe_3;
-    out[idx + 23] = -x2aRe_3 + x3aRe_3;
-
-    // Unrolled loop iteration 4
-    let x0aRe_4 = out[idx + 24];
-    let x1aRe_4 = out[idx + 26];
-    out[idx + 26] = x0aRe_4 - x1aRe_4;
-    let x3aRe_4 = out[idx + 30];
-    out[idx + 30] = x0aRe_4 - x1aRe_4;
-    let x2aRe_4 = out[idx + 28];
-    out[idx + 28] = x0aRe_4 + x1aRe_4 - x2aRe_4 - x3aRe_4; 
-    out[idx + 24] = x0aRe_4 + x1aRe_4 + x2aRe_4 + x3aRe_4;
-    out[idx + 27] = x2aRe_4 - x3aRe_4;
-    out[idx + 31] = -x2aRe_4 + x3aRe_4;
-
-    // Unrolled loop iteration 5
-    let x0aRe_5 = out[idx + 32];
-    let x1aRe_5 = out[idx + 34];
-    out[idx + 34] = x0aRe_5 - x1aRe_5;
-    let x3aRe_5 = out[idx + 38];
-    out[idx + 38] = x0aRe_5 - x1aRe_5;
-    let x2aRe_5 = out[idx + 36];
-    out[idx + 36] = x0aRe_5 + x1aRe_5 - x2aRe_5 - x3aRe_5; 
-    out[idx + 32] = x0aRe_5 + x1aRe_5 + x2aRe_5 + x3aRe_5;
-    out[idx + 35] = x2aRe_5 - x3aRe_5;
-    out[idx + 39] = -x2aRe_5 + x3aRe_5;
-
-    // Unrolled loop iteration 6
-    let x0aRe_6 = out[idx + 40];
-    let x1aRe_6 = out[idx + 42];
-    out[idx + 42] = x0aRe_6 - x1aRe_6;
-    let x3aRe_6 = out[idx + 46];
-    out[idx + 46] = x0aRe_6 - x1aRe_6;
-    let x2aRe_6 = out[idx + 44];
-    out[idx + 44] = x0aRe_6 + x1aRe_6 - x2aRe_6 - x3aRe_6; 
-    out[idx + 40] = x0aRe_6 + x1aRe_6 + x2aRe_6 + x3aRe_6;
-    out[idx + 43] = x2aRe_6 - x3aRe_6;
-    out[idx + 47] = -x2aRe_6 + x3aRe_6;
-
-    // Unrolled loop iteration 7
-    let x0aRe_7 = out[idx + 48];
-    let x1aRe_7 = out[idx + 50];
-    out[idx + 50] = x0aRe_7 - x1aRe_7;
-    let x3aRe_7 = out[idx + 54];
-    out[idx + 54] = x0aRe_7 - x1aRe_7;
-    let x2aRe_7 = out[idx + 52];
-    out[idx + 52] = x0aRe_7 + x1aRe_7 - x2aRe_7 - x3aRe_7; 
-    out[idx + 48] = x0aRe_7 + x1aRe_7 + x2aRe_7 + x3aRe_7;
-    out[idx + 51] = x2aRe_7 - x3aRe_7;
-    out[idx + 55] = -x2aRe_7 + x3aRe_7;
-
-    // Unrolled loop iteration 8
-    let x0aRe_8 = out[idx + 56];
-    let x1aRe_8 = out[idx + 58];
-    out[idx + 58] = x0aRe_8 - x1aRe_8;
-    let x3aRe_8 = out[idx + 62];
-    out[idx + 62] = x0aRe_8 - x1aRe_8;
-    let x2aRe_8 = out[idx + 60];
-    out[idx + 60] = x0aRe_8 + x1aRe_8 - x2aRe_8 - x3aRe_8; 
-    out[idx + 56] = x0aRe_8 + x1aRe_8 + x2aRe_8 + x3aRe_8;
-    out[idx + 59] = x2aRe_8 - x3aRe_8;
-    out[idx + 63] = -x2aRe_8 + x3aRe_8;
-
-    // Unrolled loop iteration 9
-    let x0aRe_9 = out[idx + 64];
-    let x1aRe_9 = out[idx + 66];
-    out[idx + 66] = x0aRe_9 - x1aRe_9;
-    let x3aRe_9 = out[idx + 70];
-    out[idx + 70] = x0aRe_9 - x1aRe_9;
-    let x2aRe_9 = out[idx + 68];
-    out[idx + 68] = x0aRe_9 + x1aRe_9 - x2aRe_9 - x3aRe_9; 
-    out[idx + 64] = x0aRe_9 + x1aRe_9 + x2aRe_9 + x3aRe_9;
-    out[idx + 67] = x2aRe_9 - x3aRe_9;
-    out[idx + 71] = -x2aRe_9 + x3aRe_9;
-
-    // Unrolled loop iteration 10
-    let x0aRe_10 = out[idx + 72];
-    let x1aRe_10 = out[idx + 74];
-    out[idx + 74] = x0aRe_10 - x1aRe_10;
-    let x3aRe_10 = out[idx + 78];
-    out[idx + 78] = x0aRe_10 - x1aRe_10;
-    let x2aRe_10 = out[idx + 76];
-    out[idx + 76] = x0aRe_10 + x1aRe_10 - x2aRe_10 - x3aRe_10; 
-    out[idx + 72] = x0aRe_10 + x1aRe_10 + x2aRe_10 + x3aRe_10;
-    out[idx + 75] = x2aRe_10 - x3aRe_10;
-    out[idx + 79] = -x2aRe_10 + x3aRe_10;
-
-    // Unrolled loop iteration 11
-    let x0aRe_11 = out[idx + 80];
-    let x1aRe_11 = out[idx + 82];
-    out[idx + 82] = x0aRe_11 - x1aRe_11;
-    let x3aRe_11 = out[idx + 86];
-    out[idx + 86] = x0aRe_11 - x1aRe_11;
-    let x2aRe_11 = out[idx + 84];
-    out[idx + 84] = x0aRe_11 + x1aRe_11 - x2aRe_11 - x3aRe_11; 
-    out[idx + 80] = x0aRe_11 + x1aRe_11 + x2aRe_11 + x3aRe_11;
-    out[idx + 83] = x2aRe_11 - x3aRe_11;
-    out[idx + 87] = -x2aRe_11 + x3aRe_11;
-
-    // Unrolled loop iteration 12
-    let x0aRe_12 = out[idx + 88];
-    let x1aRe_12 = out[idx + 90];
-    out[idx + 90] = x0aRe_12 - x1aRe_12;
-    let x3aRe_12 = out[idx + 94];
-    out[idx + 94] = x0aRe_12 - x1aRe_12;
-    let x2aRe_12 = out[idx + 92];
-    out[idx + 92] = x0aRe_12 + x1aRe_12 - x2aRe_12 - x3aRe_12; 
-    out[idx + 88] = x0aRe_12 + x1aRe_12 + x2aRe_12 + x3aRe_12;
-    out[idx + 91] = x2aRe_12 - x3aRe_12;
-    out[idx + 95] = -x2aRe_12 + x3aRe_12;
-
-    // Unrolled loop iteration 13
-    let x0aRe_13 = out[idx + 96];
-    let x1aRe_13 = out[idx + 98];
-    out[idx + 98] = x0aRe_13 - x1aRe_13;
-    let x3aRe_13 = out[idx + 102];
-    out[idx + 102] = x0aRe_13 - x1aRe_13;
-    let x2aRe_13 = out[idx + 100];
-    out[idx + 100] = x0aRe_13 + x1aRe_13 - x2aRe_13 - x3aRe_13; 
-    out[idx + 96] = x0aRe_13 + x1aRe_13 + x2aRe_13 + x3aRe_13;
-    out[idx + 99] = x2aRe_13 - x3aRe_13;
-    out[idx + 103] = -x2aRe_13 + x3aRe_13;
-
-    // Unrolled loop iteration 14
-    let x0aRe_14 = out[idx + 104];
-    let x1aRe_14 = out[idx + 106];
-    out[idx + 106] = x0aRe_14 - x1aRe_14;
-    let x3aRe_14 = out[idx + 110];
-    out[idx + 110] = x0aRe_14 - x1aRe_14;
-    let x2aRe_14 = out[idx + 108];
-    out[idx + 108] = x0aRe_14 + x1aRe_14 - x2aRe_14 - x3aRe_14; 
-    out[idx + 104] = x0aRe_14 + x1aRe_14 + x2aRe_14 + x3aRe_14;
-    out[idx + 107] = x2aRe_14 - x3aRe_14;
-    out[idx + 111] = -x2aRe_14 + x3aRe_14;
-
-    // Unrolled loop iteration 15
-    let x0aRe_15 = out[idx + 112];
-    let x1aRe_15 = out[idx + 114];
-    out[idx + 114] = x0aRe_15 - x1aRe_15;
-    let x3aRe_15 = out[idx + 118];
-    out[idx + 118] = x0aRe_15 - x1aRe_15;
-    let x2aRe_15 = out[idx + 116];
-    out[idx + 116] = x0aRe_15 + x1aRe_15 - x2aRe_15 - x3aRe_15; 
-    out[idx + 112] = x0aRe_15 + x1aRe_15 + x2aRe_15 + x3aRe_15;
-    out[idx + 115] = x2aRe_15 - x3aRe_15;
-    out[idx + 119] = -x2aRe_15 + x3aRe_15;
-
-    // Unrolled loop iteration 16
-    let x0aRe_16 = out[idx + 120];
-    let x1aRe_16 = out[idx + 122];
-    out[idx + 122] = x0aRe_16 - x1aRe_16;
-    let x3aRe_16 = out[idx + 126];
-    out[idx + 126] = x0aRe_16 - x1aRe_16;
-    let x2aRe_16 = out[idx + 124];
-    out[idx + 124] = x0aRe_16 + x1aRe_16 - x2aRe_16 - x3aRe_16; 
-    out[idx + 120] = x0aRe_16 + x1aRe_16 + x2aRe_16 + x3aRe_16;
-    out[idx + 123] = x2aRe_16 - x3aRe_16;
-    out[idx + 127] = -x2aRe_16 + x3aRe_16;
-}*/
 
     for (let idx = 0; idx < 2048; idx += 32) {
     // Unrolled loop iteration 1
@@ -2328,388 +2152,6 @@ for (let idx = 0; idx < 2048; idx += 128) {
     return out;
 }
 
-function fftComplexInPlace_seq_4__(out) {
-    const N = out.length/2;
-    const bits = Math.log2(N);
-
-    /*
-    let ____F;
-    if(N ==    4){ ____F = LOOKUP_RADIX2_4;    }
-    if(N ==    8){ ____F = LOOKUP_RADIX2_8;    }
-    if(N ==   16){ ____F = LOOKUP_RADIX2_16;   }
-    if(N ==   32){ ____F = LOOKUP_RADIX2_32;   }
-    if(N ==   64){ ____F = LOOKUP_RADIX2_64;   }
-    if(N ==  128){ ____F = LOOKUP_RADIX2_128;  }
-    if(N ==  256){ ____F = LOOKUP_RADIX2_256;  }
-    if(N ==  512){ ____F = LOOKUP_RADIX2_512;  }
-    if(N == 1024){ ____F = LOOKUP_RADIX2_1024; }
-    if(N == 2048){ ____F = LOOKUP_RADIX2_2048; }
-    if(N == 4096){ ____F = LOOKUP_RADIX2_4096; }
-    */
-
-    /*
-    let idx_LKUP; 
-    if(N ==   4){ idx_LKUP = INDEX_LOOKUP_4;    }
-    if(N ==   8){ idx_LKUP = INDEX_LOOKUP_8;    }
-    if(N ==  16){ idx_LKUP = INDEX_LOOKUP_16;   }
-    if(N ==  32){ idx_LKUP = INDEX_LOOKUP_32;   }
-    if(N ==  64){ idx_LKUP = INDEX_LOOKUP_64;   }
-    if(N == 128){ idx_LKUP = INDEX_LOOKUP_128;  }
-    if(N == 256){ idx_LKUP = INDEX_LOOKUP_256;  }
-    if(N == 512){ idx_LKUP = INDEX_LOOKUP_512;  }
-    if(N ==1024){ idx_LKUP = INDEX_LOOKUP_1024; }
-    if(N ==2048){ idx_LKUP = INDEX_LOOKUP_2048; }  
-    if(N ==4096){ idx_LKUP = INDEX_LOOKUP_4096; } 
-    */
-
-    let its = 0, accs = 0;
-
-
-    /*for(let i=0; i<16; i++){
-        console.log("INIT:",i," -> ", out[i*2], out[i*2+1]); 
-    }*/
-    
-    
-    let x0aRe, x0aIm; let x1aRe, x1aIm; let x2aRe, x2aIm; let x3aRe, x3aIm;
-    let x0bRe, x0bIm; let x1bRe, x1bIm; let x2bRe, x2bIm; let x3bRe, x3bIm;
-    let x0cRe, x0cIm; let x1cRe, x1cIm; let x2cRe, x2cIm; let x3cRe, x3cIm;
-    let x0dRe, x0dIm; let x1dRe, x1dIm; let x2dRe, x2dIm; let x3dRe, x3dIm;
-    let xM0ReA = 0; let xM0ImA = 0; let xM2ReA = 0; let xM2ImA = 0;
-    let xM1ReB = 0; let xM1ImB = 0; let xM3ReB = 0; let xM3ImB = 0;
-    let xM0ReC = 0; let xM0ImC = 0; let xM2ReC = 0; let xM2ImC = 0;
-    let xM1ReD = 0; let xM1ImD = 0; let xM3ReD = 0; let xM3ImD = 0;
-
-    let tRe_1a; let tIm_1a;    
-    let tRe_1b; let tIm_1b;
-    let tRe_1c; let tIm_1c;    
-    let tRe_1d; let tIm_1d;
-    let tRe_2a; let tIm_2a;    
-    let tRe_2b; let tIm_2b;
-    let tRe_2c; let tIm_2c;    
-    let tRe_2d; let tIm_2d;
-
-    let r = N; //64          // 4   16   64  128
-    let steps = (bits>>1);   // 1    2    3    4   
-    let ts = 1 << (steps-1); // 1    2    4    8
-    let pre1 = 0;
-    let pre2 = 2;
-    for(let p = 0; p < steps; p++){
-        let d = 1<<(2*p);    // 1    4   16   64
-        
-        let r = 4;  
-        if(N == 16){ 
-            if(p==0){ r = 8; }
-            if(p==1){ r = 4; }
-        }
-        if(N == 64){
-            if(p==0){ r = 16; }
-            if(p==1){ r = 16; }
-            if(p==2){ r = 4; }
-        }
-        if(N == 256){
-            if(p==0){ r = 32; }
-            if(p==1){ r = 32; }
-            if(p==2){ r = 4; }
-            if(p==3){ r = 4; }
-        }
-
-        let r_ = 4;  
-        if(N == 16){ 
-            if(p==0){ r_ = 4; }  
-            if(p==1){ r_ = 8; }
-        }
-        if(N == 64){
-            if(p==0){ r_ = 4; } 
-            if(p==1){ r_ = 4; }
-            if(p==2){ r_ = 16; }   
-        }
-        if(N == 256){
-            if(p==0){ r_ = 4; }
-            if(p==1){ r_ = 4; }
-            if(p==2){ r_ = 16; }    
-            if(p==3){ r_ = 32; }
-        }
-
-
-        let z = d*4;
-        let s = 0;
-        let k = 0;
-                                //  0     1     2   
-        let p1 = (p*2)+1;       //  1 //  3 //  5 //
-        let p2 = (p*2+1)+1;     //  2 //  4 //  6 //
-        let size1 = 2<<(p1-1);  //  2 //  8 // 32 // 128
-        let size2 = 2<<(p2-1);  //  4 // 16 // 64 //
-        let ji = 0; let jj = 0; let jk = 0;
-        let c = 0;
-        let w = 0;
-        let b = 0;
-
-        let jm2 = (1<<(p*2+1));    //   2     8     32
-        let jm1 = (1<<(p*2+0));    //   1     4     16
-        //console.log( "-size "+size2+"########################################" );
-        for(let b_ = 0; b_ < ts; b_++){
-          b = b_*r;  
-          if(N==256 && p == 2 && b_ >= ts/2){ 
-            b = (b_%4)*r + N/2; 
-          } 
-          s = b;
-          let k = p==0 ? 1 : (1<<(2*p));  //  1  4  16  64
-
-          for(let i_ = 0; i_ < ts; i_++){
-            let i = b + i_*r_;
-            if(N == 256 && p == 3){
-                if(i_<(ts/2)){ 
-                    i = b +  0+((i_%4)*32)*2; 
-                }else{ 
-                    i = b + 32+((i_%4)*32)*2; 
-                }
-            }
-            jk = i;
-            jj = i;
-            w = 0;
-
-            let ji = 0;
-            let jl = (i % (4<<p)); // 4  8  16  32
-
-            let i_a0 = (i + 0 + (k)*0); let i_a1 = (i + 0 + (k)*1); let i_a2 = (i + 0 + (k)*2); let i_a3 = (i + 0 + (k)*3);
-            let i_b0 = (i + 1 + (k)*0); let i_b1 = (i + 1 + (k)*1); let i_b2 = (i + 1 + (k)*2); let i_b3 = (i + 1 + (k)*3);
-            let i_c0 = (i + 2 + (k)*0); let i_c1 = (i + 2 + (k)*1); let i_c2 = (i + 2 + (k)*2); let i_c3 = (i + 2 + (k)*3);
-            let i_d0 = (i + 3 + (k)*0); let i_d1 = (i + 3 + (k)*1); let i_d2 = (i + 3 + (k)*2); let i_d3 = (i + 3 + (k)*3);
-            
-            let sign2a = ((jj+0)%size2 < size1)      ? 1 : -1;
-            let sign1a = ((jj+0)%size1 < (size1>>1)) ? 1 : -1; 
-            let sign2b = ((jj+1)%size2 < size1)      ? 1 : -1;
-            let sign1b = ((jj+1)%size1 < (size1>>1)) ? 1 : -1; 
-            let sign2c = ((jj+2)%size2 < size1)      ? 1 : -1;
-            let sign1c = ((jj+2)%size1 < (size1>>1)) ? 1 : -1; 
-            let sign2d = ((jj+3)%size2 < size1)      ? 1 : -1;
-            let sign1d = ((jj+3)%size1 < (size1>>1)) ? 1 : -1; 
-
-            let j2a = ji%size1+(i%jm2); let j1a = ji%(size1/2)+(i%jm1); ji++;
-            let j2b = ji%size1+(i%jm2); let j1b = ji%(size1/2)+(i%jm1); ji++;
-            let j2c = ji%size1+(i%jm2); let j1c = ji%(size1/2)+(i%jm1); ji++;
-            let j2d = ji%size1+(i%jm2); let j1d = ji%(size1/2)+(i%jm1); ji++;
-
-            tRe_1a  = ____F[pre1+(2*j1a+0)];
-            tIm_1a  = ____F[pre1+(2*j1a+1)];
-            tRe_1b  = tRe_1a;
-            tIm_1b  = tIm_1a;
-            tRe_1c  = tRe_1a;
-            tIm_1c  = tIm_1a;
-            tRe_1d  = tRe_1a;
-            tIm_1d  = tIm_1a;
-
-            /*if(p > 0){
-                tRe_1b  = ____F[pre1+(2*j1b+0)];
-                tIm_1b  = ____F[pre1+(2*j1b+1)];  
-                tRe_1c  = ____F[pre1+(2*j1c+0)];
-                tIm_1c  = ____F[pre1+(2*j1c+1)]; 
-                tRe_1d  = ____F[pre1+(2*j1d+0)];
-                tIm_1d  = ____F[pre1+(2*j1d+1)]; 
-            }*/
-
-            tRe_2a  = ____F[pre2+(2*j2a+0)]; 
-            tIm_2a  = ____F[pre2+(2*j2a+1)];
-            tRe_2b  = ____F[pre2+(2*j2b+0)]; 
-            tIm_2b  = ____F[pre2+(2*j2b+1)];
-            tRe_2c  = tRe_2a;
-            tIm_2c  = tIm_2a;
-            tRe_2d  = tRe_2b;
-            tIm_2d  = tIm_2b;
-
-            /*if(p > 0){        
-                tRe_2b  = ____F[pre2+(2*j2b+0)]; 
-                tIm_2b  = ____F[pre2+(2*j2b+1)];
-                tRe_2c  = ____F[pre2+(2*j2c+0)]; 
-                tIm_2c  = ____F[pre2+(2*j2c+1)];        
-                tRe_2d  = ____F[pre2+(2*j2d+0)]; 
-                tIm_2d  = ____F[pre2+(2*j2d+1)];
-            }*/
-
-            
-            if(p==0 || (i_%4) == 0){
-                                                                    //########    +00\\  |+04\\  |-08\\  |-12\\  |
-                x0aRe = out[(i_a0)*2+0]; x0aIm = out[(i_a0)*2+1];   //########       00  |   00  |   00  |   00  |
-                x1aRe = out[(i_a1)*2+0]; x1aIm = out[(i_a1)*2+1];   //########      +04  |  -04  |  +04  |  -04  |
-                x2aRe = out[(i_a2)*2+0]; x2aIm = out[(i_a2)*2+1];   //########       08  |   08  |   08  |   08  |
-                x3aRe = out[(i_a3)*2+0]; x3aIm = out[(i_a3)*2+1];   //########      +12  |  -12  |  +12  |  -12  |
-                //console.log( "(i_a0)",(i_a0),"(i_a1)",(i_a1),"(i_a2)",(i_a2),"(i_a3)",(i_a3) ); 
-            }
-            
-            jk++;
-            /*
-            if(p>0 && (i_%4) == 0){
-                                                                    //########    +01\\  |+05\\  |-09\\  |-13\\  |
-                x0bRe = out[(i_b0)*2+0]; x0bIm = out[(i_b0)*2+1];   //########       01  |   01  |   01  |   01  |
-                x1bRe = out[(i_b1)*2+0]; x1bIm = out[(i_b1)*2+1];   //########      +05  |  -05  |  +05  |  -05  |
-                x2bRe = out[(i_b2)*2+0]; x2bIm = out[(i_b2)*2+1];   //########       09  |   09  |   09  |   09  |
-                x3bRe = out[(i_b3)*2+0]; x3bIm = out[(i_b3)*2+1];   //########      +13  |  -13  |  +13  |  -13  |
-                //console.log( "(i_b0)",(i_b0),"(i_b1)",(i_b1),"(i_b2)",(i_b2),"(i_b3)",(i_b3) ); 
-            }
-
-            jk++;
-
-            if(p>0 && (i_%4) == 0){
-                                                                    //########    +02\\  |+06\\  |-10\\  |-14\\  |
-                x0cRe = out[(i_c0)*2+0]; x0cIm = out[(i_c0)*2+1];   //########       02  |   02  |   02  |   02  |
-                x1cRe = out[(i_c1)*2+0]; x1cIm = out[(i_c1)*2+1];   //########      +06  |  -06  |  +06  |  -06  |
-                x2cRe = out[(i_c2)*2+0]; x2cIm = out[(i_c2)*2+1];   //########       10  |   10  |   10  |   10  |
-                x3cRe = out[(i_c3)*2+0]; x3cIm = out[(i_c3)*2+1];   //########      +14  |  -14  |  +14  |  -14  |
-                //console.log( "(i_c0)",(i_c0),"(i_c1)",(i_c1),"(i_c2)",(i_c2),"(i_c3)",(i_c3) ); 
-            }
-
-            jk++;
-
-            if(p>0 && (i_%4) == 0){
-                                                                    //########    +03\\  |+07\\  |-11\\  |-15\\  |
-                x0dRe = out[(i_d0)*2+0]; x0dIm = out[(i_d0)*2+1];   //########       03  |   03  |   03  |   03  | 
-                x1dRe = out[(i_d1)*2+0]; x1dIm = out[(i_d1)*2+1];   //########      +07  |  -07  |  +07  |  -07  |
-                x2dRe = out[(i_d2)*2+0]; x2dIm = out[(i_d2)*2+1];   //########       11  |   11  |   11  |   11  |
-                x3dRe = out[(i_d3)*2+0]; x3dIm = out[(i_d3)*2+1];   //########      +15  |  -15  |  +15  |  -15  |
-                //console.log( "(i_d0)",(i_d0),"(i_d1)",(i_d1),"(i_d2)",(i_d2),"(i_d3)",(i_d3) ); 
-            }
-            */
-            jk++;
-
-            if(true){
-            //if(size1 == 2){
-              x0bRe = x0aRe; x0bIm = x0aIm;  
-              x1bRe = x1aRe; x1bIm = x1aIm; 
-              x2bRe = x2aRe; x2bIm = x2aIm;  
-              x3bRe = x3aRe; x3bIm = x3aIm;                              
-              x0cRe = x0aRe; x0cIm = x0aIm; 
-              x1cRe = x1aRe; x1cIm = x1aIm; 
-              x2cRe = x2aRe; x2cIm = x2aIm; 
-              x3cRe = x3aRe; x3cIm = x3aIm; 
-              x0dRe = x0bRe; x0dIm = x0bIm; 
-              x1dRe = x1bRe; x1dIm = x1bIm; 
-              x2dRe = x2bRe; x2dIm = x2bIm; 
-              x3dRe = x3bRe; x3dIm = x3bIm;
-            } 
-
-            /*                                                                                             
-              xM0ReA = x0aRe + (x1aRe * tRe_1a - x1aIm * tIm_1a) * sign1a;
-              xM0ImA = x0aIm + (x1aRe * tIm_1a + x1aIm * tRe_1a) * sign1a;                    
-              xM2ReA = x2aRe + (x3aRe * tRe_1a - x3aIm * tIm_1a) * sign1a;
-              xM2ImA = x2aIm + (x3aRe * tIm_1a + x3aIm * tRe_1a) * sign1a;
-              
-              xM1ReB = x0bRe + (x1bRe * tRe_1b - x1bIm * tIm_1b) * sign1b; 
-              xM1ImB = x0bIm + (x1bRe * tIm_1b + x1bIm * tRe_1b) * sign1b; 
-              xM3ReB = x2bRe + (x3bRe * tRe_1b - x3bIm * tIm_1b) * sign1b; 
-              xM3ImB = x2bIm + (x3bRe * tIm_1b + x3bIm * tRe_1b) * sign1b; 
-              
-              xM0ReC = x0cRe + (x1cRe * tRe_1c - x1cIm * tIm_1c) * sign1c;
-              xM0ImC = x0cIm + (x1cRe * tIm_1c + x1cIm * tRe_1c) * sign1c; 
-              xM2ReC = x2cRe + (x3cRe * tRe_1c - x3cIm * tIm_1c) * sign1c;
-              xM2ImC = x2cIm + (x3cRe * tIm_1c + x3cIm * tRe_1c) * sign1c;
-              
-              xM1ReD = x0dRe + (x1dRe * tRe_1d - x1dIm * tIm_1d) * sign1d;
-              xM1ImD = x0dIm + (x1dRe * tIm_1d + x1dIm * tRe_1d) * sign1d;
-              xM3ReD = x2dRe + (x3dRe * tRe_1d - x3dIm * tIm_1d) * sign1d;
-              xM3ImD = x2dIm + (x3dRe * tIm_1d + x3dIm * tRe_1d) * sign1d;
-            */
-
-             // size = 2     ||| size = 8
-             ///////////////////////////////// i = 0
-             // 00 <- 00 01  |||  00 <-  00 +04          -> xM0ReA
-             // 02 <- 02 03  |||  08 <-  08 +12          -> xM2ReA
-             ///////////////////////////////// i = 4                            
-             // 04 <- 04 05  |||  04 <-  00 +04          -> xM0ReA          
-             // 06 <- 06 07  |||  12 <-  08 +12          -> xM2ReA          
-             ///////////////////////////////// i = 8                             
-             // 08 <- 08 09  |||                         -> xM0ReA (skip writing)       
-             // 10 <- 10 11  |||                         -> xM2ReA (skip writing)  
-             ///////////////////////////////// i = 12
-             // 12 <- 12 13  |||                         -> xM0ReA (skip writing)  
-             // 14 <- 14 15  |||                         -> xM2ReA (skip writing)  
-             //console.log(size1, (i+0).toString().padStart(2),"--->", ((i+0)%size1 + w).toString().padStart(2),         ".re =", "[",i_a0.toString().padStart(2),"].re ",(sign1a<0)?"-":"+"," ([",i_a1.toString().padStart(2),"].re * t[",j1a.toString().padStart(2),"].re - [",i_a1.toString().padStart(2),"].im * t[",j1a.toString().padStart(2),"].im ) <-> ", "{",x0aRe.toFixed(2),"}",(sign1a<0)?"-":"+","({",x1aRe.toFixed(2),"} * t{",tRe_1a.toFixed(2),"} - {",x1aIm.toFixed(2),"} * {",tIm_1a.toFixed(2),"} ) = ",xM0ReA.toFixed(2));
-             //console.log(size1, (i+0).toString().padStart(2),"--->", ((i+0)%size1 + w + size1).toString().padStart(2), ".re =", "[",i_a2.toString().padStart(2),"].re ",(sign1a<0)?"-":"+"," ([",i_a3.toString().padStart(2),"].re * t[",j1a.toString().padStart(2),"].re - [",i_a3.toString().padStart(2),"].im * t[",j1a.toString().padStart(2),"].im ) <-> ", "{",x2aRe.toFixed(2),"}",(sign1a<0)?"-":"+","({",x3aRe.toFixed(2),"} * t{",tRe_1a.toFixed(2),"} - {",x3aIm.toFixed(2),"} * {",tIm_1a.toFixed(2),"} ) = ",xM2ReA.toFixed(2)); 
-             
-             // size = 2     ||| size = 8
-             ///////////////////////////////// i = 0
-             // 01 <- 00 01  |||  01 <-  01  05          -> xM1ReB
-             // 03 <- 02 03  |||  09 <-  09  13          -> xM3ReB
-             ///////////////////////////////// i = 4
-             // 05 <- 04 05  |||  05 <-  01  05
-             // 07 <- 06 07  |||  13 <-  09  13
-             ///////////////////////////////// i = 8
-             // 09 <- 08 09  |||
-             // 11 <- 10 11  |||
-             ///////////////////////////////// i = 12
-             // 13 <- 12 13  |||
-             // 15 <- 14 15  |||
-             //console.log(size1, (i+1).toString().padStart(2),"--->", ((i+1)%size1 + w).toString().padStart(2),         ".re =", "[",i_b0.toString().padStart(2),"].re ",(sign1b<0)?"-":"+"," ([",i_b1.toString().padStart(2),"].re * t[",j1b.toString().padStart(2),"].re - [",i_b1.toString().padStart(2),"].im * t[",j1b.toString().padStart(2),"].im ) <-> ", "{",x0bRe.toFixed(2),"}",(sign1b<0)?"-":"+","({",x1bRe.toFixed(2),"} * t{",tRe_1b.toFixed(2),"} - {",x1bIm.toFixed(2),"} * {",tIm_1b.toFixed(2),"} ) = ",xM1ReB.toFixed(2));
-             //console.log(size1, (i+1).toString().padStart(2),"--->", ((i+1)%size1 + w + size1).toString().padStart(2), ".re =", "[",i_b2.toString().padStart(2),"].re ",(sign1b<0)?"-":"+"," ([",i_b3.toString().padStart(2),"].re * t[",j1b.toString().padStart(2),"].re - [",i_b3.toString().padStart(2),"].im * t[",j1b.toString().padStart(2),"].im ) <-> ", "{",x2bRe.toFixed(2),"}",(sign1b<0)?"-":"+","({",x3bRe.toFixed(2),"} * t{",tRe_1b.toFixed(2),"} - {",x3bIm.toFixed(2),"} * {",tIm_1b.toFixed(2),"} ) = ",xM3ReB.toFixed(2));  
-             
-
-             // size = 2     ||| size = 8
-             ///////////////////////////////// i = 0
-             // 00 <- 00 01  |||  02 <-  02  06
-             // 02 <- 02 03  |||  10 <-  10  14
-             ///////////////////////////////// i = 4
-             // 04 <- 04 05  |||  06 <-  02  06
-             // 06 <- 06 07  |||  14 <-  10  14
-             ///////////////////////////////// i = 8
-             // 08 <- 08 09  |||    
-             // 10 <- 10 11  |||
-             ///////////////////////////////// i = 12
-             // 12 <- 12 13  |||
-             // 14 <- 14 15  |||
-             //console.log(size1, (i+2).toString().padStart(2),"--->", ((i+2)%size1 + w).toString().padStart(2),         ".re =", "[",i_c0.toString().padStart(2),"].re ",(sign1c<0)?"-":"+"," ([",i_c1.toString().padStart(2),"].re * t[",j1c.toString().padStart(2),"].re - [",i_c1.toString().padStart(2),"].im * t[",j1c.toString().padStart(2),"].im ) <-> ", "{",x0cRe.toFixed(2),"}",(sign1c<0)?"-":"+","({",x1cRe.toFixed(2),"} * t{",tRe_1c.toFixed(2),"} - {",x1cIm.toFixed(2),"} * {",tIm_1c.toFixed(2),"} ) = ",xM0ReC.toFixed(2));  
-             //console.log(size1, (i+2).toString().padStart(2),"--->", ((i+2)%size1 + w + size1).toString().padStart(2), ".re =", "[",i_c2.toString().padStart(2),"].re ",(sign1c<0)?"-":"+"," ([",i_c3.toString().padStart(2),"].re * t[",j1c.toString().padStart(2),"].re - [",i_c3.toString().padStart(2),"].im * t[",j1c.toString().padStart(2),"].im ) <-> ", "{",x2cRe.toFixed(2),"}",(sign1c<0)?"-":"+","({",x3cRe.toFixed(2),"} * t{",tRe_1c.toFixed(2),"} - {",x3cIm.toFixed(2),"} * {",tIm_1c.toFixed(2),"} ) = ",xM2ReC.toFixed(2));
-
-
-             // size = 2     ||| size = 8
-             ///////////////////////////////// i = 0
-             // 01 <- 00 01  |||  03 <-  03  07
-             // 03 <- 02 03  |||  11 <-  11  15
-             ///////////////////////////////// i = 4
-             // 05 <- 04 05  |||  07 <-  03  07
-             // 07 <- 06 07  |||  15 <-  11  15
-             ///////////////////////////////// i = 8
-             // 09 <- 08 09  |||
-             // 11 <- 10 11  |||
-             ///////////////////////////////// i = 12
-             // 13 <- 12 13  |||
-             // 15 <- 14 15  |||
-             //console.log(size1, (i+3).toString().padStart(2),"--->", ((i+3)%size1 + w).toString().padStart(2),         ".re =", "[",i_d0.toString().padStart(2),"].re ",(sign1d<0)?"-":"+"," ([",i_d1.toString().padStart(2),"].re * t[",j1d.toString().padStart(2),"].re - [",i_d1.toString().padStart(2),"].im * t[",j1d.toString().padStart(2),"].im ) <-> ", "{",x0dRe.toFixed(2),"}",(sign1d<0)?"-":"+","({",x1dRe.toFixed(2),"} * t{",tRe_1d.toFixed(2),"} - {",x1dIm.toFixed(2),"} * {",tIm_1d.toFixed(2),"} ) = ",xM1ReD.toFixed(2)); 
-             //console.log(size1, (i+3).toString().padStart(2),"--->", ((i+3)%size1 + w + size1).toString().padStart(2), ".re =", "[",i_d2.toString().padStart(2),"].re ",(sign1d<0)?"-":"+"," ([",i_d3.toString().padStart(2),"].re * t[",j1d.toString().padStart(2),"].re - [",i_d3.toString().padStart(2),"].im * t[",j1d.toString().padStart(2),"].im ) <-> ", "{",x2dRe.toFixed(2),"}",(sign1d<0)?"-":"+","({",x3dRe.toFixed(2),"} * t{",tRe_1d.toFixed(2),"} - {",x3dIm.toFixed(2),"} * {",tIm_1d.toFixed(2),"} ) = ",xM3ReD.toFixed(2)); 
-             
-
-             out[(0+i)*2+0] = xM0ReA + ((xM2ReA)*tRe_2a - ((xM2ImA)*tIm_2a)) * sign2a;
-             out[(0+i)*2+1] = xM0ImA + ((xM2ReA)*tIm_2a + ((xM2ImA)*tRe_2a)) * sign2a; 
-             out[(1+i)*2+0] = xM1ReB + ((xM3ReB)*tRe_2b - ((xM3ImB)*tIm_2b)) * sign2b;
-             out[(1+i)*2+1] = xM1ImB + ((xM3ReB)*tIm_2b + ((xM3ImB)*tRe_2b)) * sign2b; 
-             out[(2+i)*2+0] = xM0ReC + ((xM2ReC)*tRe_2c - ((xM2ImC)*tIm_2c)) * sign2c;
-             out[(2+i)*2+1] = xM0ImC + ((xM2ReC)*tIm_2c + ((xM2ImC)*tRe_2c)) * sign2c;
-             out[(3+i)*2+0] = xM1ReD + ((xM3ReD)*tRe_2d - ((xM3ImD)*tIm_2d)) * sign2d;
-             out[(3+i)*2+1] = xM1ImD + ((xM3ReD)*tIm_2d + ((xM3ImD)*tRe_2d)) * sign2d;
-
-             
-             //console.log(size2, (i+0).toString().padStart(2),"--->", xM0ReA.toFixed(2), (sign2a<0)?"-":"+","(",xM2ReA.toFixed(2),"*",tRe_2a.toFixed(2), j2a,"-",xM2ImA.toFixed(2),"*",tIm_2a.toFixed(2),") = ", out[(0+i)*2+0].toFixed(2));
-             //console.log(size2, (i+1).toString().padStart(2),"--->", xM1ReB.toFixed(2), (sign2b<0)?"-":"+","(",xM3ReB.toFixed(2),"*",tRe_2b.toFixed(2), j2b,"-",xM3ImB.toFixed(2),"*",tIm_2b.toFixed(2),") = ", out[(1+i)*2+0].toFixed(2));
-             //console.log(size2, (i+2).toString().padStart(2),"--->", xM0ReC.toFixed(2), (sign2c<0)?"-":"+","(",xM2ReC.toFixed(2),"*",tRe_2c.toFixed(2), j2c,"-",xM2ImC.toFixed(2),"*",tIm_2c.toFixed(2),") = ", out[(2+i)*2+0].toFixed(2));
-             //console.log(size2, (i+3).toString().padStart(2),"--->", xM1ReD.toFixed(2), (sign2d<0)?"-":"+","(",xM3ReD.toFixed(2),"*",tRe_2d.toFixed(2), j2d,"-",xM3ImD.toFixed(2),"*",tIm_2d.toFixed(2),") = ", out[(3+i)*2+0].toFixed(2));
-
-
-
-            //console.log( "-----------------------------" );
-            if( (i) % (z) == 0 ){ s += z; }
-            if( (i) % size2 == 0 ){  w += size2; } 
-          }
-        } 
-        pre1 += (2 << 2*p) + (2 << 2*p+1);
-        pre2 += (2 << 2*p+1) + (2 << 2*p+2);
-
-        
-        /*for(let i=0; i<N; i++){
-             console.log("after size ",size2," : ",i," -> ", out[i*2], out[i*2+1]); 
-        }*/
-
-    }
-    return out;
-}
-
 //  1  2| 3  4| 5  6
 //------------------  
 // 00 00 00 00 00 00
@@ -2837,100 +2279,6 @@ function fftComplexInPlace_seq_4__(out) {
 // 63 <- // 60 61 62 63 // 51 55 59 63 // 15 31 47 63 // 
 //-------------------------------------------------------
 
-
-
-
-
-
-
-
-
-// loop len per N
-// N=2  -> (2 * 2)  = 4
-// N=4  -> (3 * 4)  = 12
-// N=8  -> (4 * 8)  = 32
-// N=16 -> (5 * 16) = 80
-// N=32 -> (6 * 32) = 192
-// N=64 -> (7 * 64) = 448
-
-//2 + 4 + 8 + 16 + 32 + 64 + 128 + 256
-//(array accesses = i++ jumps)
-
-// Iterations for N = 64
-// 448 (loop len) /   2 (twiddles) =  224  -- Array Accesses:   2    <- power 1 structure --  (2*1) =    2 twiddles per iteration
-// 448 (loop len) /   8 (twiddles) = ~     -- Array Accesses:   4    <- power 2 structure --  (4*2) =    8 twiddles per iteration
-// 448 (loop len) /  24 (twiddles) = ~     -- Array Accesses:   8    <- power 3 structure --  (8*3) =   24 twiddles per iteration 
-// 448 (loop len) /  64 (twiddles) = ~     -- Array Accesses:  16    <- power 4 structure -- (16*4) =   64 twiddles per iteration
-// 448 (loop len) / 160 (twiddles) = ~     -- Array Accesses:  32    <- power 5 structure -- (32*5) =  160 twiddles per iteration 
-// 448 (loop len) / 384 (twiddles) = ~     -- Array Accesses:  64    <- power 6 structure -- (64*6) =  384 twiddles per iteration 
-// 448 (loop len) / 896 (twiddles) = ~     -- Array Accesses: 128    <- power 7 structure --(128*7) =  896 twiddles per iteration 
-// 448 (loop len) /2048 (twiddles) = ~     -- Array Accesses: 256    <- power 8 structure --(256*8) = 2048 twiddles per iteration 
-
-// Array Accesses PER Twiddles for N = 64    (Must be as low as possible for Efficency)
-
-// ps 1 -> 2   /    2   =  1
-// ps 2 -> 4   /    8   =  1/2
-// ps 3 -> 8   /   24   =  1/3
-// ps 4 -> 16  /   64   =  1/4
-// ps 5 -> 32  /  160   =  1/5
-// ps 6 -> 64  /  384   =  1/6
-// ps 7 -> 128 /  896   =  1/7
-// ps 8 -> 256 / 2048   =  1/8
-
-
-
-// Power 3 -> 
-// Power 4 ->
-// Power 5 -> 3800 
-// Power 6 -> 4600
-// Power 7 -> 4000
-
-
-function eff_p(){
-   const max_p = 8;
-   console.log("Efficiency For Powers"); 
-   for(let p = 1; p<=max_p; p++){
-        const accesses_per_it = (2<<(p-1));
-        const t_per_it = (2<<(p-1)) * p;
-        const ratio =  accesses_per_it / t_per_it;
-        console.log("ps ",p,": Access Rate ->",ratio.toFixed(2), 
-            "\tTwiddle Declarations ->",t_per_it,
-            "\tTwiddlelizers per Iteration ->",t_per_it/2,
-            "\tTwiddles per Iteration ->", t_per_it,
-            "\tAccesses per Iteration ->", accesses_per_it
-        );
-   }
-}
-
-function eff(N){
-   const max_p = 8;
-   let sum = 0;
-   let bits = Math.log2(N);
-
-   let looplen = (N>>1)*bits;
-   console.log("Efficiency For N=",N); 
-   for(let p = 1; p<=max_p; p++){
-        const accesses_per_it = (2<<(p-1));
-        const t_per_it = (2<<(p-1)) * p;
-        const iterations = looplen * 2 / (t_per_it);  
-        const accesses = accesses_per_it * looplen * 2 / (t_per_it);
-        const twiddles = t_per_it * looplen * 2 / (t_per_it);
-        const twiddlelizers = twiddles / 2;
-        const ratio =  accesses_per_it / t_per_it;
-        console.log("ps ",p,": Iterations ->",iterations.toFixed(0),
-            "\tTotal Twiddelizers ->",twiddlelizers.toFixed(0),
-            "\tTotal Accesses ->",accesses.toFixed(0),
-            "\t\tTotal Accesses (without Recycling) ->", twiddles.toFixed(0)
-        );
-   }
-}
-
-/*
-eff_p();
-eff(512);
-eff(1024);
-eff(2048);
-*/
 
 function fftComplexInPlace_flexi(out) {
     const N = out.length / 2;
@@ -3128,37 +2476,14 @@ function fftComplexInPlace_flexi(out) {
 
 
 /******************** WRAPPER *******************************************************/
-let map = bitReversalMap1024.get(1024);
+/*let map = bitReversalMap1024.get(1024);
 const N = 1024;
 const bits = 10;
 const inputBR = new Float64Array(N);
 const complexOut = new Float64Array(N * 2);
 function fftRealInPlaceRADIX4(realInput) {
-    //const N = realInput.length;
-    //const bits = Math.log2(N);
-    
-    /*if (N !== nextPowerOf2(N)) {
-        console.error("FFT FRAME must have power of 2");
-        return;
-    }*/
-    
     // Create a copy of the input array
     const input = realInput.slice();
-    
-    /*
-    let map;
-    if(N == 4){    map = bitReversalMap4.get(N);}
-    if(N == 8){    map = bitReversalMap8.get(N);}
-    if(N == 16){   map = bitReversalMap16.get(N);}
-    if(N == 32){   map = bitReversalMap32.get(N);}
-    if(N == 64){   map = bitReversalMap64.get(N);}
-    if(N == 128){  map = bitReversalMap128.get(N);}
-    if(N == 256){  map = bitReversalMap256.get(N);}
-    if(N == 512){  map = bitReversalMap512.get(N);}
-    if(N == 1024){ map = bitReversalMap1024.get(N);}
-    if(N == 2048){ map = bitReversalMap2048.get(N);}
-    if(N == 4096){ map = bitReversalMap4096.get(N);}
-    */
 
     // Perform bit reversal
     //const inputBR = new Float64Array(N);
@@ -3173,13 +2498,8 @@ function fftRealInPlaceRADIX4(realInput) {
         complexOut[i * 2 + 1] = 0; // Imaginary part is set to 0
     }
 
-    //return fftComplexInPlace_radix2(complexOut);
-    //return fftComplexInPlace_flexi(complexOut);
     return fftComplexInPlace_seq_4(complexOut);
-    //if(type == 5){ return fftComplexInPlace_seq_5(complexOut); }
-    //if(type == 6){ return fftComplexInPlace_seq_6(complexOut); }
-    //if(type == 7){ return fftComplexInPlace_seq_7(complexOut); }
-}
+}*/
 
 
 function fftComplexInPlaceRADIX4(complexInput) {
@@ -3635,15 +2955,15 @@ const performFFTOperations = (fftSize) => {
     // Perform FFT operations numOperations times
     for (let i = 0; i < numOperations; i++) {
         //fftRealInPlace_ref(testData);
-        fftRealInPlaceRADIX4(testData);
+        fftComplexInPlace_seq_4(testData);
     }
 
 };
 
 // Measure the time taken to perform FFT operations
-const measureTime = (fftSize,type) => {
+const measureTime = (fftSize) => {
     const startTime = performance.now(); // Start time
-    performFFTOperations(fftSize,type); // Perform FFT operations
+    performFFTOperations(fftSize); // Perform FFT operations
     const endTime = performance.now(); // End time
     const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
 
@@ -3711,7 +3031,7 @@ const signal4 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.
 const signal5 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
 
 
-console.log("1024:  ",compareFFTResults(fftRealInPlace_ref(testData1024),fftRealInPlaceRADIX4(testData1024)));
+console.log("1024:  ",compareFFTResults(fftRealInPlace_ref(testData1024),fftComplexInPlace_seq_4(testData1024)));
 
 /*
 console.log(signal1);
@@ -3726,6 +3046,6 @@ console.log(computeInverseFFT(computeFFT(signal3)));
 
 
 //console.log(fftRealInPlace_ref(testData256));
-console.log(fftRealInPlaceRADIX4(testData1024));
+console.log(fftComplexInPlace_seq_4(testData1024));
 
 
