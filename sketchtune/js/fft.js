@@ -1456,7 +1456,7 @@ function fftComplexInPlace_seq_4(out) {
                 let eRe61  = out[idx +  122]; let eIm61 = out[idx +  123];
                 let eRe62  = out[idx +  124]; let eIm62 = out[idx +  125];
                 let eRe63  = out[idx +  126]; let eIm63 = out[idx +  127];
-                let eRe64  = out[idx +  256]; let eIm64 = out[idx +  257];
+                let eRe64  = out[idx +  384]; let eIm64 = out[idx +  385];
 
                 let oRe0   = out[idx +  128]; let oIm0  = out[idx +  129];
                 let oRe1   = out[idx +  130]; let oIm1  = out[idx +  131];
@@ -1522,7 +1522,7 @@ function fftComplexInPlace_seq_4(out) {
                 let oRe61  = out[idx +  250]; let oIm61  = out[idx +  251];
                 let oRe62  = out[idx +  252]; let oIm62  = out[idx +  253];
                 let oRe63  = out[idx +  254]; let oIm63  = out[idx +  255];
-                let oRe64  = out[idx +  384]; let oIm64  = out[idx +  385];
+                let oRe64  = out[idx +  512]; let oIm64  = out[idx +  513];
 
 
                 let resRe0_s = eRe0 + (oRe0 * tRe0 - oIm0 * tIm0);
