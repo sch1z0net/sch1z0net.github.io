@@ -1303,10 +1303,10 @@ function fftComplexInPlace_seq_4(out) {
             const oddIndex  = i + j + halfSize;
 
             if(j > quarterSize){
-              out[evenIndex * 2]     =  out[256 + i - evenIndex * 2] ;
-              out[evenIndex * 2 + 1] = -out[256 + i - evenIndex * 2 + 1];
-              out[oddIndex * 2]      =  out[256 + i - oddIndex * 2];
-              out[oddIndex * 2 + 1]  = -out[256 + i - oddIndex * 2 + 1];
+              out[evenIndex * 2]     =  out[256 + 2*i - evenIndex * 2] ;
+              out[evenIndex * 2 + 1] = -out[256 + 2*i - evenIndex * 2 + 1];
+              out[oddIndex * 2]      =  out[256 + 2*i - oddIndex * 2];
+              out[oddIndex * 2 + 1]  = -out[256 + 2*i - oddIndex * 2 + 1];
               continue;
             }
 
