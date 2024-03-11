@@ -945,9 +945,12 @@ let tRe61  = ____F[126 + (122)]; let tIm61  = ____F[126 + (123)];
 let tRe62  = - tRe2;             let tIm62  = ____F[126 + (125)];
 let tRe63  = - tRe1;             let tIm63  = ____F[126 + (127)];*/
 
-let map = bitReversalMap1024.get(1024);
+let map = bitReversalMap1024.get(512);
+const N = 512;
+const bits = 9;
+/*let map = bitReversalMap1024.get(1024);
 const N = 1024;
-const bits = 10;
+const bits = 10;*/
 const inputBR = new Float64Array(N);
 const out = new Float64Array(N * 2);
 function fftComplexInPlace_seq_4(realInput) {
@@ -971,8 +974,8 @@ function fftComplexInPlace_seq_4(realInput) {
     // P = 0  -> 4
     //
 
-    
-    for(let idx = 0; idx < 1024; idx+=4){
+    for(let idx = 0; idx < 512; idx+=4){
+    //for(let idx = 0; idx < 1024; idx+=4){
           let x0aRe = inputBR[idx    ];
           let x1aRe = inputBR[idx + 1];
           let x2aRe = inputBR[idx + 2];
@@ -1044,8 +1047,8 @@ function fftComplexInPlace_seq_4(realInput) {
     /////////////////////////////////////////////
     // P = 1  -> 16
     //
-
-    for(let idx = 0; idx < 2048; idx+=32){
+    for(let idx = 0; idx < 1024; idx+=32){
+    //for(let idx = 0; idx < 2048; idx+=32){
           let x0aRe = out[idx     ];
           let x0bRe = out[idx +  2]; 
           let x0bIm = out[idx +  3];
@@ -1138,8 +1141,8 @@ function fftComplexInPlace_seq_4(realInput) {
     /////////////////////////////////////////////
     // P = 2  -> 64
     //
-
-    for(let idx = 0; idx < 2048; idx+=128){
+    for(let idx = 0; idx < 1024; idx+=128){
+    //for(let idx = 0; idx < 2048; idx+=128){
           
           let x0aRe_0 = out[idx       ];
           let x0bRe_0 = out[idx   +  2]; let x0bIm_0 = out[idx   +  3];
@@ -1455,8 +1458,8 @@ function fftComplexInPlace_seq_4(realInput) {
     /////////////////////////////////////////////
     // P = 2.5  -> 128
     //
-        
-            for(let idx = 0; idx < 2048; idx += 256){
+            for(let idx = 0; idx < 1024; idx += 256){
+            //for(let idx = 0; idx < 2048; idx += 256){
                 let oRe0   = out[idx +  128]; 
                 let oIm0  = out[idx +  129];
                 let eRe0   = out[idx +    0]; 
@@ -2036,7 +2039,7 @@ function fftComplexInPlace_seq_4(realInput) {
                 out[idx +  64] =  resRe32_s; 
             }
         
-     
+    
     /////////////////////////////////////////////
     // P = 3  -> 256
     //
@@ -2090,7 +2093,7 @@ function fftComplexInPlace_seq_4(realInput) {
             out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
             out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
         }
-
+/*
         for (let j = 0; j < 128; j++) {
             const evenIndex = 512 + j;
             const oddIndex  = 512 + j + 128;
@@ -2166,7 +2169,7 @@ function fftComplexInPlace_seq_4(realInput) {
             out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
             out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
         }
-
+/*
         for (let j = 0; j < 256; j++) {
             const evenIndex = 512 + j;
             const oddIndex  = 512 + j + 256;
@@ -2187,7 +2190,7 @@ function fftComplexInPlace_seq_4(realInput) {
             out[oddIndex * 2]      = evenPartRe - twiddledOddRe;
             out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
         }
-
+/*
     /////////////////////////////////////////////
     // P = 5  -> 1024
     //
@@ -2221,9 +2224,9 @@ function fftComplexInPlace_seq_4(realInput) {
             out[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
         }
 
-
     return out;
 }
+*/
 
 //  1  2| 3  4| 5  6
 //------------------  
@@ -2788,8 +2791,8 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
 
                 //if(size==2||size==8){ console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} + ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[evenIndex * 2].toFixed(2)); }
                 //if(size==2||size==8){ console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} - ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[oddIndex * 2].toFixed(2)); }
-                if(size==128){ console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} + ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[evenIndex * 2].toFixed(2)); }
-                if(size==128){ console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} - ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[oddIndex * 2].toFixed(2)); }
+                //if(size==128){ console.log(evenIndex, ".re =", "[",evenIndex,"].re + ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} + ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[evenIndex * 2].toFixed(2)); }
+                //if(size==128){ console.log(oddIndex,  ".re =", "[",evenIndex,"].re - ([",oddIndex,"].re * t[",j,"].re - [",oddIndex,"].im * t[",j,"].im ) <-> ", "{",eRe.toFixed(2),"} - ({",oRe.toFixed(2),"} * t{",twiddleRe.toFixed(2),"} - {",oIm.toFixed(2),"} * {",twiddleIm.toFixed(2),"} ) = ",out[oddIndex * 2].toFixed(2)); }
 
             }
         }
@@ -3066,15 +3069,17 @@ function compareFFTResults(array1, array2) {
 }
 
 /****************** TEST SPEED *******************/ 
-
+/*
 measureTime(1024);
 measureTime(1024);
 measureTime(1024);
 measureTime(1024);
-measureTime(1024);
-//measureTime(512,5);
-//measureTime(512,6);
-//measureTime(512,7);
+measureTime(1024);*/
+measureTime(512);
+measureTime(512);
+measureTime(512);
+measureTime(512);
+measureTime(512);
 //measureTime(1024);
 //measureTime(2048);
 //measureTime(4096);
@@ -3103,8 +3108,8 @@ const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.
 const signal4 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
 const signal5 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
 
-
-console.log("1024:  ",compareFFTResults(fftRealInPlace_ref(testData1024),fftComplexInPlace_seq_4(testData1024)));
+console.log("512:  ",compareFFTResults(fftRealInPlace_ref(testData512),fftComplexInPlace_seq_4(testData512)));
+//console.log("1024:  ",compareFFTResults(fftRealInPlace_ref(testData1024),fftComplexInPlace_seq_4(testData1024)));
 
 /*
 console.log(signal1);
@@ -3119,6 +3124,7 @@ console.log(computeInverseFFT(computeFFT(signal3)));
 
 
 //console.log(fftRealInPlace_ref(testData256));
-console.log(fftComplexInPlace_seq_4(testData1024));
+console.log(fftComplexInPlace_seq_4(testData512));
+//console.log(fftComplexInPlace_seq_4(testData1024));
 
 
