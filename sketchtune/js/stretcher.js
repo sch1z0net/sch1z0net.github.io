@@ -884,9 +884,9 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, windowType, h
         const preSpectrogram = await STFTWithWebWorkers(inputSignal, windowSize, hopSize, 1, halfSpec);
         const endTime1 = performance.now();
 
-        /*const startTime2 = performance.now();
+        const startTime2 = performance.now();
         const postSpectrogram = await stretchSpectrogram(preSpectrogram, stretchFactor);
-        const endTime2 = performance.now();*/
+        const endTime2 = performance.now();
        
         const postSpectrogram = preSpectrogram;
 
@@ -894,12 +894,12 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, windowType, h
         const processedSignal = await ISTFTWithWebWorkers(preSpectrogram, windowSize, hopSize, windowType, halfSpec);
         const endTime3 = performance.now();
 
-        /*
+        
         if(ch == 0){
             console.log(`CH ${ch}: Calculating the Spectrogram: Elapsed time: ${endTime1 - startTime1} milliseconds`);
             console.log(`CH ${ch}: Now Stretching the Spectrogram: Elapsed time: ${endTime2 - startTime2} milliseconds`);
             console.log(`CH ${ch}: Now Reconstructing the Audio Signal: Elapsed time: ${endTime3 - startTime3} milliseconds`);
-        }*/
+        }
 
         return {processedSignal, preSpectrogram, postSpectrogram};
     } catch (error) {
