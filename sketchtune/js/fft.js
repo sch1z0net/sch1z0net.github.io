@@ -2668,7 +2668,7 @@ function computeFFTFactorsWithCache(N) {
     return fftFactorCacheRADIX2[N];
 }
 
-function fftComplexInPlace_ref(complexInput, fftFactorLookup = null) {
+function fftComplexInPlace_ref(complexInput) {
     const N = complexInput.length / 2;
     const bits = Math.floor(Math.log2(N));
 
@@ -2796,11 +2796,11 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
 
             }
         }
-        if(size==256){
+        /*if(size==256){
             for(let i=0; i<N; i++){
                 console.log("after size: ",size," : ",i," -> ", out[i*2], out[i*2+1]); 
             }
-        }
+        }*/
         //console.log("size:"+size, output);
         //console.log("size:"+size, js);
         //js = [];
@@ -2837,7 +2837,8 @@ function prepare_and_fft(inputSignal, fftFactorLookup=null) {
     // Perform FFT
     //return fftRealInPlace_ref(paddedInput);
     //return fftRealInPlaceRADIX2(paddedInput);
-    return fftRealInPlaceRADIX4(paddedInput);
+    //return fftRealInPlaceRADIX4(paddedInput);
+    return fftComplexInPlace_seq_4(paddedInput);
 }
 
 
@@ -2897,8 +2898,8 @@ function ifft(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    //const fftResult = fftComplexInPlace_ref(conjugateSpectrum);
-    const fftResult = fftComplexInPlaceRADIX4(conjugateSpectrum);
+    const fftResult = fftComplexInPlace_ref(conjugateSpectrum);
+    //const fftResult = fftComplexInPlaceRADIX4(conjugateSpectrum);
 
     // Take the complex conjugate of the FFT result and scale by 1/N
     const ifftResult = new Float32Array(N * 2);
@@ -3008,6 +3009,7 @@ const generateTestData = (size) => {
     return testData;
 };
 
+/*
 const testData8    = generateTestData(8);
 const testData16   = generateTestData(16);
 const testData32   = generateTestData(32);
@@ -3018,6 +3020,7 @@ const testData512  = generateTestData(512);
 const testData1024 = generateTestData(1024);
 const testData2048 = generateTestData(2048);
 const testData4096 = generateTestData(4096);
+*/
 
 // Perform FFT operations
 const performFFTOperations = (fftSize) => {
@@ -3075,11 +3078,11 @@ measureTime(1024);
 measureTime(1024);
 measureTime(1024);
 measureTime(1024);*/
+/*measureTime(512);
 measureTime(512);
 measureTime(512);
 measureTime(512);
-measureTime(512);
-measureTime(512);
+measureTime(512);*/
 //measureTime(1024);
 //measureTime(2048);
 //measureTime(4096);
@@ -3101,14 +3104,15 @@ console.log("4096: ",compareFFTResults(fftRealInPlace_ref(testData4096),fftRealI
 */
 
 /****************** TEST IF FFT AND IFFT RETURN ORIGINAL SIGNAL *******************/ 
-
+/*
 const signal1 = [ 1.0, 0.4, 0.0, 0.2 ];
 const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5 ];
 const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
 const signal4 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
 const signal5 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
+*/
 
-console.log("512:  ",compareFFTResults(fftRealInPlace_ref(testData512),fftComplexInPlace_seq_4(testData512)));
+//console.log("512:  ",compareFFTResults(fftRealInPlace_ref(testData512),fftComplexInPlace_seq_4(testData512)));
 //console.log("1024:  ",compareFFTResults(fftRealInPlace_ref(testData1024),fftComplexInPlace_seq_4(testData1024)));
 
 /*
@@ -3124,7 +3128,7 @@ console.log(computeInverseFFT(computeFFT(signal3)));
 
 
 //console.log(fftRealInPlace_ref(testData256));
-console.log(fftComplexInPlace_seq_4(testData512));
+//console.log(fftComplexInPlace_seq_4(testData512));
 //console.log(fftComplexInPlace_seq_4(testData1024));
 
 
