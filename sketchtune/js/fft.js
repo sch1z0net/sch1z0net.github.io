@@ -1871,10 +1871,10 @@ function fftComplexInPlace_seq_4(out) {
                 out[idx + 67] = resIm33_s;
                 out[idx + 191] = -resIm33_s;
 
-                let resRe32_s = eRe32 + (oRe32 * tRe32 - oIm32 * tRe0);
+                let resRe32_s = eRe32 + (oRe32 * tRe0 - oIm32 * tRe0);
                 out[idx +  64] =  resRe32_s; 
                 out[idx + 192] =  resRe32_s;
-                let resIm32_s = eIm32 + (oRe32 * tRe0 + oIm32 * tRe32);
+                let resIm32_s = eIm32 + (oRe32 * tRe0 + oIm32 * tRe0);
                 out[idx +  65] =  resIm32_s;
                 out[idx + 193] = -resIm32_s;
 
