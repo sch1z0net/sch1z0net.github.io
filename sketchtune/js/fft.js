@@ -1448,13 +1448,13 @@ function fftComplexInPlace_seq_4(out) {
                 let eRe42 = eRe22;           let eIm42 = -eIm22;
                 let eRe41 = eRe23;           let eIm41 = -eIm23;
                 let eRe40 = eRe24;           let eIm40 = -eIm24;
-                let eRe39 = eRe23;           let eIm39 = -eIm23;
-                let eRe38 = eRe22;           let eIm38 = -eIm22;
-                let eRe37 = eRe21;           let eIm37 = -eIm21;
-                let eRe36 = eRe20;           let eIm36 = -eIm20;
-                let eRe35 = eRe19;           let eIm35 = -eIm19;
-                let eRe34 = eRe18;           let eIm34 = -eIm18;
-                let eRe33 = eRe17;           let eIm33 = -eIm17;
+                let eRe39 = eRe25;           let eIm39 = -eIm25;
+                let eRe38 = eRe26;           let eIm38 = -eIm26;
+                let eRe37 = eRe27;           let eIm37 = -eIm27;
+                let eRe36 = eRe28;           let eIm36 = -eIm28;
+                let eRe35 = eRe29;           let eIm35 = -eIm29;
+                let eRe34 = eRe30;           let eIm34 = -eIm30;
+                let eRe33 = eRe31;           let eIm33 = -eIm31;
 
                 let oRe0   = out[idx +  128]; let oIm0  = out[idx +  129];
                 let oRe1   = out[idx +  130]; let oIm1  = out[idx +  131];
