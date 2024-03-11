@@ -1390,91 +1390,167 @@ function fftComplexInPlace_seq_4(out) {
                 let oRe14 = out[idx +  156]; let oIm14 = out[idx +  157];
                 let oRe15 = out[idx +  158]; let oIm15 = out[idx +  159];
 
+                let resRe0_s = eRe0 + (oRe0 * tRe0 - oIm0 * tIm0);
+                let resIm0_s = eIm0 + (oRe0 * tIm0 + oIm0 * tRe0);
+                let resRe0_d = eRe0 - (oRe0 * tRe0 - oIm0 * tIm0);
+                let resIm0_d = eIm0 - (oRe0 * tIm0 + oIm0 * tRe0);
 
-                out[idx +   0] = eRe0 + (oRe0 * tRe0 - oIm0 * tIm0);
-                out[idx +   1] = eIm0 + (oRe0 * tIm0 + oIm0 * tRe0);
-                out[idx +  64] = eRe0 - (oRe0 * tRe0 - oIm0 * tIm0);
-                out[idx +  65] = eIm0 - (oRe0 * tIm0 + oIm0 * tRe0);
+                let resRe1_s = eRe1 + (oRe1 * tRe1 - oIm1 * tIm1);
+                let resIm1_s = eIm1 + (oRe1 * tIm1 + oIm1 * tRe1);
+                let resRe1_d = eRe1 - (oRe1 * tRe1 - oIm1 * tIm1);
+                let resIm1_d = eIm1 - (oRe1 * tIm1 + oIm1 * tRe1);
 
-                out[idx +   2] = eRe1 + (oRe1 * tRe1 - oIm1 * tIm1);
-                out[idx +   3] = eIm1 + (oRe1 * tIm1 + oIm1 * tRe1);
-                out[idx +  66] = eRe1 - (oRe1 * tRe1 - oIm1 * tIm1);
-                out[idx +  67] = eIm1 - (oRe1 * tIm1 + oIm1 * tRe1);
+                let resRe2_s = eRe2 + (oRe2 * tRe2 - oIm2 * tIm2);
+                let resIm2_s = eIm2 + (oRe2 * tIm2 + oIm2 * tRe2);
+                let resRe2_d = eRe2 - (oRe2 * tRe2 - oIm2 * tIm2);
+                let resIm2_d = eIm2 - (oRe2 * tIm2 + oIm2 * tRe2);
 
-                out[idx +   4] = eRe2 + (oRe2 * tRe2 - oIm2 * tIm2);
-                out[idx +   5] = eIm2 + (oRe2 * tIm2 + oIm2 * tRe2);
-                out[idx +  68] = eRe2 - (oRe2 * tRe2 - oIm2 * tIm2);
-                out[idx +  69] = eIm2 - (oRe2 * tIm2 + oIm2 * tRe2);
+                let resRe3_s = eRe3 + (oRe3 * tRe3 - oIm3 * tIm3);
+                let resIm3_s = eIm3 + (oRe3 * tIm3 + oIm3 * tRe3);
+                let resRe3_d = eRe3 - (oRe3 * tRe3 - oIm3 * tIm3);
+                let resIm3_d = eIm3 - (oRe3 * tIm3 + oIm3 * tRe3);
 
-                out[idx +   6] = eRe3 + (oRe3 * tRe3 - oIm3 * tIm3);
-                out[idx +   7] = eIm3 + (oRe3 * tIm3 + oIm3 * tRe3);
-                out[idx +  70] = eRe3 - (oRe3 * tRe3 - oIm3 * tIm3);
-                out[idx +  71] = eIm3 - (oRe3 * tIm3 + oIm3 * tRe3);
+                let resRe4_s = eRe4 + (oRe4 * tRe4 - oIm4 * tIm4);
+                let resIm4_s = eIm4 + (oRe4 * tIm4 + oIm4 * tRe4);
+                let resRe4_d = eRe4 - (oRe4 * tRe4 - oIm4 * tIm4);
+                let resIm4_d = eIm4 - (oRe4 * tIm4 + oIm4 * tRe4);
 
-                out[idx +   8] = eRe4 + (oRe4 * tRe4 - oIm4 * tIm4);
-                out[idx +   9] = eIm4 + (oRe4 * tIm4 + oIm4 * tRe4);
-                out[idx +  72] = eRe4 - (oRe4 * tRe4 - oIm4 * tIm4);
-                out[idx +  73] = eIm4 - (oRe4 * tIm4 + oIm4 * tRe4);
+                let resRe5_s = eRe5 + (oRe5 * tRe5 - oIm5 * tIm5);
+                let resIm5_s = eIm5 + (oRe5 * tIm5 + oIm5 * tRe5);
+                let resRe5_d = eRe5 - (oRe5 * tRe5 - oIm5 * tIm5);
+                let resIm5_d = eIm5 - (oRe5 * tIm5 + oIm5 * tRe5);
 
-                out[idx +  10] = eRe5 + (oRe5 * tRe5 - oIm5 * tIm5);
-                out[idx +  11] = eIm5 + (oRe5 * tIm5 + oIm5 * tRe5);
-                out[idx +  74] = eRe5 - (oRe5 * tRe5 - oIm5 * tIm5);
-                out[idx +  75] = eIm5 - (oRe5 * tIm5 + oIm5 * tRe5);
+                let resRe6_s = eRe6 + (oRe6 * tRe6 - oIm6 * tIm6);
+                let resIm6_s = eIm6 + (oRe6 * tIm6 + oIm6 * tRe6);
+                let resRe6_d = eRe6 - (oRe6 * tRe6 - oIm6 * tIm6);
+                let resIm6_d = eIm6 - (oRe6 * tIm6 + oIm6 * tRe6);
 
-                out[idx +  12] = eRe6 + (oRe6 * tRe6 - oIm6 * tIm6);
-                out[idx +  13] = eIm6 + (oRe6 * tIm6 + oIm6 * tRe6);
-                out[idx +  76] = eRe6 - (oRe6 * tRe6 - oIm6 * tIm6);
-                out[idx +  77] = eIm6 - (oRe6 * tIm6 + oIm6 * tRe6);
+                let resRe7_s = eRe7 + (oRe7 * tRe7 - oIm7 * tIm7);
+                let resIm7_s = eIm7 + (oRe7 * tIm7 + oIm7 * tRe7);
+                let resRe7_d = eRe7 - (oRe7 * tRe7 - oIm7 * tIm7);
+                let resIm7_d = eIm7 - (oRe7 * tIm7 + oIm7 * tRe7);
 
-                out[idx +  14] = eRe7 + (oRe7 * tRe7 - oIm7 * tIm7);
-                out[idx +  15] = eIm7 + (oRe7 * tIm7 + oIm7 * tRe7);
-                out[idx +  78] = eRe7 - (oRe7 * tRe7 - oIm7 * tIm7);
-                out[idx +  79] = eIm7 - (oRe7 * tIm7 + oIm7 * tRe7);
+                let resRe8_s = eRe8 + (oRe8 * tRe8 - oIm8 * tIm8);
+                let resIm8_s = eIm8 + (oRe8 * tIm8 + oIm8 * tRe8);
+                let resRe8_d = eRe8 - (oRe8 * tRe8 - oIm8 * tIm8);
+                let resIm8_d = eIm8 - (oRe8 * tIm8 + oIm8 * tRe8);
 
-                out[idx +  16] = eRe8 + (oRe8 * tRe8 - oIm8 * tIm8);
-                out[idx +  17] = eIm8 + (oRe8 * tIm8 + oIm8 * tRe8);
-                out[idx +  80] = eRe8 - (oRe8 * tRe8 - oIm8 * tIm8);
-                out[idx +  81] = eIm8 - (oRe8 * tIm8 + oIm8 * tRe8);
+                let resRe9_s = eRe9 + (oRe9 * tRe9 - oIm9 * tIm9);
+                let resIm9_s = eIm9 + (oRe9 * tIm9 + oIm9 * tRe9);
+                let resRe9_d = eRe9 - (oRe9 * tRe9 - oIm9 * tIm9);
+                let resIm9_d = eIm9 - (oRe9 * tIm9 + oIm9 * tRe9);
 
-                out[idx +  18] = eRe9 + (oRe9 * tRe9 - oIm9 * tIm9);
-                out[idx +  19] = eIm9 + (oRe9 * tIm9 + oIm9 * tRe9);
-                out[idx +  82] = eRe9 - (oRe9 * tRe9 - oIm9 * tIm9);
-                out[idx +  83] = eIm9 - (oRe9 * tIm9 + oIm9 * tRe9);
+                let resRe10_s = eRe10 + (oRe10 * tRe10 - oIm10 * tIm10);
+                let resIm10_s = eIm10 + (oRe10 * tIm10 + oIm10 * tRe10);
+                let resRe10_d = eRe10 - (oRe10 * tRe10 - oIm10 * tIm10);
+                let resIm10_d = eIm10 - (oRe10 * tIm10 + oIm10 * tRe10);
 
-                out[idx +  20] = eRe10 + (oRe10 * tRe10 - oIm10 * tIm10);
-                out[idx +  21] = eIm10 + (oRe10 * tIm10 + oIm10 * tRe10);
-                out[idx +  84] = eRe10 - (oRe10 * tRe10 - oIm10 * tIm10);
-                out[idx +  85] = eIm10 - (oRe10 * tIm10 + oIm10 * tRe10);
+                let resRe11_s = eRe11 + (oRe11 * tRe11 - oIm11 * tIm11);
+                let resIm11_s = eIm11 + (oRe11 * tIm11 + oIm11 * tRe11);
+                let resRe11_d = eRe11 - (oRe11 * tRe11 - oIm11 * tIm11);
+                let resIm11_d = eIm11 - (oRe11 * tIm11 + oIm11 * tRe11);
 
-                out[idx +  22] = eRe11 + (oRe11 * tRe11 - oIm11 * tIm11);
-                out[idx +  23] = eIm11 + (oRe11 * tIm11 + oIm11 * tRe11);
-                out[idx +  86] = eRe11 - (oRe11 * tRe11 - oIm11 * tIm11);
-                out[idx +  87] = eIm11 - (oRe11 * tIm11 + oIm11 * tRe11);
+                let resRe12_s = eRe12 + (oRe12 * tRe12 - oIm12 * tIm12);
+                let resIm12_s = eIm12 + (oRe12 * tIm12 + oIm12 * tRe12);
+                let resRe12_d = eRe12 - (oRe12 * tRe12 - oIm12 * tIm12);
+                let resIm12_d = eIm12 - (oRe12 * tIm12 + oIm12 * tRe12);
 
-                out[idx +  24] = eRe12 + (oRe12 * tRe12 - oIm12 * tIm12);
-                out[idx +  25] = eIm12 + (oRe12 * tIm12 + oIm12 * tRe12);
-                out[idx +  88] = eRe12 - (oRe12 * tRe12 - oIm12 * tIm12);
-                out[idx +  89] = eIm12 - (oRe12 * tIm12 + oIm12 * tRe12);
+                let resRe13_s = eRe13 + (oRe13 * tRe13 - oIm13 * tIm13);
+                let resIm13_s = eIm13 + (oRe13 * tIm13 + oIm13 * tRe13);
+                let resRe13_d = eRe13 - (oRe13 * tRe13 - oIm13 * tIm13);
+                let resIm13_d = eIm13 - (oRe13 * tIm13 + oIm13 * tRe13);
 
-                out[idx +  26] = eRe13 + (oRe13 * tRe13 - oIm13 * tIm13);
-                out[idx +  27] = eIm13 + (oRe13 * tIm13 + oIm13 * tRe13);
-                out[idx +  90] = eRe13 - (oRe13 * tRe13 - oIm13 * tIm13);
-                out[idx +  91] = eIm13 - (oRe13 * tIm13 + oIm13 * tRe13);
+                let resRe14_s = eRe14 + (oRe14 * tRe14 - oIm14 * tIm14);
+                let resIm14_s = eIm14 + (oRe14 * tIm14 + oIm14 * tRe14);
+                let resRe14_d = eRe14 - (oRe14 * tRe14 - oIm14 * tIm14);
+                let resIm14_d = eIm14 - (oRe14 * tIm14 + oIm14 * tRe14);
 
-                out[idx +  28] = eRe14 + (oRe14 * tRe14 - oIm14 * tIm14);
-                out[idx +  29] = eIm14 + (oRe14 * tIm14 + oIm14 * tRe14);
-                out[idx +  92] = eRe14 - (oRe14 * tRe14 - oIm14 * tIm14);
-                out[idx +  93] = eIm14 - (oRe14 * tIm14 + oIm14 * tRe14);
+                let resRe15_s = eRe15 + (oRe15 * tRe15 - oIm15 * tIm15);
+                let resIm15_s = eIm15 + (oRe15 * tIm15 + oIm15 * tRe15);
+                let resRe15_d = eRe15 - (oRe15 * tRe15 - oIm15 * tIm15);
+                let resIm15_d = eIm15 - (oRe15 * tIm15 + oIm15 * tRe15);
 
-                out[idx +  30] = eRe15 + (oRe15 * tRe15 - oIm15 * tIm15);
-                out[idx +  31] = eIm15 + (oRe15 * tIm15 + oIm15 * tRe15);
-                out[idx +  94] = eRe15 - (oRe15 * tRe15 - oIm15 * tIm15);
-                out[idx +  95] = eIm15 - (oRe15 * tIm15 + oIm15 * tRe15);
+                out[idx +   0] = resRe0_s; 
+                out[idx +   1] = resIm0_s;
+                out[idx + 128] = resRe0_d;
+                out[idx + 129] = resIm0_d;
+
+                out[idx +   2] = resRe1_s;
+                out[idx +   3] = resIm1_s;
+                out[idx + 130] = resRe1_d;
+                out[idx + 131] = resIm1_d;
+
+                out[idx +   4] = resRe2_s;
+                out[idx +   5] = resIm2_s;
+                out[idx + 132] = resRe2_d;
+                out[idx + 133] = resIm2_d;
+
+                out[idx +   6] = resRe3_s;
+                out[idx +   7] = resIm3_s;
+                out[idx + 134] = resRe3_d;
+                out[idx + 135] = resIm3_d;
+
+                out[idx +   8] = resRe4_s;
+                out[idx +   9] = resIm4_s;
+                out[idx + 136] = resRe4_d;
+                out[idx + 137] = resIm4_d;
+
+                out[idx +  10] = resRe5_s;
+                out[idx +  11] = resIm5_s;
+                out[idx + 138] = resRe5_d;
+                out[idx + 139] = resIm5_d;
+
+                out[idx +  12] = resRe6_s;
+                out[idx +  13] = resIm6_s;
+                out[idx + 140] = resRe6_d;
+                out[idx + 141] = resIm6_d;
+
+                out[idx +  14] = resRe7_s;
+                out[idx +  15] = resIm7_s;
+                out[idx + 142] = resRe7_d;
+                out[idx + 143] = resIm7_d;
+
+                out[idx +  16] = resRe8_s;
+                out[idx +  17] = resIm8_s;
+                out[idx + 144] = resRe8_d;
+                out[idx + 145] = resIm8_d;
+
+                out[idx +  18] = resRe9_s;
+                out[idx +  19] = resIm9_s;
+                out[idx + 146] = resRe9_d;
+                out[idx + 147] = resIm9_d;
+
+                out[idx +  20] = resRe10_s;
+                out[idx +  21] = resIm10_s;
+                out[idx + 148] = resRe10_d;
+                out[idx + 149] = resIm10_d;
+
+                out[idx +  22] = resRe11_s;
+                out[idx +  23] = resIm11_s;
+                out[idx + 150] = resRe11_d;
+                out[idx + 151] = resIm11_d;
+
+                out[idx +  24] = resRe12_s;
+                out[idx +  25] = resIm12_s;
+                out[idx + 152] = resRe12_d;
+                out[idx + 153] = resIm12_d;
+
+                out[idx +  26] = resRe13_s;
+                out[idx +  27] = resIm13_s;
+                out[idx + 154] = resRe13_d;
+                out[idx + 155] = resIm13_d;
+
+                out[idx +  28] = resRe14_s;
+                out[idx +  29] = resIm14_s;
+                out[idx + 156] = resRe14_d;
+                out[idx + 157] = resIm14_d;
+
+                out[idx +  30] = resRe15_s;
+                out[idx +  31] = resIm15_s;
+                out[idx + 158] = resRe15_d;
+                out[idx + 159] = resIm15_d;
 
             }
-
-
-
 
 /*
         for (let j = quarterSize+1; j < halfSize; j++) {
@@ -2663,11 +2739,11 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
 
             }
         }
-        /*if(size==128){ 
+        if(size==128){
             for(let i=0; i<N; i++){
                 console.log("after size: ",size," : ",i," -> ", out[i*2], out[i*2+1]); 
             }
-        }*/
+        }
         //console.log("size:"+size, output);
         //console.log("size:"+size, js);
         //js = [];
