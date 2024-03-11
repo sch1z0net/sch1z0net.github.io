@@ -2852,12 +2852,12 @@ function FFT(inputSignal) {
 function computeFFT(frame, frameID, frames) {
     // Perform FFT on the frame (you can use your FFT implementation here)
     // For simplicity, let's assume computeFFT returns the magnitude spectrum
-    //const startTime = performance.now();
+    const startTime = performance.now();
     const spectrum = FFT(frame);
-    //const endTime = performance.now();
-    //const elapsedTime = endTime - startTime;
-    //console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);
-
+    const endTime = performance.now();
+    const elapsedTime = endTime - startTime;
+    console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);
+    
     // Convert the Float32Array spectrum back to a complex array
     const complexSpectrum = [];
     for (let i = 0; i < spectrum.length; i += 2) {
@@ -2865,11 +2865,11 @@ function computeFFT(frame, frameID, frames) {
         //if(Number.isNaN(spectrum[i])){ console.error("spectrum[",i,"] is NaN"); }
         //if(Number.isNaN(spectrum[i+1])){ console.error("spectrum[",i+1,"] is NaN"); }
     }
-
-    //const endTime2 = performance.now();
-    //const elapsedTime2 = endTime2 - startTime;
-    //console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time 2: ${elapsedTime2} milliseconds`);
-
+    
+    const endTime2 = performance.now();
+    const elapsedTime2 = endTime2 - startTime;
+    console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time 2: ${elapsedTime2} milliseconds`);
+    
     return complexSpectrum;
 }
 
