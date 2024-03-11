@@ -2045,7 +2045,7 @@ function fftComplexInPlace_seq_4(realInput) {
             const evenIndex = j;
             const oddIndex  = j + 128;
 
-            if(j >= 64){
+            if(j > 64){
               out[evenIndex * 2]     =  out[512 - evenIndex * 2] ;
               out[evenIndex * 2 + 1] = -out[512 - evenIndex * 2 + 1];
               out[oddIndex * 2]      =  out[512 - oddIndex * 2];
