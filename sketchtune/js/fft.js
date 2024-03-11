@@ -1373,22 +1373,22 @@ function fftComplexInPlace_seq_4(out) {
                 let eRe14 = out[   28]; let eIm14 = out[   29];
                 let eRe15 = out[   30]; let eIm15 = out[   31];
 
-                let oRe0  = out[   64]; let oIm0  = out[   65];
-                let oRe1  = out[   66]; let oIm1  = out[   67];
-                let oRe2  = out[   68]; let oIm2  = out[   69];
-                let oRe3  = out[   70]; let oIm3  = out[   71];
-                let oRe4  = out[   72]; let oIm4  = out[   73];
-                let oRe5  = out[   74]; let oIm5  = out[   75];
-                let oRe6  = out[   76]; let oIm6  = out[   77];
-                let oRe7  = out[   78]; let oIm7  = out[   79];
-                let oRe8  = out[   80]; let oIm8  = out[   81];
-                let oRe9  = out[   82]; let oIm9  = out[   83];
-                let oRe10 = out[   84]; let oIm10 = out[   85];
-                let oRe11 = out[   86]; let oIm11 = out[   87];
-                let oRe12 = out[   88]; let oIm12 = out[   89];
-                let oRe13 = out[   90]; let oIm13 = out[   91];
-                let oRe14 = out[   92]; let oIm14 = out[   93];
-                let oRe15 = out[   94]; let oIm15 = out[   95];
+                let oRe0  = out[  128]; let oIm0  = out[  129];
+                let oRe1  = out[  130]; let oIm1  = out[  131];
+                let oRe2  = out[  132]; let oIm2  = out[  133];
+                let oRe3  = out[  134]; let oIm3  = out[  135];
+                let oRe4  = out[  136]; let oIm4  = out[  137];
+                let oRe5  = out[  138]; let oIm5  = out[  139];
+                let oRe6  = out[  140]; let oIm6  = out[  141];
+                let oRe7  = out[  142]; let oIm7  = out[  143];
+                let oRe8  = out[  144]; let oIm8  = out[  145];
+                let oRe9  = out[  146]; let oIm9  = out[  147];
+                let oRe10 = out[  148]; let oIm10 = out[  149];
+                let oRe11 = out[  150]; let oIm11 = out[  151];
+                let oRe12 = out[  152]; let oIm12 = out[  153];
+                let oRe13 = out[  154]; let oIm13 = out[  155];
+                let oRe14 = out[  156]; let oIm14 = out[  157];
+                let oRe15 = out[  158]; let oIm15 = out[  159];
 
                 out[  0] = eRe0 + (oRe0 * tRe0 - oIm0 * tIm0);
                 out[  1] = eIm0 + (oRe0 * tIm0 + oIm0 * tRe0);
