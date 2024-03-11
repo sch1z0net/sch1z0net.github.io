@@ -987,6 +987,7 @@ function fftComplexInPlace_seq_4(realInput) {
           out[2*idx  +  7] = -x2aRe + x3aRe;
     }
 
+/*
     for (let idx = 0; idx < 2048; idx += 32) {
     // Unrolled loop iteration 1
     let x0aRe_1 = out[idx];
@@ -1037,12 +1038,13 @@ function fftComplexInPlace_seq_4(realInput) {
     out[idx + 27] = x2aRe_4 - x3aRe_4;
     out[idx + 31] = -x2aRe_4 + x3aRe_4;
 }
+*/
 
 
     /////////////////////////////////////////////
     // P = 1  -> 16
     //
-/*
+
     for(let idx = 0; idx < 2048; idx+=32){
           let x0aRe = out[idx     ];
           let x0bRe = out[idx +  2]; 
@@ -1131,7 +1133,7 @@ function fftComplexInPlace_seq_4(realInput) {
           out[idx +  23] =   resImD2;  
           out[idx +  11] = - resImD2; 
     }
-*/
+
 /*
     /////////////////////////////////////////////
     // P = 2  -> 64
