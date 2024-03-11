@@ -1348,10 +1348,10 @@ function fftComplexInPlace_seq_4(out) {
                 let  t_oRe = oRe * tRe - oIm * tIm;
                 let  t_oIm = oRe * tIm + oIm * tRe;
 
-                out[evenIndex * 2]     = eRe + t_oRe;
-                out[evenIndex * 2 + 1] = eIm + t_oIm;
-                out[oddIndex * 2]      = eRe - t_oRe;
-                out[oddIndex * 2 + 1]  = eIm - t_oIm;
+                out[eI * 2]     = eRe + t_oRe;
+                out[eI * 2 + 1] = eIm + t_oIm;
+                out[oI * 2]      = eRe - t_oRe;
+                out[oI * 2 + 1]  = eIm - t_oIm;
             }
         }
 
