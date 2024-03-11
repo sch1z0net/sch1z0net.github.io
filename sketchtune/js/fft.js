@@ -1389,8 +1389,6 @@ function fftComplexInPlace_seq_4(out) {
         }*/
         
 
-
-
             for(let idx = 0; idx < 2048; idx += 256){
                 let eRe0   = out[idx +    0]; let eIm0  = out[idx +    1];
                 let eRe1   = out[idx +    2]; let eIm1  = out[idx +    3];
@@ -1425,37 +1423,38 @@ function fftComplexInPlace_seq_4(out) {
                 let eRe30  = out[idx +   60]; let eIm30 = out[idx +   61];
                 let eRe31  = out[idx +   62]; let eIm31 = out[idx +   63];
                 let eRe32  = out[idx +   64]; let eIm32 = out[idx +   65];
-                let eRe33  = out[idx +   66]; let eIm33 = out[idx +   67];
-                let eRe34  = out[idx +   68]; let eIm34 = out[idx +   69];
-                let eRe35  = out[idx +   70]; let eIm35 = out[idx +   71];
-                let eRe36  = out[idx +   72]; let eIm36 = out[idx +   73];
-                let eRe37  = out[idx +   74]; let eIm37 = out[idx +   75];
-                let eRe38  = out[idx +   76]; let eIm38 = out[idx +   77];
-                let eRe39  = out[idx +   78]; let eIm39 = out[idx +   79];
-                let eRe40  = out[idx +   80]; let eIm40 = out[idx +   81];
-                let eRe41  = out[idx +   82]; let eIm41 = out[idx +   83];
-                let eRe42  = out[idx +   84]; let eIm42 = out[idx +   85];
-                let eRe43  = out[idx +   86]; let eIm43 = out[idx +   87];
-                let eRe44  = out[idx +   88]; let eIm44 = out[idx +   89];
-                let eRe45  = out[idx +   90]; let eIm45 = out[idx +   91];
-                let eRe46  = out[idx +   92]; let eIm46 = out[idx +   93];
-                let eRe47  = out[idx +   94]; let eIm47 = out[idx +   95];
-                let eRe48  = out[idx +   96]; let eIm48 = out[idx +   97];
-                let eRe49  = out[idx +   98]; let eIm49 = out[idx +   99];
-                let eRe50  = out[idx +  100]; let eIm50 = out[idx +  101];
-                let eRe51  = out[idx +  102]; let eIm51 = out[idx +  103];
-                let eRe52  = out[idx +  104]; let eIm52 = out[idx +  105];
-                let eRe53  = out[idx +  106]; let eIm53 = out[idx +  107];
-                let eRe54  = out[idx +  108]; let eIm54 = out[idx +  109];
-                let eRe55  = out[idx +  110]; let eIm55 = out[idx +  111];
-                let eRe56  = out[idx +  112]; let eIm56 = out[idx +  113];
-                let eRe57  = out[idx +  114]; let eIm57 = out[idx +  115];
-                let eRe58  = out[idx +  116]; let eIm58 = out[idx +  117];
-                let eRe59  = out[idx +  118]; let eIm59 = out[idx +  119];
-                let eRe60  = out[idx +  120]; let eIm60 = out[idx +  121];
-                let eRe61  = out[idx +  122]; let eIm61 = out[idx +  123];
-                let eRe62  = out[idx +  124]; let eIm62 = out[idx +  125];
-                let eRe63  = out[idx +  126]; let eIm63 = out[idx +  127];
+
+                let eRe63  = eRe1;           let eIm63 = -eIm1;
+                let eRe62  = eRe2;           let eIm62 = -eIm2;
+                let eRe61  = eRe3;           let eIm61 = -eIm3;
+                let eRe60 = eRe4;            let eIm60 = -eIm4;
+                let eRe59 = eRe5;            let eIm59 = -eIm5;
+                let eRe58 = eRe6;            let eIm58 = -eIm6;
+                let eRe57 = eRe7;            let eIm57 = -eIm7;
+                let eRe56 = eRe8;            let eIm56 = -eIm8;
+                let eRe55 = eRe9;            let eIm55 = -eIm9;
+                let eRe54 = eRe10;           let eIm54 = -eIm10;
+                let eRe53 = eRe11;           let eIm53 = -eIm11;
+                let eRe52 = eRe12;           let eIm52 = -eIm12;
+                let eRe51 = eRe13;           let eIm51 = -eIm13;
+                let eRe50 = eRe14;           let eIm50 = -eIm14;
+                let eRe49 = eRe15;           let eIm49 = -eIm15;
+                let eRe48 = eRe16;           let eIm48 = -eIm16;
+                let eRe47 = eRe17;           let eIm47 = -eIm17;
+                let eRe46 = eRe18;           let eIm46 = -eIm18;
+                let eRe45 = eRe19;           let eIm45 = -eIm19;
+                let eRe44 = eRe20;           let eIm44 = -eIm20;
+                let eRe43 = eRe21;           let eIm43 = -eIm21;
+                let eRe42 = eRe22;           let eIm42 = -eIm22;
+                let eRe41 = eRe23;           let eIm41 = -eIm23;
+                let eRe40 = eRe24;           let eIm40 = -eIm24;
+                let eRe39 = eRe23;           let eIm39 = -eIm23;
+                let eRe38 = eRe22;           let eIm38 = -eIm22;
+                let eRe37 = eRe21;           let eIm37 = -eIm21;
+                let eRe36 = eRe20;           let eIm36 = -eIm20;
+                let eRe35 = eRe19;           let eIm35 = -eIm19;
+                let eRe34 = eRe18;           let eIm34 = -eIm18;
+                let eRe33 = eRe17;           let eIm33 = -eIm17;
 
                 let oRe0   = out[idx +  128]; let oIm0  = out[idx +  129];
                 let oRe1   = out[idx +  130]; let oIm1  = out[idx +  131];
@@ -1521,6 +1520,15 @@ function fftComplexInPlace_seq_4(out) {
                 let oRe61  = out[idx +  250]; let oIm61  = out[idx +  251];
                 let oRe62  = out[idx +  252]; let oIm62  = out[idx +  253];
                 let oRe63  = out[idx +  254]; let oIm63  = out[idx +  255];
+
+          /*out[idx  +   2] =   res0ReB;
+          out[idx  + 126] =   res0ReB; 
+          let res0ImB = x0bIm_0 + T0x1bIm + ((x2bRe_0 + T0x3bRe)*  t2Re_2p + ((x2bIm_0 + T0x3bIm)*  t2Re_2b)); 
+          out[idx  +   3] =   res0ImB;
+          out[idx  + 127] = - res0ImB;
+          let res0ReC = x0cRe_0 + T0x0cRe + ((x2cRe_0 + T0x2cRe)*  t2Re_2c - ((x2cIm_0 + T0x2cIm)*  t2Re_2o));  
+          out[idx  +   4] =   res0ReC;
+          out[idx  + 124] =   res0ReC;*/
 
                 let resRe0_d = eRe0 - (oRe0 * tRe0 - oIm0 * tIm0);
                 out[idx + 128] = resRe0_d;
