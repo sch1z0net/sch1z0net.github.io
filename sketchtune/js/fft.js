@@ -2843,17 +2843,17 @@ function prepare_and_fft(inputSignal, fftFactorLookup=null) {
 
 
 
-function FFT(inputSignal, fftFactorLookup=null) {
+function FFT(inputSignal) {
     //console.log("----FFT-----");
-    return prepare_and_fft(inputSignal, fftFactorLookup);
+    return prepare_and_fft(inputSignal);
 }
 
 // Function to compute FFT of a frame
-function computeFFT(frame, frameID, frames, fftFactorLookup=null) {
+function computeFFT(frame, frameID, frames) {
     // Perform FFT on the frame (you can use your FFT implementation here)
     // For simplicity, let's assume computeFFT returns the magnitude spectrum
     //const startTime = performance.now();
-    const spectrum = FFT(frame, fftFactorLookup);
+    const spectrum = FFT(frame);
     //const endTime = performance.now();
     //const elapsedTime = endTime - startTime;
     //console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);

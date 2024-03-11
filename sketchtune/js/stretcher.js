@@ -1,4 +1,4 @@
-const NUM_WORKERS = 4;
+const NUM_WORKERS = 1;
 const maxWorkers = navigator.hardwareConcurrency || 1; // Fallback to 1 if hardwareConcurrency is not available
 //console.log("Maximum number of workers:", maxWorkers);
 //console.log("Current workers:", NUM_WORKERS);
@@ -180,6 +180,9 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
 */
 
 
+
+
+
 function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
     return new Promise((resolve) => {
         var startTime = performance.now();
@@ -229,10 +232,6 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
             worker.onmessage = function (e) {
                 const endTime = performance.now();
                 const elapsedTime = endTime - startTime;
-                /*if(i == 0){
-                    console.log("Worker",i,"sent Chunk after ", elapsedTime, "ms");
-                }*/
-
                 const { id, buffer } = e.data;
 
                 // Convert the ArrayBuffer back to a Float32Array
