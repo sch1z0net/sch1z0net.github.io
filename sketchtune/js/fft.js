@@ -893,9 +893,9 @@ let tRe11 = ____F[126 + (22)]; let tIm11 = ____F[126 + (23)];
 let tRe12 = ____F[126 + (24)]; let tIm12 = ____F[126 + (25)];
 let tRe13 = ____F[126 + (26)]; let tIm13 = ____F[126 + (27)];
 let tRe14 = ____F[126 + (28)]; let tIm14 = ____F[126 + (29)];
-let tRe15 = ____F[126 + (30)]; let tIm15 = - tRe15;
+let tRe15 = ____F[126 + (30)]; let tIm15 = ____F[126 + (31)];
 let tRe16 = ____F[126 + (32)]; let tIm16 = ____F[126 + (33)];
-let tRe17 = - tRe15;           let tIm17 = ____F[126 + (35)];
+let tRe17 = ____F[126 + (34)]; let tIm17 = ____F[126 + (35)];
 let tRe18 = ____F[126 + (36)]; let tIm18 = ____F[126 + (37)];
 let tRe19 = ____F[126 + (38)]; let tIm19 = ____F[126 + (39)];
 let tRe20 = ____F[126 + (40)]; let tIm20 = ____F[126 + (41)];
@@ -908,9 +908,10 @@ let tRe26 = ____F[126 + (52)]; let tIm26 = ____F[126 + (53)];
 let tRe27 = ____F[126 + (54)]; let tIm27 = ____F[126 + (55)];
 let tRe28 = ____F[126 + (56)]; let tIm28 = ____F[126 + (57)];
 let tRe29 = ____F[126 + (58)]; let tIm29 = ____F[126 + (59)];
-let tRe30 =                    let tIm30 = ____F[126 + (61)];
-let tRe31 =                    let tIm31 = tRe1;
+let tRe30 = ____F[126 + (60)]; let tIm30 = ____F[126 + (61)];
+let tRe31 = ____F[126 + (62)]; let tIm31 = ____F[126 + (63)];
 
+/*
 let tRe32  = ____F[126 + ( 64)]; let tIm32  = ____F[126 + ( 65)];
 let tRe33  = ____F[126 + ( 66)]; let tIm33  = ____F[126 + ( 67)];
 let tRe34  = ____F[126 + ( 68)]; let tIm34  = ____F[126 + ( 69)];
@@ -942,7 +943,8 @@ let tRe59  = ____F[126 + (118)]; let tIm59  = ____F[126 + (119)];
 let tRe60  = ____F[126 + (120)]; let tIm60  = ____F[126 + (121)];
 let tRe61  = ____F[126 + (122)]; let tIm61  = ____F[126 + (123)];
 let tRe62  = - tRe2;             let tIm62  = ____F[126 + (125)];
-let tRe63  = - tRe1;             let tIm63  = ____F[126 + (127)];
+let tRe63  = - tRe1;             let tIm63  = ____F[126 + (127)];*/
+
 
 function fftComplexInPlace_seq_4(out) {
 
