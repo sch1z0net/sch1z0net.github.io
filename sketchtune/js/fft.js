@@ -1134,7 +1134,7 @@ function fftComplexInPlace_seq_4(realInput) {
           out[idx +  11] = - resImD2; 
     }
 
-/*
+
     /////////////////////////////////////////////
     // P = 2  -> 64
     //
@@ -2681,7 +2681,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
     }*/
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
-        if(size > 16){ break; }
+        if(size > 64){ break; }
         const halfSize = size / 2;
         // Get FFT factors with caching
         const factors = computeFFTFactorsWithCache(size);
