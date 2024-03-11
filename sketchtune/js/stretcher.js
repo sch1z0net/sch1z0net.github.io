@@ -185,107 +185,33 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
 
 function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
     return new Promise((resolve) => {
-        var startTime = performance.now();
+        var frames = (inputSignal.length - windowSize)/hopSize;
+        const spectrogram = new Array(frames); // Preallocate memory
+                
+                for (let i = 0; i <= frames; i++) {
+                    const startIdx = i * hopSize;
+                    const endIdx = startIdx + windowSize;
+                    let frame = inputSignalChunk.slice(startIdx, endIdx);
+                    let windowedFrame = applyHanningWindow(frame);
+                    const spectrum = computeFFT(windowedFrame, i, frames);
+                    // Assuming spectrum is the array containing the full spectrum obtained from FFT
+                    const halfSpectrum = spectrum.slice(0, spectrum.length / 2);
 
-        const numFrames = Math.floor((inputSignal.length - windowSize) / hopSize) + 1;
-        const receivedChunks = [];
-        let finalSpectrogram = [];
-
-        // Define the number of workers (you can adjust this based on performance testing)
-        const numWorkers = NUM_WORKERS;
-
-        // Calculate frames per worker
-        const framesPerWorker = Math.ceil(numFrames / numWorkers);
-
-        // Initialize a counter for finished workers
-        let numFinishedWorkers = 0;
-
-        // Create and run workers
-        for (let i = 0; i < numWorkers; i++) {
-            const startFrame = i * framesPerWorker;
-            const endFrame = Math.min(startFrame + framesPerWorker, numFrames);
-
-            // Slice inputSignal array to create a smaller chunk for this worker
-            const chunk = inputSignal.slice(startFrame * hopSize, (endFrame - 1) * hopSize + windowSize);
-
-            // Create worker and send the chunk of inputSignal
-            const worker = new Worker('./js/stftWorker.js');
-
-            // Convert chunk array to Float32Array (assuming it contains float values)
-            const chunky = new Float32Array(chunk);
-
-            // Construct the message object
-            const message = {
-                inputSignal: chunky.buffer, // Transfer ownership of the ArrayBuffer
-                windowSize: windowSize,
-                hopSize: hopSize,
-                numFrames: numFrames,
-                workerID: i,
-                mode: mode,
-                halfSpec: halfSpec
-            };
-
-            // Send the message to the worker
-            worker.postMessage(message, [chunky.buffer]); // Transfer ownership of the ArrayBuffer
-
-            // Listen for messages from the main thread
-            worker.onmessage = function (e) {
-                const endTime = performance.now();
-                const elapsedTime = endTime - startTime;
-                const { id, buffer } = e.data;
-
-                // Convert the ArrayBuffer back to a Float32Array
-                const flattenedChunk = new Float32Array(buffer);
-
-                // Convert the flattened chunk back to the original nested structure
-                let binsPerFrame = windowSize;
-                if(halfSpec){ 
-                   binsPerFrame = windowSize / 2; //Since we only need half of the symmetric spectrum
-                }
-
-                const reconstructedChunk = [];
-                for (let i = 0; i < flattenedChunk.length; i += binsPerFrame * 2) {
-                    const frame = [];
-                    for (let j = 0; j < binsPerFrame; j++) {
-                        const spectrum = {
-                            re: flattenedChunk[i + j * 2],
-                            im: flattenedChunk[i + j * 2 + 1]
-                        };
-                        frame.push(spectrum);
-                    }
-                    reconstructedChunk.push(frame);
-                }
-
-                receivedChunks.push({ id, reconstructedChunk });
-
-                // Increment the counter for finished workers
-                numFinishedWorkers++;
-
-                // Close the worker after it completes its work
-                worker.terminate();
-
-                // Check if all workers have finished processing
-                if (numFinishedWorkers === numWorkers) {
-                    // All workers have finished processing
-
-                    // Sort the spectrogram data based on the worker id
-                    receivedChunks.sort((a, b) => a.id - b.id);
-
-                    // Combine receivedChunks data into the final spectrogram array
-                    for (const { id, reconstructedChunk } of receivedChunks) {
-                        finalSpectrogram.push(...reconstructedChunk);
+                    // Store the result in the spectrogram chunk
+                    if(halfSpec){
+                        spectrogram[i] = halfSpectrum;
+                    }else{
+                        spectrogram[i] = spectrum;
                     }
 
-                    // Resolve the promise with the final spectrogram
-                    resolve(finalSpectrogram);
+                    // Clear memory by reusing variables
+                    frame = null;
+                    windowedFrame = null;
                 }
-            }
 
-            // Listen for errors from the worker
-            worker.onerror = function (error) {
-                console.error("Error in worker", i, ":", error.message);
-            };
-        }
+                // Resolve the promise with the final spectrogram
+                resolve(finalSpectrogram);
+        
     });
 }
 
