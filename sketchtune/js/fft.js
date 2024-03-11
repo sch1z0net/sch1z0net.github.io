@@ -1372,6 +1372,22 @@ function fftComplexInPlace_seq_4(out) {
                 let eRe13 = out[idx +   26]; let eIm13 = out[idx +   27];
                 let eRe14 = out[idx +   28]; let eIm14 = out[idx +   29];
                 let eRe15 = out[idx +   30]; let eIm15 = out[idx +   31];
+                let eRe16  = out[idx +   32]; let eIm16  = out[idx +   33];
+                let eRe17  = out[idx +   34]; let eIm17  = out[idx +   35];
+                let eRe18  = out[idx +   36]; let eIm18  = out[idx +   37];
+                let eRe19  = out[idx +   38]; let eIm19  = out[idx +   39];
+                let eRe20  = out[idx +   40]; let eIm20  = out[idx +   41];
+                let eRe21  = out[idx +   42]; let eIm21  = out[idx +   43];
+                let eRe22  = out[idx +   44]; let eIm22  = out[idx +   45];
+                let eRe23  = out[idx +   46]; let eIm23  = out[idx +   47];
+                let eRe24  = out[idx +   48]; let eIm24  = out[idx +   49];
+                let eRe25  = out[idx +   50]; let eIm25  = out[idx +   51];
+                let eRe26  = out[idx +   52]; let eIm26  = out[idx +   53];
+                let eRe27  = out[idx +   54]; let eIm27  = out[idx +   55];
+                let eRe28  = out[idx +   56]; let eIm28  = out[idx +   57];
+                let eRe29  = out[idx +   58]; let eIm29  = out[idx +   59];
+                let eRe30  = out[idx +   60]; let eIm30  = out[idx +   61];
+                let eRe31  = out[idx +   62]; let eIm31  = out[idx +   63];
 
                 let oRe0  = out[idx +  128]; let oIm0  = out[idx +  129];
                 let oRe1  = out[idx +  130]; let oIm1  = out[idx +  131];
@@ -1389,6 +1405,23 @@ function fftComplexInPlace_seq_4(out) {
                 let oRe13 = out[idx +  154]; let oIm13 = out[idx +  155];
                 let oRe14 = out[idx +  156]; let oIm14 = out[idx +  157];
                 let oRe15 = out[idx +  158]; let oIm15 = out[idx +  159];
+                let oRe16  = out[idx +  160]; let oIm16  = out[idx +  161];
+                let oRe17  = out[idx +  162]; let oIm17  = out[idx +  163];
+                let oRe18  = out[idx +  164]; let oIm18  = out[idx +  165];
+                let oRe19  = out[idx +  166]; let oIm19  = out[idx +  167];
+                let oRe20  = out[idx +  168]; let oIm20  = out[idx +  169];
+                let oRe21  = out[idx +  170]; let oIm21  = out[idx +  171];
+                let oRe22  = out[idx +  172]; let oIm22  = out[idx +  173];
+                let oRe23  = out[idx +  174]; let oIm23  = out[idx +  175];
+                let oRe24  = out[idx +  176]; let oIm24  = out[idx +  177];
+                let oRe25  = out[idx +  178]; let oIm25  = out[idx +  179];
+                let oRe26  = out[idx +  180]; let oIm26  = out[idx +  181];
+                let oRe27  = out[idx +  182]; let oIm27  = out[idx +  183];
+                let oRe28  = out[idx +  184]; let oIm28  = out[idx +  185];
+                let oRe29  = out[idx +  186]; let oIm29  = out[idx +  187];
+                let oRe30  = out[idx +  188]; let oIm30  = out[idx +  189];
+                let oRe31  = out[idx +  190]; let oIm31  = out[idx +  191];
+
 
                 let resRe0_s = eRe0 + (oRe0 * tRe0 - oIm0 * tIm0);
                 let resIm0_s = eIm0 + (oRe0 * tIm0 + oIm0 * tRe0);
@@ -1470,6 +1503,87 @@ function fftComplexInPlace_seq_4(out) {
                 let resRe15_d = eRe15 - (oRe15 * tRe15 - oIm15 * tIm15);
                 let resIm15_d = eIm15 - (oRe15 * tIm15 + oIm15 * tRe15);
 
+                let resRe16_s = eRe16 + (oRe16 * tRe16 - oIm16 * tIm16);
+                let resIm16_s = eIm16 + (oRe16 * tIm16 + oIm16 * tRe16);
+                let resRe16_d = eRe16 - (oRe16 * tRe16 - oIm16 * tIm16);
+                let resIm16_d = eIm16 - (oRe16 * tIm16 + oIm16 * tRe16);
+
+                let resRe17_s = eRe17 + (oRe17 * tRe17 - oIm17 * tIm17);
+                let resIm17_s = eIm17 + (oRe17 * tIm17 + oIm17 * tRe17);
+                let resRe17_d = eRe17 - (oRe17 * tRe17 - oIm17 * tIm17);
+                let resIm17_d = eIm17 - (oRe17 * tIm17 + oIm17 * tRe17);
+
+                let resRe18_s = eRe18 + (oRe18 * tRe18 - oIm18 * tIm18);
+                let resIm18_s = eIm18 + (oRe18 * tIm18 + oIm18 * tRe18);
+                let resRe18_d = eRe18 - (oRe18 * tRe18 - oIm18 * tIm18);
+                let resIm18_d = eIm18 - (oRe18 * tIm18 + oIm18 * tRe18);
+
+                let resRe19_s = eRe19 + (oRe19 * tRe19 - oIm19 * tIm19);
+                let resIm19_s = eIm19 + (oRe19 * tIm19 + oIm19 * tRe19);
+                let resRe19_d = eRe19 - (oRe19 * tRe19 - oIm19 * tIm19);
+                let resIm19_d = eIm19 - (oRe19 * tIm19 + oIm19 * tRe19);
+
+                let resRe20_s = eRe20 + (oRe20 * tRe20 - oIm20 * tIm20);
+                let resIm20_s = eIm20 + (oRe20 * tIm20 + oIm20 * tRe20);
+                let resRe20_d = eRe20 - (oRe20 * tRe20 - oIm20 * tIm20);
+                let resIm20_d = eIm20 - (oRe20 * tIm20 + oIm20 * tRe20);
+
+                let resRe21_s = eRe21 + (oRe21 * tRe21 - oIm21 * tIm21);
+                let resIm21_s = eIm21 + (oRe21 * tIm21 + oIm21 * tRe21);
+                let resRe21_d = eRe21 - (oRe21 * tRe21 - oIm21 * tIm21);
+                let resIm21_d = eIm21 - (oRe21 * tIm21 + oIm21 * tRe21);
+
+                let resRe22_s = eRe22 + (oRe22 * tRe22 - oIm22 * tIm22);
+                let resIm22_s = eIm22 + (oRe22 * tIm22 + oIm22 * tRe22);
+                let resRe22_d = eRe22 - (oRe22 * tRe22 - oIm22 * tIm22);
+                let resIm22_d = eIm22 - (oRe22 * tIm22 + oIm22 * tRe22);
+
+                let resRe23_s = eRe23 + (oRe23 * tRe23 - oIm23 * tIm23);
+                let resIm23_s = eIm23 + (oRe23 * tIm23 + oIm23 * tRe23);
+                let resRe23_d = eRe23 - (oRe23 * tRe23 - oIm23 * tIm23);
+                let resIm23_d = eIm23 - (oRe23 * tIm23 + oIm23 * tRe23);
+
+                let resRe24_s = eRe24 + (oRe24 * tRe24 - oIm24 * tIm24);
+                let resIm24_s = eIm24 + (oRe24 * tIm24 + oIm24 * tRe24);
+                let resRe24_d = eRe24 - (oRe24 * tRe24 - oIm24 * tIm24);
+                let resIm24_d = eIm24 - (oRe24 * tIm24 + oIm24 * tRe24);
+
+                let resRe25_s = eRe25 + (oRe25 * tRe25 - oIm25 * tIm25);
+                let resIm25_s = eIm25 + (oRe25 * tIm25 + oIm25 * tRe25);
+                let resRe25_d = eRe25 - (oRe25 * tRe25 - oIm25 * tIm25);
+                let resIm25_d = eIm25 - (oRe25 * tIm25 + oIm25 * tRe25);
+
+                let resRe26_s = eRe26 + (oRe26 * tRe26 - oIm26 * tIm26);
+                let resIm26_s = eIm26 + (oRe26 * tIm26 + oIm26 * tRe26);
+                let resRe26_d = eRe26 - (oRe26 * tRe26 - oIm26 * tIm26);
+                let resIm26_d = eIm26 - (oRe26 * tIm26 + oIm26 * tRe26);
+
+                let resRe27_s = eRe27 + (oRe27 * tRe27 - oIm27 * tIm27);
+                let resIm27_s = eIm27 + (oRe27 * tIm27 + oIm27 * tRe27);
+                let resRe27_d = eRe27 - (oRe27 * tRe27 - oIm27 * tIm27);
+                let resIm27_d = eIm27 - (oRe27 * tIm27 + oIm27 * tRe27);
+
+                let resRe28_s = eRe28 + (oRe28 * tRe28 - oIm28 * tIm28);
+                let resIm28_s = eIm28 + (oRe28 * tIm28 + oIm28 * tRe28);
+                let resRe28_d = eRe28 - (oRe28 * tRe28 - oIm28 * tIm28);
+                let resIm28_d = eIm28 - (oRe28 * tIm28 + oIm28 * tRe28);
+
+                let resRe29_s = eRe29 + (oRe29 * tRe29 - oIm29 * tIm29);
+                let resIm29_s = eIm29 + (oRe29 * tIm29 + oIm29 * tRe29);
+                let resRe29_d = eRe29 - (oRe29 * tRe29 - oIm29 * tIm29);
+                let resIm29_d = eIm29 - (oRe29 * tIm29 + oIm29 * tRe29);
+
+                let resRe30_s = eRe30 + (oRe30 * tRe30 - oIm30 * tIm30);
+                let resIm30_s = eIm30 + (oRe30 * tIm30 + oIm30 * tRe30);
+                let resRe30_d = eRe30 - (oRe30 * tRe30 - oIm30 * tIm30);
+                let resIm30_d = eIm30 - (oRe30 * tIm30 + oIm30 * tRe30);
+
+                let resRe31_s = eRe31 + (oRe31 * tRe31 - oIm31 * tIm31);
+                let resIm31_s = eIm31 + (oRe31 * tIm31 + oIm31 * tRe31);
+                let resRe31_d = eRe31 - (oRe31 * tRe31 - oIm31 * tIm31);
+                let resIm31_d = eIm31 - (oRe31 * tIm31 + oIm31 * tRe31);
+
+
                 out[idx +   0] = resRe0_s; 
                 out[idx +   1] = resIm0_s;
                 out[idx + 128] = resRe0_d;
@@ -1549,6 +1663,87 @@ function fftComplexInPlace_seq_4(out) {
                 out[idx +  31] = resIm15_s;
                 out[idx + 158] = resRe15_d;
                 out[idx + 159] = resIm15_d;
+
+                out[idx + 32]  = resRe16_s;
+                out[idx + 33]  = resIm16_s;
+                out[idx + 160] = resRe16_d;
+                out[idx + 161] = resIm16_d;
+
+                out[idx + 34]  = resRe17_s;
+                out[idx + 35]  = resIm17_s;
+                out[idx + 162] = resRe17_d;
+                out[idx + 163] = resIm17_d;
+
+                out[idx + 36]  = resRe18_s;
+                out[idx + 37]  = resIm18_s;
+                out[idx + 164] = resRe18_d;
+                out[idx + 165] = resIm18_d;
+
+                out[idx + 38]  = resRe19_s;
+                out[idx + 39]  = resIm19_s;
+                out[idx + 166] = resRe19_d;
+                out[idx + 167] = resIm19_d;
+
+                out[idx + 40]  = resRe20_s;
+                out[idx + 41]  = resIm20_s;
+                out[idx + 168] = resRe20_d;
+                out[idx + 169] = resIm20_d;
+
+                out[idx + 42]  = resRe21_s;
+                out[idx + 43]  = resIm21_s;
+                out[idx + 170] = resRe21_d;
+                out[idx + 171] = resIm21_d;
+
+                out[idx + 44]  = resRe22_s;
+                out[idx + 45]  = resIm22_s;
+                out[idx + 172] = resRe22_d;
+                out[idx + 173] = resIm22_d;
+
+                out[idx + 46]  = resRe23_s;
+                out[idx + 47]  = resIm23_s;
+                out[idx + 174] = resRe23_d;
+                out[idx + 175] = resIm23_d;
+
+                out[idx + 48]  = resRe24_s;
+                out[idx + 49]  = resIm24_s;
+                out[idx + 176] = resRe24_d;
+                out[idx + 177] = resIm24_d;
+
+                out[idx + 50]  = resRe25_s;
+                out[idx + 51]  = resIm25_s;
+                out[idx + 178] = resRe25_d;
+                out[idx + 179] = resIm25_d;
+
+                out[idx + 52]  = resRe26_s;
+                out[idx + 53]  = resIm26_s;
+                out[idx + 180] = resRe26_d;
+                out[idx + 181] = resIm26_d;
+
+                out[idx + 54]  = resRe27_s;
+                out[idx + 55]  = resIm27_s;
+                out[idx + 182] = resRe27_d;
+                out[idx + 183] = resIm27_d;
+
+                out[idx + 56]  = resRe28_s;
+                out[idx + 57]  = resIm28_s;
+                out[idx + 184] = resRe28_d;
+                out[idx + 185] = resIm28_d;
+
+                out[idx + 58]  = resRe29_s;
+                out[idx + 59]  = resIm29_s;
+                out[idx + 186] = resRe29_d;
+                out[idx + 187] = resIm29_d;
+
+                out[idx + 60]  = resRe30_s;
+                out[idx + 61]  = resIm30_s;
+                out[idx + 188] = resRe30_d;
+                out[idx + 189] = resIm30_d;
+
+                out[idx + 62]  = resRe31_s;
+                out[idx + 63]  = resIm31_s;
+                out[idx + 190] = resRe31_d;
+                out[idx + 191] = resIm31_d;
+
 
             }
 
