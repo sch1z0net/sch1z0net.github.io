@@ -185,13 +185,13 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
 
 function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
     return new Promise((resolve) => {
-        var frames = (inputSignal.length - windowSize)/hopSize;
+        const frames = Math.floor((inputSignal.length - windowSize) / hopSize) + 1;
         const spectrogram = new Array(frames); // Preallocate memory
                 
                 for (let i = 0; i <= frames; i++) {
                     const startIdx = i * hopSize;
                     const endIdx = startIdx + windowSize;
-                    let frame = inputSignalChunk.slice(startIdx, endIdx);
+                    let frame = inputSignal.slice(startIdx, endIdx);
                     let windowedFrame = applyHanningWindow(frame);
                     const spectrum = computeFFT(windowedFrame, i, frames);
                     // Assuming spectrum is the array containing the full spectrum obtained from FFT
@@ -210,7 +210,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
                 }
 
                 // Resolve the promise with the final spectrogram
-                resolve(finalSpectrogram);
+                resolve(spectrogram);
         
     });
 }
