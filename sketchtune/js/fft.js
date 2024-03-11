@@ -1391,8 +1391,10 @@ function fftComplexInPlace_seq_4(out) {
         
 
             for(let idx = 0; idx < 2048; idx += 256){
-                let oRe0   = out[idx +  128]; let oIm0  = out[idx +  129];
-                let eRe0   = out[idx +    0]; let eIm0  = out[idx +    1];
+                let oRe0   = out[idx +  128]; 
+                let oIm0  = out[idx +  129];
+                let eRe0   = out[idx +    0]; 
+                let eIm0  = out[idx +    1];
                 let resRe0_s = eRe0 + oRe0;
                 out[idx +   0] = resRe0_s;
                 let resIm0_s = eIm0 + oIm0;
@@ -1402,8 +1404,10 @@ function fftComplexInPlace_seq_4(out) {
                 let resIm0_d = eIm0 - oIm0
                 out[idx + 129] = resIm0_d;
 
-                let oRe1   = out[idx +  130]; let oIm1  = out[idx +  131];
-                let eRe1   = out[idx +    2]; let eIm1  = out[idx +    3];
+                let oRe1   = out[idx +  130]; 
+                let oIm1  = out[idx +  131];
+                let eRe1   = out[idx +    2]; 
+                let eIm1  = out[idx +    3];
                 let resIm1_s = eIm1 + (oRe1 * tRe31 + oIm1 * tRe1);
                 out[idx +   3] =  resIm1_s;
                 out[idx + 255] = -resIm1_s;  
@@ -1417,8 +1421,10 @@ function fftComplexInPlace_seq_4(out) {
                 out[idx + 127] =  resIm63_s;
                 out[idx + 131] = -resIm63_s;
 
-                let oRe2   = out[idx +  132]; let oIm2  = out[idx +  133];
-                let eRe2   = out[idx +    4]; let eIm2  = out[idx +    5];
+                let oRe2   = out[idx +  132]; 
+                let oIm2  = out[idx +  133];
+                let eRe2   = out[idx +    4]; 
+                let eIm2  = out[idx +    5];
                 let resIm2_s = eIm2 + (oRe2 * tRe30 + oIm2 * tRe2);
                 out[idx +   5] =  resIm2_s;
                 out[idx + 253] = -resIm2_s;
@@ -1432,8 +1438,10 @@ function fftComplexInPlace_seq_4(out) {
                 out[idx + 125] =  resIm62_s;
                 out[idx + 133] = -resIm62_s;
 
-                let oRe3   = out[idx +  134]; let oIm3  = out[idx +  135];
-                let eRe3   = out[idx +    6]; let eIm3  = out[idx +    7];
+                let oRe3   = out[idx +  134]; 
+                let oIm3  = out[idx +  135];
+                let eRe3   = out[idx +    6]; 
+                let eIm3  = out[idx +    7];
                 let resIm3_s = eIm3 + (oRe3 * tRe29 + oIm3 * tRe3);
                 out[idx +   7] =  resIm3_s;
                 out[idx + 251] = -resIm3_s;
@@ -1447,8 +1455,10 @@ function fftComplexInPlace_seq_4(out) {
                 out[idx + 123] =  resIm61_s;
                 out[idx + 135] = -resIm61_s;
 
-                let oRe4   = out[idx +  136]; let oIm4  = out[idx +  137];
-                let eRe4   = out[idx +    8]; let eIm4  = out[idx +    9];
+                let oRe4   = out[idx +  136]; 
+                let oIm4  = out[idx +  137];
+                let eRe4   = out[idx +    8]; 
+                let eIm4  = out[idx +    9];
                 let resIm4_s = eIm4 + (oRe4 * tRe28 + oIm4 * tRe4);
                 out[idx + 9] = resIm4_s;
                 out[idx + 249] = -resIm4_s;
@@ -1948,22 +1958,16 @@ function fftComplexInPlace_seq_4(out) {
                 out[idx + 191] = -resIm33_s;
 
                 // For elements 61 to 62
-                let oRe32 = out[idx + 192]; 
-                let oIm32 = out[idx + 193];
-                let eRe32 = out[idx + 64]; 
-                let eIm32 = out[idx + 65];
-                let resIm32_s = eIm32 + (oRe32 * tRe30 + oIm32 * tRe2);
-                out[idx + 65] = resIm32_s;
+                let oRe32  = out[idx +  192]; 
+                let oIm32 = out[idx +  193];
+                let eRe32  = out[idx +   64]; 
+                let eIm32 = out[idx +   65];
+                let resIm32_s = eIm32 + oRe32;
+                out[idx +  65] =  resIm32_s;
                 out[idx + 193] = -resIm32_s;
-                let resRe32_s = eRe32 + (oRe32 * tRe2 - oIm32 * tRe30);
-                out[idx + 192] = resRe32_s;
-                out[idx + 64] = resRe32_s; 
-                let resRe32_s = eRe32 - (oRe32 * tRe2 - oIm32 * tRe30);
-                out[idx + 192] = resRe32_s;
-                out[idx + 64] = resRe32_s; 
-                let resIm32_s = -eIm32 + (oRe32 * tRe30 + oIm32 * tRe2);
-                out[idx + 65] = resIm32_s;
-                out[idx + 193] = -resIm32_s;
+                let resRe32_s = eRe32 - oIm32;
+                out[idx + 192] =  resRe32_s;
+                out[idx +  64] =  resRe32_s; 
 
 
 
