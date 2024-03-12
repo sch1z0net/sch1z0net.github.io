@@ -2815,20 +2815,26 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
 /***************************** PREPARATION OF FFT AND IFFT ************************************/
 /**********************************************************************************************/
 
-
+const FFT_SIZE = 512;
+let paddedInput = new Float64Array(FFT_SIZE).fill(0);
 function prepare_and_fft(inputSignal) {
     // Apply Hanning window to the input signal (if needed)
     // const windowedSignal = applyHanningWindow(inputSignal); // Assuming the windowing function is already applied or not needed
 
     //const startTime = performance.now();
     // Zero-padding to the next power of 2
-    const FFT_SIZE = nextPowerOf2(inputSignal.length);
+    //const FFT_SIZE = nextPowerOf2(inputSignal.length);
     /*const endTime1 = performance.now();
     const elapsedTime1 = endTime1 - startTime;
     console.log(`FFT - FFTSIZE: Elapsed time: ${elapsedTime1} milliseconds`);*/
 
-    const paddedInput = new Float64Array(FFT_SIZE).fill(0);
-    inputSignal.forEach((value, index) => paddedInput[index] = value); // Store real part in even indices
+    if(inputSignal.length != FFT_SIZE){
+        paddedInput = new Float64Array(FFT_SIZE).fill(0);
+        inputSignal.forEach((value, index) => paddedInput[index] = value);
+        return fftRealInPlace_ref(paddedInput);
+    }else{
+        return fftRealInPlace_ref(inputSignal);
+    }
 
     /*const endTime2 = performance.now();
     const elapsedTime2 = endTime2 - startTime;
