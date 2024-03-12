@@ -2940,6 +2940,8 @@ function computeInverseFFT(spectrum) {
         paddedSpectrum[i * 2 + 1] = spectrum[i * 2 + 1]; // Copy imaginary part
     }
 
+    console.log(paddedSpectrum);
+
     // Now you can pass paddedSpectrum to the IFFT function
     const timeDomainSignal = IFFT(paddedSpectrum);
 
