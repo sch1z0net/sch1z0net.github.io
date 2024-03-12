@@ -306,8 +306,8 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfS
             let spectrum = spectrogram[i];
 
             let frame;
-            if(halfSpec){  frame = await computeInverseFFTonHalf(spectrum);
-            }else{         frame = await computeInverseFFT(spectrum);        }
+            if(halfSpec){  frame = computeInverseFFTonHalf(spectrum);
+            }else{         frame = computeInverseFFT(spectrum);        }
 
             // Apply synthesis window to the frame
             const synthesisWindow = hanningWindow(windowSize);
