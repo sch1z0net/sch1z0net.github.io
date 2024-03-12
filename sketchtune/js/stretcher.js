@@ -663,7 +663,16 @@ function normalizeSpectrogramToDB(spectrogram, dBmin = -20) {
 
     // Iterate over each frame in the spectrogram
     for (const frame of spectrogram) {
-        const framePower = frame.map(bin => Math.abs(bin.re * bin.re + bin.im * bin.im));
+
+        const framePower = [];
+        for (let i = 0; i < frame.length; i += 2) {
+            const re = frame[i];
+            const im = frame[i + 1];
+            const power = Math.abs(re * re + im * im);
+            framePower.push(power);
+        }
+        //const framePower = frame.map(bin => Math.abs(bin.re * bin.re + bin.im * bin.im));
+
         const maxPower = Math.max(...framePower);
         const minDB = dBmin; // Set a minimum value for dB to avoid infinity or negative infinity
         const frameDB = [];
@@ -984,7 +993,7 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, windowType, h
 
 
 function plotSpectrogram(spectrogramA,spectrogramB){
-    /*
+    
     const startTimeD = performance.now();
     
     try{
@@ -1005,7 +1014,7 @@ function plotSpectrogram(spectrogramA,spectrogramB){
 
     const endTimeD = performance.now();
     console.log(`Plotting the Spectrogram: Elapsed time: ${endTimeD - startTimeD} milliseconds`); 
-    */   
+     
 }
 
 
