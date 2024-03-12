@@ -786,8 +786,8 @@ function fftComplex512(complexInput) {
 
     // Perform bit reversal
     for (let i = 0; i < 512; i++) {
-        out[i*2  ] = inputCopy[map[i]*2  ];
-        out[i*2+1] = inputCopy[map[i]*2+1];
+        out[i*2  ] = complexInput[map[i]*2  ];
+        out[i*2+1] = complexInput[map[i]*2+1];
     }
 
     /////////////////////////////////////////////
@@ -3540,24 +3540,36 @@ let ifftResult = new Float32Array(1024);
 function ifft(input) {
     //const N = input.length / 2; // Divide by 2 since input represents complex numbers
 
+    /*
     // Take the complex conjugate of the input spectrum
     for (let i = 0; i < 512; i++) {
         conjugateSpectrum[i * 2] = input[i * 2]; // Copy real part
         conjugateSpectrum[i * 2 + 1] = -input[i * 2 + 1]; // Negate imaginary part
+    }*/
+    // Take the complex conjugate of the input spectrum in place
+    for (let i = 0; i < 1024; i += 2) {
+        input[i + 1] = -input[i + 1]; // Negate the imaginary part
     }
 
     // Apply FFT to the conjugate spectrum
     //const fftResult = fftComplexInPlace_ref(conjugateSpectrum);
     //const fftResult = fftComplexInPlaceRADIX4(conjugateSpectrum);
-    const fftResult = fftComplex512(conjugateSpectrum);
+    const result = fftComplex512(input);
 
+    for (let i = 0; i < 1024; i += 2) {
+        result[i] /= 512; // Scale the real part
+        result[i + 1] = -result[i + 1] / 512; // Scale and negate the imaginary part
+    }
+    
+    /*
     // Take the complex conjugate of the FFT result and scale by 1/N
     for (let i = 0; i < 512; i++) {
         ifftResult[i * 2] = fftResult[i * 2] / 512; // Scale real part
         ifftResult[i * 2 + 1] = -fftResult[i * 2 + 1] / 512; // Scale and negate imaginary part
     }
+    */
 
-    return ifftResult;
+    return result;
 }
 
 /*
@@ -3659,7 +3671,7 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 */
 
 
-let fullSpectrum = new Float32Array(1024).fill(0);
+let fullSpectrum = new Float32Array(1024);
 // Function to compute inverse FFT of a spectrum
 function computeInverseFFTonHalf(halfSpectrum) {
     // Ensure the size of the spectrum array is a power of 2
