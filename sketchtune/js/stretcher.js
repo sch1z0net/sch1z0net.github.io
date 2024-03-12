@@ -194,8 +194,8 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
                     const startIdx = i * hopSize;
                     const endIdx = startIdx + windowSize;
                     let frame = inputSignal.slice(startIdx, endIdx);
-                    applyHanningWindow(frame);
-                    const spectrum = fftReal512(frame);
+                    let windowedFrame = applyHanningWindow(frame);
+                    const spectrum = fftReal512(windowedFrame);
                     // Assuming spectrum is the array containing the full spectrum obtained from FFT
                     const halfSpectrum = spectrum.slice(0, 512);
                     spectrogram[i] = halfSpectrum;

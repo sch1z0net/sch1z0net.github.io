@@ -92,9 +92,11 @@ function createHanningWindow(windowLength) {
 
 // Function to apply Hanning window to the input signal
 function applyHanningWindow(frame) {
+    const windowedFrame = new Float32Array(frame.length);
     for (let i = 0; i < frame.length; i++) {
-       frame[i] *= 0.5 * (1 - Math.cos(2 * Math.PI * i / (frame.length - 1)));
+        windowedFrame[i] = frame[i] * 0.5 * (1 - Math.cos(2 * Math.PI * i / (frame.length - 1)));
     }
+    return windowedFrame;
 }
 
 /*
