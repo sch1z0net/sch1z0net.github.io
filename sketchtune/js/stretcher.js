@@ -388,6 +388,7 @@ function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitude
             const magnitude2 = spectrogram[frameIndex2][j*2];
             currentInterpolatedMagnitudes[j] = (1 - fraction) * magnitude1 + fraction * magnitude2;
         }
+        console.log(currentInterpolatedMagnitudes);
 
         // Store the interpolated magnitudes in the spectrogram
         //interpolatedMagnitudes[i] = currentInterpolatedMagnitudes.slice();
