@@ -2828,9 +2828,9 @@ function prepare_and_fft(inputSignal) {
     const elapsedTime1 = endTime1 - startTime;
     console.log(`FFT - FFTSIZE: Elapsed time: ${elapsedTime1} milliseconds`);*/
 
-    //paddedInput = new Float64Array(FFT_SIZE).fill(0);
-    //inputSignal.forEach((value, index) => paddedInput[index] = value);
-
+    paddedInput = new Float64Array(FFT_SIZE).fill(0);
+    inputSignal.forEach((value, index) => paddedInput[index] = value);
+    return fftComplexInPlace_seq_4(paddedInput)
 
     if(inputSignal.length != FFT_SIZE){
         paddedInput = new Float64Array(FFT_SIZE).fill(0);
