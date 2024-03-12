@@ -200,7 +200,6 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
                     const halfSpectrum = spectrum.slice(0, spectrum.length / 2);
                     spectrogram[i] = halfSpectrum;
 
-                    console.log(halfSpectrum);
                     /*
                     // Store the result in the spectrogram chunk
                     if(halfSpec){
