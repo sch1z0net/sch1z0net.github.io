@@ -3701,13 +3701,14 @@ async function computeFFTasync(frame, frameID, frames, fftFactorLookup=null) {
 
 
 /******************** INVERSE *********************/
-const pi = Math.PI;
+//const pi = Math.PI;
+
 function ifft(input) {
-    const N = input.length / 2; // Divide by 2 since input represents complex numbers
+    //const N = input.length / 2; // Divide by 2 since input represents complex numbers
 
     // Take the complex conjugate of the input spectrum
-    const conjugateSpectrum = new Float32Array(N * 2);
-    for (let i = 0; i < N; i++) {
+    const conjugateSpectrum = new Float32Array(1024);
+    for (let i = 0; i < 512; i++) {
         conjugateSpectrum[i * 2] = input[i * 2]; // Copy real part
         conjugateSpectrum[i * 2 + 1] = -input[i * 2 + 1]; // Negate imaginary part
     }
@@ -3718,10 +3719,10 @@ function ifft(input) {
     //const fftResult = fftComplex512(conjugateSpectrum);
 
     // Take the complex conjugate of the FFT result and scale by 1/N
-    const ifftResult = new Float32Array(N * 2);
-    for (let i = 0; i < N; i++) {
-        ifftResult[i * 2] = fftResult[i * 2] / N; // Scale real part
-        ifftResult[i * 2 + 1] = -fftResult[i * 2 + 1] / N; // Scale and negate imaginary part
+    const ifftResult = new Float32Array(1024);
+    for (let i = 0; i < 512; i++) {
+        ifftResult[i * 2] = fftResult[i * 2] / 512; // Scale real part
+        ifftResult[i * 2 + 1] = -fftResult[i * 2 + 1] / 512; // Scale and negate imaginary part
     }
 
     return ifftResult;
@@ -3733,7 +3734,7 @@ function IFFT(spectrum) {
     return ifft(spectrum);
 }
 
-
+/*
 // Function to compute inverse FFT of a spectrum
 function computeInverseFFT(spectrum) {
     // Ensure the size of the spectrum array is a power of 2
@@ -3755,7 +3756,7 @@ function computeInverseFFT(spectrum) {
     }
 
     return audioSignal;
-}
+}*/
 
 /*
 // Function to compute inverse FFT of a spectrum
@@ -3842,17 +3843,19 @@ function computeInverseFFTonHalf(halfSpectrum) {
     fullSpectrum[1] = halfSpectrum[1]; // Copy the imaginary part
 
     // Copy Nyquist frequency component (index paddedSize)
-    fullSpectrum[halfSize    ] = 0; // Copy the real part
-    fullSpectrum[halfSize + 1] = 0; // Invert the imaginary part
+    fullSpectrum[512    ] = 0; // Copy the real part
+    fullSpectrum[512 + 1] = 0; // Invert the imaginary part
 
     // Apply symmetry to fill the rest of the spectrum
     for (let i = 1; i < 256; i++) {
-        fullSpectrum[i * 2    ] = halfSpectrum[i * 2    ]; // Copy the real part
-        fullSpectrum[i * 2 + 1] = halfSpectrum[i * 2 + 1]; // Copy imaginary part
+        let re = halfSpectrum[i * 2    ];
+        let im = halfSpectrum[i * 2 + 1];
+        fullSpectrum[i * 2    ] = re; // Copy the real part
+        fullSpectrum[i * 2 + 1] = im; // Copy imaginary part
 
         // Fill the mirrored part of the spectrum
-        fullSpectrum[fullSize - (i * 2)    ] =  halfSpectrum[i * 2];     // Copy the real part
-        fullSpectrum[fullSize - (i * 2) + 1] = -halfSpectrum[i * 2 + 1]; // Invert the imaginary part
+        fullSpectrum[1024 - (i * 2)    ] =  re;     // Copy the real part
+        fullSpectrum[1024 - (i * 2) + 1] = -im; // Invert the imaginary part
     }
 
     // Perform the IFFT on the full spectrum
