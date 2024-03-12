@@ -782,10 +782,10 @@ const out = new Float32Array(N * 2);
 
 function fftComplex512(complexInput) {
     // Create a copy of the input array
-    const inputCopy = complexInput.slice();
+    //const inputCopy = complexInput.slice();
 
     // Perform bit reversal
-    for (let i = 0; i < N; i++) {
+    for (let i = 0; i < 512; i++) {
         out[i*2  ] = inputCopy[map[i]*2  ];
         out[i*2+1] = inputCopy[map[i]*2+1];
     }
@@ -3307,6 +3307,7 @@ function computeFFTFactorsWithCache(N) {
     return fftFactorCacheRADIX2[N];
 }
 
+
 function fftComplexInPlace_ref(complexInput) {
     const N = complexInput.length / 2;
     const bits = Math.floor(Math.log2(N));
@@ -3534,11 +3535,12 @@ async function computeFFTasync(frame, frameID, frames, fftFactorLookup=null) {
 /******************** INVERSE *********************/
 //const pi = Math.PI;
 
+let conjugateSpectrum = new Float32Array(1024);
+let ifftResult = new Float32Array(1024);
 function ifft(input) {
     //const N = input.length / 2; // Divide by 2 since input represents complex numbers
 
     // Take the complex conjugate of the input spectrum
-    const conjugateSpectrum = new Float32Array(1024);
     for (let i = 0; i < 512; i++) {
         conjugateSpectrum[i * 2] = input[i * 2]; // Copy real part
         conjugateSpectrum[i * 2 + 1] = -input[i * 2 + 1]; // Negate imaginary part
@@ -3550,7 +3552,6 @@ function ifft(input) {
     //const fftResult = fftComplex512(conjugateSpectrum);
 
     // Take the complex conjugate of the FFT result and scale by 1/N
-    const ifftResult = new Float32Array(1024);
     for (let i = 0; i < 512; i++) {
         ifftResult[i * 2] = fftResult[i * 2] / 512; // Scale real part
         ifftResult[i * 2 + 1] = -fftResult[i * 2 + 1] / 512; // Scale and negate imaginary part
@@ -3559,11 +3560,11 @@ function ifft(input) {
     return ifftResult;
 }
 
-
+/*
 function IFFT(spectrum) {
     //console.log("----IFFT-----");
     return ifft(spectrum);
-}
+}*/
 
 /*
 // Function to compute inverse FFT of a spectrum
@@ -3690,7 +3691,7 @@ function computeInverseFFTonHalf(halfSpectrum) {
     }
 
     // Perform the IFFT on the full spectrum
-    const timeDomainSignal = IFFT(fullSpectrum);
+    const timeDomainSignal = ifft(fullSpectrum);
 
     // Extract only the real parts of the time-domain signal
     const audioSignal = new Float32Array(timeDomainSignal.length / 2);
