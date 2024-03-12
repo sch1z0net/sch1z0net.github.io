@@ -3019,7 +3019,7 @@ const generateTestData = (size) => {
     return testData;
 };
 
-
+/*
 const testData8    = generateTestData(8);
 const testData16   = generateTestData(16);
 const testData32   = generateTestData(32);
@@ -3030,7 +3030,7 @@ const testData512  = generateTestData(512);
 const testData1024 = generateTestData(1024);
 const testData2048 = generateTestData(2048);
 const testData4096 = generateTestData(4096);
-
+*/
 
 // Perform FFT operations
 const performFFTOperations = (fftSize) => {
@@ -3089,11 +3089,11 @@ measureTime(1024);
 measureTime(1024);
 measureTime(1024);
 measureTime(1024);*/
+/*measureTime(512);
 measureTime(512);
 measureTime(512);
 measureTime(512);
-measureTime(512);
-measureTime(512);
+measureTime(512);*/
 //measureTime(1024);
 //measureTime(2048);
 //measureTime(4096);
