@@ -983,7 +983,7 @@ function fftComplex512(complexInput) {
           out[idx  +  4] =  x0aRe + x1aRe - x2aRe - x3aRe; 
           out[idx  +  5] =  x0aIm + x1aIm - x2aIm - x3aIm;
           out[idx  +  6] =  x0aRe - x1aRe - x2aIm - x3aIm;
-          out[idx  +  7] = -(x0aIm - x1aIm + x2aRe - x3aRe; )
+          out[idx  +  7] = -(x0aIm - x1aIm + x2aRe - x3aRe);
     }
 
     /////////////////////////////////////////////
