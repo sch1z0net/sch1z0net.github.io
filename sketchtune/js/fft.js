@@ -1809,10 +1809,10 @@ function fftReal512(realInput) {
 
     for(let idx = 0; idx < 512; idx+=4){
     //for(let idx = 0; idx < 1024; idx+=4){
-          let x0aRe = inputBR[idx    ];
-          let x1aRe = inputBR[idx + 1];
-          let x2aRe = inputBR[idx + 2];
-          let x3aRe = inputBR[idx + 3];
+          let x0aRe = inputBR512[idx    ];
+          let x1aRe = inputBR512[idx + 1];
+          let x2aRe = inputBR512[idx + 2];
+          let x3aRe = inputBR512[idx + 3];
           out512[2*idx      ] =  x0aRe + x1aRe + x2aRe + x3aRe;
           out512[2*idx  +  1] =  0; 
           out512[2*idx  +  2] =  x0aRe - x1aRe;
