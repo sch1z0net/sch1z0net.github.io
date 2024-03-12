@@ -203,7 +203,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
                     if(halfSpec){
                         //spectrogram[i] = halfSpectrum;
                     }else{
-                        spectrogram[i] = spectrum;
+                        spectrogram[i] = spectrum.slice();
                     }
 
                     // Clear memory by reusing variables
