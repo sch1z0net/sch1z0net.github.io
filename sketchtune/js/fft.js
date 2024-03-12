@@ -3828,7 +3828,7 @@ async function computeInverseFFTonHalf(halfSpectrum) {
 
 
 // Function to compute inverse FFT of a spectrum
-async function computeInverseFFTonHalf(halfSpectrum) {
+function computeInverseFFTonHalf(halfSpectrum) {
     // Ensure the size of the spectrum array is a power of 2
     const paddedSize = nextPowerOf2(halfSpectrum.length);
 
