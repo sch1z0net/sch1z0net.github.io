@@ -648,114 +648,7 @@ function fftComplexInPlace_radix4(out) {
 }
 
 
-
-
-
-
-
-function index_lookup(N){
-    const bits = Math.log2(N);
-
-    let lookup = new Uint16Array(bits*12*N/2);
-
-    let idx = 0;
-
-    let pre  = 0;    //offset for indexing Factor Lookup  
-    let pwr  = 0;    //power 
-    let mpwr = bits; //max power
-    let N_half    = N >> 1;
-    let N_quarter = N >> 2;
-    let c = N_half;  // circled index start
-
-    for (let size = 2; size <= N; size <<= 1) {
-        pwr++;
-        // Define variables
-        let i = 0;    // ev index, increases with every line step
-        let l = 0;    // line step made
-        let b = size; // block size
-        let bs = 0;   // block steps made
-        let ni = 0;   // number of indices handled 
-
-        const h = size >> 1;
-        const q = size >> 2;
-      
-        if( size == N ){ c = N_quarter; }; 
-
-        let br = (size==N) ? h/2 : 0;
-
-        const isNotPowerOf4 = (size & (size - 1)) !== 0 || size === 0 || (size & 0xAAAAAAAA) !== 0;
-        // runs N/2 times for PowerOf2
-        // runs N/4 times for PowerOf4
-        while (ni < N) {         
-            const eInd1 = i;        const oInd1 = i + h;                         
-            const eInd2 = i + c;    const oInd2 = i + h + c;              
-
-            const j1 = (l)%h;
-            const tRe1 = pre + 2*j1 + 0;  // LOOKUP
-            const tIm1 = pre + 2*j1 + 1;  // LOOKUP
-
-            const eRe1Indx = (eInd1 << 1);
-            const eIm1Indx = (eInd1 << 1) + 1;
-            const oRe1Indx = (oInd1 << 1);
-            const oIm1Indx = (oInd1 << 1) + 1;
-
-            lookup[idx++] = tRe1;
-            lookup[idx++] = tIm1;
-            lookup[idx++] = eRe1Indx;
-            lookup[idx++] = eIm1Indx;
-            lookup[idx++] = oRe1Indx;
-            lookup[idx++] = oIm1Indx;
-
-            // Not Power of 4?
-            if( isNotPowerOf4 ){ 
-                i++; l++; ni+=2;
-                // line reaches block-end
-                if (l % h === 0) { bs++; i=bs*b; }
-                continue; 
-            }
-
-            const j2 = j1 + br;
-            const tRe2 = pre + 2*j2 + 0;  // LOOKUP
-            const tIm2 = pre + 2*j2 + 1;  // LOOKUP
-
-            const eRe2Indx = (eInd2 << 1);
-            const eIm2Indx = (eInd2 << 1) + 1;
-            const oRe2Indx = (oInd2 << 1);
-            const oIm2Indx = (oInd2 << 1) + 1;
-
-            lookup[idx++] = tRe2;
-            lookup[idx++] = tIm2;
-            lookup[idx++] = eRe2Indx;
-            lookup[idx++] = eIm2Indx;
-            lookup[idx++] = oRe2Indx;
-            lookup[idx++] = oIm2Indx;
-            
-            i++; l++; ni+=4;
-            // line reaches block-end
-            if (l % h === 0) { bs++; i=bs*b; }
-
-        }
-        pre += size;
-    }
-
-    return lookup;
-}
-
-let INDEX_LOOKUP_4    = index_lookup(4);
-let INDEX_LOOKUP_8    = index_lookup(8);
-let INDEX_LOOKUP_16   = index_lookup(16);
-let INDEX_LOOKUP_32   = index_lookup(32);
-let INDEX_LOOKUP_64   = index_lookup(64);
-let INDEX_LOOKUP_128  = index_lookup(128);
-let INDEX_LOOKUP_256  = index_lookup(256);
-let INDEX_LOOKUP_512  = index_lookup(512);
-let INDEX_LOOKUP_1024 = index_lookup(1024);
-let INDEX_LOOKUP_2048 = index_lookup(2048);
-let INDEX_LOOKUP_4096 = index_lookup(4096);
-
 let factors = LOOKUP_RADIX2_1024;
-let idx_LKUP = INDEX_LOOKUP_1024;
-let len = idx_LKUP.length;
 
 function twiddlelizer(out, tRe, tIm, eReI, eImI, oReI, oImI){
         // Get current values
@@ -773,74 +666,6 @@ function twiddlelizer(out, tRe, tIm, eReI, eImI, oReI, oImI){
         out[oImI]  = (eIm - t_oIm);
 }
 
-/*
-function fftComplexInPlace_seq(out) {
-    const N = out.length/2;
-
-    let factors;
-    if(N ==    4){ factors = LOOKUP_RADIX2_4;    }
-    if(N ==    8){ factors = LOOKUP_RADIX2_8;    }
-    if(N ==   16){ factors = LOOKUP_RADIX2_16;   }
-    if(N ==   32){ factors = LOOKUP_RADIX2_32;   }
-    if(N ==   64){ factors = LOOKUP_RADIX2_64;   }
-    if(N ==  128){ factors = LOOKUP_RADIX2_128;  }
-    if(N ==  256){ factors = LOOKUP_RADIX2_256;  }
-    if(N ==  512){ factors = LOOKUP_RADIX2_512;  }
-    if(N == 1024){ factors = LOOKUP_RADIX2_1024; }
-    if(N == 2048){ factors = LOOKUP_RADIX2_2048; }
-    if(N == 4096){ factors = LOOKUP_RADIX2_4096; }
-
-    let idx_LKUP; 
-    if(N ==   4){ idx_LKUP = INDEX_LOOKUP_4;    }
-    if(N ==   8){ idx_LKUP = INDEX_LOOKUP_8;    }
-    if(N ==  16){ idx_LKUP = INDEX_LOOKUP_16;   }
-    if(N ==  32){ idx_LKUP = INDEX_LOOKUP_32;   }
-    if(N ==  64){ idx_LKUP = INDEX_LOOKUP_64;   }
-    if(N == 128){ idx_LKUP = INDEX_LOOKUP_128;  }
-    if(N == 256){ idx_LKUP = INDEX_LOOKUP_256;  }
-    if(N == 512){ idx_LKUP = INDEX_LOOKUP_512;  }
-    if(N ==1024){ idx_LKUP = INDEX_LOOKUP_1024; }
-    if(N ==2048){ idx_LKUP = INDEX_LOOKUP_2048; }  
-    if(N ==4096){ idx_LKUP = INDEX_LOOKUP_4096; } 
-
-    let i = 0;
-    let tRe1, tIm1, eReI1, eImI1, oReI1, oImI1;
-    let tRe2, tIm2, eReI2, eImI2, oReI2, oImI2;
-    let tRe3, tIm3, eReI3, eImI3, oReI3, oImI3;
-    let tRe4, tIm4, eReI4, eImI4, oReI4, oImI4;
-    let tRe5, tIm5, eReI5, eImI5, oReI5, oImI5;
-    let tRe6, tIm6, eReI6, eImI6, oReI6, oImI6;
-    let tRe7, tIm7, eReI7, eImI7, oReI7, oImI7;
-    let tRe8, tIm8, eReI8, eImI8, oReI8, oImI8;
-
-    while(i < len){
-        if(i==0){ 
-          // TwiddleFactors
-          tRe1 = factors[idx_LKUP[i++]]; tIm1 = factors[idx_LKUP[i++]]; eReI1 = idx_LKUP[i++]; eImI1 = idx_LKUP[i++]; oReI1 = idx_LKUP[i++]; oImI1 = idx_LKUP[i++];
-          tRe2 = factors[idx_LKUP[i++]]; tIm2 = factors[idx_LKUP[i++]]; eReI2 = idx_LKUP[i++]; eImI2 = idx_LKUP[i++]; oReI2 = idx_LKUP[i++]; oImI2 = idx_LKUP[i++];
-          tRe3 = factors[idx_LKUP[i++]]; tIm3 = factors[idx_LKUP[i++]]; eReI3 = idx_LKUP[i++]; eImI3 = idx_LKUP[i++]; oReI3 = idx_LKUP[i++]; oImI3 = idx_LKUP[i++];
-          tRe4 = factors[idx_LKUP[i++]]; tIm4 = factors[idx_LKUP[i++]]; eReI4 = idx_LKUP[i++]; eImI4 = idx_LKUP[i++]; oReI4 = idx_LKUP[i++]; oImI4 = idx_LKUP[i++];
-          tRe5 = factors[idx_LKUP[i++]]; tIm5 = factors[idx_LKUP[i++]]; eReI5 = idx_LKUP[i++]; eImI5 = idx_LKUP[i++]; oReI5 = idx_LKUP[i++]; oImI5 = idx_LKUP[i++];
-          tRe6 = factors[idx_LKUP[i++]]; tIm6 = factors[idx_LKUP[i++]]; eReI6 = idx_LKUP[i++]; eImI6 = idx_LKUP[i++]; oReI6 = idx_LKUP[i++]; oImI6 = idx_LKUP[i++];
-          tRe7 = factors[idx_LKUP[i++]]; tIm7 = factors[idx_LKUP[i++]]; eReI7 = idx_LKUP[i++]; eImI7 = idx_LKUP[i++]; oReI7 = idx_LKUP[i++]; oImI7 = idx_LKUP[i++];
-          tRe8 = factors[idx_LKUP[i++]]; tIm8 = factors[idx_LKUP[i++]]; eReI8 = idx_LKUP[i++]; eImI8 = idx_LKUP[i++]; oReI8 = idx_LKUP[i++]; oImI8 = idx_LKUP[i++];
-        }else{
-          i += 8 * 6; // factor 8
-        }
-
-        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
-        twiddlelizer(out, tRe1, tIm1, eReI1, eImI1, oReI1, oImI1);
-
-    }
-
-    return out;
-}*/
 
 let ____F = LOOKUP_RADIX2_1024;
 
@@ -2118,15 +1943,20 @@ function fftComplex512(complexInput) {
 }
 
 
-
+let paddedInput;
 function fftReal512(realInput) {
 
-    // Create a copy of the input array
-    const inputCopy = realInput.slice();
+    if(realInput.length != 512){
+        paddedInput = new Float32Array(512).fill(0);
+        inputSignal.forEach((value, index) => paddedInput[index] = value);
+    }else{
+        // Create a copy of the input array
+        paddedInput = realInput.slice();
+    }
 
     // Perform bit reversal
-    for (let i = 0; i < N; i++) {
-        inputBR[i] = inputCopy[map[i]];
+    for (let i = 0; i < 512; i++) {
+        inputBR[i] = paddedInput[map[i]];
     }
 
     /*
@@ -3688,6 +3518,7 @@ function computeFFT(frame, frameID, frames) {
     return spectrum;
 }
 
+/*
 // Function to compute FFT of a frame
 async function computeFFTasync(frame, frameID, frames, fftFactorLookup=null) {
     const spectrum = FFT(frame, fftFactorLookup);
@@ -3696,7 +3527,7 @@ async function computeFFTasync(frame, frameID, frames, fftFactorLookup=null) {
         complexSpectrum.push({ re: spectrum[i], im: spectrum[i + 1] });
     }
     return complexSpectrum;
-}
+}*/
 
 
 
