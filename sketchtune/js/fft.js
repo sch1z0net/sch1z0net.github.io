@@ -1948,7 +1948,7 @@ function fftReal512(realInput) {
 
     if(realInput.length != 512){
         paddedInput = new Float32Array(512).fill(0);
-        inputSignal.forEach((value, index) => paddedInput[index] = value);
+        realInput.forEach((value, index) => paddedInput[index] = value);
     }else{
         // Create a copy of the input array
         paddedInput = realInput.slice();
