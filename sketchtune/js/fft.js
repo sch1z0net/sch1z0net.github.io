@@ -2880,7 +2880,7 @@ function computeFFT(frame, frameID, frames) {
     //const elapsedTime2 = endTime2 - startTime;
     //console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time 2: ${elapsedTime2} milliseconds`);
 
-    return complexSpectrum;
+    return spectrum;
 }
 
 // Function to compute FFT of a frame
