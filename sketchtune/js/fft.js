@@ -21,7 +21,7 @@ function nextPowerOf4(n) {
 function applySynthesisWindow(frame, synthesisWindow) {
     const weightedFrame = new Float32Array(frame.length);
     for (let i = 0; i < frame.length; i++) {
-        weightedFrame[i] = frame[i] * synthesisWindow[i];
+        frame[i] * synthesisWindow[i];
     }
     return weightedFrame;
 }
@@ -92,11 +92,9 @@ function createHanningWindow(windowLength) {
 
 // Function to apply Hanning window to the input signal
 function applyHanningWindow(frame) {
-    const windowedFrame = new Float32Array(frame.length);
     for (let i = 0; i < frame.length; i++) {
-        windowedFrame[i] = frame[i] * 0.5 * (1 - Math.cos(2 * Math.PI * i / (frame.length - 1)));
+       frame[i] *= 0.5 * (1 - Math.cos(2 * Math.PI * i / (frame.length - 1)));
     }
-    return windowedFrame;
 }
 
 /*

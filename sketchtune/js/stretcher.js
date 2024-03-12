@@ -194,8 +194,8 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
                     const startIdx = i * hopSize;
                     const endIdx = startIdx + windowSize;
                     let frame = inputSignal.slice(startIdx, endIdx);
-                    let windowedFrame = applyHanningWindow(frame);
-                    const spectrum = fftReal512(windowedFrame);
+                    applyHanningWindow(frame);
+                    const spectrum = fftReal512(frame);
                     // Assuming spectrum is the array containing the full spectrum obtained from FFT
                     const halfSpectrum = spectrum.slice(0, 512);
                     spectrogram[i] = halfSpectrum;
@@ -318,8 +318,7 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfS
             // Compute inverse FFT of the spectrum to obtain the frame in time domain
             let spectrum = spectrogram[i];
 
-            let frame;
-            frame = computeInverseFFTonHalf(spectrum);
+            let frame = computeInverseFFTonHalf(spectrum);
             /*if(halfSpec){  frame = computeInverseFFTonHalf(spectrum);
             }else{         frame = computeInverseFFT(spectrum);        }*/
 
