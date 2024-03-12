@@ -187,7 +187,9 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
     return new Promise((resolve) => {
         const frames = Math.floor((inputSignal.length - windowSize) / hopSize) + 1;
         const spectrogram = new Array(frames); // Preallocate memory
-                
+        
+        const processFrames = async () => {
+            try {
                 for (let i = 0; i <= frames; i++) {
                     const startIdx = i * hopSize;
                     const endIdx = startIdx + windowSize;
@@ -211,6 +213,12 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
 
                 // Resolve the promise with the final spectrogram
                 resolve(spectrogram);
+            } catch (error) {
+                throw error;
+            }
+        };
+
+        processFrames();
         
     });
 }
