@@ -2845,10 +2845,10 @@ function prepare_and_fft(inputSignal) {
     console.log(`FFT - PADDING: Elapsed time: ${elapsedTime2} milliseconds`);*/
 
     // Perform FFT
-    return fftRealInPlace_ref(paddedInput);
+    //return fftRealInPlace_ref(paddedInput);
     //return fftRealInPlaceRADIX2(paddedInput);
     //return fftRealInPlaceRADIX4(paddedInput);
-    //return fftComplexInPlace_seq_4(paddedInput);
+    return fftComplexInPlace_seq_4(paddedInput);
 }
 
 
