@@ -4550,7 +4550,7 @@ function computeInverseFFTonHalf512(halfSpectrum) {
 
 let fullSpectrum1024 = new Float32Array(2048);
 // Function to compute inverse FFT of a spectrum
-function computeInverseFFTonHalf512(halfSpectrum) {
+function computeInverseFFTonHalf1024(halfSpectrum) {
     // Copy DC component (index 0)
     fullSpectrum[0] = halfSpectrum[0]; // Copy the real part
     fullSpectrum[1] = halfSpectrum[1]; // Copy the imaginary part

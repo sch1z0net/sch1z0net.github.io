@@ -381,7 +381,7 @@ function ISTFT_512(spectrogram, hopSize) {
         for (let i = 0; i < spectra; i++) {
             // Compute inverse FFT of the spectrum to obtain the frame in time domain
             let spectrum = spectrogram[i];
-            let frame = computeInverseFFTonHalf(spectrum);
+            let frame = computeInverseFFTonHalf512(spectrum);
             const weightedFrame = applySynthesisWindow(frame, synthesisWindow);
             // Overlap-add the weighted frame to the output signal
             const startIdx = i * hopSize;
@@ -412,7 +412,7 @@ function ISTFT_1024(spectrogram, hopSize) {
         for (let i = 0; i < spectra; i++) {
             // Compute inverse FFT of the spectrum to obtain the frame in time domain
             let spectrum = spectrogram[i];
-            let frame = computeInverseFFTonHalf(spectrum);
+            let frame = computeInverseFFTonHalf1024(spectrum);
             const weightedFrame = applySynthesisWindow(frame, synthesisWindow);
             // Overlap-add the weighted frame to the output signal
             const startIdx = i * hopSize;
