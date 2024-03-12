@@ -318,14 +318,13 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfS
             // Compute inverse FFT of the spectrum to obtain the frame in time domain
             let spectrum = spectrogram[i];
 
-            let frame;
-            frame = computeInverseFFTonHalf(spectrum);
+            let frame = computeInverseFFTonHalf(spectrum);
             /*if(halfSpec){  frame = computeInverseFFTonHalf(spectrum);
             }else{         frame = computeInverseFFT(spectrum);        }*/
 
             //const synthesisWindow = hammingWindow(windowSize);
             //const synthesisWindow = blackmanWindow(windowSize);
-            const weightedFrame = applySynthesisWindow(frame, synthesisWindow);
+            //applySynthesisWindow(frame, synthesisWindow);
 
             // Overlap-add the weighted frame to the output signal
             const startIdx = i * hopSize;
@@ -335,7 +334,8 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfS
                     // If there's no existing value, initialize it with the value from the current frame
                     outputSignal[startIdx + j] = frame[j];
                 } else {
-                    outputSignal[startIdx + j] += weightedFrame[j];
+                    applySynthesisWindow(frame, synthesisWindow);
+                    outputSignal[startIdx + j] += frame[j];
                 }
             }
         }

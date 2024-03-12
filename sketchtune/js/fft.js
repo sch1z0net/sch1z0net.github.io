@@ -16,14 +16,11 @@ function nextPowerOf4(n) {
 }
 
 
-
 // Function to apply synthesis window to a frame
 function applySynthesisWindow(frame, synthesisWindow) {
-    const weightedFrame = new Float32Array(frame.length);
     for (let i = 0; i < frame.length; i++) {
-        weightedFrame[i] = frame[i] * synthesisWindow[i];
+        frame[i] *= synthesisWindow[i];
     }
-    return weightedFrame;
 }
 
 // Function to normalize the output signal
