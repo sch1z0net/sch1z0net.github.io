@@ -2823,22 +2823,22 @@ function prepare_and_fft(inputSignal) {
 
     //const startTime = performance.now();
     // Zero-padding to the next power of 2
-    const FFT_SIZE = nextPowerOf2(inputSignal.length);
+    //const FFT_SIZE = nextPowerOf2(inputSignal.length);
     /*const endTime1 = performance.now();
     const elapsedTime1 = endTime1 - startTime;
     console.log(`FFT - FFTSIZE: Elapsed time: ${elapsedTime1} milliseconds`);*/
 
-    paddedInput = new Float64Array(FFT_SIZE).fill(0);
-    inputSignal.forEach((value, index) => paddedInput[index] = value);
+    //paddedInput = new Float64Array(FFT_SIZE).fill(0);
+    //inputSignal.forEach((value, index) => paddedInput[index] = value);
 
 
-    /*if(inputSignal.length != FFT_SIZE){
+    if(inputSignal.length != FFT_SIZE){
         paddedInput = new Float64Array(FFT_SIZE).fill(0);
         inputSignal.forEach((value, index) => paddedInput[index] = value);
-        return fftRealInPlace_ref(paddedInput);
+        return fftComplexInPlace_seq_4(paddedInput);
     }else{
-        return fftRealInPlace_ref(inputSignal);
-    }*/
+        return fftComplexInPlace_seq_4(inputSignal);
+    }
 
     /*const endTime2 = performance.now();
     const elapsedTime2 = endTime2 - startTime;
@@ -2848,7 +2848,7 @@ function prepare_and_fft(inputSignal) {
     //return fftRealInPlace_ref(paddedInput);
     //return fftRealInPlaceRADIX2(paddedInput);
     //return fftRealInPlaceRADIX4(paddedInput);
-    return fftComplexInPlace_seq_4(paddedInput);
+    //return fftComplexInPlace_seq_4(paddedInput);
 }
 
 
