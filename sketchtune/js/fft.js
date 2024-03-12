@@ -136,7 +136,7 @@ function precalculateFFTFactorsRADIX2flattened(maxSampleLength) {
         //....
     }
 
-    return new Float64Array(factors);
+    return new Float32Array(factors);
 }
 /*
 // Compute FFT factors with caching (optimized for Radix-4 FFT)
@@ -951,8 +951,8 @@ const bits = 9;
 /*let map = bitReversalMap1024.get(1024);
 const N = 1024;
 const bits = 10;*/
-const inputBR = new Float64Array(N);
-const out = new Float64Array(N * 2);
+const inputBR = new Float32Array(N);
+const out = new Float32Array(N * 2);
 
 
 function fftComplex512(complexInput) {
@@ -3399,20 +3399,20 @@ function fftReal512(realInput) {
 /*let map = bitReversalMap1024.get(1024);
 const N = 1024;
 const bits = 10;
-const inputBR = new Float64Array(N);
-const complexOut = new Float64Array(N * 2);
+const inputBR = new Float32Array(N);
+const complexOut = new Float32Array(N * 2);
 function fftRealInPlaceRADIX4(realInput) {
     // Create a copy of the input array
     const input = realInput.slice();
 
     // Perform bit reversal
-    //const inputBR = new Float64Array(N);
+    //const inputBR = new Float32Array(N);
     for (let i = 0; i < N; i++) {
         inputBR[i] = input[map[i]];
     }
 
     // Convert the real-valued input to a complex-valued Float32Array
-    //const complexOut = new Float64Array(N * 2);
+    //const complexOut = new Float32Array(N * 2);
     for (let i = 0; i < N; i++) {
         complexOut[i * 2] = inputBR[i];
         complexOut[i * 2 + 1] = 0; // Imaginary part is set to 0
@@ -3462,7 +3462,7 @@ function precalculateFFTFactorsRADIX2(N) {
         factors[i * 2 + 1] = Math.sin(angle1); // Sine of angle1
     }
 
-    return new Float64Array(factors);
+    return new Float32Array(factors);
 }
 
 // Function to compute FFT factors with caching
@@ -3544,7 +3544,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
     }
 
     // Perform bit reversal
-    const out = new Float64Array(N * 2);
+    const out = new Float32Array(N * 2);
     let brs = [];
     for (let i = 0; i < N; i++) {
         const reversedIndex = bitReverse(i, bits);
@@ -3625,7 +3625,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
 /**********************************************************************************************/
 
 const FFT_SIZE = 512;
-//let paddedInput = new Float64Array(FFT_SIZE).fill(0);
+//let paddedInput = new Float32Array(FFT_SIZE).fill(0);
 function prepare_and_fft(inputSignal) {
     // Apply Hanning window to the input signal (if needed)
     // const windowedSignal = applyHanningWindow(inputSignal); // Assuming the windowing function is already applied or not needed
@@ -3638,7 +3638,7 @@ function prepare_and_fft(inputSignal) {
     console.log(`FFT - FFTSIZE: Elapsed time: ${elapsedTime1} milliseconds`);*/
 
     if(inputSignal.length != FFT_SIZE){
-        paddedInput = new Float64Array(FFT_SIZE).fill(0);
+        paddedInput = new Float32Array(FFT_SIZE).fill(0);
         inputSignal.forEach((value, index) => paddedInput[index] = value);
         return fftReal512(paddedInput);
     }else{
