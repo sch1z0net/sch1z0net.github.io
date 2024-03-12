@@ -2816,7 +2816,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
 /**********************************************************************************************/
 
 
-function prepare_and_fft(inputSignal, fftFactorLookup=null) {
+function prepare_and_fft(inputSignal) {
     // Apply Hanning window to the input signal (if needed)
     // const windowedSignal = applyHanningWindow(inputSignal); // Assuming the windowing function is already applied or not needed
 
@@ -3034,7 +3034,8 @@ const performFFTOperations = (fftSize) => {
     // Perform FFT operations numOperations times
     for (let i = 0; i < numOperations; i++) {
         //fftRealInPlace_ref(testData);
-        fftComplexInPlace_seq_4(testData);
+        //fftComplexInPlace_seq_4(testData);
+        prepare_and_fft(testData);
     }
 
 };
@@ -3078,11 +3079,11 @@ measureTime(1024);
 measureTime(1024);
 measureTime(1024);
 measureTime(1024);*/
-/*measureTime(512);
 measureTime(512);
 measureTime(512);
 measureTime(512);
-measureTime(512);*/
+measureTime(512);
+measureTime(512);
 //measureTime(1024);
 //measureTime(2048);
 //measureTime(4096);
