@@ -3455,6 +3455,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
 /***************************** PREPARATION OF FFT AND IFFT ************************************/
 /**********************************************************************************************/
 
+/*
 const FFT_SIZE = 512;
 //let paddedInput = new Float32Array(FFT_SIZE).fill(0);
 function prepare_and_fft(inputSignal) {
@@ -3464,9 +3465,6 @@ function prepare_and_fft(inputSignal) {
     //const startTime = performance.now();
     // Zero-padding to the next power of 2
     //const FFT_SIZE = nextPowerOf2(inputSignal.length);
-    /*const endTime1 = performance.now();
-    const elapsedTime1 = endTime1 - startTime;
-    console.log(`FFT - FFTSIZE: Elapsed time: ${elapsedTime1} milliseconds`);*/
 
     if(inputSignal.length != FFT_SIZE){
         paddedInput = new Float32Array(FFT_SIZE).fill(0);
@@ -3476,19 +3474,15 @@ function prepare_and_fft(inputSignal) {
         return fftReal512(inputSignal);
     }
 
-    /*const endTime2 = performance.now();
-    const elapsedTime2 = endTime2 - startTime;
-    console.log(`FFT - PADDING: Elapsed time: ${elapsedTime2} milliseconds`);*/
-
     // Perform FFT
     //return fftRealInPlace_ref(paddedInput);
     //return fftRealInPlaceRADIX2(paddedInput);
     //return fftRealInPlaceRADIX4(paddedInput);
     //return fftReal512(paddedInput);
 }
+*/
 
-
-
+/*
 function FFT(inputSignal) {
     //console.log("----FFT-----");
     return prepare_and_fft(inputSignal);
@@ -3503,14 +3497,6 @@ function computeFFT(frame, frameID, frames) {
     //const endTime = performance.now();
     //const elapsedTime = endTime - startTime;
     //console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);
-    
-    // Convert the Float32Array spectrum back to a complex array
-    /*const complexSpectrum = [];
-    for (let i = 0; i < spectrum.length; i += 2) {
-        complexSpectrum.push({ re: spectrum[i], im: spectrum[i + 1] });
-        //if(Number.isNaN(spectrum[i])){ console.error("spectrum[",i,"] is NaN"); }
-        //if(Number.isNaN(spectrum[i+1])){ console.error("spectrum[",i+1,"] is NaN"); }
-    }*/
 
     //const endTime2 = performance.now();
     //const elapsedTime2 = endTime2 - startTime;
@@ -3519,7 +3505,6 @@ function computeFFT(frame, frameID, frames) {
     return spectrum;
 }
 
-/*
 // Function to compute FFT of a frame
 async function computeFFTasync(frame, frameID, frames, fftFactorLookup=null) {
     const spectrum = FFT(frame, fftFactorLookup);
@@ -3554,7 +3539,8 @@ function ifft(input) {
     // Apply FFT to the conjugate spectrum
     //const fftResult = fftComplexInPlace_ref(conjugateSpectrum);
     //const fftResult = fftComplexInPlaceRADIX4(conjugateSpectrum);
-    const result = fftComplex512(input);
+    const result = fftComplexInPlace_ref(input);
+    //const result = fftComplex512(input);
 
     for (let i = 0; i < 1024; i += 2) {
         result[i] /= 512; // Scale the real part
