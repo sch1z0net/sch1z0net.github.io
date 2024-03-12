@@ -3714,7 +3714,8 @@ function ifft(input) {
 
     // Apply FFT to the conjugate spectrum
     //const fftResult = fftComplexInPlace_ref(conjugateSpectrum);
-    const fftResult = fftComplexInPlaceRADIX4(conjugateSpectrum);
+    //const fftResult = fftComplexInPlaceRADIX4(conjugateSpectrum);
+    const fftResult = fftComplex512(conjugateSpectrum);
 
     // Take the complex conjugate of the FFT result and scale by 1/N
     const ifftResult = new Float32Array(N * 2);
