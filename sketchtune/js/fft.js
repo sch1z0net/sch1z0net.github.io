@@ -4518,26 +4518,26 @@ let fullSpectrum512 = new Float32Array(1024);
 // Function to compute inverse FFT of a spectrum
 function computeInverseFFTonHalf512(halfSpectrum) {
     // Copy DC component (index 0)
-    fullSpectrum[0] = halfSpectrum[0]; // Copy the real part
-    fullSpectrum[1] = halfSpectrum[1]; // Copy the imaginary part
+    fullSpectrum512[0] = halfSpectrum[0]; // Copy the real part
+    fullSpectrum512[1] = halfSpectrum[1]; // Copy the imaginary part
 
     // Copy Nyquist frequency component (index paddedSize)
-    fullSpectrum[512    ] = 0; // Copy the real part
-    fullSpectrum[512 + 1] = 0; // Invert the imaginary part
+    fullSpectrum512[512    ] = 0; // Copy the real part
+    fullSpectrum512[512 + 1] = 0; // Invert the imaginary part
 
     // Apply symmetry to fill the rest of the spectrum
     for (let i = 1; i < 256; i++) {
         let re = halfSpectrum[i * 2    ];
         let im = halfSpectrum[i * 2 + 1];
-        fullSpectrum[i * 2    ] = re; // Copy the real part
-        fullSpectrum[i * 2 + 1] = im; // Copy imaginary part
+        fullSpectrum512[i * 2    ] = re; // Copy the real part
+        fullSpectrum512[i * 2 + 1] = im; // Copy imaginary part
         // Fill the mirrored part of the spectrum
-        fullSpectrum[1024 - (i * 2)    ] =  re;     // Copy the real part
-        fullSpectrum[1024 - (i * 2) + 1] = -im; // Invert the imaginary part
+        fullSpectrum512[1024 - (i * 2)    ] =  re;     // Copy the real part
+        fullSpectrum512[1024 - (i * 2) + 1] = -im; // Invert the imaginary part
     }
 
     // Perform the IFFT on the full spectrum
-    const timeDomainSignal = ifft(fullSpectrum);
+    const timeDomainSignal = ifft(fullSpectrum512);
 
     // Extract only the real parts of the time-domain signal
     const audioSignal = new Float32Array(timeDomainSignal.length / 2);
@@ -4552,26 +4552,26 @@ let fullSpectrum1024 = new Float32Array(2048);
 // Function to compute inverse FFT of a spectrum
 function computeInverseFFTonHalf1024(halfSpectrum) {
     // Copy DC component (index 0)
-    fullSpectrum[0] = halfSpectrum[0]; // Copy the real part
-    fullSpectrum[1] = halfSpectrum[1]; // Copy the imaginary part
+    fullSpectrum1024[0] = halfSpectrum[0]; // Copy the real part
+    fullSpectrum1024[1] = halfSpectrum[1]; // Copy the imaginary part
 
     // Copy Nyquist frequency component (index paddedSize)
-    fullSpectrum[1024    ] = 0; // Copy the real part
-    fullSpectrum[1024 + 1] = 0; // Invert the imaginary part
+    fullSpectrum1024[1024    ] = 0; // Copy the real part
+    fullSpectrum1024[1024 + 1] = 0; // Invert the imaginary part
 
     // Apply symmetry to fill the rest of the spectrum
     for (let i = 1; i < 512; i++) {
-        let re = halfSpectrum[i * 2    ];
-        let im = halfSpectrum[i * 2 + 1];
-        fullSpectrum[i * 2    ] = re; // Copy the real part
-        fullSpectrum[i * 2 + 1] = im; // Copy imaginary part
+        let re = halfSpectrum1024[i * 2    ];
+        let im = halfSpectrum1024[i * 2 + 1];
+        fullSpectrum1024[i * 2    ] = re; // Copy the real part
+        fullSpectrum1024[i * 2 + 1] = im; // Copy imaginary part
         // Fill the mirrored part of the spectrum
-        fullSpectrum[2048 - (i * 2)    ] =  re;     // Copy the real part
-        fullSpectrum[2048 - (i * 2) + 1] = -im; // Invert the imaginary part
+        fullSpectrum1024[2048 - (i * 2)    ] =  re;     // Copy the real part
+        fullSpectrum1024[2048 - (i * 2) + 1] = -im; // Invert the imaginary part
     }
 
     // Perform the IFFT on the full spectrum
-    const timeDomainSignal = ifft(fullSpectrum);
+    const timeDomainSignal = ifft(fullSpectrum1024);
 
     // Extract only the real parts of the time-domain signal
     const audioSignal = new Float32Array(timeDomainSignal.length / 2);
