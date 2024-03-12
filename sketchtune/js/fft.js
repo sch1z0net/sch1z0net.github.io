@@ -2927,7 +2927,7 @@ function IFFT(spectrum) {
 // Function to compute inverse FFT of a spectrum
 function computeInverseFFT(spectrum) {
     // Ensure the size of the spectrum array is a power of 2
-    const paddedSize = nextPowerOf2(spectrum.length);
+    const paddedSize = nextPowerOf2(spectrum.length/2);
 
     // Pad both real and imaginary parts of the spectrum
     const paddedSpectrum = new Float32Array(paddedSize * 2).fill(0);
