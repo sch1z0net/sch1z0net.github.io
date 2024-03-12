@@ -226,6 +226,39 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
 }
 
 
+function STFT_512(inputSignal, hopSize) {
+    return new Promise((resolve) => {
+        const frames = Math.floor((inputSignal.length - 512) / hopSize) + 1;
+        const spectrogram = new Array(frames); // Preallocate memory
+        
+        const processFrames = async () => {
+            try {
+                for (let i = 0; i <= frames; i++) {
+                    const startIdx = i * hopSize;
+                    const endIdx = startIdx + 512;
+                    let frame = inputSignal.slice(startIdx, endIdx);
+                    let windowedFrame = applyHanningWindow(frame);
+                    const spectrum = fftReal512(windowedFrame);
+                    // Assuming spectrum is the array containing the full spectrum obtained from FFT
+                    const halfSpectrum = spectrum.slice(0, 512);
+                    spectrogram[i] = halfSpectrum;
+                    // Clear memory by reusing variables
+                    frame = null;
+                    windowedFrame = null;
+                }
+
+                // Resolve the promise with the final spectrogram
+                resolve(spectrogram);
+            } catch (error) {
+                throw error;
+            }
+        };
+
+        processFrames();
+        
+    });
+}
+
 function STFT_1024(inputSignal, hopSize) {
     return new Promise((resolve) => {
         const frames = Math.floor((inputSignal.length - 1024) / hopSize) + 1;
