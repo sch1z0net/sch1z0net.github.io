@@ -3847,7 +3847,7 @@ function computeInverseFFTonHalf(halfSpectrum) {
     fullSpectrum[halfSize + 1] = 0; // Invert the imaginary part
 
     // Apply symmetry to fill the rest of the spectrum
-    for (let i = 1; i < halfSpectrum.length; i++) {
+    for (let i = 1; i < halfSpectrum.length/2; i++) {
         fullSpectrum[i * 2    ] = halfSpectrum[i * 2    ]; // Copy the real part
         fullSpectrum[i * 2 + 1] = halfSpectrum[i * 2 + 1]; // Copy imaginary part
 
