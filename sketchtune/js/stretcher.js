@@ -228,7 +228,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
 
 
 
-
+/*
 // Function to perform Inverse Short-Time Fourier Transform (ISTFT) using Web Workers
 function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfSpec) {
     const numFrames = spectrogram.length;
@@ -302,9 +302,9 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfS
         return outputSignal;
     });
 }
+*/
 
 
-/*
 // Function to perform Inverse Short-Time Fourier Transform (ISTFT) using Web Workers
 function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfSpec) {
         let spectra = spectrogram.length;
@@ -343,7 +343,7 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfS
         return outputSignal;
 
 }
-*/
+
 
 
 
