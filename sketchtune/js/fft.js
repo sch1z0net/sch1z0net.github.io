@@ -4561,8 +4561,8 @@ function computeInverseFFTonHalf1024(halfSpectrum) {
 
     // Apply symmetry to fill the rest of the spectrum
     for (let i = 1; i < 512; i++) {
-        let re = halfSpectrum1024[i * 2    ];
-        let im = halfSpectrum1024[i * 2 + 1];
+        let re = halfSpectrum[i * 2    ];
+        let im = halfSpectrum[i * 2 + 1];
         fullSpectrum1024[i * 2    ] = re; // Copy the real part
         fullSpectrum1024[i * 2 + 1] = im; // Copy imaginary part
         // Fill the mirrored part of the spectrum
