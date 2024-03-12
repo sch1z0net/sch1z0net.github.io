@@ -2875,13 +2875,14 @@ function computeFFT(frame, frameID, frames) {
         //if(Number.isNaN(spectrum[i])){ console.error("spectrum[",i,"] is NaN"); }
         //if(Number.isNaN(spectrum[i+1])){ console.error("spectrum[",i+1,"] is NaN"); }
     }*/
-    const complexSpectrum = spectrum.slice();
+
+    console.log(spectrum);
 
     //const endTime2 = performance.now();
     //const elapsedTime2 = endTime2 - startTime;
     //console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time 2: ${elapsedTime2} milliseconds`);
 
-    return complexSpectrum;
+    return spectrum;
 }
 
 // Function to compute FFT of a frame
