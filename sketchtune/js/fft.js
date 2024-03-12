@@ -2816,7 +2816,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
 /**********************************************************************************************/
 
 const FFT_SIZE = 512;
-let paddedInput = new Float64Array(FFT_SIZE).fill(0);
+//let paddedInput = new Float64Array(FFT_SIZE).fill(0);
 function prepare_and_fft(inputSignal) {
     // Apply Hanning window to the input signal (if needed)
     // const windowedSignal = applyHanningWindow(inputSignal); // Assuming the windowing function is already applied or not needed
@@ -2828,9 +2828,9 @@ function prepare_and_fft(inputSignal) {
     const elapsedTime1 = endTime1 - startTime;
     console.log(`FFT - FFTSIZE: Elapsed time: ${elapsedTime1} milliseconds`);*/
 
-    paddedInput = new Float64Array(FFT_SIZE).fill(0);
-    inputSignal.forEach((value, index) => paddedInput[index] = value);
-    return fftComplexInPlace_seq_4(paddedInput)
+    let paddedInput = new Float64Array(FFT_SIZE).fill(0);
+    //inputSignal.forEach((value, index) => paddedInput[index] = value);
+
 
     if(inputSignal.length != FFT_SIZE){
         paddedInput = new Float64Array(FFT_SIZE).fill(0);
