@@ -2875,12 +2875,13 @@ function computeFFT(frame, frameID, frames) {
         //if(Number.isNaN(spectrum[i])){ console.error("spectrum[",i,"] is NaN"); }
         //if(Number.isNaN(spectrum[i+1])){ console.error("spectrum[",i+1,"] is NaN"); }
     }*/
+    const complexSpectrum = spectrum.slice();
 
     //const endTime2 = performance.now();
     //const elapsedTime2 = endTime2 - startTime;
     //console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time 2: ${elapsedTime2} milliseconds`);
 
-    return spectrum;
+    return complexSpectrum;
 }
 
 // Function to compute FFT of a frame
@@ -2939,8 +2940,6 @@ function computeInverseFFT(spectrum) {
         paddedSpectrum[i * 2] = spectrum[i * 2]; // Copy real part
         paddedSpectrum[i * 2 + 1] = spectrum[i * 2 + 1]; // Copy imaginary part
     }
-
-    console.log(paddedSpectrum);
 
     // Now you can pass paddedSpectrum to the IFFT function
     const timeDomainSignal = IFFT(paddedSpectrum);
