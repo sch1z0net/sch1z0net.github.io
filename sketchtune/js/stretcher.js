@@ -480,7 +480,7 @@ function stretchSpectrogram(preSpectrogram, stretchFactor) {
             frame.push(frameWithPhases[j]);
         }
 
-        stretchedSpectrogram.push(frameWithPairs);
+        stretchedSpectrogram.push(frame);
     }
 
     return stretchedSpectrogram;
