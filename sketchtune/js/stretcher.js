@@ -196,7 +196,6 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
                     let frame = inputSignal.slice(startIdx, endIdx);
                     let windowedFrame = applyHanningWindow(frame);
                     const spectrum = computeFFT(windowedFrame, i, frames);
-                    console.log(spectrum);
                     // Assuming spectrum is the array containing the full spectrum obtained from FFT
                     //const halfSpectrum = spectrum.slice(0, spectrum.length / 2);
 
@@ -865,6 +864,7 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, windowType, h
         const endTime2 = performance.now();*/
         
         const postSpectrogram = preSpectrogram;
+        console.log(postSpectrogram);
 
         const startTime3 = performance.now();
         const processedSignal = await ISTFTWithWebWorkers(postSpectrogram, windowSize, hopSize, windowType, halfSpec);
