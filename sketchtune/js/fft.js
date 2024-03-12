@@ -2876,8 +2876,6 @@ function computeFFT(frame, frameID, frames) {
         //if(Number.isNaN(spectrum[i+1])){ console.error("spectrum[",i+1,"] is NaN"); }
     }*/
 
-    console.log(spectrum);
-
     //const endTime2 = performance.now();
     //const elapsedTime2 = endTime2 - startTime;
     //console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time 2: ${elapsedTime2} milliseconds`);

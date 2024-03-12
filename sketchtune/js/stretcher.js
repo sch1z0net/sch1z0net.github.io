@@ -211,6 +211,8 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
                     windowedFrame = null;
                 }
 
+                console.log(spectrogram);
+
                 // Resolve the promise with the final spectrogram
                 resolve(spectrogram);
             } catch (error) {
