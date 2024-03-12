@@ -884,6 +884,7 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, windowType, h
 
 
 function plotSpectrogram(spectrogramA,spectrogramB){
+    /*
     const startTimeD = performance.now();
     
     try{
@@ -903,7 +904,8 @@ function plotSpectrogram(spectrogramA,spectrogramB){
     }
 
     const endTimeD = performance.now();
-    console.log(`Plotting the Spectrogram: Elapsed time: ${endTimeD - startTimeD} milliseconds`);    
+    console.log(`Plotting the Spectrogram: Elapsed time: ${endTimeD - startTimeD} milliseconds`); 
+    */   
 }
 
 
