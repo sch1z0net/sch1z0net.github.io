@@ -305,6 +305,8 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfS
 */
 
 
+// Apply synthesis window to the frame
+const synthesisWindow = hanningWindow(512);
 // Function to perform Inverse Short-Time Fourier Transform (ISTFT) using Web Workers
 function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfSpec) {
         let spectra = spectrogram.length;
@@ -318,8 +320,6 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfS
             if(halfSpec){  frame = computeInverseFFTonHalf(spectrum);
             }else{         frame = computeInverseFFT(spectrum);        }
 
-            // Apply synthesis window to the frame
-            const synthesisWindow = hanningWindow(windowSize);
             //const synthesisWindow = hammingWindow(windowSize);
             //const synthesisWindow = blackmanWindow(windowSize);
             const weightedFrame = applySynthesisWindow(frame, synthesisWindow);
