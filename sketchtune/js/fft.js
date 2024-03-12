@@ -3856,8 +3856,6 @@ function computeInverseFFTonHalf(halfSpectrum) {
         fullSpectrum[fullSize - (i * 2) + 1] = -halfSpectrum[i * 2 + 1]; // Invert the imaginary part
     }
 
-    console.log(fullSpectrum);
-
     // Perform the IFFT on the full spectrum
     const timeDomainSignal = IFFT(fullSpectrum);
 
