@@ -3039,9 +3039,9 @@ const performFFTOperations = (fftSize) => {
 
     // Perform FFT operations numOperations times
     for (let i = 0; i < numOperations; i++) {
-        //fftRealInPlace_ref(testData);
+        fftRealInPlace_ref(testData);
         //fftComplexInPlace_seq_4(testData);
-        prepare_and_fft(testData);
+        //prepare_and_fft(testData);
     }
 
 };
