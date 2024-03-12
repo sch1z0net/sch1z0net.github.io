@@ -197,14 +197,16 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
                     let windowedFrame = applyHanningWindow(frame);
                     const spectrum = computeFFT(windowedFrame, i, frames);
                     // Assuming spectrum is the array containing the full spectrum obtained from FFT
-                    //const halfSpectrum = spectrum.slice(0, spectrum.length / 2);
+                    const halfSpectrum = spectrum.slice(0, 512);
+                    spectrogram[i] = halfSpectrum;
 
+                    /*
                     // Store the result in the spectrogram chunk
                     if(halfSpec){
                         //spectrogram[i] = halfSpectrum;
                     }else{
                         spectrogram[i] = spectrum.slice();
-                    }
+                    }*/
 
                     // Clear memory by reusing variables
                     frame = null;
@@ -317,8 +319,9 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfS
             let spectrum = spectrogram[i];
 
             let frame;
-            if(halfSpec){  frame = computeInverseFFTonHalf(spectrum);
-            }else{         frame = computeInverseFFT(spectrum);        }
+            frame = computeInverseFFTonHalf(spectrum);
+            /*if(halfSpec){  frame = computeInverseFFTonHalf(spectrum);
+            }else{         frame = computeInverseFFT(spectrum);        }*/
 
             //const synthesisWindow = hammingWindow(windowSize);
             //const synthesisWindow = blackmanWindow(windowSize);
