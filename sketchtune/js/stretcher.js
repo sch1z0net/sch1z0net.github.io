@@ -320,7 +320,6 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfS
 
             let frame;
             frame = computeInverseFFTonHalf(spectrum);
-            console.log(frame);
             /*if(halfSpec){  frame = computeInverseFFTonHalf(spectrum);
             }else{         frame = computeInverseFFT(spectrum);        }*/
 
