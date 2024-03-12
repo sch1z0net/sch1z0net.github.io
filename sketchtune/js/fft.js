@@ -2869,12 +2869,12 @@ function computeFFT(frame, frameID, frames) {
     //console.log(`FFT for Frame ${frameID}/${frames}: Elapsed time: ${elapsedTime} milliseconds`);
     
     // Convert the Float32Array spectrum back to a complex array
-    const complexSpectrum = [];
+    /*const complexSpectrum = [];
     for (let i = 0; i < spectrum.length; i += 2) {
         complexSpectrum.push({ re: spectrum[i], im: spectrum[i + 1] });
         //if(Number.isNaN(spectrum[i])){ console.error("spectrum[",i,"] is NaN"); }
         //if(Number.isNaN(spectrum[i+1])){ console.error("spectrum[",i+1,"] is NaN"); }
-    }
+    }*/
 
     //const endTime2 = performance.now();
     //const elapsedTime2 = endTime2 - startTime;
@@ -2928,7 +2928,31 @@ function IFFT(spectrum) {
 }
 
 
+// Function to compute inverse FFT of a spectrum
+function computeInverseFFT(spectrum) {
+    // Ensure the size of the spectrum array is a power of 2
+    const paddedSize = nextPowerOf2(spectrum.length);
 
+    // Pad both real and imaginary parts of the spectrum
+    const paddedSpectrum = new Float32Array(paddedSize * 2).fill(0);
+    for (let i = 0; i < spectrum.length; i++) {
+        paddedSpectrum[i * 2] = spectrum[i * 2]; // Copy real part
+        paddedSpectrum[i * 2 + 1] = spectrum[i * 2 + 1]; // Copy imaginary part
+    }
+
+    // Now you can pass paddedSpectrum to the IFFT function
+    const timeDomainSignal = IFFT(paddedSpectrum);
+
+    // Extract only the real parts of the time-domain signal
+    const audioSignal = new Float32Array(timeDomainSignal.length / 2);
+    for (let i = 0; i < audioSignal.length; i++) {
+        audioSignal[i] = timeDomainSignal[i * 2];
+    }
+
+    return audioSignal;
+}
+
+/*
 // Function to compute inverse FFT of a spectrum
 function computeInverseFFT(spectrum) {
     // Ensure the size of the spectrum array is a power of 2
@@ -2951,7 +2975,7 @@ function computeInverseFFT(spectrum) {
     }
 
     return audioSignal;
-}
+}*/
 
 
 

@@ -220,6 +220,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
 
 
 
+/*
 // Function to perform Inverse Short-Time Fourier Transform (ISTFT) using Web Workers
 function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfSpec) {
     const numFrames = spectrogram.length;
@@ -292,6 +293,46 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfS
         //console.log("ISTFT completed.");
         return outputSignal;
     });
+}
+*/
+
+// Function to perform Inverse Short-Time Fourier Transform (ISTFT) using Web Workers
+function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfSpec) {
+        let spectra = spectrogram.length;
+        const outputSignal = new Float32Array(spectra * hopSize);
+
+        for (let i = 0; i < spectra; i++) {
+            // Compute inverse FFT of the spectrum to obtain the frame in time domain
+            let spectrum = spectrogram[i];
+
+            let frame;
+            if(halfSpec){  frame = await computeInverseFFTonHalf(spectrum);
+            }else{         frame = await computeInverseFFT(spectrum);        }
+
+            // Apply synthesis window to the frame
+            const synthesisWindow = hanningWindow(windowSize);
+            //const synthesisWindow = hammingWindow(windowSize);
+            //const synthesisWindow = blackmanWindow(windowSize);
+            const weightedFrame = applySynthesisWindow(frame, synthesisWindow);
+
+            // Overlap-add the weighted frame to the output signal
+            const startIdx = i * hopSize;
+            for (let j = 0; j < windowSize; j++) {
+                // Check if there's no existing value at the current index in the output signal chunk
+                if (!outputSignal[startIdx + j]) {
+                    // If there's no existing value, initialize it with the value from the current frame
+                    outputSignal[startIdx + j] = frame[j];
+                } else {
+                    outputSignal[startIdx + j] += weightedFrame[j];
+                }
+            }
+        }
+
+        // Normalize the output signal
+        normalizeOutput(outputSignal);
+
+        return outputSignal;
+
 }
 
 
@@ -809,11 +850,11 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, windowType, h
         const preSpectrogram = await STFTWithWebWorkers(inputSignal, windowSize, hopSize, 1, halfSpec);
         const endTime1 = performance.now();
 
-        const startTime2 = performance.now();
+        /*const startTime2 = performance.now();
         const postSpectrogram = await stretchSpectrogram(preSpectrogram, stretchFactor);
-        const endTime2 = performance.now();
-       
-        //const postSpectrogram = preSpectrogram;
+        const endTime2 = performance.now();*/
+        
+        const postSpectrogram = preSpectrogram;
 
         const startTime3 = performance.now();
         const processedSignal = await ISTFTWithWebWorkers(postSpectrogram, windowSize, hopSize, windowType, halfSpec);
@@ -822,7 +863,7 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, windowType, h
         
         if(ch == 0){
             console.log(`CH ${ch}: Calculating the Spectrogram: Elapsed time: ${endTime1 - startTime1} milliseconds`);
-            console.log(`CH ${ch}: Now Stretching the Spectrogram: Elapsed time: ${endTime2 - startTime2} milliseconds`);
+            //console.log(`CH ${ch}: Now Stretching the Spectrogram: Elapsed time: ${endTime2 - startTime2} milliseconds`);
             console.log(`CH ${ch}: Now Reconstructing the Audio Signal: Elapsed time: ${endTime3 - startTime3} milliseconds`);
         }
 
