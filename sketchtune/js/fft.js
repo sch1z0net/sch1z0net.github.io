@@ -21,7 +21,7 @@ function nextPowerOf4(n) {
 function applySynthesisWindow(frame, synthesisWindow) {
     const weightedFrame = new Float32Array(frame.length);
     for (let i = 0; i < frame.length; i++) {
-        frame[i] * synthesisWindow[i];
+        weightedFrame[i] = frame[i] * synthesisWindow[i];
     }
     return weightedFrame;
 }
