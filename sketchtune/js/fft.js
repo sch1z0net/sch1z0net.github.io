@@ -2892,9 +2892,9 @@ async function computeFFTasync(frame, frameID, frames, fftFactorLookup=null) {
 
 
 /******************** INVERSE *********************/
+const pi = Math.PI;
 function ifft(input) {
     const N = input.length / 2; // Divide by 2 since input represents complex numbers
-    const pi = Math.PI;
 
     // Take the complex conjugate of the input spectrum
     const conjugateSpectrum = new Float32Array(N * 2);
