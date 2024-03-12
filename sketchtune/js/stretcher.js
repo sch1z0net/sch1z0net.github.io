@@ -480,6 +480,8 @@ function stretchSpectrogram(preSpectrogram, stretchFactor) {
             frame.push(frameWithPhases[j]);
         }
 
+        console.log(frame);
+
         stretchedSpectrogram.push(frame);
     }
 
@@ -874,7 +876,7 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, windowType, h
         
         if(ch == 0){
             console.log(`CH ${ch}: Calculating the Spectrogram: Elapsed time: ${endTime1 - startTime1} milliseconds`);
-            //console.log(`CH ${ch}: Now Stretching the Spectrogram: Elapsed time: ${endTime2 - startTime2} milliseconds`);
+            console.log(`CH ${ch}: Now Stretching the Spectrogram: Elapsed time: ${endTime2 - startTime2} milliseconds`);
             console.log(`CH ${ch}: Now Reconstructing the Audio Signal: Elapsed time: ${endTime3 - startTime3} milliseconds`);
         }
 
