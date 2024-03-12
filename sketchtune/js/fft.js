@@ -4537,7 +4537,7 @@ function computeInverseFFTonHalf512(halfSpectrum) {
     }
 
     // Perform the IFFT on the full spectrum
-    const timeDomainSignal = ifft(fullSpectrum512);
+    const timeDomainSignal = ifft512(fullSpectrum512);
 
     // Extract only the real parts of the time-domain signal
     const audioSignal = new Float32Array(timeDomainSignal.length / 2);
@@ -4571,7 +4571,7 @@ function computeInverseFFTonHalf1024(halfSpectrum) {
     }
 
     // Perform the IFFT on the full spectrum
-    const timeDomainSignal = ifft(fullSpectrum1024);
+    const timeDomainSignal = ifft1024(fullSpectrum1024);
 
     // Extract only the real parts of the time-domain signal
     const audioSignal = new Float32Array(timeDomainSignal.length / 2);
