@@ -388,7 +388,6 @@ function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitude
             const magnitude2 = spectrogram[frameIndex2][j*2];
             currentInterpolatedMagnitudes[j] = (1 - fraction) * magnitude1 + fraction * magnitude2;
         }
-        console.log(currentInterpolatedMagnitudes);
 
         // Store the interpolated magnitudes in the spectrogram
         //interpolatedMagnitudes[i] = currentInterpolatedMagnitudes.slice();
@@ -457,8 +456,8 @@ function deepCopySpectrogram(preSpectrogram) {
 // Function to stretch spectrogram
 function stretchSpectrogram(preSpectrogram, stretchFactor) {
     // Make a deep copy of the preSpectrogram for modification
-    //const spectrogramCopy = preSpectrogram.map(frame => [...frame]); //!!!! NOT CREATING A DEEP COPY
-    const spectrogramCopy = deepCopySpectrogram(preSpectrogram);
+    const spectrogramCopy = preSpectrogram.map(frame => [...frame]); //!!!! NOT CREATING A DEEP COPY
+    //const spectrogramCopy = deepCopySpectrogram(preSpectrogram);
 
     const interpolatedMagnitudes = [];
     const synchronizedPhases = [];
