@@ -3057,7 +3057,7 @@ function fftReal512(realInput) {
             out512[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
         }*/
 
-    return out;
+    return out512;
 }
 
 
