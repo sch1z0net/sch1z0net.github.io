@@ -199,7 +199,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
                     // Assuming spectrum is the array containing the full spectrum obtained from FFT
                     const halfSpectrum = spectrum.slice(0, 512);
                     spectrogram[i] = halfSpectrum;
-
+                    
                     /*
                     // Store the result in the spectrogram chunk
                     if(halfSpec){
@@ -362,7 +362,7 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfS
 // Function to interpolate magnitudes between frames in the entire spectrogram
 function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitudes) {
     const numFrames = spectrogram.length;
-    const numBins = spectrogram[0].length;
+    const numBins = spectrogram[0].length/2;
 
     
     let originalFrameIndex = 0;
@@ -382,10 +382,10 @@ function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitude
         const fraction = originalFrameIndex - frameIndex1;
 
         const currentInterpolatedMagnitudes = new Float32Array(numBins);
-
+        
         for (let j = 0; j < numBins; j++) {
-            const magnitude1 = spectrogram[frameIndex1][j].re;
-            const magnitude2 = spectrogram[frameIndex2][j].re;
+            const magnitude1 = spectrogram[frameIndex1][j*2];
+            const magnitude2 = spectrogram[frameIndex2][j*2];
             currentInterpolatedMagnitudes[j] = (1 - fraction) * magnitude1 + fraction * magnitude2;
         }
 
@@ -398,7 +398,7 @@ function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitude
 // Function to synchronize phase values between frames in the entire spectrogram
 function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
     const numFrames = spectrogram.length;
-    const numBins = spectrogram[0].length;
+    const numBins = spectrogram[0].length/2;
 
     let originalFrameIndex = 0;
     for (let i = 0; originalFrameIndex < numFrames; i++) {
@@ -419,8 +419,8 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
         const currentSynchronizedPhases = new Float32Array(numBins);
 
         for (let j = 0; j < numBins; j++) {
-            const phase1 = spectrogram[frameIndex1][j].im;
-            const phase2 = spectrogram[frameIndex2][j].im;
+            const phase1 = spectrogram[frameIndex1][j*2+1];
+            const phase2 = spectrogram[frameIndex2][j*2+1];
             let phaseDiff = phase2 - phase1;
 
             // Wrap phase difference to [-π, π] range
@@ -472,11 +472,12 @@ function stretchSpectrogram(preSpectrogram, stretchFactor) {
     for (let i = 0; i < stretchedSpecLength; i++) {
         const frameWithMagnitudes = interpolatedMagnitudes[i];
         const frameWithPhases = synchronizedPhases[i];
-        const frameWithPairs = [];
+        const frame = [];
 
         for (let j = 0; j < frameWithMagnitudes.length; j++) {
-            const pair = { re: frameWithMagnitudes[j], im: frameWithPhases[j] };
-            frameWithPairs.push(pair);
+            //const pair = { re: frameWithMagnitudes[j], im: frameWithPhases[j] };
+            frame.push(frameWithMagnitudes[j]);
+            frame.push(frameWithPhases[j]);
         }
 
         stretchedSpectrogram.push(frameWithPairs);
@@ -861,11 +862,11 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, windowType, h
         const preSpectrogram = await STFTWithWebWorkers(inputSignal, windowSize, hopSize, 1, halfSpec);
         const endTime1 = performance.now();
 
-        /*const startTime2 = performance.now();
+        const startTime2 = performance.now();
         const postSpectrogram = await stretchSpectrogram(preSpectrogram, stretchFactor);
-        const endTime2 = performance.now();*/
+        const endTime2 = performance.now();
         
-        const postSpectrogram = preSpectrogram;
+        //const postSpectrogram = preSpectrogram;
 
         const startTime3 = performance.now();
         const processedSignal = await ISTFTWithWebWorkers(postSpectrogram, windowSize, hopSize, windowType, halfSpec);
