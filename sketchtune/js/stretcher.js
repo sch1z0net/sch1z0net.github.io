@@ -957,8 +957,8 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, windowType, h
 
         const startTime3 = performance.now();
         let processedSignal;
-        if(windowSize == 512){   processedSignal = await ISTFT_512(postSpectrogram, inputSignal, hopSize); }
-        if(windowSize == 1024){  processedSignal = await ISTFT_1024(postSpectrogram, inputSignal, hopSize); }
+        if(windowSize == 512){   processedSignal = await ISTFT_512(postSpectrogram, hopSize); }
+        if(windowSize == 1024){  processedSignal = await ISTFT_1024(postSpectrogram, hopSize); }
         const endTime3 = performance.now();
         
         if(ch == 0){
