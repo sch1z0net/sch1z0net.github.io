@@ -868,8 +868,6 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, windowType, h
         const startTime3 = performance.now();
         const processedSignal = await ISTFTWithWebWorkers(postSpectrogram, windowSize, hopSize, windowType, halfSpec);
         const endTime3 = performance.now();
-
-        console.log(processedSignal);
         
         if(ch == 0){
             console.log(`CH ${ch}: Calculating the Spectrogram: Elapsed time: ${endTime1 - startTime1} milliseconds`);

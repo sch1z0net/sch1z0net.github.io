@@ -2936,8 +2936,7 @@ function computeInverseFFT(spectrum) {
     // Pad both real and imaginary parts of the spectrum
     const paddedSpectrum = new Float32Array(paddedSize * 2).fill(0);
     for (let i = 0; i < spectrum.length; i++) {
-        paddedSpectrum[i * 2] = spectrum[i * 2]; // Copy real part
-        paddedSpectrum[i * 2 + 1] = spectrum[i * 2 + 1]; // Copy imaginary part
+        paddedSpectrum[i] = spectrum[i];
     }
 
     // Now you can pass paddedSpectrum to the IFFT function
