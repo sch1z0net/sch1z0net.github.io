@@ -4733,14 +4733,15 @@ console.log(computeInverseFFT(computeFFT(signal3)));
 const inputArray = testData1024;
 let fft_wasm = Module.cwrap('fftReal1024', null, ['number', 'number', 'number']);
 var ptr_in   = Module._malloc(inputArray.length * Float32Array.BYTES_PER_ELEMENT);
-var ptr_out  = Module._malloc(             2048 * Float32Array.BYTES_PER_ELEMENT);
+Module.HEAPF32.set(inputArray, ptr_in / Float32Array.BYTES_PER_ELEMENT);
+var ptr_out  = Module._malloc(2048 * Float32Array.BYTES_PER_ELEMENT);
 
 try {
   fft_wasm(ptr_in, inputArray.length, ptr_out);
 
   var i = 0
   for (i = 0; i < 100; ++i) {
-     console.log(HEAPF32[(ptr_out/Float32Array.BYTES_PER_ELEMENT)+i])
+     console.log(Module.HEAPF32[(ptr_out/Float32Array.BYTES_PER_ELEMENT)+i])
   }
 }
 finally {
