@@ -4097,7 +4097,7 @@ function fftReal1024(realInput) {
     /////////////////////////////////////////////
     // P = 3  -> 256
     //
-/*
+
         for (let j = 0; j < 128; j++) {
             const evenIndex = j;
             const oddIndex  = j + 128;
@@ -4277,7 +4277,7 @@ function fftReal1024(realInput) {
             out1024[oddIndex * 2]      = evenPartRe - twiddledOddRe;
             out1024[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
         }
-*/
+
     return out1024;
 }
 
@@ -4669,7 +4669,7 @@ function compareFFTResults(array1, array2) {
 }
 
 /****************** TEST SPEED *******************/ 
-
+/*
 measureTime(1024);
 measureTime(1024);
 measureTime(1024);
@@ -4730,4 +4730,6 @@ console.log(computeInverseFFT(computeFFT(signal3)));
 //console.log(fftReal512(testData512));
 //console.log(fftReal512(testData1024));
 
+const res = Module.fft_wasm(testData1024); // Call the FFT function with your data
+console.log(res);
 
