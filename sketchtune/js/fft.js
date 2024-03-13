@@ -4720,7 +4720,7 @@ console.log(signal3);
 console.log(computeInverseFFT(computeFFT(signal3)));
 */
 
-console.log("1024:  ",compareFFTResults(testData1024,computeInverseFFT(computeFFT(testData1024))));
+console.log("1024:  ",compareFFTResults(testData1024,ifft1024(fftReal1024(testData1024))));
 
 //console.log(computeFFT(signal1));
 
