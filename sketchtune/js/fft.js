@@ -4730,6 +4730,6 @@ console.log(computeInverseFFT(computeFFT(signal3)));
 //console.log(fftReal512(testData512));
 //console.log(fftReal512(testData1024));
 
-const res = Module.fft_wasm(testData1024); // Call the FFT function with your data
+const res = Module.fftReal1024(testData1024); // Call the FFT function with your data
 console.log(res);
 
