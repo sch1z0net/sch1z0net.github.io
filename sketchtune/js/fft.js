@@ -4592,147 +4592,36 @@ function computeInverseFFTonHalf1024(halfSpectrum) {
 /**********************************************************************************************/
 /********************************* TESTING PERFORMANCE ****************************************/
 
-// Define the number of FFT operations to perform
-const numOperations = 20000; // You can adjust this number based on your requirements
-
-// Generate test data as Float32Array
-const generateTestData = (size) => {
-    const testData = new Float32Array(size);
-    for (let i = 0; i < size; i++) {
-        // For demonstration purposes, generate random data between -1 and 1
-        testData[i] = Math.random() * 2 - 1;
-    }
-    return testData;
-};
-
-
-const testData8    = generateTestData(8);
-const testData16   = generateTestData(16);
-const testData32   = generateTestData(32);
-const testData64   = generateTestData(64);
-const testData128  = generateTestData(128);
-const testData256  = generateTestData(256);
-const testData512  = generateTestData(512);
-const testData1024 = generateTestData(1024);
-const testData2048 = generateTestData(2048);
-const testData4096 = generateTestData(4096);
-
-
-// Perform FFT operations
-const performFFTOperations = (fftSize) => {
-    let testData;
-    if(fftSize ==  256){ testData = testData256; }
-    if(fftSize ==  512){ testData = testData512; } 
-    if(fftSize == 1024){ testData = testData1024; } 
-    if(fftSize == 2048){ testData = testData2048; } 
-    if(fftSize == 4096){ testData = testData4096; } 
-
-    // Perform FFT operations numOperations times
-    for (let i = 0; i < numOperations; i++) {
-        //fftRealInPlace_ref(testData);
-        //fftReal512(testData);
-        fftReal1024(testData);
-    }
-
-};
-
-// Measure the time taken to perform FFT operations
-const measureTime = (fftSize) => {
-    const startTime = performance.now(); // Start time
-    performFFTOperations(fftSize); // Perform FFT operations
-    const endTime = performance.now(); // End time
-    const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
-
-    // Calculate the number of FFT operations per second
-    const operationsPerSecond = Math.floor(numOperations / (elapsedTime / 1000));
-    console.log("Number of FFT",fftSize,"operations per second:", operationsPerSecond);
-};
-
-
-function compareFFTResults(array1, array2) {
-    // Check if arrays have the same length
-    if (array1.length !== array2.length) {
-        return false;
-    }
-
-    // Check each element in the arrays for equality
-    for (let i = 0; i < array1.length; i++) {
-        // Compare elements with a small tolerance for floating-point imprecision
-        if (Math.abs(array1[i] - array2[i]) > 1e-6) {
-            console.log("Mismatch at ",i," between ",array1[i],array2[i]);
-            return false;
-        }
-    }
-
-    // If all elements are equal within tolerance, arrays are considered equal
-    return true;
-}
-
-/****************** TEST SPEED *******************/ 
-/*
-measureTime(1024);
-measureTime(1024);
-measureTime(1024);
-measureTime(1024);
-measureTime(1024);
-/*measureTime(512);
-measureTime(512);
-measureTime(512);
-measureTime(512);
-measureTime(512);*/
-//measureTime(1024);
-//measureTime(2048);
-//measureTime(4096);
-
-
-/****************** TEST IF FORWARD IS CORRECT by comparison with REFERENCE *******************/ 
-/*
-console.log("8:    ",compareFFTResults(fftRealInPlace_ref(testData8),fftRealInPlaceRADIX4(testData8)));
-console.log("16:   ",compareFFTResults(fftRealInPlace_ref(testData16),fftRealInPlaceRADIX4(testData16)));
-console.log("32:   ",compareFFTResults(fftRealInPlace_ref(testData32),fftRealInPlaceRADIX4(testData32)));
-console.log("64:   ",compareFFTResults(fftRealInPlace_ref(testData64),fftRealInPlaceRADIX4(testData64)));
-console.log("128:  ",compareFFTResults(fftRealInPlace_ref(testData128),fftRealInPlaceRADIX4(testData128)));
-console.log("256:  ",compareFFTResults(fftRealInPlace_ref(testData256),fftRealInPlaceRADIX4(testData256)));
-console.log("512:  ",compareFFTResults(fftRealInPlace_ref(testData512),fftRealInPlaceRADIX4(testData512)));
-console.log("1024: ",compareFFTResults(fftRealInPlace_ref(testData1024),fftRealInPlaceRADIX4(testData1024)));
-console.log("2048: ",compareFFTResults(fftRealInPlace_ref(testData2048),fftRealInPlaceRADIX4(testData2048)));
-console.log("4096: ",compareFFTResults(fftRealInPlace_ref(testData4096),fftRealInPlaceRADIX4(testData4096)));
-*/
-
-/****************** TEST IF FFT AND IFFT RETURN ORIGINAL SIGNAL *******************/ 
-/*
-const signal1 = [ 1.0, 0.4, 0.0, 0.2 ];
-const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5 ];
-const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
-const signal4 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
-const signal5 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
-*/
-
-//console.log("512:  ",compareFFTResults(fftRealInPlace_ref(testData512),fftReal512(testData512)));
-//console.log("1024:  ",compareFFTResults(fftRealInPlace_ref(testData1024),fftReal512(testData1024)));
-
-/*
-console.log(signal1);
-console.log(computeInverseFFT(computeFFT(signal1)));
-console.log(signal2);
-console.log(computeInverseFFT(computeFFT(signal2)));
-console.log(signal3);
-console.log(computeInverseFFT(computeFFT(signal3)));
-*/
-
-//console.log("1024:  ",compareFFTResults(testData1024,ifft1024(fftRealInPlace_ref(testData1024))));
-//console.log("1024:  ",compareFFTResults(testData1024,ifft1024(fftReal1024(testData1024))));
-
-//console.log(computeFFT(signal1));
-
-//console.log(fftRealInPlace_ref(testData256));
-//console.log(fftReal512(testData512));
-//console.log(fftReal512(testData1024));
-
-
-
 // Define your initialization logic
 function initializeModule() {
+
+    // Define the number of FFT operations to perform
+    const numOperations = 20000; // You can adjust this number based on your requirements
+
+    // Generate test data as Float32Array
+    const generateTestData = (size) => {
+        const testData = new Float32Array(size);
+        for (let i = 0; i < size; i++) {
+            // For demonstration purposes, generate random data between -1 and 1
+            testData[i] = Math.random() * 2 - 1;
+        }
+        return testData;
+    };
+
+
+    const testData8    = generateTestData(8);
+    const testData16   = generateTestData(16);
+    const testData32   = generateTestData(32);
+    const testData64   = generateTestData(64);
+    const testData128  = generateTestData(128);
+    const testData256  = generateTestData(256);
+    const testData512  = generateTestData(512);
+    const testData1024 = generateTestData(1024);
+    const testData2048 = generateTestData(2048);
+    const testData4096 = generateTestData(4096);
+
+
+
     // Call your memory-related functions after initialization
     const inputArray = testData1024;
     let fft_wasm = Module.cwrap('fftReal1024', null, ['number', 'number', 'number']);
@@ -4740,13 +4629,128 @@ function initializeModule() {
     Module.HEAPF32.set(inputArray, ptr_in / Float32Array.BYTES_PER_ELEMENT);
     var ptr_out = Module._malloc(2048 * Float32Array.BYTES_PER_ELEMENT);
 
-    try {
-        fft_wasm(ptr_in, inputArray.length, ptr_out);
 
+
+
+    // Perform FFT operations
+    const performFFTOperations = (fftSize) => {
+        let testData;
+        if(fftSize ==  256){ testData = testData256; }
+        if(fftSize ==  512){ testData = testData512; } 
+        if(fftSize == 1024){ testData = testData1024; } 
+        if(fftSize == 2048){ testData = testData2048; } 
+        if(fftSize == 4096){ testData = testData4096; } 
+
+        // Perform FFT operations numOperations times
+        for (let i = 0; i < numOperations; i++) {
+            //fftRealInPlace_ref(testData);
+            //fftReal512(testData);
+            //fftReal1024(testData);
+            fft_wasm(ptr_in, inputArray.length, ptr_out);
+        }
+
+    };
+
+    // Measure the time taken to perform FFT operations
+    const measureTime = (fftSize) => {
+        const startTime = performance.now(); // Start time
+        performFFTOperations(fftSize); // Perform FFT operations
+        const endTime = performance.now(); // End time
+        const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
+
+        // Calculate the number of FFT operations per second
+        const operationsPerSecond = Math.floor(numOperations / (elapsedTime / 1000));
+        console.log("Number of FFT",fftSize,"operations per second:", operationsPerSecond);
+    };
+
+
+    function compareFFTResults(array1, array2) {
+        // Check if arrays have the same length
+        if (array1.length !== array2.length) {
+            return false;
+        }
+
+        // Check each element in the arrays for equality
+        for (let i = 0; i < array1.length; i++) {
+            // Compare elements with a small tolerance for floating-point imprecision
+            if (Math.abs(array1[i] - array2[i]) > 1e-6) {
+                console.log("Mismatch at ",i," between ",array1[i],array2[i]);
+                return false;
+            }
+        }
+
+        // If all elements are equal within tolerance, arrays are considered equal
+        return true;
+    }
+
+    /****************** TEST SPEED *******************/ 
+    /*measureTime(512);
+    measureTime(512);
+    measureTime(512);
+    measureTime(512);
+    measureTime(512);*/
+    //measureTime(1024);
+    //measureTime(2048);
+    //measureTime(4096);
+
+
+    /****************** TEST IF FORWARD IS CORRECT by comparison with REFERENCE *******************/ 
+    /*
+    console.log("8:    ",compareFFTResults(fftRealInPlace_ref(testData8),fftRealInPlaceRADIX4(testData8)));
+    console.log("16:   ",compareFFTResults(fftRealInPlace_ref(testData16),fftRealInPlaceRADIX4(testData16)));
+    console.log("32:   ",compareFFTResults(fftRealInPlace_ref(testData32),fftRealInPlaceRADIX4(testData32)));
+    console.log("64:   ",compareFFTResults(fftRealInPlace_ref(testData64),fftRealInPlaceRADIX4(testData64)));
+    console.log("128:  ",compareFFTResults(fftRealInPlace_ref(testData128),fftRealInPlaceRADIX4(testData128)));
+    console.log("256:  ",compareFFTResults(fftRealInPlace_ref(testData256),fftRealInPlaceRADIX4(testData256)));
+    console.log("512:  ",compareFFTResults(fftRealInPlace_ref(testData512),fftRealInPlaceRADIX4(testData512)));
+    console.log("1024: ",compareFFTResults(fftRealInPlace_ref(testData1024),fftRealInPlaceRADIX4(testData1024)));
+    console.log("2048: ",compareFFTResults(fftRealInPlace_ref(testData2048),fftRealInPlaceRADIX4(testData2048)));
+    console.log("4096: ",compareFFTResults(fftRealInPlace_ref(testData4096),fftRealInPlaceRADIX4(testData4096)));
+    */
+
+    /****************** TEST IF FFT AND IFFT RETURN ORIGINAL SIGNAL *******************/ 
+    /*
+    const signal1 = [ 1.0, 0.4, 0.0, 0.2 ];
+    const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5 ];
+    const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
+    const signal4 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
+    const signal5 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
+    */
+
+    //console.log("512:  ",compareFFTResults(fftRealInPlace_ref(testData512),fftReal512(testData512)));
+    //console.log("1024:  ",compareFFTResults(fftRealInPlace_ref(testData1024),fftReal512(testData1024)));
+
+    /*
+    console.log(signal1);
+    console.log(computeInverseFFT(computeFFT(signal1)));
+    console.log(signal2);
+    console.log(computeInverseFFT(computeFFT(signal2)));
+    console.log(signal3);
+    console.log(computeInverseFFT(computeFFT(signal3)));
+    */
+
+    //console.log("1024:  ",compareFFTResults(testData1024,ifft1024(fftRealInPlace_ref(testData1024))));
+    //console.log("1024:  ",compareFFTResults(testData1024,ifft1024(fftReal1024(testData1024))));
+
+    //console.log(computeFFT(signal1));
+
+    //console.log(fftRealInPlace_ref(testData256));
+    //console.log(fftReal512(testData512));
+    //console.log(fftReal512(testData1024));
+
+
+    try {
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        /*
         var i = 0;
         for (i = 0; i < 100; ++i) {
             console.log(Module.HEAPF32[(ptr_out / Float32Array.BYTES_PER_ELEMENT) + i]);
         }
+        */
     } finally {
         Module._free(ptr_in);
         Module._free(ptr_out);
