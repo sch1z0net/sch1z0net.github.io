@@ -4535,7 +4535,7 @@ function computeInverseFFTonHalf512(halfSpectrum) {
         fullSpectrum512[1024 - (i * 2)    ] =  re;     // Copy the real part
         fullSpectrum512[1024 - (i * 2) + 1] = -im; // Invert the imaginary part
     }
-
+    
     // Perform the IFFT on the full spectrum
     const timeDomainSignal = ifft512(fullSpectrum512);
 
@@ -4554,7 +4554,7 @@ function computeInverseFFTonHalf1024(halfSpectrum) {
     // Copy DC component (index 0)
     fullSpectrum1024[0] = halfSpectrum[0]; // Copy the real part
     fullSpectrum1024[1] = halfSpectrum[1]; // Copy the imaginary part
-
+    
     // Copy Nyquist frequency component (index paddedSize)
     fullSpectrum1024[1024    ] = 0; // Copy the real part
     fullSpectrum1024[1024 + 1] = 0; // Invert the imaginary part
@@ -4605,7 +4605,7 @@ const generateTestData = (size) => {
     return testData;
 };
 
-/*
+
 const testData8    = generateTestData(8);
 const testData16   = generateTestData(16);
 const testData32   = generateTestData(32);
@@ -4616,7 +4616,7 @@ const testData512  = generateTestData(512);
 const testData1024 = generateTestData(1024);
 const testData2048 = generateTestData(2048);
 const testData4096 = generateTestData(4096);
-*/
+
 
 // Perform FFT operations
 const performFFTOperations = (fftSize) => {
@@ -4631,7 +4631,7 @@ const performFFTOperations = (fftSize) => {
     for (let i = 0; i < numOperations; i++) {
         //fftRealInPlace_ref(testData);
         //fftReal512(testData);
-        prepare_and_fft(testData);
+        fftReal1024(testData);
     }
 
 };
@@ -4669,12 +4669,12 @@ function compareFFTResults(array1, array2) {
 }
 
 /****************** TEST SPEED *******************/ 
-/*
+
 measureTime(1024);
 measureTime(1024);
 measureTime(1024);
 measureTime(1024);
-measureTime(1024);*/
+measureTime(1024);
 /*measureTime(512);
 measureTime(512);
 measureTime(512);
@@ -4687,7 +4687,6 @@ measureTime(512);*/
 
 /****************** TEST IF FORWARD IS CORRECT by comparison with REFERENCE *******************/ 
 /*
-
 console.log("8:    ",compareFFTResults(fftRealInPlace_ref(testData8),fftRealInPlaceRADIX4(testData8)));
 console.log("16:   ",compareFFTResults(fftRealInPlace_ref(testData16),fftRealInPlaceRADIX4(testData16)));
 console.log("32:   ",compareFFTResults(fftRealInPlace_ref(testData32),fftRealInPlaceRADIX4(testData32)));
@@ -4720,6 +4719,8 @@ console.log(computeInverseFFT(computeFFT(signal2)));
 console.log(signal3);
 console.log(computeInverseFFT(computeFFT(signal3)));
 */
+
+console.log("1024:  ",compareFFTResults(testData1024,computeInverseFFT(computeFFT(testData1024))));
 
 //console.log(computeFFT(signal1));
 
