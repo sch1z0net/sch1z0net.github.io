@@ -257,6 +257,62 @@ float resImB2;
 float resImD1;     
 float resImD2;  
 
+float x0aRe_0, x0bRe_0, x0bIm_0, x0cRe_0, x0cIm_0, x0dRe_0, x0dIm_0, x0aRe_4, x0aIm_4, x0bRe_4, x0bIm_4, x0cRe_4, x0cIm_4, x0dRe_4, x0dIm_4, x0aRe_8;
+float x1aRe_0, x1bRe_0, x1bIm_0, x1cRe_0, x1cIm_0, x1dRe_0, x1dIm_0, x1aRe_4, x1aIm_4, x1bRe_4, x1bIm_4, x1cRe_4, x1cIm_4, x1dRe_4, x1dIm_4, x1aRe_8, x1aIm_8;
+float x2aRe_0, x2aIm_0, x2bRe_0, x2bIm_0, x2cRe_0, x2cIm_0, x2dRe_0, x2dIm_0, x2aRe_4, x2aIm_4, x2bRe_4, x2bIm_4, x2cRe_4, x2cIm_4, x2dRe_4, x2dIm_4, x2aRe_8, x2aIm_8;
+float x3aRe_0, x3aIm_0, x3bRe_0, x3bIm_0, x3cRe_0, x3cIm_0, x3dRe_0, x3dIm_0, x3aRe_4, x3aIm_4, x3bRe_4, x3bIm_4, x3cRe_4, x3cIm_4, x3dRe_4, x3dIm_4, x3aRe_8, x3aIm_8;
+
+float T0x1bRe, T0x1bIm, T0x3bRe, T0x3bIm;
+float T0x0cRe, T0x0cIm, T0x2cRe, T0x2cIm;
+float T0x1dRe, T0x1dIm, T0x3dRe, T0x3dIm;
+
+float T1x0aRe, T1x0aIm, T1x2aRe, T1x2aIm;
+float T1x1bRe, T1x1bIm, T1x3bRe, T1x3bIm;
+float T1x0cRe, T1x0cIm, T1x2cRe, T1x2cIm;
+float T1x1dRe, T1x1dIm, T1x3dRe, T1x3dIm;
+
+float T2x0aRe, T2x0aIm, T2x2aRe, T2x2aIm;
+float T2x1bRe, T2x1bIm, T2x3bRe, T2x3bIm;
+float T2x0cRe, T2x0cIm, T2x2cRe, T2x2cIm;
+float T2x1dRe, T2x1dIm, T2x3dRe, T2x3dIm;
+
+float T3x0aRe, T3x0aIm, T3x2aRe, T3x2aIm;
+float T3x1bRe, T3x1bIm, T3x3bRe, T3x3bIm;
+float T3x0cRe, T3x0cIm, T3x2cRe, T3x2cIm;
+float T3x1dRe, T3x1dIm, T3x3dRe, T3x3dIm;
+
+float res0ReB, res0ImB;
+float res0ReC, res0ImC;
+float res0ReD, res0ImD;
+float res1ReA, res1ImA;
+float res1ReB, res1ImB;
+float res1ReC, res1ImC;
+float res1ReD, res1ImD;
+float res2ReA, res2ImA;
+float res2ReB, res2ImB;
+float res2ReC, res2ImC;
+float res2ReD, res2ImD;
+float res3ReA, res3ImA;
+float res3ReB, res3ImB;
+float res3ReC, res3ImC;
+float res3ReD, res3ImD;
+float res4ReA, res4ImA;
+float res4ReB, res4ImB;
+float res4ReC, res4ImC;
+float res4ReD, res4ImD;
+float res5ReA, res5ImA;
+float res5ReB, res5ImB;
+float res5ReC, res5ImC;
+float res5ReD, res5ImD;
+float res6ReA, res6ImA;
+float res6ReB, res6ImB;
+float res6ReC, res6ImC;
+float res6ReD, res6ImD;
+float res7ReA, res7ImA;
+float res7ReB, res7ImB;
+float res7ReC, res7ImC;
+float res7ReD, res7ImD;
+
 
 // Modified function to accept pointer to output array
 void fftReal1024(float* realInput, int size, float* out1024) {
@@ -384,6 +440,319 @@ void fftReal1024(float* realInput, int size, float* out1024) {
         out1024[idx +  23] =   resImD2;  
         out1024[idx +  11] = - resImD2; 
     }
+
+    // P = 2  -> 64
+    for(int idx = 0; idx < 2048; idx+=128){
+        x0aRe_0 = out1024[idx       ];
+        x0bRe_0 = out1024[idx   +  2]; x0bIm_0 = out1024[idx   +  3];
+        x0cRe_0 = out1024[idx   +  4]; x0cIm_0 = out1024[idx   +  5];
+        x0dRe_0 = out1024[idx   +  6]; x0dIm_0 = out1024[idx   +  7];
+        x0aRe_4 = out1024[idx   +  8]; x0aIm_4 = out1024[idx   +  9];
+        x0bRe_4 = out1024[idx   + 10]; x0bIm_4 = out1024[idx   + 11];
+        x0cRe_4 = out1024[idx   + 12]; x0cIm_4 = out1024[idx   + 13];
+        x0dRe_4 = out1024[idx   + 14]; x0dIm_4 = out1024[idx   + 15];
+        x0aRe_8 = out1024[idx   + 16];                                   
+
+        x1aRe_0 = out1024[idx   + 32];
+        x1bRe_0 = out1024[idx   + 34]; x1bIm_0 = out1024[idx   + 35];
+        x1cRe_0 = out1024[idx   + 36]; x1cIm_0 = out1024[idx   + 37];
+        x1dRe_0 = out1024[idx   + 38]; x1dIm_0 = out1024[idx   + 39];
+        x1aRe_4 = out1024[idx   + 40]; x1aIm_4 = out1024[idx   + 41];
+        x1bRe_4 = out1024[idx   + 42]; x1bIm_4 = out1024[idx   + 43];
+        x1cRe_4 = out1024[idx   + 44]; x1cIm_4 = out1024[idx   + 45];
+        x1dRe_4 = out1024[idx   + 46]; x1dIm_4 = out1024[idx   + 47];
+        x1aRe_8 = out1024[idx   + 48]; x1aIm_8 = out1024[idx   + 49];
+
+        x2aRe_0 = out1024[idx   + 64]; x2aIm_0 = out1024[idx   + 65];
+        x2bRe_0 = out1024[idx   + 66]; x2bIm_0 = out1024[idx   + 67];
+        x2cRe_0 = out1024[idx   + 68]; x2cIm_0 = out1024[idx   + 69];
+        x2dRe_0 = out1024[idx   + 70]; x2dIm_0 = out1024[idx   + 71];
+        x2aRe_4 = out1024[idx   + 72]; x2aIm_4 = out1024[idx   + 73];
+        x2bRe_4 = out1024[idx   + 74]; x2bIm_4 = out1024[idx   + 75];
+        x2cRe_4 = out1024[idx   + 76]; x2cIm_4 = out1024[idx   + 77];
+        x2dRe_4 = out1024[idx   + 78]; x2dIm_4 = out1024[idx   + 79];
+        x2aRe_8 = out1024[idx   + 80]; x2aIm_8 = out1024[idx   + 81];
+
+        x3aRe_0 = out1024[idx   + 96]; x3aIm_0 = out1024[idx   + 97];
+        x3bRe_0 = out1024[idx   + 98]; x3bIm_0 = out1024[idx   + 99];
+        x3cRe_0 = out1024[idx   +100]; x3cIm_0 = out1024[idx   +101];
+        x3dRe_0 = out1024[idx   +102]; x3dIm_0 = out1024[idx   +103];
+        x3aRe_4 = out1024[idx   +104]; x3aIm_4 = out1024[idx   +105];
+        x3bRe_4 = out1024[idx   +106]; x3bIm_4 = out1024[idx   +107];
+        x3cRe_4 = out1024[idx   +108]; x3cIm_4 = out1024[idx   +109];
+        x3dRe_4 = out1024[idx   +110]; x3dIm_4 = out1024[idx   +111];
+        x3aRe_8 = out1024[idx   +112]; x3aIm_8 = out1024[idx   +113];
+
+        T0x1bRe = (x1bRe_0 * t2Re_1b - x1bIm_0 * t2Re_1h);
+        T0x1bIm = (x1bRe_0 * t2Re_1h + x1bIm_0 * t2Re_1b);
+        T0x3bRe = (x3bRe_0 * t2Re_1b - x3bIm_0 * t2Re_1h);
+        T0x3bIm = (x3bRe_0 * t2Re_1h + x3bIm_0 * t2Re_1b);
+
+        T0x0cRe = (x1cRe_0 * t2Re_1c - x1cIm_0 * t2Re_1g);
+        T0x0cIm = (x1cRe_0 * t2Re_1g + x1cIm_0 * t2Re_1c);
+        T0x2cRe = (x3cRe_0 * t2Re_1c - x3cIm_0 * t2Re_1g);
+        T0x2cIm = (x3cRe_0 * t2Re_1g + x3cIm_0 * t2Re_1c);
+
+        T0x1dRe = (x1dRe_0 * t2Re_1d - x1dIm_0 * t2Re_1f);
+        T0x1dIm = (x1dRe_0 * t2Re_1f + x1dIm_0 * t2Re_1d);
+        T0x3dRe = (x3dRe_0 * t2Re_1d - x3dIm_0 * t2Re_1f);
+        T0x3dIm = (x3dRe_0 * t2Re_1f + x3dIm_0 * t2Re_1d);
+
+        out1024[idx       ] =   (x0aRe_0 + x1aRe_0) + (x2aRe_0 + x3aRe_0);
+        out1024[idx  +  64] =   (x0aRe_0 + x1aRe_0) - (x2aRe_0 + x3aRe_0);
+        out1024[idx  +  65] =                       - (x2aIm_0 + x3aIm_0);
+        out1024[idx  +   1] =                         (x2aIm_0 + x3aIm_0); 
+        res0ReB = x0bRe_0 + T0x1bRe + ((x2bRe_0 + T0x3bRe)*  t2Re_2b - ((x2bIm_0 + T0x3bIm)*  t2Re_2p));
+        out1024[idx  +   2] =   res0ReB;
+        out1024[idx  + 126] =   res0ReB; 
+        res0ImB = x0bIm_0 + T0x1bIm + ((x2bRe_0 + T0x3bRe)*  t2Re_2p + ((x2bIm_0 + T0x3bIm)*  t2Re_2b)); 
+        out1024[idx  + 127] = - res0ImB;
+        out1024[idx  +   3] =   res0ImB;
+        res0ReC = x0cRe_0 + T0x0cRe + ((x2cRe_0 + T0x2cRe)*  t2Re_2c - ((x2cIm_0 + T0x2cIm)*  t2Re_2o));  
+        out1024[idx  +   4] =   res0ReC;
+        out1024[idx  + 124] =   res0ReC;
+        res0ImC = x0cIm_0 + T0x0cIm + ((x2cRe_0 + T0x2cRe)*  t2Re_2o + ((x2cIm_0 + T0x2cIm)*  t2Re_2c));
+        out1024[idx  + 125] = - res0ImC;
+        out1024[idx  +   5] =   res0ImC; 
+        res0ReD = x0dRe_0 + T0x1dRe + ((x2dRe_0 + T0x3dRe)*  t2Re_2d - ((x2dIm_0 + T0x3dIm)*  t2Re_2n));  
+        out1024[idx  +   6] =   res0ReD;
+        out1024[idx  + 122] =   res0ReD;
+        res0ImD = x0dIm_0 + T0x1dIm + ((x2dRe_0 + T0x3dRe)*  t2Re_2n + ((x2dIm_0 + T0x3dIm)*  t2Re_2d)); 
+        out1024[idx  + 123] = - res0ImD;
+        out1024[idx  +   7] =   res0ImD;  
+        res1ReA =    (x0aRe_0 - x1aRe_0) - (x2aIm_0 - x3aIm_0);
+        out1024[idx  +  32] =   res1ReA;
+        out1024[idx  +  96] =   res1ReA;
+        res1ImA =                          (x2aRe_0 - x3aRe_0); 
+        out1024[idx  +  97] = - res1ImA;
+        out1024[idx  +  33] =   res1ImA;
+        res1ReB = x0bRe_0 - T0x1bRe + ((x2bRe_0 - T0x3bRe)* -t2Re_2p  - ((x2bIm_0 - T0x3bIm)*  t2Re_2b ));
+        out1024[idx  +  34] =   res1ReB;
+        out1024[idx  +  94] =   res1ReB;
+        res1ImB = x0bIm_0 - T0x1bIm + ((x2bRe_0 - T0x3bRe)*  t2Re_2b  + ((x2bIm_0 - T0x3bIm)* -t2Re_2p )); 
+        out1024[idx  +  95] = - res1ImB; 
+        out1024[idx  +  35] =   res1ImB;
+        res1ReC = x0cRe_0 - T0x0cRe + ((x2cRe_0 - T0x2cRe)* -t2Re_2o  - ((x2cIm_0 - T0x2cIm)*  t2Re_2c )); 
+        out1024[idx  +  36] =   res1ReC;
+        out1024[idx  +  92] =   res1ReC;
+        res1ImC = x0cIm_0 - T0x0cIm + ((x2cRe_0 - T0x2cRe)*  t2Re_2c  + ((x2cIm_0 - T0x2cIm)* -t2Re_2o ));
+        out1024[idx  +  93] = - res1ImC;  
+        out1024[idx  +  37] =   res1ImC; 
+        res1ReD = x0dRe_0 - T0x1dRe + ((x2dRe_0 - T0x3dRe)* -t2Re_2n  - ((x2dIm_0 - T0x3dIm)*  t2Re_2d ));
+        out1024[idx  +  38] =   res1ReD;
+        out1024[idx  +  90] =   res1ReD;
+        res1ImD = x0dIm_0 - T0x1dIm + ((x2dRe_0 - T0x3dRe)*  t2Re_2d  + ((x2dIm_0 - T0x3dIm)* -t2Re_2n ));  
+        out1024[idx  +  91] = - res1ImD; 
+        out1024[idx  +  39] =   res1ImD;
+
+        T1x0aRe = (x1aRe_4 * t2Re_1e - x1aIm_4 * t2Re_1e);
+        T1x0aIm = (x1aRe_4 * t2Re_1e + x1aIm_4 * t2Re_1e);
+        T1x2aRe = (x3aRe_4 * t2Re_1e - x3aIm_4 * t2Re_1e);
+        T1x2aIm = (x3aRe_4 * t2Re_1e + x3aIm_4 * t2Re_1e);
+
+        T1x1bRe = (x1bRe_4 * t2Re_1f - x1bIm_4 * t2Re_1d);
+        T1x1bIm = (x1bRe_4 * t2Re_1d + x1bIm_4 * t2Re_1f);
+        T1x3bRe = (x3bRe_4 * t2Re_1f - x3bIm_4 * t2Re_1d);
+        T1x3bIm = (x3bRe_4 * t2Re_1d + x3bIm_4 * t2Re_1f);
+
+        T1x0cRe = (x1cRe_4 * t2Re_1g - x1cIm_4 * t2Re_1c);
+        T1x0cIm = (x1cRe_4 * t2Re_1c + x1cIm_4 * t2Re_1g);
+        T1x2cRe = (x3cRe_4 * t2Re_1g - x3cIm_4 * t2Re_1c);
+        T1x2cIm = (x3cRe_4 * t2Re_1c + x3cIm_4 * t2Re_1g);
+
+        T1x1dRe = (x1dRe_4 * t2Re_1h - x1dIm_4 * t2Re_1b);
+        T1x1dIm = (x1dRe_4 * t2Re_1b + x1dIm_4 * t2Re_1h);
+        T1x3dRe = (x3dRe_4 * t2Re_1h - x3dIm_4 * t2Re_1b);
+        T1x3dIm = (x3dRe_4 * t2Re_1b + x3dIm_4 * t2Re_1h);
+
+        res2ReA = x0aRe_4 + T1x0aRe + ((x2aRe_4 + T1x2aRe)*  t2Re_2e - ((x2aIm_4 + T1x2aIm)*  t2Re_2m));  
+        out1024[idx  +   8] =   res2ReA;
+        out1024[idx  + 120] =   res2ReA;
+        res2ImA = x0aIm_4 + T1x0aIm + ((x2aRe_4 + T1x2aRe)*  t2Re_2m + ((x2aIm_4 + T1x2aIm)*  t2Re_2e)); 
+        out1024[idx  + 121] = - res2ImA; 
+        out1024[idx  +   9] =   res2ImA;
+        res2ReB = x0bRe_4 + T1x1bRe + ((x2bRe_4 + T1x3bRe)*  t2Re_2f - ((x2bIm_4 + T1x3bIm)*  t2Re_2l));
+        out1024[idx  +  10] =   res2ReB;
+        out1024[idx  + 118] =   res2ReB; 
+        res2ImB = x0bIm_4 + T1x1bIm + ((x2bRe_4 + T1x3bRe)*  t2Re_2l + ((x2bIm_4 + T1x3bIm)*  t2Re_2f));  
+        out1024[idx  + 119] = - res2ImB; 
+        out1024[idx  +  11] =   res2ImB; 
+        res2ReC = x0cRe_4 + T1x0cRe + ((x2cRe_4 + T1x2cRe)*  t2Re_2g - ((x2cIm_4 + T1x2cIm)*  t2Re_2k));
+        out1024[idx  +  12] =   res2ReC;
+        out1024[idx  + 116] =   res2ReC;  
+        res2ImC = x0cIm_4 + T1x0cIm + ((x2cRe_4 + T1x2cRe)*  t2Re_2k + ((x2cIm_4 + T1x2cIm)*  t2Re_2g)); 
+        out1024[idx  + 117] = - res2ImC; 
+        out1024[idx  +  13] =   res2ImC; 
+        res2ReD = x0dRe_4 + T1x1dRe + ((x2dRe_4 + T1x3dRe)*  t2Re_2h - ((x2dIm_4 + T1x3dIm)*  t2Re_2j));  
+        out1024[idx  +  14] =   res2ReD;
+        out1024[idx  + 114] =   res2ReD;
+        res2ImD = x0dIm_4 + T1x1dIm + ((x2dRe_4 + T1x3dRe)*  t2Re_2j + ((x2dIm_4 + T1x3dIm)*  t2Re_2h));
+        out1024[idx  + 115] = - res2ImD; 
+        out1024[idx  +  15] =   res2ImD;
+        res3ReA = x0aRe_4 - T1x0aRe + ((x2aRe_4 - T1x2aRe)* -t2Re_2m  - ((x2aIm_4 - T1x2aIm)*  t2Re_2e ));
+        out1024[idx  +  40] =   res3ReA;
+        out1024[idx  +  88] =   res3ReA;
+        res3ImA = x0aIm_4 - T1x0aIm + ((x2aRe_4 - T1x2aRe)*  t2Re_2e  + ((x2aIm_4 - T1x2aIm)* -t2Re_2m )); 
+        out1024[idx  +  89] = - res3ImA;
+        out1024[idx  +  41] =   res3ImA; 
+        res3ReB = x0bRe_4 - T1x1bRe + ((x2bRe_4 - T1x3bRe)* -t2Re_2l  - ((x2bIm_4 - T1x3bIm)*  t2Re_2f ));
+        out1024[idx  +  42] =   res3ReB; 
+        out1024[idx  +  86] =   res3ReB;
+        res3ImB = x0bIm_4 - T1x1bIm + ((x2bRe_4 - T1x3bRe)*  t2Re_2f  + ((x2bIm_4 - T1x3bIm)* -t2Re_2l ));
+        out1024[idx  +  87] = - res3ImB; 
+        out1024[idx  +  43] =   res3ImB; 
+        res3ReC = x0cRe_4 - T1x0cRe + ((x2cRe_4 - T1x2cRe)* -t2Re_2k  - ((x2cIm_4 - T1x2cIm)*  t2Re_2g ));
+        out1024[idx  +  44] =   res3ReC;
+        out1024[idx  +  84] =   res3ReC;
+        res3ImC = x0cIm_4 - T1x0cIm + ((x2cRe_4 - T1x2cRe)*  t2Re_2g  + ((x2cIm_4 - T1x2cIm)* -t2Re_2k )); 
+        out1024[idx  +  85] = - res3ImC;
+        out1024[idx  +  45] =   res3ImC;
+        res3ReD = x0dRe_4 - T1x1dRe + ((x2dRe_4 - T1x3dRe)* -t2Re_2j  - ((x2dIm_4 - T1x3dIm)*  t2Re_2h ));
+        out1024[idx  +  46] =   res3ReD;
+        out1024[idx  +  82] =   res3ReD;
+        res3ImD = x0dIm_4 - T1x1dIm + ((x2dRe_4 - T1x3dRe)*  t2Re_2h  + ((x2dIm_4 - T1x3dIm)* -t2Re_2j ));
+        out1024[idx  +  83] = - res3ImD;
+        out1024[idx  +  47] =   res3ImD; 
+
+        T2x0aRe = - x1aIm_8;
+        T2x0aIm =   x1aRe_8;
+        T2x2aRe = - x3aIm_8;
+        T2x2aIm =   x3aRe_8;
+
+        T2x1bRe = (x1dRe_4 * -t2Re_1h - -x1dIm_4 *  t2Re_1b);
+        T2x1bIm = (x1dRe_4 *  t2Re_1b + -x1dIm_4 * -t2Re_1h);
+        T2x3bRe = (x3dRe_4 * -t2Re_1h - -x3dIm_4 *  t2Re_1b);
+        T2x3bIm = (x3dRe_4 *  t2Re_1b + -x3dIm_4 * -t2Re_1h);
+
+        T2x0cRe = (x1cRe_4 * -t2Re_1g - -x1cIm_4 *  t2Re_1c);
+        T2x0cIm = (x1cRe_4 *  t2Re_1c + -x1cIm_4 * -t2Re_1g);
+        T2x2cRe = (x3cRe_4 * -t2Re_1g - -x3cIm_4 *  t2Re_1c);
+        T2x2cIm = (x3cRe_4 *  t2Re_1c + -x3cIm_4 * -t2Re_1g);
+
+        T2x1dRe = (x1bRe_4 * -t2Re_1f - -x1bIm_4 *  t2Re_1d);
+        T2x1dIm = (x1bRe_4 *  t2Re_1d + -x1bIm_4 * -t2Re_1f);
+        T2x3dRe = (x3bRe_4 * -t2Re_1f - -x3bIm_4 *  t2Re_1d);
+        T2x3dIm = (x3bRe_4 *  t2Re_1d + -x3bIm_4 * -t2Re_1f);
+
+        res4ReA =  x0aRe_8 + T2x0aRe + ((x2aRe_8 + T2x2aRe)*  t2Re_2i - (( x2aIm_8 + T2x2aIm)*  t2Re_2i)); 
+        out1024[idx  +  16] =   res4ReA;
+        out1024[idx  + 112] =   res4ReA; 
+        res4ImA =  0       + T2x0aIm + ((x2aRe_8 + T2x2aRe)*  t2Re_2i + (( x2aIm_8 + T2x2aIm)*  t2Re_2i)); 
+        out1024[idx  + 113] = - res4ImA; 
+        out1024[idx  +  17] =   res4ImA;
+        res4ReB =  x0dRe_4 + T2x1bRe + ((x2dRe_4 + T2x3bRe)*  t2Re_2j - ((-x2dIm_4 + T2x3bIm)*  t2Re_2h)); 
+        out1024[idx  +  18] =   res4ReB;
+        out1024[idx  + 110] =   res4ReB;
+        res4ImB = -x0dIm_4 + T2x1bIm + ((x2dRe_4 + T2x3bRe)*  t2Re_2h + ((-x2dIm_4 + T2x3bIm)*  t2Re_2j)); 
+        out1024[idx  + 111] = - res4ImB; 
+        out1024[idx  +  19] =   res4ImB; 
+        res4ReC =  x0cRe_4 + T2x0cRe + ((x2cRe_4 + T2x2cRe)*  t2Re_2k - ((-x2cIm_4 + T2x2cIm)*  t2Re_2g)); 
+        out1024[idx  +  20] =   res4ReC;
+        out1024[idx  + 108] =   res4ReC; 
+        res4ImC = -x0cIm_4 + T2x0cIm + ((x2cRe_4 + T2x2cRe)*  t2Re_2g + ((-x2cIm_4 + T2x2cIm)*  t2Re_2k));   
+        out1024[idx  + 109] = - res4ImC;
+        out1024[idx  +  21] =   res4ImC;
+        res4ReD =  x0bRe_4 + T2x1dRe + ((x2bRe_4 + T2x3dRe)*  t2Re_2l - ((-x2bIm_4 + T2x3dIm)*  t2Re_2f)); 
+        out1024[idx  +  22] =   res4ReD;
+        out1024[idx  + 106] =   res4ReD; 
+        res4ImD = -x0bIm_4 + T2x1dIm + ((x2bRe_4 + T2x3dRe)*  t2Re_2f + ((-x2bIm_4 + T2x3dIm)*  t2Re_2l)); 
+        out1024[idx  + 107] = - res4ImD;
+        out1024[idx  +  23] =   res4ImD;
+        res5ReA =  x0aRe_8 - T2x0aRe + ((x2aRe_8 - T2x2aRe)* -t2Re_2i  - (( x2aIm_8 - T2x2aIm)*  t2Re_2i ));
+        out1024[idx  +  48] =   res5ReA;
+        out1024[idx  +  80] =   res5ReA;
+        res5ImA =  0       - T2x0aIm + ((x2aRe_8 - T2x2aRe)*  t2Re_2i  + (( x2aIm_8 - T2x2aIm)* -t2Re_2i ));
+        out1024[idx  +  81] = - res5ImA;
+        out1024[idx  +  49] =   res5ImA; 
+        res5ReB =  x0dRe_4 - T2x1bRe + ((x2dRe_4 - T2x3bRe)* -t2Re_2h  - ((-x2dIm_4 - T2x3bIm)*  t2Re_2j ));
+        out1024[idx  +  50] =   res5ReB;
+        out1024[idx  +  78] =   res5ReB;
+        res5ImB = -x0dIm_4 - T2x1bIm + ((x2dRe_4 - T2x3bRe)*  t2Re_2j  + ((-x2dIm_4 - T2x3bIm)* -t2Re_2h ));
+        out1024[idx  +  79] = - res5ImB;
+        out1024[idx  +  51] =   res5ImB; 
+        res5ReC =  x0cRe_4 - T2x0cRe + ((x2cRe_4 - T2x2cRe)* -t2Re_2g  - ((-x2cIm_4 - T2x2cIm)*  t2Re_2k ));
+        out1024[idx  +  52] =   res5ReC;
+        out1024[idx  +  76] =   res5ReC;
+        res5ImC = -x0cIm_4 - T2x0cIm + ((x2cRe_4 - T2x2cRe)*  t2Re_2k  + ((-x2cIm_4 - T2x2cIm)* -t2Re_2g ));
+        out1024[idx  +  77] = - res5ImC; 
+        out1024[idx  +  53] =   res5ImC;
+        res5ReD =  x0bRe_4 - T2x1dRe + ((x2bRe_4 - T2x3dRe)* -t2Re_2f  - ((-x2bIm_4 - T2x3dIm)*  t2Re_2l ));
+        out1024[idx  +  54] =   res5ReD;
+        out1024[idx  +  74] =   res5ReD;
+        res5ImD = -x0bIm_4 - T2x1dIm + ((x2bRe_4 - T2x3dRe)*  t2Re_2l  + ((-x2bIm_4 - T2x3dIm)* -t2Re_2f ));
+        out1024[idx  +  75] = - res5ImD;
+        out1024[idx  +  55] =   res5ImD;
+
+        T3x0aRe = (x1aRe_4  * -t2Re_1e - -x1aIm_4 *  t2Re_1e);
+        T3x0aIm = (x1aRe_4  *  t2Re_1e + -x1aIm_4 * -t2Re_1e);
+        T3x2aRe = (x3aRe_4  * -t2Re_1e - -x3aIm_4 *  t2Re_1e);
+        T3x2aIm = (x3aRe_4  *  t2Re_1e + -x3aIm_4 * -t2Re_1e);
+
+        T3x1bRe = (x1dRe_0  * -t2Re_1d - -x1dIm_0 *  t2Re_1f);
+        T3x1bIm = (x1dRe_0  *  t2Re_1f + -x1dIm_0 * -t2Re_1d);
+        T3x3bRe = (x3dRe_0  * -t2Re_1d - -x3dIm_0 *  t2Re_1f);
+        T3x3bIm = (x3dRe_0  *  t2Re_1f + -x3dIm_0 * -t2Re_1d);
+
+        T3x0cRe = (x1cRe_0  * -t2Re_1c - -x1cIm_0 *  t2Re_1g);
+        T3x0cIm = (x1cRe_0  *  t2Re_1g + -x1cIm_0 * -t2Re_1c);
+        T3x2cRe = (x3cRe_0  * -t2Re_1c - -x3cIm_0 *  t2Re_1g);
+        T3x2cIm = (x3cRe_0  *  t2Re_1g + -x3cIm_0 * -t2Re_1c);
+
+        T3x1dRe = (x1bRe_0  * -t2Re_1b - -x1bIm_0 *  t2Re_1h);
+        T3x1dIm = (x1bRe_0  *  t2Re_1h + -x1bIm_0 * -t2Re_1b);
+        T3x3dRe = (x3bRe_0  * -t2Re_1b - -x3bIm_0 *  t2Re_1h);
+        T3x3dIm = (x3bRe_0  *  t2Re_1h + -x3bIm_0 * -t2Re_1b);
+
+        res6ReA =  x0aRe_4 + T3x0aRe + ((x2aRe_4 + T3x2aRe)*  t2Re_2m - ((-x2aIm_4 + T3x2aIm)*  t2Re_2e));  
+        out1024[idx  +  24] =   res6ReA;
+        out1024[idx  + 104] =   res6ReA;
+        res6ImA = -x0aIm_4 + T3x0aIm + ((x2aRe_4 + T3x2aRe)*  t2Re_2e + ((-x2aIm_4 + T3x2aIm)*  t2Re_2m)); 
+        out1024[idx  + 105] = - res6ImA; 
+        out1024[idx  +  25] =   res6ImA;
+        res6ReB =  x0dRe_0 + T3x1bRe + ((x2dRe_0 + T3x3bRe)*  t2Re_2n - ((-x2dIm_0 + T3x3bIm)*  t2Re_2d)); 
+        out1024[idx  +  26] =   res6ReB;
+        out1024[idx  + 102] =   res6ReB;
+        res6ImB = -x0dIm_0 + T3x1bIm + ((x2dRe_0 + T3x3bRe)*  t2Re_2d + ((-x2dIm_0 + T3x3bIm)*  t2Re_2n)); 
+        out1024[idx  + 103] = - res6ImB; 
+        out1024[idx  +  27] =   res6ImB; 
+        res6ReC =  x0cRe_0 + T3x0cRe + ((x2cRe_0 + T3x2cRe)*  t2Re_2o - ((-x2cIm_0 + T3x2cIm)*  t2Re_2c));  
+        out1024[idx  +  28] =   res6ReC;
+        out1024[idx  + 100] =   res6ReC;
+        res6ImC = -x0cIm_0 + T3x0cIm + ((x2cRe_0 + T3x2cRe)*  t2Re_2c + ((-x2cIm_0 + T3x2cIm)*  t2Re_2o)); 
+        out1024[idx  + 101] = - res6ImC; 
+        out1024[idx  +  29] =   res6ImC; 
+        res6ReD =  x0bRe_0 + T3x1dRe + ((x2bRe_0 + T3x3dRe)*  t2Re_2p - ((-x2bIm_0 + T3x3dIm)*  t2Re_2b)); 
+        out1024[idx  +  30] =   res6ReD;
+        out1024[idx  +  98] =   res6ReD; 
+        res6ImD = -x0bIm_0 + T3x1dIm + ((x2bRe_0 + T3x3dRe)*  t2Re_2b + ((-x2bIm_0 + T3x3dIm)*  t2Re_2p)); 
+        out1024[idx  +  99] = - res6ImD;
+        out1024[idx  +  31] =   res6ImD;
+        res7ReA =  x0aRe_4 - T3x0aRe + ((x2aRe_4 - T3x2aRe)* -t2Re_2e  - ((-x2aIm_4 - T3x2aIm)*  t2Re_2m ));
+        out1024[idx  +  56] =   res7ReA;
+        out1024[idx  +  72] =   res7ReA;
+        res7ImA = -x0aIm_4 - T3x0aIm + ((x2aRe_4 - T3x2aRe)*  t2Re_2m  + ((-x2aIm_4 - T3x2aIm)* -t2Re_2e ));
+        out1024[idx  +  73] = - res7ImA;
+        out1024[idx  +  57] =   res7ImA;
+        res7ReB =  x0dRe_0 - T3x1bRe + ((x2dRe_0 - T3x3bRe)* -t2Re_2d  - ((-x2dIm_0 - T3x3bIm)*  t2Re_2n ));
+        out1024[idx  +  58] =   res7ReB;
+        out1024[idx  +  70] =   res7ReB;
+        res7ImB = -x0dIm_0 - T3x1bIm + ((x2dRe_0 - T3x3bRe)*  t2Re_2n  + ((-x2dIm_0 - T3x3bIm)* -t2Re_2d ));
+        out1024[idx  +  71] = - res7ImB; 
+        out1024[idx  +  59] =   res7ImB;
+        res7ReC =  x0cRe_0 - T3x0cRe + ((x2cRe_0 - T3x2cRe)* -t2Re_2c  - ((-x2cIm_0 - T3x2cIm)*  t2Re_2o ));
+        out1024[idx  +  60] =   res7ReC;
+        out1024[idx  +  68] =   res7ReC;
+        res7ImC = -x0cIm_0 - T3x0cIm + ((x2cRe_0 - T3x2cRe)*  t2Re_2o  + ((-x2cIm_0 - T3x2cIm)* -t2Re_2c ));
+        out1024[idx  +  69] = - res7ImC;
+        out1024[idx  +  61] =   res7ImC;
+        res7ReD =  x0bRe_0 - T3x1dRe + ((x2bRe_0 - T3x3dRe)* -t2Re_2b  - ((-x2bIm_0 - T3x3dIm)*  t2Re_2p ));
+        out1024[idx  +  62] =   res7ReD;
+        out1024[idx  +  66] =   res7ReD;
+        res7ImD = -x0bIm_0 - T3x1dIm + ((x2bRe_0 - T3x3dRe)*  t2Re_2p  + ((-x2bIm_0 - T3x3dIm)* -t2Re_2b ));
+        out1024[idx  +  67] = - res7ImD;
+        out1024[idx  +  63] =   res7ImD;
+    }
+
 }
 
 
