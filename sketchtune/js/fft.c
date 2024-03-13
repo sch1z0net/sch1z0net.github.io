@@ -217,8 +217,8 @@ float tIm31 = ____F[126 + (63)];
 */
 
 
-float out1024[2048];
-float* fftReal1024(float* realInput, int size) {
+// Modified function to accept pointer to output array
+void fftReal1024(float* realInput, int size, float* out1024) {
     float inputBR1024[1024];
     float paddedInput[1024];
 
@@ -255,37 +255,11 @@ float* fftReal1024(float* realInput, int size) {
         out1024[2 * idx + 6] = x0aRe - x1aRe;
         out1024[2 * idx + 7] = -x2aRe + x3aRe;
     }
-
-    return out1024;
 }
 
 
-int main() {
 
+int main() {
   return 0;
 }
-
-/*
-int main() {
-    int N = 1024;
-
-    // Call the function to get the array
-    //int* bitReversalMap1024 = precomputeBitReversalMap(N);
-    float* ____F = precalculateFFTFactorsRADIX2flattened(N);
-    
-    // Print the content of the array
-    //printf("Bit Reversal Map for %d elements:\n", N);
-    for (int i = 0; i < N; i++) {
-        printf("%i", i);
-        printf(" - %af,", ____F[i]);
-        printf("\n");
-    }
-
-    // Free allocated memory
-    free(____F); // Don't forget to free the allocated memory
-
-    return 0;
-}*/
-
-
 
