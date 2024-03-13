@@ -4497,6 +4497,7 @@ function ifft512(input) {
     return result;
 }
 
+let result1024 = new Float32Array(1024);
 function ifft1024(input) {
     // Take the complex conjugate of the input spectrum in place
     for (let i = 0; i < 2048; i += 2) {
@@ -4504,12 +4505,12 @@ function ifft1024(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    const result = fftComplexInPlace_ref(input);
-    for (let i = 0; i < 2048; i += 2) {
-        result[i] /= 1024; // Scale the real part
-        result[i + 1] = -result[i + 1] / 1024; // Scale and negate the imaginary part
+    const result_ = fftComplexInPlace_ref(input);
+    
+    for (let i = 0; i < 1024; i++) {
+        result1024[i] = result_[i*2] / 1024; // Scale the real part
     }
-    return result;
+    return result1024;
 }
 
 
@@ -4537,13 +4538,13 @@ function computeInverseFFTonHalf512(halfSpectrum) {
     }
     
     // Perform the IFFT on the full spectrum
-    const timeDomainSignal = ifft512(fullSpectrum512);
+    const audioSignal = ifft512(fullSpectrum512);
 
     // Extract only the real parts of the time-domain signal
-    const audioSignal = new Float32Array(timeDomainSignal.length / 2);
+    /*const audioSignal = new Float32Array(timeDomainSignal.length / 2);
     for (let i = 0; i < audioSignal.length; i++) {
         audioSignal[i] = timeDomainSignal[i * 2];
-    }
+    }*/
 
     return audioSignal;
 }
@@ -4571,13 +4572,13 @@ function computeInverseFFTonHalf1024(halfSpectrum) {
     }
 
     // Perform the IFFT on the full spectrum
-    const timeDomainSignal = ifft1024(fullSpectrum1024);
+    const audioSignal = ifft1024(fullSpectrum1024);
 
-    // Extract only the real parts of the time-domain signal
+    /*// Extract only the real parts of the time-domain signal
     const audioSignal = new Float32Array(timeDomainSignal.length / 2);
     for (let i = 0; i < audioSignal.length; i++) {
         audioSignal[i] = timeDomainSignal[i * 2];
-    }
+    }*/
 
     return audioSignal;
 }
