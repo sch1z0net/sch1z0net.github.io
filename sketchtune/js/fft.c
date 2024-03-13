@@ -1591,7 +1591,7 @@ void fftReal1024(float* realInput, int size, float* out1024) {
         out1024[2 * idx + 7] = -x2aRe + x3aRe;
     }*/
 
-    
+
     for (int idx = 0, out_idx = 0; idx < 1024; idx += 4, out_idx += 8) {
         float x0aRe = inputBR1024[idx];
         float x1aRe = inputBR1024[idx + 1];
@@ -1615,8 +1615,6 @@ void fftReal1024(float* realInput, int size, float* out1024) {
     }
 
 
-
-/*
     // P = 1  -> 16
     for (int idx = 0; idx < 2048; idx += 32) {
         x0aRe = out1024[idx     ];
@@ -2763,7 +2761,7 @@ void fftReal1024(float* realInput, int size, float* out1024) {
             out1024[oI * 2]      = eRe - t_oRe;
             out1024[oI * 2 + 1]  = eIm - t_oIm;
         }
-*/
+
 }
 
 
