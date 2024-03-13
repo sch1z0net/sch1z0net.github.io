@@ -4729,13 +4729,23 @@ console.log(computeInverseFFT(computeFFT(signal3)));
 //console.log(fftReal512(testData512));
 //console.log(fftReal512(testData1024));
 
-let fft_wasm = Module.cwrap('fftReal1024', 'array', ['array']);
+
 const inputArray = testData1024;
-// Allocate memory for the output array
-const outputArray = new Float32Array(2048);
-// Call the WebAssembly function
-fft_wasm(inputArray.byteOffset, inputArray.length, outputArray.byteOffset);
-// Do something with the outputArray
-console.log(outputArray);
+let fft_wasm = Module.cwrap('fftReal1024', 'array', ['array']);
+var ptr_in  = Module._malloc(inputArray.length * Float32Array.BYTES_PER_ELEMENT);
+var ptr_out = Module._malloc(             2048 * Float32Array.BYTES_PER_ELEMENT);
+
+try {
+  fft_wasm(ptr_in, inputArray.length, ptr_out);
+
+  var i = 0
+  for (i = 0; i < 100; ++i) {
+     console.log(HEAPF32[(ptr_out/Float32Array.BYTES_PER_ELEMENT)+i])
+  }
+}
+finally {
+  Module._free(ptr_in);
+  Module._free(ptr_out);
+}
 
 
