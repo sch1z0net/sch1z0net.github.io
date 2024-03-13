@@ -2582,8 +2582,8 @@ void fftReal1024(float* realInput, int size, float* out1024) {
     //
 
         for (int j = 0; j < 128; j++) {
-            eI  = j;
-            oI  = j + 128;
+            int eI  = j;
+            int oI  = j + 128;
 
             if(j > 64){
               out1024[eI * 2]      =  out1024[512 - eI * 2] ;
@@ -2593,37 +2593,16 @@ void fftReal1024(float* realInput, int size, float* out1024) {
               continue;
             }
 
-            eRe  = out1024[eI * 2];
-            eIm  = out1024[eI * 2 + 1];
-            oRe  = out1024[oI * 2];
-            oIm  = out1024[oI * 2 + 1];
+            float eRe  = out1024[eI * 2];
+            float eIm  = out1024[eI * 2 + 1];
+            float oRe  = out1024[oI * 2];
+            float oIm  = out1024[oI * 2 + 1];
 
-            tRe = ____F[254 + (j * 2 + 0)];
-            tIm = ____F[254 + (j * 2 + 1)];
+            float tRe = ____F[254 + (j * 2 + 0)];
+            float tIm = ____F[254 + (j * 2 + 1)];
 
-            t_oRe = oRe * tRe - oIm * tIm;
-            t_oIm = oRe * tIm + oIm * tRe;
-
-            out1024[eI * 2]      = eRe + t_oRe;
-            out1024[eI * 2 + 1]  = eIm + t_oIm;
-            out1024[oI * 2]      = eRe - t_oRe;
-            out1024[oI * 2 + 1]  = eIm - t_oIm;
-        }
-
-        for (int j = 0; j < 128; j++) {
-            eI = 256 + j;
-            oI  = 256 + j + 128;
-
-            eRe  = out1024[eI * 2];
-            eIm  = out1024[eI * 2 + 1];
-            oRe  = out1024[oI * 2];
-            oIm  = out1024[oI * 2 + 1];
-
-            tRe = ____F[254 + (j * 2 + 0)];
-            tIm = ____F[254 + (j * 2 + 1)];
-
-            t_oRe = oRe * tRe - oIm * tIm;
-            t_oIm = oRe * tIm + oIm * tRe;
+            float t_oRe = oRe * tRe - oIm * tIm;
+            float t_oIm = oRe * tIm + oIm * tRe;
 
             out1024[eI * 2]      = eRe + t_oRe;
             out1024[eI * 2 + 1]  = eIm + t_oIm;
@@ -2632,19 +2611,19 @@ void fftReal1024(float* realInput, int size, float* out1024) {
         }
 
         for (int j = 0; j < 128; j++) {
-            eI = 512 + j;
-            oI  = 512 + j + 128;
+            int eI = 256 + j;
+            int oI  = 256 + j + 128;
 
-            eRe  = out1024[eI * 2];
-            eIm  = out1024[eI * 2 + 1];
-            oRe  = out1024[oI * 2];
-            oIm  = out1024[oI * 2 + 1];
+            float eRe  = out1024[eI * 2];
+            float eIm  = out1024[eI * 2 + 1];
+            float oRe  = out1024[oI * 2];
+            float oIm  = out1024[oI * 2 + 1];
 
-            tRe = ____F[254 + (j * 2 + 0)];
-            tIm = ____F[254 + (j * 2 + 1)];
+            float tRe = ____F[254 + (j * 2 + 0)];
+            float tIm = ____F[254 + (j * 2 + 1)];
 
-            t_oRe = oRe * tRe - oIm * tIm;
-            t_oIm = oRe * tIm + oIm * tRe;
+            float t_oRe = oRe * tRe - oIm * tIm;
+            float t_oIm = oRe * tIm + oIm * tRe;
 
             out1024[eI * 2]      = eRe + t_oRe;
             out1024[eI * 2 + 1]  = eIm + t_oIm;
@@ -2653,19 +2632,40 @@ void fftReal1024(float* realInput, int size, float* out1024) {
         }
 
         for (int j = 0; j < 128; j++) {
-            eI = 768 + j;
-            oI  = 768 + j + 128;
+            int eI = 512 + j;
+            int oI  = 512 + j + 128;
 
-            eRe  = out1024[eI * 2];
-            eIm  = out1024[eI * 2 + 1];
-            oRe  = out1024[oI * 2];
-            oIm  = out1024[oI * 2 + 1];
+            float eRe  = out1024[eI * 2];
+            float eIm  = out1024[eI * 2 + 1];
+            float oRe  = out1024[oI * 2];
+            float oIm  = out1024[oI * 2 + 1];
 
-            tRe = ____F[254 + (j * 2 + 0)];
-            tIm = ____F[254 + (j * 2 + 1)];
+            float tRe = ____F[254 + (j * 2 + 0)];
+            float tIm = ____F[254 + (j * 2 + 1)];
 
-            t_oRe = oRe * tRe - oIm * tIm;
-            t_oIm = oRe * tIm + oIm * tRe;
+            float t_oRe = oRe * tRe - oIm * tIm;
+            float t_oIm = oRe * tIm + oIm * tRe;
+
+            out1024[eI * 2]      = eRe + t_oRe;
+            out1024[eI * 2 + 1]  = eIm + t_oIm;
+            out1024[oI * 2]      = eRe - t_oRe;
+            out1024[oI * 2 + 1]  = eIm - t_oIm;
+        }
+
+        for (int j = 0; j < 128; j++) {
+            int eI = 768 + j;
+            int oI  = 768 + j + 128;
+
+            float eRe  = out1024[eI * 2];
+            float eIm  = out1024[eI * 2 + 1];
+            float oRe  = out1024[oI * 2];
+            float oIm  = out1024[oI * 2 + 1];
+
+            float tRe = ____F[254 + (j * 2 + 0)];
+            float tIm = ____F[254 + (j * 2 + 1)];
+
+            float t_oRe = oRe * tRe - oIm * tIm;
+            float t_oIm = oRe * tIm + oIm * tRe;
 
             out1024[eI * 2]      = eRe + t_oRe;
             out1024[eI * 2 + 1]  = eIm + t_oIm;
@@ -2679,8 +2679,8 @@ void fftReal1024(float* realInput, int size, float* out1024) {
     //
 
         for (int j = 0; j < 256; j++) {
-            eI = j;
-            oI  = j + 256;
+            int eI = j;
+            int oI  = j + 256;
 
             if(j > 128){
               out1024[eI * 2]      =  out1024[1024 - eI * 2] ;
@@ -2690,16 +2690,16 @@ void fftReal1024(float* realInput, int size, float* out1024) {
               continue;
             }
 
-            eRe  = out1024[eI * 2];
-            eIm  = out1024[eI * 2 + 1];
-            oRe  = out1024[oI * 2];
-            oIm  = out1024[oI * 2 + 1];
+            float eRe  = out1024[eI * 2];
+            float eIm  = out1024[eI * 2 + 1];
+            float oRe  = out1024[oI * 2];
+            float oIm  = out1024[oI * 2 + 1];
 
-            tRe = ____F[510 + (j * 2 + 0)];
-            tIm = ____F[510 + (j * 2 + 1)];
+            float tRe = ____F[510 + (j * 2 + 0)];
+            float tIm = ____F[510 + (j * 2 + 1)];
 
-            t_oRe = oRe * tRe - oIm * tIm;
-            t_oIm = oRe * tIm + oIm * tRe;
+            float t_oRe = oRe * tRe - oIm * tIm;
+            float t_oIm = oRe * tIm + oIm * tRe;
 
             out1024[eI * 2]      = eRe + t_oRe;
             out1024[eI * 2 + 1]  = eIm + t_oIm;
@@ -2708,19 +2708,19 @@ void fftReal1024(float* realInput, int size, float* out1024) {
         }
 
         for (int j = 0; j < 256; j++) {
-            eI = 512 + j;
-            oI  = 512 + j + 256;
+            int eI = 512 + j;
+            int oI  = 512 + j + 256;
 
-            eRe  = out1024[eI * 2];
-            eIm  = out1024[eI * 2 + 1];
-            oRe  = out1024[oI * 2];
-            oIm  = out1024[oI * 2 + 1];
+            float eRe  = out1024[eI * 2];
+            float eIm  = out1024[eI * 2 + 1];
+            float oRe  = out1024[oI * 2];
+            float oIm  = out1024[oI * 2 + 1];
 
-            tRe = ____F[510 + (j * 2 + 0)];
-            tIm = ____F[510 + (j * 2 + 1)];
+            float tRe = ____F[510 + (j * 2 + 0)];
+            float tIm = ____F[510 + (j * 2 + 1)];
 
-            t_oRe = oRe * tRe - oIm * tIm;
-            t_oIm = oRe * tIm + oIm * tRe;
+            float t_oRe = oRe * tRe - oIm * tIm;
+            float t_oIm = oRe * tIm + oIm * tRe;
 
             out1024[eI * 2]      = eRe + t_oRe;
             out1024[eI * 2 + 1]  = eIm + t_oIm;
@@ -2733,8 +2733,8 @@ void fftReal1024(float* realInput, int size, float* out1024) {
     //
 
         for (int j = 0; j < 512; j++) {
-            eI = j;
-            oI  = j + 512;
+            int eI = j;
+            int oI  = j + 512;
 
             if(j > 256){
               out1024[eI * 2]      =  out1024[2048 - eI * 2] ;
@@ -2744,16 +2744,16 @@ void fftReal1024(float* realInput, int size, float* out1024) {
               continue;
             }
 
-            eRe  = out1024[eI * 2];
-            eIm  = out1024[eI * 2 + 1];
-            oRe  = out1024[oI * 2];
-            oIm  = out1024[oI * 2 + 1];
+            float eRe  = out1024[eI * 2];
+            float eIm  = out1024[eI * 2 + 1];
+            float oRe  = out1024[oI * 2];
+            float oIm  = out1024[oI * 2 + 1];
 
-            tRe = ____F[1022 + (j * 2 + 0)];
-            tIm = ____F[1022 + (j * 2 + 1)];
+            float tRe = ____F[1022 + (j * 2 + 0)];
+            float tIm = ____F[1022 + (j * 2 + 1)];
 
-            t_oRe = oRe * tRe - oIm * tIm;
-            t_oIm = oRe * tIm + oIm * tRe;
+            float t_oRe = oRe * tRe - oIm * tIm;
+            float t_oIm = oRe * tIm + oIm * tRe;
 
             out1024[eI * 2]      = eRe + t_oRe;
             out1024[eI * 2 + 1]  = eIm + t_oIm;
