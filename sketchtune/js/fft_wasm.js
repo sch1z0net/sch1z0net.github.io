@@ -1293,7 +1293,6 @@ var wasmImports = {
 var wasmExports = createWasm();
 var ___wasm_call_ctors = createExportWrapper('__wasm_call_ctors');
 var _fftReal1024 = Module['_fftReal1024'] = createExportWrapper('fftReal1024');
-var _main = createExportWrapper('main');
 var _fflush = createExportWrapper('fflush');
 var _malloc = Module['_malloc'] = createExportWrapper('malloc');
 var _free = Module['_free'] = createExportWrapper('free');

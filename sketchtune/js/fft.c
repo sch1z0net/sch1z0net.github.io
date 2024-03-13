@@ -217,11 +217,13 @@ float tIm31 = ____F[126 + (63)];
 */
 
 
+// Define global arrays
+float inputBR1024[1024];
+float paddedInput[1024];
+// Define global variables for x0aRe, x1aRe, x2aRe, and x3aRe
+float x0aRe, x1aRe, x2aRe, x3aRe;
 // Modified function to accept pointer to output array
 void fftReal1024(float* realInput, int size, float* out1024) {
-    float inputBR1024[1024];
-    float paddedInput[1024];
-
     // Padding the input if necessary
     if (size != 1024) {
         for (int i = 0; i < 1024; i++) {
@@ -241,10 +243,10 @@ void fftReal1024(float* realInput, int size, float* out1024) {
 
     // P = 0  -> 4
     for (int idx = 0; idx < 1024; idx += 4) {
-        float x0aRe = inputBR1024[idx];
-        float x1aRe = inputBR1024[idx + 1];
-        float x2aRe = inputBR1024[idx + 2];
-        float x3aRe = inputBR1024[idx + 3];
+        x0aRe = inputBR1024[idx];
+        x1aRe = inputBR1024[idx + 1];
+        x2aRe = inputBR1024[idx + 2];
+        x3aRe = inputBR1024[idx + 3];
 
         out1024[2 * idx    ] = x0aRe + x1aRe + x2aRe + x3aRe;
         out1024[2 * idx + 1] = 0;
@@ -258,8 +260,8 @@ void fftReal1024(float* realInput, int size, float* out1024) {
 }
 
 
-
+/*
 int main() {
   return 0;
-}
+}*/
 
