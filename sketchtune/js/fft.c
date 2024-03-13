@@ -360,7 +360,7 @@ float tIm31 = 0x1.ff621ep-1f;
 float inputBR1024[1024];
 float paddedInput[1024];
 // Define global variables for intermediate computations
-float x0aRe, x0bRe, x0bIm, x0cRe;
+/* float x0aRe, x0bRe, x0bIm, x0cRe;
 float x1aRe, x1bRe, x1bIm, x1cRe;
 float x2aRe, x2bRe, x2bIm, x2cRe;
 float x3aRe, x3bRe, x3bIm, x3cRe;
@@ -394,7 +394,7 @@ float resReD2;
 float resImB1;    
 float resImB2;     
 float resImD1;     
-float resImD2;  
+float resImD2;  */
 
 float x0aRe_0, x0bRe_0, x0bIm_0, x0cRe_0, x0cIm_0, x0dRe_0, x0dIm_0, x0aRe_4, x0aIm_4, x0bRe_4, x0bIm_4, x0cRe_4, x0cIm_4, x0dRe_4, x0dIm_4, x0aRe_8;
 float x1aRe_0, x1bRe_0, x1bIm_0, x1cRe_0, x1cIm_0, x1dRe_0, x1dIm_0, x1aRe_4, x1aIm_4, x1bRe_4, x1bIm_4, x1cRe_4, x1cIm_4, x1dRe_4, x1dIm_4, x1aRe_8, x1aIm_8;
@@ -1614,121 +1614,92 @@ void fftReal1024(float* realInput, int size, float* out1024) {
         out1024[out_idx + 7] = diff4;
     }
 
-
-/*
-int i = 256, idx = 1024, out_idx = 2048;
-while (--i) {
-    float x3aRe = inputBR1024[idx - 1];
-    float x2aRe = inputBR1024[idx - 2];
-    float x1aRe = inputBR1024[idx - 3];
-    float x0aRe = inputBR1024[idx - 4];
-
-    float sum = x0aRe + x1aRe + x2aRe + x3aRe;
-    float diff1 = x0aRe - x1aRe;
-    float diff2 = x2aRe - x3aRe;
-    float diff3 = x0aRe - x1aRe;
-    float diff4 = -x2aRe + x3aRe;
-
-    out1024[out_idx - 1] = diff4;
-    out1024[out_idx - 2] = diff3;
-    out1024[out_idx - 3] = 0;
-    out1024[out_idx - 4] = sum - x2aRe - x3aRe;
-    out1024[out_idx - 5] = diff2;
-    out1024[out_idx - 6] = diff1;
-    out1024[out_idx - 7] = 0;
-    out1024[out_idx - 8] = sum;
-
-    idx -= 4;
-    out_idx -= 8;
-}*/
-
-
     // P = 1  -> 16
     for (int idx = 0; idx < 2048; idx += 32) {
-        x0aRe = out1024[idx     ];
-        x0bRe = out1024[idx +  2]; 
-        x0bIm = out1024[idx +  3];
-        x0cRe = out1024[idx +  4];
+        float x0aRe = out1024[idx     ];
+        float x0bRe = out1024[idx +  2]; 
+        float x0bIm = out1024[idx +  3];
+        float x0cRe = out1024[idx +  4];
 
-        x1aRe = out1024[idx +  8];
+        float x1aRe = out1024[idx +  8];
         out1024[idx +   8] = x0aRe - x1aRe; 
-        x1bRe = out1024[idx + 10];
-        x1bIm = out1024[idx + 11];
-        x1cRe = out1024[idx + 12];
+        float x1bRe = out1024[idx + 10];
+        float x1bIm = out1024[idx + 11];
+        float x1cRe = out1024[idx + 12];
 
-        x2aRe = out1024[idx + 16];
-        x2bRe = out1024[idx + 18];
-        x2bIm = out1024[idx + 19];
-        x2cRe = out1024[idx + 20];
+        float x2aRe = out1024[idx + 16];
+        float x2bRe = out1024[idx + 18];
+        float x2bIm = out1024[idx + 19];
+        float x2cRe = out1024[idx + 20];
 
-        x3aRe = out1024[idx + 24];
+        float x3aRe = out1024[idx + 24];
         out1024[idx +  24] = x0aRe - x1aRe;
         out1024[idx +  25] = x3aRe - x2aRe;  
-        x3bRe = out1024[idx + 26];
-        x3bIm = out1024[idx + 27];
-        x3cRe = out1024[idx + 28];
+        float x3bRe = out1024[idx + 26];
+        float x3bIm = out1024[idx + 27];
+        float x3cRe = out1024[idx + 28];
 
         out1024[idx      ] = x0aRe + x1aRe + x2aRe + x3aRe;  
         out1024[idx +   9] = x2aRe - x3aRe;      
         out1024[idx +  16] = x0aRe + x1aRe - x2aRe - x3aRe;
 
-        x2cRe_tRe_2c = x2cRe * t1Re_2c;
-        x3cRe_tRe_2c = x3cRe * t1Re_2c;
+        float x2cRe_tRe_2c = x2cRe * t1Re_2c;
+        float x3cRe_tRe_2c = x3cRe * t1Re_2c;
 
-        resReC1 = x0cRe + x2cRe_tRe_2c - x3cRe_tRe_2c;
+        float resReC1 = x0cRe + x2cRe_tRe_2c - x3cRe_tRe_2c;
         out1024[idx +  28] =   resReC1; 
         out1024[idx +   4] =   resReC1; 
-        resImC1 = x1cRe + x2cRe_tRe_2c + x3cRe_tRe_2c; 
+        float resImC1 = x1cRe + x2cRe_tRe_2c + x3cRe_tRe_2c; 
         out1024[idx +   5] =   resImC1; 
         out1024[idx +  29] = - resImC1;
-        resReC2 = x0cRe - x2cRe_tRe_2c + x3cRe_tRe_2c; 
+        float resReC2 = x0cRe - x2cRe_tRe_2c + x3cRe_tRe_2c; 
         out1024[idx +  20] =   resReC2;
         out1024[idx +  12] =   resReC2; 
-        resImC2 = x1cRe - x2cRe_tRe_2c - x3cRe_tRe_2c; 
+        float resImC2 = x1cRe - x2cRe_tRe_2c - x3cRe_tRe_2c; 
         out1024[idx +  13] = - resImC2; 
         out1024[idx +  21] =   resImC2;  
 
-        x1dif = (x1bRe-x1bIm);
-        x1sum = (x1bRe+x1bIm);
-        x3dif = (x3bRe-x3bIm);
-        x3sum = (x3bRe+x3bIm);
+        float x1dif = (x1bRe-x1bIm);
+        float x1sum = (x1bRe+x1bIm);
+        float x3dif = (x3bRe-x3bIm);
+        float x3sum = (x3bRe+x3bIm);
 
-        x1dif_tRe_1b = x1dif * t1Re_1b;
-        x1sum_tRe_1b = x1sum * t1Re_1b;
+        float x1dif_tRe_1b = x1dif * t1Re_1b;
+        float x1sum_tRe_1b = x1sum * t1Re_1b;
           
-        x3dif_tRe_1b2b = x3dif * t1Re_1b2b;
-        x3dif_tRe_1b2d = x3dif * t1Re_1b2d;
-        x3sum_tRe_1b2b = x3sum * t1Re_1b2b;
-        x3sum_tRe_1b2d = x3sum * t1Re_1b2d;
+        float x3dif_tRe_1b2b = x3dif * t1Re_1b2b;
+        float x3dif_tRe_1b2d = x3dif * t1Re_1b2d;
+        float x3sum_tRe_1b2b = x3sum * t1Re_1b2b;
+        float x3sum_tRe_1b2d = x3sum * t1Re_1b2d;
 
-        tempReB = (x3dif_tRe_1b2b - x3sum_tRe_1b2d + x2bRe*t1Re_2b - x2bIm*t1Re_2d);
-        tempImB = (x3dif_tRe_1b2d + x3sum_tRe_1b2b + x2bRe*t1Re_2d + x2bIm*t1Re_2b);
-        tempReD = (x3dif_tRe_1b2d + x3sum_tRe_1b2b - x2bRe*t1Re_2d - x2bIm*t1Re_2b);
-        tempImD = (x3dif_tRe_1b2b - x3sum_tRe_1b2d - x2bRe*t1Re_2b + x2bIm*t1Re_2d);
+        float tempReB = (x3dif_tRe_1b2b - x3sum_tRe_1b2d + x2bRe*t1Re_2b - x2bIm*t1Re_2d);
+        float tempImB = (x3dif_tRe_1b2d + x3sum_tRe_1b2b + x2bRe*t1Re_2d + x2bIm*t1Re_2b);
+        float tempReD = (x3dif_tRe_1b2d + x3sum_tRe_1b2b - x2bRe*t1Re_2d - x2bIm*t1Re_2b);
+        float tempImD = (x3dif_tRe_1b2b - x3sum_tRe_1b2d - x2bRe*t1Re_2b + x2bIm*t1Re_2d);
 
-        resReB1 = x0bRe  + x1dif_tRe_1b + tempReB;     
+        float resReB1 = x0bRe  + x1dif_tRe_1b + tempReB;     
         out1024[idx +   2] =   resReB1; 
         out1024[idx +  30] =   resReB1;  
-        resReB2 = x0bRe  + x1dif_tRe_1b - tempReB;     
+        float resReB2 = x0bRe  + x1dif_tRe_1b - tempReB;     
         out1024[idx +  18] =   resReB2;
         out1024[idx +  14] =   resReB2; 
-        resReD1 = x0bRe  - x1dif_tRe_1b - tempReD;     
+        float resReD1 = x0bRe  - x1dif_tRe_1b - tempReD;     
         out1024[idx +   6] =   resReD1; 
         out1024[idx +  26] =   resReD1; 
-        resReD2 = x0bRe  - x1dif_tRe_1b + tempReD;     
+        float resReD2 = x0bRe  - x1dif_tRe_1b + tempReD;     
         out1024[idx +  22] =   resReD2;
         out1024[idx +  10] =   resReD2; 
 
-        resImB1 = x0bIm  + x1sum_tRe_1b + tempImB;     
+        float resImB1 = x0bIm  + x1sum_tRe_1b + tempImB;     
         out1024[idx +   3] =   resImB1; 
         out1024[idx +  31] = - resImB1;  
-        resImB2 = x0bIm  + x1sum_tRe_1b - tempImB;     
+        float resImB2 = x0bIm  + x1sum_tRe_1b - tempImB;     
         out1024[idx +  19] =   resImB2;
         out1024[idx +  15] = - resImB2; 
-        resImD1 =-x0bIm  + x1sum_tRe_1b - tempImD;     
+        float resImD1 =-x0bIm  + x1sum_tRe_1b - tempImD;     
         out1024[idx +   7] =   resImD1; 
         out1024[idx +  27] = - resImD1; 
-        resImD2 =-x0bIm  + x1sum_tRe_1b + tempImD;     
+        float resImD2 =-x0bIm  + x1sum_tRe_1b + tempImD;     
         out1024[idx +  23] =   resImD2;  
         out1024[idx +  11] = - resImD2; 
     }
