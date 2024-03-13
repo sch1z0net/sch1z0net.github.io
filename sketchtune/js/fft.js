@@ -4730,23 +4730,34 @@ console.log(computeInverseFFT(computeFFT(signal3)));
 //console.log(fftReal512(testData1024));
 
 
-const inputArray = testData1024;
-let fft_wasm = Module.cwrap('fftReal1024', null, ['number', 'number', 'number']);
-var ptr_in   = Module._malloc(inputArray.length * Float32Array.BYTES_PER_ELEMENT);
-Module.HEAPF32.set(inputArray, ptr_in / Float32Array.BYTES_PER_ELEMENT);
-var ptr_out  = Module._malloc(2048 * Float32Array.BYTES_PER_ELEMENT);
 
-try {
-  fft_wasm(ptr_in, inputArray.length, ptr_out);
+// Define your initialization logic
+function initializeModule() {
+    // Call your memory-related functions after initialization
+    const inputArray = testData1024;
+    let fft_wasm = Module.cwrap('fftReal1024', null, ['number', 'number', 'number']);
+    var ptr_in = Module._malloc(inputArray.length * Float32Array.BYTES_PER_ELEMENT);
+    Module.HEAPF32.set(inputArray, ptr_in / Float32Array.BYTES_PER_ELEMENT);
+    var ptr_out = Module._malloc(2048 * Float32Array.BYTES_PER_ELEMENT);
 
-  var i = 0
-  for (i = 0; i < 100; ++i) {
-     console.log(Module.HEAPF32[(ptr_out/Float32Array.BYTES_PER_ELEMENT)+i])
-  }
+    try {
+        fft_wasm(ptr_in, inputArray.length, ptr_out);
+
+        var i = 0;
+        for (i = 0; i < 100; ++i) {
+            console.log(Module.HEAPF32[(ptr_out / Float32Array.BYTES_PER_ELEMENT) + i]);
+        }
+    } finally {
+        Module._free(ptr_in);
+        Module._free(ptr_out);
+    }
 }
-finally {
-  Module._free(ptr_in);
-  Module._free(ptr_out);
+
+// Check if the module is already initialized, otherwise wait for initialization
+if (Module.isRuntimeInitialized) {
+    initializeModule();
+} else {
+    Module.onRuntimeInitialized = initializeModule;
 }
 
 
