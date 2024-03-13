@@ -540,13 +540,13 @@ void fftReal1024(float* realInput, int size, float* out1024) {
             paddedInput[i] = realInput[i];
         }
     }
-
+/*
     // Perform bit reversal
     for (int i = 0; i < 1024; i++) {
         inputBR1024[i] = paddedInput[bitReversalMap1024[i]];
     }
+*/
 
-/*
     inputBR1024[0] = paddedInput[0];
     inputBR1024[1] = paddedInput[512];
     inputBR1024[2] = paddedInput[256];
@@ -1571,7 +1571,7 @@ void fftReal1024(float* realInput, int size, float* out1024) {
     inputBR1024[1021] = paddedInput[767];
     inputBR1024[1022] = paddedInput[511];
     inputBR1024[1023] = paddedInput[1023];
-*/
+
 
     // P = 0  -> 4
     for (int idx = 0; idx < 1024; idx += 4) {
