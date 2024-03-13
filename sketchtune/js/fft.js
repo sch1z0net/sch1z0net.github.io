@@ -4097,7 +4097,7 @@ function fftReal1024(realInput) {
     /////////////////////////////////////////////
     // P = 3  -> 256
     //
-
+/*
         for (let j = 0; j < 128; j++) {
             const evenIndex = j;
             const oddIndex  = j + 128;
@@ -4277,7 +4277,7 @@ function fftReal1024(realInput) {
             out1024[oddIndex * 2]      = evenPartRe - twiddledOddRe;
             out1024[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
         }
-
+*/
     return out1024;
 }
 
@@ -4482,6 +4482,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
 /******************** INVERSE *********************/
 //const pi = Math.PI;
 
+let result512 = new Float32Array(512);
 function ifft512(input) {
     // Take the complex conjugate of the input spectrum in place
     for (let i = 0; i < 1024; i += 2) {
@@ -4489,12 +4490,11 @@ function ifft512(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    const result = fftComplexInPlace_ref(input);
-    for (let i = 0; i < 1024; i += 2) {
-        result[i] /= 512; // Scale the real part
-        result[i + 1] = -result[i + 1] / 512; // Scale and negate the imaginary part
+    const result_ = fftComplexInPlace_ref(input);
+    for (let i = 0; i < 512; i++) {
+        result512[i] = result_[i*2] / 512; // Scale the real part
     }
-    return result;
+    return result512;
 }
 
 let result1024 = new Float32Array(1024);
@@ -4506,7 +4506,6 @@ function ifft1024(input) {
 
     // Apply FFT to the conjugate spectrum
     const result_ = fftComplexInPlace_ref(input);
-    
     for (let i = 0; i < 1024; i++) {
         result1024[i] = result_[i*2] / 1024; // Scale the real part
     }
@@ -4721,11 +4720,8 @@ console.log(signal3);
 console.log(computeInverseFFT(computeFFT(signal3)));
 */
 
-console.log(testData1024);
-console.log(ifft1024(fftRealInPlace_ref(testData1024)));
-
-console.log("1024:  ",compareFFTResults(testData1024,ifft1024(fftRealInPlace_ref(testData1024))));
-console.log("1024:  ",compareFFTResults(testData1024,ifft1024(fftReal1024(testData1024))));
+//console.log("1024:  ",compareFFTResults(testData1024,ifft1024(fftRealInPlace_ref(testData1024))));
+//console.log("1024:  ",compareFFTResults(testData1024,ifft1024(fftReal1024(testData1024))));
 
 //console.log(computeFFT(signal1));
 
