@@ -4730,6 +4730,6 @@ console.log(computeInverseFFT(computeFFT(signal3)));
 //console.log(fftReal512(testData512));
 //console.log(fftReal512(testData1024));
 
-let fft_wasm = Module.cwrap('fftReal1024', 'array', ['array'])
+let fft_wasm = Module.cwrap('fftReal1024', 'array', ['array']);
 console.log(fft_wasm(testData1024, testData1024.length));
 
