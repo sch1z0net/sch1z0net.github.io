@@ -3060,7 +3060,7 @@ function fftReal512(realInput) {
     return out512;
 }
 
-/*
+
 function fftReal1024(realInput) {
     var ptr_in = Module._malloc(realInput.length * Float32Array.BYTES_PER_ELEMENT);
     Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
@@ -3073,15 +3073,14 @@ function fftReal1024(realInput) {
     // Copy data from ptr_out to the JavaScript array
     result.set(Module.HEAPF32.subarray(ptr_out / Float32Array.BYTES_PER_ELEMENT, (ptr_out + 2048 * Float32Array.BYTES_PER_ELEMENT) / Float32Array.BYTES_PER_ELEMENT));
     // Free the memory allocated for ptr_out
+    Module._free(ptr_in);
     Module._free(ptr_out);
     // Return the JavaScript array
     return result;
-}*/
+}
 
 
-
-
-
+/*
 let map1024       = bitReversalMap1024.get(1024);
 const inputBR1024 = new Float32Array(1024);
 const out1024     = new Float32Array(2048);
@@ -4301,7 +4300,7 @@ function fftReal1024(realInput) {
 
     return out1024;
 }
-
+*/
 
 
 
@@ -4616,14 +4615,8 @@ function computeInverseFFTonHalf1024(halfSpectrum) {
 let fft_wasm;
 function initializeModule() {
     fft_wasm = Module.cwrap('fftReal1024', null, ['number', 'number', 'number']);
-}
 
 
-
-
-/*
-// Define your initialization logic
-function initializeModule() {
 
     // Define the number of FFT operations to perform
     const numOperations = 20000; // You can adjust this number based on your requirements
@@ -4651,17 +4644,6 @@ function initializeModule() {
     const testData4096 = generateTestData(4096);
 
 
-
-    // Call your memory-related functions after initialization
-    const inputArray = testData1024;
-    let fft_wasm = Module.cwrap('fftReal1024', null, ['number', 'number', 'number']);
-    var ptr_in = Module._malloc(inputArray.length * Float32Array.BYTES_PER_ELEMENT);
-    Module.HEAPF32.set(inputArray, ptr_in / Float32Array.BYTES_PER_ELEMENT);
-    var ptr_out = Module._malloc(2048 * Float32Array.BYTES_PER_ELEMENT);
-
-
-
-
     // Perform FFT operations
     const performFFTOperations = (fftSize) => {
         let testData;
@@ -4675,8 +4657,8 @@ function initializeModule() {
         for (let i = 0; i < numOperations; i++) {
             //fftRealInPlace_ref(testData);
             //fftReal512(testData);
-            //fftReal1024(testData);
-            fft_wasm(ptr_in, inputArray.length, ptr_out);
+            fftReal1024(testData);
+            //fft_wasm(ptr_in, inputArray.length, ptr_out);
         }
 
     };
@@ -4721,6 +4703,11 @@ function initializeModule() {
     //measureTime(1024);
     //measureTime(2048);
     //measureTime(4096);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
 
     //console.log("8:    ",compareFFTResults(fftRealInPlace_ref(testData8),fftRealInPlaceRADIX4(testData8)));
     //console.log("16:   ",compareFFTResults(fftRealInPlace_ref(testData16),fftRealInPlaceRADIX4(testData16)));
@@ -4741,9 +4728,8 @@ function initializeModule() {
     
 
     //console.log("512:  ",compareFFTResults(fftRealInPlace_ref(testData512),fftReal512(testData512)));
-    //console.log("1024:  ",compareFFTResults(fftRealInPlace_ref(testData1024),fftReal512(testData1024)));
+    console.log("1024:  ",compareFFTResults(fftRealInPlace_ref(testData1024),fftReal1024(testData1024)));
 
-    
     //console.log(signal1);
     //console.log(computeInverseFFT(computeFFT(signal1)));
     //console.log(signal2);
@@ -4762,18 +4748,8 @@ function initializeModule() {
     //console.log(fftReal512(testData1024));
 
 
-    try {
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-    } finally {
-        Module._free(ptr_in);
-        Module._free(ptr_out);
-    }
 }
-*/
+
 
 // Check if the module is already initialized, otherwise wait for initialization
 if (Module.isRuntimeInitialized) {
