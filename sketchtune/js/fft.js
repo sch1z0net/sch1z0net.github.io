@@ -4703,11 +4703,11 @@ function initializeModule() {
     //measureTime(1024);
     //measureTime(2048);
     //measureTime(4096);
+        /*measureTime(1024);
         measureTime(1024);
         measureTime(1024);
         measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
+        measureTime(1024);*/
 
     //console.log("8:    ",compareFFTResults(fftRealInPlace_ref(testData8),fftRealInPlaceRADIX4(testData8)));
     //console.log("16:   ",compareFFTResults(fftRealInPlace_ref(testData16),fftRealInPlaceRADIX4(testData16)));
@@ -4728,7 +4728,7 @@ function initializeModule() {
     
 
     //console.log("512:  ",compareFFTResults(fftRealInPlace_ref(testData512),fftReal512(testData512)));
-    console.log("1024:  ",compareFFTResults(fftRealInPlace_ref(testData1024),fftReal1024(testData1024)));
+    //console.log("1024:  ",compareFFTResults(fftRealInPlace_ref(testData1024),fftReal1024(testData1024)));
 
     //console.log(signal1);
     //console.log(computeInverseFFT(computeFFT(signal1)));
