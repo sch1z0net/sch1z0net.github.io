@@ -99,12 +99,12 @@ void generate_code(size) {
         fprintf(fp, "        out1024[idx + %d] = resRe%d_s;\n", (i*2), i);
 
         fprintf(fp, "        double resRe%d_s = eRe%d - (oRe%d * tRe%d - oIm%d * tRe%d);\n", (n-i), i, i, i, i, (n-i));
-        fprintf(fp, "        out1024[idx + %d] = resRe%d_s;\n", size+(i*2), (hsize-i));
-        fprintf(fp, "        out1024[idx + %d] = resRe%d_s;\n", size-(i*2), (hsize-i));
+        fprintf(fp, "        out1024[idx + %d] = resRe%d_s;\n", size+(i*2), (n-i));
+        fprintf(fp, "        out1024[idx + %d] = resRe%d_s;\n", size-(i*2), (n-i));
 
         fprintf(fp, "        double resIm%d_s = -eIm%d + (oRe%d * tRe%d + oIm%d * tRe%d);\n", (n-i), i, i, (n-i), i, i);
-        fprintf(fp, "        out1024[idx + %d] = resIm%d_s;\n", size-(i*2)+1, (hsize-i));
-        fprintf(fp, "        out1024[idx + %d] = -resIm%d_s;\n", size+(i*2)+1, (hsize-i));
+        fprintf(fp, "        out1024[idx + %d] = resIm%d_s;\n", size-(i*2)+1, (n-i));
+        fprintf(fp, "        out1024[idx + %d] = -resIm%d_s;\n", size+(i*2)+1, (n-i));
         fprintf(fp, "        \n");
     }
     fprintf(fp, "    } \n");
