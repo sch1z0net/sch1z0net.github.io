@@ -646,6 +646,7 @@ double paddingInput[1024] __attribute__((aligned(32)));
 double out1024[2048] __attribute__((aligned(32)));
 double *paddedInput;  // Declare as a pointer
 
+
 // Export out1024 array
 EMSCRIPTEN_KEEPALIVE
 double* getOut1024Ptr() {
@@ -665,41 +666,2318 @@ void fftReal1024(double* realInput, int size) {
         paddedInput = realInput;
     }
 
-double in0  =paddedInput[0];
-double in16 =paddedInput[32];
-double in8  =paddedInput[64];
-double in4  =paddedInput[128];
-double in12 =paddedInput[192];
-double in2  =paddedInput[256];
-double in10 =paddedInput[320];
-double in6  =paddedInput[384];
-double in14 =paddedInput[448];
-double in1  =paddedInput[512];
-double in9  =paddedInput[576];
-double in5  =paddedInput[640];
-double in13 =paddedInput[704];
-double in3  =paddedInput[768];
-double in11 =paddedInput[832];
-double in7  =paddedInput[896];
-double in15 =paddedInput[960];
 
-inputBR1024[0] =in0;
-inputBR1024[1] =in1;
-inputBR1024[2] =in2;
-inputBR1024[3] =in3;
-inputBR1024[4] =in4;
-inputBR1024[5] =in5;
-inputBR1024[6] =in6;
-inputBR1024[7] =in7;
-inputBR1024[8] =in8;
-inputBR1024[9] =in9;
+
+
+
+double in0=paddedInput[0];
+double in8=paddedInput[64];
+double in4=paddedInput[128];
+double in12=paddedInput[192];
+double in2=paddedInput[256];
+double in10=paddedInput[320];
+double in6=paddedInput[384];
+double in14=paddedInput[448];
+double in1=paddedInput[512];
+double in9=paddedInput[576];
+double in5=paddedInput[640];
+double in13=paddedInput[704];
+double in3=paddedInput[768];
+double in11=paddedInput[832];
+double in7=paddedInput[896];
+double in15=paddedInput[960];
+
+
+inputBR1024[0]=in0;
+inputBR1024[1]=in1;
+inputBR1024[2]=in2;
+inputBR1024[3]=in3;
+inputBR1024[4]=in4;
+inputBR1024[5]=in5;
+inputBR1024[6]=in6;
+inputBR1024[7]=in7;
+inputBR1024[8]=in8;
+inputBR1024[9]=in9;
 inputBR1024[10]=in10;
 inputBR1024[11]=in11;
 inputBR1024[12]=in12;
 inputBR1024[13]=in13;
 inputBR1024[14]=in14;
 inputBR1024[15]=in15;
+
+
+double in16=paddedInput[32];
+double in24=paddedInput[96];
+double in20=paddedInput[160];
+double in28=paddedInput[224];
+double in18=paddedInput[288];
+double in26=paddedInput[352];
+double in22=paddedInput[416];
+double in30=paddedInput[480];
+double in17=paddedInput[544];
+double in25=paddedInput[608];
+double in21=paddedInput[672];
+double in29=paddedInput[736];
+double in19=paddedInput[800];
+double in27=paddedInput[864];
+double in23=paddedInput[928];
+double in31=paddedInput[992];
+
+
 inputBR1024[16]=in16;
+inputBR1024[17]=in17;
+inputBR1024[18]=in18;
+inputBR1024[19]=in19;
+inputBR1024[20]=in20;
+inputBR1024[21]=in21;
+inputBR1024[22]=in22;
+inputBR1024[23]=in23;
+inputBR1024[24]=in24;
+inputBR1024[25]=in25;
+inputBR1024[26]=in26;
+inputBR1024[27]=in27;
+inputBR1024[28]=in28;
+inputBR1024[29]=in29;
+inputBR1024[30]=in30;
+inputBR1024[31]=in31;
+
+
+double in32=paddedInput[16];
+double in40=paddedInput[80];
+double in36=paddedInput[144];
+double in44=paddedInput[208];
+double in34=paddedInput[272];
+double in42=paddedInput[336];
+double in38=paddedInput[400];
+double in46=paddedInput[464];
+double in33=paddedInput[528];
+double in41=paddedInput[592];
+double in37=paddedInput[656];
+double in45=paddedInput[720];
+double in35=paddedInput[784];
+double in43=paddedInput[848];
+double in39=paddedInput[912];
+double in47=paddedInput[976];
+
+
+inputBR1024[32]=in32;
+inputBR1024[33]=in33;
+inputBR1024[34]=in34;
+inputBR1024[35]=in35;
+inputBR1024[36]=in36;
+inputBR1024[37]=in37;
+inputBR1024[38]=in38;
+inputBR1024[39]=in39;
+inputBR1024[40]=in40;
+inputBR1024[41]=in41;
+inputBR1024[42]=in42;
+inputBR1024[43]=in43;
+inputBR1024[44]=in44;
+inputBR1024[45]=in45;
+inputBR1024[46]=in46;
+inputBR1024[47]=in47;
+
+
+double in48=paddedInput[48];
+double in56=paddedInput[112];
+double in52=paddedInput[176];
+double in60=paddedInput[240];
+double in50=paddedInput[304];
+double in58=paddedInput[368];
+double in54=paddedInput[432];
+double in62=paddedInput[496];
+double in49=paddedInput[560];
+double in57=paddedInput[624];
+double in53=paddedInput[688];
+double in61=paddedInput[752];
+double in51=paddedInput[816];
+double in59=paddedInput[880];
+double in55=paddedInput[944];
+double in63=paddedInput[1008];
+
+
+inputBR1024[48]=in48;
+inputBR1024[49]=in49;
+inputBR1024[50]=in50;
+inputBR1024[51]=in51;
+inputBR1024[52]=in52;
+inputBR1024[53]=in53;
+inputBR1024[54]=in54;
+inputBR1024[55]=in55;
+inputBR1024[56]=in56;
+inputBR1024[57]=in57;
+inputBR1024[58]=in58;
+inputBR1024[59]=in59;
+inputBR1024[60]=in60;
+inputBR1024[61]=in61;
+inputBR1024[62]=in62;
+inputBR1024[63]=in63;
+
+
+double in64=paddedInput[8];
+double in72=paddedInput[72];
+double in68=paddedInput[136];
+double in76=paddedInput[200];
+double in66=paddedInput[264];
+double in74=paddedInput[328];
+double in70=paddedInput[392];
+double in78=paddedInput[456];
+double in65=paddedInput[520];
+double in73=paddedInput[584];
+double in69=paddedInput[648];
+double in77=paddedInput[712];
+double in67=paddedInput[776];
+double in75=paddedInput[840];
+double in71=paddedInput[904];
+double in79=paddedInput[968];
+
+
+inputBR1024[64]=in64;
+inputBR1024[65]=in65;
+inputBR1024[66]=in66;
+inputBR1024[67]=in67;
+inputBR1024[68]=in68;
+inputBR1024[69]=in69;
+inputBR1024[70]=in70;
+inputBR1024[71]=in71;
+inputBR1024[72]=in72;
+inputBR1024[73]=in73;
+inputBR1024[74]=in74;
+inputBR1024[75]=in75;
+inputBR1024[76]=in76;
+inputBR1024[77]=in77;
+inputBR1024[78]=in78;
+inputBR1024[79]=in79;
+
+
+double in80=paddedInput[40];
+double in88=paddedInput[104];
+double in84=paddedInput[168];
+double in92=paddedInput[232];
+double in82=paddedInput[296];
+double in90=paddedInput[360];
+double in86=paddedInput[424];
+double in94=paddedInput[488];
+double in81=paddedInput[552];
+double in89=paddedInput[616];
+double in85=paddedInput[680];
+double in93=paddedInput[744];
+double in83=paddedInput[808];
+double in91=paddedInput[872];
+double in87=paddedInput[936];
+double in95=paddedInput[1000];
+
+
+inputBR1024[80]=in80;
+inputBR1024[81]=in81;
+inputBR1024[82]=in82;
+inputBR1024[83]=in83;
+inputBR1024[84]=in84;
+inputBR1024[85]=in85;
+inputBR1024[86]=in86;
+inputBR1024[87]=in87;
+inputBR1024[88]=in88;
+inputBR1024[89]=in89;
+inputBR1024[90]=in90;
+inputBR1024[91]=in91;
+inputBR1024[92]=in92;
+inputBR1024[93]=in93;
+inputBR1024[94]=in94;
+inputBR1024[95]=in95;
+
+
+double in96=paddedInput[24];
+double in104=paddedInput[88];
+double in100=paddedInput[152];
+double in108=paddedInput[216];
+double in98=paddedInput[280];
+double in106=paddedInput[344];
+double in102=paddedInput[408];
+double in110=paddedInput[472];
+double in97=paddedInput[536];
+double in105=paddedInput[600];
+double in101=paddedInput[664];
+double in109=paddedInput[728];
+double in99=paddedInput[792];
+double in107=paddedInput[856];
+double in103=paddedInput[920];
+double in111=paddedInput[984];
+
+
+inputBR1024[96]=in96;
+inputBR1024[97]=in97;
+inputBR1024[98]=in98;
+inputBR1024[99]=in99;
+inputBR1024[100]=in100;
+inputBR1024[101]=in101;
+inputBR1024[102]=in102;
+inputBR1024[103]=in103;
+inputBR1024[104]=in104;
+inputBR1024[105]=in105;
+inputBR1024[106]=in106;
+inputBR1024[107]=in107;
+inputBR1024[108]=in108;
+inputBR1024[109]=in109;
+inputBR1024[110]=in110;
+inputBR1024[111]=in111;
+
+
+double in112=paddedInput[56];
+double in120=paddedInput[120];
+double in116=paddedInput[184];
+double in124=paddedInput[248];
+double in114=paddedInput[312];
+double in122=paddedInput[376];
+double in118=paddedInput[440];
+double in126=paddedInput[504];
+double in113=paddedInput[568];
+double in121=paddedInput[632];
+double in117=paddedInput[696];
+double in125=paddedInput[760];
+double in115=paddedInput[824];
+double in123=paddedInput[888];
+double in119=paddedInput[952];
+double in127=paddedInput[1016];
+
+
+inputBR1024[112]=in112;
+inputBR1024[113]=in113;
+inputBR1024[114]=in114;
+inputBR1024[115]=in115;
+inputBR1024[116]=in116;
+inputBR1024[117]=in117;
+inputBR1024[118]=in118;
+inputBR1024[119]=in119;
+inputBR1024[120]=in120;
+inputBR1024[121]=in121;
+inputBR1024[122]=in122;
+inputBR1024[123]=in123;
+inputBR1024[124]=in124;
+inputBR1024[125]=in125;
+inputBR1024[126]=in126;
+inputBR1024[127]=in127;
+
+
+double in128=paddedInput[4];
+double in136=paddedInput[68];
+double in132=paddedInput[132];
+double in140=paddedInput[196];
+double in130=paddedInput[260];
+double in138=paddedInput[324];
+double in134=paddedInput[388];
+double in142=paddedInput[452];
+double in129=paddedInput[516];
+double in137=paddedInput[580];
+double in133=paddedInput[644];
+double in141=paddedInput[708];
+double in131=paddedInput[772];
+double in139=paddedInput[836];
+double in135=paddedInput[900];
+double in143=paddedInput[964];
+
+
+inputBR1024[128]=in128;
+inputBR1024[129]=in129;
+inputBR1024[130]=in130;
+inputBR1024[131]=in131;
+inputBR1024[132]=in132;
+inputBR1024[133]=in133;
+inputBR1024[134]=in134;
+inputBR1024[135]=in135;
+inputBR1024[136]=in136;
+inputBR1024[137]=in137;
+inputBR1024[138]=in138;
+inputBR1024[139]=in139;
+inputBR1024[140]=in140;
+inputBR1024[141]=in141;
+inputBR1024[142]=in142;
+inputBR1024[143]=in143;
+
+
+double in144=paddedInput[36];
+double in152=paddedInput[100];
+double in148=paddedInput[164];
+double in156=paddedInput[228];
+double in146=paddedInput[292];
+double in154=paddedInput[356];
+double in150=paddedInput[420];
+double in158=paddedInput[484];
+double in145=paddedInput[548];
+double in153=paddedInput[612];
+double in149=paddedInput[676];
+double in157=paddedInput[740];
+double in147=paddedInput[804];
+double in155=paddedInput[868];
+double in151=paddedInput[932];
+double in159=paddedInput[996];
+
+
+inputBR1024[144]=in144;
+inputBR1024[145]=in145;
+inputBR1024[146]=in146;
+inputBR1024[147]=in147;
+inputBR1024[148]=in148;
+inputBR1024[149]=in149;
+inputBR1024[150]=in150;
+inputBR1024[151]=in151;
+inputBR1024[152]=in152;
+inputBR1024[153]=in153;
+inputBR1024[154]=in154;
+inputBR1024[155]=in155;
+inputBR1024[156]=in156;
+inputBR1024[157]=in157;
+inputBR1024[158]=in158;
+inputBR1024[159]=in159;
+
+
+double in160=paddedInput[20];
+double in168=paddedInput[84];
+double in164=paddedInput[148];
+double in172=paddedInput[212];
+double in162=paddedInput[276];
+double in170=paddedInput[340];
+double in166=paddedInput[404];
+double in174=paddedInput[468];
+double in161=paddedInput[532];
+double in169=paddedInput[596];
+double in165=paddedInput[660];
+double in173=paddedInput[724];
+double in163=paddedInput[788];
+double in171=paddedInput[852];
+double in167=paddedInput[916];
+double in175=paddedInput[980];
+
+
+inputBR1024[160]=in160;
+inputBR1024[161]=in161;
+inputBR1024[162]=in162;
+inputBR1024[163]=in163;
+inputBR1024[164]=in164;
+inputBR1024[165]=in165;
+inputBR1024[166]=in166;
+inputBR1024[167]=in167;
+inputBR1024[168]=in168;
+inputBR1024[169]=in169;
+inputBR1024[170]=in170;
+inputBR1024[171]=in171;
+inputBR1024[172]=in172;
+inputBR1024[173]=in173;
+inputBR1024[174]=in174;
+inputBR1024[175]=in175;
+
+
+double in176=paddedInput[52];
+double in184=paddedInput[116];
+double in180=paddedInput[180];
+double in188=paddedInput[244];
+double in178=paddedInput[308];
+double in186=paddedInput[372];
+double in182=paddedInput[436];
+double in190=paddedInput[500];
+double in177=paddedInput[564];
+double in185=paddedInput[628];
+double in181=paddedInput[692];
+double in189=paddedInput[756];
+double in179=paddedInput[820];
+double in187=paddedInput[884];
+double in183=paddedInput[948];
+double in191=paddedInput[1012];
+
+
+inputBR1024[176]=in176;
+inputBR1024[177]=in177;
+inputBR1024[178]=in178;
+inputBR1024[179]=in179;
+inputBR1024[180]=in180;
+inputBR1024[181]=in181;
+inputBR1024[182]=in182;
+inputBR1024[183]=in183;
+inputBR1024[184]=in184;
+inputBR1024[185]=in185;
+inputBR1024[186]=in186;
+inputBR1024[187]=in187;
+inputBR1024[188]=in188;
+inputBR1024[189]=in189;
+inputBR1024[190]=in190;
+inputBR1024[191]=in191;
+
+
+double in192=paddedInput[12];
+double in200=paddedInput[76];
+double in196=paddedInput[140];
+double in204=paddedInput[204];
+double in194=paddedInput[268];
+double in202=paddedInput[332];
+double in198=paddedInput[396];
+double in206=paddedInput[460];
+double in193=paddedInput[524];
+double in201=paddedInput[588];
+double in197=paddedInput[652];
+double in205=paddedInput[716];
+double in195=paddedInput[780];
+double in203=paddedInput[844];
+double in199=paddedInput[908];
+double in207=paddedInput[972];
+
+
+inputBR1024[192]=in192;
+inputBR1024[193]=in193;
+inputBR1024[194]=in194;
+inputBR1024[195]=in195;
+inputBR1024[196]=in196;
+inputBR1024[197]=in197;
+inputBR1024[198]=in198;
+inputBR1024[199]=in199;
+inputBR1024[200]=in200;
+inputBR1024[201]=in201;
+inputBR1024[202]=in202;
+inputBR1024[203]=in203;
+inputBR1024[204]=in204;
+inputBR1024[205]=in205;
+inputBR1024[206]=in206;
+inputBR1024[207]=in207;
+
+
+double in208=paddedInput[44];
+double in216=paddedInput[108];
+double in212=paddedInput[172];
+double in220=paddedInput[236];
+double in210=paddedInput[300];
+double in218=paddedInput[364];
+double in214=paddedInput[428];
+double in222=paddedInput[492];
+double in209=paddedInput[556];
+double in217=paddedInput[620];
+double in213=paddedInput[684];
+double in221=paddedInput[748];
+double in211=paddedInput[812];
+double in219=paddedInput[876];
+double in215=paddedInput[940];
+double in223=paddedInput[1004];
+
+
+inputBR1024[208]=in208;
+inputBR1024[209]=in209;
+inputBR1024[210]=in210;
+inputBR1024[211]=in211;
+inputBR1024[212]=in212;
+inputBR1024[213]=in213;
+inputBR1024[214]=in214;
+inputBR1024[215]=in215;
+inputBR1024[216]=in216;
+inputBR1024[217]=in217;
+inputBR1024[218]=in218;
+inputBR1024[219]=in219;
+inputBR1024[220]=in220;
+inputBR1024[221]=in221;
+inputBR1024[222]=in222;
+inputBR1024[223]=in223;
+
+
+double in224=paddedInput[28];
+double in232=paddedInput[92];
+double in228=paddedInput[156];
+double in236=paddedInput[220];
+double in226=paddedInput[284];
+double in234=paddedInput[348];
+double in230=paddedInput[412];
+double in238=paddedInput[476];
+double in225=paddedInput[540];
+double in233=paddedInput[604];
+double in229=paddedInput[668];
+double in237=paddedInput[732];
+double in227=paddedInput[796];
+double in235=paddedInput[860];
+double in231=paddedInput[924];
+double in239=paddedInput[988];
+
+
+inputBR1024[224]=in224;
+inputBR1024[225]=in225;
+inputBR1024[226]=in226;
+inputBR1024[227]=in227;
+inputBR1024[228]=in228;
+inputBR1024[229]=in229;
+inputBR1024[230]=in230;
+inputBR1024[231]=in231;
+inputBR1024[232]=in232;
+inputBR1024[233]=in233;
+inputBR1024[234]=in234;
+inputBR1024[235]=in235;
+inputBR1024[236]=in236;
+inputBR1024[237]=in237;
+inputBR1024[238]=in238;
+inputBR1024[239]=in239;
+
+
+double in240=paddedInput[60];
+double in248=paddedInput[124];
+double in244=paddedInput[188];
+double in252=paddedInput[252];
+double in242=paddedInput[316];
+double in250=paddedInput[380];
+double in246=paddedInput[444];
+double in254=paddedInput[508];
+double in241=paddedInput[572];
+double in249=paddedInput[636];
+double in245=paddedInput[700];
+double in253=paddedInput[764];
+double in243=paddedInput[828];
+double in251=paddedInput[892];
+double in247=paddedInput[956];
+double in255=paddedInput[1020];
+
+
+inputBR1024[240]=in240;
+inputBR1024[241]=in241;
+inputBR1024[242]=in242;
+inputBR1024[243]=in243;
+inputBR1024[244]=in244;
+inputBR1024[245]=in245;
+inputBR1024[246]=in246;
+inputBR1024[247]=in247;
+inputBR1024[248]=in248;
+inputBR1024[249]=in249;
+inputBR1024[250]=in250;
+inputBR1024[251]=in251;
+inputBR1024[252]=in252;
+inputBR1024[253]=in253;
+inputBR1024[254]=in254;
+inputBR1024[255]=in255;
+
+
+double in256=paddedInput[2];
+double in264=paddedInput[66];
+double in260=paddedInput[130];
+double in268=paddedInput[194];
+double in258=paddedInput[258];
+double in266=paddedInput[322];
+double in262=paddedInput[386];
+double in270=paddedInput[450];
+double in257=paddedInput[514];
+double in265=paddedInput[578];
+double in261=paddedInput[642];
+double in269=paddedInput[706];
+double in259=paddedInput[770];
+double in267=paddedInput[834];
+double in263=paddedInput[898];
+double in271=paddedInput[962];
+
+
+inputBR1024[256]=in256;
+inputBR1024[257]=in257;
+inputBR1024[258]=in258;
+inputBR1024[259]=in259;
+inputBR1024[260]=in260;
+inputBR1024[261]=in261;
+inputBR1024[262]=in262;
+inputBR1024[263]=in263;
+inputBR1024[264]=in264;
+inputBR1024[265]=in265;
+inputBR1024[266]=in266;
+inputBR1024[267]=in267;
+inputBR1024[268]=in268;
+inputBR1024[269]=in269;
+inputBR1024[270]=in270;
+inputBR1024[271]=in271;
+
+
+double in272=paddedInput[34];
+double in280=paddedInput[98];
+double in276=paddedInput[162];
+double in284=paddedInput[226];
+double in274=paddedInput[290];
+double in282=paddedInput[354];
+double in278=paddedInput[418];
+double in286=paddedInput[482];
+double in273=paddedInput[546];
+double in281=paddedInput[610];
+double in277=paddedInput[674];
+double in285=paddedInput[738];
+double in275=paddedInput[802];
+double in283=paddedInput[866];
+double in279=paddedInput[930];
+double in287=paddedInput[994];
+
+
+inputBR1024[272]=in272;
+inputBR1024[273]=in273;
+inputBR1024[274]=in274;
+inputBR1024[275]=in275;
+inputBR1024[276]=in276;
+inputBR1024[277]=in277;
+inputBR1024[278]=in278;
+inputBR1024[279]=in279;
+inputBR1024[280]=in280;
+inputBR1024[281]=in281;
+inputBR1024[282]=in282;
+inputBR1024[283]=in283;
+inputBR1024[284]=in284;
+inputBR1024[285]=in285;
+inputBR1024[286]=in286;
+inputBR1024[287]=in287;
+
+
+double in288=paddedInput[18];
+double in296=paddedInput[82];
+double in292=paddedInput[146];
+double in300=paddedInput[210];
+double in290=paddedInput[274];
+double in298=paddedInput[338];
+double in294=paddedInput[402];
+double in302=paddedInput[466];
+double in289=paddedInput[530];
+double in297=paddedInput[594];
+double in293=paddedInput[658];
+double in301=paddedInput[722];
+double in291=paddedInput[786];
+double in299=paddedInput[850];
+double in295=paddedInput[914];
+double in303=paddedInput[978];
+
+
+inputBR1024[288]=in288;
+inputBR1024[289]=in289;
+inputBR1024[290]=in290;
+inputBR1024[291]=in291;
+inputBR1024[292]=in292;
+inputBR1024[293]=in293;
+inputBR1024[294]=in294;
+inputBR1024[295]=in295;
+inputBR1024[296]=in296;
+inputBR1024[297]=in297;
+inputBR1024[298]=in298;
+inputBR1024[299]=in299;
+inputBR1024[300]=in300;
+inputBR1024[301]=in301;
+inputBR1024[302]=in302;
+inputBR1024[303]=in303;
+
+
+double in304=paddedInput[50];
+double in312=paddedInput[114];
+double in308=paddedInput[178];
+double in316=paddedInput[242];
+double in306=paddedInput[306];
+double in314=paddedInput[370];
+double in310=paddedInput[434];
+double in318=paddedInput[498];
+double in305=paddedInput[562];
+double in313=paddedInput[626];
+double in309=paddedInput[690];
+double in317=paddedInput[754];
+double in307=paddedInput[818];
+double in315=paddedInput[882];
+double in311=paddedInput[946];
+double in319=paddedInput[1010];
+
+
+inputBR1024[304]=in304;
+inputBR1024[305]=in305;
+inputBR1024[306]=in306;
+inputBR1024[307]=in307;
+inputBR1024[308]=in308;
+inputBR1024[309]=in309;
+inputBR1024[310]=in310;
+inputBR1024[311]=in311;
+inputBR1024[312]=in312;
+inputBR1024[313]=in313;
+inputBR1024[314]=in314;
+inputBR1024[315]=in315;
+inputBR1024[316]=in316;
+inputBR1024[317]=in317;
+inputBR1024[318]=in318;
+inputBR1024[319]=in319;
+
+
+double in320=paddedInput[10];
+double in328=paddedInput[74];
+double in324=paddedInput[138];
+double in332=paddedInput[202];
+double in322=paddedInput[266];
+double in330=paddedInput[330];
+double in326=paddedInput[394];
+double in334=paddedInput[458];
+double in321=paddedInput[522];
+double in329=paddedInput[586];
+double in325=paddedInput[650];
+double in333=paddedInput[714];
+double in323=paddedInput[778];
+double in331=paddedInput[842];
+double in327=paddedInput[906];
+double in335=paddedInput[970];
+
+
+inputBR1024[320]=in320;
+inputBR1024[321]=in321;
+inputBR1024[322]=in322;
+inputBR1024[323]=in323;
+inputBR1024[324]=in324;
+inputBR1024[325]=in325;
+inputBR1024[326]=in326;
+inputBR1024[327]=in327;
+inputBR1024[328]=in328;
+inputBR1024[329]=in329;
+inputBR1024[330]=in330;
+inputBR1024[331]=in331;
+inputBR1024[332]=in332;
+inputBR1024[333]=in333;
+inputBR1024[334]=in334;
+inputBR1024[335]=in335;
+
+
+double in336=paddedInput[42];
+double in344=paddedInput[106];
+double in340=paddedInput[170];
+double in348=paddedInput[234];
+double in338=paddedInput[298];
+double in346=paddedInput[362];
+double in342=paddedInput[426];
+double in350=paddedInput[490];
+double in337=paddedInput[554];
+double in345=paddedInput[618];
+double in341=paddedInput[682];
+double in349=paddedInput[746];
+double in339=paddedInput[810];
+double in347=paddedInput[874];
+double in343=paddedInput[938];
+double in351=paddedInput[1002];
+
+
+inputBR1024[336]=in336;
+inputBR1024[337]=in337;
+inputBR1024[338]=in338;
+inputBR1024[339]=in339;
+inputBR1024[340]=in340;
+inputBR1024[341]=in341;
+inputBR1024[342]=in342;
+inputBR1024[343]=in343;
+inputBR1024[344]=in344;
+inputBR1024[345]=in345;
+inputBR1024[346]=in346;
+inputBR1024[347]=in347;
+inputBR1024[348]=in348;
+inputBR1024[349]=in349;
+inputBR1024[350]=in350;
+inputBR1024[351]=in351;
+
+
+double in352=paddedInput[26];
+double in360=paddedInput[90];
+double in356=paddedInput[154];
+double in364=paddedInput[218];
+double in354=paddedInput[282];
+double in362=paddedInput[346];
+double in358=paddedInput[410];
+double in366=paddedInput[474];
+double in353=paddedInput[538];
+double in361=paddedInput[602];
+double in357=paddedInput[666];
+double in365=paddedInput[730];
+double in355=paddedInput[794];
+double in363=paddedInput[858];
+double in359=paddedInput[922];
+double in367=paddedInput[986];
+
+
+inputBR1024[352]=in352;
+inputBR1024[353]=in353;
+inputBR1024[354]=in354;
+inputBR1024[355]=in355;
+inputBR1024[356]=in356;
+inputBR1024[357]=in357;
+inputBR1024[358]=in358;
+inputBR1024[359]=in359;
+inputBR1024[360]=in360;
+inputBR1024[361]=in361;
+inputBR1024[362]=in362;
+inputBR1024[363]=in363;
+inputBR1024[364]=in364;
+inputBR1024[365]=in365;
+inputBR1024[366]=in366;
+inputBR1024[367]=in367;
+
+
+double in368=paddedInput[58];
+double in376=paddedInput[122];
+double in372=paddedInput[186];
+double in380=paddedInput[250];
+double in370=paddedInput[314];
+double in378=paddedInput[378];
+double in374=paddedInput[442];
+double in382=paddedInput[506];
+double in369=paddedInput[570];
+double in377=paddedInput[634];
+double in373=paddedInput[698];
+double in381=paddedInput[762];
+double in371=paddedInput[826];
+double in379=paddedInput[890];
+double in375=paddedInput[954];
+double in383=paddedInput[1018];
+
+
+inputBR1024[368]=in368;
+inputBR1024[369]=in369;
+inputBR1024[370]=in370;
+inputBR1024[371]=in371;
+inputBR1024[372]=in372;
+inputBR1024[373]=in373;
+inputBR1024[374]=in374;
+inputBR1024[375]=in375;
+inputBR1024[376]=in376;
+inputBR1024[377]=in377;
+inputBR1024[378]=in378;
+inputBR1024[379]=in379;
+inputBR1024[380]=in380;
+inputBR1024[381]=in381;
+inputBR1024[382]=in382;
+inputBR1024[383]=in383;
+
+
+double in384=paddedInput[6];
+double in392=paddedInput[70];
+double in388=paddedInput[134];
+double in396=paddedInput[198];
+double in386=paddedInput[262];
+double in394=paddedInput[326];
+double in390=paddedInput[390];
+double in398=paddedInput[454];
+double in385=paddedInput[518];
+double in393=paddedInput[582];
+double in389=paddedInput[646];
+double in397=paddedInput[710];
+double in387=paddedInput[774];
+double in395=paddedInput[838];
+double in391=paddedInput[902];
+double in399=paddedInput[966];
+
+
+inputBR1024[384]=in384;
+inputBR1024[385]=in385;
+inputBR1024[386]=in386;
+inputBR1024[387]=in387;
+inputBR1024[388]=in388;
+inputBR1024[389]=in389;
+inputBR1024[390]=in390;
+inputBR1024[391]=in391;
+inputBR1024[392]=in392;
+inputBR1024[393]=in393;
+inputBR1024[394]=in394;
+inputBR1024[395]=in395;
+inputBR1024[396]=in396;
+inputBR1024[397]=in397;
+inputBR1024[398]=in398;
+inputBR1024[399]=in399;
+
+
+double in400=paddedInput[38];
+double in408=paddedInput[102];
+double in404=paddedInput[166];
+double in412=paddedInput[230];
+double in402=paddedInput[294];
+double in410=paddedInput[358];
+double in406=paddedInput[422];
+double in414=paddedInput[486];
+double in401=paddedInput[550];
+double in409=paddedInput[614];
+double in405=paddedInput[678];
+double in413=paddedInput[742];
+double in403=paddedInput[806];
+double in411=paddedInput[870];
+double in407=paddedInput[934];
+double in415=paddedInput[998];
+
+
+inputBR1024[400]=in400;
+inputBR1024[401]=in401;
+inputBR1024[402]=in402;
+inputBR1024[403]=in403;
+inputBR1024[404]=in404;
+inputBR1024[405]=in405;
+inputBR1024[406]=in406;
+inputBR1024[407]=in407;
+inputBR1024[408]=in408;
+inputBR1024[409]=in409;
+inputBR1024[410]=in410;
+inputBR1024[411]=in411;
+inputBR1024[412]=in412;
+inputBR1024[413]=in413;
+inputBR1024[414]=in414;
+inputBR1024[415]=in415;
+
+
+double in416=paddedInput[22];
+double in424=paddedInput[86];
+double in420=paddedInput[150];
+double in428=paddedInput[214];
+double in418=paddedInput[278];
+double in426=paddedInput[342];
+double in422=paddedInput[406];
+double in430=paddedInput[470];
+double in417=paddedInput[534];
+double in425=paddedInput[598];
+double in421=paddedInput[662];
+double in429=paddedInput[726];
+double in419=paddedInput[790];
+double in427=paddedInput[854];
+double in423=paddedInput[918];
+double in431=paddedInput[982];
+
+
+inputBR1024[416]=in416;
+inputBR1024[417]=in417;
+inputBR1024[418]=in418;
+inputBR1024[419]=in419;
+inputBR1024[420]=in420;
+inputBR1024[421]=in421;
+inputBR1024[422]=in422;
+inputBR1024[423]=in423;
+inputBR1024[424]=in424;
+inputBR1024[425]=in425;
+inputBR1024[426]=in426;
+inputBR1024[427]=in427;
+inputBR1024[428]=in428;
+inputBR1024[429]=in429;
+inputBR1024[430]=in430;
+inputBR1024[431]=in431;
+
+
+double in432=paddedInput[54];
+double in440=paddedInput[118];
+double in436=paddedInput[182];
+double in444=paddedInput[246];
+double in434=paddedInput[310];
+double in442=paddedInput[374];
+double in438=paddedInput[438];
+double in446=paddedInput[502];
+double in433=paddedInput[566];
+double in441=paddedInput[630];
+double in437=paddedInput[694];
+double in445=paddedInput[758];
+double in435=paddedInput[822];
+double in443=paddedInput[886];
+double in439=paddedInput[950];
+double in447=paddedInput[1014];
+
+
+inputBR1024[432]=in432;
+inputBR1024[433]=in433;
+inputBR1024[434]=in434;
+inputBR1024[435]=in435;
+inputBR1024[436]=in436;
+inputBR1024[437]=in437;
+inputBR1024[438]=in438;
+inputBR1024[439]=in439;
+inputBR1024[440]=in440;
+inputBR1024[441]=in441;
+inputBR1024[442]=in442;
+inputBR1024[443]=in443;
+inputBR1024[444]=in444;
+inputBR1024[445]=in445;
+inputBR1024[446]=in446;
+inputBR1024[447]=in447;
+
+
+double in448=paddedInput[14];
+double in456=paddedInput[78];
+double in452=paddedInput[142];
+double in460=paddedInput[206];
+double in450=paddedInput[270];
+double in458=paddedInput[334];
+double in454=paddedInput[398];
+double in462=paddedInput[462];
+double in449=paddedInput[526];
+double in457=paddedInput[590];
+double in453=paddedInput[654];
+double in461=paddedInput[718];
+double in451=paddedInput[782];
+double in459=paddedInput[846];
+double in455=paddedInput[910];
+double in463=paddedInput[974];
+
+
+inputBR1024[448]=in448;
+inputBR1024[449]=in449;
+inputBR1024[450]=in450;
+inputBR1024[451]=in451;
+inputBR1024[452]=in452;
+inputBR1024[453]=in453;
+inputBR1024[454]=in454;
+inputBR1024[455]=in455;
+inputBR1024[456]=in456;
+inputBR1024[457]=in457;
+inputBR1024[458]=in458;
+inputBR1024[459]=in459;
+inputBR1024[460]=in460;
+inputBR1024[461]=in461;
+inputBR1024[462]=in462;
+inputBR1024[463]=in463;
+
+
+double in464=paddedInput[46];
+double in472=paddedInput[110];
+double in468=paddedInput[174];
+double in476=paddedInput[238];
+double in466=paddedInput[302];
+double in474=paddedInput[366];
+double in470=paddedInput[430];
+double in478=paddedInput[494];
+double in465=paddedInput[558];
+double in473=paddedInput[622];
+double in469=paddedInput[686];
+double in477=paddedInput[750];
+double in467=paddedInput[814];
+double in475=paddedInput[878];
+double in471=paddedInput[942];
+double in479=paddedInput[1006];
+
+
+inputBR1024[464]=in464;
+inputBR1024[465]=in465;
+inputBR1024[466]=in466;
+inputBR1024[467]=in467;
+inputBR1024[468]=in468;
+inputBR1024[469]=in469;
+inputBR1024[470]=in470;
+inputBR1024[471]=in471;
+inputBR1024[472]=in472;
+inputBR1024[473]=in473;
+inputBR1024[474]=in474;
+inputBR1024[475]=in475;
+inputBR1024[476]=in476;
+inputBR1024[477]=in477;
+inputBR1024[478]=in478;
+inputBR1024[479]=in479;
+
+
+double in480=paddedInput[30];
+double in488=paddedInput[94];
+double in484=paddedInput[158];
+double in492=paddedInput[222];
+double in482=paddedInput[286];
+double in490=paddedInput[350];
+double in486=paddedInput[414];
+double in494=paddedInput[478];
+double in481=paddedInput[542];
+double in489=paddedInput[606];
+double in485=paddedInput[670];
+double in493=paddedInput[734];
+double in483=paddedInput[798];
+double in491=paddedInput[862];
+double in487=paddedInput[926];
+double in495=paddedInput[990];
+
+
+inputBR1024[480]=in480;
+inputBR1024[481]=in481;
+inputBR1024[482]=in482;
+inputBR1024[483]=in483;
+inputBR1024[484]=in484;
+inputBR1024[485]=in485;
+inputBR1024[486]=in486;
+inputBR1024[487]=in487;
+inputBR1024[488]=in488;
+inputBR1024[489]=in489;
+inputBR1024[490]=in490;
+inputBR1024[491]=in491;
+inputBR1024[492]=in492;
+inputBR1024[493]=in493;
+inputBR1024[494]=in494;
+inputBR1024[495]=in495;
+
+
+double in496=paddedInput[62];
+double in504=paddedInput[126];
+double in500=paddedInput[190];
+double in508=paddedInput[254];
+double in498=paddedInput[318];
+double in506=paddedInput[382];
+double in502=paddedInput[446];
+double in510=paddedInput[510];
+double in497=paddedInput[574];
+double in505=paddedInput[638];
+double in501=paddedInput[702];
+double in509=paddedInput[766];
+double in499=paddedInput[830];
+double in507=paddedInput[894];
+double in503=paddedInput[958];
+double in511=paddedInput[1022];
+
+
+inputBR1024[496]=in496;
+inputBR1024[497]=in497;
+inputBR1024[498]=in498;
+inputBR1024[499]=in499;
+inputBR1024[500]=in500;
+inputBR1024[501]=in501;
+inputBR1024[502]=in502;
+inputBR1024[503]=in503;
+inputBR1024[504]=in504;
+inputBR1024[505]=in505;
+inputBR1024[506]=in506;
+inputBR1024[507]=in507;
+inputBR1024[508]=in508;
+inputBR1024[509]=in509;
+inputBR1024[510]=in510;
+inputBR1024[511]=in511;
+
+
+double in512=paddedInput[1];
+double in520=paddedInput[65];
+double in516=paddedInput[129];
+double in524=paddedInput[193];
+double in514=paddedInput[257];
+double in522=paddedInput[321];
+double in518=paddedInput[385];
+double in526=paddedInput[449];
+double in513=paddedInput[513];
+double in521=paddedInput[577];
+double in517=paddedInput[641];
+double in525=paddedInput[705];
+double in515=paddedInput[769];
+double in523=paddedInput[833];
+double in519=paddedInput[897];
+double in527=paddedInput[961];
+
+
+inputBR1024[512]=in512;
+inputBR1024[513]=in513;
+inputBR1024[514]=in514;
+inputBR1024[515]=in515;
+inputBR1024[516]=in516;
+inputBR1024[517]=in517;
+inputBR1024[518]=in518;
+inputBR1024[519]=in519;
+inputBR1024[520]=in520;
+inputBR1024[521]=in521;
+inputBR1024[522]=in522;
+inputBR1024[523]=in523;
+inputBR1024[524]=in524;
+inputBR1024[525]=in525;
+inputBR1024[526]=in526;
+inputBR1024[527]=in527;
+
+
+double in528=paddedInput[33];
+double in536=paddedInput[97];
+double in532=paddedInput[161];
+double in540=paddedInput[225];
+double in530=paddedInput[289];
+double in538=paddedInput[353];
+double in534=paddedInput[417];
+double in542=paddedInput[481];
+double in529=paddedInput[545];
+double in537=paddedInput[609];
+double in533=paddedInput[673];
+double in541=paddedInput[737];
+double in531=paddedInput[801];
+double in539=paddedInput[865];
+double in535=paddedInput[929];
+double in543=paddedInput[993];
+
+
+inputBR1024[528]=in528;
+inputBR1024[529]=in529;
+inputBR1024[530]=in530;
+inputBR1024[531]=in531;
+inputBR1024[532]=in532;
+inputBR1024[533]=in533;
+inputBR1024[534]=in534;
+inputBR1024[535]=in535;
+inputBR1024[536]=in536;
+inputBR1024[537]=in537;
+inputBR1024[538]=in538;
+inputBR1024[539]=in539;
+inputBR1024[540]=in540;
+inputBR1024[541]=in541;
+inputBR1024[542]=in542;
+inputBR1024[543]=in543;
+
+
+double in544=paddedInput[17];
+double in552=paddedInput[81];
+double in548=paddedInput[145];
+double in556=paddedInput[209];
+double in546=paddedInput[273];
+double in554=paddedInput[337];
+double in550=paddedInput[401];
+double in558=paddedInput[465];
+double in545=paddedInput[529];
+double in553=paddedInput[593];
+double in549=paddedInput[657];
+double in557=paddedInput[721];
+double in547=paddedInput[785];
+double in555=paddedInput[849];
+double in551=paddedInput[913];
+double in559=paddedInput[977];
+
+
+inputBR1024[544]=in544;
+inputBR1024[545]=in545;
+inputBR1024[546]=in546;
+inputBR1024[547]=in547;
+inputBR1024[548]=in548;
+inputBR1024[549]=in549;
+inputBR1024[550]=in550;
+inputBR1024[551]=in551;
+inputBR1024[552]=in552;
+inputBR1024[553]=in553;
+inputBR1024[554]=in554;
+inputBR1024[555]=in555;
+inputBR1024[556]=in556;
+inputBR1024[557]=in557;
+inputBR1024[558]=in558;
+inputBR1024[559]=in559;
+
+
+double in560=paddedInput[49];
+double in568=paddedInput[113];
+double in564=paddedInput[177];
+double in572=paddedInput[241];
+double in562=paddedInput[305];
+double in570=paddedInput[369];
+double in566=paddedInput[433];
+double in574=paddedInput[497];
+double in561=paddedInput[561];
+double in569=paddedInput[625];
+double in565=paddedInput[689];
+double in573=paddedInput[753];
+double in563=paddedInput[817];
+double in571=paddedInput[881];
+double in567=paddedInput[945];
+double in575=paddedInput[1009];
+
+
+inputBR1024[560]=in560;
+inputBR1024[561]=in561;
+inputBR1024[562]=in562;
+inputBR1024[563]=in563;
+inputBR1024[564]=in564;
+inputBR1024[565]=in565;
+inputBR1024[566]=in566;
+inputBR1024[567]=in567;
+inputBR1024[568]=in568;
+inputBR1024[569]=in569;
+inputBR1024[570]=in570;
+inputBR1024[571]=in571;
+inputBR1024[572]=in572;
+inputBR1024[573]=in573;
+inputBR1024[574]=in574;
+inputBR1024[575]=in575;
+
+
+double in576=paddedInput[9];
+double in584=paddedInput[73];
+double in580=paddedInput[137];
+double in588=paddedInput[201];
+double in578=paddedInput[265];
+double in586=paddedInput[329];
+double in582=paddedInput[393];
+double in590=paddedInput[457];
+double in577=paddedInput[521];
+double in585=paddedInput[585];
+double in581=paddedInput[649];
+double in589=paddedInput[713];
+double in579=paddedInput[777];
+double in587=paddedInput[841];
+double in583=paddedInput[905];
+double in591=paddedInput[969];
+
+
+inputBR1024[576]=in576;
+inputBR1024[577]=in577;
+inputBR1024[578]=in578;
+inputBR1024[579]=in579;
+inputBR1024[580]=in580;
+inputBR1024[581]=in581;
+inputBR1024[582]=in582;
+inputBR1024[583]=in583;
+inputBR1024[584]=in584;
+inputBR1024[585]=in585;
+inputBR1024[586]=in586;
+inputBR1024[587]=in587;
+inputBR1024[588]=in588;
+inputBR1024[589]=in589;
+inputBR1024[590]=in590;
+inputBR1024[591]=in591;
+
+
+double in592=paddedInput[41];
+double in600=paddedInput[105];
+double in596=paddedInput[169];
+double in604=paddedInput[233];
+double in594=paddedInput[297];
+double in602=paddedInput[361];
+double in598=paddedInput[425];
+double in606=paddedInput[489];
+double in593=paddedInput[553];
+double in601=paddedInput[617];
+double in597=paddedInput[681];
+double in605=paddedInput[745];
+double in595=paddedInput[809];
+double in603=paddedInput[873];
+double in599=paddedInput[937];
+double in607=paddedInput[1001];
+
+
+inputBR1024[592]=in592;
+inputBR1024[593]=in593;
+inputBR1024[594]=in594;
+inputBR1024[595]=in595;
+inputBR1024[596]=in596;
+inputBR1024[597]=in597;
+inputBR1024[598]=in598;
+inputBR1024[599]=in599;
+inputBR1024[600]=in600;
+inputBR1024[601]=in601;
+inputBR1024[602]=in602;
+inputBR1024[603]=in603;
+inputBR1024[604]=in604;
+inputBR1024[605]=in605;
+inputBR1024[606]=in606;
+inputBR1024[607]=in607;
+
+
+double in608=paddedInput[25];
+double in616=paddedInput[89];
+double in612=paddedInput[153];
+double in620=paddedInput[217];
+double in610=paddedInput[281];
+double in618=paddedInput[345];
+double in614=paddedInput[409];
+double in622=paddedInput[473];
+double in609=paddedInput[537];
+double in617=paddedInput[601];
+double in613=paddedInput[665];
+double in621=paddedInput[729];
+double in611=paddedInput[793];
+double in619=paddedInput[857];
+double in615=paddedInput[921];
+double in623=paddedInput[985];
+
+
+inputBR1024[608]=in608;
+inputBR1024[609]=in609;
+inputBR1024[610]=in610;
+inputBR1024[611]=in611;
+inputBR1024[612]=in612;
+inputBR1024[613]=in613;
+inputBR1024[614]=in614;
+inputBR1024[615]=in615;
+inputBR1024[616]=in616;
+inputBR1024[617]=in617;
+inputBR1024[618]=in618;
+inputBR1024[619]=in619;
+inputBR1024[620]=in620;
+inputBR1024[621]=in621;
+inputBR1024[622]=in622;
+inputBR1024[623]=in623;
+
+
+double in624=paddedInput[57];
+double in632=paddedInput[121];
+double in628=paddedInput[185];
+double in636=paddedInput[249];
+double in626=paddedInput[313];
+double in634=paddedInput[377];
+double in630=paddedInput[441];
+double in638=paddedInput[505];
+double in625=paddedInput[569];
+double in633=paddedInput[633];
+double in629=paddedInput[697];
+double in637=paddedInput[761];
+double in627=paddedInput[825];
+double in635=paddedInput[889];
+double in631=paddedInput[953];
+double in639=paddedInput[1017];
+
+
+inputBR1024[624]=in624;
+inputBR1024[625]=in625;
+inputBR1024[626]=in626;
+inputBR1024[627]=in627;
+inputBR1024[628]=in628;
+inputBR1024[629]=in629;
+inputBR1024[630]=in630;
+inputBR1024[631]=in631;
+inputBR1024[632]=in632;
+inputBR1024[633]=in633;
+inputBR1024[634]=in634;
+inputBR1024[635]=in635;
+inputBR1024[636]=in636;
+inputBR1024[637]=in637;
+inputBR1024[638]=in638;
+inputBR1024[639]=in639;
+
+
+double in640=paddedInput[5];
+double in648=paddedInput[69];
+double in644=paddedInput[133];
+double in652=paddedInput[197];
+double in642=paddedInput[261];
+double in650=paddedInput[325];
+double in646=paddedInput[389];
+double in654=paddedInput[453];
+double in641=paddedInput[517];
+double in649=paddedInput[581];
+double in645=paddedInput[645];
+double in653=paddedInput[709];
+double in643=paddedInput[773];
+double in651=paddedInput[837];
+double in647=paddedInput[901];
+double in655=paddedInput[965];
+
+
+inputBR1024[640]=in640;
+inputBR1024[641]=in641;
+inputBR1024[642]=in642;
+inputBR1024[643]=in643;
+inputBR1024[644]=in644;
+inputBR1024[645]=in645;
+inputBR1024[646]=in646;
+inputBR1024[647]=in647;
+inputBR1024[648]=in648;
+inputBR1024[649]=in649;
+inputBR1024[650]=in650;
+inputBR1024[651]=in651;
+inputBR1024[652]=in652;
+inputBR1024[653]=in653;
+inputBR1024[654]=in654;
+inputBR1024[655]=in655;
+
+
+double in656=paddedInput[37];
+double in664=paddedInput[101];
+double in660=paddedInput[165];
+double in668=paddedInput[229];
+double in658=paddedInput[293];
+double in666=paddedInput[357];
+double in662=paddedInput[421];
+double in670=paddedInput[485];
+double in657=paddedInput[549];
+double in665=paddedInput[613];
+double in661=paddedInput[677];
+double in669=paddedInput[741];
+double in659=paddedInput[805];
+double in667=paddedInput[869];
+double in663=paddedInput[933];
+double in671=paddedInput[997];
+
+
+inputBR1024[656]=in656;
+inputBR1024[657]=in657;
+inputBR1024[658]=in658;
+inputBR1024[659]=in659;
+inputBR1024[660]=in660;
+inputBR1024[661]=in661;
+inputBR1024[662]=in662;
+inputBR1024[663]=in663;
+inputBR1024[664]=in664;
+inputBR1024[665]=in665;
+inputBR1024[666]=in666;
+inputBR1024[667]=in667;
+inputBR1024[668]=in668;
+inputBR1024[669]=in669;
+inputBR1024[670]=in670;
+inputBR1024[671]=in671;
+
+
+double in672=paddedInput[21];
+double in680=paddedInput[85];
+double in676=paddedInput[149];
+double in684=paddedInput[213];
+double in674=paddedInput[277];
+double in682=paddedInput[341];
+double in678=paddedInput[405];
+double in686=paddedInput[469];
+double in673=paddedInput[533];
+double in681=paddedInput[597];
+double in677=paddedInput[661];
+double in685=paddedInput[725];
+double in675=paddedInput[789];
+double in683=paddedInput[853];
+double in679=paddedInput[917];
+double in687=paddedInput[981];
+
+
+inputBR1024[672]=in672;
+inputBR1024[673]=in673;
+inputBR1024[674]=in674;
+inputBR1024[675]=in675;
+inputBR1024[676]=in676;
+inputBR1024[677]=in677;
+inputBR1024[678]=in678;
+inputBR1024[679]=in679;
+inputBR1024[680]=in680;
+inputBR1024[681]=in681;
+inputBR1024[682]=in682;
+inputBR1024[683]=in683;
+inputBR1024[684]=in684;
+inputBR1024[685]=in685;
+inputBR1024[686]=in686;
+inputBR1024[687]=in687;
+
+
+double in688=paddedInput[53];
+double in696=paddedInput[117];
+double in692=paddedInput[181];
+double in700=paddedInput[245];
+double in690=paddedInput[309];
+double in698=paddedInput[373];
+double in694=paddedInput[437];
+double in702=paddedInput[501];
+double in689=paddedInput[565];
+double in697=paddedInput[629];
+double in693=paddedInput[693];
+double in701=paddedInput[757];
+double in691=paddedInput[821];
+double in699=paddedInput[885];
+double in695=paddedInput[949];
+double in703=paddedInput[1013];
+
+
+inputBR1024[688]=in688;
+inputBR1024[689]=in689;
+inputBR1024[690]=in690;
+inputBR1024[691]=in691;
+inputBR1024[692]=in692;
+inputBR1024[693]=in693;
+inputBR1024[694]=in694;
+inputBR1024[695]=in695;
+inputBR1024[696]=in696;
+inputBR1024[697]=in697;
+inputBR1024[698]=in698;
+inputBR1024[699]=in699;
+inputBR1024[700]=in700;
+inputBR1024[701]=in701;
+inputBR1024[702]=in702;
+inputBR1024[703]=in703;
+
+
+double in704=paddedInput[13];
+double in712=paddedInput[77];
+double in708=paddedInput[141];
+double in716=paddedInput[205];
+double in706=paddedInput[269];
+double in714=paddedInput[333];
+double in710=paddedInput[397];
+double in718=paddedInput[461];
+double in705=paddedInput[525];
+double in713=paddedInput[589];
+double in709=paddedInput[653];
+double in717=paddedInput[717];
+double in707=paddedInput[781];
+double in715=paddedInput[845];
+double in711=paddedInput[909];
+double in719=paddedInput[973];
+
+
+inputBR1024[704]=in704;
+inputBR1024[705]=in705;
+inputBR1024[706]=in706;
+inputBR1024[707]=in707;
+inputBR1024[708]=in708;
+inputBR1024[709]=in709;
+inputBR1024[710]=in710;
+inputBR1024[711]=in711;
+inputBR1024[712]=in712;
+inputBR1024[713]=in713;
+inputBR1024[714]=in714;
+inputBR1024[715]=in715;
+inputBR1024[716]=in716;
+inputBR1024[717]=in717;
+inputBR1024[718]=in718;
+inputBR1024[719]=in719;
+
+
+double in720=paddedInput[45];
+double in728=paddedInput[109];
+double in724=paddedInput[173];
+double in732=paddedInput[237];
+double in722=paddedInput[301];
+double in730=paddedInput[365];
+double in726=paddedInput[429];
+double in734=paddedInput[493];
+double in721=paddedInput[557];
+double in729=paddedInput[621];
+double in725=paddedInput[685];
+double in733=paddedInput[749];
+double in723=paddedInput[813];
+double in731=paddedInput[877];
+double in727=paddedInput[941];
+double in735=paddedInput[1005];
+
+
+inputBR1024[720]=in720;
+inputBR1024[721]=in721;
+inputBR1024[722]=in722;
+inputBR1024[723]=in723;
+inputBR1024[724]=in724;
+inputBR1024[725]=in725;
+inputBR1024[726]=in726;
+inputBR1024[727]=in727;
+inputBR1024[728]=in728;
+inputBR1024[729]=in729;
+inputBR1024[730]=in730;
+inputBR1024[731]=in731;
+inputBR1024[732]=in732;
+inputBR1024[733]=in733;
+inputBR1024[734]=in734;
+inputBR1024[735]=in735;
+
+
+double in736=paddedInput[29];
+double in744=paddedInput[93];
+double in740=paddedInput[157];
+double in748=paddedInput[221];
+double in738=paddedInput[285];
+double in746=paddedInput[349];
+double in742=paddedInput[413];
+double in750=paddedInput[477];
+double in737=paddedInput[541];
+double in745=paddedInput[605];
+double in741=paddedInput[669];
+double in749=paddedInput[733];
+double in739=paddedInput[797];
+double in747=paddedInput[861];
+double in743=paddedInput[925];
+double in751=paddedInput[989];
+
+
+inputBR1024[736]=in736;
+inputBR1024[737]=in737;
+inputBR1024[738]=in738;
+inputBR1024[739]=in739;
+inputBR1024[740]=in740;
+inputBR1024[741]=in741;
+inputBR1024[742]=in742;
+inputBR1024[743]=in743;
+inputBR1024[744]=in744;
+inputBR1024[745]=in745;
+inputBR1024[746]=in746;
+inputBR1024[747]=in747;
+inputBR1024[748]=in748;
+inputBR1024[749]=in749;
+inputBR1024[750]=in750;
+inputBR1024[751]=in751;
+
+
+double in752=paddedInput[61];
+double in760=paddedInput[125];
+double in756=paddedInput[189];
+double in764=paddedInput[253];
+double in754=paddedInput[317];
+double in762=paddedInput[381];
+double in758=paddedInput[445];
+double in766=paddedInput[509];
+double in753=paddedInput[573];
+double in761=paddedInput[637];
+double in757=paddedInput[701];
+double in765=paddedInput[765];
+double in755=paddedInput[829];
+double in763=paddedInput[893];
+double in759=paddedInput[957];
+double in767=paddedInput[1021];
+
+
+inputBR1024[752]=in752;
+inputBR1024[753]=in753;
+inputBR1024[754]=in754;
+inputBR1024[755]=in755;
+inputBR1024[756]=in756;
+inputBR1024[757]=in757;
+inputBR1024[758]=in758;
+inputBR1024[759]=in759;
+inputBR1024[760]=in760;
+inputBR1024[761]=in761;
+inputBR1024[762]=in762;
+inputBR1024[763]=in763;
+inputBR1024[764]=in764;
+inputBR1024[765]=in765;
+inputBR1024[766]=in766;
+inputBR1024[767]=in767;
+
+
+double in768=paddedInput[3];
+double in776=paddedInput[67];
+double in772=paddedInput[131];
+double in780=paddedInput[195];
+double in770=paddedInput[259];
+double in778=paddedInput[323];
+double in774=paddedInput[387];
+double in782=paddedInput[451];
+double in769=paddedInput[515];
+double in777=paddedInput[579];
+double in773=paddedInput[643];
+double in781=paddedInput[707];
+double in771=paddedInput[771];
+double in779=paddedInput[835];
+double in775=paddedInput[899];
+double in783=paddedInput[963];
+
+
+inputBR1024[768]=in768;
+inputBR1024[769]=in769;
+inputBR1024[770]=in770;
+inputBR1024[771]=in771;
+inputBR1024[772]=in772;
+inputBR1024[773]=in773;
+inputBR1024[774]=in774;
+inputBR1024[775]=in775;
+inputBR1024[776]=in776;
+inputBR1024[777]=in777;
+inputBR1024[778]=in778;
+inputBR1024[779]=in779;
+inputBR1024[780]=in780;
+inputBR1024[781]=in781;
+inputBR1024[782]=in782;
+inputBR1024[783]=in783;
+
+
+double in784=paddedInput[35];
+double in792=paddedInput[99];
+double in788=paddedInput[163];
+double in796=paddedInput[227];
+double in786=paddedInput[291];
+double in794=paddedInput[355];
+double in790=paddedInput[419];
+double in798=paddedInput[483];
+double in785=paddedInput[547];
+double in793=paddedInput[611];
+double in789=paddedInput[675];
+double in797=paddedInput[739];
+double in787=paddedInput[803];
+double in795=paddedInput[867];
+double in791=paddedInput[931];
+double in799=paddedInput[995];
+
+
+inputBR1024[784]=in784;
+inputBR1024[785]=in785;
+inputBR1024[786]=in786;
+inputBR1024[787]=in787;
+inputBR1024[788]=in788;
+inputBR1024[789]=in789;
+inputBR1024[790]=in790;
+inputBR1024[791]=in791;
+inputBR1024[792]=in792;
+inputBR1024[793]=in793;
+inputBR1024[794]=in794;
+inputBR1024[795]=in795;
+inputBR1024[796]=in796;
+inputBR1024[797]=in797;
+inputBR1024[798]=in798;
+inputBR1024[799]=in799;
+
+
+double in800=paddedInput[19];
+double in808=paddedInput[83];
+double in804=paddedInput[147];
+double in812=paddedInput[211];
+double in802=paddedInput[275];
+double in810=paddedInput[339];
+double in806=paddedInput[403];
+double in814=paddedInput[467];
+double in801=paddedInput[531];
+double in809=paddedInput[595];
+double in805=paddedInput[659];
+double in813=paddedInput[723];
+double in803=paddedInput[787];
+double in811=paddedInput[851];
+double in807=paddedInput[915];
+double in815=paddedInput[979];
+
+
+inputBR1024[800]=in800;
+inputBR1024[801]=in801;
+inputBR1024[802]=in802;
+inputBR1024[803]=in803;
+inputBR1024[804]=in804;
+inputBR1024[805]=in805;
+inputBR1024[806]=in806;
+inputBR1024[807]=in807;
+inputBR1024[808]=in808;
+inputBR1024[809]=in809;
+inputBR1024[810]=in810;
+inputBR1024[811]=in811;
+inputBR1024[812]=in812;
+inputBR1024[813]=in813;
+inputBR1024[814]=in814;
+inputBR1024[815]=in815;
+
+
+double in816=paddedInput[51];
+double in824=paddedInput[115];
+double in820=paddedInput[179];
+double in828=paddedInput[243];
+double in818=paddedInput[307];
+double in826=paddedInput[371];
+double in822=paddedInput[435];
+double in830=paddedInput[499];
+double in817=paddedInput[563];
+double in825=paddedInput[627];
+double in821=paddedInput[691];
+double in829=paddedInput[755];
+double in819=paddedInput[819];
+double in827=paddedInput[883];
+double in823=paddedInput[947];
+double in831=paddedInput[1011];
+
+
+inputBR1024[816]=in816;
+inputBR1024[817]=in817;
+inputBR1024[818]=in818;
+inputBR1024[819]=in819;
+inputBR1024[820]=in820;
+inputBR1024[821]=in821;
+inputBR1024[822]=in822;
+inputBR1024[823]=in823;
+inputBR1024[824]=in824;
+inputBR1024[825]=in825;
+inputBR1024[826]=in826;
+inputBR1024[827]=in827;
+inputBR1024[828]=in828;
+inputBR1024[829]=in829;
+inputBR1024[830]=in830;
+inputBR1024[831]=in831;
+
+
+double in832=paddedInput[11];
+double in840=paddedInput[75];
+double in836=paddedInput[139];
+double in844=paddedInput[203];
+double in834=paddedInput[267];
+double in842=paddedInput[331];
+double in838=paddedInput[395];
+double in846=paddedInput[459];
+double in833=paddedInput[523];
+double in841=paddedInput[587];
+double in837=paddedInput[651];
+double in845=paddedInput[715];
+double in835=paddedInput[779];
+double in843=paddedInput[843];
+double in839=paddedInput[907];
+double in847=paddedInput[971];
+
+
+inputBR1024[832]=in832;
+inputBR1024[833]=in833;
+inputBR1024[834]=in834;
+inputBR1024[835]=in835;
+inputBR1024[836]=in836;
+inputBR1024[837]=in837;
+inputBR1024[838]=in838;
+inputBR1024[839]=in839;
+inputBR1024[840]=in840;
+inputBR1024[841]=in841;
+inputBR1024[842]=in842;
+inputBR1024[843]=in843;
+inputBR1024[844]=in844;
+inputBR1024[845]=in845;
+inputBR1024[846]=in846;
+inputBR1024[847]=in847;
+
+
+double in848=paddedInput[43];
+double in856=paddedInput[107];
+double in852=paddedInput[171];
+double in860=paddedInput[235];
+double in850=paddedInput[299];
+double in858=paddedInput[363];
+double in854=paddedInput[427];
+double in862=paddedInput[491];
+double in849=paddedInput[555];
+double in857=paddedInput[619];
+double in853=paddedInput[683];
+double in861=paddedInput[747];
+double in851=paddedInput[811];
+double in859=paddedInput[875];
+double in855=paddedInput[939];
+double in863=paddedInput[1003];
+
+
+inputBR1024[848]=in848;
+inputBR1024[849]=in849;
+inputBR1024[850]=in850;
+inputBR1024[851]=in851;
+inputBR1024[852]=in852;
+inputBR1024[853]=in853;
+inputBR1024[854]=in854;
+inputBR1024[855]=in855;
+inputBR1024[856]=in856;
+inputBR1024[857]=in857;
+inputBR1024[858]=in858;
+inputBR1024[859]=in859;
+inputBR1024[860]=in860;
+inputBR1024[861]=in861;
+inputBR1024[862]=in862;
+inputBR1024[863]=in863;
+
+
+double in864=paddedInput[27];
+double in872=paddedInput[91];
+double in868=paddedInput[155];
+double in876=paddedInput[219];
+double in866=paddedInput[283];
+double in874=paddedInput[347];
+double in870=paddedInput[411];
+double in878=paddedInput[475];
+double in865=paddedInput[539];
+double in873=paddedInput[603];
+double in869=paddedInput[667];
+double in877=paddedInput[731];
+double in867=paddedInput[795];
+double in875=paddedInput[859];
+double in871=paddedInput[923];
+double in879=paddedInput[987];
+
+
+inputBR1024[864]=in864;
+inputBR1024[865]=in865;
+inputBR1024[866]=in866;
+inputBR1024[867]=in867;
+inputBR1024[868]=in868;
+inputBR1024[869]=in869;
+inputBR1024[870]=in870;
+inputBR1024[871]=in871;
+inputBR1024[872]=in872;
+inputBR1024[873]=in873;
+inputBR1024[874]=in874;
+inputBR1024[875]=in875;
+inputBR1024[876]=in876;
+inputBR1024[877]=in877;
+inputBR1024[878]=in878;
+inputBR1024[879]=in879;
+
+
+double in880=paddedInput[59];
+double in888=paddedInput[123];
+double in884=paddedInput[187];
+double in892=paddedInput[251];
+double in882=paddedInput[315];
+double in890=paddedInput[379];
+double in886=paddedInput[443];
+double in894=paddedInput[507];
+double in881=paddedInput[571];
+double in889=paddedInput[635];
+double in885=paddedInput[699];
+double in893=paddedInput[763];
+double in883=paddedInput[827];
+double in891=paddedInput[891];
+double in887=paddedInput[955];
+double in895=paddedInput[1019];
+
+
+inputBR1024[880]=in880;
+inputBR1024[881]=in881;
+inputBR1024[882]=in882;
+inputBR1024[883]=in883;
+inputBR1024[884]=in884;
+inputBR1024[885]=in885;
+inputBR1024[886]=in886;
+inputBR1024[887]=in887;
+inputBR1024[888]=in888;
+inputBR1024[889]=in889;
+inputBR1024[890]=in890;
+inputBR1024[891]=in891;
+inputBR1024[892]=in892;
+inputBR1024[893]=in893;
+inputBR1024[894]=in894;
+inputBR1024[895]=in895;
+
+
+double in896=paddedInput[7];
+double in904=paddedInput[71];
+double in900=paddedInput[135];
+double in908=paddedInput[199];
+double in898=paddedInput[263];
+double in906=paddedInput[327];
+double in902=paddedInput[391];
+double in910=paddedInput[455];
+double in897=paddedInput[519];
+double in905=paddedInput[583];
+double in901=paddedInput[647];
+double in909=paddedInput[711];
+double in899=paddedInput[775];
+double in907=paddedInput[839];
+double in903=paddedInput[903];
+double in911=paddedInput[967];
+
+
+inputBR1024[896]=in896;
+inputBR1024[897]=in897;
+inputBR1024[898]=in898;
+inputBR1024[899]=in899;
+inputBR1024[900]=in900;
+inputBR1024[901]=in901;
+inputBR1024[902]=in902;
+inputBR1024[903]=in903;
+inputBR1024[904]=in904;
+inputBR1024[905]=in905;
+inputBR1024[906]=in906;
+inputBR1024[907]=in907;
+inputBR1024[908]=in908;
+inputBR1024[909]=in909;
+inputBR1024[910]=in910;
+inputBR1024[911]=in911;
+
+
+double in912=paddedInput[39];
+double in920=paddedInput[103];
+double in916=paddedInput[167];
+double in924=paddedInput[231];
+double in914=paddedInput[295];
+double in922=paddedInput[359];
+double in918=paddedInput[423];
+double in926=paddedInput[487];
+double in913=paddedInput[551];
+double in921=paddedInput[615];
+double in917=paddedInput[679];
+double in925=paddedInput[743];
+double in915=paddedInput[807];
+double in923=paddedInput[871];
+double in919=paddedInput[935];
+double in927=paddedInput[999];
+
+
+inputBR1024[912]=in912;
+inputBR1024[913]=in913;
+inputBR1024[914]=in914;
+inputBR1024[915]=in915;
+inputBR1024[916]=in916;
+inputBR1024[917]=in917;
+inputBR1024[918]=in918;
+inputBR1024[919]=in919;
+inputBR1024[920]=in920;
+inputBR1024[921]=in921;
+inputBR1024[922]=in922;
+inputBR1024[923]=in923;
+inputBR1024[924]=in924;
+inputBR1024[925]=in925;
+inputBR1024[926]=in926;
+inputBR1024[927]=in927;
+
+
+double in928=paddedInput[23];
+double in936=paddedInput[87];
+double in932=paddedInput[151];
+double in940=paddedInput[215];
+double in930=paddedInput[279];
+double in938=paddedInput[343];
+double in934=paddedInput[407];
+double in942=paddedInput[471];
+double in929=paddedInput[535];
+double in937=paddedInput[599];
+double in933=paddedInput[663];
+double in941=paddedInput[727];
+double in931=paddedInput[791];
+double in939=paddedInput[855];
+double in935=paddedInput[919];
+double in943=paddedInput[983];
+
+
+inputBR1024[928]=in928;
+inputBR1024[929]=in929;
+inputBR1024[930]=in930;
+inputBR1024[931]=in931;
+inputBR1024[932]=in932;
+inputBR1024[933]=in933;
+inputBR1024[934]=in934;
+inputBR1024[935]=in935;
+inputBR1024[936]=in936;
+inputBR1024[937]=in937;
+inputBR1024[938]=in938;
+inputBR1024[939]=in939;
+inputBR1024[940]=in940;
+inputBR1024[941]=in941;
+inputBR1024[942]=in942;
+inputBR1024[943]=in943;
+
+
+double in944=paddedInput[55];
+double in952=paddedInput[119];
+double in948=paddedInput[183];
+double in956=paddedInput[247];
+double in946=paddedInput[311];
+double in954=paddedInput[375];
+double in950=paddedInput[439];
+double in958=paddedInput[503];
+double in945=paddedInput[567];
+double in953=paddedInput[631];
+double in949=paddedInput[695];
+double in957=paddedInput[759];
+double in947=paddedInput[823];
+double in955=paddedInput[887];
+double in951=paddedInput[951];
+double in959=paddedInput[1015];
+
+
+inputBR1024[944]=in944;
+inputBR1024[945]=in945;
+inputBR1024[946]=in946;
+inputBR1024[947]=in947;
+inputBR1024[948]=in948;
+inputBR1024[949]=in949;
+inputBR1024[950]=in950;
+inputBR1024[951]=in951;
+inputBR1024[952]=in952;
+inputBR1024[953]=in953;
+inputBR1024[954]=in954;
+inputBR1024[955]=in955;
+inputBR1024[956]=in956;
+inputBR1024[957]=in957;
+inputBR1024[958]=in958;
+inputBR1024[959]=in959;
+
+
+double in960=paddedInput[15];
+double in968=paddedInput[79];
+double in964=paddedInput[143];
+double in972=paddedInput[207];
+double in962=paddedInput[271];
+double in970=paddedInput[335];
+double in966=paddedInput[399];
+double in974=paddedInput[463];
+double in961=paddedInput[527];
+double in969=paddedInput[591];
+double in965=paddedInput[655];
+double in973=paddedInput[719];
+double in963=paddedInput[783];
+double in971=paddedInput[847];
+double in967=paddedInput[911];
+double in975=paddedInput[975];
+
+
+inputBR1024[960]=in960;
+inputBR1024[961]=in961;
+inputBR1024[962]=in962;
+inputBR1024[963]=in963;
+inputBR1024[964]=in964;
+inputBR1024[965]=in965;
+inputBR1024[966]=in966;
+inputBR1024[967]=in967;
+inputBR1024[968]=in968;
+inputBR1024[969]=in969;
+inputBR1024[970]=in970;
+inputBR1024[971]=in971;
+inputBR1024[972]=in972;
+inputBR1024[973]=in973;
+inputBR1024[974]=in974;
+inputBR1024[975]=in975;
+
+
+double in976=paddedInput[47];
+double in984=paddedInput[111];
+double in980=paddedInput[175];
+double in988=paddedInput[239];
+double in978=paddedInput[303];
+double in986=paddedInput[367];
+double in982=paddedInput[431];
+double in990=paddedInput[495];
+double in977=paddedInput[559];
+double in985=paddedInput[623];
+double in981=paddedInput[687];
+double in989=paddedInput[751];
+double in979=paddedInput[815];
+double in987=paddedInput[879];
+double in983=paddedInput[943];
+double in991=paddedInput[1007];
+
+
+inputBR1024[976]=in976;
+inputBR1024[977]=in977;
+inputBR1024[978]=in978;
+inputBR1024[979]=in979;
+inputBR1024[980]=in980;
+inputBR1024[981]=in981;
+inputBR1024[982]=in982;
+inputBR1024[983]=in983;
+inputBR1024[984]=in984;
+inputBR1024[985]=in985;
+inputBR1024[986]=in986;
+inputBR1024[987]=in987;
+inputBR1024[988]=in988;
+inputBR1024[989]=in989;
+inputBR1024[990]=in990;
+inputBR1024[991]=in991;
+
+
+double in992=paddedInput[31];
+double in1000=paddedInput[95];
+double in996=paddedInput[159];
+double in1004=paddedInput[223];
+double in994=paddedInput[287];
+double in1002=paddedInput[351];
+double in998=paddedInput[415];
+double in1006=paddedInput[479];
+double in993=paddedInput[543];
+double in1001=paddedInput[607];
+double in997=paddedInput[671];
+double in1005=paddedInput[735];
+double in995=paddedInput[799];
+double in1003=paddedInput[863];
+double in999=paddedInput[927];
+double in1007=paddedInput[991];
+
+
+inputBR1024[992]=in992;
+inputBR1024[993]=in993;
+inputBR1024[994]=in994;
+inputBR1024[995]=in995;
+inputBR1024[996]=in996;
+inputBR1024[997]=in997;
+inputBR1024[998]=in998;
+inputBR1024[999]=in999;
+inputBR1024[1000]=in1000;
+inputBR1024[1001]=in1001;
+inputBR1024[1002]=in1002;
+inputBR1024[1003]=in1003;
+inputBR1024[1004]=in1004;
+inputBR1024[1005]=in1005;
+inputBR1024[1006]=in1006;
+inputBR1024[1007]=in1007;
+
+
+double in1008=paddedInput[63];
+double in1016=paddedInput[127];
+double in1012=paddedInput[191];
+double in1020=paddedInput[255];
+double in1010=paddedInput[319];
+double in1018=paddedInput[383];
+double in1014=paddedInput[447];
+double in1022=paddedInput[511];
+double in1009=paddedInput[575];
+double in1017=paddedInput[639];
+double in1013=paddedInput[703];
+double in1021=paddedInput[767];
+double in1011=paddedInput[831];
+double in1019=paddedInput[895];
+double in1015=paddedInput[959];
+double in1023=paddedInput[1023];
+
+
+inputBR1024[1008]=in1008;
+inputBR1024[1009]=in1009;
+inputBR1024[1010]=in1010;
+inputBR1024[1011]=in1011;
+inputBR1024[1012]=in1012;
+inputBR1024[1013]=in1013;
+inputBR1024[1014]=in1014;
+inputBR1024[1015]=in1015;
+inputBR1024[1016]=in1016;
+inputBR1024[1017]=in1017;
+inputBR1024[1018]=in1018;
+inputBR1024[1019]=in1019;
+inputBR1024[1020]=in1020;
+inputBR1024[1021]=in1021;
+inputBR1024[1022]=in1022;
+inputBR1024[1023]=in1023;
+
+
+
+
+
+
 
 /*
 inputBR1024[0]=paddedInput[0];
@@ -718,7 +2996,7 @@ inputBR1024[12]=paddedInput[192];
 inputBR1024[13]=paddedInput[704];
 inputBR1024[14]=paddedInput[448];
 inputBR1024[15]=paddedInput[960];
-inputBR1024[16]=paddedInput[32];*/
+inputBR1024[16]=paddedInput[32];
 
 inputBR1024[17]=paddedInput[544];
 inputBR1024[18]=paddedInput[288];
@@ -736,6 +3014,7 @@ inputBR1024[29]=paddedInput[736];
 inputBR1024[30]=paddedInput[480];
 inputBR1024[31]=paddedInput[992];
 inputBR1024[32]=paddedInput[16];
+
 inputBR1024[33]=paddedInput[528];
 inputBR1024[34]=paddedInput[272];
 inputBR1024[35]=paddedInput[784];
@@ -1727,7 +4006,7 @@ inputBR1024[1020]=paddedInput[255];
 inputBR1024[1021]=paddedInput[767];
 inputBR1024[1022]=paddedInput[511];
 inputBR1024[1023]=paddedInput[1023];
-
+*/
 
     // P = 0  -> 4
     for (int idx = 0, out_idx = 0; idx < 1024; idx += 4, out_idx += 8) {
@@ -5231,6 +7510,51 @@ int main() {
     printf("%a", t1Re_1b * t1Re_2d);
     return 0;
 }*/
+
+/*
+int main() {
+    for (int i = 0; i < 1024; i+=16) { 
+        printf("double in%i=", i+0); printf("paddedInput[%i];", bitReversalMap1024[i+0]); printf("\n");
+        printf("double in%i=", i+8); printf("paddedInput[%i];", bitReversalMap1024[i+8]); printf("\n");
+        printf("double in%i=", i+4); printf("paddedInput[%i];", bitReversalMap1024[i+4]); printf("\n");
+        printf("double in%i=", i+12); printf("paddedInput[%i];", bitReversalMap1024[i+12]); printf("\n");
+        printf("double in%i=", i+2); printf("paddedInput[%i];", bitReversalMap1024[i+2]); printf("\n");
+        printf("double in%i=", i+10); printf("paddedInput[%i];", bitReversalMap1024[i+10]); printf("\n");
+        printf("double in%i=", i+6); printf("paddedInput[%i];", bitReversalMap1024[i+6]); printf("\n");
+        printf("double in%i=", i+14); printf("paddedInput[%i];", bitReversalMap1024[i+14]); printf("\n");
+        printf("double in%i=", i+1); printf("paddedInput[%i];", bitReversalMap1024[i+1]); printf("\n");
+        printf("double in%i=", i+9); printf("paddedInput[%i];", bitReversalMap1024[i+9]); printf("\n");
+        printf("double in%i=", i+5); printf("paddedInput[%i];", bitReversalMap1024[i+5]); printf("\n");
+        printf("double in%i=", i+13); printf("paddedInput[%i];", bitReversalMap1024[i+13]); printf("\n");
+        printf("double in%i=", i+3); printf("paddedInput[%i];", bitReversalMap1024[i+3]); printf("\n");
+        printf("double in%i=", i+11); printf("paddedInput[%i];", bitReversalMap1024[i+11]); printf("\n");
+        printf("double in%i=", i+7); printf("paddedInput[%i];", bitReversalMap1024[i+7]); printf("\n");
+        printf("double in%i=", i+15); printf("paddedInput[%i];", bitReversalMap1024[i+15]); printf("\n");
+        printf("\n");
+        printf("\n");
+        printf("inputBR1024[%i]=", i+0); printf("in%i;", i+0); printf("\n");
+        printf("inputBR1024[%i]=", i+1); printf("in%i;", i+1); printf("\n");
+        printf("inputBR1024[%i]=", i+2); printf("in%i;", i+2); printf("\n");
+        printf("inputBR1024[%i]=", i+3); printf("in%i;", i+3); printf("\n");
+        printf("inputBR1024[%i]=", i+4); printf("in%i;", i+4); printf("\n");
+        printf("inputBR1024[%i]=", i+5); printf("in%i;", i+5); printf("\n");
+        printf("inputBR1024[%i]=", i+6); printf("in%i;", i+6); printf("\n");
+        printf("inputBR1024[%i]=", i+7); printf("in%i;", i+7); printf("\n");
+        printf("inputBR1024[%i]=", i+8); printf("in%i;", i+8); printf("\n");
+        printf("inputBR1024[%i]=", i+9); printf("in%i;", i+9); printf("\n");
+        printf("inputBR1024[%i]=", i+10); printf("in%i;", i+10); printf("\n");
+        printf("inputBR1024[%i]=", i+11); printf("in%i;", i+11); printf("\n");
+        printf("inputBR1024[%i]=", i+12); printf("in%i;", i+12); printf("\n");
+        printf("inputBR1024[%i]=", i+13); printf("in%i;", i+13); printf("\n");
+        printf("inputBR1024[%i]=", i+14); printf("in%i;", i+14); printf("\n");
+        printf("inputBR1024[%i]=", i+15); printf("in%i;", i+15); printf("\n");
+        printf("\n");
+        printf("\n");
+    }
+    return 0;
+}
+*/
+
 
 
 
