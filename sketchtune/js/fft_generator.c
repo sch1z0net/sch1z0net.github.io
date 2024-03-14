@@ -114,7 +114,7 @@ void generate_code(size) {
 }
 
 int main() {
-    generate_code(256);
+    generate_code(512);
     printf("Generated code written to generated_code.c\n");
 
     return 0;
