@@ -272,7 +272,8 @@ function STFT_1024(inputSignal, hopSize) {
                     let frame = inputSignal.slice(startIdx, endIdx);
                     let windowedFrame = applyHanningWindow(frame);
 
-                    const spectrum = fftReal1024(windowedFrame);
+                    const spectrum = fftRealInPlace_ref(windowedFrame);
+                    //const spectrum = fftReal1024(windowedFrame);
                     // Assuming spectrum is the array containing the full spectrum obtained from FFT
                     const halfSpectrum = spectrum.slice(0, 1024);
                     spectrogram[i] = halfSpectrum;

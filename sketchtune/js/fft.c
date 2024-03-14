@@ -1,3 +1,5 @@
+//emcc fft.c -o fft_wasm.js -s EXPORTED_RUNTIME_METHODS='cwrap,ccall' -s EXPORTED_FUNCTIONS='_getOut1024Ptr, _fftReal1024, _free, _malloc' -O3
+
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
@@ -698,8 +700,7 @@ double tRe27 = 0x1.8f8b83c69a60cp-3;
 double tRe28 = 0x1.2c8106e8e613ap-3;
 double tRe29 = 0x1.917a6bc29b438p-4;
 double tRe30 = 0x1.91f65f10dd825p-5;
-//double tRe31 = 0x1.1a62633145c07p-54;
-double tRe31 = 0x0p+0;
+double tRe31 = 0x1.1a62633145c07p-54;
 
 
 // Define global arrays
