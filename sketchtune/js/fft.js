@@ -3080,7 +3080,7 @@ function fftReal1024(realInput) {
 }*/
 
 // Pre-allocate result array
-var result = new Float32Array(2048);
+//var result = new Float32Array(2048);
 // Calculate byte offsets
 var byteOffset;
 var byteLength;
@@ -3101,6 +3101,12 @@ function fftReal1024(realInput) {
     // Return the result array
     return result;
 }
+
+
+
+
+
+
 
 
 
