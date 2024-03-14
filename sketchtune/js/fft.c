@@ -1705,7 +1705,7 @@ void fftReal1024(float* realInput, int size, float* out1024) {
         out1024[idx +  23] =   resImD2;  
         out1024[idx +  11] = - resImD2; 
     }
-/*
+
     // P = 2  -> 64
     for(int idx = 0; idx < 2048; idx+=128){
         float x0aRe_0 = out1024[idx       ];
@@ -2760,7 +2760,7 @@ void fftReal1024(float* realInput, int size, float* out1024) {
             out1024[oI * 2]      = eRe - t_oRe;
             out1024[oI * 2 + 1]  = eIm - t_oIm;
         }
-*/
+
 }
 
 
