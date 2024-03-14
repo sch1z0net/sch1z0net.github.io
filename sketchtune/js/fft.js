@@ -19,7 +19,7 @@ function nextPowerOf4(n) {
 
 // Function to apply synthesis window to a frame
 function applySynthesisWindow(frame, synthesisWindow) {
-    const weightedFrame = new Float32Array(frame.length);
+    const weightedFrame = new Float64Array(frame.length);
     for (let i = 0; i < frame.length; i++) {
         weightedFrame[i] = frame[i] * synthesisWindow[i];
     }
@@ -48,7 +48,7 @@ function normalizeOutput(outputSignalChunk) {
 
 /******************** UTILS *********************/
 function hanningWindow(windowSize) {
-    const window = new Float32Array(windowSize);
+    const window = new Float64Array(windowSize);
     const alpha = 0.5;
     for (let i = 0; i < windowSize; i++) {
         window[i] = (1 - alpha) - (alpha * Math.cos(2 * Math.PI * i / (windowSize - 1)));
@@ -57,7 +57,7 @@ function hanningWindow(windowSize) {
 }
 
 function hammingWindow(windowSize) {
-    const window = new Float32Array(windowSize);
+    const window = new Float64Array(windowSize);
     const alpha = 0.54;
     const beta = 1 - alpha;
     for (let i = 0; i < windowSize; i++) {
@@ -67,7 +67,7 @@ function hammingWindow(windowSize) {
 }
 
 function blackmanWindow(windowSize) {
-    const window = new Float32Array(windowSize);
+    const window = new Float64Array(windowSize);
     const alpha = 0.42;
     const beta = 0.5;
     const gamma = 0.08;
@@ -83,7 +83,7 @@ function blackmanWindow(windowSize) {
 
 // Function to create a Hanning window
 function createHanningWindow(windowLength) {
-    const window = new Float32Array(windowLength);
+    const window = new Float64Array(windowLength);
     for (let i = 0; i < windowLength; i++) {
         window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * i / (windowLength - 1)));
     }
@@ -92,7 +92,7 @@ function createHanningWindow(windowLength) {
 
 // Function to apply Hanning window to the input signal
 function applyHanningWindow(frame) {
-    const windowedFrame = new Float32Array(frame.length);
+    const windowedFrame = new Float64Array(frame.length);
     for (let i = 0; i < frame.length; i++) {
         windowedFrame[i] = frame[i] * 0.5 * (1 - Math.cos(2 * Math.PI * i / (frame.length - 1)));
     }
@@ -136,7 +136,7 @@ function precalculateFFTFactorsRADIX2flattened(maxSampleLength) {
         //....
     }
 
-    return new Float32Array(factors);
+    return new Float64Array(factors);
 }
 /*
 // Compute FFT factors with caching (optimized for Radix-4 FFT)
@@ -161,7 +161,7 @@ function precalculateFFTFactorsRADIX4(maxSampleLength) {
     pre += N;
    }
 
-    return new Float32Array(factors);
+    return new Float64Array(factors);
 }*/
 
 
@@ -294,15 +294,15 @@ function fftRealInPlaceRADIX2(realInput) {
     if(N == 2048){ factors = LOOKUP_RADIX2_2048; map = bitReversalMap2048.get(N);}
 
     // Create a copy of the input array
-    const out = new Float32Array(N);
+    const out = new Float64Array(N);
 
     // Perform bit reversal
     for (let i = 0; i < N; i++) {
         out[i] = input[map[i]];
     }
 
-    // Convert the real-valued input to a complex-valued Float32Array
-    const complexInput = new Float32Array(N * 2);
+    // Convert the real-valued input to a complex-valued Float64Array
+    const complexInput = new Float64Array(N * 2);
     for (let i = 0; i < N; i++) {
         complexInput[i * 2] = out[i];
         complexInput[i * 2 + 1] = 0; // Imaginary part is set to 0
@@ -1779,12 +1779,12 @@ let tRe31 = ____F[126 + (62)]; let tIm31 = ____F[126 + (63)];
 
 let paddedInput;
 let map512  = bitReversalMap512.get(512);
-const inputBR512  = new Float32Array(512);
-const out512      = new Float32Array(1024);
+const inputBR512  = new Float64Array(512);
+const out512      = new Float64Array(1024);
 function fftReal512(realInput) {
 
     if(realInput.length != 512){
-        paddedInput = new Float32Array(512).fill(0);
+        paddedInput = new Float64Array(512).fill(0);
         realInput.forEach((value, index) => paddedInput[index] = value);
     }else{
         // Create a copy of the input array
@@ -1797,7 +1797,7 @@ function fftReal512(realInput) {
     }
 
     /*
-    // Convert the real-valued input to a complex-valued Float32Array
+    // Convert the real-valued input to a complex-valued Float64Array
     for (let i = 0; i < N; i++) {
         out512[i * 2] = inputBR[i];
         out512[i * 2 + 1] = 0; // Imaginary part is set to 0
@@ -3062,16 +3062,16 @@ function fftReal512(realInput) {
 
 /*
 function fftReal1024(realInput) {
-    var ptr_in = Module._malloc(realInput.length * Float32Array.BYTES_PER_ELEMENT);
-    Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
-    var ptr_out = Module._malloc(2048 * Float32Array.BYTES_PER_ELEMENT);
+    var ptr_in = Module._malloc(realInput.length * Float64Array.BYTES_PER_ELEMENT);
+    Module.HEAPF32.set(realInput, ptr_in / Float64Array.BYTES_PER_ELEMENT);
+    var ptr_out = Module._malloc(2048 * Float64Array.BYTES_PER_ELEMENT);
 
     fft_wasm(ptr_in, realInput.length, ptr_out);
 
     // Allocate memory for the JavaScript array
-    var result = new Float32Array(2048);
+    var result = new Float64Array(2048);
     // Copy data from ptr_out to the JavaScript array
-    result.set(Module.HEAPF32.subarray(ptr_out / Float32Array.BYTES_PER_ELEMENT, (ptr_out + 2048 * Float32Array.BYTES_PER_ELEMENT) / Float32Array.BYTES_PER_ELEMENT));
+    result.set(Module.HEAPF32.subarray(ptr_out / Float64Array.BYTES_PER_ELEMENT, (ptr_out + 2048 * Float64Array.BYTES_PER_ELEMENT) / Float64Array.BYTES_PER_ELEMENT));
     // Free the memory allocated for ptr_out
     Module._free(ptr_in);
     Module._free(ptr_out);
@@ -3080,21 +3080,21 @@ function fftReal1024(realInput) {
 }*/
 
 // Pre-allocate result array
-//var result = new Float32Array(2048);
+//var result = new Float64Array(2048);
 // Calculate byte offsets
 var byteOffset;
 var byteLength;
 var ptr_out;
 /*function fftReal1024(realInput) {
     // Allocate memory for input data
-    var ptr_in = Module._malloc(realInput.length * Float32Array.BYTES_PER_ELEMENT);
-    Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
+    var ptr_in = Module._malloc(realInput.length * Float64Array.BYTES_PER_ELEMENT);
+    Module.HEAPF32.set(realInput, ptr_in / Float64Array.BYTES_PER_ELEMENT);
 
     // Perform FFT
     fft_wasm(ptr_in, realInput.length, ptr_out);
 
     // Copy data from module memory to the result array
-    //result.set(Module.HEAPF32.subarray(byteOffset, byteOffset + byteLength / Float32Array.BYTES_PER_ELEMENT));
+    //result.set(Module.HEAPF32.subarray(byteOffset, byteOffset + byteLength / Float64Array.BYTES_PER_ELEMENT));
 
     // Free memory
     Module._free(ptr_in);
@@ -3106,15 +3106,15 @@ var ptr_out;
 /*
 function fftReal1024(realInput) {
     // Allocate memory for input data
-    var ptr_in = Module._malloc(realInput.length * Float32Array.BYTES_PER_ELEMENT);
-    Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
+    var ptr_in = Module._malloc(realInput.length * Float64Array.BYTES_PER_ELEMENT);
+    Module.HEAPF32.set(realInput, ptr_in / Float64Array.BYTES_PER_ELEMENT);
 
     // Perform FFT
     fft_wasm(ptr_in, realInput.length);
 
     // Access out1024 array directly from exported memory
     var out1024Ptr = Module.ccall('getOut1024Ptr', 'number', [], []);
-    var result = new Float32Array(Module.HEAPF32.buffer, out1024Ptr, 2048);
+    var result = new Float64Array(Module.HEAPF32.buffer, out1024Ptr, 2048);
 
     // Free memory
     Module._free(ptr_in);
@@ -3134,7 +3134,7 @@ function fftReal1024(realInput) {
 
     // Access out1024 array directly from exported memory
     var out1024Ptr = Module.ccall('getOut1024Ptr', 'number', [], []);
-    var result = new Float32Array(Module.HEAPF64.buffer, out1024Ptr, 2048);
+    var result = new Float64Array(Module.HEAPF64.buffer, out1024Ptr, 2048);
 
     // Free memory
     Module._free(ptr_in);
@@ -3151,12 +3151,12 @@ function fftReal1024(realInput) {
 
 /*
 let map1024       = bitReversalMap1024.get(1024);
-const inputBR1024 = new Float32Array(1024);
-const out1024     = new Float32Array(2048);
+const inputBR1024 = new Float64Array(1024);
+const out1024     = new Float64Array(2048);
 function fftReal1024(realInput) {
 
     if(realInput.length != 1024){
-        paddedInput = new Float32Array(1024).fill(0);
+        paddedInput = new Float64Array(1024).fill(0);
         realInput.forEach((value, index) => paddedInput[index] = value);
     }else{
         // Create a copy of the input array
@@ -4403,7 +4403,7 @@ function precalculateFFTFactorsRADIX2(N) {
         factors[i * 2 + 1] = Math.sin(angle1); // Sine of angle1
     }
 
-    return new Float32Array(factors);
+    return new Float64Array(factors);
 }
 
 // Function to compute FFT factors with caching
@@ -4429,7 +4429,7 @@ function fftComplexInPlace_ref(complexInput) {
     }
 
     // Perform bit reversal
-    const out = new Float32Array(N * 2);
+    const out = new Float64Array(N * 2);
     for (let i = 0; i < N; i++) {
         const reversedIndex = bitReverse(i, bits);
         out[reversedIndex * 2    ] = complexInput[i * 2    ]; // Copy real part
@@ -4486,7 +4486,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
     }
 
     // Perform bit reversal
-    const out = new Float32Array(N * 2);
+    const out = new Float64Array(N * 2);
     let brs = [];
     for (let i = 0; i < N; i++) {
         const reversedIndex = bitReverse(i, bits);
@@ -4571,7 +4571,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
 /******************** INVERSE *********************/
 //const pi = Math.PI;
 
-let result512 = new Float32Array(512);
+let result512 = new Float64Array(512);
 function ifft512(input) {
     // Take the complex conjugate of the input spectrum in place
     for (let i = 0; i < 1024; i += 2) {
@@ -4586,7 +4586,7 @@ function ifft512(input) {
     return result512;
 }
 
-let result1024 = new Float32Array(1024);
+let result1024 = new Float64Array(1024);
 function ifft1024(input) {
     // Take the complex conjugate of the input spectrum in place
     for (let i = 0; i < 2048; i += 2) {
@@ -4603,7 +4603,7 @@ function ifft1024(input) {
 
 
 
-let fullSpectrum512 = new Float32Array(1024);
+let fullSpectrum512 = new Float64Array(1024);
 // Function to compute inverse FFT of a spectrum
 function computeInverseFFTonHalf512(halfSpectrum) {
     // Copy DC component (index 0)
@@ -4629,7 +4629,7 @@ function computeInverseFFTonHalf512(halfSpectrum) {
     const audioSignal = ifft512(fullSpectrum512);
 
     // Extract only the real parts of the time-domain signal
-    /*const audioSignal = new Float32Array(timeDomainSignal.length / 2);
+    /*const audioSignal = new Float64Array(timeDomainSignal.length / 2);
     for (let i = 0; i < audioSignal.length; i++) {
         audioSignal[i] = timeDomainSignal[i * 2];
     }*/
@@ -4637,7 +4637,7 @@ function computeInverseFFTonHalf512(halfSpectrum) {
     return audioSignal;
 }
 
-let fullSpectrum1024 = new Float32Array(2048);
+let fullSpectrum1024 = new Float64Array(2048);
 // Function to compute inverse FFT of a spectrum
 function computeInverseFFTonHalf1024(halfSpectrum) {
     // Copy DC component (index 0)
@@ -4663,7 +4663,7 @@ function computeInverseFFTonHalf1024(halfSpectrum) {
     const audioSignal = ifft1024(fullSpectrum1024);
 
     /*// Extract only the real parts of the time-domain signal
-    const audioSignal = new Float32Array(timeDomainSignal.length / 2);
+    const audioSignal = new Float64Array(timeDomainSignal.length / 2);
     for (let i = 0; i < audioSignal.length; i++) {
         audioSignal[i] = timeDomainSignal[i * 2];
     }*/
@@ -4694,7 +4694,7 @@ function initializeModule() {
     // Define the number of FFT operations to perform
     const numOperations = 20000; // You can adjust this number based on your requirements
 
-    // Generate test data as Float32Array
+    // Generate test data as Float64Array
     const generateTestData = (size) => {
         const testData = new Float64Array(size);
         for (let i = 0; i < size; i++) {
