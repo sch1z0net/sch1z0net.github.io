@@ -3060,16 +3060,6 @@ function fftReal512(realInput) {
     return out512;
 }
 
-
-function fftReal1024(realInput){
-    var ptr_in = Module._malloc(realInput.length * Float32Array.BYTES_PER_ELEMENT);
-    Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
-    var ptr_out = Module._malloc(2048 * Float32Array.BYTES_PER_ELEMENT);
-
-
-
-}
-
 function fftReal1024(realInput) {
     var ptr_in = Module._malloc(realInput.length * Float32Array.BYTES_PER_ELEMENT);
     Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
