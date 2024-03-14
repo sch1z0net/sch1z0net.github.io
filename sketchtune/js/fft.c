@@ -2044,6 +2044,8 @@ double t2Re_2j = 0x1.44cf325091dd7p-1;
         double T2x3dRe = (x3bRe_4 * -t2Re_1f - -x3bIm_4 *  t2Re_1d);
         double T2x3dIm = (x3bRe_4 *  t2Re_1d + -x3bIm_4 * -t2Re_1f);
 
+double t2Re_2i = 0x1.6a09e667f3bcdp-1;
+
         double res4ReA =  x0aRe_8 + T2x0aRe + ((x2aRe_8 + T2x2aRe)*  t2Re_2i - (( x2aIm_8 + T2x2aIm)*  t2Re_2i)); 
         out1024[idx  +  16] =   res4ReA;
         out1024[idx  + 112] =   res4ReA; 
@@ -2068,9 +2070,6 @@ double t2Re_2j = 0x1.44cf325091dd7p-1;
         double res4ImD = -x0bIm_4 + T2x1dIm + ((x2bRe_4 + T2x3dRe)*  t2Re_2f + ((-x2bIm_4 + T2x3dIm)*  t2Re_2l)); 
         out1024[idx  + 107] = - res4ImD;
         out1024[idx  +  23] =   res4ImD;
-
-double t2Re_2i = 0x1.6a09e667f3bcdp-1;
-
         double res5ReA =  x0aRe_8 - T2x0aRe + ((x2aRe_8 - T2x2aRe)* -t2Re_2i  - (( x2aIm_8 - T2x2aIm)*  t2Re_2i ));
         out1024[idx  +  48] =   res5ReA;
         out1024[idx  +  80] =   res5ReA;
