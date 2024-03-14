@@ -2944,7 +2944,7 @@ function fftReal1024(realInput) {
     return result;
 }
 */
-/*
+
 function fftReal1024(realInput) {
     // Allocate memory for input data
     var ptr_in = Module._malloc(realInput.length * Float64Array.BYTES_PER_ELEMENT);
@@ -2962,7 +2962,7 @@ function fftReal1024(realInput) {
 
     // Return the result array
     return result;
-}*/
+}
 
 
 
@@ -4188,7 +4188,7 @@ function fftReal1024(realInput) {
 
     return out1024;
 }
-
+*/
 
 
 
