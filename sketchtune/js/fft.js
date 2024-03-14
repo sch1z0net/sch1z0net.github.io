@@ -366,7 +366,6 @@ function fftComplexInPlace_radix2(out) {
     return out;
 }
 
-
 let factors  = LOOKUP_RADIX2_1024;
 let ____F    = LOOKUP_RADIX2_1024;
 
@@ -2945,7 +2944,7 @@ function fftReal1024(realInput) {
     return result;
 }
 */
-
+/*
 function fftReal1024(realInput) {
     // Allocate memory for input data
     var ptr_in = Module._malloc(realInput.length * Float64Array.BYTES_PER_ELEMENT);
@@ -2963,15 +2962,13 @@ function fftReal1024(realInput) {
 
     // Return the result array
     return result;
-}
+}*/
 
 
 
 
 
 
-
-/*
 let map1024       = bitReversalMap1024.get(1024);
 const inputBR1024 = new Float64Array(1024);
 const out1024     = new Float64Array(2048);
@@ -4191,7 +4188,7 @@ function fftReal1024(realInput) {
 
     return out1024;
 }
-*/
+
 
 
 
