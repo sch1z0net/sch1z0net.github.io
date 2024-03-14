@@ -18,7 +18,7 @@ const maxSampleLength = 60 * 44100; // 60 seconds at 44100 Hz sample rate
 
 function generateTestDataSignal(durationSeconds, sampleRate) {
     const numSamples = durationSeconds * sampleRate;
-    const signal = new Float64Array(numSamples);
+    const signal = new Float32Array(numSamples);
 
     for (let i = 0; i < numSamples; i++) {
         // Generate a simple sine wave with a frequency of 440 Hz (A4 note)
@@ -118,8 +118,8 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode) {
         const worker = new Worker('./js/stftWorker.js');
         //worker.postMessage({ inputSignal: chunk, windowSize, hopSize, fftFactorLookup });
 
-        // Convert chunk array to Float64Array (assuming it contains float values)
-        const chunky = new Float64Array(chunk);
+        // Convert chunk array to Float32Array (assuming it contains float values)
+        const chunky = new Float32Array(chunk);
 
         // Construct the message object
         const message = {
@@ -299,7 +299,7 @@ function STFT_1024(inputSignal, hopSize) {
 // Function to perform Inverse Short-Time Fourier Transform (ISTFT) using Web Workers
 function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfSpec) {
     const numFrames = spectrogram.length;
-    const outputSignal = new Float64Array((numFrames - 1) * hopSize + windowSize);
+    const outputSignal = new Float32Array((numFrames - 1) * hopSize + windowSize);
 
     // Define the number of workers (you can adjust this based on performance testing)
     const numWorkers = NUM_WORKERS;
@@ -319,9 +319,9 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfS
         const chunk = spectrogram.slice(startFrame, endFrame);
 
         const flattenedChunk = chunk.flatMap(frame => frame.flatMap(spectrum => [spectrum.re, spectrum.im]) );
-        // Convert the flattened array to a Float64Array
-        const float32Array = new Float64Array(flattenedChunk);
-        // Convert the Float64Array to an ArrayBuffer
+        // Convert the flattened array to a Float32Array
+        const float32Array = new Float32Array(flattenedChunk);
+        // Convert the Float32Array to an ArrayBuffer
         const arrayBuffer = float32Array.buffer;
 
         // Create worker and send the chunk of spectrogram
@@ -346,8 +346,8 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfS
             worker.onmessage = function (e) {
                 const {id, buffer} = e.data;
 
-                // Convert the ArrayBuffer back to a Float64Array
-                const outputChunk = new Float64Array(buffer);
+                // Convert the ArrayBuffer back to a Float32Array
+                const outputChunk = new Float32Array(buffer);
                 // Copy the processed signal chunk to the output signal
                 const startIdx = id * framesPerWorker * hopSize;
                 outputSignal.set(outputChunk, startIdx);
@@ -377,7 +377,7 @@ const synthesisWindow_512 = hanningWindow(512);
 // Function to perform Inverse Short-Time Fourier Transform (ISTFT) using Web Workers
 function ISTFT_512(spectrogram, hopSize) {
         let spectra = spectrogram.length;
-        const outputSignal = new Float64Array(spectra * hopSize);
+        const outputSignal = new Float32Array(spectra * hopSize);
 
         for (let i = 0; i < spectra; i++) {
             // Compute inverse FFT of the spectrum to obtain the frame in time domain
@@ -408,7 +408,7 @@ const synthesisWindow_1024 = hanningWindow(1024);
 // Function to perform Inverse Short-Time Fourier Transform (ISTFT) using Web Workers
 function ISTFT_1024(spectrogram, hopSize) {
         let spectra = spectrogram.length;
-        const outputSignal = new Float64Array(spectra * hopSize);
+        const outputSignal = new Float32Array(spectra * hopSize);
 
         for (let i = 0; i < spectra; i++) {
             // Compute inverse FFT of the spectrum to obtain the frame in time domain
@@ -468,7 +468,7 @@ function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitude
         // Calculate the fraction between the two frames
         const fraction = originalFrameIndex - frameIndex1;
 
-        const currentInterpolatedMagnitudes = new Float64Array(numBins);
+        const currentInterpolatedMagnitudes = new Float32Array(numBins);
         
         for (let j = 0; j < numBins; j++) {
             const magnitude1 = spectrogram[frameIndex1][j*2];
@@ -503,7 +503,7 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
         // Calculate the fraction between the two frames
         const fraction = originalFrameIndex - frameIndex1;
 
-        const currentSynchronizedPhases = new Float64Array(numBins);
+        const currentSynchronizedPhases = new Float32Array(numBins);
 
         for (let j = 0; j < numBins; j++) {
             const phase1 = spectrogram[frameIndex1][j*2+1];
@@ -1083,7 +1083,7 @@ async function phaseVocoder(audioContext, inputBuffer, stretchFactor, windowSize
 
     // Process inputBuffer frame by frame for each channel
     for (let ch = 0; ch < numChannels; ch++) {
-        const inputData = copyBuffer.getChannelData(ch);
+        const inputData = new Float64Array(copyBuffer.getChannelData(ch));
         // SEQUENCIALLY
         /*let spectrogram = await processChannel(audioContext, inputData, outputBuffer, ch, stretchFactor, windowSize, hopSize, smoothFactor);
         if(ch == 0){ spectrogramA = spectrogram; }
@@ -1123,14 +1123,14 @@ async function processChannel(audioContext, inputData, outputBuffer, ch, stretch
     const startTimeCH = performance.now();
 
     const {processedSignal, preSpectrogram, postSpectrogram} = await timeStretch(inputData, stretchFactor, windowSize, windowType, hopSize, smoothFactor, halfSpec, ch);
-    const processedSignalFloat64 = new Float64Array(processedSignal);  // Convert processedSignal to Float64Array if necessary
+    const processedSignalFloat32 = new Float32Array(processedSignal);  // Convert processedSignal to Float32Array if necessary
     
     const endTimeCH = performance.now();
     const elapsedTimeCH = endTimeCH - startTimeCH;
     //console.log(`TimeStretch: CH ${ch} Elapsed time: ${elapsedTimeCH} milliseconds`);
 
     // Copy the processed signal to the output buffer
-    outputBuffer.copyToChannel(processedSignalFloat64, ch);
+    outputBuffer.copyToChannel(processedSignalFloat32, ch);
 
     return postSpectrogram;
 }
