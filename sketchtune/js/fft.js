@@ -3094,7 +3094,13 @@ function fftReal1024(realInput) {
     fft_wasm(ptr_in, realInput.length, ptr_out);
 
     // Copy data from module memory to the result array
-    result.set(Module.HEAPF32.subarray(byteOffset, byteOffset + byteLength / Float32Array.BYTES_PER_ELEMENT));
+    //result.set(Module.HEAPF32.subarray(byteOffset, byteOffset + byteLength / Float32Array.BYTES_PER_ELEMENT));
+
+    // Assuming Module.exports.memory is the exported memory object from your WebAssembly module
+    var memoryBuffer = new Uint8Array(Module.exports.memory.buffer);
+    // Read data directly from memory
+    var result = new Float32Array(memoryBuffer.buffer, ptr_out, 2048);
+
 
     // Free memory
     Module._free(ptr_in);
