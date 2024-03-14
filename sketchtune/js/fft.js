@@ -4631,7 +4631,6 @@ function initializeModule() {
         return testData;
     };
 
-
     const testData8    = generateTestData(8);
     const testData16   = generateTestData(16);
     const testData32   = generateTestData(32);
@@ -4703,11 +4702,11 @@ function initializeModule() {
     //measureTime(1024);
     //measureTime(2048);
     //measureTime(4096);
-        /*measureTime(1024);
         measureTime(1024);
         measureTime(1024);
         measureTime(1024);
-        measureTime(1024);*/
+        measureTime(1024);
+        measureTime(1024);
 
     //console.log("8:    ",compareFFTResults(fftRealInPlace_ref(testData8),fftRealInPlaceRADIX4(testData8)));
     //console.log("16:   ",compareFFTResults(fftRealInPlace_ref(testData16),fftRealInPlaceRADIX4(testData16)));
@@ -4746,7 +4745,6 @@ function initializeModule() {
     //console.log(fftRealInPlace_ref(testData256));
     //console.log(fftReal512(testData512));
     //console.log(fftReal512(testData1024));
-
 
 }
 
