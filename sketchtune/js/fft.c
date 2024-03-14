@@ -635,74 +635,6 @@ float tIm31 = 0x1.ff621ep-1f;
 */
 
 
-
-double t1Re_1b = 0x1.6a09e667f3bcdp-1;
-
-double t1Re_2b = 0x1.d906bcf328d46p-1;
-double t1Re_2c = 0x1.6a09e667f3bcdp-1;
-double t1Re_2d = 0x1.87de2a6aea964p-2;
-
-double t1Re_1b2b = 0x1.4e7ae9144f0fcp-1; //t1Re_1b * t1Re_2b;
-double t1Re_1b2d = 0x1.1517a7bdb3896p-2; //t1Re_1b * t1Re_2d;
-
-double t2Re_1b = 0x1.f6297cff75cbp-1;
-double t2Re_1c = 0x1.d906bcf328d46p-1;
-double t2Re_1d = 0x1.a9b66290ea1a3p-1;
-double t2Re_1e = 0x1.6a09e667f3bcdp-1;
-double t2Re_1f = 0x1.1c73b39ae68c9p-1;
-double t2Re_1g = 0x1.87de2a6aea964p-2;
-double t2Re_1h = 0x1.8f8b83c69a60cp-3;
-
-double t2Re_2b = 0x1.fd88da3d12526p-1;
-double t2Re_2c = 0x1.f6297cff75cbp-1;
-double t2Re_2d = 0x1.e9f4156c62ddap-1;
-double t2Re_2e = 0x1.d906bcf328d46p-1;
-double t2Re_2f = 0x1.c38b2f180bdb1p-1;
-double t2Re_2g = 0x1.a9b66290ea1a3p-1;
-double t2Re_2h = 0x1.8bc806b151741p-1;
-double t2Re_2i = 0x1.6a09e667f3bcdp-1;
-double t2Re_2j = 0x1.44cf325091dd7p-1;
-double t2Re_2k = 0x1.1c73b39ae68c9p-1;
-double t2Re_2l = 0x1.e2b5d3806f63ep-2;
-double t2Re_2m = 0x1.87de2a6aea964p-2;
-double t2Re_2n = 0x1.294062ed59f04p-2;
-double t2Re_2o = 0x1.8f8b83c69a60cp-3;
-double t2Re_2p = 0x1.917a6bc29b438p-4;
-
-double tRe0  = 0x1p+0;
-double tRe1  = 0x1.ff621e3796d7ep-1;
-double tRe2  = 0x1.fd88da3d12526p-1; 
-double tRe3  = 0x1.fa7557f08a517p-1;
-double tRe4  = 0x1.f6297cff75cbp-1;
-double tRe5  = 0x1.f0a7efb9230d7p-1; 
-double tRe6  = 0x1.e9f4156c62ddap-1;
-double tRe7  = 0x1.e212104f686e5p-1;
-double tRe8  = 0x1.d906bcf328d46p-1;
-double tRe9  = 0x1.ced7af43cc773p-1;
-double tRe10 = 0x1.c38b2f180bdb1p-1;
-double tRe11 = 0x1.b728345196e3ep-1;
-double tRe12 = 0x1.a9b66290ea1a3p-1;
-double tRe13 = 0x1.9b3e047f38741p-1; 
-double tRe14 = 0x1.8bc806b151741p-1;
-double tRe15 = 0x1.7b5df226aafbp-1;
-double tRe16 = 0x1.6a09e667f3bcdp-1;
-double tRe17 = 0x1.57d69348cecap-1;
-double tRe18 = 0x1.44cf325091dd7p-1;
-double tRe19 = 0x1.30ff7fce17036p-1;
-double tRe20 = 0x1.1c73b39ae68c9p-1;
-double tRe21 = 0x1.073879922ffeep-1;
-double tRe22 = 0x1.e2b5d3806f63ep-2;
-double tRe23 = 0x1.b5d1009e15cc2p-2;
-double tRe24 = 0x1.87de2a6aea964p-2;
-double tRe25 = 0x1.58f9a75ab1fddp-2;
-double tRe26 = 0x1.294062ed59f04p-2;
-double tRe27 = 0x1.f19f97b215f1ep-3;
-double tRe28 = 0x1.8f8b83c69a60cp-3;
-double tRe29 = 0x1.2c8106e8e613ap-3;
-double tRe30 = 0x1.917a6bc29b438p-4;
-double tRe31 = 0x1.91f65f10dd825p-5;
-
-
 // Define global arrays
 double inputBR1024[1024];
 double paddedInput[1024];
@@ -1810,6 +1742,9 @@ inputBR1024[1023]=paddedInput[1023];
         out1024[idx +   9] = x2aRe - x3aRe;      
         out1024[idx +  16] = x0aRe + x1aRe - x2aRe - x3aRe;
 
+
+double t1Re_2c = 0x1.6a09e667f3bcdp-1;
+
         double x2cRe_tRe_2c = x2cRe * t1Re_2c;
         double x3cRe_tRe_2c = x3cRe * t1Re_2c;
 
@@ -1831,13 +1766,21 @@ inputBR1024[1023]=paddedInput[1023];
         double x3dif = (x3bRe-x3bIm);
         double x3sum = (x3bRe+x3bIm);
 
+double t1Re_1b = 0x1.6a09e667f3bcdp-1;
+
         double x1dif_tRe_1b = x1dif * t1Re_1b;
         double x1sum_tRe_1b = x1sum * t1Re_1b;
           
+double t1Re_1b2b = 0x1.4e7ae9144f0fcp-1; //t1Re_1b * t1Re_2b;
+double t1Re_1b2d = 0x1.1517a7bdb3896p-2; //t1Re_1b * t1Re_2d;
+
         double x3dif_tRe_1b2b = x3dif * t1Re_1b2b;
         double x3dif_tRe_1b2d = x3dif * t1Re_1b2d;
         double x3sum_tRe_1b2b = x3sum * t1Re_1b2b;
         double x3sum_tRe_1b2d = x3sum * t1Re_1b2d;
+
+double t1Re_2b = 0x1.d906bcf328d46p-1;
+double t1Re_2d = 0x1.87de2a6aea964p-2;
 
         double tempReB = (x3dif_tRe_1b2b - x3sum_tRe_1b2d + x2bRe*t1Re_2b - x2bIm*t1Re_2d);
         double tempImB = (x3dif_tRe_1b2d + x3sum_tRe_1b2b + x2bRe*t1Re_2d + x2bIm*t1Re_2b);
@@ -1913,15 +1856,24 @@ inputBR1024[1023]=paddedInput[1023];
         double x3dRe_4 = out1024[idx   +110]; double x3dIm_4 = out1024[idx   +111];
         double x3aRe_8 = out1024[idx   +112]; double x3aIm_8 = out1024[idx   +113];
 
+double t2Re_1b = 0x1.f6297cff75cbp-1;
+double t2Re_1h = 0x1.8f8b83c69a60cp-3;
+
         double T0x1bRe = (x1bRe_0 * t2Re_1b - x1bIm_0 * t2Re_1h);
         double T0x1bIm = (x1bRe_0 * t2Re_1h + x1bIm_0 * t2Re_1b);
         double T0x3bRe = (x3bRe_0 * t2Re_1b - x3bIm_0 * t2Re_1h);
         double T0x3bIm = (x3bRe_0 * t2Re_1h + x3bIm_0 * t2Re_1b);
 
+double t2Re_1c = 0x1.d906bcf328d46p-1;
+double t2Re_1g = 0x1.87de2a6aea964p-2;
+
         double T0x0cRe = (x1cRe_0 * t2Re_1c - x1cIm_0 * t2Re_1g);
         double T0x0cIm = (x1cRe_0 * t2Re_1g + x1cIm_0 * t2Re_1c);
         double T0x2cRe = (x3cRe_0 * t2Re_1c - x3cIm_0 * t2Re_1g);
         double T0x2cIm = (x3cRe_0 * t2Re_1g + x3cIm_0 * t2Re_1c);
+
+double t2Re_1d = 0x1.a9b66290ea1a3p-1;
+double t2Re_1f = 0x1.1c73b39ae68c9p-1;
 
         double T0x1dRe = (x1dRe_0 * t2Re_1d - x1dIm_0 * t2Re_1f);
         double T0x1dIm = (x1dRe_0 * t2Re_1f + x1dIm_0 * t2Re_1d);
@@ -1932,18 +1884,30 @@ inputBR1024[1023]=paddedInput[1023];
         out1024[idx  +  64] =   (x0aRe_0 + x1aRe_0) - (x2aRe_0 + x3aRe_0);
         out1024[idx  +  65] =                       - (x2aIm_0 + x3aIm_0);
         out1024[idx  +   1] =                         (x2aIm_0 + x3aIm_0); 
+
+double t2Re_2b = 0x1.fd88da3d12526p-1;
+double t2Re_2p = 0x1.917a6bc29b438p-4;
+
         double res0ReB = x0bRe_0 + T0x1bRe + ((x2bRe_0 + T0x3bRe)*  t2Re_2b - ((x2bIm_0 + T0x3bIm)*  t2Re_2p));
         out1024[idx  +   2] =   res0ReB;
         out1024[idx  + 126] =   res0ReB; 
         double res0ImB = x0bIm_0 + T0x1bIm + ((x2bRe_0 + T0x3bRe)*  t2Re_2p + ((x2bIm_0 + T0x3bIm)*  t2Re_2b)); 
         out1024[idx  + 127] = - res0ImB;
         out1024[idx  +   3] =   res0ImB;
+
+double t2Re_2c = 0x1.f6297cff75cbp-1;
+double t2Re_2o = 0x1.8f8b83c69a60cp-3;
+
         double res0ReC = x0cRe_0 + T0x0cRe + ((x2cRe_0 + T0x2cRe)*  t2Re_2c - ((x2cIm_0 + T0x2cIm)*  t2Re_2o));  
         out1024[idx  +   4] =   res0ReC;
         out1024[idx  + 124] =   res0ReC;
         double res0ImC = x0cIm_0 + T0x0cIm + ((x2cRe_0 + T0x2cRe)*  t2Re_2o + ((x2cIm_0 + T0x2cIm)*  t2Re_2c));
         out1024[idx  + 125] = - res0ImC;
         out1024[idx  +   5] =   res0ImC; 
+
+double t2Re_2d = 0x1.e9f4156c62ddap-1;
+double t2Re_2n = 0x1.294062ed59f04p-2;
+
         double res0ReD = x0dRe_0 + T0x1dRe + ((x2dRe_0 + T0x3dRe)*  t2Re_2d - ((x2dIm_0 + T0x3dIm)*  t2Re_2n));  
         out1024[idx  +   6] =   res0ReD;
         out1024[idx  + 122] =   res0ReD;
@@ -1975,6 +1939,7 @@ inputBR1024[1023]=paddedInput[1023];
         out1024[idx  +  91] = - res1ImD; 
         out1024[idx  +  39] =   res1ImD;
 
+double t2Re_1e = 0x1.6a09e667f3bcdp-1;
         double T1x0aRe = (x1aRe_4 * t2Re_1e - x1aIm_4 * t2Re_1e);
         double T1x0aIm = (x1aRe_4 * t2Re_1e + x1aIm_4 * t2Re_1e);
         double T1x2aRe = (x3aRe_4 * t2Re_1e - x3aIm_4 * t2Re_1e);
@@ -1995,24 +1960,39 @@ inputBR1024[1023]=paddedInput[1023];
         double T1x3dRe = (x3dRe_4 * t2Re_1h - x3dIm_4 * t2Re_1b);
         double T1x3dIm = (x3dRe_4 * t2Re_1b + x3dIm_4 * t2Re_1h);
 
+double t2Re_2e = 0x1.d906bcf328d46p-1;
+double t2Re_2m = 0x1.87de2a6aea964p-2;
+
         double res2ReA = x0aRe_4 + T1x0aRe + ((x2aRe_4 + T1x2aRe)*  t2Re_2e - ((x2aIm_4 + T1x2aIm)*  t2Re_2m));  
         out1024[idx  +   8] =   res2ReA;
         out1024[idx  + 120] =   res2ReA;
         double res2ImA = x0aIm_4 + T1x0aIm + ((x2aRe_4 + T1x2aRe)*  t2Re_2m + ((x2aIm_4 + T1x2aIm)*  t2Re_2e)); 
         out1024[idx  + 121] = - res2ImA; 
         out1024[idx  +   9] =   res2ImA;
+
+double t2Re_2f = 0x1.c38b2f180bdb1p-1;
+double t2Re_2l = 0x1.e2b5d3806f63ep-2;
+
         double res2ReB = x0bRe_4 + T1x1bRe + ((x2bRe_4 + T1x3bRe)*  t2Re_2f - ((x2bIm_4 + T1x3bIm)*  t2Re_2l));
         out1024[idx  +  10] =   res2ReB;
         out1024[idx  + 118] =   res2ReB; 
         double res2ImB = x0bIm_4 + T1x1bIm + ((x2bRe_4 + T1x3bRe)*  t2Re_2l + ((x2bIm_4 + T1x3bIm)*  t2Re_2f));  
         out1024[idx  + 119] = - res2ImB; 
         out1024[idx  +  11] =   res2ImB; 
+
+double t2Re_2g = 0x1.a9b66290ea1a3p-1;
+double t2Re_2k = 0x1.1c73b39ae68c9p-1;
+
         double res2ReC = x0cRe_4 + T1x0cRe + ((x2cRe_4 + T1x2cRe)*  t2Re_2g - ((x2cIm_4 + T1x2cIm)*  t2Re_2k));
         out1024[idx  +  12] =   res2ReC;
         out1024[idx  + 116] =   res2ReC;  
         double res2ImC = x0cIm_4 + T1x0cIm + ((x2cRe_4 + T1x2cRe)*  t2Re_2k + ((x2cIm_4 + T1x2cIm)*  t2Re_2g)); 
         out1024[idx  + 117] = - res2ImC; 
         out1024[idx  +  13] =   res2ImC; 
+
+double t2Re_2h = 0x1.8bc806b151741p-1;
+double t2Re_2j = 0x1.44cf325091dd7p-1;
+
         double res2ReD = x0dRe_4 + T1x1dRe + ((x2dRe_4 + T1x3dRe)*  t2Re_2h - ((x2dIm_4 + T1x3dIm)*  t2Re_2j));  
         out1024[idx  +  14] =   res2ReD;
         out1024[idx  + 114] =   res2ReD;
@@ -2088,6 +2068,9 @@ inputBR1024[1023]=paddedInput[1023];
         double res4ImD = -x0bIm_4 + T2x1dIm + ((x2bRe_4 + T2x3dRe)*  t2Re_2f + ((-x2bIm_4 + T2x3dIm)*  t2Re_2l)); 
         out1024[idx  + 107] = - res4ImD;
         out1024[idx  +  23] =   res4ImD;
+
+double t2Re_2i = 0x1.6a09e667f3bcdp-1;
+
         double res5ReA =  x0aRe_8 - T2x0aRe + ((x2aRe_8 - T2x2aRe)* -t2Re_2i  - (( x2aIm_8 - T2x2aIm)*  t2Re_2i ));
         out1024[idx  +  48] =   res5ReA;
         out1024[idx  +  80] =   res5ReA;
@@ -2205,6 +2188,8 @@ inputBR1024[1023]=paddedInput[1023];
         double oIm1 = out1024[idx + 131];
         double eRe1 = out1024[idx + 2];
         double eIm1 = out1024[idx + 3];
+double tRe1  = 0x1.ff621e3796d7ep-1;
+double tRe31 = 0x1.91f65f10dd825p-5;
         double resIm1_s = eIm1 + (oRe1 * tRe31 + oIm1 * tRe1);
         out1024[idx + 3] = resIm1_s;
         out1024[idx + 255] = -resIm1_s;
@@ -2222,6 +2207,8 @@ inputBR1024[1023]=paddedInput[1023];
         double oIm2 = out1024[idx + 133];
         double eRe2 = out1024[idx + 4];
         double eIm2 = out1024[idx + 5];
+double tRe2  = 0x1.fd88da3d12526p-1; 
+double tRe30 = 0x1.917a6bc29b438p-4;
         double resIm2_s = eIm2 + (oRe2 * tRe30 + oIm2 * tRe2);
         out1024[idx + 5] = resIm2_s;
         out1024[idx + 253] = -resIm2_s;
@@ -2239,6 +2226,8 @@ inputBR1024[1023]=paddedInput[1023];
         double oIm3 = out1024[idx + 135];
         double eRe3 = out1024[idx + 6];
         double eIm3 = out1024[idx + 7];
+double tRe3  = 0x1.fa7557f08a517p-1;
+double tRe29 = 0x1.2c8106e8e613ap-3;
         double resIm3_s = eIm3 + (oRe3 * tRe29 + oIm3 * tRe3);
         out1024[idx + 7] = resIm3_s;
         out1024[idx + 251] = -resIm3_s;
@@ -2256,6 +2245,8 @@ inputBR1024[1023]=paddedInput[1023];
         double oIm4  = out1024[idx +  137];
         double eRe4   = out1024[idx +    8]; 
         double eIm4  = out1024[idx +    9];
+double tRe4  = 0x1.f6297cff75cbp-1;
+double tRe28 = 0x1.8f8b83c69a60cp-3;
         double resIm4_s = eIm4 + (oRe4 * tRe28 + oIm4 * tRe4);
         out1024[idx + 9] = resIm4_s;
         out1024[idx + 249] = -resIm4_s;
@@ -2273,6 +2264,8 @@ inputBR1024[1023]=paddedInput[1023];
         double oIm5 = out1024[idx + 139];
         double eRe5 = out1024[idx + 10]; 
         double eIm5 = out1024[idx + 11];
+double tRe5  = 0x1.f0a7efb9230d7p-1; 
+double tRe27 = 0x1.f19f97b215f1ep-3;
         double resIm5_s = eIm5 + (oRe5 * tRe27 + oIm5 * tRe5);
         out1024[idx + 11] = resIm5_s;
         out1024[idx + 247] = -resIm5_s;
@@ -2290,6 +2283,8 @@ inputBR1024[1023]=paddedInput[1023];
         double oIm6 = out1024[idx + 141];
         double eRe6 = out1024[idx + 12]; 
         double eIm6 = out1024[idx + 13];
+double tRe6  = 0x1.e9f4156c62ddap-1;
+double tRe26 = 0x1.294062ed59f04p-2;
         double resIm6_s = eIm6 + (oRe6 * tRe26 + oIm6 * tRe6);
         out1024[idx + 13] = resIm6_s;
         out1024[idx + 245] = -resIm6_s;
@@ -2307,6 +2302,8 @@ inputBR1024[1023]=paddedInput[1023];
         double oIm7 = out1024[idx + 143];
         double eRe7 = out1024[idx + 14]; 
         double eIm7 = out1024[idx + 15];
+double tRe7  = 0x1.e212104f686e5p-1;
+double tRe25 = 0x1.58f9a75ab1fddp-2;
         double resIm7_s = eIm7 + (oRe7 * tRe25 + oIm7 * tRe7);
         out1024[idx + 15] = resIm7_s;
         out1024[idx + 243] = -resIm7_s;
@@ -2324,6 +2321,8 @@ inputBR1024[1023]=paddedInput[1023];
         double oIm8 = out1024[idx + 145];
         double eRe8 = out1024[idx + 16]; 
         double eIm8 = out1024[idx + 17];
+double tRe8  = 0x1.d906bcf328d46p-1;
+double tRe24 = 0x1.87de2a6aea964p-2;
         double resIm8_s = eIm8 + (oRe8 * tRe24 + oIm8 * tRe8);
         out1024[idx + 17] = resIm8_s;
         out1024[idx + 241] = -resIm8_s;
@@ -2341,6 +2340,8 @@ inputBR1024[1023]=paddedInput[1023];
         double oIm9 = out1024[idx + 147];
         double eRe9 = out1024[idx + 18]; 
         double eIm9 = out1024[idx + 19];
+double tRe9  = 0x1.ced7af43cc773p-1;
+double tRe23 = 0x1.b5d1009e15cc2p-2;
         double resIm9_s = eIm9 + (oRe9 * tRe23 + oIm9 * tRe9);
         out1024[idx + 19] = resIm9_s;
         out1024[idx + 239] = -resIm9_s;
@@ -2358,6 +2359,8 @@ inputBR1024[1023]=paddedInput[1023];
         double oIm10 = out1024[idx + 149];
         double eRe10 = out1024[idx + 20]; 
         double eIm10 = out1024[idx + 21];
+double tRe10 = 0x1.c38b2f180bdb1p-1;
+double tRe22 = 0x1.e2b5d3806f63ep-2;
         double resIm10_s = eIm10 + (oRe10 * tRe22 + oIm10 * tRe10);
         out1024[idx + 21] = resIm10_s;
         out1024[idx + 237] = -resIm10_s;
@@ -2375,6 +2378,8 @@ inputBR1024[1023]=paddedInput[1023];
         double oIm11 = out1024[idx + 151];
         double eRe11 = out1024[idx + 22]; 
         double eIm11 = out1024[idx + 23];
+double tRe11 = 0x1.b728345196e3ep-1;
+double tRe21 = 0x1.073879922ffeep-1;
         double resIm11_s = eIm11 + (oRe11 * tRe21 + oIm11 * tRe11);
         out1024[idx + 23] = resIm11_s;
         out1024[idx + 235] = -resIm11_s;
@@ -2392,6 +2397,8 @@ inputBR1024[1023]=paddedInput[1023];
         double oIm12 = out1024[idx + 153];
         double eRe12 = out1024[idx + 24]; 
         double eIm12 = out1024[idx + 25];
+double tRe12 = 0x1.a9b66290ea1a3p-1;
+double tRe20 = 0x1.1c73b39ae68c9p-1;
         double resIm12_s = eIm12 + (oRe12 * tRe20 + oIm12 * tRe12);
         out1024[idx + 25] = resIm12_s;
         out1024[idx + 233] = -resIm12_s;
@@ -2409,6 +2416,8 @@ inputBR1024[1023]=paddedInput[1023];
         double oIm13 = out1024[idx + 155];
         double eRe13 = out1024[idx + 26]; 
         double eIm13 = out1024[idx + 27];
+double tRe13 = 0x1.9b3e047f38741p-1; 
+double tRe19 = 0x1.30ff7fce17036p-1;
         double resIm13_s = eIm13 + (oRe13 * tRe19 + oIm13 * tRe13);
         out1024[idx + 27] = resIm13_s;
         out1024[idx + 231] = -resIm13_s;
@@ -2426,6 +2435,8 @@ inputBR1024[1023]=paddedInput[1023];
         double oIm14 = out1024[idx + 157];
         double eRe14 = out1024[idx + 28]; 
         double eIm14 = out1024[idx + 29];
+double tRe14 = 0x1.8bc806b151741p-1;
+double tRe18 = 0x1.44cf325091dd7p-1;
         double resIm14_s = eIm14 + (oRe14 * tRe18 + oIm14 * tRe14);
         out1024[idx + 29] = resIm14_s;
         out1024[idx + 229] = -resIm14_s;
@@ -2443,6 +2454,8 @@ inputBR1024[1023]=paddedInput[1023];
         double oIm15 = out1024[idx + 159];
         double eRe15 = out1024[idx + 30]; 
         double eIm15 = out1024[idx + 31];
+double tRe15 = 0x1.7b5df226aafbp-1;
+double tRe17 = 0x1.57d69348cecap-1;
         double resIm15_s = eIm15 + (oRe15 * tRe17 + oIm15 * tRe15);
         out1024[idx + 31] = resIm15_s;
         out1024[idx + 227] = -resIm15_s;
@@ -2460,6 +2473,7 @@ inputBR1024[1023]=paddedInput[1023];
         double oIm16 = out1024[idx + 161];
         double eRe16 = out1024[idx + 32]; 
         double eIm16 = out1024[idx + 33];
+double tRe16 = 0x1.6a09e667f3bcdp-1;
         double resIm16_s = eIm16 + (oRe16 * tRe16 + oIm16 * tRe16);
         out1024[idx + 33] = resIm16_s;
         out1024[idx + 225] = -resIm16_s;
