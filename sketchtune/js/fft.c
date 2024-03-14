@@ -2018,7 +2018,7 @@ void fftReal1024(float* realInput, int size, float* out1024) {
         out1024[idx  +  63] =   res7ImD;
     }
 
-
+/*
     /////////////////////////////////////////////
     // P = 2.5  -> 128
     //
@@ -2760,7 +2760,7 @@ void fftReal1024(float* realInput, int size, float* out1024) {
             out1024[oI * 2]      = eRe - t_oRe;
             out1024[oI * 2 + 1]  = eIm - t_oIm;
         }
-
+*/
 }
 
 
