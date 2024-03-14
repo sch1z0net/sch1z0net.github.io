@@ -257,8 +257,8 @@ float t1Re_2b = 0x1.d906bcp-1f;
 float t1Re_2c = 0x1.6a09e6p-1f;
 float t1Re_2d = 0x1.87de2ap-2f;
 
-float t1Re_1b2b = 0x1.fd54adp-1f; // t1Re_1b * t1Re_2b;
-float t1Re_1b2d = 0x1.b612f8p-3f; //t1Re_1b * t1Re_2d;
+float t1Re_1b2b = 0x1.4e7ae8p-1f; // t1Re_1b * t1Re_2b;
+float t1Re_1b2d = 0x1.1517a8p-2f; //t1Re_1b * t1Re_2d;
 
 float t2Re_1b = 0x1.f6297cp-1f;
 float t2Re_1c = 0x1.d906bcp-1f;
@@ -1670,10 +1670,10 @@ inputBR1024[1023]=paddedInput[1023];
         float x1dif_tRe_1b = x1dif * t1Re_1b;
         float x1sum_tRe_1b = x1sum * t1Re_1b;
           
-        float x3dif_tRe_1b2b = x3dif * t1Re_1b * t1Re_2b;
-        float x3dif_tRe_1b2d = x3dif * t1Re_1b * t1Re_2d;
-        float x3sum_tRe_1b2b = x3sum * t1Re_1b * t1Re_2b;
-        float x3sum_tRe_1b2d = x3sum * t1Re_1b * t1Re_2d;
+        float x3dif_tRe_1b2b = x3dif * t1Re_1b2b;
+        float x3dif_tRe_1b2d = x3dif * t1Re_1b2d;
+        float x3sum_tRe_1b2b = x3sum * t1Re_1b2b;
+        float x3sum_tRe_1b2d = x3sum * t1Re_1b2d;
 
         float tempReB = (x3dif_tRe_1b2b - x3sum_tRe_1b2d + x2bRe*t1Re_2b - x2bIm*t1Re_2d);
         float tempImB = (x3dif_tRe_1b2d + x3sum_tRe_1b2b + x2bRe*t1Re_2d + x2bIm*t1Re_2b);
@@ -2796,7 +2796,13 @@ int main() {
 }*/
 
 
-
+int main() {
+    // Print all entries in the array
+    printf("%a", t1Re_1b * t1Re_2b);
+    printf("\n");
+    printf("%a", t1Re_1b * t1Re_2d);
+    return 0;
+}
 
 
 
