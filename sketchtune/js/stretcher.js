@@ -377,7 +377,7 @@ const synthesisWindow_512 = hanningWindow(512);
 // Function to perform Inverse Short-Time Fourier Transform (ISTFT) using Web Workers
 function ISTFT_512(spectrogram, hopSize) {
         let spectra = spectrogram.length;
-        const outputSignal = new Float32Array(spectra * hopSize);
+        const outputSignal = new Float64Array(spectra * hopSize);
 
         for (let i = 0; i < spectra; i++) {
             // Compute inverse FFT of the spectrum to obtain the frame in time domain
@@ -408,7 +408,7 @@ const synthesisWindow_1024 = hanningWindow(1024);
 // Function to perform Inverse Short-Time Fourier Transform (ISTFT) using Web Workers
 function ISTFT_1024(spectrogram, hopSize) {
         let spectra = spectrogram.length;
-        const outputSignal = new Float32Array(spectra * hopSize);
+        const outputSignal = new Float64Array(spectra * hopSize);
 
         for (let i = 0; i < spectra; i++) {
             // Compute inverse FFT of the spectrum to obtain the frame in time domain
@@ -468,7 +468,7 @@ function interpolateMagnitudes(spectrogram, stretchFactor, interpolatedMagnitude
         // Calculate the fraction between the two frames
         const fraction = originalFrameIndex - frameIndex1;
 
-        const currentInterpolatedMagnitudes = new Float32Array(numBins);
+        const currentInterpolatedMagnitudes = new Float64Array(numBins);
         
         for (let j = 0; j < numBins; j++) {
             const magnitude1 = spectrogram[frameIndex1][j*2];
@@ -503,7 +503,7 @@ function synchronizePhase(spectrogram, stretchFactor, synchronizedPhases) {
         // Calculate the fraction between the two frames
         const fraction = originalFrameIndex - frameIndex1;
 
-        const currentSynchronizedPhases = new Float32Array(numBins);
+        const currentSynchronizedPhases = new Float64Array(numBins);
 
         for (let j = 0; j < numBins; j++) {
             const phase1 = spectrogram[frameIndex1][j*2+1];

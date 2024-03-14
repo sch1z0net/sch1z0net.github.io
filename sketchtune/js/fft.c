@@ -667,7 +667,6 @@ double t2Re_2n = 0x1.294062ed59f04p-2;
 double t2Re_2o = 0x1.8f8b83c69a60cp-3;
 double t2Re_2p = 0x1.917a6bc29b438p-4;
 
-
 double tRe0  = 0x1.ff621e3796d7ep-1;
 double tRe1  = 0x1.fd88da3d12526p-1; 
 double tRe2  = 0x1.fa7557f08a517p-1;
