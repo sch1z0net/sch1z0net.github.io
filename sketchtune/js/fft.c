@@ -662,7 +662,7 @@ void fftReal1024(double* realInput, int size) {
         paddedInput = paddingInput;
     } else {
         // Use the original input array directly
-        paddedInput = inputBR1024;
+        paddedInput = realInput;
     }
 
 
