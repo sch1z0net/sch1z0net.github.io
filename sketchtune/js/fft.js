@@ -3102,6 +3102,8 @@ var ptr_out;
     return result;
 }*/
 
+
+/*
 function fftReal1024(realInput) {
     // Allocate memory for input data
     var ptr_in = Module._malloc(realInput.length * Float32Array.BYTES_PER_ELEMENT);
@@ -3120,7 +3122,26 @@ function fftReal1024(realInput) {
     // Return the result array
     return result;
 }
+*/
 
+function fftReal1024(realInput) {
+    // Allocate memory for input data
+    var ptr_in = Module._malloc(realInput.length * Float64Array.BYTES_PER_ELEMENT);
+    Module.HEAPF64.set(realInput, ptr_in / Float64Array.BYTES_PER_ELEMENT);
+
+    // Perform FFT
+    fft_wasm(ptr_in, realInput.length);
+
+    // Access out1024 array directly from exported memory
+    var out1024Ptr = Module.ccall('getOut1024Ptr', 'number', [], []);
+    var result = new Float32Array(Module.HEAPF64.buffer, out1024Ptr, 2048);
+
+    // Free memory
+    Module._free(ptr_in);
+
+    // Return the result array
+    return result;
+}
 
 
 
@@ -4664,9 +4685,9 @@ let fft_wasm;
 function initializeModule() {
     fft_wasm = Module.cwrap('fftReal1024', null, ['number', 'number', 'number']);
     // Calculate byte offsets
-    byteLength = 2048 * Float32Array.BYTES_PER_ELEMENT;
+    byteLength = 2048 * Float64Array.BYTES_PER_ELEMENT;
     ptr_out = Module._malloc(byteLength);
-    byteOffset = ptr_out / Float32Array.BYTES_PER_ELEMENT;
+    byteOffset = ptr_out / Float64Array.BYTES_PER_ELEMENT;
 
 
 
@@ -4675,7 +4696,7 @@ function initializeModule() {
 
     // Generate test data as Float32Array
     const generateTestData = (size) => {
-        const testData = new Float32Array(size);
+        const testData = new Float64Array(size);
         for (let i = 0; i < size; i++) {
             // For demonstration purposes, generate random data between -1 and 1
             testData[i] = Math.random() * 2 - 1;
