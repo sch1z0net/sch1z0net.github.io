@@ -3060,6 +3060,7 @@ function fftReal512(realInput) {
     return out512;
 }
 
+/*
 function fftReal1024(realInput) {
     var ptr_in = Module._malloc(realInput.length * Float32Array.BYTES_PER_ELEMENT);
     Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
@@ -3075,12 +3076,12 @@ function fftReal1024(realInput) {
     Module._free(ptr_out);
     // Return the JavaScript array
     return result;
-}
+}*/
 
 
 
 
-/*
+
 let map1024       = bitReversalMap1024.get(1024);
 const inputBR1024 = new Float32Array(1024);
 const out1024     = new Float32Array(2048);
@@ -4300,7 +4301,7 @@ function fftReal1024(realInput) {
 
     return out1024;
 }
-*/
+
 
 
 
