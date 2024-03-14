@@ -4611,8 +4611,6 @@ function computeInverseFFTonHalf1024(halfSpectrum) {
 
 let fft_wasm;
 function initializeModule() {
-    // Call your memory-related functions after initialization
-    const inputArray = testData1024;
     fft_wasm = Module.cwrap('fftReal1024', null, ['number', 'number', 'number']);
 }
 
