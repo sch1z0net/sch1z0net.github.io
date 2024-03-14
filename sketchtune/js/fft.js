@@ -3064,6 +3064,9 @@ function fftReal1024(realInput) {
     var ptr_in = Module._malloc(realInput.length * Float32Array.BYTES_PER_ELEMENT);
     Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
     var ptr_out = Module._malloc(2048 * Float32Array.BYTES_PER_ELEMENT);
+
+    fft_wasm(ptr_in, realInput.length, ptr_out);
+
     // Allocate memory for the JavaScript array
     var result = new Float32Array(2048);
     // Copy data from ptr_out to the JavaScript array
