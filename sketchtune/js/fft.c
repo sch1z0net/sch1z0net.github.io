@@ -1669,10 +1669,10 @@ void fftReal1024(float* realInput, int size, float* out1024) {
         float x1dif_tRe_1b = x1dif * t1Re_1b;
         float x1sum_tRe_1b = x1sum * t1Re_1b;
           
-        float x3dif_tRe_1b2b = x3dif * t1Re_1b2b;
-        float x3dif_tRe_1b2d = x3dif * t1Re_1b2d;
-        float x3sum_tRe_1b2b = x3sum * t1Re_1b2b;
-        float x3sum_tRe_1b2d = x3sum * t1Re_1b2d;
+        float x3dif_tRe_1b2b = x3dif * t1Re_1b * t1Re_2b;
+        float x3dif_tRe_1b2d = x3dif * t1Re_1b * t1Re_2d;
+        float x3sum_tRe_1b2b = x3sum * t1Re_1b * t1Re_2b;
+        float x3sum_tRe_1b2d = x3sum * t1Re_1b * t1Re_2d;
 
         float tempReB = (x3dif_tRe_1b2b - x3sum_tRe_1b2d + x2bRe*t1Re_2b - x2bIm*t1Re_2d);
         float tempImB = (x3dif_tRe_1b2d + x3sum_tRe_1b2b + x2bRe*t1Re_2d + x2bIm*t1Re_2b);
