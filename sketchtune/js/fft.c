@@ -642,8 +642,9 @@ float tIm31 = 0x1.ff621ep-1f;
 //double out1024[2048];
 
 double inputBR1024[1024] __attribute__((aligned(32)));
-double paddedInput[1024] __attribute__((aligned(32)));
+double paddingInput[1024] __attribute__((aligned(32)));
 double out1024[2048] __attribute__((aligned(32)));
+double *paddedInput;  // Declare as a pointer
 
 // Export out1024 array
 EMSCRIPTEN_KEEPALIVE
@@ -656,13 +657,12 @@ void fftReal1024(double* realInput, int size) {
     // Padding the input if necessary
     if (size != 1024) {
         for (int i = 0; i < 1024; i++) {
-            paddedInput[i] = (i < size) ? realInput[i] : 0;
+            paddingInput[i] = (i < size) ? realInput[i] : 0;
         }
+        paddedInput = paddingInput;
     } else {
-        // Create a copy of the input array
-        for (int i = 0; i < 1024; i++) {
-            paddedInput[i] = realInput[i];
-        }
+        // Use the original input array directly
+        paddedInput = inputBR1024;
     }
 
 
