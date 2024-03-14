@@ -3060,7 +3060,7 @@ function fftReal512(realInput) {
     return out512;
 }
 
-
+/*
 function fftReal1024(realInput) {
     var ptr_in = Module._malloc(realInput.length * Float32Array.BYTES_PER_ELEMENT);
     Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
@@ -3077,7 +3077,31 @@ function fftReal1024(realInput) {
     Module._free(ptr_out);
     // Return the JavaScript array
     return result;
+}*/
+
+// Pre-allocate result array
+var result = new Float32Array(2048);
+// Calculate byte offsets
+var byteOffset;
+var byteLength;
+function fftReal1024(realInput) {
+    // Allocate memory for input data
+    var ptr_in = Module._malloc(realInput.length * Float32Array.BYTES_PER_ELEMENT);
+    Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
+    var ptr_out = Module._malloc(byteLength);
+
+    // Perform FFT
+    fft_wasm(ptr_in, realInput.length, ptr_out);
+
+    // Copy data from module memory to the result array
+    result.set(Module.HEAPF32.subarray(byteOffset, byteOffset + byteLength / Float32Array.BYTES_PER_ELEMENT));
+
+    // Free memory
+    Module._free(ptr_in);
+    // Return the result array
+    return result;
 }
+
 
 
 /*
@@ -4615,6 +4639,10 @@ function computeInverseFFTonHalf1024(halfSpectrum) {
 let fft_wasm;
 function initializeModule() {
     fft_wasm = Module.cwrap('fftReal1024', null, ['number', 'number', 'number']);
+    // Calculate byte offsets
+    var byteOffset = ptr_out / Float32Array.BYTES_PER_ELEMENT;
+    var byteLength = 2048 * Float32Array.BYTES_PER_ELEMENT;
+
 
 
 
