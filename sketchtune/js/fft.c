@@ -636,12 +636,14 @@ float tIm31 = 0x1.ff621ep-1f;
 
 
 // Define global arrays
-double inputBR1024[1024];
-double paddedInput[1024];
-
+//double inputBR1024[1024];
+//double paddedInput[1024];
 // Define the out1024 array outside of the function
-double out1024[2048];
+//double out1024[2048];
 
+double inputBR1024[1024] __attribute__((aligned(32)));
+double paddedInput[1024] __attribute__((aligned(32)));
+double out1024[2048] __attribute__((aligned(32)));
 
 // Export out1024 array
 EMSCRIPTEN_KEEPALIVE
