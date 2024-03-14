@@ -665,7 +665,43 @@ void fftReal1024(double* realInput, int size) {
         paddedInput = realInput;
     }
 
+double in0  =paddedInput[0];
+double in16 =paddedInput[32];
+double in8  =paddedInput[64];
+double in4  =paddedInput[128];
+double in12 =paddedInput[192];
+double in2  =paddedInput[256];
+double in10 =paddedInput[320];
+double in6  =paddedInput[384];
+double in14 =paddedInput[448];
+double in1  =paddedInput[512];
+double in9  =paddedInput[576];
+double in5  =paddedInput[640];
+double in13 =paddedInput[704];
+double in3  =paddedInput[768];
+double in11 =paddedInput[832];
+double in7  =paddedInput[896];
+double in15 =paddedInput[960];
 
+inputBR1024[0] =in0;
+inputBR1024[1] =in1;
+inputBR1024[2] =in2;
+inputBR1024[3] =in3;
+inputBR1024[4] =in4;
+inputBR1024[5] =in5;
+inputBR1024[6] =in6;
+inputBR1024[7] =in7;
+inputBR1024[8] =in8;
+inputBR1024[9] =in9;
+inputBR1024[10]=in10;
+inputBR1024[11]=in11;
+inputBR1024[12]=in12;
+inputBR1024[13]=in13;
+inputBR1024[14]=in14;
+inputBR1024[15]=in15;
+inputBR1024[16]=in16;
+
+/*
 inputBR1024[0]=paddedInput[0];
 inputBR1024[1]=paddedInput[512];
 inputBR1024[2]=paddedInput[256];
@@ -682,7 +718,8 @@ inputBR1024[12]=paddedInput[192];
 inputBR1024[13]=paddedInput[704];
 inputBR1024[14]=paddedInput[448];
 inputBR1024[15]=paddedInput[960];
-inputBR1024[16]=paddedInput[32];
+inputBR1024[16]=paddedInput[32];*/
+
 inputBR1024[17]=paddedInput[544];
 inputBR1024[18]=paddedInput[288];
 inputBR1024[19]=paddedInput[800];
