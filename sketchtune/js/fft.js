@@ -3061,6 +3061,33 @@ function fftReal512(realInput) {
 }
 
 
+function fftReal1024(realInput){
+    var ptr_in = Module._malloc(realInput.length * Float32Array.BYTES_PER_ELEMENT);
+    Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
+    var ptr_out = Module._malloc(2048 * Float32Array.BYTES_PER_ELEMENT);
+
+
+
+}
+
+function fftReal1024(realInput) {
+    var ptr_in = Module._malloc(realInput.length * Float32Array.BYTES_PER_ELEMENT);
+    Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
+    var ptr_out = Module._malloc(2048 * Float32Array.BYTES_PER_ELEMENT);
+    // Allocate memory for the JavaScript array
+    var result = new Float32Array(2048);
+    // Copy data from ptr_out to the JavaScript array
+    result.set(Module.HEAPF32.subarray(ptr_out / Float32Array.BYTES_PER_ELEMENT, (ptr_out + 2048 * Float32Array.BYTES_PER_ELEMENT) / Float32Array.BYTES_PER_ELEMENT));
+    // Free the memory allocated for ptr_out
+    Module._free(ptr_out);
+    // Return the JavaScript array
+    return result;
+}
+
+
+
+
+/*
 let map1024       = bitReversalMap1024.get(1024);
 const inputBR1024 = new Float32Array(1024);
 const out1024     = new Float32Array(2048);
@@ -4280,7 +4307,7 @@ function fftReal1024(realInput) {
 
     return out1024;
 }
-
+*/
 
 
 
@@ -4592,6 +4619,17 @@ function computeInverseFFTonHalf1024(halfSpectrum) {
 /**********************************************************************************************/
 /********************************* TESTING PERFORMANCE ****************************************/
 
+let fft_wasm;
+function initializeModule() {
+    // Call your memory-related functions after initialization
+    const inputArray = testData1024;
+    fft_wasm = Module.cwrap('fftReal1024', null, ['number', 'number', 'number']);
+}
+
+
+
+
+/*
 // Define your initialization logic
 function initializeModule() {
 
@@ -4683,51 +4721,44 @@ function initializeModule() {
         return true;
     }
 
-    /****************** TEST SPEED *******************/ 
-    /*measureTime(512);
-    measureTime(512);
-    measureTime(512);
-    measureTime(512);
-    measureTime(512);*/
+    //measureTime(512);
+    //measureTime(512);
+    //measureTime(512);
+    //measureTime(512);
+    //measureTime(512);
     //measureTime(1024);
     //measureTime(2048);
     //measureTime(4096);
 
-
-    /****************** TEST IF FORWARD IS CORRECT by comparison with REFERENCE *******************/ 
-    /*
-    console.log("8:    ",compareFFTResults(fftRealInPlace_ref(testData8),fftRealInPlaceRADIX4(testData8)));
-    console.log("16:   ",compareFFTResults(fftRealInPlace_ref(testData16),fftRealInPlaceRADIX4(testData16)));
-    console.log("32:   ",compareFFTResults(fftRealInPlace_ref(testData32),fftRealInPlaceRADIX4(testData32)));
-    console.log("64:   ",compareFFTResults(fftRealInPlace_ref(testData64),fftRealInPlaceRADIX4(testData64)));
-    console.log("128:  ",compareFFTResults(fftRealInPlace_ref(testData128),fftRealInPlaceRADIX4(testData128)));
-    console.log("256:  ",compareFFTResults(fftRealInPlace_ref(testData256),fftRealInPlaceRADIX4(testData256)));
-    console.log("512:  ",compareFFTResults(fftRealInPlace_ref(testData512),fftRealInPlaceRADIX4(testData512)));
-    console.log("1024: ",compareFFTResults(fftRealInPlace_ref(testData1024),fftRealInPlaceRADIX4(testData1024)));
-    console.log("2048: ",compareFFTResults(fftRealInPlace_ref(testData2048),fftRealInPlaceRADIX4(testData2048)));
-    console.log("4096: ",compareFFTResults(fftRealInPlace_ref(testData4096),fftRealInPlaceRADIX4(testData4096)));
-    */
-
-    /****************** TEST IF FFT AND IFFT RETURN ORIGINAL SIGNAL *******************/ 
-    /*
-    const signal1 = [ 1.0, 0.4, 0.0, 0.2 ];
-    const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5 ];
-    const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
-    const signal4 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
-    const signal5 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
-    */
+    //console.log("8:    ",compareFFTResults(fftRealInPlace_ref(testData8),fftRealInPlaceRADIX4(testData8)));
+    //console.log("16:   ",compareFFTResults(fftRealInPlace_ref(testData16),fftRealInPlaceRADIX4(testData16)));
+    //console.log("32:   ",compareFFTResults(fftRealInPlace_ref(testData32),fftRealInPlaceRADIX4(testData32)));
+    //console.log("64:   ",compareFFTResults(fftRealInPlace_ref(testData64),fftRealInPlaceRADIX4(testData64)));
+    //console.log("128:  ",compareFFTResults(fftRealInPlace_ref(testData128),fftRealInPlaceRADIX4(testData128)));
+    //console.log("256:  ",compareFFTResults(fftRealInPlace_ref(testData256),fftRealInPlaceRADIX4(testData256)));
+    //console.log("512:  ",compareFFTResults(fftRealInPlace_ref(testData512),fftRealInPlaceRADIX4(testData512)));
+    //console.log("1024: ",compareFFTResults(fftRealInPlace_ref(testData1024),fftRealInPlaceRADIX4(testData1024)));
+    //console.log("2048: ",compareFFTResults(fftRealInPlace_ref(testData2048),fftRealInPlaceRADIX4(testData2048)));
+    //console.log("4096: ",compareFFTResults(fftRealInPlace_ref(testData4096),fftRealInPlaceRADIX4(testData4096)));
+    
+    //const signal1 = [ 1.0, 0.4, 0.0, 0.2 ];
+    //const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5 ];
+    //const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
+    //const signal4 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
+    //const signal5 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
+    
 
     //console.log("512:  ",compareFFTResults(fftRealInPlace_ref(testData512),fftReal512(testData512)));
     //console.log("1024:  ",compareFFTResults(fftRealInPlace_ref(testData1024),fftReal512(testData1024)));
 
-    /*
-    console.log(signal1);
-    console.log(computeInverseFFT(computeFFT(signal1)));
-    console.log(signal2);
-    console.log(computeInverseFFT(computeFFT(signal2)));
-    console.log(signal3);
-    console.log(computeInverseFFT(computeFFT(signal3)));
-    */
+    
+    //console.log(signal1);
+    //console.log(computeInverseFFT(computeFFT(signal1)));
+    //console.log(signal2);
+    //console.log(computeInverseFFT(computeFFT(signal2)));
+    //console.log(signal3);
+    //console.log(computeInverseFFT(computeFFT(signal3)));
+    
 
     //console.log("1024:  ",compareFFTResults(testData1024,ifft1024(fftRealInPlace_ref(testData1024))));
     //console.log("1024:  ",compareFFTResults(testData1024,ifft1024(fftReal1024(testData1024))));
@@ -4745,17 +4776,12 @@ function initializeModule() {
         measureTime(1024);
         measureTime(1024);
         measureTime(1024);
-        /*
-        var i = 0;
-        for (i = 0; i < 100; ++i) {
-            console.log(Module.HEAPF32[(ptr_out / Float32Array.BYTES_PER_ELEMENT) + i]);
-        }
-        */
     } finally {
         Module._free(ptr_in);
         Module._free(ptr_out);
     }
 }
+*/
 
 // Check if the module is already initialized, otherwise wait for initialization
 if (Module.isRuntimeInitialized) {
