@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <emscripten.h>
 
 /*
 float* precalculateFFTFactorsRADIX2flattened(int maxSampleLength) {
@@ -355,182 +356,27 @@ float tIm31 = 0x1.ff621ep-1f;
 
 
 
-
 // Define global arrays
 float inputBR1024[1024];
 float paddedInput[1024];
-// Define global variables for intermediate computations
-/* float x0aRe, x0bRe, x0bIm, x0cRe;
-float x1aRe, x1bRe, x1bIm, x1cRe;
-float x2aRe, x2bRe, x2bIm, x2cRe;
-float x3aRe, x3bRe, x3bIm, x3cRe;
-
-float x2cRe_tRe_2c, x3cRe_tRe_2c;
-float resReC1, resImC1, resReC2, resImC2;
-
-float x1dif;
-float x1sum;
-float x3dif;
-float x3sum;
-
-float x1dif_tRe_1b;
-float x1sum_tRe_1b;
-          
-float x3dif_tRe_1b2b;
-float x3dif_tRe_1b2d;
-float x3sum_tRe_1b2b;
-float x3sum_tRe_1b2d;
-
-float tempReB;
-float tempImB;
-float tempReD;
-float tempImD;
-
-float resReB1;    
-float resReB2;    
-float resReD1;
-float resReD2;  
-
-float resImB1;    
-float resImB2;     
-float resImD1;     
-float resImD2;  */
-
-/*
-float x0aRe_0, x0bRe_0, x0bIm_0, x0cRe_0, x0cIm_0, x0dRe_0, x0dIm_0, x0aRe_4, x0aIm_4, x0bRe_4, x0bIm_4, x0cRe_4, x0cIm_4, x0dRe_4, x0dIm_4, x0aRe_8;
-float x1aRe_0, x1bRe_0, x1bIm_0, x1cRe_0, x1cIm_0, x1dRe_0, x1dIm_0, x1aRe_4, x1aIm_4, x1bRe_4, x1bIm_4, x1cRe_4, x1cIm_4, x1dRe_4, x1dIm_4, x1aRe_8, x1aIm_8;
-float x2aRe_0, x2aIm_0, x2bRe_0, x2bIm_0, x2cRe_0, x2cIm_0, x2dRe_0, x2dIm_0, x2aRe_4, x2aIm_4, x2bRe_4, x2bIm_4, x2cRe_4, x2cIm_4, x2dRe_4, x2dIm_4, x2aRe_8, x2aIm_8;
-float x3aRe_0, x3aIm_0, x3bRe_0, x3bIm_0, x3cRe_0, x3cIm_0, x3dRe_0, x3dIm_0, x3aRe_4, x3aIm_4, x3bRe_4, x3bIm_4, x3cRe_4, x3cIm_4, x3dRe_4, x3dIm_4, x3aRe_8, x3aIm_8;
-
-float T0x1bRe, T0x1bIm, T0x3bRe, T0x3bIm;
-float T0x0cRe, T0x0cIm, T0x2cRe, T0x2cIm;
-float T0x1dRe, T0x1dIm, T0x3dRe, T0x3dIm;
-
-float T1x0aRe, T1x0aIm, T1x2aRe, T1x2aIm;
-float T1x1bRe, T1x1bIm, T1x3bRe, T1x3bIm;
-float T1x0cRe, T1x0cIm, T1x2cRe, T1x2cIm;
-float T1x1dRe, T1x1dIm, T1x3dRe, T1x3dIm;
-
-float T2x0aRe, T2x0aIm, T2x2aRe, T2x2aIm;
-float T2x1bRe, T2x1bIm, T2x3bRe, T2x3bIm;
-float T2x0cRe, T2x0cIm, T2x2cRe, T2x2cIm;
-float T2x1dRe, T2x1dIm, T2x3dRe, T2x3dIm;
-
-float T3x0aRe, T3x0aIm, T3x2aRe, T3x2aIm;
-float T3x1bRe, T3x1bIm, T3x3bRe, T3x3bIm;
-float T3x0cRe, T3x0cIm, T3x2cRe, T3x2cIm;
-float T3x1dRe, T3x1dIm, T3x3dRe, T3x3dIm;
-
-float res0ReB, res0ImB;
-float res0ReC, res0ImC;
-float res0ReD, res0ImD;
-float res1ReA, res1ImA;
-float res1ReB, res1ImB;
-float res1ReC, res1ImC;
-float res1ReD, res1ImD;
-float res2ReA, res2ImA;
-float res2ReB, res2ImB;
-float res2ReC, res2ImC;
-float res2ReD, res2ImD;
-float res3ReA, res3ImA;
-float res3ReB, res3ImB;
-float res3ReC, res3ImC;
-float res3ReD, res3ImD;
-float res4ReA, res4ImA;
-float res4ReB, res4ImB;
-float res4ReC, res4ImC;
-float res4ReD, res4ImD;
-float res5ReA, res5ImA;
-float res5ReB, res5ImB;
-float res5ReC, res5ImC;
-float res5ReD, res5ImD;
-float res6ReA, res6ImA;
-float res6ReB, res6ImB;
-float res6ReC, res6ImC;
-float res6ReD, res6ImD;
-float res7ReA, res7ImA;
-float res7ReB, res7ImB;
-float res7ReC, res7ImC;
-float res7ReD, res7ImD;*/
-
-/*
-float oRe0, oIm0, eRe0, eIm0;
-float oRe1, oIm1, eRe1, eIm1;
-float oRe2, oIm2, eRe2, eIm2;
-float oRe3, oIm3, eRe3, eIm3;
-float oRe4, oIm4, eRe4, eIm4;
-float oRe5, oIm5, eRe5, eIm5;
-float oRe6, oIm6, eRe6, eIm6;
-float oRe7, oIm7, eRe7, eIm7;
-float oRe8, oIm8, eRe8, eIm8;
-float oRe9, oIm9, eRe9, eIm9;
-float oRe10, oIm10, eRe10, eIm10;
-float oRe11, oIm11, eRe11, eIm11;
-float oRe12, oIm12, eRe12, eIm12;
-float oRe13, oIm13, eRe13, eIm13;
-float oRe14, oIm14, eRe14, eIm14;
-float oRe15, oIm15, eRe15, eIm15;
-float oRe16, oIm16, eRe16, eIm16;
-float oRe17, oIm17, eRe17, eIm17;
-float oRe18, oIm18, eRe18, eIm18;
-float oRe19, oIm19, eRe19, eIm19;
-float oRe20, oIm20, eRe20, eIm20;
-float oRe21, oIm21, eRe21, eIm21;
-float oRe22, oIm22, eRe22, eIm22;
-float oRe23, oIm23, eRe23, eIm23;
-float oRe24, oIm24, eRe24, eIm24;
-float oRe25, oIm25, eRe25, eIm25;
-float oRe26, oIm26, eRe26, eIm26;
-float oRe27, oIm27, eRe27, eIm27;
-float oRe28, oIm28, eRe28, eIm28;
-float oRe29, oIm29, eRe29, eIm29;
-float oRe30, oIm30, eRe30, eIm30;
-float oRe31, oIm31, eRe31, eIm31;
-float oRe32, oIm32, eRe32, eIm32;
-
-float resRe0_s, resIm0_s, resRe0_d, resIm0_d;
-float resIm1_s, resRe1_s, resRe63_s, resIm63_s;
-float resIm2_s, resRe2_s, resRe62_s, resIm62_s;
-float resIm3_s, resRe3_s, resRe61_s, resIm61_s;
-float resIm4_s, resRe4_s, resRe60_s, resIm60_s;
-float resIm5_s, resRe5_s, resRe59_s, resIm59_s;
-float resIm6_s, resRe6_s, resRe58_s, resIm58_s;
-float resIm7_s, resRe7_s, resRe57_s, resIm57_s;
-float resIm8_s, resRe8_s, resRe56_s, resIm56_s;
-float resIm9_s, resRe9_s, resRe55_s, resIm55_s;
-float resIm10_s, resRe10_s, resRe54_s, resIm54_s;
-float resIm11_s, resRe11_s, resRe53_s, resIm53_s;
-float resIm12_s, resRe12_s, resRe52_s, resIm52_s;
-float resIm13_s, resRe13_s, resRe51_s, resIm51_s;
-float resIm14_s, resRe14_s, resRe50_s, resIm50_s;
-float resIm15_s, resRe15_s, resRe49_s, resIm49_s;
-float resIm16_s, resRe16_s, resRe48_s, resIm48_s;
-float resIm17_s, resRe17_s, resRe47_s, resIm47_s;
-float resIm18_s, resRe18_s, resRe46_s, resIm46_s;
-float resIm19_s, resRe19_s, resRe45_s, resIm45_s;
-float resIm20_s, resRe20_s, resRe44_s, resIm44_s;
-float resIm21_s, resRe21_s, resRe43_s, resIm43_s;
-float resIm22_s, resRe22_s, resRe42_s, resIm42_s;
-float resIm23_s, resRe23_s, resRe41_s, resIm41_s;
-float resIm24_s, resRe24_s, resRe40_s, resIm40_s;
-float resIm25_s, resRe25_s, resRe39_s, resIm39_s;
-float resIm26_s, resRe26_s, resRe38_s, resIm38_s;
-float resIm27_s, resRe27_s, resRe37_s, resIm37_s;
-float resIm28_s, resRe28_s, resRe36_s, resIm36_s;
-float resIm29_s, resRe29_s, resRe35_s, resIm35_s;
-float resIm30_s, resRe30_s, resRe34_s, resIm34_s;
-float resIm31_s, resRe31_s, resRe33_s, resIm33_s;
-float resIm32_s, resRe32_s; */
 
 int eI, oI;
 float eRe, eIm, oRe, oIm;
 float tRe, tIm;
 float t_oRe, t_oIm;
 
+// Define the out1024 array outside of the function
+float out1024[2048];
 
+
+// Export out1024 array
+EMSCRIPTEN_KEEPALIVE
+float* getOut1024Ptr() {
+    return out1024;
+}
 
 // Modified function to accept pointer to output array
-void fftReal1024(float* realInput, int size, float* out1024) {
+void fftReal1024(float* realInput, int size/*, float* out1024*/) {
     // Padding the input if necessary
     if (size != 1024) {
         for (int i = 0; i < 1024; i++) {
@@ -2761,7 +2607,6 @@ inputBR1024[1023]=paddedInput[1023];
             out1024[oI * 2]      = eRe - t_oRe;
             out1024[oI * 2 + 1]  = eIm - t_oIm;
         }
-
 }
 
 

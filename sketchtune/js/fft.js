@@ -3085,7 +3085,7 @@ function fftReal1024(realInput) {
 var byteOffset;
 var byteLength;
 var ptr_out;
-function fftReal1024(realInput) {
+/*function fftReal1024(realInput) {
     // Allocate memory for input data
     var ptr_in = Module._malloc(realInput.length * Float32Array.BYTES_PER_ELEMENT);
     Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
@@ -3096,18 +3096,30 @@ function fftReal1024(realInput) {
     // Copy data from module memory to the result array
     //result.set(Module.HEAPF32.subarray(byteOffset, byteOffset + byteLength / Float32Array.BYTES_PER_ELEMENT));
 
-    // Assuming Module.exports.memory is the exported memory object from your WebAssembly module
-    var memoryBuffer = new Uint8Array(Module.exports.memory.buffer);
-    // Read data directly from memory
-    var result = new Float32Array(memoryBuffer.buffer, ptr_out, 2048);
-
-
     // Free memory
     Module._free(ptr_in);
     // Return the result array
     return result;
-}
+}*/
 
+function fftReal1024(realInput) {
+    // Allocate memory for input data
+    var ptr_in = Module._malloc(realInput.length * Float32Array.BYTES_PER_ELEMENT);
+    Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
+
+    // Perform FFT
+    fft_wasm(ptr_in, realInput.length);
+
+    // Access out1024 array directly from exported memory
+    var out1024Ptr = Module.ccall('getOut1024Ptr', 'number', [], []);
+    var result = new Float32Array(Module.HEAPF32.buffer, out1024Ptr, 2048);
+
+    // Free memory
+    Module._free(ptr_in);
+
+    // Return the result array
+    return result;
+}
 
 
 
