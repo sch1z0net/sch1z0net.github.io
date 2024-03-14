@@ -3084,11 +3084,11 @@ var result = new Float32Array(2048);
 // Calculate byte offsets
 var byteOffset;
 var byteLength;
+var ptr_out;
 function fftReal1024(realInput) {
     // Allocate memory for input data
     var ptr_in = Module._malloc(realInput.length * Float32Array.BYTES_PER_ELEMENT);
     Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
-    var ptr_out = Module._malloc(byteLength);
 
     // Perform FFT
     fft_wasm(ptr_in, realInput.length, ptr_out);
@@ -4640,9 +4640,9 @@ let fft_wasm;
 function initializeModule() {
     fft_wasm = Module.cwrap('fftReal1024', null, ['number', 'number', 'number']);
     // Calculate byte offsets
-    var byteOffset = ptr_out / Float32Array.BYTES_PER_ELEMENT;
-    var byteLength = 2048 * Float32Array.BYTES_PER_ELEMENT;
-
+    byteLength = 2048 * Float32Array.BYTES_PER_ELEMENT;
+    ptr_out = Module._malloc(byteLength);
+    byteOffset = ptr_out / Float32Array.BYTES_PER_ELEMENT;
 
 
 
