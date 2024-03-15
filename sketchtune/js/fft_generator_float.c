@@ -322,7 +322,8 @@ int main() {
     //generate_code(128, fp);
     //generate_code(256, fp);
     //generate_code(512, fp);
-    generate_code_unrolled(256, fp);
+    generate_code_unrolled(128, fp);
+    //generate_code_unrolled(256, fp);
     //generate_code_unrolled(512, fp);
     //generate_code_unrolled(1024, fp);
     //generate_code_unrolled_1024(fp);
