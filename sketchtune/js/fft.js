@@ -2981,8 +2981,9 @@ function fftReal1024(realInput) {
     // Perform FFT
     fft_wasm(ptr_in, realInput.length);
 
+    var out1024Ptr = Module.ccall('getOut1024Ptr', 'number', [], []);
     // Access out1024 array directly from exported memory
-    var result = new Float32Array(Module.HEAPF32.buffer, out1024Ptr, maxOutputLength);
+    var result = new Float32Array(Module.HEAPF32.buffer, out1024Ptr, 2048);
 
     // Return the result array
     return result;
