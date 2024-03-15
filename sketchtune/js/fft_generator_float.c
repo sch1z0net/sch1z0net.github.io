@@ -132,10 +132,10 @@ int main() {
         return 0;
     }
 
-    generate_code(128, fp);
-    generate_code(256, fp);
-    /*generate_code(512, fp);
-    generate_code(1024, fp);*/
+    //generate_code(128, fp);
+    //generate_code(256, fp);
+    generate_code(512, fp);
+    //generate_code(1024, fp);
     printf("Generated code written to generated_code.c\n");
 
     fclose(fp);
