@@ -2369,10 +2369,6 @@ float t2Re_2i = 0x1.6a09e6p-1f;
 
 */
 
-
-
-
-
     for(int idx = 0; idx < 2048; idx += 256){ 
         float oRe0 = out1024[idx + 128];
         float oIm0 = out1024[idx + 129];
@@ -2957,7 +2953,7 @@ float t2Re_2i = 0x1.6a09e6p-1f;
         out1024[idx + 64] = resRe32_s;
     } 
 
-
+/*
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     // FFT step for SIZE 256 
@@ -4120,8 +4116,99 @@ float t2Re_2i = 0x1.6a09e6p-1f;
         float resRe64_s = eRe64 - oIm64;
         out1024[idx + 384] = resRe64_s;
         out1024[idx + 128] = resRe64_s;
-    } 
+    } */
 
+        for (int j = 0; j < 128; j++) {
+            int eI = j;
+            int oI  = j + 128;
+
+            if(j > 64){
+              out1024[eI * 2]      =  out1024[512 - eI * 2] ;
+              out1024[eI * 2 + 1]  = -out1024[512 - eI * 2 + 1];
+              out1024[oI * 2]      =  out1024[512 - oI * 2];
+              out1024[oI * 2 + 1]  = -out1024[512 - oI * 2 + 1];
+              continue;
+            }
+
+            float eRe  = out1024[eI * 2];
+            float eIm  = out1024[eI * 2 + 1];
+            float oRe  = out1024[oI * 2];
+            float oIm  = out1024[oI * 2 + 1];
+
+            float tRe = ____F[254 + (j * 2 + 0)];
+            float tIm = ____F[254 + (j * 2 + 1)];
+
+            float t_oRe = oRe * tRe - oIm * tIm;
+            float t_oIm = oRe * tIm + oIm * tRe;
+
+            out1024[eI * 2]      = eRe + t_oRe;
+            out1024[eI * 2 + 1]  = eIm + t_oIm;
+            out1024[oI * 2]      = eRe - t_oRe;
+            out1024[oI * 2 + 1]  = eIm - t_oIm;
+        }
+
+        for (int j = 0; j < 128; j++) {
+            int eI = 256 + j;
+            int oI  = 256 + j + 128;
+
+            float eRe  = out1024[eI * 2];
+            float eIm  = out1024[eI * 2 + 1];
+            float oRe  = out1024[oI * 2];
+            float oIm  = out1024[oI * 2 + 1];
+
+            float tRe = ____F[254 + (j * 2 + 0)];
+            float tIm = ____F[254 + (j * 2 + 1)];
+
+            float t_oRe = oRe * tRe - oIm * tIm;
+            float t_oIm = oRe * tIm + oIm * tRe;
+
+            out1024[eI * 2]      = eRe + t_oRe;
+            out1024[eI * 2 + 1]  = eIm + t_oIm;
+            out1024[oI * 2]      = eRe - t_oRe;
+            out1024[oI * 2 + 1]  = eIm - t_oIm;
+        }
+
+        for (int j = 0; j < 128; j++) {
+            int eI = 512 + j;
+            int oI  = 512 + j + 128;
+
+            float eRe  = out1024[eI * 2];
+            float eIm  = out1024[eI * 2 + 1];
+            float oRe  = out1024[oI * 2];
+            float oIm  = out1024[oI * 2 + 1];
+
+            float tRe = ____F[254 + (j * 2 + 0)];
+            float tIm = ____F[254 + (j * 2 + 1)];
+
+            float t_oRe = oRe * tRe - oIm * tIm;
+            float t_oIm = oRe * tIm + oIm * tRe;
+
+            out1024[eI * 2]      = eRe + t_oRe;
+            out1024[eI * 2 + 1]  = eIm + t_oIm;
+            out1024[oI * 2]      = eRe - t_oRe;
+            out1024[oI * 2 + 1]  = eIm - t_oIm;
+        }
+
+        for (int j = 0; j < 128; j++) {
+            int eI = 768 + j;
+            int oI  = 768 + j + 128;
+
+            float eRe  = out1024[eI * 2];
+            float eIm  = out1024[eI * 2 + 1];
+            float oRe  = out1024[oI * 2];
+            float oIm  = out1024[oI * 2 + 1];
+
+            float tRe = ____F[254 + (j * 2 + 0)];
+            float tIm = ____F[254 + (j * 2 + 1)];
+
+            float t_oRe = oRe * tRe - oIm * tIm;
+            float t_oIm = oRe * tIm + oIm * tRe;
+
+            out1024[eI * 2]      = eRe + t_oRe;
+            out1024[eI * 2 + 1]  = eIm + t_oIm;
+            out1024[oI * 2]      = eRe - t_oRe;
+            out1024[oI * 2 + 1]  = eIm - t_oIm;
+        }
 
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
