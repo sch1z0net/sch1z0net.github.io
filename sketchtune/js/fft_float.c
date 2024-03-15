@@ -139,9 +139,9 @@ float ____F[2046] = {
 
 
 
-float inputBR1024[1024] __attribute__((aligned(32)));
-float paddingInput[1024] __attribute__((aligned(32)));
-float out1024[2048] __attribute__((aligned(32)));
+float inputBR1024[1024] __attribute__((aligned(16)));
+float paddingInput[1024] __attribute__((aligned(16)));
+float out1024[2048] __attribute__((aligned(16)));
 float *paddedInput;  // Declare as a pointer
 
 
@@ -153,7 +153,7 @@ float* getOut1024Ptr() {
 
 // Modified function to accept pointer to output array
 void fftReal1024(float* realInput, int size) {
- /*   // Padding the input if necessary
+    // Padding the input if necessary
     if (size != 1024) {
         for (int i = 0; i < 1024; i++) {
             paddingInput[i] = (i < size) ? realInput[i] : 0;
@@ -162,8 +162,8 @@ void fftReal1024(float* realInput, int size) {
     } else {
         // Use the original input array directly
         paddedInput = realInput;
-    }*/
-paddedInput = realInput;
+    }
+
 
 inputBR1024[0]=paddedInput[0];
 inputBR1024[1]=paddedInput[512];
