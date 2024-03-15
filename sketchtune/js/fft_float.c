@@ -2,7 +2,8 @@
 #include <math.h>
 #include <stdlib.h>
 #include <emscripten.h>
-#include <xmmintrin.h>
+//#include <xmmintrin.h>
+#include <emmintrin.h>
 
 
 
@@ -182,7 +183,7 @@ float* getOut1024Ptr() {
         out1024[out_idx + 7] = -diff2;
     }*/
 
-void simd_compute(float *inputBR1024, float *out1024) {
+void simd_compute_4(float *inputBR1024, float *out1024) {
     // Assuming inputBR1024 and out1024 are arrays of size 1024
     for (int idx = 0, out_idx = 0; idx < 1024; idx += 4, out_idx += 8) {
         // Load 4 float values from input array into SIMD registers
@@ -200,17 +201,6 @@ void simd_compute(float *inputBR1024, float *out1024) {
         __m128 xmm_result2 = _mm_sub_ps(xmm_sum1, xmm_sum2);        //sum1 - sum2
         __m128 xmm_result3 = _mm_unpacklo_ps(xmm_diff1, xmm_diff2); //diff1
         __m128 xmm_result4 = _mm_unpackhi_ps(xmm_diff1, xmm_diff2); //diff2
-        /*
-        // Store the results back to memory
-        _mm_storeu_ps(&out1024[out_idx + 0], xmm_result1);
-        _mm_storeu_ps(&out1024[out_idx + 2], xmm_result3);
-        _mm_storeu_ps(&out1024[out_idx + 3], xmm_result4);
-        _mm_storeu_ps(&out1024[out_idx + 4], xmm_result2);
-        out1024[out_idx + 1] = 0.0f;
-        out1024[out_idx + 5] = 0.0f;
-        out1024[out_idx + 6] =  out1024[out_idx + 2];
-        out1024[out_idx + 7] = -out1024[out_idx + 3];
-        */
 
         // Store the results back to memory
 		_mm_storeu_ps(&out1024[out_idx + 0], xmm_result1);
@@ -224,7 +214,109 @@ void simd_compute(float *inputBR1024, float *out1024) {
     }
 }
 
+void simd_compute_16(float *out1024) {
+    for (int idx = 0; idx < 2048; idx += 32) {
+        __m128 xmm_x0aRe = _mm_loadu_ps(&out1024[idx + 0]);
+        __m128 xmm_x0bRe = _mm_loadu_ps(&out1024[idx + 2]);
+        __m128 xmm_x0bIm = _mm_loadu_ps(&out1024[idx + 3]);
+        __m128 xmm_x0cRe = _mm_loadu_ps(&out1024[idx + 4]);
 
+        __m128 xmm_x1aRe = _mm_loadu_ps(&out1024[idx + 8]);
+        __m128 xmm_x1bRe = _mm_loadu_ps(&out1024[idx + 10]);
+        __m128 xmm_x1bIm = _mm_loadu_ps(&out1024[idx + 11]);
+        __m128 xmm_x1cRe = _mm_loadu_ps(&out1024[idx + 12]);
+
+        __m128 xmm_x2aRe = _mm_loadu_ps(&out1024[idx + 16]);
+        __m128 xmm_x2bRe = _mm_loadu_ps(&out1024[idx + 18]);
+        __m128 xmm_x2bIm = _mm_loadu_ps(&out1024[idx + 19]);
+        __m128 xmm_x2cRe = _mm_loadu_ps(&out1024[idx + 20]);
+
+        __m128 xmm_x3aRe = _mm_loadu_ps(&out1024[idx + 24]);
+        __m128 xmm_x3bRe = _mm_loadu_ps(&out1024[idx + 26]);
+        __m128 xmm_x3bIm = _mm_loadu_ps(&out1024[idx + 27]);
+        __m128 xmm_x3cRe = _mm_loadu_ps(&out1024[idx + 28]);
+        
+        __m128 xmm_dif01    = _mm_sub_ps(xmm_x0aRe, xmm_x1aRe);
+        __m128 xmm_dif32    = _mm_sub_ps(xmm_x3aRe, xmm_x2aRe);
+        __m128 xmm_dif23    = _mm_sub_ps(xmm_x2aRe, xmm_x3aRe);
+        __m128 xmm_sum01    = _mm_add_ps(xmm_x0aRe, xmm_x1aRe);
+        __m128 xmm_sum23    = _mm_add_ps(xmm_x2aRe, xmm_x3aRe);
+        __m128 xmm_sum01_23 = _mm_add_ps(xmm_sum01, xmm_sum23);
+        __m128 xmm_dif01_23 = _mm_sub_ps(xmm_sum01, xmm_sum23);
+        
+        _mm_storeu_ps(&out1024[idx +  0], xmm_sum01_23);
+        _mm_storeu_ps(&out1024[idx +  8], xmm_dif01);
+        _mm_storeu_ps(&out1024[idx +  9], xmm_dif23);
+        _mm_storeu_ps(&out1024[idx + 16], xmm_dif01_23);
+        _mm_storeu_ps(&out1024[idx + 24], xmm_dif01);
+        _mm_storeu_ps(&out1024[idx + 25], xmm_dif32);
+
+        __m128 xmm_t1Re_2c      = _mm_set1_ps(0x1.6a09e6p-1f);
+        __m128 xmm_x2cRe_tRe_2c = _mm_mul_ps(xmm_x2cRe, xmm_t1Re_2c);
+        __m128 xmm_x3cRe_tRe_2c = _mm_mul_ps(xmm_x3cRe, xmm_t1Re_2c);
+        
+		__m128 xmm_resReC1 = _mm_add_ps(xmm_x0cRe, _mm_sub_ps(xmm_x2cRe_tRe_2c, xmm_x3cRe_tRe_2c));
+		_mm_storeu_ps(&out1024[idx + 28], xmm_resReC1);
+		_mm_storeu_ps(&out1024[idx + 4],  xmm_resReC1);
+		__m128 xmm_resImC1 = _mm_add_ps(xmm_x1cRe, _mm_add_ps(xmm_x2cRe_tRe_2c, xmm_x3cRe_tRe_2c));
+		_mm_storeu_ps(&out1024[idx + 5],  xmm_resImC1);
+		_mm_storeu_ps(&out1024[idx + 29], _mm_sub_ps(_mm_setzero_ps(), xmm_resImC1));
+		__m128 xmm_resReC2 = _mm_add_ps(xmm_x0cRe, _mm_sub_ps(xmm_x3cRe_tRe_2c, xmm_x2cRe_tRe_2c));
+		_mm_storeu_ps(&out1024[idx + 20], xmm_resReC2);
+		_mm_storeu_ps(&out1024[idx + 12], xmm_resReC2);
+		__m128 xmm_resImC2 = _mm_sub_ps(xmm_x1cRe, _mm_add_ps(xmm_x2cRe_tRe_2c, xmm_x3cRe_tRe_2c));
+		_mm_storeu_ps(&out1024[idx + 13], _mm_sub_ps(_mm_setzero_ps(), xmm_resImC2));
+		_mm_storeu_ps(&out1024[idx + 21], xmm_resImC2);
+
+        __m128 xmm_x1dif = _mm_sub_ps(xmm_x1bRe, xmm_x1bIm);
+		__m128 xmm_x1sum = _mm_add_ps(xmm_x1bRe, xmm_x1bIm);
+		__m128 xmm_x3dif = _mm_sub_ps(xmm_x3bRe, xmm_x3bIm);
+		__m128 xmm_x3sum = _mm_add_ps(xmm_x3bRe, xmm_x3bIm);
+
+		__m128 xmm_t1Re_1b   = _mm_set1_ps(0x1.6a09e6p-1f);
+		__m128 xmm_t1Re_1b2b = _mm_set1_ps(0x1.4e7ae8p-1f);
+		__m128 xmm_t1Re_1b2d = _mm_set1_ps(0x1.1517a8p-2f);
+		__m128 xmm_t1Re_2b   = _mm_set1_ps(0x1.d906bcp-1f);
+		__m128 xmm_t1Re_2d   = _mm_set1_ps(0x1.87de2ap-2f);
+
+		__m128 xmm_x1dif_tRe_1b   = _mm_mul_ps(xmm_x1dif, xmm_t1Re_1b);
+		__m128 xmm_x1sum_tRe_1b   = _mm_mul_ps(xmm_x1sum, xmm_t1Re_1b);
+		__m128 xmm_x3dif_tRe_1b2b = _mm_mul_ps(xmm_x3dif, xmm_t1Re_1b2b);
+		__m128 xmm_x3dif_tRe_1b2d = _mm_mul_ps(xmm_x3dif, xmm_t1Re_1b2d);
+		__m128 xmm_x3sum_tRe_1b2b = _mm_mul_ps(xmm_x3sum, xmm_t1Re_1b2b);
+		__m128 xmm_x3sum_tRe_1b2d = _mm_mul_ps(xmm_x3sum, xmm_t1Re_1b2d);
+
+		__m128 xmm_tempReB = _mm_sub_ps(_mm_add_ps(xmm_x3dif_tRe_1b2b, _mm_mul_ps(xmm_x2bRe, xmm_t1Re_2b)), _mm_add_ps(xmm_x3sum_tRe_1b2d, _mm_mul_ps(xmm_x2bIm, xmm_t1Re_2d)));
+		__m128 xmm_tempImB = _mm_add_ps(_mm_add_ps(xmm_x3dif_tRe_1b2d, _mm_mul_ps(xmm_x2bRe, xmm_t1Re_2d)), _mm_add_ps(xmm_x3sum_tRe_1b2b, _mm_mul_ps(xmm_x2bIm, xmm_t1Re_2b)));
+		__m128 xmm_tempReD = _mm_sub_ps(_mm_add_ps(xmm_x3dif_tRe_1b2d, _mm_mul_ps(xmm_x2bRe, xmm_t1Re_2d)), _mm_add_ps(xmm_x3sum_tRe_1b2b, _mm_mul_ps(xmm_x2bIm, xmm_t1Re_2b)));
+		__m128 xmm_tempImD = _mm_sub_ps(_mm_sub_ps(xmm_x3dif_tRe_1b2b, _mm_mul_ps(xmm_x2bRe, xmm_t1Re_2b)), _mm_sub_ps(xmm_x3sum_tRe_1b2d, _mm_mul_ps(xmm_x2bIm, xmm_t1Re_2d)));
+
+		__m128 xmm_resReB1 = _mm_add_ps(_mm_add_ps(_mm_loadu_ps(&out1024[idx + 2]), xmm_x1dif_tRe_1b), xmm_tempReB);
+		_mm_storeu_ps(&out1024[idx + 2], xmm_resReB1);
+		_mm_storeu_ps(&out1024[idx + 30], xmm_resReB1);
+		__m128 xmm_resReB2 = _mm_sub_ps(_mm_add_ps(_mm_loadu_ps(&out1024[idx + 18]), xmm_x1dif_tRe_1b), xmm_tempReB);
+		_mm_storeu_ps(&out1024[idx + 18], xmm_resReB2);
+		_mm_storeu_ps(&out1024[idx + 14], xmm_resReB2);
+		__m128 xmm_resReD1 = _mm_sub_ps(_mm_sub_ps(_mm_loadu_ps(&out1024[idx + 6]), xmm_x1dif_tRe_1b), xmm_tempReD);
+		_mm_storeu_ps(&out1024[idx + 6], xmm_resReD1);
+		_mm_storeu_ps(&out1024[idx + 26], xmm_resReD1);
+		__m128 xmm_resReD2 = _mm_add_ps(_mm_sub_ps(_mm_loadu_ps(&out1024[idx + 22]), xmm_x1dif_tRe_1b), xmm_tempReD);
+		_mm_storeu_ps(&out1024[idx + 22], xmm_resReD2);
+		_mm_storeu_ps(&out1024[idx + 10], xmm_resReD2);
+		__m128 xmm_resImB1 = _mm_add_ps(_mm_add_ps(_mm_loadu_ps(&out1024[idx + 3]), xmm_x1sum_tRe_1b), xmm_tempImB);
+		_mm_storeu_ps(&out1024[idx + 3], xmm_resImB1);
+		_mm_storeu_ps(&out1024[idx + 31], _mm_sub_ps(_mm_setzero_ps(), xmm_resImB1));
+		__m128 xmm_resImB2 = _mm_sub_ps(_mm_add_ps(_mm_loadu_ps(&out1024[idx + 19]), xmm_x1sum_tRe_1b), xmm_tempImB);
+		_mm_storeu_ps(&out1024[idx + 19], xmm_resImB2);
+		_mm_storeu_ps(&out1024[idx + 15], _mm_sub_ps(_mm_setzero_ps(), xmm_resImB2));
+		__m128 xmm_resImD1 = _mm_sub_ps(_mm_sub_ps(_mm_loadu_ps(&out1024[idx + 7]), xmm_x1sum_tRe_1b), xmm_tempImD);
+		_mm_storeu_ps(&out1024[idx + 7], xmm_resImD1);
+		_mm_storeu_ps(&out1024[idx + 27], _mm_sub_ps(_mm_setzero_ps(), xmm_resImD1));
+		__m128 xmm_resImD2 = _mm_add_ps(_mm_sub_ps(_mm_loadu_ps(&out1024[idx + 23]), xmm_x1sum_tRe_1b), xmm_tempImD);
+		_mm_storeu_ps(&out1024[idx + 23], xmm_resImD2);
+		_mm_storeu_ps(&out1024[idx + 11], _mm_sub_ps(_mm_setzero_ps(), xmm_resImD2));
+    }
+}
 
 
 // Modified function to accept pointer to output array
@@ -1271,7 +1363,7 @@ inputBR1024[1023]=paddedInput[1023];
     // FFT step for SIZE 4
     ////////////////////////////////////////////////
     // Call SIMD function
-    simd_compute(inputBR1024, out1024);
+    simd_compute_4(inputBR1024, out1024);
 
     
     ////////////////////////////////////////////////
@@ -1304,6 +1396,9 @@ inputBR1024[1023]=paddedInput[1023];
     ////////////////////////////////////////////////
     // FFT step for SIZE 16
     ////////////////////////////////////////////////
+    simd_compute_16(out1024);
+
+    /*
     for (int idx = 0; idx < 2048; idx += 32) {
         float x0aRe = out1024[idx     ];
         float x0bRe = out1024[idx +  2]; 
@@ -1332,7 +1427,7 @@ inputBR1024[1023]=paddedInput[1023];
         out1024[idx +   9] = x2aRe - x3aRe;      
         out1024[idx +  16] = x0aRe + x1aRe - x2aRe - x3aRe;
 
-float t1Re_2c = 0x1.6a09e6p-1f;
+        float t1Re_2c = 0x1.6a09e6p-1f;
 
         float x2cRe_tRe_2c = x2cRe * t1Re_2c;
         float x3cRe_tRe_2c = x3cRe * t1Re_2c;
@@ -1356,22 +1451,22 @@ float t1Re_2c = 0x1.6a09e6p-1f;
         float x3sum = (x3bRe+x3bIm);
 
 
-float t1Re_1b = 0x1.6a09e6p-1f;
+        float t1Re_1b = 0x1.6a09e6p-1f;
 
         float x1dif_tRe_1b = x1dif * t1Re_1b;
         float x1sum_tRe_1b = x1sum * t1Re_1b;
           
 
-float t1Re_1b2b = 0x1.4e7ae8p-1f;
-float t1Re_1b2d = 0x1.1517a8p-2f; 
+        float t1Re_1b2b = 0x1.4e7ae8p-1f;
+        float t1Re_1b2d = 0x1.1517a8p-2f; 
 
         float x3dif_tRe_1b2b = x3dif * t1Re_1b2b;
         float x3dif_tRe_1b2d = x3dif * t1Re_1b2d;
         float x3sum_tRe_1b2b = x3sum * t1Re_1b2b;
         float x3sum_tRe_1b2d = x3sum * t1Re_1b2d;
 
-float t1Re_2b = 0x1.d906bcp-1f;
-float t1Re_2d = 0x1.87de2ap-2f;
+        float t1Re_2b = 0x1.d906bcp-1f;
+        float t1Re_2d = 0x1.87de2ap-2f;
 
         float tempReB = (x3dif_tRe_1b2b - x3sum_tRe_1b2d + x2bRe*t1Re_2b - x2bIm*t1Re_2d);
         float tempImB = (x3dif_tRe_1b2d + x3sum_tRe_1b2b + x2bRe*t1Re_2d + x2bIm*t1Re_2b);
@@ -1404,6 +1499,9 @@ float t1Re_2d = 0x1.87de2ap-2f;
         out1024[idx +  23] =   resImD2;  
         out1024[idx +  11] = - resImD2; 
     }
+    */
+
+
 
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
