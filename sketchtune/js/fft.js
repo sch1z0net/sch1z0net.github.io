@@ -4539,7 +4539,7 @@ function initializeModule() {
 
 
     // Define the number of FFT operations to perform
-    const numOperations = 50000; // You can adjust this number based on your requirements
+    const numOperations = 20000; // You can adjust this number based on your requirements
 
     // Generate test data as Float32Array
     const generateTestData = (size) => {
