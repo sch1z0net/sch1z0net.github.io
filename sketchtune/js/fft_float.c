@@ -1673,6 +1673,9 @@ float t2Re_2i = 0x1.6a09e6p-1f;
     ////////////////////////////////////////////////
     // FFT step for SIZE 128 
     ////////////////////////////////////////////////
+
+
+    /*
     for(int idx = 0; idx < 2048; idx += 256){ 
         float oRe0 = out1024[idx + 128];
         float oIm0 = out1024[idx + 129];
@@ -2255,11 +2258,35 @@ float t2Re_2i = 0x1.6a09e6p-1f;
         float resRe32_s = eRe32 - oIm32;
         out1024[idx + 192] = resRe32_s;
         out1024[idx + 64] = resRe32_s;
-        
     } 
+    */
+
+    for(int i = 0; i < 1024; i+=256) {
+        for (int j = 0; j < 128; j++) {
+            int eI = i + j;
+            int oI  = i + j + 128;
+
+            float eRe  = out1024[eI * 2];
+            float eIm  = out1024[eI * 2 + 1];
+            float oRe  = out1024[oI * 2];
+            float oIm  = out1024[oI * 2 + 1];
+
+            float tRe = ____F[254 + (j * 2 + 0)];
+            float tIm = ____F[254 + (j * 2 + 1)];
+
+            float t_oRe = oRe * tRe - oIm * tIm;
+            float t_oIm = oRe * tIm + oIm * tRe;
+
+            out1024[eI * 2]      = eRe + t_oRe;
+            out1024[eI * 2 + 1]  = eIm + t_oIm;
+            out1024[oI * 2]      = eRe - t_oRe;
+            out1024[oI * 2 + 1]  = eIm - t_oIm;
+        }
+    }
+
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
-    // FFT step for SIZE 256 
+    // FFT step for SIZE 512
     ////////////////////////////////////////////////
 
     /////////////////////////////////////////////
@@ -2319,7 +2346,7 @@ float t2Re_2i = 0x1.6a09e6p-1f;
 
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
-    // FFT step for SIZE 512 
+    // FFT step for SIZE 1024
     ////////////////////////////////////////////////
     /////////////////////////////////////////////
         for (int j = 0; j < 512; j++) {
