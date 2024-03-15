@@ -2945,6 +2945,7 @@ function fftReal1024(realInput) {
 }
 */
 
+/*
 function fftReal1024(realInput) {
     // Allocate memory for input data
     var ptr_in = Module._malloc(realInput.length * Float32Array.BYTES_PER_ELEMENT);
@@ -2962,7 +2963,34 @@ function fftReal1024(realInput) {
 
     // Return the result array
     return result;
+}*/
+
+// Allocate memory for input data outside of the function
+var maxInputLength = 1024; // Assuming maximum input length
+var ptr_in;
+
+function fftReal1024(realInput) {
+    // Check if the input length exceeds the maximum length
+    if (realInput.length > maxInputLength) {
+        throw new Error("Input length exceeds maximum length");
+    }
+
+    // Copy input data to the preallocated memory buffer
+    Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
+
+    // Perform FFT
+    fft_wasm(ptr_in, realInput.length);
+
+    // Access out1024 array directly from exported memory
+    var result = new Float32Array(Module.HEAPF32.buffer, out1024Ptr, maxOutputLength);
+
+    // Return the result array
+    return result;
 }
+
+
+
+
 
 
 
@@ -4505,6 +4533,7 @@ function initializeModule() {
     byteLength = 2048 * Float32Array.BYTES_PER_ELEMENT;
     ptr_out = Module._malloc(byteLength);
     byteOffset = ptr_out / Float32Array.BYTES_PER_ELEMENT;
+    ptr_in = Module._malloc(maxInputLength * Float32Array.BYTES_PER_ELEMENT);
 
 
 
