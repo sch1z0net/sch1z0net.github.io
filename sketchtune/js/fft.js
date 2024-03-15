@@ -4558,7 +4558,7 @@ function initializeModule() {
     const testData128  = generateTestData(128);
     const testData256  = generateTestData(256);
     const testData512  = generateTestData(512);
-    const testData1024 = generateTestData(1024);
+    let testData1024   = generateTestData(1024);
     const testData2048 = generateTestData(2048);
     const testData4096 = generateTestData(4096);
 
@@ -4615,14 +4615,36 @@ function initializeModule() {
         return true;
     }
 
-    //measureTime(512);
-    //measureTime(512);
-    //measureTime(512);
-    //measureTime(512);
-    //measureTime(512);
-    //measureTime(1024);
-    //measureTime(2048);
-    //measureTime(4096);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        testData1024   = generateTestData(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        testData1024   = generateTestData(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        testData1024   = generateTestData(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        testData1024   = generateTestData(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        testData1024   = generateTestData(1024);
         measureTime(1024);
         measureTime(1024);
         measureTime(1024);
