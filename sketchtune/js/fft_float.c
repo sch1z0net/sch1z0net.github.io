@@ -204,12 +204,12 @@ void simd_compute_4(float *inputBR1024, float *out1024) {
 
         // Store the results back to memory
 		_mm_storeu_ps(&out1024[out_idx + 0], xmm_result1);
-		_mm_storeu_ps(&out1024[out_idx + 4], xmm_result2);
 		_mm_storeu_ps(&out1024[out_idx + 1], _mm_setzero_ps()); 
-		_mm_storeu_ps(&out1024[out_idx + 5], _mm_setzero_ps());
 		_mm_storeu_ps(&out1024[out_idx + 2], xmm_result3);
-		_mm_storeu_ps(&out1024[out_idx + 6], xmm_result3);
 		_mm_storeu_ps(&out1024[out_idx + 3], xmm_result4);
+		_mm_storeu_ps(&out1024[out_idx + 4], xmm_result2);
+		_mm_storeu_ps(&out1024[out_idx + 5], _mm_setzero_ps());
+		_mm_storeu_ps(&out1024[out_idx + 6], xmm_result3);
 		_mm_storeu_ps(&out1024[out_idx + 7], _mm_sub_ps(_mm_setzero_ps(), xmm_result4));
     }
 }
