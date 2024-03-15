@@ -107,6 +107,24 @@ void generate_code(int size, FILE *fp) {
     free(FAC);
 }
 
+
+int main() {
+    FILE *fp = fopen("generated_code.c", "w");
+    if (fp == NULL) {
+        printf("Error opening file.\n");
+        return 0;
+    }
+
+    float* FAC = precalculateFFTFactorsRADIX2flattened(256);
+    free(FAC);
+
+    fclose(fp);
+
+    return 0;
+}
+
+
+/*
 int main() {
     FILE *fp = fopen("generated_code.c", "w");
     if (fp == NULL) {
@@ -123,5 +141,5 @@ int main() {
     fclose(fp);
 
     return 0;
-}
+}*/
 
