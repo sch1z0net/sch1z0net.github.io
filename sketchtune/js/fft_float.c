@@ -2,6 +2,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <emscripten.h>
+#include <xmmintrin.h>
 
 
 
@@ -180,7 +181,7 @@ float* getOut1024Ptr() {
         out1024[out_idx + 6] = diff1;
         out1024[out_idx + 7] = -diff2;
     }*/
-/*
+
 void simd_compute(float *inputBR1024, float *out1024) {
     // Assuming inputBR1024 and out1024 are arrays of size 1024
     for (int idx = 0, out_idx = 0; idx < 1024; idx += 4, out_idx += 8) {
@@ -195,24 +196,33 @@ void simd_compute(float *inputBR1024, float *out1024) {
         __m128 xmm_sum2 = _mm_add_ps(xmm_x2aRe, xmm_x3aRe);
         __m128 xmm_diff1 = _mm_sub_ps(xmm_x0aRe, xmm_x1aRe);
         __m128 xmm_diff2 = _mm_sub_ps(xmm_x2aRe, xmm_x3aRe);
-        __m128 xmm_result1 = _mm_add_ps(xmm_sum1, xmm_sum2);
-        __m128 xmm_result2 = _mm_sub_ps(xmm_sum1, xmm_sum2);
-        __m128 xmm_result3 = _mm_unpacklo_ps(xmm_diff1, xmm_diff2);
-        __m128 xmm_result4 = _mm_unpackhi_ps(xmm_diff1, xmm_diff2);
-
+        __m128 xmm_result1 = _mm_add_ps(xmm_sum1, xmm_sum2);        //sum1 + sum2
+        __m128 xmm_result2 = _mm_sub_ps(xmm_sum1, xmm_sum2);        //sum1 - sum2
+        __m128 xmm_result3 = _mm_unpacklo_ps(xmm_diff1, xmm_diff2); //diff1
+        __m128 xmm_result4 = _mm_unpackhi_ps(xmm_diff1, xmm_diff2); //diff2
+        /*
         // Store the results back to memory
         _mm_storeu_ps(&out1024[out_idx + 0], xmm_result1);
         _mm_storeu_ps(&out1024[out_idx + 2], xmm_result3);
+        _mm_storeu_ps(&out1024[out_idx + 3], xmm_result4);
         _mm_storeu_ps(&out1024[out_idx + 4], xmm_result2);
-        _mm_storeu_ps(&out1024[out_idx + 6], xmm_result4);
-        // Store the zero values explicitly
         out1024[out_idx + 1] = 0.0f;
-        out1024[out_idx + 3] = diff2;
         out1024[out_idx + 5] = 0.0f;
-        // Negate the second diff2 value
-        out1024[out_idx + 7] = ;
+        out1024[out_idx + 6] =  out1024[out_idx + 2];
+        out1024[out_idx + 7] = -out1024[out_idx + 3];
+        */
+
+        // Store the results back to memory
+		_mm_storeu_ps(&out1024[out_idx + 0], xmm_result1);
+		_mm_storeu_ps(&out1024[out_idx + 4], xmm_result2);
+		_mm_storeu_ps(&out1024[out_idx + 1], _mm_setzero_ps()); 
+		_mm_storeu_ps(&out1024[out_idx + 5], _mm_setzero_ps());
+		_mm_storeu_ps(&out1024[out_idx + 2], xmm_result3);
+		_mm_storeu_ps(&out1024[out_idx + 6], xmm_result3);
+		_mm_storeu_ps(&out1024[out_idx + 3], xmm_result4);
+		_mm_storeu_ps(&out1024[out_idx + 7], _mm_sub_ps(_mm_setzero_ps(), xmm_result4));
     }
-}*/
+}
 
 
 
@@ -1261,14 +1271,14 @@ inputBR1024[1023]=paddedInput[1023];
     // FFT step for SIZE 4
     ////////////////////////////////////////////////
     // Call SIMD function
-    //simd_compute(inputBR1024, out1024);
+    simd_compute(inputBR1024, out1024);
 
     
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     // FFT step for SIZE 4
     ////////////////////////////////////////////////
-    for (int idx = 0, out_idx = 0; idx < 1024; idx += 4, out_idx += 8) {
+    /*for (int idx = 0, out_idx = 0; idx < 1024; idx += 4, out_idx += 8) {
         float x0aRe = inputBR1024[idx];
         float x1aRe = inputBR1024[idx + 1];
         float x2aRe = inputBR1024[idx + 2];
@@ -1287,7 +1297,7 @@ inputBR1024[1023]=paddedInput[1023];
         out1024[out_idx + 5] = 0.0f;
         out1024[out_idx + 6] = diff1;
         out1024[out_idx + 7] = -diff2;
-    }
+    }*/
 
 
     ////////////////////////////////////////////////
