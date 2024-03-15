@@ -107,8 +107,7 @@ void generate_code_unrolled_1024(FILE *fp) {
 }
 
 
-void generate_code_unrolled_512(FILE *fp) {
-    int size = 512;
+void generate_code_unrolled(int size, FILE *fp) {
     float* FAC = precalculateFFTFactorsRADIX2flattened(size);
 
     int hsize = size/2;
@@ -120,7 +119,7 @@ void generate_code_unrolled_512(FILE *fp) {
     fprintf(fp, "    ////////////////////////////////////////////////\n");
     fprintf(fp, "    // FFT step for SIZE %d \n", size);
     fprintf(fp, "    ////////////////////////////////////////////////\n");
-    for (int x = 0; x < 2048; x+=1024) {
+    for (int x = 0; x < 2048; x+=size*2) {
       for (int i = 0; i <= n; i++) {
         // Generate variable names based on the current index
         int eRe = i * 2;
@@ -323,7 +322,9 @@ int main() {
     //generate_code(128, fp);
     //generate_code(256, fp);
     //generate_code(512, fp);
-    generate_code_unrolled_512(fp);
+    generate_code_unrolled(256, fp);
+    //generate_code_unrolled(512, fp);
+    //generate_code_unrolled(1024, fp);
     //generate_code_unrolled_1024(fp);
     printf("Generated code written to generated_code.c\n");
 
