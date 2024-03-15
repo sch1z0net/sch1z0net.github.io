@@ -1827,7 +1827,7 @@ float t2Re_2i = 0x1.6a09e6p-1f;
     // FFT step for SIZE 128 UNROLLED
     ////////////////////////////////////////////////
     
-    /*
+    
     {
         float oRe0 = out1024[128];
         float oIm0 = out1024[129];
@@ -6485,13 +6485,13 @@ float t2Re_2i = 0x1.6a09e6p-1f;
         out1024[1984] = resRe1824_s;
         out1024[1856] = resRe1824_s;
     }
-    */
+    
 
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     // FFT step for SIZE 128 
     ////////////////////////////////////////////////
-  
+    /*
     for(int idx = 0; idx < 2048; idx += 256){ 
         float oRe0 = out1024[idx + 128];
         float oIm0 = out1024[idx + 129];
@@ -7076,7 +7076,7 @@ float t2Re_2i = 0x1.6a09e6p-1f;
         out1024[idx + 64] = resRe32_s;
         
     } 
-
+    */
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     // FFT step for SIZE 256 UNROLLED
@@ -22321,4 +22321,9 @@ float t2Re_2i = 0x1.6a09e6p-1f;
 }
 
 
+
+
+
+// THIS:
+//  emcc fft_float.c -o fft_wasm.js -s EXPORTED_RUNTIME_METHODS='cwrap,ccall' -s EXPORTED_FUNCTIONS='_getOut1024Ptr, _fftReal1024, _free, _malloc' -O3 -msimd128 -msse2 -fno-vectorize -fno-slp-vectorize
 
