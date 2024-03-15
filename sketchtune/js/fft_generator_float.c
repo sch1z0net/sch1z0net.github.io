@@ -78,10 +78,10 @@ void generate_code(int size, FILE *fp) {
         fprintf(fp, "        float eIm%d = out1024[idx + %d];\n", i, eIm);
 
         if(i < h){
-          fprintf(fp, "        float tRe%d = %a;\n", i, FAC[i*2]);
-          fprintf(fp, "        float tRe%d = %a;\n", (n - i), FAC[(n - i)*2]);
+          fprintf(fp, "        float tRe%d = %af;\n", i, FAC[i*2]);
+          fprintf(fp, "        float tRe%d = %af;\n", (n - i), FAC[(n - i)*2]);
         }else if(i == h){
-          fprintf(fp, "        float tRe%d = %a;\n", i, FAC[i*2]);
+          fprintf(fp, "        float tRe%d = %af;\n", i, FAC[i*2]);
         }
 
         fprintf(fp, "        float resIm%d_s = eIm%d + (oRe%d * tRe%d + oIm%d * tRe%d);\n", i, i, i, (n-i), i, i);
@@ -107,7 +107,7 @@ void generate_code(int size, FILE *fp) {
     free(FAC);
 }
 
-
+/*
 int main() {
     FILE *fp = fopen("generated_code.c", "w");
     if (fp == NULL) {
@@ -121,10 +121,10 @@ int main() {
     fclose(fp);
 
     return 0;
-}
+}*/
 
 
-/*
+
 int main() {
     FILE *fp = fopen("generated_code.c", "w");
     if (fp == NULL) {
@@ -134,12 +134,12 @@ int main() {
 
     generate_code(128, fp);
     generate_code(256, fp);
-    generate_code(512, fp);
-    generate_code(1024, fp);
+    /*generate_code(512, fp);
+    generate_code(1024, fp);*/
     printf("Generated code written to generated_code.c\n");
 
     fclose(fp);
 
     return 0;
-}*/
+}
 
