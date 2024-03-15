@@ -1359,9 +1359,9 @@ inputBR1024[1023]=paddedInput[1023];
     ////////////////////////////////////////////////
     // FFT step for SIZE 16
     ////////////////////////////////////////////////
-    simd_compute_16(out1024);
+    // simd_compute_16(out1024);
 
-    /*
+    
     for (int idx = 0; idx < 2048; idx += 32) {
         float x0aRe = out1024[idx     ];
         float x0bRe = out1024[idx +  2]; 
@@ -1462,7 +1462,7 @@ inputBR1024[1023]=paddedInput[1023];
         out1024[idx +  23] =   resImD2;  
         out1024[idx +  11] = - resImD2; 
     }
-    */
+    
 
 
 
