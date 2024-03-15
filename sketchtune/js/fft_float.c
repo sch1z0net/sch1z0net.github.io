@@ -139,9 +139,9 @@ float ____F[2046] = {
 
 
 
-float inputBR1024[1024] __attribute__((aligned(16)));
-float paddingInput[1024] __attribute__((aligned(16)));
-float out1024[2048] __attribute__((aligned(16)));
+float inputBR1024[1024] __attribute__((aligned(32)));
+float paddingInput[1024] __attribute__((aligned(32)));
+float out1024[2048] __attribute__((aligned(32)));
 float *paddedInput;  // Declare as a pointer
 
 
