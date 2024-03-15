@@ -4618,6 +4618,18 @@ function initializeModule() {
         measureTime(1024);
         measureTime(1024);
         measureTime(1024);
+        testData1024   = generateTestData(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        testData1024   = generateTestData(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        /*testData1024   = generateTestData(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
         measureTime(1024);
         measureTime(1024);
         testData1024   = generateTestData(1024);
@@ -4631,25 +4643,7 @@ function initializeModule() {
         measureTime(1024);
         measureTime(1024);
         measureTime(1024);
-        measureTime(1024);
-        testData1024   = generateTestData(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        testData1024   = generateTestData(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        testData1024   = generateTestData(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
+        measureTime(1024);*/
 
     //console.log("8:    ",compareFFTResults(fftRealInPlace_ref(testData8),fftRealInPlaceRADIX4(testData8)));
     //console.log("16:   ",compareFFTResults(fftRealInPlace_ref(testData16),fftRealInPlaceRADIX4(testData16)));
