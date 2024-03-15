@@ -156,33 +156,6 @@ float* getOut1024Ptr() {
 
 
 
-
-    /*
-    ////////////////////////////////////////////////
-    ////////////////////////////////////////////////
-    // FFT step for SIZE 4
-    ////////////////////////////////////////////////
-    for (int idx = 0, out_idx = 0; idx < 1024; idx += 4, out_idx += 8) {
-        float x0aRe = inputBR1024[idx];
-        float x1aRe = inputBR1024[idx + 1];
-        float x2aRe = inputBR1024[idx + 2];
-        float x3aRe = inputBR1024[idx + 3];
-
-        float sum1 = x0aRe + x1aRe;
-        float sum2 = x2aRe + x3aRe;
-        float diff1 = x0aRe - x1aRe;
-        float diff2 = x2aRe - x3aRe;
-
-        out1024[out_idx] = sum1 + sum2;
-        out1024[out_idx + 1] = 0;
-        out1024[out_idx + 2] = diff1;
-        out1024[out_idx + 3] = diff2;
-        out1024[out_idx + 4] = sum1 - sum2;
-        out1024[out_idx + 5] = 0;
-        out1024[out_idx + 6] = diff1;
-        out1024[out_idx + 7] = -diff2;
-    }*/
-
 void simd_compute_4(float *inputBR1024, float *out1024) {
     // Assuming inputBR1024 and out1024 are arrays of size 1024
     for (int idx = 0, out_idx = 0; idx < 1024; idx += 4, out_idx += 8) {
@@ -1357,13 +1330,9 @@ inputBR1024[1023]=paddedInput[1023];
     // FFT step for SIZE 4
     ////////////////////////////////////////////////
     // Call SIMD function
-    //simd_compute_4(inputBR1024, out1024);
+    simd_compute_4(inputBR1024, out1024);
 
-    
-    ////////////////////////////////////////////////
-    ////////////////////////////////////////////////
-    // FFT step for SIZE 4
-    ////////////////////////////////////////////////
+    /*
     for (int idx = 0, out_idx = 0; idx < 1024; idx += 4, out_idx += 8) {
         float x0aRe = inputBR1024[idx];
         float x1aRe = inputBR1024[idx + 1];
@@ -1384,15 +1353,15 @@ inputBR1024[1023]=paddedInput[1023];
         out1024[out_idx + 6] = diff1;
         out1024[out_idx + 7] = -diff2;
     }
-
+    */
 
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     // FFT step for SIZE 16
     ////////////////////////////////////////////////
-    //simd_compute_16(out1024);
+    simd_compute_16(out1024);
 
-    
+    /*
     for (int idx = 0; idx < 2048; idx += 32) {
         float x0aRe = out1024[idx     ];
         float x0bRe = out1024[idx +  2]; 
@@ -1493,7 +1462,7 @@ inputBR1024[1023]=paddedInput[1023];
         out1024[idx +  23] =   resImD2;  
         out1024[idx +  11] = - resImD2; 
     }
-    
+    */
 
 
 
@@ -1501,6 +1470,7 @@ inputBR1024[1023]=paddedInput[1023];
     ////////////////////////////////////////////////
     // FFT step for SIZE 64
     ////////////////////////////////////////////////
+    
     for(int idx = 0; idx < 2048; idx+=128){
         float x0aRe_0 = out1024[idx       ];
         float x0bRe_0 = out1024[idx   +  2]; float x0bIm_0 = out1024[idx   +  3];
@@ -1851,11 +1821,13 @@ float t2Re_2i = 0x1.6a09e6p-1f;
 
 
 
-/*
+
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     // FFT step for SIZE 128 UNROLLED
     ////////////////////////////////////////////////
+    
+    /*
     {
         float oRe0 = out1024[128];
         float oIm0 = out1024[129];
@@ -6513,15 +6485,13 @@ float t2Re_2i = 0x1.6a09e6p-1f;
         out1024[1984] = resRe1824_s;
         out1024[1856] = resRe1824_s;
     }
-*/
+    */
 
-
-
-  
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     // FFT step for SIZE 128 
     ////////////////////////////////////////////////
+  
     for(int idx = 0; idx < 2048; idx += 256){ 
         float oRe0 = out1024[idx + 128];
         float oIm0 = out1024[idx + 129];
@@ -7107,11 +7077,11 @@ float t2Re_2i = 0x1.6a09e6p-1f;
         
     } 
 
-
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     // FFT step for SIZE 256 UNROLLED
     ////////////////////////////////////////////////
+    
     /*{
         float oRe0 = out1024[256];
         float oIm0 = out1024[257];
@@ -11745,15 +11715,13 @@ float t2Re_2i = 0x1.6a09e6p-1f;
         out1024[1920] = resRe1600_s;
         out1024[1664] = resRe1600_s;
     }        
-*/
-
-
-
+    */
 
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     // FFT step for SIZE 256
     ////////////////////////////////////////////////
+   
     for(int idx = 0; idx < 2048; idx += 512){ 
         float oRe0 = out1024[idx + 256];
         float oIm0 = out1024[idx + 257];
@@ -12915,13 +12883,7 @@ float t2Re_2i = 0x1.6a09e6p-1f;
     } 
 
 
-
-
-
-
-
-
-/*
+    /*
         for (int j = 0; j < 128; j++) {
             int eI = j;
             int oI  = j + 128;
@@ -13014,7 +12976,7 @@ float t2Re_2i = 0x1.6a09e6p-1f;
             out1024[oI * 2 + 1]  = eIm - t_oIm;
         }
 
-*/
+    */
 
 
 
@@ -17648,7 +17610,7 @@ float t2Re_2i = 0x1.6a09e6p-1f;
         out1024[1792] = resRe1152_s;
         out1024[1280] = resRe1152_s;
     }
-*/
+    */
 
 
 
@@ -17708,7 +17670,7 @@ float t2Re_2i = 0x1.6a09e6p-1f;
     ////////////////////////////////////////////////
     // FFT step for SIZE 1024 UNROLLED
     ////////////////////////////////////////////////
-   /* {
+    /* {
         float oRe0 = out1024[1024];
         float oIm0 = out1024[1025];
         float eRe0 = out1024[0];
@@ -22323,13 +22285,7 @@ float t2Re_2i = 0x1.6a09e6p-1f;
         out1024[1536] = resRe256_s;
         out1024[512] = resRe256_s;
     }   
-*/
-
-
-
-
-
-
+    */
 
     
         for (int j = 0; j < 512; j++) {
