@@ -5,7 +5,7 @@
 
 
 
-float ____F[2046] __attribute__((aligned(32))) = {  
+float ____F[2046] = {  
 0x1p+0f, 0x0p+0f, 0x1p+0f, 0x0p+0f, -0x1.777a5cp-25f, 0x1p+0f, 0x1p+0f, 0x0p+0f, 0x1.6a09e6p-1f, 0x1.6a09e6p-1f, -0x1.777a5cp-25f, 0x1p+0f, -0x1.6a09e6p-1f, 0x1.6a09e6p-1f, 0x1p+0f, 0x0p+0f, 
 0x1.d906bcp-1f, 0x1.87de2cp-2f, 0x1.6a09e6p-1f, 0x1.6a09e6p-1f, 0x1.87de2ap-2f, 0x1.d906bcp-1f, -0x1.777a5cp-25f, 0x1p+0f, -0x1.87de28p-2f, 0x1.d906bep-1f, -0x1.6a09e6p-1f, 0x1.6a09e6p-1f, -0x1.d906bcp-1f, 0x1.87de2ep-2f, 0x1p+0f, 0x0p+0f, 
 0x1.f6297cp-1f, 0x1.8f8b84p-3f, 0x1.d906bcp-1f, 0x1.87de2cp-2f, 0x1.a9b662p-1f, 0x1.1c73b4p-1f, 0x1.6a09e6p-1f, 0x1.6a09e6p-1f, 0x1.1c73b4p-1f, 0x1.a9b662p-1f, 0x1.87de2ap-2f, 0x1.d906bcp-1f, 0x1.8f8b88p-3f, 0x1.f6297cp-1f, -0x1.777a5cp-25f, 0x1p+0f, 
@@ -139,9 +139,9 @@ float ____F[2046] __attribute__((aligned(32))) = {
 
 
 
-float inputBR1024[1024] __attribute__((aligned(32)));
-float paddingInput[1024] __attribute__((aligned(32)));
-float out1024[2048] __attribute__((aligned(32)));
+float inputBR1024[1024] __attribute__((aligned(16)));
+float paddingInput[1024] __attribute__((aligned(16)));
+float out1024[2048] __attribute__((aligned(16)));
 float *paddedInput;  // Declare as a pointer
 
 
