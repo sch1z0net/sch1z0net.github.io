@@ -4562,21 +4562,22 @@ function initializeModule() {
     const testData2048 = generateTestData(2048);
     const testData4096 = generateTestData(4096);
 
-
     // Perform FFT operations
     const performFFTOperations = (fftSize) => {
+        /*
         let testData;
         if(fftSize ==  256){ testData = testData256; }
         if(fftSize ==  512){ testData = testData512; } 
         if(fftSize == 1024){ testData = testData1024; } 
         if(fftSize == 2048){ testData = testData2048; } 
         if(fftSize == 4096){ testData = testData4096; } 
+        */
 
         // Perform FFT operations numOperations times
         for (let i = 0; i < numOperations; i++) {
             //fftRealInPlace_ref(testData);
             //fftReal512(testData);
-            fftReal1024(testData);
+            fftReal1024(testData1024);
             //fft_wasm(ptr_in, inputArray.length, ptr_out);
         }
 
