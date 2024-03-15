@@ -151,12 +151,78 @@ float* getOut1024Ptr() {
     return out1024;
 }
 
+
+
+
+
+    /*
+    ////////////////////////////////////////////////
+    ////////////////////////////////////////////////
+    // FFT step for SIZE 4
+    ////////////////////////////////////////////////
+    for (int idx = 0, out_idx = 0; idx < 1024; idx += 4, out_idx += 8) {
+        float x0aRe = inputBR1024[idx];
+        float x1aRe = inputBR1024[idx + 1];
+        float x2aRe = inputBR1024[idx + 2];
+        float x3aRe = inputBR1024[idx + 3];
+
+        float sum1 = x0aRe + x1aRe;
+        float sum2 = x2aRe + x3aRe;
+        float diff1 = x0aRe - x1aRe;
+        float diff2 = x2aRe - x3aRe;
+
+        out1024[out_idx] = sum1 + sum2;
+        out1024[out_idx + 1] = 0;
+        out1024[out_idx + 2] = diff1;
+        out1024[out_idx + 3] = diff2;
+        out1024[out_idx + 4] = sum1 - sum2;
+        out1024[out_idx + 5] = 0;
+        out1024[out_idx + 6] = diff1;
+        out1024[out_idx + 7] = -diff2;
+    }*/
+/*
+void simd_compute(float *inputBR1024, float *out1024) {
+    // Assuming inputBR1024 and out1024 are arrays of size 1024
+    for (int idx = 0, out_idx = 0; idx < 1024; idx += 4, out_idx += 8) {
+        // Load 4 float values from input array into SIMD registers
+        __m128 xmm_x0aRe = _mm_loadu_ps(&inputBR1024[idx + 0]);
+        __m128 xmm_x1aRe = _mm_loadu_ps(&inputBR1024[idx + 1]);
+        __m128 xmm_x2aRe = _mm_loadu_ps(&inputBR1024[idx + 2]);
+        __m128 xmm_x3aRe = _mm_loadu_ps(&inputBR1024[idx + 3]);
+
+        // Perform SIMD computations
+        __m128 xmm_sum1 = _mm_add_ps(xmm_x0aRe, xmm_x1aRe);
+        __m128 xmm_sum2 = _mm_add_ps(xmm_x2aRe, xmm_x3aRe);
+        __m128 xmm_diff1 = _mm_sub_ps(xmm_x0aRe, xmm_x1aRe);
+        __m128 xmm_diff2 = _mm_sub_ps(xmm_x2aRe, xmm_x3aRe);
+        __m128 xmm_result1 = _mm_add_ps(xmm_sum1, xmm_sum2);
+        __m128 xmm_result2 = _mm_sub_ps(xmm_sum1, xmm_sum2);
+        __m128 xmm_result3 = _mm_unpacklo_ps(xmm_diff1, xmm_diff2);
+        __m128 xmm_result4 = _mm_unpackhi_ps(xmm_diff1, xmm_diff2);
+
+        // Store the results back to memory
+        _mm_storeu_ps(&out1024[out_idx + 0], xmm_result1);
+        _mm_storeu_ps(&out1024[out_idx + 2], xmm_result3);
+        _mm_storeu_ps(&out1024[out_idx + 4], xmm_result2);
+        _mm_storeu_ps(&out1024[out_idx + 6], xmm_result4);
+        // Store the zero values explicitly
+        out1024[out_idx + 1] = 0.0f;
+        out1024[out_idx + 3] = diff2;
+        out1024[out_idx + 5] = 0.0f;
+        // Negate the second diff2 value
+        out1024[out_idx + 7] = ;
+    }
+}*/
+
+
+
+
 // Modified function to accept pointer to output array
 void fftReal1024(float* realInput, int size) {
     // Padding the input if necessary
     if (size != 1024) {
         for (int i = 0; i < 1024; i++) {
-            paddingInput[i] = (i < size) ? realInput[i] : 0;
+            paddingInput[i] = (i < size) ? realInput[i] : 0.0f;
         }
         paddedInput = paddingInput;
     } else {
@@ -1190,7 +1256,14 @@ inputBR1024[1021]=paddedInput[767];
 inputBR1024[1022]=paddedInput[511];
 inputBR1024[1023]=paddedInput[1023];
 
+    ////////////////////////////////////////////////
+    ////////////////////////////////////////////////
+    // FFT step for SIZE 4
+    ////////////////////////////////////////////////
+    // Call SIMD function
+    //simd_compute(inputBR1024, out1024);
 
+    
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     // FFT step for SIZE 4
@@ -1207,11 +1280,11 @@ inputBR1024[1023]=paddedInput[1023];
         float diff2 = x2aRe - x3aRe;
 
         out1024[out_idx] = sum1 + sum2;
-        out1024[out_idx + 1] = 0;
+        out1024[out_idx + 1] = 0.0f;
         out1024[out_idx + 2] = diff1;
         out1024[out_idx + 3] = diff2;
         out1024[out_idx + 4] = sum1 - sum2;
-        out1024[out_idx + 5] = 0;
+        out1024[out_idx + 5] = 0.0f;
         out1024[out_idx + 6] = diff1;
         out1024[out_idx + 7] = -diff2;
     }
