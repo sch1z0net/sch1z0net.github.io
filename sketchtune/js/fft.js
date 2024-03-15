@@ -2948,14 +2948,14 @@ function fftReal1024(realInput) {
 function fftReal1024(realInput) {
     // Allocate memory for input data
     var ptr_in = Module._malloc(realInput.length * Float32Array.BYTES_PER_ELEMENT);
-    Module.HEAPF64.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
+    Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
 
     // Perform FFT
     fft_wasm(ptr_in, realInput.length);
 
     // Access out1024 array directly from exported memory
     var out1024Ptr = Module.ccall('getOut1024Ptr', 'number', [], []);
-    var result = new Float32Array(Module.HEAPF64.buffer, out1024Ptr, 2048);
+    var result = new Float32Array(Module.HEAPF32.buffer, out1024Ptr, 2048);
 
     // Free memory
     Module._free(ptr_in);
