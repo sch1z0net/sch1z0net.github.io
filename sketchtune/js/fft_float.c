@@ -195,22 +195,16 @@ void simd_compute_4(float *inputBR1024, float *out1024) {
         // Perform SIMD computations
         __m128 xmm_sum1 = _mm_add_ps(xmm_x0aRe, xmm_x1aRe);
         __m128 xmm_sum2 = _mm_add_ps(xmm_x2aRe, xmm_x3aRe);
+		_mm_storeu_ps(&out1024[out_idx + 0], _mm_add_ps(xmm_sum1, xmm_sum2));
+		_mm_storeu_ps(&out1024[out_idx + 4], _mm_sub_ps(xmm_sum1, xmm_sum2));
         __m128 xmm_diff1 = _mm_sub_ps(xmm_x0aRe, xmm_x1aRe);
         __m128 xmm_diff2 = _mm_sub_ps(xmm_x2aRe, xmm_x3aRe);
-       /* __m128 xmm_result1 = _mm_add_ps(xmm_sum1, xmm_sum2);        //sum1 + sum2
-        __m128 xmm_result2 = _mm_sub_ps(xmm_sum1, xmm_sum2);        //sum1 - sum2
-        __m128 xmm_result3 = _mm_unpacklo_ps(xmm_diff1, xmm_diff2); //diff1
-        __m128 xmm_result4 = _mm_unpackhi_ps(xmm_diff1, xmm_diff2); //diff2
-      */
-        // Store the results back to memory
-		_mm_storeu_ps(&out1024[out_idx + 0], _mm_add_ps(xmm_sum1, xmm_sum2));
-		_mm_storeu_ps(&out1024[out_idx + 1], _mm_setzero_ps()); 
 		_mm_storeu_ps(&out1024[out_idx + 2], _mm_unpacklo_ps(xmm_diff1, xmm_diff2));
 		_mm_storeu_ps(&out1024[out_idx + 3], _mm_unpackhi_ps(xmm_diff1, xmm_diff2));
-		_mm_storeu_ps(&out1024[out_idx + 4], _mm_sub_ps(xmm_sum1, xmm_sum2));
-		_mm_storeu_ps(&out1024[out_idx + 5], _mm_setzero_ps());
 		_mm_storeu_ps(&out1024[out_idx + 6], _mm_unpacklo_ps(xmm_diff1, xmm_diff2));
 		_mm_storeu_ps(&out1024[out_idx + 7], _mm_sub_ps(_mm_setzero_ps(), _mm_unpackhi_ps(xmm_diff1, xmm_diff2)));
+		_mm_storeu_ps(&out1024[out_idx + 1], _mm_setzero_ps()); 
+		_mm_storeu_ps(&out1024[out_idx + 5], _mm_setzero_ps());
     }
 }
 
