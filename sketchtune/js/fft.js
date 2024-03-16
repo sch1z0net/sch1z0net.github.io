@@ -634,7 +634,6 @@ const measureTime = (fftSize) => {
 };
 
 function runTests(){
-
         measureTime(1024);
         measureTime(1024);
         measureTime(1024);
@@ -682,7 +681,6 @@ function runTests(){
         measureTime(128);
         measureTime(128);
         measureTime(128);
-
 }
 
 function compareFFTResults(array1, array2) {
@@ -746,9 +744,11 @@ function compareFFTResults(array1, array2) {
 // Check if the module is already initialized, otherwise wait for initialization
 if (Module.isRuntimeInitialized) {
     initializeModule();
-    runTests();
 } else {
-    Module.onRuntimeInitialized = initializeModule;
+    Module.onRuntimeInitialized = function(){
+        initializeModule();
+        runTests();
+    };
 }
 
 
