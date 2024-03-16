@@ -137,10 +137,14 @@ $(document).ready(function(){
     // Create table header
     var $thead = $("<thead>").appendTo($table);
     var $trHead = $("<tr>").appendTo($thead);
-    $("<th>").text("FFT Sizes").attr("colspan", 7).appendTo($trHead); // colspan to span all columns
+    $("<th>").text("FFT Sizes").attr("colspan", 8).appendTo($trHead); // colspan to span all columns
+    for (var size = 128; size <= 4096; size *= 2) {
+        $("<th>").text(size).appendTo($trHead);
+    }
     // Create table body
     var $tbody = $("<tbody>").appendTo($table);
     var $tr = $("<tr>").appendTo($tbody); // Single row for all sizes
+    $("<td>").text("OINK FFT").appendTo($tr);
     for (var size = 128; size <= 4096; size *= 2) {
         $("<td>").text(size).appendTo($tr);
     }

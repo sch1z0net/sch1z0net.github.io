@@ -75,11 +75,13 @@ body {
   box-sizing: border-box;
   box-sizing: border-box;
   display: block;
-  background-color: rgba(10,10,10,0.1);
+  background-color: rgba(200,200,200,0.2);
 }
 
 #fft-table {
-  
+   width: 100%;
+   font-family: "Varela", sans-serif;
+   font-size: 12px;
 }
 
 
