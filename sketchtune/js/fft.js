@@ -2814,6 +2814,7 @@ function fftReal1024(realInput) {
 //var N = 1024; // Assuming maximum input length
 var N = 512; // Assuming maximum input length
 var ptr_in;
+let fft_wasm;
 
 function fftReal1024(realInput) {
     // Check if the input length exceeds the maximum length
@@ -4393,7 +4394,6 @@ function computeInverseFFTonHalf1024(halfSpectrum) {
 /**********************************************************************************************/
 /********************************* TESTING PERFORMANCE ****************************************/
 
-let fft_wasm;
 function initializeModule() {
     fft_wasm = Module.cwrap('fftReal512', null, ['number', 'number', 'number']);
     //fft_wasm = Module.cwrap('fftReal1024', null, ['number', 'number', 'number']);
