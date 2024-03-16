@@ -27,12 +27,24 @@ body {
 
 #title {
   position: absolute;
-  top: 25%;
+  top: 10%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-family: "Sue Ellen Francisco", cursive !important;
   font-weight: 400;
   font-style: normal;
-  font-size: 200px;
+  font-size: 100px;
 }
+
+#subtitle {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Sue Ellen Francisco", cursive !important;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 40px;
+}
+
 
