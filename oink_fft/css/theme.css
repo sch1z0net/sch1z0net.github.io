@@ -22,3 +22,14 @@ body {
   position: absolute;
   box-sizing: border-box;
 }
+
+
+#centeredTitle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -75%);
+  font-family: "Sue Ellen Francisco", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
