@@ -194,7 +194,6 @@ function bitReverse(num, bits) {
 
 // Cache object to store precalculated FFT factors
 const fftFactorCacheRADIX2 = {};
-const fftFactorCacheRADIX4 = {};
 
 // Pre-calculate FFT factors for a given size and cache them for future use
 function precalculateFFTFactorsRADIX2(N) {
@@ -222,7 +221,7 @@ function computeFFTFactorsWithCache(N) {
 }
 
 
-function fftComplexInPlace_ref(complexInput) {
+function fftComplex_ref(complexInput) {
     const N = complexInput.length / 2;
     const bits = Math.floor(Math.log2(N));
 
@@ -279,7 +278,7 @@ function fftComplexInPlace_ref(complexInput) {
 }
 
 
-function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
+function fftReal_ref(realInput) {
     const N = realInput.length;
     const bits = Math.floor(Math.log2(N));
 
@@ -300,7 +299,7 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
     //console.log("BR:",brs);
 
     if (N <= 1) {
-        return output;
+        return out;
     }
 
     let js = [];
@@ -379,7 +378,7 @@ function ifft128(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    const result_ = fftComplexInPlace_ref(input);
+    const result_ = fftComplex_ref(input);
     for (let i = 0; i < 128; i++) {
         result128[i] = result_[i*2] / 128; // Scale the real part
     }
@@ -394,7 +393,7 @@ function ifft256(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    const result_ = fftComplexInPlace_ref(input);
+    const result_ = fftComplex_ref(input);
     for (let i = 0; i < 256; i++) {
         result256[i] = result_[i*2] / 256; // Scale the real part
     }
@@ -409,7 +408,7 @@ function ifft512(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    const result_ = fftComplexInPlace_ref(input);
+    const result_ = fftComplex_ref(input);
     for (let i = 0; i < 512; i++) {
         result512[i] = result_[i*2] / 512; // Scale the real part
     }
@@ -424,7 +423,7 @@ function ifft1024(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    const result_ = fftComplexInPlace_ref(input);
+    const result_ = fftComplex_ref(input);
     for (let i = 0; i < 1024; i++) {
         result1024[i] = result_[i*2] / 1024; // Scale the real part
     }
@@ -711,10 +710,10 @@ function compareFFTResults(array1, array2) {
 
 function runComparison(){
     console.log("\n\nCompare to Reference:");
-    console.log("128:  ",compareFFTResults(fftRealInPlace_ref(testData128), fftReal128(testData128)));
-    console.log("256:  ",compareFFTResults(fftRealInPlace_ref(testData256), fftReal256(testData256)));
-    console.log("512:  ",compareFFTResults(fftRealInPlace_ref(testData512), fftReal512(testData512)));
-    console.log("1024: ",compareFFTResults(fftRealInPlace_ref(testData1024),fftReal1024(testData1024)));
+    console.log("128:  ",compareFFTResults(fftReal_ref(testData128.slice()), fftReal128(testData128.slice())));
+    console.log("256:  ",compareFFTResults(fftReal_ref(testData256.slice()), fftReal256(testData256.slice())));
+    console.log("512:  ",compareFFTResults(fftReal_ref(testData512.slice()), fftReal512(testData512.slice())));
+    console.log("1024: ",compareFFTResults(fftReal_ref(testData1024.slice()),fftReal1024(testData1024.slice())));
 }
 
 function runForthAndBack(){
