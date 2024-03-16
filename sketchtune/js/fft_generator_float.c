@@ -2,6 +2,25 @@
 #include <math.h>
 #include <stdlib.h>
 
+
+void bitReversalMap(int N) {
+    int bits = log2(N);
+    int map[N];
+
+    for (int i = 0; i < N; i++) {
+        int reversedIndex = 0;
+        for (int j = 0; j < bits; j++) {
+            reversedIndex = (reversedIndex << 1) | ((i >> j) & 1);
+        }
+        map[i] = reversedIndex;
+    }
+
+    for (int i = 0; i < N; i++) {
+        printf("inputBR1024[%d]=paddedInput[%d]; \n", i, map[i]);
+    }
+}
+
+
 float* precalculateFFTFactorsRADIX2flattened(int N) {
     float* factors = (float*)malloc(N * sizeof(float));
 
@@ -311,7 +330,7 @@ int main() {
 }*/
 
 
-
+/*
 int main() {
     FILE *fp = fopen("generated_code.c", "w");
     if (fp == NULL) {
@@ -331,6 +350,12 @@ int main() {
 
     fclose(fp);
 
+    return 0;
+}*/
+
+
+int main() {
+    bitReversalMap(512);
     return 0;
 }
 

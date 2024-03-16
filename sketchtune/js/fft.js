@@ -1598,6 +1598,8 @@ let tRe31 = ____F[126 + (62)]; let tIm31 = ____F[126 + (63)];
     
 // }
 
+
+/*
 let paddedInput;
 let map512  = bitReversalMap512.get(512);
 const inputBR512  = new Float32Array(512);
@@ -1616,13 +1618,6 @@ function fftReal512(realInput) {
     for (let i = 0; i < 512; i++) {
         inputBR512[i] = paddedInput[map512[i]];
     }
-
-    /*
-    // Convert the real-valued input to a complex-valued Float32Array
-    for (let i = 0; i < N; i++) {
-        out512[i * 2] = inputBR[i];
-        out512[i * 2 + 1] = 0; // Imaginary part is set to 0
-    }*/
 
     /////////////////////////////////////////////
     // P = 0  -> 4
@@ -1643,60 +1638,6 @@ function fftReal512(realInput) {
           out512[2*idx  +  6] =  x0aRe - x1aRe; 
           out512[2*idx  +  7] = -x2aRe + x3aRe;
     }
-
-/*
-    for (let idx = 0; idx < 2048; idx += 32) {
-    // Unrolled loop iteration 1
-    let x0aRe_1 = out512[idx];
-    let x1aRe_1 = out512[idx + 2];
-    out512[idx + 2] = x0aRe_1 - x1aRe_1;
-    let x3aRe_1 = out512[idx + 6];
-    out512[idx + 6] = x0aRe_1 - x1aRe_1;
-
-    let x2aRe_1 = out512[idx + 4];
-    out512[idx + 4] = x0aRe_1 + x1aRe_1 - x2aRe_1 - x3aRe_1; 
-    out512[idx + 3] = x2aRe_1 - x3aRe_1;
-    out512[idx] = x0aRe_1 + x1aRe_1 + x2aRe_1 + x3aRe_1;
-    out512[idx + 7] = -x2aRe_1 + x3aRe_1;
-
-    // Unrolled loop iteration 2
-    let x0aRe_2 = out512[idx + 8];
-    let x1aRe_2 = out512[idx + 10];
-    out512[idx + 10] = x0aRe_2 - x1aRe_2;
-    let x3aRe_2 = out512[idx + 14];
-    out512[idx + 14] = x0aRe_2 - x1aRe_2;
-    let x2aRe_2 = out512[idx + 12];
-    out512[idx + 12] = x0aRe_2 + x1aRe_2 - x2aRe_2 - x3aRe_2; 
-    out512[idx + 11] = x2aRe_2 - x3aRe_2;
-    out512[idx + 8] = x0aRe_2 + x1aRe_2 + x2aRe_2 + x3aRe_2;
-    out512[idx + 15] = -x2aRe_2 + x3aRe_2;
-
-    // Unrolled loop iteration 3
-    let x0aRe_3 = out512[idx + 16];
-    let x1aRe_3 = out512[idx + 18];
-    out512[idx + 18] = x0aRe_3 - x1aRe_3;
-    let x3aRe_3 = out512[idx + 22];
-    out512[idx + 22] = x0aRe_3 - x1aRe_3;
-    let x2aRe_3 = out512[idx + 20];
-    out512[idx + 20] = x0aRe_3 + x1aRe_3 - x2aRe_3 - x3aRe_3; 
-    out512[idx + 16] = x0aRe_3 + x1aRe_3 + x2aRe_3 + x3aRe_3;
-    out512[idx + 19] = x2aRe_3 - x3aRe_3;
-    out512[idx + 23] = -x2aRe_3 + x3aRe_3;
-
-    // Unrolled loop iteration 4
-    let x0aRe_4 = out512[idx + 24];
-    let x1aRe_4 = out512[idx + 26];
-    out512[idx + 26] = x0aRe_4 - x1aRe_4;
-    let x3aRe_4 = out512[idx + 30];
-    out512[idx + 30] = x0aRe_4 - x1aRe_4;
-    let x2aRe_4 = out512[idx + 28];
-    out512[idx + 28] = x0aRe_4 + x1aRe_4 - x2aRe_4 - x3aRe_4; 
-    out512[idx + 24] = x0aRe_4 + x1aRe_4 + x2aRe_4 + x3aRe_4;
-    out512[idx + 27] = x2aRe_4 - x3aRe_4;
-    out512[idx + 31] = -x2aRe_4 + x3aRe_4;
-}
-*/
-
 
     /////////////////////////////////////////////
     // P = 1  -> 16
@@ -2747,49 +2688,6 @@ function fftReal512(realInput) {
             out512[oddIndex * 2]      = evenPartRe - twiddledOddRe;
             out512[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
         }
-/*
-        for (let j = 0; j < 128; j++) {
-            const evenIndex = 512 + j;
-            const oddIndex  = 512 + j + 128;
-
-            const evenPartRe = out512[evenIndex * 2];
-            const evenPartIm = out512[evenIndex * 2 + 1];
-            const oddPartRe  = out512[oddIndex * 2];
-            const oddPartIm  = out512[oddIndex * 2 + 1];
-
-            const twiddleRe = ____F[254 + (j * 2 + 0)];
-            const twiddleIm = ____F[254 + (j * 2 + 1)];
-
-            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
-            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
-
-            out512[evenIndex * 2]     = evenPartRe + twiddledOddRe;
-            out512[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
-            out512[oddIndex * 2]      = evenPartRe - twiddledOddRe;
-            out512[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
-        }
-
-        for (let j = 0; j < 128; j++) {
-            const evenIndex = 768 + j;
-            const oddIndex  = 768 + j + 128;
-
-            const evenPartRe = out512[evenIndex * 2];
-            const evenPartIm = out512[evenIndex * 2 + 1];
-            const oddPartRe  = out512[oddIndex * 2];
-            const oddPartIm  = out512[oddIndex * 2 + 1];
-
-            const twiddleRe = ____F[254 + (j * 2 + 0)];
-            const twiddleIm = ____F[254 + (j * 2 + 1)];
-
-            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
-            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
-
-            out512[evenIndex * 2]     = evenPartRe + twiddledOddRe;
-            out512[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
-            out512[oddIndex * 2]      = evenPartRe - twiddledOddRe;
-            out512[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
-        }
-*/
 
     /////////////////////////////////////////////
     // P = 4  -> 512
@@ -2823,63 +2721,10 @@ function fftReal512(realInput) {
             out512[oddIndex * 2]      = evenPartRe - twiddledOddRe;
             out512[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
         }
-/*
-        for (let j = 0; j < 256; j++) {
-            const evenIndex = 512 + j;
-            const oddIndex  = 512 + j + 256;
-
-            const evenPartRe = out512[evenIndex * 2];
-            const evenPartIm = out512[evenIndex * 2 + 1];
-            const oddPartRe  = out512[oddIndex * 2];
-            const oddPartIm  = out512[oddIndex * 2 + 1];
-
-            const twiddleRe = ____F[510 + (j * 2 + 0)];
-            const twiddleIm = ____F[510 + (j * 2 + 1)];
-
-            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
-            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
-
-            out512[evenIndex * 2]     = evenPartRe + twiddledOddRe;
-            out512[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
-            out512[oddIndex * 2]      = evenPartRe - twiddledOddRe;
-            out512[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
-        }
-/*
-    /////////////////////////////////////////////
-    // P = 5  -> 1024
-    //
-
-        for (let j = 0; j < 512; j++) {
-            const evenIndex = j;
-            const oddIndex  = j + 512;
-
-            if(j > 256){
-              out512[evenIndex * 2]     =  out512[2048 - evenIndex * 2] ;
-              out512[evenIndex * 2 + 1] = -out512[2048 - evenIndex * 2 + 1];
-              out512[oddIndex * 2]      =  out512[2048 - oddIndex * 2];
-              out512[oddIndex * 2 + 1]  = -out512[2048 - oddIndex * 2 + 1];
-              continue;
-            }
-
-            const evenPartRe = out512[evenIndex * 2];
-            const evenPartIm = out512[evenIndex * 2 + 1];
-            const oddPartRe  = out512[oddIndex * 2];
-            const oddPartIm  = out512[oddIndex * 2 + 1];
-
-            const twiddleRe = ____F[1022 + (j * 2 + 0)];
-            const twiddleIm = ____F[1022 + (j * 2 + 1)];
-
-            const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
-            const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
-
-            out512[evenIndex * 2]     = evenPartRe + twiddledOddRe;
-            out512[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
-            out512[oddIndex * 2]      = evenPartRe - twiddledOddRe;
-            out512[oddIndex * 2 + 1]  = evenPartIm - twiddledOddIm;
-        }*/
 
     return out512;
 }
+*/
 
 /*
 function fftReal1024(realInput) {
@@ -2966,12 +2811,13 @@ function fftReal1024(realInput) {
 }*/
 
 // Allocate memory for input data outside of the function
-var maxInputLength = 1024; // Assuming maximum input length
+//var N = 1024; // Assuming maximum input length
+var N = 512; // Assuming maximum input length
 var ptr_in;
 
 function fftReal1024(realInput) {
     // Check if the input length exceeds the maximum length
-    if (realInput.length > maxInputLength) {
+    if (realInput.length > N) {
         throw new Error("Input length exceeds maximum length");
     }
 
@@ -2983,12 +2829,32 @@ function fftReal1024(realInput) {
 
     var out1024Ptr = Module.ccall('getOut1024Ptr', 'number', [], []);
     // Access out1024 array directly from exported memory
-    var result = new Float32Array(Module.HEAPF32.buffer, out1024Ptr, 2048);
+    var result = new Float32Array(Module.HEAPF32.buffer, out1024Ptr, N*2);
 
     // Return the result array
     return result;
 }
 
+
+function fftReal512(realInput) {
+    // Check if the input length exceeds the maximum length
+    if (realInput.length > N) {
+        throw new Error("Input length exceeds maximum length");
+    }
+
+    // Copy input data to the preallocated memory buffer
+    Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
+
+    // Perform FFT
+    fft_wasm(ptr_in, realInput.length);
+
+    var out512Ptr = Module.ccall('getOut512Ptr', 'number', [], []);
+    // Access out1024 array directly from exported memory
+    var result = new Float32Array(Module.HEAPF32.buffer, out512Ptr, N*2);
+
+    // Return the result array
+    return result;
+}
 
 
 
@@ -4529,12 +4395,13 @@ function computeInverseFFTonHalf1024(halfSpectrum) {
 
 let fft_wasm;
 function initializeModule() {
-    fft_wasm = Module.cwrap('fftReal1024', null, ['number', 'number', 'number']);
+    fft_wasm = Module.cwrap('fftReal512', null, ['number', 'number', 'number']);
+    //fft_wasm = Module.cwrap('fftReal1024', null, ['number', 'number', 'number']);
     // Calculate byte offsets
-    byteLength = 2048 * Float32Array.BYTES_PER_ELEMENT;
+    byteLength = 2 * N * Float32Array.BYTES_PER_ELEMENT;
     ptr_out = Module._malloc(byteLength);
     byteOffset = ptr_out / Float32Array.BYTES_PER_ELEMENT;
-    ptr_in = Module._malloc(maxInputLength * Float32Array.BYTES_PER_ELEMENT);
+    ptr_in = Module._malloc(N * Float32Array.BYTES_PER_ELEMENT);
 
 
 
@@ -4557,7 +4424,7 @@ function initializeModule() {
     const testData64   = generateTestData(64);
     const testData128  = generateTestData(128);
     const testData256  = generateTestData(256);
-    const testData512  = generateTestData(512);
+    let testData512    = generateTestData(512);
     let testData1024   = generateTestData(1024);
     const testData2048 = generateTestData(2048);
     const testData4096 = generateTestData(4096);
@@ -4576,8 +4443,8 @@ function initializeModule() {
         // Perform FFT operations numOperations times
         for (let i = 0; i < numOperations; i++) {
             //fftRealInPlace_ref(testData);
-            //fftReal512(testData);
-            fftReal1024(testData1024);
+            fftReal512(testData);
+            //fftReal1024(testData1024);
             //fft_wasm(ptr_in, inputArray.length, ptr_out);
         }
 
@@ -4614,36 +4481,32 @@ function initializeModule() {
         // If all elements are equal within tolerance, arrays are considered equal
         return true;
     }
+    /*
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        testData1024   = generateTestData(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        testData1024   = generateTestData(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+    */
 
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        testData1024   = generateTestData(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        testData1024   = generateTestData(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        /*testData1024   = generateTestData(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        testData1024   = generateTestData(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        testData1024   = generateTestData(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);*/
+        measureTime(512);
+        measureTime(512);
+        measureTime(512);
+        testData512  = generateTestData(512);
+        measureTime(512);
+        measureTime(512);
+        measureTime(512);
+        testData512  = generateTestData(512);
+        measureTime(512);
+        measureTime(512);
+        measureTime(512);
+
 
     //console.log("8:    ",compareFFTResults(fftRealInPlace_ref(testData8),fftRealInPlaceRADIX4(testData8)));
     //console.log("16:   ",compareFFTResults(fftRealInPlace_ref(testData16),fftRealInPlaceRADIX4(testData16)));
