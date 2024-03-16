@@ -197,7 +197,7 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
                     let windowedFrame = applyHanningWindow(frame);
                     const spectrum = fftReal512(windowedFrame);
                     // Assuming spectrum is the array containing the full spectrum obtained from FFT
-                    const halfSpectrum = spectrum.slice(0, 512);
+                    const halfSpectrum = spectrum.slice(0, 512+2);
                     spectrogram[i] = halfSpectrum;
                     
                     /*
@@ -239,7 +239,7 @@ function STFT_128(inputSignal, hopSize) {
                     let windowedFrame = applyHanningWindow(frame);
                     const spectrum = fftReal128(windowedFrame);
                     // Assuming spectrum is the array containing the full spectrum obtained from FFT
-                    const halfSpectrum = spectrum.slice(0, 128);
+                    const halfSpectrum = spectrum.slice(0, 128+2);
                     spectrogram[i] = halfSpectrum;
                     // Clear memory by reusing variables
                     frame = null;
@@ -272,7 +272,7 @@ function STFT_256(inputSignal, hopSize) {
                     let windowedFrame = applyHanningWindow(frame);
                     const spectrum = fftReal256(windowedFrame);
                     // Assuming spectrum is the array containing the full spectrum obtained from FFT
-                    const halfSpectrum = spectrum.slice(0, 256);
+                    const halfSpectrum = spectrum.slice(0, 256+2);
                     spectrogram[i] = halfSpectrum;
                     // Clear memory by reusing variables
                     frame = null;
@@ -305,7 +305,7 @@ function STFT_512(inputSignal, hopSize) {
                     let windowedFrame = applyHanningWindow(frame);
                     const spectrum = fftReal512(windowedFrame);
                     // Assuming spectrum is the array containing the full spectrum obtained from FFT
-                    const halfSpectrum = spectrum.slice(0, 512);
+                    const halfSpectrum = spectrum.slice(0, 512+2);
                     spectrogram[i] = halfSpectrum;
                     // Clear memory by reusing variables
                     frame = null;
