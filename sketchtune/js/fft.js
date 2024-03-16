@@ -320,7 +320,7 @@ function fftComplex_ref_d(complexInput) {
                 // Multiply by twiddle factors
                 const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
                 const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
-
+                
                 // Combine results of even and odd parts in place
                 out[evenIndex * 2    ] = evenPartRe + twiddledOddRe;
                 out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
@@ -349,7 +349,7 @@ function fftReal_ref_d(realInput) {
         out[reversedIndex * 2    ] = realInput[i]; // Copy real part
         out[reversedIndex * 2 + 1] = 0;            // Copy imaginary part
     }
-
+    
     if (N <= 1) {
         return out;
     }
@@ -557,8 +557,8 @@ function computeInverseFFTonHalf128(halfSpectrum) {
     for (let i = 1; i < 64; i++) {
         let re = halfSpectrum[i * 2    ];
         let im = halfSpectrum[i * 2 + 1];
-        fullSpectrum256[i * 2    ] = re; // Copy the real part
-        fullSpectrum256[i * 2 + 1] = im; // Copy imaginary part
+        fullSpectrum128[i * 2    ] = re; // Copy the real part
+        fullSpectrum128[i * 2 + 1] = im; // Copy imaginary part
         // Fill the mirrored part of the spectrum
         fullSpectrum128[256 - (i * 2)    ] =  re;     // Copy the real part
         fullSpectrum128[256 - (i * 2) + 1] = -im; // Invert the imaginary part
