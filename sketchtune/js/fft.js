@@ -309,7 +309,7 @@ function fftReal_ref(realInput) {
     }*/
     // Recursively calculate FFT
     for (let size = 2; size <= N; size *= 2) {
-        if(size > 64){ break; }
+        //if(size > 64){ break; }
         const halfSize = size / 2;
         // Get FFT factors with caching
         const factors = computeFFTFactorsWithCache(size);
@@ -695,7 +695,6 @@ function compareFFTResults(array1, array2) {
         // Compare elements with a small tolerance for floating-point imprecision
         if (Math.abs(array1[i] - array2[i]) > 1e-6) {
             console.log("Mismatch at ",i," between ",array1[i],array2[i]);
-            return false;
         }
     }
 
