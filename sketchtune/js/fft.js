@@ -490,7 +490,7 @@ function ifft128(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    const result_ = fftComplex_ref_d(input);
+    const result_ = fftComplex_ref(input);
     for (let i = 0; i < 128; i++) {
         result128[i] = result_[i*2] / 128; // Scale the real part
     }
@@ -505,7 +505,7 @@ function ifft256(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    const result_ = fftComplex_ref_d(input);
+    const result_ = fftComplex_ref(input);
     for (let i = 0; i < 256; i++) {
         result256[i] = result_[i*2] / 256; // Scale the real part
     }
@@ -520,7 +520,7 @@ function ifft512(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    const result_ = fftComplex_ref_d(input);
+    const result_ = fftComplex_ref(input);
     for (let i = 0; i < 512; i++) {
         result512[i] = result_[i*2] / 512; // Scale the real part
     }
@@ -535,7 +535,7 @@ function ifft1024(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    const result_ = fftComplex_ref_d(input);
+    const result_ = fftComplex_ref(input);
     for (let i = 0; i < 1024; i++) {
         result1024[i] = result_[i*2] / 1024; // Scale the real part
     }
@@ -544,7 +544,7 @@ function ifft1024(input) {
 
 let fullSpectrum128 = new Float32Array(256);
 // Function to compute inverse FFT of a spectrum
-function computeInverseFFTonHalf128(halfSpectrum) {
+function IFFT128onHalf(halfSpectrum) {
     // Copy DC component (index 0)
     fullSpectrum128[0] = halfSpectrum[0]; // Copy the real part
     fullSpectrum128[1] = halfSpectrum[1]; // Copy the imaginary part
@@ -573,7 +573,7 @@ function computeInverseFFTonHalf128(halfSpectrum) {
 
 let fullSpectrum256 = new Float32Array(512);
 // Function to compute inverse FFT of a spectrum
-function computeInverseFFTonHalf256(halfSpectrum) {
+function IFFT256onHalf(halfSpectrum) {
     // Copy DC component (index 0)
     fullSpectrum256[0] = halfSpectrum[0]; // Copy the real part
     fullSpectrum256[1] = halfSpectrum[1]; // Copy the imaginary part
@@ -601,7 +601,7 @@ function computeInverseFFTonHalf256(halfSpectrum) {
 
 let fullSpectrum512 = new Float32Array(1024);
 // Function to compute inverse FFT of a spectrum
-function computeInverseFFTonHalf512(halfSpectrum) {
+function IFFT512onHalf(halfSpectrum) {
     // Copy DC component (index 0)
     fullSpectrum512[0] = halfSpectrum[0]; // Copy the real part
     fullSpectrum512[1] = halfSpectrum[1]; // Copy the imaginary part
@@ -629,7 +629,7 @@ function computeInverseFFTonHalf512(halfSpectrum) {
 
 let fullSpectrum1024 = new Float32Array(2048);
 // Function to compute inverse FFT of a spectrum
-function computeInverseFFTonHalf1024(halfSpectrum) {
+function IFFT1024onHalf(halfSpectrum) {
     // Copy DC component (index 0)
     fullSpectrum1024[0] = halfSpectrum[0]; // Copy the real part
     fullSpectrum1024[1] = halfSpectrum[1]; // Copy the imaginary part
@@ -836,10 +836,10 @@ function runComparison(){
 function runForthAndBack(){
     let error;
     
-    let signal128  = ifft128(fftReal_ref_d(testData128));
-    let signal256  = ifft256(fftReal_ref_d(testData256));
-    let signal512  = ifft512(fftReal_ref_d(testData512));
-    let signal1024 = ifft1024(fftReal_ref_d(testData1024));
+    let signal128  = ifft128(fftReal_ref(testData128));
+    let signal256  = ifft256(fftReal_ref(testData256));
+    let signal512  = ifft512(fftReal_ref(testData512));
+    let signal1024 = ifft1024(fftReal_ref(testData1024));
 
     error = 1e-3;
     console.log("\n\nCompare after Forth and Back with acceptable Error ",error," :");
