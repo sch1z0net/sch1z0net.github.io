@@ -35,7 +35,6 @@ body {
 
 #title {
   font-family: "Sue Ellen Francisco", cursive !important;
-  font-weight: 400;
   font-style: normal;
   font-size: 100px;
   margin: 0;
@@ -49,5 +48,17 @@ body {
   margin: 0;
   font-size: 40px;
 }
+
+#descr_div {
+  position: absolute;
+  font-family: "Sue Ellen Francisco", cursive !important;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  height: 50px;
+  font-size: 20px;
+}
+
 
 

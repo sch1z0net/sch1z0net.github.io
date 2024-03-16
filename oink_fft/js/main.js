@@ -131,6 +131,19 @@ $(document).ready(function(){
     var $stats_div = $("<div>").attr("id", "stats_div");
     $("#root").append($stats_div);
 
+    var $descr_div = $("<div>").attr("id", "descr_div");
+    $("#root").append($descr_div);
+    $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
+    
+
+
+
+
+
+
+
+
+
     
 
     // Check if the module is already initialized, otherwise wait for initialization
