@@ -744,6 +744,7 @@ function compareFFTResults(array1, array2) {
 // Check if the module is already initialized, otherwise wait for initialization
 if (Module.isRuntimeInitialized) {
     initializeModule();
+    runTests();
 } else {
     Module.onRuntimeInitialized = function(){
         initializeModule();
