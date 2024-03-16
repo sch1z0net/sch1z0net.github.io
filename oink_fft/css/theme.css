@@ -26,7 +26,7 @@ body {
 
 #title_div {
   position: absolute;
-  top: 20%;
+  top: 12%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
@@ -39,6 +39,7 @@ body {
   font-size: 100px;
   margin: 0;
   height: 140px;
+  white-space: nowrap;
 }
 
 #subtitle {
@@ -47,16 +48,18 @@ body {
   font-style: normal;
   margin: 0;
   font-size: 40px;
+  white-space: nowrap;
 }
 
 #descr_div {
   position: absolute;
   font-family: "Sue Ellen Francisco", cursive !important;
-  bottom: 10%;
+  bottom: 6%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
   height: 50px;
+  width: 100%;
   font-size: 20px;
 }
 
