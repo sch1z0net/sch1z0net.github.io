@@ -128,8 +128,10 @@ $(document).ready(function(){
     var $subtitle = $("<h2>").text("the oinkiest FFT in the web").attr("id", "subtitle");
     $title_div.append($subtitle);
 
+    var $stats_div = $("<div>").attr("id", "stats_div");
+    $("#root").append($stats_div);
 
-
+    
 
     // Check if the module is already initialized, otherwise wait for initialization
     if (Module.isRuntimeInitialized) {
