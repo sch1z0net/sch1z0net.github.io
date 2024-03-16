@@ -16,7 +16,7 @@ void bitReversalMap(int N) {
     }
 
     for (int i = 0; i < N; i++) {
-        printf("inputBR1024[%d]=paddedInput[%d]; \n", i, map[i]);
+        printf("inputBR256[%d]=paddedInput256[%d]; \n", i, map[i]);
     }
 }
 
@@ -237,7 +237,7 @@ int main() {
 }*/
 
 
-
+/*
 int main() {
     FILE *fp = fopen("generated_code.c", "w");
     if (fp == NULL) {
@@ -250,19 +250,24 @@ int main() {
     //generate_code(512, fp);
     //generate_code_unrolled(512, 128, fp);
     //generate_code_unrolled(512, 256, fp);
-    generate_code_unrolled(512, 512, fp);
+    //generate_code_unrolled(512, 512, fp);
     //generate_code_unrolled(1024, fp);
+
+    //generate_code_unrolled(256, 128, fp);
+    //generate_code_unrolled(256, 256, fp);
+
     printf("Generated code written to generated_code.c\n");
 
     fclose(fp);
 
     return 0;
-}
+}*/
 
-/*
+
 int main() {
-    bitReversalMap(512);
+    //bitReversalMap(512);
+    bitReversalMap(256);
     return 0;
 }
-*/
+
 

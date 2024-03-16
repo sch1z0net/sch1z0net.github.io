@@ -2812,7 +2812,8 @@ function fftReal1024(realInput) {
 
 // Allocate memory for input data outside of the function
 //var N = 1024; // Assuming maximum input length
-var N = 512; // Assuming maximum input length
+//var N = 512; // Assuming maximum input length
+var N = 256; // Assuming maximum input length
 var ptr_in;
 let fft_wasm;
 
@@ -2852,6 +2853,26 @@ function fftReal512(realInput) {
     var out512Ptr = Module.ccall('getOut512Ptr', 'number', [], []);
     // Access out1024 array directly from exported memory
     var result = new Float32Array(Module.HEAPF32.buffer, out512Ptr, N*2);
+
+    // Return the result array
+    return result;
+}
+
+function fftReal256(realInput) {
+    // Check if the input length exceeds the maximum length
+    if (realInput.length > N) {
+        throw new Error("Input length exceeds maximum length");
+    }
+
+    // Copy input data to the preallocated memory buffer
+    Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
+
+    // Perform FFT
+    fft_wasm(ptr_in, realInput.length);
+
+    var out256Ptr = Module.ccall('getOut256Ptr', 'number', [], []);
+    // Access out1024 array directly from exported memory
+    var result = new Float32Array(Module.HEAPF32.buffer, out256Ptr, N*2);
 
     // Return the result array
     return result;
@@ -4395,7 +4416,8 @@ function computeInverseFFTonHalf1024(halfSpectrum) {
 /********************************* TESTING PERFORMANCE ****************************************/
 
 function initializeModule() {
-    fft_wasm = Module.cwrap('fftReal512', null, ['number', 'number', 'number']);
+    fft_wasm = Module.cwrap('fftReal256', null, ['number', 'number', 'number']);
+    //fft_wasm = Module.cwrap('fftReal512', null, ['number', 'number', 'number']);
     //fft_wasm = Module.cwrap('fftReal1024', null, ['number', 'number', 'number']);
     // Calculate byte offsets
     byteLength = 2 * N * Float32Array.BYTES_PER_ELEMENT;
@@ -4495,6 +4517,7 @@ function initializeModule() {
         measureTime(1024);
     */
 
+    /*
         measureTime(512);
         measureTime(512);
         measureTime(512);
@@ -4506,7 +4529,19 @@ function initializeModule() {
         measureTime(512);
         measureTime(512);
         measureTime(512);
+    */
 
+        measureTime(256);
+        measureTime(256);
+        measureTime(256);
+        testData256  = generateTestData(256);
+        measureTime(256);
+        measureTime(256);
+        measureTime(256);
+        testData256  = generateTestData(256);
+        measureTime(256);
+        measureTime(256);
+        measureTime(256);
 
     //console.log("8:    ",compareFFTResults(fftRealInPlace_ref(testData8),fftRealInPlaceRADIX4(testData8)));
     //console.log("16:   ",compareFFTResults(fftRealInPlace_ref(testData16),fftRealInPlaceRADIX4(testData16)));
