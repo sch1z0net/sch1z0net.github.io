@@ -35368,6 +35368,1248 @@ float t2Re_2i = 0x1.6a09e6p-1f;
 
 
 
+
+
+
+
+float inputBR128[128] __attribute__((aligned(16)));
+float paddingInput128[128] __attribute__((aligned(16)));
+float out128[256] __attribute__((aligned(16)));
+float *paddedInput128;  // Declare as a pointer
+
+EMSCRIPTEN_KEEPALIVE
+float* getOut128Ptr() {
+    return out128;
+}
+
+// Modified function to accept pointer to output array
+void fftReal128(float* realInput, int size) {
+    // Padding the input if necessary
+    if (size != 128) {
+        for (int i = 0; i < 128; i++) {
+            paddingInput128[i] = (i < size) ? realInput[i] : 0.0f;
+        }
+        paddedInput128 = paddingInput128;
+    } else {
+        // Use the original input array directly
+        paddedInput128 = realInput;
+    }
+
+    inputBR128[0]=paddedInput128[0]; 
+    inputBR128[1]=paddedInput128[64]; 
+    inputBR128[2]=paddedInput128[32]; 
+    inputBR128[3]=paddedInput128[96]; 
+    inputBR128[4]=paddedInput128[16]; 
+    inputBR128[5]=paddedInput128[80]; 
+    inputBR128[6]=paddedInput128[48]; 
+    inputBR128[7]=paddedInput128[112]; 
+    inputBR128[8]=paddedInput128[8]; 
+    inputBR128[9]=paddedInput128[72]; 
+    inputBR128[10]=paddedInput128[40]; 
+    inputBR128[11]=paddedInput128[104]; 
+    inputBR128[12]=paddedInput128[24]; 
+    inputBR128[13]=paddedInput128[88]; 
+    inputBR128[14]=paddedInput128[56]; 
+    inputBR128[15]=paddedInput128[120]; 
+    inputBR128[16]=paddedInput128[4]; 
+    inputBR128[17]=paddedInput128[68]; 
+    inputBR128[18]=paddedInput128[36]; 
+    inputBR128[19]=paddedInput128[100]; 
+    inputBR128[20]=paddedInput128[20]; 
+    inputBR128[21]=paddedInput128[84]; 
+    inputBR128[22]=paddedInput128[52]; 
+    inputBR128[23]=paddedInput128[116]; 
+    inputBR128[24]=paddedInput128[12]; 
+    inputBR128[25]=paddedInput128[76]; 
+    inputBR128[26]=paddedInput128[44]; 
+    inputBR128[27]=paddedInput128[108]; 
+    inputBR128[28]=paddedInput128[28]; 
+    inputBR128[29]=paddedInput128[92]; 
+    inputBR128[30]=paddedInput128[60]; 
+    inputBR128[31]=paddedInput128[124]; 
+    inputBR128[32]=paddedInput128[2]; 
+    inputBR128[33]=paddedInput128[66]; 
+    inputBR128[34]=paddedInput128[34]; 
+    inputBR128[35]=paddedInput128[98]; 
+    inputBR128[36]=paddedInput128[18]; 
+    inputBR128[37]=paddedInput128[82]; 
+    inputBR128[38]=paddedInput128[50]; 
+    inputBR128[39]=paddedInput128[114]; 
+    inputBR128[40]=paddedInput128[10]; 
+    inputBR128[41]=paddedInput128[74]; 
+    inputBR128[42]=paddedInput128[42]; 
+    inputBR128[43]=paddedInput128[106]; 
+    inputBR128[44]=paddedInput128[26]; 
+    inputBR128[45]=paddedInput128[90]; 
+    inputBR128[46]=paddedInput128[58]; 
+    inputBR128[47]=paddedInput128[122]; 
+    inputBR128[48]=paddedInput128[6]; 
+    inputBR128[49]=paddedInput128[70]; 
+    inputBR128[50]=paddedInput128[38]; 
+    inputBR128[51]=paddedInput128[102]; 
+    inputBR128[52]=paddedInput128[22]; 
+    inputBR128[53]=paddedInput128[86]; 
+    inputBR128[54]=paddedInput128[54]; 
+    inputBR128[55]=paddedInput128[118]; 
+    inputBR128[56]=paddedInput128[14]; 
+    inputBR128[57]=paddedInput128[78]; 
+    inputBR128[58]=paddedInput128[46]; 
+    inputBR128[59]=paddedInput128[110]; 
+    inputBR128[60]=paddedInput128[30]; 
+    inputBR128[61]=paddedInput128[94]; 
+    inputBR128[62]=paddedInput128[62]; 
+    inputBR128[63]=paddedInput128[126]; 
+    inputBR128[64]=paddedInput128[1]; 
+    inputBR128[65]=paddedInput128[65]; 
+    inputBR128[66]=paddedInput128[33]; 
+    inputBR128[67]=paddedInput128[97]; 
+    inputBR128[68]=paddedInput128[17]; 
+    inputBR128[69]=paddedInput128[81]; 
+    inputBR128[70]=paddedInput128[49]; 
+    inputBR128[71]=paddedInput128[113]; 
+    inputBR128[72]=paddedInput128[9]; 
+    inputBR128[73]=paddedInput128[73]; 
+    inputBR128[74]=paddedInput128[41]; 
+    inputBR128[75]=paddedInput128[105]; 
+    inputBR128[76]=paddedInput128[25]; 
+    inputBR128[77]=paddedInput128[89]; 
+    inputBR128[78]=paddedInput128[57]; 
+    inputBR128[79]=paddedInput128[121]; 
+    inputBR128[80]=paddedInput128[5]; 
+    inputBR128[81]=paddedInput128[69]; 
+    inputBR128[82]=paddedInput128[37]; 
+    inputBR128[83]=paddedInput128[101]; 
+    inputBR128[84]=paddedInput128[21]; 
+    inputBR128[85]=paddedInput128[85]; 
+    inputBR128[86]=paddedInput128[53]; 
+    inputBR128[87]=paddedInput128[117]; 
+    inputBR128[88]=paddedInput128[13]; 
+    inputBR128[89]=paddedInput128[77]; 
+    inputBR128[90]=paddedInput128[45]; 
+    inputBR128[91]=paddedInput128[109]; 
+    inputBR128[92]=paddedInput128[29]; 
+    inputBR128[93]=paddedInput128[93]; 
+    inputBR128[94]=paddedInput128[61]; 
+    inputBR128[95]=paddedInput128[125]; 
+    inputBR128[96]=paddedInput128[3]; 
+    inputBR128[97]=paddedInput128[67]; 
+    inputBR128[98]=paddedInput128[35]; 
+    inputBR128[99]=paddedInput128[99]; 
+    inputBR128[100]=paddedInput128[19]; 
+    inputBR128[101]=paddedInput128[83]; 
+    inputBR128[102]=paddedInput128[51]; 
+    inputBR128[103]=paddedInput128[115]; 
+    inputBR128[104]=paddedInput128[11]; 
+    inputBR128[105]=paddedInput128[75]; 
+    inputBR128[106]=paddedInput128[43]; 
+    inputBR128[107]=paddedInput128[107]; 
+    inputBR128[108]=paddedInput128[27]; 
+    inputBR128[109]=paddedInput128[91]; 
+    inputBR128[110]=paddedInput128[59]; 
+    inputBR128[111]=paddedInput128[123]; 
+    inputBR128[112]=paddedInput128[7]; 
+    inputBR128[113]=paddedInput128[71]; 
+    inputBR128[114]=paddedInput128[39]; 
+    inputBR128[115]=paddedInput128[103]; 
+    inputBR128[116]=paddedInput128[23]; 
+    inputBR128[117]=paddedInput128[87]; 
+    inputBR128[118]=paddedInput128[55]; 
+    inputBR128[119]=paddedInput128[119]; 
+    inputBR128[120]=paddedInput128[15]; 
+    inputBR128[121]=paddedInput128[79]; 
+    inputBR128[122]=paddedInput128[47]; 
+    inputBR128[123]=paddedInput128[111]; 
+    inputBR128[124]=paddedInput128[31]; 
+    inputBR128[125]=paddedInput128[95]; 
+    inputBR128[126]=paddedInput128[63]; 
+    inputBR128[127]=paddedInput128[127]; 
+
+    ////////////////////////////////////////////////
+    ////////////////////////////////////////////////
+    // FFT step for SIZE 4
+    ////////////////////////////////////////////////
+    for (int idx = 0, out_idx = 0; idx < 128; idx += 4, out_idx += 8) {
+        float x0aRe = inputBR128[idx];
+        float x1aRe = inputBR128[idx + 1];
+        float x2aRe = inputBR128[idx + 2];
+        float x3aRe = inputBR128[idx + 3];
+
+        float sum1 = x0aRe + x1aRe;
+        float sum2 = x2aRe + x3aRe;
+        float diff1 = x0aRe - x1aRe;
+        float diff2 = x2aRe - x3aRe;
+
+        out128[out_idx] = sum1 + sum2;
+        out128[out_idx + 1] = 0.0f;
+        out128[out_idx + 2] = diff1;
+        out128[out_idx + 3] = diff2;
+        out128[out_idx + 4] = sum1 - sum2;
+        out128[out_idx + 5] = 0.0f;
+        out128[out_idx + 6] = diff1;
+        out128[out_idx + 7] = -diff2;
+    }
+    
+
+    ////////////////////////////////////////////////
+    ////////////////////////////////////////////////
+    // FFT step for SIZE 16
+    ////////////////////////////////////////////////
+    for (int idx = 0; idx < 256; idx += 32) {
+        float x0aRe = out128[idx     ];
+        float x0bRe = out128[idx +  2]; 
+        float x0bIm = out128[idx +  3];
+        float x0cRe = out128[idx +  4];
+
+        float x1aRe = out128[idx +  8];
+        out128[idx +   8] = x0aRe - x1aRe; 
+        float x1bRe = out128[idx + 10];
+        float x1bIm = out128[idx + 11];
+        float x1cRe = out128[idx + 12];
+
+        float x2aRe = out128[idx + 16];
+        float x2bRe = out128[idx + 18];
+        float x2bIm = out128[idx + 19];
+        float x2cRe = out128[idx + 20];
+
+        float x3aRe = out128[idx + 24];
+        out128[idx +  24] = x0aRe - x1aRe;
+        out128[idx +  25] = x3aRe - x2aRe;  
+        float x3bRe = out128[idx + 26];
+        float x3bIm = out128[idx + 27];
+        float x3cRe = out128[idx + 28];
+
+        out128[idx      ] = x0aRe + x1aRe + x2aRe + x3aRe;  
+        out128[idx +   9] = x2aRe - x3aRe;      
+        out128[idx +  16] = x0aRe + x1aRe - x2aRe - x3aRe;
+
+        float t1Re_2c = 0x1.6a09e6p-1f;
+
+        float x2cRe_tRe_2c = x2cRe * t1Re_2c;
+        float x3cRe_tRe_2c = x3cRe * t1Re_2c;
+
+        float resReC1 = x0cRe + x2cRe_tRe_2c - x3cRe_tRe_2c;
+        out128[idx +  28] =   resReC1; 
+        out128[idx +   4] =   resReC1; 
+        float resImC1 = x1cRe + x2cRe_tRe_2c + x3cRe_tRe_2c; 
+        out128[idx +   5] =   resImC1; 
+        out128[idx +  29] = - resImC1;
+        float resReC2 = x0cRe - x2cRe_tRe_2c + x3cRe_tRe_2c; 
+        out128[idx +  20] =   resReC2;
+        out128[idx +  12] =   resReC2; 
+        float resImC2 = x1cRe - x2cRe_tRe_2c - x3cRe_tRe_2c; 
+        out128[idx +  13] = - resImC2; 
+        out128[idx +  21] =   resImC2;  
+
+        float x1dif = (x1bRe-x1bIm);
+        float x1sum = (x1bRe+x1bIm);
+        float x3dif = (x3bRe-x3bIm);
+        float x3sum = (x3bRe+x3bIm);
+
+
+        float t1Re_1b = 0x1.6a09e6p-1f;
+
+        float x1dif_tRe_1b = x1dif * t1Re_1b;
+        float x1sum_tRe_1b = x1sum * t1Re_1b;
+          
+
+        float t1Re_1b2b = 0x1.4e7ae8p-1f;
+        float t1Re_1b2d = 0x1.1517a8p-2f; 
+
+        float x3dif_tRe_1b2b = x3dif * t1Re_1b2b;
+        float x3dif_tRe_1b2d = x3dif * t1Re_1b2d;
+        float x3sum_tRe_1b2b = x3sum * t1Re_1b2b;
+        float x3sum_tRe_1b2d = x3sum * t1Re_1b2d;
+
+        float t1Re_2b = 0x1.d906bcp-1f;
+        float t1Re_2d = 0x1.87de2ap-2f;
+
+        float tempReB = (x3dif_tRe_1b2b - x3sum_tRe_1b2d + x2bRe*t1Re_2b - x2bIm*t1Re_2d);
+        float tempImB = (x3dif_tRe_1b2d + x3sum_tRe_1b2b + x2bRe*t1Re_2d + x2bIm*t1Re_2b);
+        float tempReD = (x3dif_tRe_1b2d + x3sum_tRe_1b2b - x2bRe*t1Re_2d - x2bIm*t1Re_2b);
+        float tempImD = (x3dif_tRe_1b2b - x3sum_tRe_1b2d - x2bRe*t1Re_2b + x2bIm*t1Re_2d);
+
+        float resReB1 = x0bRe  + x1dif_tRe_1b + tempReB;     
+        out128[idx +   2] =   resReB1; 
+        out128[idx +  30] =   resReB1;  
+        float resReB2 = x0bRe  + x1dif_tRe_1b - tempReB;     
+        out128[idx +  18] =   resReB2;
+        out128[idx +  14] =   resReB2; 
+        float resReD1 = x0bRe  - x1dif_tRe_1b - tempReD;     
+        out128[idx +   6] =   resReD1; 
+        out128[idx +  26] =   resReD1; 
+        float resReD2 = x0bRe  - x1dif_tRe_1b + tempReD;     
+        out128[idx +  22] =   resReD2;
+        out128[idx +  10] =   resReD2; 
+
+        float resImB1 = x0bIm  + x1sum_tRe_1b + tempImB;     
+        out128[idx +   3] =   resImB1; 
+        out128[idx +  31] = - resImB1;  
+        float resImB2 = x0bIm  + x1sum_tRe_1b - tempImB;     
+        out128[idx +  19] =   resImB2;
+        out128[idx +  15] = - resImB2; 
+        float resImD1 =-x0bIm  + x1sum_tRe_1b - tempImD;     
+        out128[idx +   7] =   resImD1; 
+        out128[idx +  27] = - resImD1; 
+        float resImD2 =-x0bIm  + x1sum_tRe_1b + tempImD;     
+        out128[idx +  23] =   resImD2;  
+        out128[idx +  11] = - resImD2; 
+    }
+    
+
+    ////////////////////////////////////////////////
+    ////////////////////////////////////////////////
+    // FFT step for SIZE 64
+    ////////////////////////////////////////////////
+    
+    for(int idx = 0; idx < 512; idx+=128){
+        float x0aRe_0 = out128[idx       ];
+        float x0bRe_0 = out128[idx   +  2]; float x0bIm_0 = out128[idx   +  3];
+        float x0cRe_0 = out128[idx   +  4]; float x0cIm_0 = out128[idx   +  5];
+        float x0dRe_0 = out128[idx   +  6]; float x0dIm_0 = out128[idx   +  7];
+        float x0aRe_4 = out128[idx   +  8]; float x0aIm_4 = out128[idx   +  9];
+        float x0bRe_4 = out128[idx   + 10]; float x0bIm_4 = out128[idx   + 11];
+        float x0cRe_4 = out128[idx   + 12]; float x0cIm_4 = out128[idx   + 13];
+        float x0dRe_4 = out128[idx   + 14]; float x0dIm_4 = out128[idx   + 15];
+        float x0aRe_8 = out128[idx   + 16];                                   
+
+        float x1aRe_0 = out128[idx   + 32];
+        float x1bRe_0 = out128[idx   + 34]; float x1bIm_0 = out128[idx   + 35];
+        float x1cRe_0 = out128[idx   + 36]; float x1cIm_0 = out128[idx   + 37];
+        float x1dRe_0 = out128[idx   + 38]; float x1dIm_0 = out128[idx   + 39];
+        float x1aRe_4 = out128[idx   + 40]; float x1aIm_4 = out128[idx   + 41];
+        float x1bRe_4 = out128[idx   + 42]; float x1bIm_4 = out128[idx   + 43];
+        float x1cRe_4 = out128[idx   + 44]; float x1cIm_4 = out128[idx   + 45];
+        float x1dRe_4 = out128[idx   + 46]; float x1dIm_4 = out128[idx   + 47];
+        float x1aRe_8 = out128[idx   + 48]; float x1aIm_8 = out128[idx   + 49];
+
+        float x2aRe_0 = out128[idx   + 64]; float x2aIm_0 = out128[idx   + 65];
+        float x2bRe_0 = out128[idx   + 66]; float x2bIm_0 = out128[idx   + 67];
+        float x2cRe_0 = out128[idx   + 68]; float x2cIm_0 = out128[idx   + 69];
+        float x2dRe_0 = out128[idx   + 70]; float x2dIm_0 = out128[idx   + 71];
+        float x2aRe_4 = out128[idx   + 72]; float x2aIm_4 = out128[idx   + 73];
+        float x2bRe_4 = out128[idx   + 74]; float x2bIm_4 = out128[idx   + 75];
+        float x2cRe_4 = out128[idx   + 76]; float x2cIm_4 = out128[idx   + 77];
+        float x2dRe_4 = out128[idx   + 78]; float x2dIm_4 = out128[idx   + 79];
+        float x2aRe_8 = out128[idx   + 80]; float x2aIm_8 = out128[idx   + 81];
+
+        float x3aRe_0 = out128[idx   + 96]; float x3aIm_0 = out128[idx   + 97];
+        float x3bRe_0 = out128[idx   + 98]; float x3bIm_0 = out128[idx   + 99];
+        float x3cRe_0 = out128[idx   +100]; float x3cIm_0 = out128[idx   +101];
+        float x3dRe_0 = out128[idx   +102]; float x3dIm_0 = out128[idx   +103];
+        float x3aRe_4 = out128[idx   +104]; float x3aIm_4 = out128[idx   +105];
+        float x3bRe_4 = out128[idx   +106]; float x3bIm_4 = out128[idx   +107];
+        float x3cRe_4 = out128[idx   +108]; float x3cIm_4 = out128[idx   +109];
+        float x3dRe_4 = out128[idx   +110]; float x3dIm_4 = out128[idx   +111];
+        float x3aRe_8 = out128[idx   +112]; float x3aIm_8 = out128[idx   +113];
+
+float t2Re_1b = 0x1.f6297cp-1f;
+float t2Re_1h = 0x1.8f8b88p-3f;
+
+        float T0x1bRe = (x1bRe_0 * t2Re_1b - x1bIm_0 * t2Re_1h);
+        float T0x1bIm = (x1bRe_0 * t2Re_1h + x1bIm_0 * t2Re_1b);
+        float T0x3bRe = (x3bRe_0 * t2Re_1b - x3bIm_0 * t2Re_1h);
+        float T0x3bIm = (x3bRe_0 * t2Re_1h + x3bIm_0 * t2Re_1b);
+
+float t2Re_1c = 0x1.d906bcp-1f;
+float t2Re_1g = 0x1.87de2ap-2f;
+
+        float T0x0cRe = (x1cRe_0 * t2Re_1c - x1cIm_0 * t2Re_1g);
+        float T0x0cIm = (x1cRe_0 * t2Re_1g + x1cIm_0 * t2Re_1c);
+        float T0x2cRe = (x3cRe_0 * t2Re_1c - x3cIm_0 * t2Re_1g);
+        float T0x2cIm = (x3cRe_0 * t2Re_1g + x3cIm_0 * t2Re_1c);
+
+float t2Re_1d = 0x1.a9b662p-1f;
+float t2Re_1f = 0x1.1c73b4p-1f;
+
+        float T0x1dRe = (x1dRe_0 * t2Re_1d - x1dIm_0 * t2Re_1f);
+        float T0x1dIm = (x1dRe_0 * t2Re_1f + x1dIm_0 * t2Re_1d);
+        float T0x3dRe = (x3dRe_0 * t2Re_1d - x3dIm_0 * t2Re_1f);
+        float T0x3dIm = (x3dRe_0 * t2Re_1f + x3dIm_0 * t2Re_1d);
+
+        out128[idx       ] =   (x0aRe_0 + x1aRe_0) + (x2aRe_0 + x3aRe_0);
+        out128[idx  +  64] =   (x0aRe_0 + x1aRe_0) - (x2aRe_0 + x3aRe_0);
+        out128[idx  +  65] =                       - (x2aIm_0 + x3aIm_0);
+        out128[idx  +   1] =                         (x2aIm_0 + x3aIm_0); 
+
+float t2Re_2b = 0x1.fd88dap-1f;
+float t2Re_2p = 0x1.917a6ap-4f;
+
+        float res0ReB = x0bRe_0 + T0x1bRe + ((x2bRe_0 + T0x3bRe)*  t2Re_2b - ((x2bIm_0 + T0x3bIm)*  t2Re_2p));
+        out128[idx  +   2] =   res0ReB;
+        out128[idx  + 126] =   res0ReB; 
+        float res0ImB = x0bIm_0 + T0x1bIm + ((x2bRe_0 + T0x3bRe)*  t2Re_2p + ((x2bIm_0 + T0x3bIm)*  t2Re_2b)); 
+        out128[idx  + 127] = - res0ImB;
+        out128[idx  +   3] =   res0ImB;
+
+float t2Re_2c = 0x1.f6297cp-1f;
+float t2Re_2o = 0x1.8f8b88p-3f;
+
+        float res0ReC = x0cRe_0 + T0x0cRe + ((x2cRe_0 + T0x2cRe)*  t2Re_2c - ((x2cIm_0 + T0x2cIm)*  t2Re_2o));  
+        out128[idx  +   4] =   res0ReC;
+        out128[idx  + 124] =   res0ReC;
+        float res0ImC = x0cIm_0 + T0x0cIm + ((x2cRe_0 + T0x2cRe)*  t2Re_2o + ((x2cIm_0 + T0x2cIm)*  t2Re_2c));
+        out128[idx  + 125] = - res0ImC;
+        out128[idx  +   5] =   res0ImC; 
+
+float t2Re_2d = 0x1.e9f416p-1f;
+float t2Re_2n = 0x1.29406p-2f;
+
+        float res0ReD = x0dRe_0 + T0x1dRe + ((x2dRe_0 + T0x3dRe)*  t2Re_2d - ((x2dIm_0 + T0x3dIm)*  t2Re_2n));  
+        out128[idx  +   6] =   res0ReD;
+        out128[idx  + 122] =   res0ReD;
+        float res0ImD = x0dIm_0 + T0x1dIm + ((x2dRe_0 + T0x3dRe)*  t2Re_2n + ((x2dIm_0 + T0x3dIm)*  t2Re_2d)); 
+        out128[idx  + 123] = - res0ImD;
+        out128[idx  +   7] =   res0ImD;  
+        float res1ReA =    (x0aRe_0 - x1aRe_0) - (x2aIm_0 - x3aIm_0);
+        out128[idx  +  32] =   res1ReA;
+        out128[idx  +  96] =   res1ReA;
+        float res1ImA =                          (x2aRe_0 - x3aRe_0); 
+        out128[idx  +  97] = - res1ImA;
+        out128[idx  +  33] =   res1ImA;
+        float res1ReB = x0bRe_0 - T0x1bRe + ((x2bRe_0 - T0x3bRe)* -t2Re_2p  - ((x2bIm_0 - T0x3bIm)*  t2Re_2b ));
+        out128[idx  +  34] =   res1ReB;
+        out128[idx  +  94] =   res1ReB;
+        float res1ImB = x0bIm_0 - T0x1bIm + ((x2bRe_0 - T0x3bRe)*  t2Re_2b  + ((x2bIm_0 - T0x3bIm)* -t2Re_2p )); 
+        out128[idx  +  95] = - res1ImB; 
+        out128[idx  +  35] =   res1ImB;
+        float res1ReC = x0cRe_0 - T0x0cRe + ((x2cRe_0 - T0x2cRe)* -t2Re_2o  - ((x2cIm_0 - T0x2cIm)*  t2Re_2c )); 
+        out128[idx  +  36] =   res1ReC;
+        out128[idx  +  92] =   res1ReC;
+        float res1ImC = x0cIm_0 - T0x0cIm + ((x2cRe_0 - T0x2cRe)*  t2Re_2c  + ((x2cIm_0 - T0x2cIm)* -t2Re_2o ));
+        out128[idx  +  93] = - res1ImC;  
+        out128[idx  +  37] =   res1ImC; 
+        float res1ReD = x0dRe_0 - T0x1dRe + ((x2dRe_0 - T0x3dRe)* -t2Re_2n  - ((x2dIm_0 - T0x3dIm)*  t2Re_2d ));
+        out128[idx  +  38] =   res1ReD;
+        out128[idx  +  90] =   res1ReD;
+        float res1ImD = x0dIm_0 - T0x1dIm + ((x2dRe_0 - T0x3dRe)*  t2Re_2d  + ((x2dIm_0 - T0x3dIm)* -t2Re_2n ));  
+        out128[idx  +  91] = - res1ImD; 
+        out128[idx  +  39] =   res1ImD;
+
+float t2Re_1e = 0x1.6a09e6p-1f;
+
+float t2Re_2e = 0x1.d906bcp-1f;
+float t2Re_2m = 0x1.87de2ap-2f;
+
+        float T1x0aRe = (x1aRe_4 * t2Re_1e - x1aIm_4 * t2Re_1e);
+        float T1x0aIm = (x1aRe_4 * t2Re_1e + x1aIm_4 * t2Re_1e);
+        float T1x2aRe = (x3aRe_4 * t2Re_1e - x3aIm_4 * t2Re_1e);
+        float T1x2aIm = (x3aRe_4 * t2Re_1e + x3aIm_4 * t2Re_1e);
+        float res2ReA = x0aRe_4 + T1x0aRe + ((x2aRe_4 + T1x2aRe)*  t2Re_2e - ((x2aIm_4 + T1x2aIm)*  t2Re_2m));  
+        out128[idx  +   8] =   res2ReA;
+        out128[idx  + 120] =   res2ReA;
+        float res2ImA = x0aIm_4 + T1x0aIm + ((x2aRe_4 + T1x2aRe)*  t2Re_2m + ((x2aIm_4 + T1x2aIm)*  t2Re_2e)); 
+        out128[idx  + 121] = - res2ImA; 
+        out128[idx  +   9] =   res2ImA;
+
+float t2Re_2f = 0x1.c38b3p-1f;
+float t2Re_2l = 0x1.e2b5d6p-2f;
+
+        float T1x1bRe = (x1bRe_4 * t2Re_1f - x1bIm_4 * t2Re_1d);
+        float T1x1bIm = (x1bRe_4 * t2Re_1d + x1bIm_4 * t2Re_1f);
+        float T1x3bRe = (x3bRe_4 * t2Re_1f - x3bIm_4 * t2Re_1d);
+        float T1x3bIm = (x3bRe_4 * t2Re_1d + x3bIm_4 * t2Re_1f);
+        float res2ReB = x0bRe_4 + T1x1bRe + ((x2bRe_4 + T1x3bRe)*  t2Re_2f - ((x2bIm_4 + T1x3bIm)*  t2Re_2l));
+        out128[idx  +  10] =   res2ReB;
+        out128[idx  + 118] =   res2ReB; 
+        float res2ImB = x0bIm_4 + T1x1bIm + ((x2bRe_4 + T1x3bRe)*  t2Re_2l + ((x2bIm_4 + T1x3bIm)*  t2Re_2f));  
+        out128[idx  + 119] = - res2ImB; 
+        out128[idx  +  11] =   res2ImB; 
+
+float t2Re_2g = 0x1.a9b662p-1f;
+float t2Re_2k = 0x1.1c73b4p-1f;
+
+        float T1x0cRe = (x1cRe_4 * t2Re_1g - x1cIm_4 * t2Re_1c);
+        float T1x0cIm = (x1cRe_4 * t2Re_1c + x1cIm_4 * t2Re_1g);
+        float T1x2cRe = (x3cRe_4 * t2Re_1g - x3cIm_4 * t2Re_1c);
+        float T1x2cIm = (x3cRe_4 * t2Re_1c + x3cIm_4 * t2Re_1g);
+        float res2ReC = x0cRe_4 + T1x0cRe + ((x2cRe_4 + T1x2cRe)*  t2Re_2g - ((x2cIm_4 + T1x2cIm)*  t2Re_2k));
+        out128[idx  +  12] =   res2ReC;
+        out128[idx  + 116] =   res2ReC;  
+        float res2ImC = x0cIm_4 + T1x0cIm + ((x2cRe_4 + T1x2cRe)*  t2Re_2k + ((x2cIm_4 + T1x2cIm)*  t2Re_2g)); 
+        out128[idx  + 117] = - res2ImC; 
+        out128[idx  +  13] =   res2ImC; 
+
+float t2Re_2h = 0x1.8bc808p-1f;
+float t2Re_2j = 0x1.44cf32p-1f;
+
+        float T1x1dRe = (x1dRe_4 * t2Re_1h - x1dIm_4 * t2Re_1b);
+        float T1x1dIm = (x1dRe_4 * t2Re_1b + x1dIm_4 * t2Re_1h);
+        float T1x3dRe = (x3dRe_4 * t2Re_1h - x3dIm_4 * t2Re_1b);
+        float T1x3dIm = (x3dRe_4 * t2Re_1b + x3dIm_4 * t2Re_1h);
+        float res2ReD = x0dRe_4 + T1x1dRe + ((x2dRe_4 + T1x3dRe)*  t2Re_2h - ((x2dIm_4 + T1x3dIm)*  t2Re_2j));  
+        out128[idx  +  14] =   res2ReD;
+        out128[idx  + 114] =   res2ReD;
+        float res2ImD = x0dIm_4 + T1x1dIm + ((x2dRe_4 + T1x3dRe)*  t2Re_2j + ((x2dIm_4 + T1x3dIm)*  t2Re_2h));
+        out128[idx  + 115] = - res2ImD; 
+        out128[idx  +  15] =   res2ImD;
+        float res3ReA = x0aRe_4 - T1x0aRe + ((x2aRe_4 - T1x2aRe)* -t2Re_2m  - ((x2aIm_4 - T1x2aIm)*  t2Re_2e ));
+        out128[idx  +  40] =   res3ReA;
+        out128[idx  +  88] =   res3ReA;
+        float res3ImA = x0aIm_4 - T1x0aIm + ((x2aRe_4 - T1x2aRe)*  t2Re_2e  + ((x2aIm_4 - T1x2aIm)* -t2Re_2m )); 
+        out128[idx  +  89] = - res3ImA;
+        out128[idx  +  41] =   res3ImA; 
+        float res3ReB = x0bRe_4 - T1x1bRe + ((x2bRe_4 - T1x3bRe)* -t2Re_2l  - ((x2bIm_4 - T1x3bIm)*  t2Re_2f ));
+        out128[idx  +  42] =   res3ReB; 
+        out128[idx  +  86] =   res3ReB;
+        float res3ImB = x0bIm_4 - T1x1bIm + ((x2bRe_4 - T1x3bRe)*  t2Re_2f  + ((x2bIm_4 - T1x3bIm)* -t2Re_2l ));
+        out128[idx  +  87] = - res3ImB; 
+        out128[idx  +  43] =   res3ImB; 
+        float res3ReC = x0cRe_4 - T1x0cRe + ((x2cRe_4 - T1x2cRe)* -t2Re_2k  - ((x2cIm_4 - T1x2cIm)*  t2Re_2g ));
+        out128[idx  +  44] =   res3ReC;
+        out128[idx  +  84] =   res3ReC;
+        float res3ImC = x0cIm_4 - T1x0cIm + ((x2cRe_4 - T1x2cRe)*  t2Re_2g  + ((x2cIm_4 - T1x2cIm)* -t2Re_2k )); 
+        out128[idx  +  85] = - res3ImC;
+        out128[idx  +  45] =   res3ImC;
+        float res3ReD = x0dRe_4 - T1x1dRe + ((x2dRe_4 - T1x3dRe)* -t2Re_2j  - ((x2dIm_4 - T1x3dIm)*  t2Re_2h ));
+        out128[idx  +  46] =   res3ReD;
+        out128[idx  +  82] =   res3ReD;
+        float res3ImD = x0dIm_4 - T1x1dIm + ((x2dRe_4 - T1x3dRe)*  t2Re_2h  + ((x2dIm_4 - T1x3dIm)* -t2Re_2j ));
+        out128[idx  +  83] = - res3ImD;
+        out128[idx  +  47] =   res3ImD; 
+
+float t2Re_2i = 0x1.6a09e6p-1f;
+
+        float T2x0aRe = - x1aIm_8;
+        float T2x0aIm =   x1aRe_8;
+        float T2x2aRe = - x3aIm_8;
+        float T2x2aIm =   x3aRe_8;
+        float res4ReA =  x0aRe_8 + T2x0aRe + ((x2aRe_8 + T2x2aRe)*  t2Re_2i - (( x2aIm_8 + T2x2aIm)*  t2Re_2i)); 
+        out128[idx  +  16] =   res4ReA;
+        out128[idx  + 112] =   res4ReA; 
+        float res4ImA =  0       + T2x0aIm + ((x2aRe_8 + T2x2aRe)*  t2Re_2i + (( x2aIm_8 + T2x2aIm)*  t2Re_2i)); 
+        out128[idx  + 113] = - res4ImA; 
+        out128[idx  +  17] =   res4ImA;
+
+        float T2x1bRe = (x1dRe_4 * -t2Re_1h - -x1dIm_4 *  t2Re_1b);
+        float T2x1bIm = (x1dRe_4 *  t2Re_1b + -x1dIm_4 * -t2Re_1h);
+        float T2x3bRe = (x3dRe_4 * -t2Re_1h - -x3dIm_4 *  t2Re_1b);
+        float T2x3bIm = (x3dRe_4 *  t2Re_1b + -x3dIm_4 * -t2Re_1h);
+        float res4ReB =  x0dRe_4 + T2x1bRe + ((x2dRe_4 + T2x3bRe)*  t2Re_2j - ((-x2dIm_4 + T2x3bIm)*  t2Re_2h)); 
+        out128[idx  +  18] =   res4ReB;
+        out128[idx  + 110] =   res4ReB;
+        float res4ImB = -x0dIm_4 + T2x1bIm + ((x2dRe_4 + T2x3bRe)*  t2Re_2h + ((-x2dIm_4 + T2x3bIm)*  t2Re_2j)); 
+        out128[idx  + 111] = - res4ImB; 
+        out128[idx  +  19] =   res4ImB; 
+
+        float T2x0cRe = (x1cRe_4 * -t2Re_1g - -x1cIm_4 *  t2Re_1c);
+        float T2x0cIm = (x1cRe_4 *  t2Re_1c + -x1cIm_4 * -t2Re_1g);
+        float T2x2cRe = (x3cRe_4 * -t2Re_1g - -x3cIm_4 *  t2Re_1c);
+        float T2x2cIm = (x3cRe_4 *  t2Re_1c + -x3cIm_4 * -t2Re_1g);
+        float res4ReC =  x0cRe_4 + T2x0cRe + ((x2cRe_4 + T2x2cRe)*  t2Re_2k - ((-x2cIm_4 + T2x2cIm)*  t2Re_2g)); 
+        out128[idx  +  20] =   res4ReC;
+        out128[idx  + 108] =   res4ReC; 
+        float res4ImC = -x0cIm_4 + T2x0cIm + ((x2cRe_4 + T2x2cRe)*  t2Re_2g + ((-x2cIm_4 + T2x2cIm)*  t2Re_2k));   
+        out128[idx  + 109] = - res4ImC;
+        out128[idx  +  21] =   res4ImC;
+
+        float T2x1dRe = (x1bRe_4 * -t2Re_1f - -x1bIm_4 *  t2Re_1d);
+        float T2x1dIm = (x1bRe_4 *  t2Re_1d + -x1bIm_4 * -t2Re_1f);
+        float T2x3dRe = (x3bRe_4 * -t2Re_1f - -x3bIm_4 *  t2Re_1d);
+        float T2x3dIm = (x3bRe_4 *  t2Re_1d + -x3bIm_4 * -t2Re_1f);
+        float res4ReD =  x0bRe_4 + T2x1dRe + ((x2bRe_4 + T2x3dRe)*  t2Re_2l - ((-x2bIm_4 + T2x3dIm)*  t2Re_2f)); 
+        out128[idx  +  22] =   res4ReD;
+        out128[idx  + 106] =   res4ReD; 
+        float res4ImD = -x0bIm_4 + T2x1dIm + ((x2bRe_4 + T2x3dRe)*  t2Re_2f + ((-x2bIm_4 + T2x3dIm)*  t2Re_2l)); 
+        out128[idx  + 107] = - res4ImD;
+        out128[idx  +  23] =   res4ImD;
+
+        float res5ReA =  x0aRe_8 - T2x0aRe + ((x2aRe_8 - T2x2aRe)* -t2Re_2i  - (( x2aIm_8 - T2x2aIm)*  t2Re_2i ));
+        out128[idx  +  48] =   res5ReA;
+        out128[idx  +  80] =   res5ReA;
+        float res5ImA =  0       - T2x0aIm + ((x2aRe_8 - T2x2aRe)*  t2Re_2i  + (( x2aIm_8 - T2x2aIm)* -t2Re_2i ));
+        out128[idx  +  81] = - res5ImA;
+        out128[idx  +  49] =   res5ImA; 
+        float res5ReB =  x0dRe_4 - T2x1bRe + ((x2dRe_4 - T2x3bRe)* -t2Re_2h  - ((-x2dIm_4 - T2x3bIm)*  t2Re_2j ));
+        out128[idx  +  50] =   res5ReB;
+        out128[idx  +  78] =   res5ReB;
+        float res5ImB = -x0dIm_4 - T2x1bIm + ((x2dRe_4 - T2x3bRe)*  t2Re_2j  + ((-x2dIm_4 - T2x3bIm)* -t2Re_2h ));
+        out128[idx  +  79] = - res5ImB;
+        out128[idx  +  51] =   res5ImB; 
+        float res5ReC =  x0cRe_4 - T2x0cRe + ((x2cRe_4 - T2x2cRe)* -t2Re_2g  - ((-x2cIm_4 - T2x2cIm)*  t2Re_2k ));
+        out128[idx  +  52] =   res5ReC;
+        out128[idx  +  76] =   res5ReC;
+        float res5ImC = -x0cIm_4 - T2x0cIm + ((x2cRe_4 - T2x2cRe)*  t2Re_2k  + ((-x2cIm_4 - T2x2cIm)* -t2Re_2g ));
+        out128[idx  +  77] = - res5ImC; 
+        out128[idx  +  53] =   res5ImC;
+        float res5ReD =  x0bRe_4 - T2x1dRe + ((x2bRe_4 - T2x3dRe)* -t2Re_2f  - ((-x2bIm_4 - T2x3dIm)*  t2Re_2l ));
+        out128[idx  +  54] =   res5ReD;
+        out128[idx  +  74] =   res5ReD;
+        float res5ImD = -x0bIm_4 - T2x1dIm + ((x2bRe_4 - T2x3dRe)*  t2Re_2l  + ((-x2bIm_4 - T2x3dIm)* -t2Re_2f ));
+        out128[idx  +  75] = - res5ImD;
+        out128[idx  +  55] =   res5ImD;
+
+        float T3x0aRe = (x1aRe_4  * -t2Re_1e - -x1aIm_4 *  t2Re_1e);
+        float T3x0aIm = (x1aRe_4  *  t2Re_1e + -x1aIm_4 * -t2Re_1e);
+        float T3x2aRe = (x3aRe_4  * -t2Re_1e - -x3aIm_4 *  t2Re_1e);
+        float T3x2aIm = (x3aRe_4  *  t2Re_1e + -x3aIm_4 * -t2Re_1e);
+        float res6ReA =  x0aRe_4 + T3x0aRe + ((x2aRe_4 + T3x2aRe)*  t2Re_2m - ((-x2aIm_4 + T3x2aIm)*  t2Re_2e));  
+        out128[idx  +  24] =   res6ReA;
+        out128[idx  + 104] =   res6ReA;
+        float res6ImA = -x0aIm_4 + T3x0aIm + ((x2aRe_4 + T3x2aRe)*  t2Re_2e + ((-x2aIm_4 + T3x2aIm)*  t2Re_2m)); 
+        out128[idx  + 105] = - res6ImA; 
+        out128[idx  +  25] =   res6ImA;
+
+        float T3x1bRe = (x1dRe_0  * -t2Re_1d - -x1dIm_0 *  t2Re_1f);
+        float T3x1bIm = (x1dRe_0  *  t2Re_1f + -x1dIm_0 * -t2Re_1d);
+        float T3x3bRe = (x3dRe_0  * -t2Re_1d - -x3dIm_0 *  t2Re_1f);
+        float T3x3bIm = (x3dRe_0  *  t2Re_1f + -x3dIm_0 * -t2Re_1d);
+        float res6ReB =  x0dRe_0 + T3x1bRe + ((x2dRe_0 + T3x3bRe)*  t2Re_2n - ((-x2dIm_0 + T3x3bIm)*  t2Re_2d)); 
+        out128[idx  +  26] =   res6ReB;
+        out128[idx  + 102] =   res6ReB;
+        float res6ImB = -x0dIm_0 + T3x1bIm + ((x2dRe_0 + T3x3bRe)*  t2Re_2d + ((-x2dIm_0 + T3x3bIm)*  t2Re_2n)); 
+        out128[idx  + 103] = - res6ImB; 
+        out128[idx  +  27] =   res6ImB; 
+
+        float T3x0cRe = (x1cRe_0  * -t2Re_1c - -x1cIm_0 *  t2Re_1g);
+        float T3x0cIm = (x1cRe_0  *  t2Re_1g + -x1cIm_0 * -t2Re_1c);
+        float T3x2cRe = (x3cRe_0  * -t2Re_1c - -x3cIm_0 *  t2Re_1g);
+        float T3x2cIm = (x3cRe_0  *  t2Re_1g + -x3cIm_0 * -t2Re_1c);
+        float res6ReC =  x0cRe_0 + T3x0cRe + ((x2cRe_0 + T3x2cRe)*  t2Re_2o - ((-x2cIm_0 + T3x2cIm)*  t2Re_2c));  
+        out128[idx  +  28] =   res6ReC;
+        out128[idx  + 100] =   res6ReC;
+        float res6ImC = -x0cIm_0 + T3x0cIm + ((x2cRe_0 + T3x2cRe)*  t2Re_2c + ((-x2cIm_0 + T3x2cIm)*  t2Re_2o)); 
+        out128[idx  + 101] = - res6ImC; 
+        out128[idx  +  29] =   res6ImC; 
+
+        float T3x1dRe = (x1bRe_0  * -t2Re_1b - -x1bIm_0 *  t2Re_1h);
+        float T3x1dIm = (x1bRe_0  *  t2Re_1h + -x1bIm_0 * -t2Re_1b);
+        float T3x3dRe = (x3bRe_0  * -t2Re_1b - -x3bIm_0 *  t2Re_1h);
+        float T3x3dIm = (x3bRe_0  *  t2Re_1h + -x3bIm_0 * -t2Re_1b);
+        float res6ReD =  x0bRe_0 + T3x1dRe + ((x2bRe_0 + T3x3dRe)*  t2Re_2p - ((-x2bIm_0 + T3x3dIm)*  t2Re_2b)); 
+        out128[idx  +  30] =   res6ReD;
+        out128[idx  +  98] =   res6ReD; 
+        float res6ImD = -x0bIm_0 + T3x1dIm + ((x2bRe_0 + T3x3dRe)*  t2Re_2b + ((-x2bIm_0 + T3x3dIm)*  t2Re_2p)); 
+        out128[idx  +  99] = - res6ImD;
+        out128[idx  +  31] =   res6ImD;
+
+        float res7ReA =  x0aRe_4 - T3x0aRe + ((x2aRe_4 - T3x2aRe)* -t2Re_2e  - ((-x2aIm_4 - T3x2aIm)*  t2Re_2m ));
+        out128[idx  +  56] =   res7ReA;
+        out128[idx  +  72] =   res7ReA;
+        float res7ImA = -x0aIm_4 - T3x0aIm + ((x2aRe_4 - T3x2aRe)*  t2Re_2m  + ((-x2aIm_4 - T3x2aIm)* -t2Re_2e ));
+        out128[idx  +  73] = - res7ImA;
+        out128[idx  +  57] =   res7ImA;
+        float res7ReB =  x0dRe_0 - T3x1bRe + ((x2dRe_0 - T3x3bRe)* -t2Re_2d  - ((-x2dIm_0 - T3x3bIm)*  t2Re_2n ));
+        out128[idx  +  58] =   res7ReB;
+        out128[idx  +  70] =   res7ReB;
+        float res7ImB = -x0dIm_0 - T3x1bIm + ((x2dRe_0 - T3x3bRe)*  t2Re_2n  + ((-x2dIm_0 - T3x3bIm)* -t2Re_2d ));
+        out128[idx  +  71] = - res7ImB; 
+        out128[idx  +  59] =   res7ImB;
+        float res7ReC =  x0cRe_0 - T3x0cRe + ((x2cRe_0 - T3x2cRe)* -t2Re_2c  - ((-x2cIm_0 - T3x2cIm)*  t2Re_2o ));
+        out128[idx  +  60] =   res7ReC;
+        out128[idx  +  68] =   res7ReC;
+        float res7ImC = -x0cIm_0 - T3x0cIm + ((x2cRe_0 - T3x2cRe)*  t2Re_2o  + ((-x2cIm_0 - T3x2cIm)* -t2Re_2c ));
+        out128[idx  +  69] = - res7ImC;
+        out128[idx  +  61] =   res7ImC;
+        float res7ReD =  x0bRe_0 - T3x1dRe + ((x2bRe_0 - T3x3dRe)* -t2Re_2b  - ((-x2bIm_0 - T3x3dIm)*  t2Re_2p ));
+        out128[idx  +  62] =   res7ReD;
+        out128[idx  +  66] =   res7ReD;
+        float res7ImD = -x0bIm_0 - T3x1dIm + ((x2bRe_0 - T3x3dRe)*  t2Re_2p  + ((-x2bIm_0 - T3x3dIm)* -t2Re_2b ));
+        out128[idx  +  67] = - res7ImD;
+        out128[idx  +  63] =   res7ImD;
+    }
+
+    ////////////////////////////////////////////////
+    ////////////////////////////////////////////////
+    // FFT step for SIZE 128 
+    ////////////////////////////////////////////////
+    {
+        float oRe0 = out128[128];
+        float oIm0 = out128[129];
+        float eRe0 = out128[0];
+        float eIm0 = out128[1];
+        float resRe0_s = eRe0 + oRe0;
+        out128[0] = resRe0_s;
+        float resIm0_s = eIm0 + oIm0;
+        out128[1] = resRe0_s;
+        float resRe0_d = eRe0 - oRe0;
+        out128[128] = resRe0_d;
+        float resIm0_d = eIm0 - oIm0;
+        out128[129] = resIm0_d;
+        
+        float oRe1 = out128[130];
+        float oIm1 = out128[131];
+        float eRe1 = out128[2];
+        float eIm1 = out128[3];
+        float tRe1 = 0x1.ff621ep-1f;
+        float tRe31 = 0x1.91f652p-5f;
+        float resIm1_s = eIm1 + (oRe1 * tRe31 + oIm1 * tRe1);
+        out128[3] = resIm1_s;
+        out128[255] = -resIm1_s;
+        float resRe1_s = eRe1 + (oRe1 * tRe1 - oIm1 * tRe31);
+        out128[254] = resRe1_s;
+        out128[2] = resRe1_s;
+        float resRe63_s = eRe1 - (oRe1 * tRe1 - oIm1 * tRe31);
+        out128[130] = resRe63_s;
+        out128[126] = resRe63_s;
+        float resIm63_s = -eIm1 + (oRe1 * tRe31 + oIm1 * tRe1);
+        out128[127] = resIm63_s;
+        out128[131] = -resIm63_s;
+        
+        float oRe2 = out128[132];
+        float oIm2 = out128[133];
+        float eRe2 = out128[4];
+        float eIm2 = out128[5];
+        float tRe2 = 0x1.fd88dap-1f;
+        float tRe30 = 0x1.917a6ap-4f;
+        float resIm2_s = eIm2 + (oRe2 * tRe30 + oIm2 * tRe2);
+        out128[5] = resIm2_s;
+        out128[253] = -resIm2_s;
+        float resRe2_s = eRe2 + (oRe2 * tRe2 - oIm2 * tRe30);
+        out128[252] = resRe2_s;
+        out128[4] = resRe2_s;
+        float resRe62_s = eRe2 - (oRe2 * tRe2 - oIm2 * tRe30);
+        out128[132] = resRe62_s;
+        out128[124] = resRe62_s;
+        float resIm62_s = -eIm2 + (oRe2 * tRe30 + oIm2 * tRe2);
+        out128[125] = resIm62_s;
+        out128[133] = -resIm62_s;
+        
+        float oRe3 = out128[134];
+        float oIm3 = out128[135];
+        float eRe3 = out128[6];
+        float eIm3 = out128[7];
+        float tRe3 = 0x1.fa7558p-1f;
+        float tRe29 = 0x1.2c810ap-3f;
+        float resIm3_s = eIm3 + (oRe3 * tRe29 + oIm3 * tRe3);
+        out128[7] = resIm3_s;
+        out128[251] = -resIm3_s;
+        float resRe3_s = eRe3 + (oRe3 * tRe3 - oIm3 * tRe29);
+        out128[250] = resRe3_s;
+        out128[6] = resRe3_s;
+        float resRe61_s = eRe3 - (oRe3 * tRe3 - oIm3 * tRe29);
+        out128[134] = resRe61_s;
+        out128[122] = resRe61_s;
+        float resIm61_s = -eIm3 + (oRe3 * tRe29 + oIm3 * tRe3);
+        out128[123] = resIm61_s;
+        out128[135] = -resIm61_s;
+        
+        float oRe4 = out128[136];
+        float oIm4 = out128[137];
+        float eRe4 = out128[8];
+        float eIm4 = out128[9];
+        float tRe4 = 0x1.f6297cp-1f;
+        float tRe28 = 0x1.8f8b88p-3f;
+        float resIm4_s = eIm4 + (oRe4 * tRe28 + oIm4 * tRe4);
+        out128[9] = resIm4_s;
+        out128[249] = -resIm4_s;
+        float resRe4_s = eRe4 + (oRe4 * tRe4 - oIm4 * tRe28);
+        out128[248] = resRe4_s;
+        out128[8] = resRe4_s;
+        float resRe60_s = eRe4 - (oRe4 * tRe4 - oIm4 * tRe28);
+        out128[136] = resRe60_s;
+        out128[120] = resRe60_s;
+        float resIm60_s = -eIm4 + (oRe4 * tRe28 + oIm4 * tRe4);
+        out128[121] = resIm60_s;
+        out128[137] = -resIm60_s;
+        
+        float oRe5 = out128[138];
+        float oIm5 = out128[139];
+        float eRe5 = out128[10];
+        float eIm5 = out128[11];
+        float tRe5 = 0x1.f0a7fp-1f;
+        float tRe27 = 0x1.f19fap-3f;
+        float resIm5_s = eIm5 + (oRe5 * tRe27 + oIm5 * tRe5);
+        out128[11] = resIm5_s;
+        out128[247] = -resIm5_s;
+        float resRe5_s = eRe5 + (oRe5 * tRe5 - oIm5 * tRe27);
+        out128[246] = resRe5_s;
+        out128[10] = resRe5_s;
+        float resRe59_s = eRe5 - (oRe5 * tRe5 - oIm5 * tRe27);
+        out128[138] = resRe59_s;
+        out128[118] = resRe59_s;
+        float resIm59_s = -eIm5 + (oRe5 * tRe27 + oIm5 * tRe5);
+        out128[119] = resIm59_s;
+        out128[139] = -resIm59_s;
+        
+        float oRe6 = out128[140];
+        float oIm6 = out128[141];
+        float eRe6 = out128[12];
+        float eIm6 = out128[13];
+        float tRe6 = 0x1.e9f416p-1f;
+        float tRe26 = 0x1.29406p-2f;
+        float resIm6_s = eIm6 + (oRe6 * tRe26 + oIm6 * tRe6);
+        out128[13] = resIm6_s;
+        out128[245] = -resIm6_s;
+        float resRe6_s = eRe6 + (oRe6 * tRe6 - oIm6 * tRe26);
+        out128[244] = resRe6_s;
+        out128[12] = resRe6_s;
+        float resRe58_s = eRe6 - (oRe6 * tRe6 - oIm6 * tRe26);
+        out128[140] = resRe58_s;
+        out128[116] = resRe58_s;
+        float resIm58_s = -eIm6 + (oRe6 * tRe26 + oIm6 * tRe6);
+        out128[117] = resIm58_s;
+        out128[141] = -resIm58_s;
+        
+        float oRe7 = out128[142];
+        float oIm7 = out128[143];
+        float eRe7 = out128[14];
+        float eIm7 = out128[15];
+        float tRe7 = 0x1.e2121p-1f;
+        float tRe25 = 0x1.58f9a6p-2f;
+        float resIm7_s = eIm7 + (oRe7 * tRe25 + oIm7 * tRe7);
+        out128[15] = resIm7_s;
+        out128[243] = -resIm7_s;
+        float resRe7_s = eRe7 + (oRe7 * tRe7 - oIm7 * tRe25);
+        out128[242] = resRe7_s;
+        out128[14] = resRe7_s;
+        float resRe57_s = eRe7 - (oRe7 * tRe7 - oIm7 * tRe25);
+        out128[142] = resRe57_s;
+        out128[114] = resRe57_s;
+        float resIm57_s = -eIm7 + (oRe7 * tRe25 + oIm7 * tRe7);
+        out128[115] = resIm57_s;
+        out128[143] = -resIm57_s;
+        
+        float oRe8 = out128[144];
+        float oIm8 = out128[145];
+        float eRe8 = out128[16];
+        float eIm8 = out128[17];
+        float tRe8 = 0x1.d906bcp-1f;
+        float tRe24 = 0x1.87de2ap-2f;
+        float resIm8_s = eIm8 + (oRe8 * tRe24 + oIm8 * tRe8);
+        out128[17] = resIm8_s;
+        out128[241] = -resIm8_s;
+        float resRe8_s = eRe8 + (oRe8 * tRe8 - oIm8 * tRe24);
+        out128[240] = resRe8_s;
+        out128[16] = resRe8_s;
+        float resRe56_s = eRe8 - (oRe8 * tRe8 - oIm8 * tRe24);
+        out128[144] = resRe56_s;
+        out128[112] = resRe56_s;
+        float resIm56_s = -eIm8 + (oRe8 * tRe24 + oIm8 * tRe8);
+        out128[113] = resIm56_s;
+        out128[145] = -resIm56_s;
+        
+        float oRe9 = out128[146];
+        float oIm9 = out128[147];
+        float eRe9 = out128[18];
+        float eIm9 = out128[19];
+        float tRe9 = 0x1.ced7bp-1f;
+        float tRe23 = 0x1.b5d102p-2f;
+        float resIm9_s = eIm9 + (oRe9 * tRe23 + oIm9 * tRe9);
+        out128[19] = resIm9_s;
+        out128[239] = -resIm9_s;
+        float resRe9_s = eRe9 + (oRe9 * tRe9 - oIm9 * tRe23);
+        out128[238] = resRe9_s;
+        out128[18] = resRe9_s;
+        float resRe55_s = eRe9 - (oRe9 * tRe9 - oIm9 * tRe23);
+        out128[146] = resRe55_s;
+        out128[110] = resRe55_s;
+        float resIm55_s = -eIm9 + (oRe9 * tRe23 + oIm9 * tRe9);
+        out128[111] = resIm55_s;
+        out128[147] = -resIm55_s;
+        
+        float oRe10 = out128[148];
+        float oIm10 = out128[149];
+        float eRe10 = out128[20];
+        float eIm10 = out128[21];
+        float tRe10 = 0x1.c38b3p-1f;
+        float tRe22 = 0x1.e2b5d6p-2f;
+        float resIm10_s = eIm10 + (oRe10 * tRe22 + oIm10 * tRe10);
+        out128[21] = resIm10_s;
+        out128[237] = -resIm10_s;
+        float resRe10_s = eRe10 + (oRe10 * tRe10 - oIm10 * tRe22);
+        out128[236] = resRe10_s;
+        out128[20] = resRe10_s;
+        float resRe54_s = eRe10 - (oRe10 * tRe10 - oIm10 * tRe22);
+        out128[148] = resRe54_s;
+        out128[108] = resRe54_s;
+        float resIm54_s = -eIm10 + (oRe10 * tRe22 + oIm10 * tRe10);
+        out128[109] = resIm54_s;
+        out128[149] = -resIm54_s;
+        
+        float oRe11 = out128[150];
+        float oIm11 = out128[151];
+        float eRe11 = out128[22];
+        float eIm11 = out128[23];
+        float tRe11 = 0x1.b72834p-1f;
+        float tRe21 = 0x1.07387cp-1f;
+        float resIm11_s = eIm11 + (oRe11 * tRe21 + oIm11 * tRe11);
+        out128[23] = resIm11_s;
+        out128[235] = -resIm11_s;
+        float resRe11_s = eRe11 + (oRe11 * tRe11 - oIm11 * tRe21);
+        out128[234] = resRe11_s;
+        out128[22] = resRe11_s;
+        float resRe53_s = eRe11 - (oRe11 * tRe11 - oIm11 * tRe21);
+        out128[150] = resRe53_s;
+        out128[106] = resRe53_s;
+        float resIm53_s = -eIm11 + (oRe11 * tRe21 + oIm11 * tRe11);
+        out128[107] = resIm53_s;
+        out128[151] = -resIm53_s;
+        
+        float oRe12 = out128[152];
+        float oIm12 = out128[153];
+        float eRe12 = out128[24];
+        float eIm12 = out128[25];
+        float tRe12 = 0x1.a9b662p-1f;
+        float tRe20 = 0x1.1c73b4p-1f;
+        float resIm12_s = eIm12 + (oRe12 * tRe20 + oIm12 * tRe12);
+        out128[25] = resIm12_s;
+        out128[233] = -resIm12_s;
+        float resRe12_s = eRe12 + (oRe12 * tRe12 - oIm12 * tRe20);
+        out128[232] = resRe12_s;
+        out128[24] = resRe12_s;
+        float resRe52_s = eRe12 - (oRe12 * tRe12 - oIm12 * tRe20);
+        out128[152] = resRe52_s;
+        out128[104] = resRe52_s;
+        float resIm52_s = -eIm12 + (oRe12 * tRe20 + oIm12 * tRe12);
+        out128[105] = resIm52_s;
+        out128[153] = -resIm52_s;
+        
+        float oRe13 = out128[154];
+        float oIm13 = out128[155];
+        float eRe13 = out128[26];
+        float eIm13 = out128[27];
+        float tRe13 = 0x1.9b3e04p-1f;
+        float tRe19 = 0x1.30ff8p-1f;
+        float resIm13_s = eIm13 + (oRe13 * tRe19 + oIm13 * tRe13);
+        out128[27] = resIm13_s;
+        out128[231] = -resIm13_s;
+        float resRe13_s = eRe13 + (oRe13 * tRe13 - oIm13 * tRe19);
+        out128[230] = resRe13_s;
+        out128[26] = resRe13_s;
+        float resRe51_s = eRe13 - (oRe13 * tRe13 - oIm13 * tRe19);
+        out128[154] = resRe51_s;
+        out128[102] = resRe51_s;
+        float resIm51_s = -eIm13 + (oRe13 * tRe19 + oIm13 * tRe13);
+        out128[103] = resIm51_s;
+        out128[155] = -resIm51_s;
+        
+        float oRe14 = out128[156];
+        float oIm14 = out128[157];
+        float eRe14 = out128[28];
+        float eIm14 = out128[29];
+        float tRe14 = 0x1.8bc808p-1f;
+        float tRe18 = 0x1.44cf32p-1f;
+        float resIm14_s = eIm14 + (oRe14 * tRe18 + oIm14 * tRe14);
+        out128[29] = resIm14_s;
+        out128[229] = -resIm14_s;
+        float resRe14_s = eRe14 + (oRe14 * tRe14 - oIm14 * tRe18);
+        out128[228] = resRe14_s;
+        out128[28] = resRe14_s;
+        float resRe50_s = eRe14 - (oRe14 * tRe14 - oIm14 * tRe18);
+        out128[156] = resRe50_s;
+        out128[100] = resRe50_s;
+        float resIm50_s = -eIm14 + (oRe14 * tRe18 + oIm14 * tRe14);
+        out128[101] = resIm50_s;
+        out128[157] = -resIm50_s;
+        
+        float oRe15 = out128[158];
+        float oIm15 = out128[159];
+        float eRe15 = out128[30];
+        float eIm15 = out128[31];
+        float tRe15 = 0x1.7b5df2p-1f;
+        float tRe17 = 0x1.57d694p-1f;
+        float resIm15_s = eIm15 + (oRe15 * tRe17 + oIm15 * tRe15);
+        out128[31] = resIm15_s;
+        out128[227] = -resIm15_s;
+        float resRe15_s = eRe15 + (oRe15 * tRe15 - oIm15 * tRe17);
+        out128[226] = resRe15_s;
+        out128[30] = resRe15_s;
+        float resRe49_s = eRe15 - (oRe15 * tRe15 - oIm15 * tRe17);
+        out128[158] = resRe49_s;
+        out128[98] = resRe49_s;
+        float resIm49_s = -eIm15 + (oRe15 * tRe17 + oIm15 * tRe15);
+        out128[99] = resIm49_s;
+        out128[159] = -resIm49_s;
+        
+        float oRe16 = out128[160];
+        float oIm16 = out128[161];
+        float eRe16 = out128[32];
+        float eIm16 = out128[33];
+        float tRe16 = 0x1.6a09e6p-1f;
+        float resIm16_s = eIm16 + (oRe16 * tRe16 + oIm16 * tRe16);
+        out128[33] = resIm16_s;
+        out128[225] = -resIm16_s;
+        float resRe16_s = eRe16 + (oRe16 * tRe16 - oIm16 * tRe16);
+        out128[224] = resRe16_s;
+        out128[32] = resRe16_s;
+        float resRe48_s = eRe16 - (oRe16 * tRe16 - oIm16 * tRe16);
+        out128[160] = resRe48_s;
+        out128[96] = resRe48_s;
+        float resIm48_s = -eIm16 + (oRe16 * tRe16 + oIm16 * tRe16);
+        out128[97] = resIm48_s;
+        out128[161] = -resIm48_s;
+        
+        float oRe17 = out128[162];
+        float oIm17 = out128[163];
+        float eRe17 = out128[34];
+        float eIm17 = out128[35];
+        float resIm17_s = eIm17 + (oRe17 * tRe15 + oIm17 * tRe17);
+        out128[35] = resIm17_s;
+        out128[223] = -resIm17_s;
+        float resRe17_s = eRe17 + (oRe17 * tRe17 - oIm17 * tRe15);
+        out128[222] = resRe17_s;
+        out128[34] = resRe17_s;
+        float resRe47_s = eRe17 - (oRe17 * tRe17 - oIm17 * tRe15);
+        out128[162] = resRe47_s;
+        out128[94] = resRe47_s;
+        float resIm47_s = -eIm17 + (oRe17 * tRe15 + oIm17 * tRe17);
+        out128[95] = resIm47_s;
+        out128[163] = -resIm47_s;
+        
+        float oRe18 = out128[164];
+        float oIm18 = out128[165];
+        float eRe18 = out128[36];
+        float eIm18 = out128[37];
+        float resIm18_s = eIm18 + (oRe18 * tRe14 + oIm18 * tRe18);
+        out128[37] = resIm18_s;
+        out128[221] = -resIm18_s;
+        float resRe18_s = eRe18 + (oRe18 * tRe18 - oIm18 * tRe14);
+        out128[220] = resRe18_s;
+        out128[36] = resRe18_s;
+        float resRe46_s = eRe18 - (oRe18 * tRe18 - oIm18 * tRe14);
+        out128[164] = resRe46_s;
+        out128[92] = resRe46_s;
+        float resIm46_s = -eIm18 + (oRe18 * tRe14 + oIm18 * tRe18);
+        out128[93] = resIm46_s;
+        out128[165] = -resIm46_s;
+        
+        float oRe19 = out128[166];
+        float oIm19 = out128[167];
+        float eRe19 = out128[38];
+        float eIm19 = out128[39];
+        float resIm19_s = eIm19 + (oRe19 * tRe13 + oIm19 * tRe19);
+        out128[39] = resIm19_s;
+        out128[219] = -resIm19_s;
+        float resRe19_s = eRe19 + (oRe19 * tRe19 - oIm19 * tRe13);
+        out128[218] = resRe19_s;
+        out128[38] = resRe19_s;
+        float resRe45_s = eRe19 - (oRe19 * tRe19 - oIm19 * tRe13);
+        out128[166] = resRe45_s;
+        out128[90] = resRe45_s;
+        float resIm45_s = -eIm19 + (oRe19 * tRe13 + oIm19 * tRe19);
+        out128[91] = resIm45_s;
+        out128[167] = -resIm45_s;
+        
+        float oRe20 = out128[168];
+        float oIm20 = out128[169];
+        float eRe20 = out128[40];
+        float eIm20 = out128[41];
+        float resIm20_s = eIm20 + (oRe20 * tRe12 + oIm20 * tRe20);
+        out128[41] = resIm20_s;
+        out128[217] = -resIm20_s;
+        float resRe20_s = eRe20 + (oRe20 * tRe20 - oIm20 * tRe12);
+        out128[216] = resRe20_s;
+        out128[40] = resRe20_s;
+        float resRe44_s = eRe20 - (oRe20 * tRe20 - oIm20 * tRe12);
+        out128[168] = resRe44_s;
+        out128[88] = resRe44_s;
+        float resIm44_s = -eIm20 + (oRe20 * tRe12 + oIm20 * tRe20);
+        out128[89] = resIm44_s;
+        out128[169] = -resIm44_s;
+        
+        float oRe21 = out128[170];
+        float oIm21 = out128[171];
+        float eRe21 = out128[42];
+        float eIm21 = out128[43];
+        float resIm21_s = eIm21 + (oRe21 * tRe11 + oIm21 * tRe21);
+        out128[43] = resIm21_s;
+        out128[215] = -resIm21_s;
+        float resRe21_s = eRe21 + (oRe21 * tRe21 - oIm21 * tRe11);
+        out128[214] = resRe21_s;
+        out128[42] = resRe21_s;
+        float resRe43_s = eRe21 - (oRe21 * tRe21 - oIm21 * tRe11);
+        out128[170] = resRe43_s;
+        out128[86] = resRe43_s;
+        float resIm43_s = -eIm21 + (oRe21 * tRe11 + oIm21 * tRe21);
+        out128[87] = resIm43_s;
+        out128[171] = -resIm43_s;
+        
+        float oRe22 = out128[172];
+        float oIm22 = out128[173];
+        float eRe22 = out128[44];
+        float eIm22 = out128[45];
+        float resIm22_s = eIm22 + (oRe22 * tRe10 + oIm22 * tRe22);
+        out128[45] = resIm22_s;
+        out128[213] = -resIm22_s;
+        float resRe22_s = eRe22 + (oRe22 * tRe22 - oIm22 * tRe10);
+        out128[212] = resRe22_s;
+        out128[44] = resRe22_s;
+        float resRe42_s = eRe22 - (oRe22 * tRe22 - oIm22 * tRe10);
+        out128[172] = resRe42_s;
+        out128[84] = resRe42_s;
+        float resIm42_s = -eIm22 + (oRe22 * tRe10 + oIm22 * tRe22);
+        out128[85] = resIm42_s;
+        out128[173] = -resIm42_s;
+        
+        float oRe23 = out128[174];
+        float oIm23 = out128[175];
+        float eRe23 = out128[46];
+        float eIm23 = out128[47];
+        float resIm23_s = eIm23 + (oRe23 * tRe9 + oIm23 * tRe23);
+        out128[47] = resIm23_s;
+        out128[211] = -resIm23_s;
+        float resRe23_s = eRe23 + (oRe23 * tRe23 - oIm23 * tRe9);
+        out128[210] = resRe23_s;
+        out128[46] = resRe23_s;
+        float resRe41_s = eRe23 - (oRe23 * tRe23 - oIm23 * tRe9);
+        out128[174] = resRe41_s;
+        out128[82] = resRe41_s;
+        float resIm41_s = -eIm23 + (oRe23 * tRe9 + oIm23 * tRe23);
+        out128[83] = resIm41_s;
+        out128[175] = -resIm41_s;
+        
+        float oRe24 = out128[176];
+        float oIm24 = out128[177];
+        float eRe24 = out128[48];
+        float eIm24 = out128[49];
+        float resIm24_s = eIm24 + (oRe24 * tRe8 + oIm24 * tRe24);
+        out128[49] = resIm24_s;
+        out128[209] = -resIm24_s;
+        float resRe24_s = eRe24 + (oRe24 * tRe24 - oIm24 * tRe8);
+        out128[208] = resRe24_s;
+        out128[48] = resRe24_s;
+        float resRe40_s = eRe24 - (oRe24 * tRe24 - oIm24 * tRe8);
+        out128[176] = resRe40_s;
+        out128[80] = resRe40_s;
+        float resIm40_s = -eIm24 + (oRe24 * tRe8 + oIm24 * tRe24);
+        out128[81] = resIm40_s;
+        out128[177] = -resIm40_s;
+        
+        float oRe25 = out128[178];
+        float oIm25 = out128[179];
+        float eRe25 = out128[50];
+        float eIm25 = out128[51];
+        float resIm25_s = eIm25 + (oRe25 * tRe7 + oIm25 * tRe25);
+        out128[51] = resIm25_s;
+        out128[207] = -resIm25_s;
+        float resRe25_s = eRe25 + (oRe25 * tRe25 - oIm25 * tRe7);
+        out128[206] = resRe25_s;
+        out128[50] = resRe25_s;
+        float resRe39_s = eRe25 - (oRe25 * tRe25 - oIm25 * tRe7);
+        out128[178] = resRe39_s;
+        out128[78] = resRe39_s;
+        float resIm39_s = -eIm25 + (oRe25 * tRe7 + oIm25 * tRe25);
+        out128[79] = resIm39_s;
+        out128[179] = -resIm39_s;
+        
+        float oRe26 = out128[180];
+        float oIm26 = out128[181];
+        float eRe26 = out128[52];
+        float eIm26 = out128[53];
+        float resIm26_s = eIm26 + (oRe26 * tRe6 + oIm26 * tRe26);
+        out128[53] = resIm26_s;
+        out128[205] = -resIm26_s;
+        float resRe26_s = eRe26 + (oRe26 * tRe26 - oIm26 * tRe6);
+        out128[204] = resRe26_s;
+        out128[52] = resRe26_s;
+        float resRe38_s = eRe26 - (oRe26 * tRe26 - oIm26 * tRe6);
+        out128[180] = resRe38_s;
+        out128[76] = resRe38_s;
+        float resIm38_s = -eIm26 + (oRe26 * tRe6 + oIm26 * tRe26);
+        out128[77] = resIm38_s;
+        out128[181] = -resIm38_s;
+        
+        float oRe27 = out128[182];
+        float oIm27 = out128[183];
+        float eRe27 = out128[54];
+        float eIm27 = out128[55];
+        float resIm27_s = eIm27 + (oRe27 * tRe5 + oIm27 * tRe27);
+        out128[55] = resIm27_s;
+        out128[203] = -resIm27_s;
+        float resRe27_s = eRe27 + (oRe27 * tRe27 - oIm27 * tRe5);
+        out128[202] = resRe27_s;
+        out128[54] = resRe27_s;
+        float resRe37_s = eRe27 - (oRe27 * tRe27 - oIm27 * tRe5);
+        out128[182] = resRe37_s;
+        out128[74] = resRe37_s;
+        float resIm37_s = -eIm27 + (oRe27 * tRe5 + oIm27 * tRe27);
+        out128[75] = resIm37_s;
+        out128[183] = -resIm37_s;
+        
+        float oRe28 = out128[184];
+        float oIm28 = out128[185];
+        float eRe28 = out128[56];
+        float eIm28 = out128[57];
+        float resIm28_s = eIm28 + (oRe28 * tRe4 + oIm28 * tRe28);
+        out128[57] = resIm28_s;
+        out128[201] = -resIm28_s;
+        float resRe28_s = eRe28 + (oRe28 * tRe28 - oIm28 * tRe4);
+        out128[200] = resRe28_s;
+        out128[56] = resRe28_s;
+        float resRe36_s = eRe28 - (oRe28 * tRe28 - oIm28 * tRe4);
+        out128[184] = resRe36_s;
+        out128[72] = resRe36_s;
+        float resIm36_s = -eIm28 + (oRe28 * tRe4 + oIm28 * tRe28);
+        out128[73] = resIm36_s;
+        out128[185] = -resIm36_s;
+        
+        float oRe29 = out128[186];
+        float oIm29 = out128[187];
+        float eRe29 = out128[58];
+        float eIm29 = out128[59];
+        float resIm29_s = eIm29 + (oRe29 * tRe3 + oIm29 * tRe29);
+        out128[59] = resIm29_s;
+        out128[199] = -resIm29_s;
+        float resRe29_s = eRe29 + (oRe29 * tRe29 - oIm29 * tRe3);
+        out128[198] = resRe29_s;
+        out128[58] = resRe29_s;
+        float resRe35_s = eRe29 - (oRe29 * tRe29 - oIm29 * tRe3);
+        out128[186] = resRe35_s;
+        out128[70] = resRe35_s;
+        float resIm35_s = -eIm29 + (oRe29 * tRe3 + oIm29 * tRe29);
+        out128[71] = resIm35_s;
+        out128[187] = -resIm35_s;
+        
+        float oRe30 = out128[188];
+        float oIm30 = out128[189];
+        float eRe30 = out128[60];
+        float eIm30 = out128[61];
+        float resIm30_s = eIm30 + (oRe30 * tRe2 + oIm30 * tRe30);
+        out128[61] = resIm30_s;
+        out128[197] = -resIm30_s;
+        float resRe30_s = eRe30 + (oRe30 * tRe30 - oIm30 * tRe2);
+        out128[196] = resRe30_s;
+        out128[60] = resRe30_s;
+        float resRe34_s = eRe30 - (oRe30 * tRe30 - oIm30 * tRe2);
+        out128[188] = resRe34_s;
+        out128[68] = resRe34_s;
+        float resIm34_s = -eIm30 + (oRe30 * tRe2 + oIm30 * tRe30);
+        out128[69] = resIm34_s;
+        out128[189] = -resIm34_s;
+        
+        float oRe31 = out128[190];
+        float oIm31 = out128[191];
+        float eRe31 = out128[62];
+        float eIm31 = out128[63];
+        float resIm31_s = eIm31 + (oRe31 * tRe1 + oIm31 * tRe31);
+        out128[63] = resIm31_s;
+        out128[195] = -resIm31_s;
+        float resRe31_s = eRe31 + (oRe31 * tRe31 - oIm31 * tRe1);
+        out128[194] = resRe31_s;
+        out128[62] = resRe31_s;
+        float resRe33_s = eRe31 - (oRe31 * tRe31 - oIm31 * tRe1);
+        out128[190] = resRe33_s;
+        out128[66] = resRe33_s;
+        float resIm33_s = -eIm31 + (oRe31 * tRe1 + oIm31 * tRe31);
+        out128[67] = resIm33_s;
+        out128[191] = -resIm33_s;
+        
+        float oRe32 = out128[192];
+        float oIm32 = out128[193];
+        float eRe32 = out128[64];
+        float eIm32 = out128[65];
+        float resIm32_s = eIm32 + oRe32;
+        out128[65] = resIm32_s;
+        out128[193] = -resIm32_s;
+        float resRe32_s = eRe32 - oIm32;
+        out128[192] = resRe32_s;
+        out128[64] = resRe32_s;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // THIS:
 //  emcc fft_float.c -o fft_wasm.js -s EXPORTED_RUNTIME_METHODS='cwrap,ccall' -s EXPORTED_FUNCTIONS='_getOut1024Ptr, _fftReal1024, _free, _malloc' -O3 -msimd128 -msse2 -fno-vectorize -fno-slp-vectorize
 

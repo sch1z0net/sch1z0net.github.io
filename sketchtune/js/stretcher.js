@@ -225,6 +225,38 @@ function STFTWithWebWorkers(inputSignal, windowSize, hopSize, mode, halfSpec) {
     });
 }
 
+function STFT_128(inputSignal, hopSize) {
+    return new Promise((resolve) => {
+        const frames = Math.floor((inputSignal.length - 128) / hopSize) + 1;
+        const spectrogram = new Array(frames); // Preallocate memory
+        
+        const processFrames = async () => {
+            try {
+                for (let i = 0; i <= frames; i++) {
+                    const startIdx = i * hopSize;
+                    const endIdx = startIdx + 128;
+                    let frame = inputSignal.slice(startIdx, endIdx);
+                    let windowedFrame = applyHanningWindow(frame);
+                    const spectrum = fftReal128(windowedFrame);
+                    // Assuming spectrum is the array containing the full spectrum obtained from FFT
+                    const halfSpectrum = spectrum.slice(0, 128);
+                    spectrogram[i] = halfSpectrum;
+                    // Clear memory by reusing variables
+                    frame = null;
+                    windowedFrame = null;
+                }
+
+                // Resolve the promise with the final spectrogram
+                resolve(spectrogram);
+            } catch (error) {
+                throw error;
+            }
+        };
+
+        processFrames();
+        
+    });
+}
 
 function STFT_256(inputSignal, hopSize) {
     return new Promise((resolve) => {
@@ -403,6 +435,37 @@ function ISTFTWithWebWorkers(spectrogram, windowSize, hopSize, windowType, halfS
     });
 }
 */
+
+// Apply synthesis window to the frame
+const synthesisWindow_128 = hanningWindow(128);
+// Function to perform Inverse Short-Time Fourier Transform (ISTFT) using Web Workers
+function ISTFT_128(spectrogram, hopSize) {
+        let spectra = spectrogram.length;
+        const outputSignal = new Float32Array(spectra * hopSize);
+
+        for (let i = 0; i < spectra; i++) {
+            // Compute inverse FFT of the spectrum to obtain the frame in time domain
+            let spectrum = spectrogram[i];
+            let frame = computeInverseFFTonHalf128(spectrum);
+            const weightedFrame = applySynthesisWindow(frame, synthesisWindow_128);
+            // Overlap-add the weighted frame to the output signal
+            const startIdx = i * hopSize;
+            for (let j = 0; j < 128; j++) {
+                // Check if there's no existing value at the current index in the output signal chunk
+                if (!outputSignal[startIdx + j]) {
+                    // If there's no existing value, initialize it with the value from the current frame
+                    outputSignal[startIdx + j] = frame[j];
+                } else {
+                    outputSignal[startIdx + j] += weightedFrame[j];
+                }
+            }
+        }
+
+        // Normalize the output signal
+        normalizeOutput(outputSignal);
+
+        return outputSignal;
+}
 
 
 // Apply synthesis window to the frame
