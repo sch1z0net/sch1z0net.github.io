@@ -24,12 +24,15 @@ body {
   box-sizing: border-box;
 }
 
-
-#title {
+#title_div {
   position: absolute;
   top: 10%;
   left: 50%;
   transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+#title {
   font-family: "Sue Ellen Francisco", cursive !important;
   font-weight: 400;
   font-style: normal;
@@ -37,10 +40,6 @@ body {
 }
 
 #subtitle {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   font-family: "Sue Ellen Francisco", cursive !important;
   font-weight: 400;
   font-style: normal;

@@ -119,13 +119,14 @@ function runForthAndBack(){
 }
 
 $(document).ready(function(){
-    // Create a title element
+    var $title_div = $("<div>").attr("id", "title_div");
+    $("#root").append($title_div);
+
     var $title = $("<h1>").text("OINK FFT").attr("id", "title");
-    // Append the title element to the body
-    $("#root").append($title);
+    $title_div.append($title);
 
     var $subtitle = $("<h2>").text("the oinkiest FFT in the web").attr("id", "subtitle");
-    $("#root").append($subtitle);
+    $title_div.append($subtitle);
 
 
 
