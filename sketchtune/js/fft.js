@@ -4305,6 +4305,21 @@ function fftRealInPlace_ref(realInput, fftFactorLookup = null) {
 /******************** INVERSE *********************/
 //const pi = Math.PI;
 
+let result256 = new Float32Array(256);
+function ifft256(input) {
+    // Take the complex conjugate of the input spectrum in place
+    for (let i = 0; i < 512; i += 2) {
+        input[i + 1] = -input[i + 1]; // Negate the imaginary part
+    }
+
+    // Apply FFT to the conjugate spectrum
+    const result_ = fftComplexInPlace_ref(input);
+    for (let i = 0; i < 256; i++) {
+        result256[i] = result_[i*2] / 256; // Scale the real part
+    }
+    return result256;
+}
+
 let result512 = new Float32Array(512);
 function ifft512(input) {
     // Take the complex conjugate of the input spectrum in place
