@@ -693,8 +693,9 @@ function compareFFTResults(array1, array2) {
     // Check each element in the arrays for equality
     for (let i = 0; i < array1.length; i++) {
         // Compare elements with a small tolerance for floating-point imprecision
-        if (Math.abs(array1[i] - array2[i]) > 1e-6) {
+        if (Math.abs(array1[i] - array2[i]) > 1e-4) {
             console.log("Mismatch at ",i," between ",array1[i],array2[i]);
+            return false;
         }
     }
 
