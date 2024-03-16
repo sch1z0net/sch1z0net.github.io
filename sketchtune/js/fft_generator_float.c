@@ -248,9 +248,9 @@ int main() {
     //generate_code(128, fp);
     //generate_code(256, fp);
     //generate_code(512, fp);
-    generate_code_unrolled(512, 128, fp);
-    generate_code_unrolled(512, 256, fp);
-    //generate_code_unrolled(512, fp);
+    //generate_code_unrolled(512, 128, fp);
+    //generate_code_unrolled(512, 256, fp);
+    generate_code_unrolled(512, 512, fp);
     //generate_code_unrolled(1024, fp);
     printf("Generated code written to generated_code.c\n");
 
