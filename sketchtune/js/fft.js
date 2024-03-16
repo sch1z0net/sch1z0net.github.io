@@ -485,12 +485,6 @@ function computeInverseFFTonHalf256(halfSpectrum) {
     // Perform the IFFT on the full spectrum
     const audioSignal = ifft256(fullSpectrum256);
 
-    // Extract only the real parts of the time-domain signal
-    /*const audioSignal = new Float32Array(timeDomainSignal.length / 2);
-    for (let i = 0; i < audioSignal.length; i++) {
-        audioSignal[i] = timeDomainSignal[i * 2];
-    }*/
-
     return audioSignal;
 }
 
@@ -519,12 +513,6 @@ function computeInverseFFTonHalf512(halfSpectrum) {
     // Perform the IFFT on the full spectrum
     const audioSignal = ifft512(fullSpectrum512);
 
-    // Extract only the real parts of the time-domain signal
-    /*const audioSignal = new Float32Array(timeDomainSignal.length / 2);
-    for (let i = 0; i < audioSignal.length; i++) {
-        audioSignal[i] = timeDomainSignal[i * 2];
-    }*/
-
     return audioSignal;
 }
 
@@ -552,12 +540,6 @@ function computeInverseFFTonHalf1024(halfSpectrum) {
 
     // Perform the IFFT on the full spectrum
     const audioSignal = ifft1024(fullSpectrum1024);
-
-    /*// Extract only the real parts of the time-domain signal
-    const audioSignal = new Float32Array(timeDomainSignal.length / 2);
-    for (let i = 0; i < audioSignal.length; i++) {
-        audioSignal[i] = timeDomainSignal[i * 2];
-    }*/
 
     return audioSignal;
 }
@@ -743,10 +725,10 @@ function runComparison(){
 function runForthAndBack(){
     let error;
     
-    let signal128  = computeInverseFFTonHalf128(fftReal128(testData128.slice(0, 128)));
-    let signal256  = computeInverseFFTonHalf256(fftReal256(testData256.slice(0, 256)));
-    let signal512  = computeInverseFFTonHalf512(fftReal512(testData512.slice(0, 512)));
-    let signal1024 = computeInverseFFTonHalf1024(fftReal1024(testData1024.slice(0, 1024)));
+    let signal128  = computeInverseFFTonHalf128(fftReal128(testData128).slice(0, 128));
+    let signal256  = computeInverseFFTonHalf256(fftReal256(testData256).slice(0, 256));
+    let signal512  = computeInverseFFTonHalf512(fftReal512(testData512).slice(0, 512));
+    let signal1024 = computeInverseFFTonHalf1024(fftReal1024(testData1024).slice(0, 1024));
 
     error = 1e-3;
     console.log("\n\nCompare after Forth and Back with acceptable Error ",error," :");
