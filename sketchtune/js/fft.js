@@ -741,15 +741,15 @@ function runForthAndBack(){
 // Check if the module is already initialized, otherwise wait for initialization
 if (Module.isRuntimeInitialized) {
     initializeModule();
-    runPerformance();
+    //runPerformance();
     runComparison();
-    runForthAndBack();
+    //runForthAndBack();
 } else {
     Module.onRuntimeInitialized = function(){
         initializeModule();
-        runPerformance();
+        //runPerformance();
         runComparison();
-        runForthAndBack();
+        //runForthAndBack();
     };
 }
 
