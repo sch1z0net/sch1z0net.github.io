@@ -65,7 +65,7 @@ void generate_code_unrolled(int FFT_N, int size, FILE *fp) {
           fprintf(fp, "        float resRe%d_s = eRe%d + oRe%d;\n", _i, _i, _i);
           fprintf(fp, "        out%d[%d] = resRe%d_s;\n", FFT_N, x + 0, _i);
           fprintf(fp, "        float resIm%d_s = eIm%d + oIm%d;\n", _i, _i, _i);
-          fprintf(fp, "        out%d[%d] = resRe0_s;\n", FFT_N, x + 1);
+          fprintf(fp, "        out%d[%d] = resIm%d_s;\n", FFT_N, x + 1, _i);
           fprintf(fp, "        float resRe%d_d = eRe%d - oRe%d;\n", _i, _i, _i);
           fprintf(fp, "        out%d[%d] = resRe%d_d;\n", FFT_N, x + size, _i);
           fprintf(fp, "        float resIm%d_d = eIm%d - oIm%d;\n", _i, _i, _i);
