@@ -684,7 +684,7 @@ function runPerformance(){
         measureTime(128);
 }
 
-function compareFFTResults(array1, array2) {
+function compareFFTResults(array1, array2, error) {
     // Check if arrays have the same length
     if (array1.length !== array2.length) {
         return false;
@@ -693,7 +693,7 @@ function compareFFTResults(array1, array2) {
     // Check each element in the arrays for equality
     for (let i = 0; i < array1.length; i++) {
         // Compare elements with a small tolerance for floating-point imprecision
-        if (Math.abs(array1[i] - array2[i]) > 1e-3) { //1e-6
+        if (Math.abs(array1[i] - array2[i]) > error) { //1e-6
             console.log("Mismatch at ",i," between ",array1[i],array2[i]);
             return false;
         }
@@ -710,16 +710,34 @@ function compareFFTResults(array1, array2) {
 //const signal5 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
 
 function runComparison(){
-    console.log("\n\nCompare to Reference:");
-    console.log("128:  ",compareFFTResults(fftReal_ref(testData128), fftReal128(testData128)));
-    /*let res1 = fftReal_ref(testData128);
-    let res2 = fftReal128(testData128);
-    for(let i = 0; i<256; i++){
-        console.log(res1[i].toFixed(3),"  ",res2[i].toFixed(3));
-    }*/
-    console.log("256:  ",compareFFTResults(fftReal_ref(testData256), fftReal256(testData256)));
-    console.log("512:  ",compareFFTResults(fftReal_ref(testData512), fftReal512(testData512)));
-    console.log("1024: ",compareFFTResults(fftReal_ref(testData1024),fftReal1024(testData1024)));
+    let error;
+    error = 1e-3;
+    console.log("\n\nCompare to Reference with acceptable Error ",error," :");
+    console.log("128:  ",compareFFTResults(fftReal_ref(testData128), fftReal128(testData128)), error);
+    console.log("256:  ",compareFFTResults(fftReal_ref(testData256), fftReal256(testData256)), error);
+    console.log("512:  ",compareFFTResults(fftReal_ref(testData512), fftReal512(testData512)), error);
+    console.log("1024: ",compareFFTResults(fftReal_ref(testData1024),fftReal1024(testData1024)), error);
+
+    error = 1e-4;
+    console.log("\n\nCompare to Reference with acceptable Error ",error," :");
+    console.log("128:  ",compareFFTResults(fftReal_ref(testData128), fftReal128(testData128)), error);
+    console.log("256:  ",compareFFTResults(fftReal_ref(testData256), fftReal256(testData256)), error);
+    console.log("512:  ",compareFFTResults(fftReal_ref(testData512), fftReal512(testData512)), error);
+    console.log("1024: ",compareFFTResults(fftReal_ref(testData1024),fftReal1024(testData1024)), error);
+
+    error = 1e-5;
+    console.log("\n\nCompare to Reference with acceptable Error ",error," :");
+    console.log("128:  ",compareFFTResults(fftReal_ref(testData128), fftReal128(testData128)), error);
+    console.log("256:  ",compareFFTResults(fftReal_ref(testData256), fftReal256(testData256)), error);
+    console.log("512:  ",compareFFTResults(fftReal_ref(testData512), fftReal512(testData512)), error);
+    console.log("1024: ",compareFFTResults(fftReal_ref(testData1024),fftReal1024(testData1024)), error);
+
+    error = 1e-6;
+    console.log("\n\nCompare to Reference with acceptable Error ",error," :");
+    console.log("128:  ",compareFFTResults(fftReal_ref(testData128), fftReal128(testData128)), error);
+    console.log("256:  ",compareFFTResults(fftReal_ref(testData256), fftReal256(testData256)), error);
+    console.log("512:  ",compareFFTResults(fftReal_ref(testData512), fftReal512(testData512)), error);
+    console.log("1024: ",compareFFTResults(fftReal_ref(testData1024),fftReal1024(testData1024)), error);
 }
 
 function runForthAndBack(){
