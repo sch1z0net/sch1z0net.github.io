@@ -100,100 +100,78 @@ function applyHanningWindow(frame) {
 /**********************************************************************************************/
 /**********************************************************************************************/
 /**********************************************************************************************/
-/*******************************  RADIX 2/4 IMPLEMENTATIONS ***********************************/
+/*******************************  WASM FFT MIXED RADIX      ***********************************/
 /**********************************************************************************************/
 /**********************************************************************************************/
 /**********************************************************************************************/
 /**********************************************************************************************/
 
-var byteOffset;
-var byteLength;
-var ptr_out;
+var p_in_128, fft_wasm_128;
+var p_in_256, fft_wasm_256;
+var p_in_512, fft_wasm_512;
+var p_in_1024, fft_wasm_1024;
 
-// Allocate memory for input data outside of the function
-//var N = 1024; // Assuming maximum input length
-//var N = 512; // Assuming maximum input length
-//var N = 256; // Assuming maximum input length
-var N = 128; // Assuming maximum input length
-var ptr_in;
-let fft_wasm;
+function initializeModule() {
+    fft_wasm_128 = Module.cwrap('fftReal128', null, ['number', 'number', 'number']);
+    p_in_128     = Module._malloc(128 * Float32Array.BYTES_PER_ELEMENT);
+
+    fft_wasm_256 = Module.cwrap('fftReal256', null, ['number', 'number', 'number']);
+    p_in_256     = Module._malloc(256 * Float32Array.BYTES_PER_ELEMENT);
+
+    fft_wasm_512 = Module.cwrap('fftReal512', null, ['number', 'number', 'number']);
+    p_in_512     = Module._malloc(512 * Float32Array.BYTES_PER_ELEMENT);
+
+    fft_wasm_1024= Module.cwrap('fftReal1024', null, ['number', 'number', 'number']);
+    p_in_1024    = Module._malloc(1024* Float32Array.BYTES_PER_ELEMENT);
+}
 
 function fftReal1024(realInput) {
     // Check if the input length exceeds the maximum length
-    if (realInput.length > N) {
-        throw new Error("Input length exceeds maximum length");
-    }
-
+    if (realInput.length > 1024) { throw new Error("Input length exceeds maximum length"); }
     // Copy input data to the preallocated memory buffer
-    Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
-
+    Module.HEAPF32.set(realInput, p_in_1024 / Float32Array.BYTES_PER_ELEMENT);
     // Perform FFT
-    fft_wasm(ptr_in, realInput.length);
-
-    var out1024Ptr = Module.ccall('getOut1024Ptr', 'number', [], []);
-    // Access out1024 array directly from exported memory
-    var result = new Float32Array(Module.HEAPF32.buffer, out1024Ptr, N*2);
-
+    fft_wasm_1024(p_in_1024, realInput.length);
+    var p_out_1024 = Module.ccall('getOut1024Ptr', 'number', [], []);
     // Return the result array
-    return result;
+    return new Float32Array(Module.HEAPF32.buffer, p_out_1024, 2048);
 }
 
 
 function fftReal512(realInput) {
     // Check if the input length exceeds the maximum length
-    if (realInput.length > N) {
-        throw new Error("Input length exceeds maximum length");
-    }
-
+    if (realInput.length > 512) { throw new Error("Input length exceeds maximum length"); }
     // Copy input data to the preallocated memory buffer
-    Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
-
+    Module.HEAPF32.set(realInput, p_in_512 / Float32Array.BYTES_PER_ELEMENT);
     // Perform FFT
-    fft_wasm(ptr_in, realInput.length);
-
-    var out512Ptr = Module.ccall('getOut512Ptr', 'number', [], []);
-    var result = new Float32Array(Module.HEAPF32.buffer, out512Ptr, N*2);
-
+    fft_wasm_512(p_in_512, realInput.length);
+    var p_out_512 = Module.ccall('getOut512Ptr', 'number', [], []);
     // Return the result array
-    return result;
+    return new Float32Array(Module.HEAPF32.buffer, p_out_512, 1024);
 }
 
 function fftReal256(realInput) {
     // Check if the input length exceeds the maximum length
-    if (realInput.length > N) {
-        throw new Error("Input length exceeds maximum length");
-    }
-
+    if (realInput.length > 256) { throw new Error("Input length exceeds maximum length"); }
     // Copy input data to the preallocated memory buffer
-    Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
-
+    Module.HEAPF32.set(realInput, p_in_256 / Float32Array.BYTES_PER_ELEMENT);
     // Perform FFT
-    fft_wasm(ptr_in, realInput.length);
-
-    var out256Ptr = Module.ccall('getOut256Ptr', 'number', [], []);
-    var result = new Float32Array(Module.HEAPF32.buffer, out256Ptr, N*2);
-
+    fft_wasm_256(p_in_256, realInput.length);
+    var p_out_256 = Module.ccall('getOut256Ptr', 'number', [], []);
     // Return the result array
-    return result;
+    return new Float32Array(Module.HEAPF32.buffer, p_out_256, 512);
 }
 
 function fftReal128(realInput) {
     // Check if the input length exceeds the maximum length
-    if (realInput.length > N) {
-        throw new Error("Input length exceeds maximum length");
-    }
-
+    if (realInput.length > 128) { throw new Error("Input length exceeds maximum length"); }
     // Copy input data to the preallocated memory buffer
-    Module.HEAPF32.set(realInput, ptr_in / Float32Array.BYTES_PER_ELEMENT);
-
+    Module.HEAPF32.set(realInput, p_in_128 / Float32Array.BYTES_PER_ELEMENT);
     // Perform FFT
-    fft_wasm(ptr_in, realInput.length);
-
-    var out128Ptr = Module.ccall('getOut128Ptr', 'number', [], []);
-    var result = new Float32Array(Module.HEAPF32.buffer, out128Ptr, N*2);
-
+    fft_wasm_128(p_in_128, realInput.length);
+    var p_out_128 = Module.ccall('getOut128Ptr', 'number', [], []);
     // Return the result array
-    return result;
+    return new Float32Array(Module.HEAPF32.buffer, p_out_128, 256);
 }
 
 
@@ -595,103 +573,80 @@ function computeInverseFFTonHalf1024(halfSpectrum) {
 /**********************************************************************************************/
 /********************************* TESTING PERFORMANCE ****************************************/
 
-function initializeModule() {
-    fft_wasm = Module.cwrap('fftReal128', null, ['number', 'number', 'number']);
-    //fft_wasm = Module.cwrap('fftReal256', null, ['number', 'number', 'number']);
-    //fft_wasm = Module.cwrap('fftReal512', null, ['number', 'number', 'number']);
-    //fft_wasm = Module.cwrap('fftReal1024', null, ['number', 'number', 'number']);
-    // Calculate byte offsets
-    byteLength = 2 * N * Float32Array.BYTES_PER_ELEMENT;
-    ptr_out = Module._malloc(byteLength);
-    byteOffset = ptr_out / Float32Array.BYTES_PER_ELEMENT;
-    ptr_in = Module._malloc(N * Float32Array.BYTES_PER_ELEMENT);
+// Define the number of FFT operations to perform
+const numOperations = 20000; // You can adjust this number based on your requirements
 
-
-
-    // Define the number of FFT operations to perform
-    const numOperations = 20000; // You can adjust this number based on your requirements
-
-    // Generate test data as Float32Array
-    const generateTestData = (size) => {
-        const testData = new Float32Array(size);
-        for (let i = 0; i < size; i++) {
-            // For demonstration purposes, generate random data between -1 and 1
-            testData[i] = Math.random() * 2 - 1;
-        }
-        return testData;
-    };
-
-    let testData8      = generateTestData(8);
-    let testData16     = generateTestData(16);
-    let testData32     = generateTestData(32);
-    let testData64     = generateTestData(64);
-    let testData128    = generateTestData(128);
-    let testData256    = generateTestData(256);
-    let testData512    = generateTestData(512);
-    let testData1024   = generateTestData(1024);
-    let testData2048   = generateTestData(2048);
-    let testData4096   = generateTestData(4096);
-
-    // Perform FFT operations
-    const performFFTOperations = (fftSize) => {
-        // Perform FFT operations numOperations times
-        for (let i = 0; i < numOperations; i++) {
-            //fftRealInPlace_ref(testData);
-            fftReal128(testData128);
-            //fftReal256(testData256);
-            //fftReal512(testData512);
-            //fftReal1024(testData1024);
-            //fft_wasm(ptr_in, inputArray.length, ptr_out);
-        }
-
-    };
-
-    // Measure the time taken to perform FFT operations
-    const measureTime = (fftSize) => {
-        const startTime = performance.now(); // Start time
-        performFFTOperations(fftSize); // Perform FFT operations
-        const endTime = performance.now(); // End time
-        const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
-
-        // Calculate the number of FFT operations per second
-        const operationsPerSecond = Math.floor(numOperations / (elapsedTime / 1000));
-        console.log("Number of FFT",fftSize,"operations per second:", operationsPerSecond);
-    };
-
-
-    function compareFFTResults(array1, array2) {
-        // Check if arrays have the same length
-        if (array1.length !== array2.length) {
-            return false;
-        }
-
-        // Check each element in the arrays for equality
-        for (let i = 0; i < array1.length; i++) {
-            // Compare elements with a small tolerance for floating-point imprecision
-            if (Math.abs(array1[i] - array2[i]) > 1e-6) {
-                console.log("Mismatch at ",i," between ",array1[i],array2[i]);
-                return false;
-            }
-        }
-
-        // If all elements are equal within tolerance, arrays are considered equal
-        return true;
+// Generate test data as Float32Array
+const generateTestData = (size) => {
+    const testData = new Float32Array(size);
+    for (let i = 0; i < size; i++) {
+        // For demonstration purposes, generate random data between -1 and 1
+        testData[i] = Math.random() * 2 - 1;
     }
-    /*
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        testData1024   = generateTestData(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        testData1024   = generateTestData(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-    */
+    return testData;
+};
 
-    /*
+let testData8      = generateTestData(8);
+let testData16     = generateTestData(16);
+let testData32     = generateTestData(32);
+let testData64     = generateTestData(64);
+let testData128    = generateTestData(128);
+let testData256    = generateTestData(256);
+let testData512    = generateTestData(512);
+let testData1024   = generateTestData(1024);
+let testData2048   = generateTestData(2048);
+let testData4096   = generateTestData(4096);
+
+// Perform FFT operations
+const performFFTOperations = (fftSize) => {
+    if(fftSize == 128){
+        for (let i = 0; i < numOperations; i++) {
+             fftReal128(testData128);
+        }
+    }
+    if(fftSize == 256){
+        for (let i = 0; i < numOperations; i++) {
+             fftReal256(testData256);
+        }
+    }
+    if(fftSize == 512){
+        for (let i = 0; i < numOperations; i++) {
+             fftReal512(testData512);
+        }
+    }
+    if(fftSize == 1024){
+        for (let i = 0; i < numOperations; i++) {
+             fftReal1024(testData1024);
+        }
+    }
+};
+
+// Measure the time taken to perform FFT operations
+const measureTime = (fftSize) => {
+    const startTime = performance.now(); // Start time
+    performFFTOperations(fftSize); // Perform FFT operations
+    const endTime = performance.now(); // End time
+    const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
+
+    // Calculate the number of FFT operations per second
+    const operationsPerSecond = Math.floor(numOperations / (elapsedTime / 1000));
+    console.log("Number of FFT",fftSize,"operations per second:", operationsPerSecond);
+};
+
+function runTests(){
+
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        testData1024 = generateTestData(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+        testData1024 = generateTestData(1024);
+        measureTime(1024);
+        measureTime(1024);
+        measureTime(1024);
+
         measureTime(512);
         measureTime(512);
         measureTime(512);
@@ -703,8 +658,7 @@ function initializeModule() {
         measureTime(512);
         measureTime(512);
         measureTime(512);
-    */
-     /*
+
         measureTime(256);
         measureTime(256);
         measureTime(256);
@@ -716,7 +670,6 @@ function initializeModule() {
         measureTime(256);
         measureTime(256);
         measureTime(256);
-    */
     
         measureTime(128);
         measureTime(128);
@@ -729,6 +682,27 @@ function initializeModule() {
         measureTime(128);
         measureTime(128);
         measureTime(128);
+
+}
+
+function compareFFTResults(array1, array2) {
+    // Check if arrays have the same length
+    if (array1.length !== array2.length) {
+        return false;
+    }
+
+    // Check each element in the arrays for equality
+    for (let i = 0; i < array1.length; i++) {
+        // Compare elements with a small tolerance for floating-point imprecision
+        if (Math.abs(array1[i] - array2[i]) > 1e-6) {
+            console.log("Mismatch at ",i," between ",array1[i],array2[i]);
+            return false;
+        }
+    }
+
+    // If all elements are equal within tolerance, arrays are considered equal
+    return true;
+}
 
     //console.log("8:    ",compareFFTResults(fftRealInPlace_ref(testData8),fftRealInPlaceRADIX4(testData8)));
     //console.log("16:   ",compareFFTResults(fftRealInPlace_ref(testData16),fftRealInPlaceRADIX4(testData16)));
@@ -768,12 +742,11 @@ function initializeModule() {
     //console.log(fftReal512(testData512));
     //console.log(fftReal512(testData1024));
 
-}
-
 
 // Check if the module is already initialized, otherwise wait for initialization
 if (Module.isRuntimeInitialized) {
     initializeModule();
+    runTests();
 } else {
     Module.onRuntimeInitialized = initializeModule;
 }
