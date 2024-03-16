@@ -741,16 +741,40 @@ function runComparison(){
 }
 
 function runForthAndBack(){
-    console.log("\n\nCompare after Forth and Back:");
+    let error;
+    
     let signal128  = computeInverseFFTonHalf128(fftReal128(testData128.slice(0, 128)));
     let signal256  = computeInverseFFTonHalf256(fftReal256(testData256.slice(0, 256)));
     let signal512  = computeInverseFFTonHalf512(fftReal512(testData512.slice(0, 512)));
     let signal1024 = computeInverseFFTonHalf1024(fftReal1024(testData1024.slice(0, 1024)));
 
-    console.log("128:   ",compareFFTResults(testData128, signal128));
-    console.log("256:   ",compareFFTResults(testData256, signal256));
-    console.log("512:   ",compareFFTResults(testData512, signal512));
-    console.log("1024:  ",compareFFTResults(testData1024, signal1024));
+    error = 1e-3;
+    console.log("\n\nCompare after Forth and Back with acceptable Error ",error," :");
+    console.log("128:   ",compareFFTResults(testData128, signal128 ,error));
+    console.log("256:   ",compareFFTResults(testData256, signal256 ,error));
+    console.log("512:   ",compareFFTResults(testData512, signal512 ,error));
+    console.log("1024:  ",compareFFTResults(testData1024, signal1024 ,error));
+
+    error = 1e-4;
+    console.log("\n\nCompare after Forth and Back with acceptable Error ",error," :");
+    console.log("128:   ",compareFFTResults(testData128, signal128 ,error));
+    console.log("256:   ",compareFFTResults(testData256, signal256 ,error));
+    console.log("512:   ",compareFFTResults(testData512, signal512 ,error));
+    console.log("1024:  ",compareFFTResults(testData1024, signal1024 ,error));
+
+    error = 1e-5;
+    console.log("\n\nCompare after Forth and Back with acceptable Error ",error," :");
+    console.log("128:   ",compareFFTResults(testData128, signal128 ,error));
+    console.log("256:   ",compareFFTResults(testData256, signal256 ,error));
+    console.log("512:   ",compareFFTResults(testData512, signal512 ,error));
+    console.log("1024:  ",compareFFTResults(testData1024, signal1024 ,error));
+
+    error = 1e-6;
+    console.log("\n\nCompare after Forth and Back with acceptable Error ",error," :");
+    console.log("128:   ",compareFFTResults(testData128, signal128 ,error));
+    console.log("256:   ",compareFFTResults(testData256, signal256 ,error));
+    console.log("512:   ",compareFFTResults(testData512, signal512 ,error));
+    console.log("1024:  ",compareFFTResults(testData1024, signal1024 ,error));
 }
 
 
@@ -761,13 +785,13 @@ if (Module.isRuntimeInitialized) {
     initializeModule();
     //runPerformance();
     runComparison();
-    //runForthAndBack();
+    runForthAndBack();
 } else {
     Module.onRuntimeInitialized = function(){
         initializeModule();
         //runPerformance();
         runComparison();
-        //runForthAndBack();
+        runForthAndBack();
     };
 }
 
