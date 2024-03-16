@@ -333,6 +333,61 @@ function fftComplex_ref_d(complexInput) {
     return out;
 }
 
+function fftReal_ref_d(realInput) {
+    const N = realInput.length;
+    const bits = Math.floor(Math.log2(N));
+
+    if (N !== nextPowerOf2(N)) {
+        console.error("FFT FRAME must have power of 2");
+        return;
+    }
+
+    // Perform bit reversal
+    const out = new Float64Array(N * 2);
+    for (let i = 0; i < N; i++) {
+        const reversedIndex = bitReverse(i, bits);
+        out[reversedIndex * 2    ] = realInput[i]; // Copy real part
+        out[reversedIndex * 2 + 1] = 0;            // Copy imaginary part
+    }
+
+    if (N <= 1) {
+        return out;
+    }
+
+    // Recursively calculate FFT
+    for (let size = 2; size <= N; size *= 2) {
+        const halfSize = size / 2;
+        //const factors = computeFFTFactorsWithCache(size);
+        for (let i = 0; i < N; i += size) {
+            for (let j = 0; j < halfSize; j++) {
+                const evenIndex = i + j;
+                const oddIndex = i + j + halfSize;
+
+                const eRe = out[evenIndex * 2];
+                const eIm = out[evenIndex * 2 + 1];
+                const oRe = out[oddIndex * 2];
+                const oIm = out[oddIndex * 2 + 1];
+
+                const twiddleRe = Math.cos((2 * Math.PI * j) / size);
+                const twiddleIm = Math.sin((2 * Math.PI * j) / size);
+                //const twiddleRe = factors[2 * j    ];
+                //const twiddleIm = factors[2 * j + 1];
+
+                // Multiply by twiddle factors
+                const t_oRe = oRe * twiddleRe - oIm * twiddleIm;
+                const t_oIm = oRe * twiddleIm + oIm * twiddleRe;
+
+                // Combine results of even and odd parts in place
+                out[evenIndex * 2    ] = eRe + t_oRe;
+                out[evenIndex * 2 + 1] = eIm + t_oIm;
+                out[oddIndex  * 2    ] = eRe - t_oRe;
+                out[oddIndex  * 2 + 1] = eIm - t_oIm;
+            }
+        }
+    }
+
+    return out;
+}
 
 function fftReal_ref(realInput) {
     const N = realInput.length;
@@ -781,10 +836,10 @@ function runComparison(){
 function runForthAndBack(){
     let error;
     
-    let signal128  = computeInverseFFTonHalf128(fftReal_ref(testData128).slice(0, 128));
-    let signal256  = computeInverseFFTonHalf256(fftReal_ref(testData256).slice(0, 256));
-    let signal512  = computeInverseFFTonHalf512(fftReal_ref(testData512).slice(0, 512));
-    let signal1024 = computeInverseFFTonHalf1024(fftReal_ref(testData1024).slice(0, 1024));
+    let signal128  = computeInverseFFTonHalf128(fftReal_ref_d(testData128).slice(0, 128));
+    let signal256  = computeInverseFFTonHalf256(fftReal_ref_d(testData256).slice(0, 256));
+    let signal512  = computeInverseFFTonHalf512(fftReal_ref_d(testData512).slice(0, 512));
+    let signal1024 = computeInverseFFTonHalf1024(fftReal_ref_d(testData1024).slice(0, 1024));
 
     error = 1e-3;
     console.log("\n\nCompare after Forth and Back with acceptable Error ",error," :");
