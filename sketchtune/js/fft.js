@@ -4336,6 +4336,39 @@ function ifft1024(input) {
 }
 
 
+let fullSpectrum256 = new Float32Array(512);
+// Function to compute inverse FFT of a spectrum
+function computeInverseFFTonHalf256(halfSpectrum) {
+    // Copy DC component (index 0)
+    fullSpectrum256[0] = halfSpectrum[0]; // Copy the real part
+    fullSpectrum256[1] = halfSpectrum[1]; // Copy the imaginary part
+
+    // Copy Nyquist frequency component (index paddedSize)
+    fullSpectrum256[256    ] = 0; // Copy the real part
+    fullSpectrum256[256 + 1] = 0; // Invert the imaginary part
+
+    // Apply symmetry to fill the rest of the spectrum
+    for (let i = 1; i < 128; i++) {
+        let re = halfSpectrum[i * 2    ];
+        let im = halfSpectrum[i * 2 + 1];
+        fullSpectrum256[i * 2    ] = re; // Copy the real part
+        fullSpectrum256[i * 2 + 1] = im; // Copy imaginary part
+        // Fill the mirrored part of the spectrum
+        fullSpectrum256[512 - (i * 2)    ] =  re;     // Copy the real part
+        fullSpectrum256[512 - (i * 2) + 1] = -im; // Invert the imaginary part
+    }
+    
+    // Perform the IFFT on the full spectrum
+    const audioSignal = ifft256(fullSpectrum256);
+
+    // Extract only the real parts of the time-domain signal
+    /*const audioSignal = new Float32Array(timeDomainSignal.length / 2);
+    for (let i = 0; i < audioSignal.length; i++) {
+        audioSignal[i] = timeDomainSignal[i * 2];
+    }*/
+
+    return audioSignal;
+}
 
 let fullSpectrum512 = new Float32Array(1024);
 // Function to compute inverse FFT of a spectrum
