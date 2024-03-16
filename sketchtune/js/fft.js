@@ -550,8 +550,8 @@ function IFFT128onHalf(halfSpectrum) {
     fullSpectrum128[1] = halfSpectrum[1]; // Copy the imaginary part
 
     // Copy Nyquist frequency component (index paddedSize)
-    fullSpectrum128[128    ] = 0; // Copy the real part
-    fullSpectrum128[128 + 1] = 0; // Invert the imaginary part
+    fullSpectrum128[128    ] = halfSpectrum[128];     // Copy the real part
+    fullSpectrum128[128 + 1] = halfSpectrum[128 + 1]; // Invert the imaginary part
 
     // Apply symmetry to fill the rest of the spectrum
     for (let i = 1; i < 64; i++) {
@@ -579,8 +579,8 @@ function IFFT256onHalf(halfSpectrum) {
     fullSpectrum256[1] = halfSpectrum[1]; // Copy the imaginary part
 
     // Copy Nyquist frequency component (index paddedSize)
-    fullSpectrum256[256    ] = 0; // Copy the real part
-    fullSpectrum256[256 + 1] = 0; // Invert the imaginary part
+    fullSpectrum256[256    ] = halfSpectrum[256]; // Copy the real part
+    fullSpectrum256[256 + 1] = halfSpectrum[256 + 1]; // Invert the imaginary part
 
     // Apply symmetry to fill the rest of the spectrum
     for (let i = 1; i < 128; i++) {
@@ -607,8 +607,8 @@ function IFFT512onHalf(halfSpectrum) {
     fullSpectrum512[1] = halfSpectrum[1]; // Copy the imaginary part
 
     // Copy Nyquist frequency component (index paddedSize)
-    fullSpectrum512[512    ] = 0; // Copy the real part
-    fullSpectrum512[512 + 1] = 0; // Invert the imaginary part
+    fullSpectrum512[512    ] = halfSpectrum[512]; // Copy the real part
+    fullSpectrum512[512 + 1] = halfSpectrum[512 + 1]; // Invert the imaginary part
 
     // Apply symmetry to fill the rest of the spectrum
     for (let i = 1; i < 256; i++) {
@@ -635,8 +635,8 @@ function IFFT1024onHalf(halfSpectrum) {
     fullSpectrum1024[1] = halfSpectrum[1]; // Copy the imaginary part
     
     // Copy Nyquist frequency component (index paddedSize)
-    fullSpectrum1024[1024    ] = 0; // Copy the real part
-    fullSpectrum1024[1024 + 1] = 0; // Invert the imaginary part
+    fullSpectrum1024[1024    ] = halfSpectrum[1024]; // Copy the real part
+    fullSpectrum1024[1024 + 1] = halfSpectrum[1024 + 1]; // Invert the imaginary part
 
     // Apply symmetry to fill the rest of the spectrum
     for (let i = 1; i < 512; i++) {
@@ -836,10 +836,10 @@ function runComparison(){
 function runForthAndBack(){
     let error;
     
-    let signal128  = ifft128(fftReal_ref(testData128));
-    let signal256  = ifft256(fftReal_ref(testData256));
-    let signal512  = ifft512(fftReal_ref(testData512));
-    let signal1024 = ifft1024(fftReal_ref(testData1024));
+    let signal128  = IFFT128onHalf(fftReal_ref(testData128).slice(0,128+2));
+    let signal256  = IFFT256onHalf(fftReal_ref(testData256).slice(0,256+2));
+    let signal512  = IFFT512onHalf(fftReal_ref(testData512).slice(0,512+2));
+    let signal1024 = IFFT1024onHalf(fftReal_ref(testData1024).slice(0,1024+2));
 
     error = 1e-3;
     console.log("\n\nCompare after Forth and Back with acceptable Error ",error," :");
