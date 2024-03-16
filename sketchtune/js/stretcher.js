@@ -446,7 +446,7 @@ function ISTFT_128(spectrogram, hopSize) {
         for (let i = 0; i < spectra; i++) {
             // Compute inverse FFT of the spectrum to obtain the frame in time domain
             let spectrum = spectrogram[i];
-            let frame = computeInverseFFTonHalf128(spectrum);
+            let frame = IFFT128onHalf(spectrum);
             const weightedFrame = applySynthesisWindow(frame, synthesisWindow_128);
             // Overlap-add the weighted frame to the output signal
             const startIdx = i * hopSize;
@@ -478,7 +478,7 @@ function ISTFT_256(spectrogram, hopSize) {
         for (let i = 0; i < spectra; i++) {
             // Compute inverse FFT of the spectrum to obtain the frame in time domain
             let spectrum = spectrogram[i];
-            let frame = computeInverseFFTonHalf256(spectrum);
+            let frame = IFFT256onHalf(spectrum);
             const weightedFrame = applySynthesisWindow(frame, synthesisWindow_256);
             // Overlap-add the weighted frame to the output signal
             const startIdx = i * hopSize;
@@ -510,7 +510,7 @@ function ISTFT_512(spectrogram, hopSize) {
         for (let i = 0; i < spectra; i++) {
             // Compute inverse FFT of the spectrum to obtain the frame in time domain
             let spectrum = spectrogram[i];
-            let frame = computeInverseFFTonHalf512(spectrum);
+            let frame = IFFT512onHalf(spectrum);
             const weightedFrame = applySynthesisWindow(frame, synthesisWindow_512);
             // Overlap-add the weighted frame to the output signal
             const startIdx = i * hopSize;
@@ -541,7 +541,7 @@ function ISTFT_1024(spectrogram, hopSize) {
         for (let i = 0; i < spectra; i++) {
             // Compute inverse FFT of the spectrum to obtain the frame in time domain
             let spectrum = spectrogram[i];
-            let frame = computeInverseFFTonHalf1024(spectrum);
+            let frame = IFFT1024onHalf(spectrum);
             const weightedFrame = applySynthesisWindow(frame, synthesisWindow_1024);
             // Overlap-add the weighted frame to the output signal
             const startIdx = i * hopSize;
