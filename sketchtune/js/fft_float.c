@@ -32271,7 +32271,6 @@ float* getOut256Ptr() {
 }
 
 
-
 // Modified function to accept pointer to output array
 void fftReal256(float* realInput, int size) {
     // Padding the input if necessary
@@ -32548,24 +32547,24 @@ void fftReal256(float* realInput, int size) {
     // FFT step for SIZE 4
     ////////////////////////////////////////////////
     for (int idx = 0, out_idx = 0; idx < 256; idx += 4, out_idx += 8) {
-        float x0aRe = inputBR512[idx];
-        float x1aRe = inputBR512[idx + 1];
-        float x2aRe = inputBR512[idx + 2];
-        float x3aRe = inputBR512[idx + 3];
+        float x0aRe = inputBR256[idx];
+        float x1aRe = inputBR256[idx + 1];
+        float x2aRe = inputBR256[idx + 2];
+        float x3aRe = inputBR256[idx + 3];
 
         float sum1 = x0aRe + x1aRe;
         float sum2 = x2aRe + x3aRe;
         float diff1 = x0aRe - x1aRe;
         float diff2 = x2aRe - x3aRe;
 
-        out512[out_idx] = sum1 + sum2;
-        out512[out_idx + 1] = 0.0f;
-        out512[out_idx + 2] = diff1;
-        out512[out_idx + 3] = diff2;
-        out512[out_idx + 4] = sum1 - sum2;
-        out512[out_idx + 5] = 0.0f;
-        out512[out_idx + 6] = diff1;
-        out512[out_idx + 7] = -diff2;
+        out256[out_idx] = sum1 + sum2;
+        out256[out_idx + 1] = 0.0f;
+        out256[out_idx + 2] = diff1;
+        out256[out_idx + 3] = diff2;
+        out256[out_idx + 4] = sum1 - sum2;
+        out256[out_idx + 5] = 0.0f;
+        out256[out_idx + 6] = diff1;
+        out256[out_idx + 7] = -diff2;
     }
     
 
@@ -32574,32 +32573,32 @@ void fftReal256(float* realInput, int size) {
     // FFT step for SIZE 16
     ////////////////////////////////////////////////
     for (int idx = 0; idx < 512; idx += 32) {
-        float x0aRe = out512[idx     ];
-        float x0bRe = out512[idx +  2]; 
-        float x0bIm = out512[idx +  3];
-        float x0cRe = out512[idx +  4];
+        float x0aRe = out256[idx     ];
+        float x0bRe = out256[idx +  2]; 
+        float x0bIm = out256[idx +  3];
+        float x0cRe = out256[idx +  4];
 
-        float x1aRe = out512[idx +  8];
-        out512[idx +   8] = x0aRe - x1aRe; 
-        float x1bRe = out512[idx + 10];
-        float x1bIm = out512[idx + 11];
-        float x1cRe = out512[idx + 12];
+        float x1aRe = out256[idx +  8];
+        out256[idx +   8] = x0aRe - x1aRe; 
+        float x1bRe = out256[idx + 10];
+        float x1bIm = out256[idx + 11];
+        float x1cRe = out256[idx + 12];
 
-        float x2aRe = out512[idx + 16];
-        float x2bRe = out512[idx + 18];
-        float x2bIm = out512[idx + 19];
-        float x2cRe = out512[idx + 20];
+        float x2aRe = out256[idx + 16];
+        float x2bRe = out256[idx + 18];
+        float x2bIm = out256[idx + 19];
+        float x2cRe = out256[idx + 20];
 
-        float x3aRe = out512[idx + 24];
-        out512[idx +  24] = x0aRe - x1aRe;
-        out512[idx +  25] = x3aRe - x2aRe;  
-        float x3bRe = out512[idx + 26];
-        float x3bIm = out512[idx + 27];
-        float x3cRe = out512[idx + 28];
+        float x3aRe = out256[idx + 24];
+        out256[idx +  24] = x0aRe - x1aRe;
+        out256[idx +  25] = x3aRe - x2aRe;  
+        float x3bRe = out256[idx + 26];
+        float x3bIm = out256[idx + 27];
+        float x3cRe = out256[idx + 28];
 
-        out512[idx      ] = x0aRe + x1aRe + x2aRe + x3aRe;  
-        out512[idx +   9] = x2aRe - x3aRe;      
-        out512[idx +  16] = x0aRe + x1aRe - x2aRe - x3aRe;
+        out256[idx      ] = x0aRe + x1aRe + x2aRe + x3aRe;  
+        out256[idx +   9] = x2aRe - x3aRe;      
+        out256[idx +  16] = x0aRe + x1aRe - x2aRe - x3aRe;
 
         float t1Re_2c = 0x1.6a09e6p-1f;
 
@@ -32607,17 +32606,17 @@ void fftReal256(float* realInput, int size) {
         float x3cRe_tRe_2c = x3cRe * t1Re_2c;
 
         float resReC1 = x0cRe + x2cRe_tRe_2c - x3cRe_tRe_2c;
-        out512[idx +  28] =   resReC1; 
-        out512[idx +   4] =   resReC1; 
+        out256[idx +  28] =   resReC1; 
+        out256[idx +   4] =   resReC1; 
         float resImC1 = x1cRe + x2cRe_tRe_2c + x3cRe_tRe_2c; 
-        out512[idx +   5] =   resImC1; 
-        out512[idx +  29] = - resImC1;
+        out256[idx +   5] =   resImC1; 
+        out256[idx +  29] = - resImC1;
         float resReC2 = x0cRe - x2cRe_tRe_2c + x3cRe_tRe_2c; 
-        out512[idx +  20] =   resReC2;
-        out512[idx +  12] =   resReC2; 
+        out256[idx +  20] =   resReC2;
+        out256[idx +  12] =   resReC2; 
         float resImC2 = x1cRe - x2cRe_tRe_2c - x3cRe_tRe_2c; 
-        out512[idx +  13] = - resImC2; 
-        out512[idx +  21] =   resImC2;  
+        out256[idx +  13] = - resImC2; 
+        out256[idx +  21] =   resImC2;  
 
         float x1dif = (x1bRe-x1bIm);
         float x1sum = (x1bRe+x1bIm);
@@ -32648,30 +32647,30 @@ void fftReal256(float* realInput, int size) {
         float tempImD = (x3dif_tRe_1b2b - x3sum_tRe_1b2d - x2bRe*t1Re_2b + x2bIm*t1Re_2d);
 
         float resReB1 = x0bRe  + x1dif_tRe_1b + tempReB;     
-        out512[idx +   2] =   resReB1; 
-        out512[idx +  30] =   resReB1;  
+        out256[idx +   2] =   resReB1; 
+        out256[idx +  30] =   resReB1;  
         float resReB2 = x0bRe  + x1dif_tRe_1b - tempReB;     
-        out512[idx +  18] =   resReB2;
-        out512[idx +  14] =   resReB2; 
+        out256[idx +  18] =   resReB2;
+        out256[idx +  14] =   resReB2; 
         float resReD1 = x0bRe  - x1dif_tRe_1b - tempReD;     
-        out512[idx +   6] =   resReD1; 
-        out512[idx +  26] =   resReD1; 
+        out256[idx +   6] =   resReD1; 
+        out256[idx +  26] =   resReD1; 
         float resReD2 = x0bRe  - x1dif_tRe_1b + tempReD;     
-        out512[idx +  22] =   resReD2;
-        out512[idx +  10] =   resReD2; 
+        out256[idx +  22] =   resReD2;
+        out256[idx +  10] =   resReD2; 
 
         float resImB1 = x0bIm  + x1sum_tRe_1b + tempImB;     
-        out512[idx +   3] =   resImB1; 
-        out512[idx +  31] = - resImB1;  
+        out256[idx +   3] =   resImB1; 
+        out256[idx +  31] = - resImB1;  
         float resImB2 = x0bIm  + x1sum_tRe_1b - tempImB;     
-        out512[idx +  19] =   resImB2;
-        out512[idx +  15] = - resImB2; 
+        out256[idx +  19] =   resImB2;
+        out256[idx +  15] = - resImB2; 
         float resImD1 =-x0bIm  + x1sum_tRe_1b - tempImD;     
-        out512[idx +   7] =   resImD1; 
-        out512[idx +  27] = - resImD1; 
+        out256[idx +   7] =   resImD1; 
+        out256[idx +  27] = - resImD1; 
         float resImD2 =-x0bIm  + x1sum_tRe_1b + tempImD;     
-        out512[idx +  23] =   resImD2;  
-        out512[idx +  11] = - resImD2; 
+        out256[idx +  23] =   resImD2;  
+        out256[idx +  11] = - resImD2; 
     }
     
 
@@ -32681,45 +32680,45 @@ void fftReal256(float* realInput, int size) {
     ////////////////////////////////////////////////
     
     for(int idx = 0; idx < 512; idx+=128){
-        float x0aRe_0 = out512[idx       ];
-        float x0bRe_0 = out512[idx   +  2]; float x0bIm_0 = out512[idx   +  3];
-        float x0cRe_0 = out512[idx   +  4]; float x0cIm_0 = out512[idx   +  5];
-        float x0dRe_0 = out512[idx   +  6]; float x0dIm_0 = out512[idx   +  7];
-        float x0aRe_4 = out512[idx   +  8]; float x0aIm_4 = out512[idx   +  9];
-        float x0bRe_4 = out512[idx   + 10]; float x0bIm_4 = out512[idx   + 11];
-        float x0cRe_4 = out512[idx   + 12]; float x0cIm_4 = out512[idx   + 13];
-        float x0dRe_4 = out512[idx   + 14]; float x0dIm_4 = out512[idx   + 15];
-        float x0aRe_8 = out512[idx   + 16];                                   
+        float x0aRe_0 = out256[idx       ];
+        float x0bRe_0 = out256[idx   +  2]; float x0bIm_0 = out256[idx   +  3];
+        float x0cRe_0 = out256[idx   +  4]; float x0cIm_0 = out256[idx   +  5];
+        float x0dRe_0 = out256[idx   +  6]; float x0dIm_0 = out256[idx   +  7];
+        float x0aRe_4 = out256[idx   +  8]; float x0aIm_4 = out256[idx   +  9];
+        float x0bRe_4 = out256[idx   + 10]; float x0bIm_4 = out256[idx   + 11];
+        float x0cRe_4 = out256[idx   + 12]; float x0cIm_4 = out256[idx   + 13];
+        float x0dRe_4 = out256[idx   + 14]; float x0dIm_4 = out256[idx   + 15];
+        float x0aRe_8 = out256[idx   + 16];                                   
 
-        float x1aRe_0 = out512[idx   + 32];
-        float x1bRe_0 = out512[idx   + 34]; float x1bIm_0 = out512[idx   + 35];
-        float x1cRe_0 = out512[idx   + 36]; float x1cIm_0 = out512[idx   + 37];
-        float x1dRe_0 = out512[idx   + 38]; float x1dIm_0 = out512[idx   + 39];
-        float x1aRe_4 = out512[idx   + 40]; float x1aIm_4 = out512[idx   + 41];
-        float x1bRe_4 = out512[idx   + 42]; float x1bIm_4 = out512[idx   + 43];
-        float x1cRe_4 = out512[idx   + 44]; float x1cIm_4 = out512[idx   + 45];
-        float x1dRe_4 = out512[idx   + 46]; float x1dIm_4 = out512[idx   + 47];
-        float x1aRe_8 = out512[idx   + 48]; float x1aIm_8 = out512[idx   + 49];
+        float x1aRe_0 = out256[idx   + 32];
+        float x1bRe_0 = out256[idx   + 34]; float x1bIm_0 = out256[idx   + 35];
+        float x1cRe_0 = out256[idx   + 36]; float x1cIm_0 = out256[idx   + 37];
+        float x1dRe_0 = out256[idx   + 38]; float x1dIm_0 = out256[idx   + 39];
+        float x1aRe_4 = out256[idx   + 40]; float x1aIm_4 = out256[idx   + 41];
+        float x1bRe_4 = out256[idx   + 42]; float x1bIm_4 = out256[idx   + 43];
+        float x1cRe_4 = out256[idx   + 44]; float x1cIm_4 = out256[idx   + 45];
+        float x1dRe_4 = out256[idx   + 46]; float x1dIm_4 = out256[idx   + 47];
+        float x1aRe_8 = out256[idx   + 48]; float x1aIm_8 = out256[idx   + 49];
 
-        float x2aRe_0 = out512[idx   + 64]; float x2aIm_0 = out512[idx   + 65];
-        float x2bRe_0 = out512[idx   + 66]; float x2bIm_0 = out512[idx   + 67];
-        float x2cRe_0 = out512[idx   + 68]; float x2cIm_0 = out512[idx   + 69];
-        float x2dRe_0 = out512[idx   + 70]; float x2dIm_0 = out512[idx   + 71];
-        float x2aRe_4 = out512[idx   + 72]; float x2aIm_4 = out512[idx   + 73];
-        float x2bRe_4 = out512[idx   + 74]; float x2bIm_4 = out512[idx   + 75];
-        float x2cRe_4 = out512[idx   + 76]; float x2cIm_4 = out512[idx   + 77];
-        float x2dRe_4 = out512[idx   + 78]; float x2dIm_4 = out512[idx   + 79];
-        float x2aRe_8 = out512[idx   + 80]; float x2aIm_8 = out512[idx   + 81];
+        float x2aRe_0 = out256[idx   + 64]; float x2aIm_0 = out256[idx   + 65];
+        float x2bRe_0 = out256[idx   + 66]; float x2bIm_0 = out256[idx   + 67];
+        float x2cRe_0 = out256[idx   + 68]; float x2cIm_0 = out256[idx   + 69];
+        float x2dRe_0 = out256[idx   + 70]; float x2dIm_0 = out256[idx   + 71];
+        float x2aRe_4 = out256[idx   + 72]; float x2aIm_4 = out256[idx   + 73];
+        float x2bRe_4 = out256[idx   + 74]; float x2bIm_4 = out256[idx   + 75];
+        float x2cRe_4 = out256[idx   + 76]; float x2cIm_4 = out256[idx   + 77];
+        float x2dRe_4 = out256[idx   + 78]; float x2dIm_4 = out256[idx   + 79];
+        float x2aRe_8 = out256[idx   + 80]; float x2aIm_8 = out256[idx   + 81];
 
-        float x3aRe_0 = out512[idx   + 96]; float x3aIm_0 = out512[idx   + 97];
-        float x3bRe_0 = out512[idx   + 98]; float x3bIm_0 = out512[idx   + 99];
-        float x3cRe_0 = out512[idx   +100]; float x3cIm_0 = out512[idx   +101];
-        float x3dRe_0 = out512[idx   +102]; float x3dIm_0 = out512[idx   +103];
-        float x3aRe_4 = out512[idx   +104]; float x3aIm_4 = out512[idx   +105];
-        float x3bRe_4 = out512[idx   +106]; float x3bIm_4 = out512[idx   +107];
-        float x3cRe_4 = out512[idx   +108]; float x3cIm_4 = out512[idx   +109];
-        float x3dRe_4 = out512[idx   +110]; float x3dIm_4 = out512[idx   +111];
-        float x3aRe_8 = out512[idx   +112]; float x3aIm_8 = out512[idx   +113];
+        float x3aRe_0 = out256[idx   + 96]; float x3aIm_0 = out256[idx   + 97];
+        float x3bRe_0 = out256[idx   + 98]; float x3bIm_0 = out256[idx   + 99];
+        float x3cRe_0 = out256[idx   +100]; float x3cIm_0 = out256[idx   +101];
+        float x3dRe_0 = out256[idx   +102]; float x3dIm_0 = out256[idx   +103];
+        float x3aRe_4 = out256[idx   +104]; float x3aIm_4 = out256[idx   +105];
+        float x3bRe_4 = out256[idx   +106]; float x3bIm_4 = out256[idx   +107];
+        float x3cRe_4 = out256[idx   +108]; float x3cIm_4 = out256[idx   +109];
+        float x3dRe_4 = out256[idx   +110]; float x3dIm_4 = out256[idx   +111];
+        float x3aRe_8 = out256[idx   +112]; float x3aIm_8 = out256[idx   +113];
 
 float t2Re_1b = 0x1.f6297cp-1f;
 float t2Re_1h = 0x1.8f8b88p-3f;
@@ -32745,64 +32744,64 @@ float t2Re_1f = 0x1.1c73b4p-1f;
         float T0x3dRe = (x3dRe_0 * t2Re_1d - x3dIm_0 * t2Re_1f);
         float T0x3dIm = (x3dRe_0 * t2Re_1f + x3dIm_0 * t2Re_1d);
 
-        out512[idx       ] =   (x0aRe_0 + x1aRe_0) + (x2aRe_0 + x3aRe_0);
-        out512[idx  +  64] =   (x0aRe_0 + x1aRe_0) - (x2aRe_0 + x3aRe_0);
-        out512[idx  +  65] =                       - (x2aIm_0 + x3aIm_0);
-        out512[idx  +   1] =                         (x2aIm_0 + x3aIm_0); 
+        out256[idx       ] =   (x0aRe_0 + x1aRe_0) + (x2aRe_0 + x3aRe_0);
+        out256[idx  +  64] =   (x0aRe_0 + x1aRe_0) - (x2aRe_0 + x3aRe_0);
+        out256[idx  +  65] =                       - (x2aIm_0 + x3aIm_0);
+        out256[idx  +   1] =                         (x2aIm_0 + x3aIm_0); 
 
 float t2Re_2b = 0x1.fd88dap-1f;
 float t2Re_2p = 0x1.917a6ap-4f;
 
         float res0ReB = x0bRe_0 + T0x1bRe + ((x2bRe_0 + T0x3bRe)*  t2Re_2b - ((x2bIm_0 + T0x3bIm)*  t2Re_2p));
-        out512[idx  +   2] =   res0ReB;
-        out512[idx  + 126] =   res0ReB; 
+        out256[idx  +   2] =   res0ReB;
+        out256[idx  + 126] =   res0ReB; 
         float res0ImB = x0bIm_0 + T0x1bIm + ((x2bRe_0 + T0x3bRe)*  t2Re_2p + ((x2bIm_0 + T0x3bIm)*  t2Re_2b)); 
-        out512[idx  + 127] = - res0ImB;
-        out512[idx  +   3] =   res0ImB;
+        out256[idx  + 127] = - res0ImB;
+        out256[idx  +   3] =   res0ImB;
 
 float t2Re_2c = 0x1.f6297cp-1f;
 float t2Re_2o = 0x1.8f8b88p-3f;
 
         float res0ReC = x0cRe_0 + T0x0cRe + ((x2cRe_0 + T0x2cRe)*  t2Re_2c - ((x2cIm_0 + T0x2cIm)*  t2Re_2o));  
-        out512[idx  +   4] =   res0ReC;
-        out512[idx  + 124] =   res0ReC;
+        out256[idx  +   4] =   res0ReC;
+        out256[idx  + 124] =   res0ReC;
         float res0ImC = x0cIm_0 + T0x0cIm + ((x2cRe_0 + T0x2cRe)*  t2Re_2o + ((x2cIm_0 + T0x2cIm)*  t2Re_2c));
-        out512[idx  + 125] = - res0ImC;
-        out512[idx  +   5] =   res0ImC; 
+        out256[idx  + 125] = - res0ImC;
+        out256[idx  +   5] =   res0ImC; 
 
 float t2Re_2d = 0x1.e9f416p-1f;
 float t2Re_2n = 0x1.29406p-2f;
 
         float res0ReD = x0dRe_0 + T0x1dRe + ((x2dRe_0 + T0x3dRe)*  t2Re_2d - ((x2dIm_0 + T0x3dIm)*  t2Re_2n));  
-        out512[idx  +   6] =   res0ReD;
-        out512[idx  + 122] =   res0ReD;
+        out256[idx  +   6] =   res0ReD;
+        out256[idx  + 122] =   res0ReD;
         float res0ImD = x0dIm_0 + T0x1dIm + ((x2dRe_0 + T0x3dRe)*  t2Re_2n + ((x2dIm_0 + T0x3dIm)*  t2Re_2d)); 
-        out512[idx  + 123] = - res0ImD;
-        out512[idx  +   7] =   res0ImD;  
+        out256[idx  + 123] = - res0ImD;
+        out256[idx  +   7] =   res0ImD;  
         float res1ReA =    (x0aRe_0 - x1aRe_0) - (x2aIm_0 - x3aIm_0);
-        out512[idx  +  32] =   res1ReA;
-        out512[idx  +  96] =   res1ReA;
+        out256[idx  +  32] =   res1ReA;
+        out256[idx  +  96] =   res1ReA;
         float res1ImA =                          (x2aRe_0 - x3aRe_0); 
-        out512[idx  +  97] = - res1ImA;
-        out512[idx  +  33] =   res1ImA;
+        out256[idx  +  97] = - res1ImA;
+        out256[idx  +  33] =   res1ImA;
         float res1ReB = x0bRe_0 - T0x1bRe + ((x2bRe_0 - T0x3bRe)* -t2Re_2p  - ((x2bIm_0 - T0x3bIm)*  t2Re_2b ));
-        out512[idx  +  34] =   res1ReB;
-        out512[idx  +  94] =   res1ReB;
+        out256[idx  +  34] =   res1ReB;
+        out256[idx  +  94] =   res1ReB;
         float res1ImB = x0bIm_0 - T0x1bIm + ((x2bRe_0 - T0x3bRe)*  t2Re_2b  + ((x2bIm_0 - T0x3bIm)* -t2Re_2p )); 
-        out512[idx  +  95] = - res1ImB; 
-        out512[idx  +  35] =   res1ImB;
+        out256[idx  +  95] = - res1ImB; 
+        out256[idx  +  35] =   res1ImB;
         float res1ReC = x0cRe_0 - T0x0cRe + ((x2cRe_0 - T0x2cRe)* -t2Re_2o  - ((x2cIm_0 - T0x2cIm)*  t2Re_2c )); 
-        out512[idx  +  36] =   res1ReC;
-        out512[idx  +  92] =   res1ReC;
+        out256[idx  +  36] =   res1ReC;
+        out256[idx  +  92] =   res1ReC;
         float res1ImC = x0cIm_0 - T0x0cIm + ((x2cRe_0 - T0x2cRe)*  t2Re_2c  + ((x2cIm_0 - T0x2cIm)* -t2Re_2o ));
-        out512[idx  +  93] = - res1ImC;  
-        out512[idx  +  37] =   res1ImC; 
+        out256[idx  +  93] = - res1ImC;  
+        out256[idx  +  37] =   res1ImC; 
         float res1ReD = x0dRe_0 - T0x1dRe + ((x2dRe_0 - T0x3dRe)* -t2Re_2n  - ((x2dIm_0 - T0x3dIm)*  t2Re_2d ));
-        out512[idx  +  38] =   res1ReD;
-        out512[idx  +  90] =   res1ReD;
+        out256[idx  +  38] =   res1ReD;
+        out256[idx  +  90] =   res1ReD;
         float res1ImD = x0dIm_0 - T0x1dIm + ((x2dRe_0 - T0x3dRe)*  t2Re_2d  + ((x2dIm_0 - T0x3dIm)* -t2Re_2n ));  
-        out512[idx  +  91] = - res1ImD; 
-        out512[idx  +  39] =   res1ImD;
+        out256[idx  +  91] = - res1ImD; 
+        out256[idx  +  39] =   res1ImD;
 
 float t2Re_1e = 0x1.6a09e6p-1f;
 
@@ -32814,11 +32813,11 @@ float t2Re_2m = 0x1.87de2ap-2f;
         float T1x2aRe = (x3aRe_4 * t2Re_1e - x3aIm_4 * t2Re_1e);
         float T1x2aIm = (x3aRe_4 * t2Re_1e + x3aIm_4 * t2Re_1e);
         float res2ReA = x0aRe_4 + T1x0aRe + ((x2aRe_4 + T1x2aRe)*  t2Re_2e - ((x2aIm_4 + T1x2aIm)*  t2Re_2m));  
-        out512[idx  +   8] =   res2ReA;
-        out512[idx  + 120] =   res2ReA;
+        out256[idx  +   8] =   res2ReA;
+        out256[idx  + 120] =   res2ReA;
         float res2ImA = x0aIm_4 + T1x0aIm + ((x2aRe_4 + T1x2aRe)*  t2Re_2m + ((x2aIm_4 + T1x2aIm)*  t2Re_2e)); 
-        out512[idx  + 121] = - res2ImA; 
-        out512[idx  +   9] =   res2ImA;
+        out256[idx  + 121] = - res2ImA; 
+        out256[idx  +   9] =   res2ImA;
 
 float t2Re_2f = 0x1.c38b3p-1f;
 float t2Re_2l = 0x1.e2b5d6p-2f;
@@ -32828,11 +32827,11 @@ float t2Re_2l = 0x1.e2b5d6p-2f;
         float T1x3bRe = (x3bRe_4 * t2Re_1f - x3bIm_4 * t2Re_1d);
         float T1x3bIm = (x3bRe_4 * t2Re_1d + x3bIm_4 * t2Re_1f);
         float res2ReB = x0bRe_4 + T1x1bRe + ((x2bRe_4 + T1x3bRe)*  t2Re_2f - ((x2bIm_4 + T1x3bIm)*  t2Re_2l));
-        out512[idx  +  10] =   res2ReB;
-        out512[idx  + 118] =   res2ReB; 
+        out256[idx  +  10] =   res2ReB;
+        out256[idx  + 118] =   res2ReB; 
         float res2ImB = x0bIm_4 + T1x1bIm + ((x2bRe_4 + T1x3bRe)*  t2Re_2l + ((x2bIm_4 + T1x3bIm)*  t2Re_2f));  
-        out512[idx  + 119] = - res2ImB; 
-        out512[idx  +  11] =   res2ImB; 
+        out256[idx  + 119] = - res2ImB; 
+        out256[idx  +  11] =   res2ImB; 
 
 float t2Re_2g = 0x1.a9b662p-1f;
 float t2Re_2k = 0x1.1c73b4p-1f;
@@ -32842,11 +32841,11 @@ float t2Re_2k = 0x1.1c73b4p-1f;
         float T1x2cRe = (x3cRe_4 * t2Re_1g - x3cIm_4 * t2Re_1c);
         float T1x2cIm = (x3cRe_4 * t2Re_1c + x3cIm_4 * t2Re_1g);
         float res2ReC = x0cRe_4 + T1x0cRe + ((x2cRe_4 + T1x2cRe)*  t2Re_2g - ((x2cIm_4 + T1x2cIm)*  t2Re_2k));
-        out512[idx  +  12] =   res2ReC;
-        out512[idx  + 116] =   res2ReC;  
+        out256[idx  +  12] =   res2ReC;
+        out256[idx  + 116] =   res2ReC;  
         float res2ImC = x0cIm_4 + T1x0cIm + ((x2cRe_4 + T1x2cRe)*  t2Re_2k + ((x2cIm_4 + T1x2cIm)*  t2Re_2g)); 
-        out512[idx  + 117] = - res2ImC; 
-        out512[idx  +  13] =   res2ImC; 
+        out256[idx  + 117] = - res2ImC; 
+        out256[idx  +  13] =   res2ImC; 
 
 float t2Re_2h = 0x1.8bc808p-1f;
 float t2Re_2j = 0x1.44cf32p-1f;
@@ -32856,35 +32855,35 @@ float t2Re_2j = 0x1.44cf32p-1f;
         float T1x3dRe = (x3dRe_4 * t2Re_1h - x3dIm_4 * t2Re_1b);
         float T1x3dIm = (x3dRe_4 * t2Re_1b + x3dIm_4 * t2Re_1h);
         float res2ReD = x0dRe_4 + T1x1dRe + ((x2dRe_4 + T1x3dRe)*  t2Re_2h - ((x2dIm_4 + T1x3dIm)*  t2Re_2j));  
-        out512[idx  +  14] =   res2ReD;
-        out512[idx  + 114] =   res2ReD;
+        out256[idx  +  14] =   res2ReD;
+        out256[idx  + 114] =   res2ReD;
         float res2ImD = x0dIm_4 + T1x1dIm + ((x2dRe_4 + T1x3dRe)*  t2Re_2j + ((x2dIm_4 + T1x3dIm)*  t2Re_2h));
-        out512[idx  + 115] = - res2ImD; 
-        out512[idx  +  15] =   res2ImD;
+        out256[idx  + 115] = - res2ImD; 
+        out256[idx  +  15] =   res2ImD;
         float res3ReA = x0aRe_4 - T1x0aRe + ((x2aRe_4 - T1x2aRe)* -t2Re_2m  - ((x2aIm_4 - T1x2aIm)*  t2Re_2e ));
-        out512[idx  +  40] =   res3ReA;
-        out512[idx  +  88] =   res3ReA;
+        out256[idx  +  40] =   res3ReA;
+        out256[idx  +  88] =   res3ReA;
         float res3ImA = x0aIm_4 - T1x0aIm + ((x2aRe_4 - T1x2aRe)*  t2Re_2e  + ((x2aIm_4 - T1x2aIm)* -t2Re_2m )); 
-        out512[idx  +  89] = - res3ImA;
-        out512[idx  +  41] =   res3ImA; 
+        out256[idx  +  89] = - res3ImA;
+        out256[idx  +  41] =   res3ImA; 
         float res3ReB = x0bRe_4 - T1x1bRe + ((x2bRe_4 - T1x3bRe)* -t2Re_2l  - ((x2bIm_4 - T1x3bIm)*  t2Re_2f ));
-        out512[idx  +  42] =   res3ReB; 
-        out512[idx  +  86] =   res3ReB;
+        out256[idx  +  42] =   res3ReB; 
+        out256[idx  +  86] =   res3ReB;
         float res3ImB = x0bIm_4 - T1x1bIm + ((x2bRe_4 - T1x3bRe)*  t2Re_2f  + ((x2bIm_4 - T1x3bIm)* -t2Re_2l ));
-        out512[idx  +  87] = - res3ImB; 
-        out512[idx  +  43] =   res3ImB; 
+        out256[idx  +  87] = - res3ImB; 
+        out256[idx  +  43] =   res3ImB; 
         float res3ReC = x0cRe_4 - T1x0cRe + ((x2cRe_4 - T1x2cRe)* -t2Re_2k  - ((x2cIm_4 - T1x2cIm)*  t2Re_2g ));
-        out512[idx  +  44] =   res3ReC;
-        out512[idx  +  84] =   res3ReC;
+        out256[idx  +  44] =   res3ReC;
+        out256[idx  +  84] =   res3ReC;
         float res3ImC = x0cIm_4 - T1x0cIm + ((x2cRe_4 - T1x2cRe)*  t2Re_2g  + ((x2cIm_4 - T1x2cIm)* -t2Re_2k )); 
-        out512[idx  +  85] = - res3ImC;
-        out512[idx  +  45] =   res3ImC;
+        out256[idx  +  85] = - res3ImC;
+        out256[idx  +  45] =   res3ImC;
         float res3ReD = x0dRe_4 - T1x1dRe + ((x2dRe_4 - T1x3dRe)* -t2Re_2j  - ((x2dIm_4 - T1x3dIm)*  t2Re_2h ));
-        out512[idx  +  46] =   res3ReD;
-        out512[idx  +  82] =   res3ReD;
+        out256[idx  +  46] =   res3ReD;
+        out256[idx  +  82] =   res3ReD;
         float res3ImD = x0dIm_4 - T1x1dIm + ((x2dRe_4 - T1x3dRe)*  t2Re_2h  + ((x2dIm_4 - T1x3dIm)* -t2Re_2j ));
-        out512[idx  +  83] = - res3ImD;
-        out512[idx  +  47] =   res3ImD; 
+        out256[idx  +  83] = - res3ImD;
+        out256[idx  +  47] =   res3ImD; 
 
 float t2Re_2i = 0x1.6a09e6p-1f;
 
@@ -32893,138 +32892,138 @@ float t2Re_2i = 0x1.6a09e6p-1f;
         float T2x2aRe = - x3aIm_8;
         float T2x2aIm =   x3aRe_8;
         float res4ReA =  x0aRe_8 + T2x0aRe + ((x2aRe_8 + T2x2aRe)*  t2Re_2i - (( x2aIm_8 + T2x2aIm)*  t2Re_2i)); 
-        out512[idx  +  16] =   res4ReA;
-        out512[idx  + 112] =   res4ReA; 
+        out256[idx  +  16] =   res4ReA;
+        out256[idx  + 112] =   res4ReA; 
         float res4ImA =  0       + T2x0aIm + ((x2aRe_8 + T2x2aRe)*  t2Re_2i + (( x2aIm_8 + T2x2aIm)*  t2Re_2i)); 
-        out512[idx  + 113] = - res4ImA; 
-        out512[idx  +  17] =   res4ImA;
+        out256[idx  + 113] = - res4ImA; 
+        out256[idx  +  17] =   res4ImA;
 
         float T2x1bRe = (x1dRe_4 * -t2Re_1h - -x1dIm_4 *  t2Re_1b);
         float T2x1bIm = (x1dRe_4 *  t2Re_1b + -x1dIm_4 * -t2Re_1h);
         float T2x3bRe = (x3dRe_4 * -t2Re_1h - -x3dIm_4 *  t2Re_1b);
         float T2x3bIm = (x3dRe_4 *  t2Re_1b + -x3dIm_4 * -t2Re_1h);
         float res4ReB =  x0dRe_4 + T2x1bRe + ((x2dRe_4 + T2x3bRe)*  t2Re_2j - ((-x2dIm_4 + T2x3bIm)*  t2Re_2h)); 
-        out512[idx  +  18] =   res4ReB;
-        out512[idx  + 110] =   res4ReB;
+        out256[idx  +  18] =   res4ReB;
+        out256[idx  + 110] =   res4ReB;
         float res4ImB = -x0dIm_4 + T2x1bIm + ((x2dRe_4 + T2x3bRe)*  t2Re_2h + ((-x2dIm_4 + T2x3bIm)*  t2Re_2j)); 
-        out512[idx  + 111] = - res4ImB; 
-        out512[idx  +  19] =   res4ImB; 
+        out256[idx  + 111] = - res4ImB; 
+        out256[idx  +  19] =   res4ImB; 
 
         float T2x0cRe = (x1cRe_4 * -t2Re_1g - -x1cIm_4 *  t2Re_1c);
         float T2x0cIm = (x1cRe_4 *  t2Re_1c + -x1cIm_4 * -t2Re_1g);
         float T2x2cRe = (x3cRe_4 * -t2Re_1g - -x3cIm_4 *  t2Re_1c);
         float T2x2cIm = (x3cRe_4 *  t2Re_1c + -x3cIm_4 * -t2Re_1g);
         float res4ReC =  x0cRe_4 + T2x0cRe + ((x2cRe_4 + T2x2cRe)*  t2Re_2k - ((-x2cIm_4 + T2x2cIm)*  t2Re_2g)); 
-        out512[idx  +  20] =   res4ReC;
-        out512[idx  + 108] =   res4ReC; 
+        out256[idx  +  20] =   res4ReC;
+        out256[idx  + 108] =   res4ReC; 
         float res4ImC = -x0cIm_4 + T2x0cIm + ((x2cRe_4 + T2x2cRe)*  t2Re_2g + ((-x2cIm_4 + T2x2cIm)*  t2Re_2k));   
-        out512[idx  + 109] = - res4ImC;
-        out512[idx  +  21] =   res4ImC;
+        out256[idx  + 109] = - res4ImC;
+        out256[idx  +  21] =   res4ImC;
 
         float T2x1dRe = (x1bRe_4 * -t2Re_1f - -x1bIm_4 *  t2Re_1d);
         float T2x1dIm = (x1bRe_4 *  t2Re_1d + -x1bIm_4 * -t2Re_1f);
         float T2x3dRe = (x3bRe_4 * -t2Re_1f - -x3bIm_4 *  t2Re_1d);
         float T2x3dIm = (x3bRe_4 *  t2Re_1d + -x3bIm_4 * -t2Re_1f);
         float res4ReD =  x0bRe_4 + T2x1dRe + ((x2bRe_4 + T2x3dRe)*  t2Re_2l - ((-x2bIm_4 + T2x3dIm)*  t2Re_2f)); 
-        out512[idx  +  22] =   res4ReD;
-        out512[idx  + 106] =   res4ReD; 
+        out256[idx  +  22] =   res4ReD;
+        out256[idx  + 106] =   res4ReD; 
         float res4ImD = -x0bIm_4 + T2x1dIm + ((x2bRe_4 + T2x3dRe)*  t2Re_2f + ((-x2bIm_4 + T2x3dIm)*  t2Re_2l)); 
-        out512[idx  + 107] = - res4ImD;
-        out512[idx  +  23] =   res4ImD;
+        out256[idx  + 107] = - res4ImD;
+        out256[idx  +  23] =   res4ImD;
 
         float res5ReA =  x0aRe_8 - T2x0aRe + ((x2aRe_8 - T2x2aRe)* -t2Re_2i  - (( x2aIm_8 - T2x2aIm)*  t2Re_2i ));
-        out512[idx  +  48] =   res5ReA;
-        out512[idx  +  80] =   res5ReA;
+        out256[idx  +  48] =   res5ReA;
+        out256[idx  +  80] =   res5ReA;
         float res5ImA =  0       - T2x0aIm + ((x2aRe_8 - T2x2aRe)*  t2Re_2i  + (( x2aIm_8 - T2x2aIm)* -t2Re_2i ));
-        out512[idx  +  81] = - res5ImA;
-        out512[idx  +  49] =   res5ImA; 
+        out256[idx  +  81] = - res5ImA;
+        out256[idx  +  49] =   res5ImA; 
         float res5ReB =  x0dRe_4 - T2x1bRe + ((x2dRe_4 - T2x3bRe)* -t2Re_2h  - ((-x2dIm_4 - T2x3bIm)*  t2Re_2j ));
-        out512[idx  +  50] =   res5ReB;
-        out512[idx  +  78] =   res5ReB;
+        out256[idx  +  50] =   res5ReB;
+        out256[idx  +  78] =   res5ReB;
         float res5ImB = -x0dIm_4 - T2x1bIm + ((x2dRe_4 - T2x3bRe)*  t2Re_2j  + ((-x2dIm_4 - T2x3bIm)* -t2Re_2h ));
-        out512[idx  +  79] = - res5ImB;
-        out512[idx  +  51] =   res5ImB; 
+        out256[idx  +  79] = - res5ImB;
+        out256[idx  +  51] =   res5ImB; 
         float res5ReC =  x0cRe_4 - T2x0cRe + ((x2cRe_4 - T2x2cRe)* -t2Re_2g  - ((-x2cIm_4 - T2x2cIm)*  t2Re_2k ));
-        out512[idx  +  52] =   res5ReC;
-        out512[idx  +  76] =   res5ReC;
+        out256[idx  +  52] =   res5ReC;
+        out256[idx  +  76] =   res5ReC;
         float res5ImC = -x0cIm_4 - T2x0cIm + ((x2cRe_4 - T2x2cRe)*  t2Re_2k  + ((-x2cIm_4 - T2x2cIm)* -t2Re_2g ));
-        out512[idx  +  77] = - res5ImC; 
-        out512[idx  +  53] =   res5ImC;
+        out256[idx  +  77] = - res5ImC; 
+        out256[idx  +  53] =   res5ImC;
         float res5ReD =  x0bRe_4 - T2x1dRe + ((x2bRe_4 - T2x3dRe)* -t2Re_2f  - ((-x2bIm_4 - T2x3dIm)*  t2Re_2l ));
-        out512[idx  +  54] =   res5ReD;
-        out512[idx  +  74] =   res5ReD;
+        out256[idx  +  54] =   res5ReD;
+        out256[idx  +  74] =   res5ReD;
         float res5ImD = -x0bIm_4 - T2x1dIm + ((x2bRe_4 - T2x3dRe)*  t2Re_2l  + ((-x2bIm_4 - T2x3dIm)* -t2Re_2f ));
-        out512[idx  +  75] = - res5ImD;
-        out512[idx  +  55] =   res5ImD;
+        out256[idx  +  75] = - res5ImD;
+        out256[idx  +  55] =   res5ImD;
 
         float T3x0aRe = (x1aRe_4  * -t2Re_1e - -x1aIm_4 *  t2Re_1e);
         float T3x0aIm = (x1aRe_4  *  t2Re_1e + -x1aIm_4 * -t2Re_1e);
         float T3x2aRe = (x3aRe_4  * -t2Re_1e - -x3aIm_4 *  t2Re_1e);
         float T3x2aIm = (x3aRe_4  *  t2Re_1e + -x3aIm_4 * -t2Re_1e);
         float res6ReA =  x0aRe_4 + T3x0aRe + ((x2aRe_4 + T3x2aRe)*  t2Re_2m - ((-x2aIm_4 + T3x2aIm)*  t2Re_2e));  
-        out512[idx  +  24] =   res6ReA;
-        out512[idx  + 104] =   res6ReA;
+        out256[idx  +  24] =   res6ReA;
+        out256[idx  + 104] =   res6ReA;
         float res6ImA = -x0aIm_4 + T3x0aIm + ((x2aRe_4 + T3x2aRe)*  t2Re_2e + ((-x2aIm_4 + T3x2aIm)*  t2Re_2m)); 
-        out512[idx  + 105] = - res6ImA; 
-        out512[idx  +  25] =   res6ImA;
+        out256[idx  + 105] = - res6ImA; 
+        out256[idx  +  25] =   res6ImA;
 
         float T3x1bRe = (x1dRe_0  * -t2Re_1d - -x1dIm_0 *  t2Re_1f);
         float T3x1bIm = (x1dRe_0  *  t2Re_1f + -x1dIm_0 * -t2Re_1d);
         float T3x3bRe = (x3dRe_0  * -t2Re_1d - -x3dIm_0 *  t2Re_1f);
         float T3x3bIm = (x3dRe_0  *  t2Re_1f + -x3dIm_0 * -t2Re_1d);
         float res6ReB =  x0dRe_0 + T3x1bRe + ((x2dRe_0 + T3x3bRe)*  t2Re_2n - ((-x2dIm_0 + T3x3bIm)*  t2Re_2d)); 
-        out512[idx  +  26] =   res6ReB;
-        out512[idx  + 102] =   res6ReB;
+        out256[idx  +  26] =   res6ReB;
+        out256[idx  + 102] =   res6ReB;
         float res6ImB = -x0dIm_0 + T3x1bIm + ((x2dRe_0 + T3x3bRe)*  t2Re_2d + ((-x2dIm_0 + T3x3bIm)*  t2Re_2n)); 
-        out512[idx  + 103] = - res6ImB; 
-        out512[idx  +  27] =   res6ImB; 
+        out256[idx  + 103] = - res6ImB; 
+        out256[idx  +  27] =   res6ImB; 
 
         float T3x0cRe = (x1cRe_0  * -t2Re_1c - -x1cIm_0 *  t2Re_1g);
         float T3x0cIm = (x1cRe_0  *  t2Re_1g + -x1cIm_0 * -t2Re_1c);
         float T3x2cRe = (x3cRe_0  * -t2Re_1c - -x3cIm_0 *  t2Re_1g);
         float T3x2cIm = (x3cRe_0  *  t2Re_1g + -x3cIm_0 * -t2Re_1c);
         float res6ReC =  x0cRe_0 + T3x0cRe + ((x2cRe_0 + T3x2cRe)*  t2Re_2o - ((-x2cIm_0 + T3x2cIm)*  t2Re_2c));  
-        out512[idx  +  28] =   res6ReC;
-        out512[idx  + 100] =   res6ReC;
+        out256[idx  +  28] =   res6ReC;
+        out256[idx  + 100] =   res6ReC;
         float res6ImC = -x0cIm_0 + T3x0cIm + ((x2cRe_0 + T3x2cRe)*  t2Re_2c + ((-x2cIm_0 + T3x2cIm)*  t2Re_2o)); 
-        out512[idx  + 101] = - res6ImC; 
-        out512[idx  +  29] =   res6ImC; 
+        out256[idx  + 101] = - res6ImC; 
+        out256[idx  +  29] =   res6ImC; 
 
         float T3x1dRe = (x1bRe_0  * -t2Re_1b - -x1bIm_0 *  t2Re_1h);
         float T3x1dIm = (x1bRe_0  *  t2Re_1h + -x1bIm_0 * -t2Re_1b);
         float T3x3dRe = (x3bRe_0  * -t2Re_1b - -x3bIm_0 *  t2Re_1h);
         float T3x3dIm = (x3bRe_0  *  t2Re_1h + -x3bIm_0 * -t2Re_1b);
         float res6ReD =  x0bRe_0 + T3x1dRe + ((x2bRe_0 + T3x3dRe)*  t2Re_2p - ((-x2bIm_0 + T3x3dIm)*  t2Re_2b)); 
-        out512[idx  +  30] =   res6ReD;
-        out512[idx  +  98] =   res6ReD; 
+        out256[idx  +  30] =   res6ReD;
+        out256[idx  +  98] =   res6ReD; 
         float res6ImD = -x0bIm_0 + T3x1dIm + ((x2bRe_0 + T3x3dRe)*  t2Re_2b + ((-x2bIm_0 + T3x3dIm)*  t2Re_2p)); 
-        out512[idx  +  99] = - res6ImD;
-        out512[idx  +  31] =   res6ImD;
+        out256[idx  +  99] = - res6ImD;
+        out256[idx  +  31] =   res6ImD;
 
         float res7ReA =  x0aRe_4 - T3x0aRe + ((x2aRe_4 - T3x2aRe)* -t2Re_2e  - ((-x2aIm_4 - T3x2aIm)*  t2Re_2m ));
-        out512[idx  +  56] =   res7ReA;
-        out512[idx  +  72] =   res7ReA;
+        out256[idx  +  56] =   res7ReA;
+        out256[idx  +  72] =   res7ReA;
         float res7ImA = -x0aIm_4 - T3x0aIm + ((x2aRe_4 - T3x2aRe)*  t2Re_2m  + ((-x2aIm_4 - T3x2aIm)* -t2Re_2e ));
-        out512[idx  +  73] = - res7ImA;
-        out512[idx  +  57] =   res7ImA;
+        out256[idx  +  73] = - res7ImA;
+        out256[idx  +  57] =   res7ImA;
         float res7ReB =  x0dRe_0 - T3x1bRe + ((x2dRe_0 - T3x3bRe)* -t2Re_2d  - ((-x2dIm_0 - T3x3bIm)*  t2Re_2n ));
-        out512[idx  +  58] =   res7ReB;
-        out512[idx  +  70] =   res7ReB;
+        out256[idx  +  58] =   res7ReB;
+        out256[idx  +  70] =   res7ReB;
         float res7ImB = -x0dIm_0 - T3x1bIm + ((x2dRe_0 - T3x3bRe)*  t2Re_2n  + ((-x2dIm_0 - T3x3bIm)* -t2Re_2d ));
-        out512[idx  +  71] = - res7ImB; 
-        out512[idx  +  59] =   res7ImB;
+        out256[idx  +  71] = - res7ImB; 
+        out256[idx  +  59] =   res7ImB;
         float res7ReC =  x0cRe_0 - T3x0cRe + ((x2cRe_0 - T3x2cRe)* -t2Re_2c  - ((-x2cIm_0 - T3x2cIm)*  t2Re_2o ));
-        out512[idx  +  60] =   res7ReC;
-        out512[idx  +  68] =   res7ReC;
+        out256[idx  +  60] =   res7ReC;
+        out256[idx  +  68] =   res7ReC;
         float res7ImC = -x0cIm_0 - T3x0cIm + ((x2cRe_0 - T3x2cRe)*  t2Re_2o  + ((-x2cIm_0 - T3x2cIm)* -t2Re_2c ));
-        out512[idx  +  69] = - res7ImC;
-        out512[idx  +  61] =   res7ImC;
+        out256[idx  +  69] = - res7ImC;
+        out256[idx  +  61] =   res7ImC;
         float res7ReD =  x0bRe_0 - T3x1dRe + ((x2bRe_0 - T3x3dRe)* -t2Re_2b  - ((-x2bIm_0 - T3x3dIm)*  t2Re_2p ));
-        out512[idx  +  62] =   res7ReD;
-        out512[idx  +  66] =   res7ReD;
+        out256[idx  +  62] =   res7ReD;
+        out256[idx  +  66] =   res7ReD;
         float res7ImD = -x0bIm_0 - T3x1dIm + ((x2bRe_0 - T3x3dRe)*  t2Re_2p  + ((-x2bIm_0 - T3x3dIm)* -t2Re_2b ));
-        out512[idx  +  67] = - res7ImD;
-        out512[idx  +  63] =   res7ImD;
+        out256[idx  +  67] = - res7ImD;
+        out256[idx  +  63] =   res7ImD;
     }
     
 
@@ -35363,6 +35362,7 @@ float t2Re_2i = 0x1.6a09e6p-1f;
     }
 
 }
+
 
 
 
