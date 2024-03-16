@@ -767,11 +767,11 @@ function runPerformance(){
         measureTime(128);
         measureTime(128);
         measureTime(128);
-        testData256  = generateTestData(128);
+        testData128  = generateTestData(128);
         measureTime(128);
         measureTime(128);
         measureTime(128);
-        testData256  = generateTestData(128);
+        testData128  = generateTestData(128);
         measureTime(128);
         measureTime(128);
         measureTime(128);
