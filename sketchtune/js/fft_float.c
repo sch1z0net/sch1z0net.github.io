@@ -35842,6 +35842,7 @@ float t2Re_2j = 0x1.44cf32p-1f;
         float res2ImD = x0dIm_4 + T1x1dIm + ((x2dRe_4 + T1x3dRe)*  t2Re_2j + ((x2dIm_4 + T1x3dIm)*  t2Re_2h));
         out128[idx  + 115] = - res2ImD; 
         out128[idx  +  15] =   res2ImD;
+
         float res3ReA = x0aRe_4 - T1x0aRe + ((x2aRe_4 - T1x2aRe)* -t2Re_2m  - ((x2aIm_4 - T1x2aIm)*  t2Re_2e ));
         out128[idx  +  40] =   res3ReA;
         out128[idx  +  88] =   res3ReA;
@@ -36008,6 +36009,7 @@ float t2Re_2i = 0x1.6a09e6p-1f;
         out128[idx  +  63] =   res7ImD;
     }
 
+/*
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     // FFT step for SIZE 128 
@@ -36595,6 +36597,7 @@ float t2Re_2i = 0x1.6a09e6p-1f;
         out128[192] = resRe32_s;
         out128[64] = resRe32_s;
     }
+    */
 }
 
 
