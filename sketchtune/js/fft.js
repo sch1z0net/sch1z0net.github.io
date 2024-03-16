@@ -4443,7 +4443,7 @@ function initializeModule() {
         // Perform FFT operations numOperations times
         for (let i = 0; i < numOperations; i++) {
             //fftRealInPlace_ref(testData);
-            fftReal512(testData);
+            fftReal512(testData512);
             //fftReal1024(testData1024);
             //fft_wasm(ptr_in, inputArray.length, ptr_out);
         }
