@@ -130,14 +130,33 @@ $(document).ready(function(){
 
     var $stats_div = $("<div>").attr("id", "stats_div");
     $("#root").append($stats_div);
+    
+
+    var $table = $("<table>").addClass("fft-table");
+    var $thead = $("<thead>").appendTo($table);
+    var $trHead = $("<tr>").appendTo($thead);
+    $("<th>").text("FFT Size").appendTo($trHead);
+    var $tbody = $("<tbody>").appendTo($table);
+    for (var size = 128; size <= 4096; size *= 2) {
+        var $tr = $("<tr>").appendTo($tbody);
+        $("<td>").text(size).appendTo($tr);
+    }
+
+    // Append the table to the body
+    $stats_div.append($table);
+
+
+
+
+
 
     var $descr_div = $("<div>").attr("id", "descr_div");
     $("#root").append($descr_div);
     $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
     
+    
 
-
-
+    
 
 
 
