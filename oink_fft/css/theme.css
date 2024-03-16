@@ -24,12 +24,12 @@ body {
 }
 
 
-#centeredTitle {
+#title {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -75%);
-  font-family: "Sue Ellen Francisco", cursive;
+  font-family: "Sue Ellen Francisco", cursive !important;
   font-weight: 400;
   font-style: normal;
 }

@@ -214,7 +214,6 @@ function fftReal_ref(realInput) {
         const factors = computeFFTFactorsWithCache(size);
         for (let i = 0; i < N; i += size) {
             for (let j = 0; j < halfSize; j++) {
-                js.push(j);
                 const evenIndex = i + j;
                 const oddIndex = i + j + halfSize;
 
