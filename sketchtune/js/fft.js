@@ -633,7 +633,9 @@ const measureTime = (fftSize) => {
     console.log("Number of FFT",fftSize,"operations per second:", operationsPerSecond);
 };
 
-function runTests(){
+function runPerformance(){
+        console.log("\n\nPerformance Test:");
+        
         measureTime(1024);
         measureTime(1024);
         measureTime(1024);
@@ -702,53 +704,48 @@ function compareFFTResults(array1, array2) {
     return true;
 }
 
-    //console.log("8:    ",compareFFTResults(fftRealInPlace_ref(testData8),fftRealInPlaceRADIX4(testData8)));
-    //console.log("16:   ",compareFFTResults(fftRealInPlace_ref(testData16),fftRealInPlaceRADIX4(testData16)));
-    //console.log("32:   ",compareFFTResults(fftRealInPlace_ref(testData32),fftRealInPlaceRADIX4(testData32)));
-    //console.log("64:   ",compareFFTResults(fftRealInPlace_ref(testData64),fftRealInPlaceRADIX4(testData64)));
-    //console.log("128:  ",compareFFTResults(fftRealInPlace_ref(testData128),fftRealInPlaceRADIX4(testData128)));
-    //console.log("256:  ",compareFFTResults(fftRealInPlace_ref(testData256),fftRealInPlaceRADIX4(testData256)));
-    //console.log("512:  ",compareFFTResults(fftRealInPlace_ref(testData512),fftRealInPlaceRADIX4(testData512)));
-    //console.log("1024: ",compareFFTResults(fftRealInPlace_ref(testData1024),fftRealInPlaceRADIX4(testData1024)));
-    //console.log("2048: ",compareFFTResults(fftRealInPlace_ref(testData2048),fftRealInPlaceRADIX4(testData2048)));
-    //console.log("4096: ",compareFFTResults(fftRealInPlace_ref(testData4096),fftRealInPlaceRADIX4(testData4096)));
-    
-    //const signal1 = [ 1.0, 0.4, 0.0, 0.2 ];
-    //const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5 ];
-    //const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
-    //const signal4 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
-    //const signal5 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
-    
+//const signal1 = [ 1.0, 0.4, 0.0, 0.2 ];
+//const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5 ];
+//const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
+//const signal4 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
+//const signal5 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
 
-    //console.log("512:  ",compareFFTResults(fftRealInPlace_ref(testData512),fftReal512(testData512)));
-    //console.log("1024:  ",compareFFTResults(fftRealInPlace_ref(testData1024),fftReal1024(testData1024)));
+function runComparison(){
+    console.log("\n\nCompare to Reference:");
+    console.log("128:  ",compareFFTResults(fftRealInPlace_ref(testData128), fftReal128(testData128)));
+    console.log("256:  ",compareFFTResults(fftRealInPlace_ref(testData256), fftReal256(testData256)));
+    console.log("512:  ",compareFFTResults(fftRealInPlace_ref(testData512), fftReal512(testData512)));
+    console.log("1024: ",compareFFTResults(fftRealInPlace_ref(testData1024),fftReal1024(testData1024)));
+}
 
-    //console.log(signal1);
-    //console.log(computeInverseFFT(computeFFT(signal1)));
-    //console.log(signal2);
-    //console.log(computeInverseFFT(computeFFT(signal2)));
-    //console.log(signal3);
-    //console.log(computeInverseFFT(computeFFT(signal3)));
-    
+function runForthAndBack(){
+    console.log("\n\nCompare after Forth and Back:");
+    let signal128  = computeInverseFFTonHalf128(fftReal128(testData128.slice(0, 128));
+    let signal256  = computeInverseFFTonHalf256(fftReal256(testData256.slice(0, 256));
+    let signal512  = computeInverseFFTonHalf512(fftReal512(testData512.slice(0, 512));
+    let signal1024 = computeInverseFFTonHalf1024(fftReal1024(testData1024.slice(0, 1024));
 
-    //console.log("1024:  ",compareFFTResults(testData1024,ifft1024(fftRealInPlace_ref(testData1024))));
-    //console.log("1024:  ",compareFFTResults(testData1024,ifft1024(fftReal1024(testData1024))));
+    console.log("128:   ",compareFFTResults(testData128, signal128));
+    console.log("256:   ",compareFFTResults(testData256, signal256));
+    console.log("512:   ",compareFFTResults(testData512, signal512));
+    console.log("1024:  ",compareFFTResults(testData1024, signal1024));
+}
 
-    //console.log(computeFFT(signal1));
 
-    //console.log(fftRealInPlace_ref(testData256));
-    //console.log(fftReal512(testData512));
-    //console.log(fftReal512(testData1024));
 
 
 // Check if the module is already initialized, otherwise wait for initialization
 if (Module.isRuntimeInitialized) {
     initializeModule();
-    runTests();
+    runPerformance();
+    runComparison();
+    runForthAndBack();
 } else {
     Module.onRuntimeInitialized = function(){
         initializeModule();
-        runTests();
+        runPerformance();
+        runComparison();
+        runForthAndBack();
     };
 }
 
