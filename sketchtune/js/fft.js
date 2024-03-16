@@ -710,10 +710,15 @@ function compareFFTResults(array1, array2) {
 
 function runComparison(){
     console.log("\n\nCompare to Reference:");
-    console.log("128:  ",compareFFTResults(fftReal_ref(testData128.slice()), fftReal128(testData128.slice())));
-    console.log("256:  ",compareFFTResults(fftReal_ref(testData256.slice()), fftReal256(testData256.slice())));
-    console.log("512:  ",compareFFTResults(fftReal_ref(testData512.slice()), fftReal512(testData512.slice())));
-    console.log("1024: ",compareFFTResults(fftReal_ref(testData1024.slice()),fftReal1024(testData1024.slice())));
+    console.log("128:  ",compareFFTResults(fftReal_ref(testData128), fftReal128(testData128)));
+    let res1 = fftReal_ref(testData128);
+    let res2 = fftReal128(testData128);
+    for(let i = 0; i<256; i++){
+        console.log(res1[i].toFixed(3),"  ",res2[i].toFixed(3));
+    }
+    console.log("256:  ",compareFFTResults(fftReal_ref(testData256), fftReal256(testData256)));
+    console.log("512:  ",compareFFTResults(fftReal_ref(testData512), fftReal512(testData512)));
+    console.log("1024: ",compareFFTResults(fftReal_ref(testData1024),fftReal1024(testData1024)));
 }
 
 function runForthAndBack(){
