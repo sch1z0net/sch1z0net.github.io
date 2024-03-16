@@ -34,99 +34,7 @@ float* precalculateFFTFactorsRADIX2flattened(int N) {
 }
 
 
-void generate_code_unrolled_1024(FILE *fp) {
-    int size = 1024;
-    float* FAC = precalculateFFTFactorsRADIX2flattened(size);
-    
-    int hsize = size/2;
-    int dsize = size*2;
-    int n = size/4;
-    int h = n/2;
-    
-    fprintf(fp, "    ////////////////////////////////////////////////\n");
-    fprintf(fp, "    ////////////////////////////////////////////////\n");
-    fprintf(fp, "    // FFT step for SIZE %d \n", size);
-    fprintf(fp, "    ////////////////////////////////////////////////\n");
-    for (int i = 0; i <= n; i++) {
-        // Generate variable names based on the current index
-        int eRe = i * 2;
-        int eIm = i * 2 + 1;
-        int oRe = i * 2 + size;
-        int oIm = i * 2 + size + 1;
-
-        if(i == 0){
-          fprintf(fp, "        float oRe%d = out1024[%d];\n", i, oRe);
-          fprintf(fp, "        float oIm%d = out1024[%d];\n", i, oIm);
-          fprintf(fp, "        float eRe%d = out1024[%d];\n", i, eRe);
-          fprintf(fp, "        float eIm%d = out1024[%d];\n", i, eIm);
-
-          fprintf(fp, "        float resRe0_s = eRe0 + oRe0;\n");
-          fprintf(fp, "        out1024[0] = resRe0_s;\n");
-          fprintf(fp, "        float resIm0_s = eIm0 + oIm0;\n");
-          fprintf(fp, "        out1024[1] = resRe0_s;\n");
-          fprintf(fp, "        float resRe0_d = eRe0 - oRe0;\n");
-          fprintf(fp, "        out1024[%d] = resRe0_d;\n", size);
-          fprintf(fp, "        float resIm0_d = eIm0 - oIm0;\n");
-          fprintf(fp, "        out1024[%d] = resIm0_d;\n", size+1);
-          fprintf(fp, "        \n");
-          continue;
-        }
-
-        if(i == n){
-          fprintf(fp, "        float oRe%d = out1024[%d];\n", i, oRe);
-          fprintf(fp, "        float oIm%d = out1024[%d];\n", i, oIm);
-          fprintf(fp, "        float eRe%d = out1024[%d];\n", i, eRe);
-          fprintf(fp, "        float eIm%d = out1024[%d];\n", i, eIm);
-
-          fprintf(fp, "        float resIm%d_s = eIm%d + oRe%d;\n",i,i,i);
-          fprintf(fp, "        out1024[%d] = resIm%d_s;\n", (i*2)+1, i);
-          fprintf(fp, "        out1024[%d] = -resIm%d_s;\n", dsize-(i*2)+1, i);
-
-          fprintf(fp, "        float resRe%d_s = eRe%d - oIm%d;\n",i,i,i);
-          fprintf(fp, "        out1024[%d] = resRe%d_s;\n", dsize-(i*2), i);
-          fprintf(fp, "        out1024[%d] = resRe%d_s;\n", (i*2), i);
-
-          fprintf(fp, "        \n");
-          continue;
-        }
-
-        // Generate the calculations based on the pattern
-        fprintf(fp, "        float oRe%d = out1024[%d];\n", i, oRe);
-        fprintf(fp, "        float oIm%d = out1024[%d];\n", i, oIm);
-        fprintf(fp, "        float eRe%d = out1024[%d];\n", i, eRe);
-        fprintf(fp, "        float eIm%d = out1024[%d];\n", i, eIm);
-
-        if(i < h){
-          fprintf(fp, "        float tRe%d = %af;\n", i, FAC[i*2]);
-          fprintf(fp, "        float tRe%d = %af;\n", (n - i), FAC[(n - i)*2]);
-        }else if(i == h){
-          fprintf(fp, "        float tRe%d = %af;\n", i, FAC[i*2]);
-        }
-
-        fprintf(fp, "        float resIm%d_s = eIm%d + (oRe%d * tRe%d + oIm%d * tRe%d);\n", i, i, i, (n-i), i, i);
-        fprintf(fp, "        out1024[%d] = resIm%d_s;\n", (i*2)+1, i);
-        fprintf(fp, "        out1024[%d] = -resIm%d_s;\n", dsize-(i*2)+1, i);
-
-        fprintf(fp, "        float resRe%d_s = eRe%d + (oRe%d * tRe%d - oIm%d * tRe%d);\n", i, i, i, i, i, (n-i));
-        fprintf(fp, "        out1024[%d] = resRe%d_s;\n", dsize-(i*2), i);
-        fprintf(fp, "        out1024[%d] = resRe%d_s;\n", (i*2), i);
-
-        fprintf(fp, "        float resRe%d_s = eRe%d - (oRe%d * tRe%d - oIm%d * tRe%d);\n", (hsize-i), i, i, i, i, (n-i));
-        fprintf(fp, "        out1024[%d] = resRe%d_s;\n", size+(i*2), (hsize-i));
-        fprintf(fp, "        out1024[%d] = resRe%d_s;\n", size-(i*2), (hsize-i));
-
-        fprintf(fp, "        float resIm%d_s = -eIm%d + (oRe%d * tRe%d + oIm%d * tRe%d);\n", (hsize-i), i, i, (n-i), i, i);
-        fprintf(fp, "        out1024[%d] = resIm%d_s;\n", size-(i*2)+1, (hsize-i));
-        fprintf(fp, "        out1024[%d] = -resIm%d_s;\n", size+(i*2)+1, (hsize-i));
-       
-       fprintf(fp, "        \n");
-    }
-
-    free(FAC);
-}
-
-
-void generate_code_unrolled(int size, FILE *fp) {
+void generate_code_unrolled(int FFT_N, int size, FILE *fp) {
     float* FAC = precalculateFFTFactorsRADIX2flattened(size);
 
     int hsize = size/2;
@@ -138,7 +46,7 @@ void generate_code_unrolled(int size, FILE *fp) {
     fprintf(fp, "    ////////////////////////////////////////////////\n");
     fprintf(fp, "    // FFT step for SIZE %d \n", size);
     fprintf(fp, "    ////////////////////////////////////////////////\n");
-    for (int x = 0; x < 2048; x+=size*2) {
+    for (int x = 0; x < FFT_N*2; x+=size*2) {
       for (int i = 0; i <= n; i++) {
         // Generate variable names based on the current index
         int eRe = i * 2;
@@ -149,46 +57,46 @@ void generate_code_unrolled(int size, FILE *fp) {
         int _i = x+i;
 
         if(i == 0){
-          fprintf(fp, "        float oRe%d = out1024[%d];\n", _i, x + oRe);
-          fprintf(fp, "        float oIm%d = out1024[%d];\n", _i, x + oIm);
-          fprintf(fp, "        float eRe%d = out1024[%d];\n", _i, x + eRe);
-          fprintf(fp, "        float eIm%d = out1024[%d];\n", _i, x + eIm);
+          fprintf(fp, "        float oRe%d = out%d[%d];\n", _i, FFT_N, x + oRe);
+          fprintf(fp, "        float oIm%d = out%d[%d];\n", _i, FFT_N, x + oIm);
+          fprintf(fp, "        float eRe%d = out%d[%d];\n", _i, FFT_N, x + eRe);
+          fprintf(fp, "        float eIm%d = out%d[%d];\n", _i, FFT_N, x + eIm);
 
           fprintf(fp, "        float resRe%d_s = eRe%d + oRe%d;\n", _i, _i, _i);
-          fprintf(fp, "        out1024[%d] = resRe%d_s;\n", x + 0, _i);
+          fprintf(fp, "        out%d[%d] = resRe%d_s;\n", FFT_N, x + 0, _i);
           fprintf(fp, "        float resIm%d_s = eIm%d + oIm%d;\n", _i, _i, _i);
-          fprintf(fp, "        out1024[%d] = resRe0_s;\n", x + 1);
+          fprintf(fp, "        out%d[%d] = resRe0_s;\n", FFT_N, x + 1);
           fprintf(fp, "        float resRe%d_d = eRe%d - oRe%d;\n", _i, _i, _i);
-          fprintf(fp, "        out1024[%d] = resRe%d_d;\n", x + size, _i);
+          fprintf(fp, "        out%d[%d] = resRe%d_d;\n", FFT_N, x + size, _i);
           fprintf(fp, "        float resIm%d_d = eIm%d - oIm%d;\n", _i, _i, _i);
-          fprintf(fp, "        out1024[%d] = resIm%d_d;\n", x + size+1, _i);
+          fprintf(fp, "        out%d[%d] = resIm%d_d;\n", FFT_N, x + size+1, _i);
           fprintf(fp, "        \n");
           continue;
         }
 
         if(i == n){
-          fprintf(fp, "        float oRe%d = out1024[%d];\n", _i, x + oRe);
-          fprintf(fp, "        float oIm%d = out1024[%d];\n", _i, x + oIm);
-          fprintf(fp, "        float eRe%d = out1024[%d];\n", _i, x + eRe);
-          fprintf(fp, "        float eIm%d = out1024[%d];\n", _i, x + eIm);
+          fprintf(fp, "        float oRe%d = out%d[%d];\n", _i, FFT_N, x + oRe);
+          fprintf(fp, "        float oIm%d = out%d[%d];\n", _i, FFT_N, x + oIm);
+          fprintf(fp, "        float eRe%d = out%d[%d];\n", _i, FFT_N, x + eRe);
+          fprintf(fp, "        float eIm%d = out%d[%d];\n", _i, FFT_N, x + eIm);
 
           fprintf(fp, "        float resIm%d_s = eIm%d + oRe%d;\n",_i,_i,_i);
-          fprintf(fp, "        out1024[%d] = resIm%d_s;\n", x + ((i*2)+1), _i);
-          fprintf(fp, "        out1024[%d] = -resIm%d_s;\n", x + (dsize-(i*2)+1), _i);
+          fprintf(fp, "        out%d[%d] = resIm%d_s;\n", FFT_N, x + ((i*2)+1), _i);
+          fprintf(fp, "        out%d[%d] = -resIm%d_s;\n", FFT_N, x + (dsize-(i*2)+1), _i);
 
           fprintf(fp, "        float resRe%d_s = eRe%d - oIm%d;\n",_i,_i,_i);
-          fprintf(fp, "        out1024[%d] = resRe%d_s;\n", x + (dsize-(i*2)), _i);
-          fprintf(fp, "        out1024[%d] = resRe%d_s;\n", x + (i*2), _i);
+          fprintf(fp, "        out%d[%d] = resRe%d_s;\n", FFT_N, x + (dsize-(i*2)), _i);
+          fprintf(fp, "        out%d[%d] = resRe%d_s;\n", FFT_N, x + (i*2), _i);
 
           fprintf(fp, "        \n");
           continue;
         }
 
         // Generate the calculations based on the pattern
-        fprintf(fp, "        float oRe%d = out1024[%d];\n", _i, x + oRe);
-        fprintf(fp, "        float oIm%d = out1024[%d];\n", _i, x + oIm);
-        fprintf(fp, "        float eRe%d = out1024[%d];\n", _i, x + eRe);
-        fprintf(fp, "        float eIm%d = out1024[%d];\n", _i, x + eIm);
+        fprintf(fp, "        float oRe%d = out%d[%d];\n", _i, FFT_N, x + oRe);
+        fprintf(fp, "        float oIm%d = out%d[%d];\n", _i, FFT_N, x + oIm);
+        fprintf(fp, "        float eRe%d = out%d[%d];\n", _i, FFT_N, x + eRe);
+        fprintf(fp, "        float eIm%d = out%d[%d];\n", _i, FFT_N, x + eIm);
 
         if(i < h){
           fprintf(fp, "        float tRe%d = %af;\n", _i, FAC[i*2]);
@@ -198,20 +106,20 @@ void generate_code_unrolled(int size, FILE *fp) {
         }
 
         fprintf(fp, "        float resIm%d_s = eIm%d + (oRe%d * tRe%d + oIm%d * tRe%d);\n", _i, _i, _i, x+(n-i), _i, _i);
-        fprintf(fp, "        out1024[%d] = resIm%d_s;\n", x + ((i*2)+1), _i);
-        fprintf(fp, "        out1024[%d] = -resIm%d_s;\n", x + (dsize-(i*2)+1), _i);
+        fprintf(fp, "        out%d[%d] = resIm%d_s;\n", FFT_N, x + ((i*2)+1), _i);
+        fprintf(fp, "        out%d[%d] = -resIm%d_s;\n", FFT_N, x + (dsize-(i*2)+1), _i);
 
         fprintf(fp, "        float resRe%d_s = eRe%d + (oRe%d * tRe%d - oIm%d * tRe%d);\n", _i, _i, _i, _i, _i, x+(n-i));
-        fprintf(fp, "        out1024[%d] = resRe%d_s;\n", x + (dsize-(i*2)), _i);
-        fprintf(fp, "        out1024[%d] = resRe%d_s;\n", x + (i*2), _i);
+        fprintf(fp, "        out%d[%d] = resRe%d_s;\n", FFT_N, x + (dsize-(i*2)), _i);
+        fprintf(fp, "        out%d[%d] = resRe%d_s;\n", FFT_N, x + (i*2), _i);
 
         fprintf(fp, "        float resRe%d_s = eRe%d - (oRe%d * tRe%d - oIm%d * tRe%d);\n", x+(hsize-i), _i, _i, _i, _i, x+(n-i));
-        fprintf(fp, "        out1024[%d] = resRe%d_s;\n", x + (size+(i*2)), x+(hsize-i));
-        fprintf(fp, "        out1024[%d] = resRe%d_s;\n", x + (size-(i*2)), x+(hsize-i));
+        fprintf(fp, "        out%d[%d] = resRe%d_s;\n", FFT_N, x + (size+(i*2)), x+(hsize-i));
+        fprintf(fp, "        out%d[%d] = resRe%d_s;\n", FFT_N, x + (size-(i*2)), x+(hsize-i));
 
         fprintf(fp, "        float resIm%d_s = -eIm%d + (oRe%d * tRe%d + oIm%d * tRe%d);\n", x+(hsize-i), _i, _i, x+(n-i), _i, _i);
-        fprintf(fp, "        out1024[%d] = resIm%d_s;\n", x + (size-(i*2)+1), x+(hsize-i));
-        fprintf(fp, "        out1024[%d] = -resIm%d_s;\n", x + (size+(i*2)+1), x+(hsize-i));
+        fprintf(fp, "        out%d[%d] = resIm%d_s;\n", FFT_N, x + (size-(i*2)+1), x+(hsize-i));
+        fprintf(fp, "        out%d[%d] = -resIm%d_s;\n", FFT_N, x + (size+(i*2)+1), x+(hsize-i));
        
        fprintf(fp, "        \n");
       }
@@ -220,8 +128,7 @@ void generate_code_unrolled(int size, FILE *fp) {
     free(FAC);
 }
 
-
-void generate_code(int size, FILE *fp) {
+void generate_code(int FFT_N, int size, FILE *fp) {
     float* FAC = precalculateFFTFactorsRADIX2flattened(size);
 
     int hsize = size/2;
@@ -330,7 +237,7 @@ int main() {
 }*/
 
 
-/*
+
 int main() {
     FILE *fp = fopen("generated_code.c", "w");
     if (fp == NULL) {
@@ -341,21 +248,21 @@ int main() {
     //generate_code(128, fp);
     //generate_code(256, fp);
     //generate_code(512, fp);
-    generate_code_unrolled(128, fp);
-    //generate_code_unrolled(256, fp);
+    generate_code_unrolled(512, 128, fp);
+    generate_code_unrolled(512, 256, fp);
     //generate_code_unrolled(512, fp);
     //generate_code_unrolled(1024, fp);
-    //generate_code_unrolled_1024(fp);
     printf("Generated code written to generated_code.c\n");
 
     fclose(fp);
 
     return 0;
-}*/
+}
 
-
+/*
 int main() {
     bitReversalMap(512);
     return 0;
 }
+*/
 
