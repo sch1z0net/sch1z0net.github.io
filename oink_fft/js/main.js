@@ -132,13 +132,16 @@ $(document).ready(function(){
     $("#root").append($stats_div);
     
 
-    var $table = $("<table>").addClass("fft-table");
+    // Create a table element
+    var $table = $("<table>").attr("id", "fft-table");
+    // Create table header
     var $thead = $("<thead>").appendTo($table);
     var $trHead = $("<tr>").appendTo($thead);
-    $("<th>").text("FFT Size").appendTo($trHead);
+    $("<th>").text("FFT Sizes").attr("colspan", 7).appendTo($trHead); // colspan to span all columns
+    // Create table body
     var $tbody = $("<tbody>").appendTo($table);
+    var $tr = $("<tr>").appendTo($tbody); // Single row for all sizes
     for (var size = 128; size <= 4096; size *= 2) {
-        var $tr = $("<tr>").appendTo($tbody);
         $("<td>").text(size).appendTo($tr);
     }
 
