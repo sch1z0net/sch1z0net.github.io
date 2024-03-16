@@ -277,6 +277,62 @@ function fftComplex_ref(complexInput) {
     return out;
 }
 
+function fftComplex_ref_d(complexInput) {
+    const N = complexInput.length / 2;
+    const bits = Math.floor(Math.log2(N));
+
+    if (N !== nextPowerOf2(N)) {
+        console.error("FFT FRAME must have power of 2");
+        return;
+    }
+
+    // Perform bit reversal
+    const out = new Float64Array(N * 2);
+    for (let i = 0; i < N; i++) {
+        const reversedIndex = bitReverse(i, bits);
+        out[reversedIndex * 2    ] = complexInput[i * 2    ]; // Copy real part
+        out[reversedIndex * 2 + 1] = complexInput[i * 2 + 1]; // Copy imaginary part
+    }
+
+    if (N <= 1) {
+        return output;
+    }
+
+    // Recursively calculate FFT
+    for (let size = 2; size <= N; size *= 2) {
+        const halfSize = size / 2;
+        // Get FFT factors with caching
+        //const factors = computeFFTFactorsWithCache(size);
+        for (let i = 0; i < N; i += size) {
+            for (let j = 0; j < halfSize; j++) {
+                const evenIndex = i + j;
+                const oddIndex = i + j + halfSize;
+                const evenPartRe = out[evenIndex * 2    ];
+                const evenPartIm = out[evenIndex * 2 + 1];
+                const oddPartRe  = out[oddIndex  * 2    ];
+                const oddPartIm  = out[oddIndex  * 2 + 1];
+
+                const twiddleRe = Math.cos((2 * Math.PI * j) / size);
+                const twiddleIm = Math.sin((2 * Math.PI * j) / size);
+                //const twiddleRe = factors[2 * j    ];
+                //const twiddleIm = factors[2 * j + 1];
+
+                // Multiply by twiddle factors
+                const twiddledOddRe = oddPartRe * twiddleRe - oddPartIm * twiddleIm;
+                const twiddledOddIm = oddPartRe * twiddleIm + oddPartIm * twiddleRe;
+
+                // Combine results of even and odd parts in place
+                out[evenIndex * 2    ] = evenPartRe + twiddledOddRe;
+                out[evenIndex * 2 + 1] = evenPartIm + twiddledOddIm;
+                out[oddIndex  * 2    ] = evenPartRe - twiddledOddRe;
+                out[oddIndex  * 2 + 1] = evenPartIm - twiddledOddIm;
+            }
+        }
+    }
+
+    return out;
+}
+
 
 function fftReal_ref(realInput) {
     const N = realInput.length;
@@ -379,7 +435,7 @@ function ifft128(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    const result_ = fftComplex_ref(input);
+    const result_ = fftComplex_ref_d(input);
     for (let i = 0; i < 128; i++) {
         result128[i] = result_[i*2] / 128; // Scale the real part
     }
@@ -394,7 +450,7 @@ function ifft256(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    const result_ = fftComplex_ref(input);
+    const result_ = fftComplex_ref_d(input);
     for (let i = 0; i < 256; i++) {
         result256[i] = result_[i*2] / 256; // Scale the real part
     }
@@ -409,7 +465,7 @@ function ifft512(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    const result_ = fftComplex_ref(input);
+    const result_ = fftComplex_ref_d(input);
     for (let i = 0; i < 512; i++) {
         result512[i] = result_[i*2] / 512; // Scale the real part
     }
@@ -424,7 +480,7 @@ function ifft1024(input) {
     }
 
     // Apply FFT to the conjugate spectrum
-    const result_ = fftComplex_ref(input);
+    const result_ = fftComplex_ref_d(input);
     for (let i = 0; i < 1024; i++) {
         result1024[i] = result_[i*2] / 1024; // Scale the real part
     }
