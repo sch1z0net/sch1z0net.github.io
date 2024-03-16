@@ -4445,7 +4445,7 @@ function initializeModule() {
     const testData32   = generateTestData(32);
     const testData64   = generateTestData(64);
     const testData128  = generateTestData(128);
-    const testData256  = generateTestData(256);
+    let testData256  = generateTestData(256);
     let testData512    = generateTestData(512);
     let testData1024   = generateTestData(1024);
     const testData2048 = generateTestData(2048);
@@ -4465,7 +4465,8 @@ function initializeModule() {
         // Perform FFT operations numOperations times
         for (let i = 0; i < numOperations; i++) {
             //fftRealInPlace_ref(testData);
-            fftReal512(testData512);
+            fftReal256(testData256);
+            //fftReal512(testData512);
             //fftReal1024(testData1024);
             //fft_wasm(ptr_in, inputArray.length, ptr_out);
         }
