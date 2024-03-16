@@ -836,10 +836,10 @@ function runComparison(){
 function runForthAndBack(){
     let error;
     
-    let signal128  = computeInverseFFTonHalf128(fftReal_ref_d(testData128).slice(0, 128));
-    let signal256  = computeInverseFFTonHalf256(fftReal_ref_d(testData256).slice(0, 256));
-    let signal512  = computeInverseFFTonHalf512(fftReal_ref_d(testData512).slice(0, 512));
-    let signal1024 = computeInverseFFTonHalf1024(fftReal_ref_d(testData1024).slice(0, 1024));
+    let signal128  = ifft128(fftReal_ref_d(testData128));
+    let signal256  = ifft256(fftReal_ref_d(testData256));
+    let signal512  = ifft512(fftReal_ref_d(testData512));
+    let signal1024 = ifft1024(fftReal_ref_d(testData1024));
 
     error = 1e-3;
     console.log("\n\nCompare after Forth and Back with acceptable Error ",error," :");
