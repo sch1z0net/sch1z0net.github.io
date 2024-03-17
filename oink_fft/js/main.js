@@ -386,16 +386,20 @@ $(document).ready(function(){
     }
     
     Module_KISS().then(function(Module) {
+        Module_KISS_ = Module;
         initializeModuleKISS();
         console.log("INITIALIZED KISS");
         run();
     });
 
     Module_OINK().then(function(Module) {
+        Module_OINK_ = Module;
         initializeModuleOINK();
         console.log("INITIALIZED OINK");
         run();
     });
+
+
 
     /*
     // Check if the module is already initialized, otherwise wait for initialization
