@@ -108,7 +108,7 @@ $(document).ready(function(){
     // Create the image element
     var $oinkImage = $("<img>", {
         id: "oinkImage",
-        src: "oink.png"
+        src: "./favicon/oink.png"
     });
 
     // Append the image to the container div
