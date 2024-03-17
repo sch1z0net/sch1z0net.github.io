@@ -53,10 +53,10 @@ let ooura_oo_256 = new Ooura(256, {"type":"real", "radix":4} );
 let ooura_oo_512 = new Ooura(512, {"type":"real", "radix":4} );
 let ooura_oo_1024 = new Ooura(1024, {"type":"real", "radix":4} );
 const perform_OOURA = (fftSize, testData) => {
-    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { let ooura_data = Float64Array.from(testData.slice()); ooura_oo_128.fftInPlace(ooura_data.buffer); } }
-    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { let ooura_data = Float64Array.from(testData.slice()); ooura_oo_256.fftInPlace(ooura_data.buffer); } }
-    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { let ooura_data = Float64Array.from(testData.slice()); ooura_oo_512.fftInPlace(ooura_data.buffer); } }
-    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { let ooura_data = Float64Array.from(testData.slice()); ooura_oo_1024.fftInPlace(ooura_data.buffer); } }
+    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { let ooura_data = testData.slice(); ooura_oo_128.fftInPlace(ooura_data.buffer); } }
+    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { let ooura_data = testData.slice(); ooura_oo_256.fftInPlace(ooura_data.buffer); } }
+    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { let ooura_data = testData.slice(); ooura_oo_512.fftInPlace(ooura_data.buffer); } }
+    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { let ooura_data = testData.slice(); ooura_oo_1024.fftInPlace(ooura_data.buffer); } }
 };
 
 //////////////////////////////////////
@@ -96,9 +96,11 @@ const perform_OINK = (fftSize, testData) => {
 // Measure the time taken to perform FFT operations
 //////////////////////////////////////
 const measureTime = (type, fftSize, testData) => {
+    let testData64 = Float64Array.from(testData.slice());
+
     const startTime = performance.now(); // Start time
     if(type == "INDUTNY"){ perform_INDUTNY(fftSize, testData); }
-    if(type == "OOURA"){ perform_OOURA(fftSize, testData); }
+    if(type == "OOURA"){ perform_OOURA(fftSize, testData64); }
     if(type == "DSP"){ perform_DSP(fftSize, testData); }
     if(type == "OINK"){ perform_OINK(fftSize, testData); }
     const endTime = performance.now(); // End time
