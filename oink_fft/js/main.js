@@ -38,6 +38,7 @@ let kiss_fft_128, kiss_input_128;
 let kiss_fft_256, kiss_input_256;
 let kiss_fft_512, kiss_input_512;
 let kiss_fft_1024,kiss_input_1024;
+/*
 function initializeModuleKISS(){
     kiss_fft_128 = new Module_KISS.KissFftReal(128);
     kiss_input_128 = kiss_fft_128.getInputTimeDataBuffer();
@@ -47,7 +48,7 @@ function initializeModuleKISS(){
     kiss_input_512 = kiss_fft_512.getInputTimeDataBuffer();
     kiss_fft_1024 = new Module_KISS.KissFftReal(1024);
     kiss_input_1024 = kiss_fft_1024.getInputTimeDataBuffer();
-};
+};*/
 
 const perform_KISS = (fftSize, testData) => {
     if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { kiss_input_128.set(testData.slice()); kiss_fft_128.transform(); } }
@@ -375,7 +376,7 @@ $(document).ready(function(){
           runPerformance("INDUTNY");
           runPerformance("OOURA");
           runPerformance("DSP");
-          runPerformance("KISS");
+          //runPerformance("KISS");
           runPerformance("OINK");
           //runComparison();
           //runForthAndBack();
