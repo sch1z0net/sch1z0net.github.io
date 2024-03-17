@@ -83,10 +83,21 @@ const perform_INDUTNY = (fftSize, testData) => {
 // PREPARE AND PERFORM OINK
 //////////////////////////////////////
 const perform_OINK = (fftSize, testData) => {
-    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { fftReal128(testData); } }
-    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { fftReal256(testData); } }
-    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { fftReal512(testData); } }
-    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { fftReal1024(testData);} }
+    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { fftReal128(testData.slice()); } }
+    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { fftReal256(testData.slice()); } }
+    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { fftReal512(testData.slice()); } }
+    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { fftReal1024(testData.slice());} }
+};
+
+//////////////////////////////////////
+//////////////////////////////////////
+// Only Copy per Slicing
+//////////////////////////////////////
+const perform_slice = (fftSize, testData) => {
+    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { testData.slice(); } }
+    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { testData.slice(); } }
+    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { testData.slice(); } }
+    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { testData.slice(); } }
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -95,7 +106,21 @@ const perform_OINK = (fftSize, testData) => {
 //////////////////////////////////////
 // Measure the time taken to perform FFT operations
 //////////////////////////////////////
-const measureTime = (type, fftSize, testData) => {
+const measureSlicing = (type, fftSize, testData) => {
+    let testData64 = Float64Array.from(testData.slice());
+
+    const startTime = performance.now(); // Start time
+    if(type == "INDUTNY"){ perform_slice(fftSize, testData); }
+    if(type == "OOURA"){ perform_slice(fftSize, testData64); }
+    if(type == "DSP"){ perform_slice(fftSize, testData64); }
+    if(type == "OINK"){ perform_slice(fftSize, testData); }
+    const endTime = performance.now(); // End time
+    const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
+
+    return elapsedTime;
+};
+
+const measureFFT = (type, fftSize, testData) => {
     let testData64 = Float64Array.from(testData.slice());
 
     const startTime = performance.now(); // Start time
@@ -106,10 +131,7 @@ const measureTime = (type, fftSize, testData) => {
     const endTime = performance.now(); // End time
     const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
 
-    // Calculate the number of FFT operations per second
-    const operationsPerSecond = Math.floor(numOperations / (elapsedTime / 1000));
-
-    return operationsPerSecond;
+    return elapsedTime;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -139,7 +161,10 @@ function runPerformance(type){
     for (var size = 128; size <= 1024; size *= 2) {
         let avrg_ops = 0;
         for(let i = 0; i<RUNS; i++){
-          avrg_ops += measureTime(type, size, SIGNAL[j][i]);
+          let eT_slice = measureSlicing(type, size, SIGNAL[j][i]);
+          let eT_FFT   = measureFFT(type, size, SIGNAL[j][i]);
+          let ops = Math.floor(numOperations / ((eT_FFT-eT_slice) / 1000));
+          avrg_ops += ops;
         }
         avrg_ops = Math.floor(avrg_ops/RUNS);
         if(type == "INDUTNY"){ INDUTNY_FFT_RESULTS.set(size, avrg_ops); } 
