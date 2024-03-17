@@ -102,15 +102,18 @@ let kiss_fft_256, kiss_input_256;
 let kiss_fft_512, kiss_input_512;
 let kiss_fft_1024,kiss_input_1024;
 
-function initializeModuleKISS(){
-    kiss_fft_128 = new Module_KISS_.KissFftReal(128);
-    kiss_input_128 = kiss_fft_128.getInputTimeDataBuffer();
-    kiss_fft_256 = new Module_KISS_.KissFftReal(256);
-    kiss_input_256 = kiss_fft_256.getInputTimeDataBuffer();
-    kiss_fft_512 = new Module_KISS_.KissFftReal(512);
-    kiss_input_512 = kiss_fft_512.getInputTimeDataBuffer();
-    kiss_fft_1024 = new Module_KISS_.KissFftReal(1024);
-    kiss_input_1024 = kiss_fft_1024.getInputTimeDataBuffer();
+function initializeKISS(){
+    return new Promise((resolve, reject) => {
+        kiss_fft_128 = new Module_KISS_.KissFftReal(128);
+        kiss_input_128 = kiss_fft_128.getInputTimeDataBuffer();
+        kiss_fft_256 = new Module_KISS_.KissFftReal(256);
+        kiss_input_256 = kiss_fft_256.getInputTimeDataBuffer();
+        kiss_fft_512 = new Module_KISS_.KissFftReal(512);
+        kiss_input_512 = kiss_fft_512.getInputTimeDataBuffer();
+        kiss_fft_1024 = new Module_KISS_.KissFftReal(1024);
+        kiss_input_1024 = kiss_fft_1024.getInputTimeDataBuffer();
+        resolve();
+    });
 };
 
 const perform_KISS = (fftSize, testData) => {
@@ -124,12 +127,21 @@ const perform_KISS = (fftSize, testData) => {
 //////////////////////////////////////
 // PREPARE AND PERFORM DSP
 //////////////////////////////////////
-/*
-var dsp_fft_128 = new FFT(128, 44100);
-var dsp_fft_256 = new FFT(256, 44100);
-var dsp_fft_512 = new FFT(512, 44100);
-var dsp_fft_1024 = new FFT(1024, 44100);
-*/
+let dsp_fft_128;
+let dsp_fft_256;
+let dsp_fft_512;
+let dsp_fft_1024;
+
+function initializeDSP(){
+    return new Promise((resolve, reject) => {
+        dsp_fft_128 = new FFT(128, 44100);
+        dsp_fft_256 = new FFT(256, 44100);
+        dsp_fft_512 = new FFT(512, 44100);
+        dsp_fft_1024 = new FFT(1024, 44100);
+        resolve();
+    });
+}    
+
 const perform_DSP = (fftSize, testData) => {
     if(fftSize == 128){ for (let i = 0; i < numOPs; i++) { dsp_fft_128.forward(testData.slice()); } }
     if(fftSize == 256){ for (let i = 0; i < numOPs; i++) { dsp_fft_256.forward(testData.slice()); } }
@@ -141,10 +153,21 @@ const perform_DSP = (fftSize, testData) => {
 //////////////////////////////////////
 // PREPARE AND PERFORM OOURA
 //////////////////////////////////////
-let ooura_oo_128 = new Ooura(128, {"type":"real", "radix":4} );
-let ooura_oo_256 = new Ooura(256, {"type":"real", "radix":4} );
-let ooura_oo_512 = new Ooura(512, {"type":"real", "radix":4} );
-let ooura_oo_1024 = new Ooura(1024, {"type":"real", "radix":4} );
+let ooura_oo_128;
+let ooura_oo_256;
+let ooura_oo_512;
+let ooura_oo_1024;
+
+function initializeOOURA(){
+    return new Promise((resolve, reject) => {
+        ooura_oo_128 = new Ooura(128, {"type":"real", "radix":4} );
+        ooura_oo_256 = new Ooura(256, {"type":"real", "radix":4} );
+        ooura_oo_512 = new Ooura(512, {"type":"real", "radix":4} );
+        ooura_oo_1024 = new Ooura(1024, {"type":"real", "radix":4} );
+        resolve();
+    });
+}
+
 const perform_OOURA = (fftSize, testData) => {
     if(fftSize == 128){ for (let i = 0; i < numOPs; i++) { let ooura_data = testData.slice(); ooura_oo_128.fftInPlace(ooura_data.buffer); } }
     if(fftSize == 256){ for (let i = 0; i < numOPs; i++) { let ooura_data = testData.slice(); ooura_oo_256.fftInPlace(ooura_data.buffer); } }
@@ -156,16 +179,25 @@ const perform_OOURA = (fftSize, testData) => {
 //////////////////////////////////////
 // PREPARE AND PERFORM INDUTNY
 //////////////////////////////////////
-/*
-const indutny_f_128 = new IND_FFT(128);
-const indutny_out_128 = indutny_f_128.createComplexArray();
-const indutny_f_256 = new IND_FFT(256);
-const indutny_out_256 = indutny_f_256.createComplexArray();
-const indutny_f_512 = new IND_FFT(512);
-const indutny_out_512 = indutny_f_512.createComplexArray();
-const indutny_f_1024 = new IND_FFT(1024);
-const indutny_out_1024 = indutny_f_1024.createComplexArray();
-*/
+let indutny_f_128,  indutny_out_128;
+let indutny_f_256,  indutny_out_256;
+let indutny_f_512,  indutny_out_512;
+let indutny_f_1024, indutny_out_1024;
+
+function initializeINDUTNY(){
+    return new Promise((resolve, reject) => {
+        indutny_f_128 = new IND_FFT(128);
+        indutny_out_128 = indutny_f_128.createComplexArray();
+        indutny_f_256 = new IND_FFT(256);
+        indutny_out_256 = indutny_f_256.createComplexArray();
+        indutny_f_512 = new IND_FFT(512);
+        indutny_out_512 = indutny_f_512.createComplexArray();
+        indutny_f_1024 = new IND_FFT(1024);
+        indutny_out_1024 = indutny_f_1024.createComplexArray();
+        resolve();
+    });
+}
+
 const perform_INDUTNY = (fftSize, testData) => {
     if(fftSize == 128){ for (let i = 0; i < numOPs; i++) { indutny_f_128.realTransform(indutny_out_128, testData.slice()); } }
     if(fftSize == 256){ for (let i = 0; i < numOPs; i++) { indutny_f_256.realTransform(indutny_out_256, testData.slice()); } }
@@ -237,11 +269,11 @@ let RUNS = 6;
 
 var SIGNAL = [];
 
-var OINK_FFT_RESULTS = new Map();
+var OINK_FFT_RESULTS    = new Map();
 var INDUTNY_FFT_RESULTS = new Map();
-var OOURA_FFT_RESULTS = new Map();
-var DSP_FFT_RESULTS = new Map();
-var KISS_FFT_RESULTS = new Map();
+var OOURA_FFT_RESULTS   = new Map();
+var DSP_FFT_RESULTS     = new Map();
+var KISS_FFT_RESULTS    = new Map();
 
 var j = 0;
 for (var size = 128; size <= 1024; size *= 2) {
@@ -355,25 +387,19 @@ function runForthAndBack(){
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
 
-function run_already(){
-      createPerformanceTable();
-
-      //runPerformance("INDUTNY"); addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS);
-      //runPerformance("DSP");     addPerformanceRow("DSP", DSP_FFT_RESULTS);
-      runPerformance("OOURA");   addPerformanceRow("OOURA", OOURA_FFT_RESULTS);
-
-      //runComparison();
-      //runForthAndBack();        
-}
-
 $(document).ready(function(){
-    run_already();
     
+    createPerformanceTable();
+
+    initializeINDUTNY().then(() => { runPerformance("INDUTNY"); addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS); });
+    initializeDSP().then(() => {     runPerformance("DSP");     addPerformanceRow("DSP", DSP_FFT_RESULTS); });
+    initializeOOURA().then(() => {   runPerformance("OOURA");   addPerformanceRow("OOURA", OOURA_FFT_RESULTS); });
+
     /*
     let initialized = 0;
     Module_KISS().then(function(Module) {
         Module_KISS_ = Module;
-        initializeModuleKISS();
+        initializeKISS();
         console.log("INITIALIZED KISS");
         runPerformance("KISS");    addPerformanceRow("KISS", KISS_FFT_RESULTS);
         if(++initialized == 2){ $loading.hide(); }
