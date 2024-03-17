@@ -217,12 +217,22 @@ body {
 
 button {
    background-color: white;
-   border-color: black;
+   color: black;
+   border: 1px solid black;
+   border-radius: 50%;
 }
+
+button:hover {
+    background-color: black;
+    color: white;
+}
+
 
 select {
    background-color: white;
-   border-color: black;
+   color: black;
+   border: 1px solid black;
+   border-radius: 50%;
 }
 
 #numOpsSelect{
