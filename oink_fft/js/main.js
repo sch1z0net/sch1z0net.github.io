@@ -53,10 +53,10 @@ const perform_INDUTNY = (fftSize, testData) => {
 // PREPARE AND PERFORM OINK
 //////////////////////////////////////
 const perform_OINK = (fftSize, testData) => {
-    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { fftReal128(testData); } }
-    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { fftReal256(testData); } }
-    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { fftReal512(testData); } }
-    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { fftReal1024(testData);} }
+    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { fftReal128(testData.slice()); } }
+    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { fftReal256(testData.slice()); } }
+    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { fftReal512(testData.slice()); } }
+    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { fftReal1024(testData.slice());} }
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
