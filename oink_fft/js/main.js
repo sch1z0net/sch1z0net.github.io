@@ -359,6 +359,8 @@ $(document).ready(function(){
           //runComparison();
           //runForthAndBack();        
     }
+
+    run_already();
     
     let initialized = 0;
     Module_KISS().then(function(Module) {
@@ -376,7 +378,5 @@ $(document).ready(function(){
         runPerformance("OINK");    addPerformanceRow("OINK", OINK_FFT_RESULTS);
         if(++initialized == 2){ $loading.hide(); }
     });
-    
-    run_already();
 
 });
