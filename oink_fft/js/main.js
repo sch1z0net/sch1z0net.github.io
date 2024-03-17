@@ -349,37 +349,36 @@ $(document).ready(function(){
     $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
     
 
-    
-    let init_count = 0;
-    function run(){
-        init_count++;
-        if(init_count == 2){
+    function run_already(){
           createPerformanceTable();
 
           runPerformance("INDUTNY"); addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS);
           runPerformance("OOURA");   addPerformanceRow("OOURA", OOURA_FFT_RESULTS);
           runPerformance("DSP");     addPerformanceRow("DSP", DSP_FFT_RESULTS);
-          runPerformance("KISS");    addPerformanceRow("KISS", KISS_FFT_RESULTS);
-          runPerformance("OINK");    addPerformanceRow("OINK", OINK_FFT_RESULTS);
+          //runPerformance("KISS");    addPerformanceRow("KISS", KISS_FFT_RESULTS);
+          //runPerformance("OINK");    addPerformanceRow("OINK", OINK_FFT_RESULTS);
 
-          $loading.hide();
           //runComparison();
           //runForthAndBack();        
-        }
     }
     
+    run_already();
+
+    let initialized = 0;
     Module_KISS().then(function(Module) {
         Module_KISS_ = Module;
         initializeModuleKISS();
         console.log("INITIALIZED KISS");
-        run();
+        runPerformance("KISS");    addPerformanceRow("KISS", KISS_FFT_RESULTS);
+        if(initialized++ == 2){ $loading.hide(); }
     });
 
     Module_OINK().then(function(Module) {
         Module_OINK_ = Module;
         initializeModuleOINK();
         console.log("INITIALIZED OINK");
-        run();
+        runPerformance("OINK");    addPerformanceRow("OINK", OINK_FFT_RESULTS);
+        if(initialized++ == 2){ $loading.hide(); }
     });
 
 
