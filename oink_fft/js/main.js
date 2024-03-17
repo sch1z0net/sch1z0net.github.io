@@ -354,9 +354,9 @@ function runForthAndBack(){
 function run_already(){
       createPerformanceTable();
 
-      runPerformance("INDUTNY"); addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS);
+      //runPerformance("INDUTNY"); addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS);
+      //runPerformance("DSP");     addPerformanceRow("DSP", DSP_FFT_RESULTS);
       runPerformance("OOURA");   addPerformanceRow("OOURA", OOURA_FFT_RESULTS);
-      runPerformance("DSP");     addPerformanceRow("DSP", DSP_FFT_RESULTS);
 
       //runComparison();
       //runForthAndBack();        
