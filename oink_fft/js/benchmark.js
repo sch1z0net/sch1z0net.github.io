@@ -215,6 +215,7 @@ var KISS_FFT_RESULTS    = new Map();
 
 // Define a function to execute the loop asynchronously
 const runPerformanceLoop = async (type) => {
+    let j = 0;
     for (let size = 128; size <= 1024; size *= 2) {
         let avrg_ops = 0;
 
