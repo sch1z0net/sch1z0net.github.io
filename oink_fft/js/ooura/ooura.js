@@ -2,7 +2,8 @@
 //const init = require('./init.js');
 //const trans = require('./transform.js');
 
-class Ooura {
+//class Ooura {
+class ooura {
 	constructor(size, info = {type: 'real', radix: 4}) {
 		assert(Ooura.isPowerOf2(size));
 
