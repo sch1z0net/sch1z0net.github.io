@@ -127,9 +127,9 @@ for (var size = 128; size <= 1024; size *= 2) {
    var SIGNALS = [];
    for(let i = 0; i<RUNS; i++){
       let signal = generateTestData(size);
-      SIGNALS[i] = signal;
+      SIGNALS.push(signal);
    }
-   SIGNAL[j] = SIGNALS;
+   SIGNAL.push(SIGNALS);
    j++;
 }
 
