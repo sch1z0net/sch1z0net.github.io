@@ -235,20 +235,20 @@ var DSP_FFT_RESULTS     = new Map();
 var KISS_FFT_RESULTS    = new Map();
 
 // Define a function to execute the loop asynchronously
-const runPerformance = async (type) => {
-    let j = 0;
+/*const runPerformance = async (type) => {
+    let s = 0;
     for (let size = 128; size <= 1024; size *= 2) {
         let avrg_ops = 0;
 
         // Warm up
-        for (let i = 0; i < WARMUPS; i++) {
-            await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[j][i]);
+        for (let run = 0; run < WARMUPS; run++) {
+            await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[s][run]);
         }
 
         // Run Measurement
-        for (let i = 0; i < RUNS; i++) {
-            let eT_slice = await measureSlicing(type, size, SIGNALS_FOR_EACH_FFT[j][i]);
-            let eT_FFT   = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[j][i]);
+        for (let run = 0; run < RUNS; run++) {
+            let eT_slice = await measureSlicing(type, size, SIGNALS_FOR_EACH_FFT[s][run]);
+            let eT_FFT   = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[s][run]);
             let ops = Math.floor(numOPs / ((eT_FFT - eT_slice) / 1000));
             avrg_ops += ops;
         }
@@ -259,9 +259,43 @@ const runPerformance = async (type) => {
         if (type == "DSP") {     DSP_FFT_RESULTS.set(size, avrg_ops); }
         if (type == "KISS") {    KISS_FFT_RESULTS.set(size, avrg_ops); }
         if (type == "OINK") {    OINK_FFT_RESULTS.set(size, avrg_ops); }
-        j++;
+        s++;
+    }
+};*/
+
+const runPerformance = async (type) => {
+    let s = 0;
+    for (let size = 128; size <= 1024; size *= 2) {
+        let avrg_ops = 0;
+
+        // Warm up
+        for (let run = 0; run < WARMUPS; run++) {
+            await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[s][run]);
+        }
+
+        // Run Measurement
+        for (let run = 0; run < RUNS; run++) {
+            let eT_slice = await measureSlicing(type, size, SIGNALS_FOR_EACH_FFT[s][run]);
+            let eT_FFT = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[s][run]);
+            let ops = Math.floor(numOPs / ((eT_FFT - eT_slice) / 1000));
+            avrg_ops += ops;
+
+            // Introduce a delay between iterations
+            await new Promise(resolve => setTimeout(resolve, DELAY_BETWEEN_ITERATIONS));
+        }
+
+        avrg_ops = Math.floor(avrg_ops / RUNS);
+        if (type == "INDUTNY") { INDUTNY_FFT_RESULTS.set(size, avrg_ops); }
+        if (type == "OOURA") { OOURA_FFT_RESULTS.set(size, avrg_ops); }
+        if (type == "DSP") { DSP_FFT_RESULTS.set(size, avrg_ops); }
+        if (type == "KISS") { KISS_FFT_RESULTS.set(size, avrg_ops); }
+        if (type == "OINK") { OINK_FFT_RESULTS.set(size, avrg_ops); }
+        s++;
     }
 };
+
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
