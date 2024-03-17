@@ -42,10 +42,10 @@ const indutny_out_512 = indutny_f_512.createComplexArray();
 const indutny_f_1024 = new FFT(1024);
 const indutny_out_1024 = indutny_f_1024.createComplexArray();
 const perform_INDUTNY = (fftSize, testData) => {
-    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { indutny_f_128.realTransform(indutny_out_128, testData); } }
-    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { indutny_f_256.realTransform(indutny_out_256, testData); } }
-    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { indutny_f_512.realTransform(indutny_out_512, testData); } }
-    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { indutny_f_1024.realTransform(indutny_out_1024, testData); } }
+    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { indutny_f_128.realTransform(indutny_out_128, testData.slice()); } }
+    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { indutny_f_256.realTransform(indutny_out_256, testData.slice()); } }
+    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { indutny_f_512.realTransform(indutny_out_512, testData.slice()); } }
+    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { indutny_f_1024.realTransform(indutny_out_1024, testData.slice()); } }
 };
 
 //////////////////////////////////////
