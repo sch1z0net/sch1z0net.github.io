@@ -258,6 +258,7 @@ $(document).ready(function(){
     if (Module.isRuntimeInitialized) {
         initializeModule();
         runPerformance("INDUTNY");
+        runPerformance("OOURA");
         runPerformance("OINK");
         runComparison();
         runForthAndBack();
@@ -266,6 +267,7 @@ $(document).ready(function(){
         Module.onRuntimeInitialized = function(){
             initializeModule();
             runPerformance("INDUTNY");
+            runPerformance("OOURA");
             runPerformance("OINK");
             runComparison();
             runForthAndBack();
