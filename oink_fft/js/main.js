@@ -308,6 +308,7 @@ $(document).ready(function(){
     }
 
     var $tbody;
+    var $loading = $('<div id="loading-circle"></div>');
     function createPerformanceTable(){
         resetPerformanceTable();
 
@@ -317,7 +318,7 @@ $(document).ready(function(){
         var $thead = $("<thead>").appendTo($table);
         var $trHead = $("<tr>").appendTo($thead);
         // Create the loading circle element
-        $('<div class="loading-circle"></div>').appendTo($trHead);
+        $loading.show().appendTo($trHead);
         // Create Header Text
         $("<th>").text("FFT Performance (measured in OINKS per second)").attr("colspan", 6).appendTo($trHead); // colspan to span all columns
         // Create table body
@@ -359,9 +360,10 @@ $(document).ready(function(){
           runPerformance("DSP");     addPerformanceRow("DSP", DSP_FFT_RESULTS);
           runPerformance("KISS");    addPerformanceRow("KISS", KISS_FFT_RESULTS);
           runPerformance("OINK");    addPerformanceRow("OINK", OINK_FFT_RESULTS);
+
+          $loading.hide();
           //runComparison();
-          //runForthAndBack();
-          createPerformanceTable();           
+          //runForthAndBack();        
         }
     }
     
