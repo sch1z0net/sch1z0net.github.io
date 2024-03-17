@@ -355,9 +355,7 @@ $(document).ready(function(){
           runPerformance("INDUTNY"); addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS);
           runPerformance("OOURA");   addPerformanceRow("OOURA", OOURA_FFT_RESULTS);
           runPerformance("DSP");     addPerformanceRow("DSP", DSP_FFT_RESULTS);
-          //runPerformance("KISS");    addPerformanceRow("KISS", KISS_FFT_RESULTS);
-          //runPerformance("OINK");    addPerformanceRow("OINK", OINK_FFT_RESULTS);
-
+ 
           //runComparison();
           //runForthAndBack();        
     }
