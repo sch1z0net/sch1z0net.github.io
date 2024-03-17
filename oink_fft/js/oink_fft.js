@@ -18,29 +18,29 @@ var p_in_512, fft_wasm_512;
 var p_in_1024, fft_wasm_1024;
 
 function initializeModule() {
-    fft_wasm_128 = Module.cwrap('fftReal128', null, ['number', 'number', 'number']);
-    p_in_128     = Module._malloc(128 * Float32Array.BYTES_PER_ELEMENT);
+    fft_wasm_128 = Module_Oink.cwrap('fftReal128', null, ['number', 'number', 'number']);
+    p_in_128     = Module_Oink._malloc(128 * Float32Array.BYTES_PER_ELEMENT);
 
-    fft_wasm_256 = Module.cwrap('fftReal256', null, ['number', 'number', 'number']);
-    p_in_256     = Module._malloc(256 * Float32Array.BYTES_PER_ELEMENT);
+    fft_wasm_256 = Module_Oink.cwrap('fftReal256', null, ['number', 'number', 'number']);
+    p_in_256     = Module_Oink._malloc(256 * Float32Array.BYTES_PER_ELEMENT);
 
-    fft_wasm_512 = Module.cwrap('fftReal512', null, ['number', 'number', 'number']);
-    p_in_512     = Module._malloc(512 * Float32Array.BYTES_PER_ELEMENT);
+    fft_wasm_512 = Module_Oink.cwrap('fftReal512', null, ['number', 'number', 'number']);
+    p_in_512     = Module_Oink._malloc(512 * Float32Array.BYTES_PER_ELEMENT);
 
-    fft_wasm_1024= Module.cwrap('fftReal1024', null, ['number', 'number', 'number']);
-    p_in_1024    = Module._malloc(1024* Float32Array.BYTES_PER_ELEMENT);
+    fft_wasm_1024= Module_Oink.cwrap('fftReal1024', null, ['number', 'number', 'number']);
+    p_in_1024    = Module_Oink._malloc(1024* Float32Array.BYTES_PER_ELEMENT);
 }
 
 function fftReal1024(realInput) {
     // Check if the input length exceeds the maximum length
     if (realInput.length > 1024) { throw new Error("Input length exceeds maximum length"); }
     // Copy input data to the preallocated memory buffer
-    Module.HEAPF32.set(realInput, p_in_1024 / Float32Array.BYTES_PER_ELEMENT);
+    Module_Oink.HEAPF32.set(realInput, p_in_1024 / Float32Array.BYTES_PER_ELEMENT);
     // Perform FFT
     fft_wasm_1024(p_in_1024, realInput.length);
-    var p_out_1024 = Module.ccall('getOut1024Ptr', 'number', [], []);
+    var p_out_1024 = Module_Oink.ccall('getOut1024Ptr', 'number', [], []);
     // Return the result array
-    return new Float32Array(Module.HEAPF32.buffer, p_out_1024, 2048);
+    return new Float32Array(Module_Oink.HEAPF32.buffer, p_out_1024, 2048);
 }
 
 
@@ -48,36 +48,36 @@ function fftReal512(realInput) {
     // Check if the input length exceeds the maximum length
     if (realInput.length > 512) { throw new Error("Input length exceeds maximum length"); }
     // Copy input data to the preallocated memory buffer
-    Module.HEAPF32.set(realInput, p_in_512 / Float32Array.BYTES_PER_ELEMENT);
+    Module_Oink.HEAPF32.set(realInput, p_in_512 / Float32Array.BYTES_PER_ELEMENT);
     // Perform FFT
     fft_wasm_512(p_in_512, realInput.length);
-    var p_out_512 = Module.ccall('getOut512Ptr', 'number', [], []);
+    var p_out_512 = Module_Oink.ccall('getOut512Ptr', 'number', [], []);
     // Return the result array
-    return new Float32Array(Module.HEAPF32.buffer, p_out_512, 1024);
+    return new Float32Array(Module_Oink.HEAPF32.buffer, p_out_512, 1024);
 }
 
 function fftReal256(realInput) {
     // Check if the input length exceeds the maximum length
     if (realInput.length > 256) { throw new Error("Input length exceeds maximum length"); }
     // Copy input data to the preallocated memory buffer
-    Module.HEAPF32.set(realInput, p_in_256 / Float32Array.BYTES_PER_ELEMENT);
+    Module_Oink.HEAPF32.set(realInput, p_in_256 / Float32Array.BYTES_PER_ELEMENT);
     // Perform FFT
     fft_wasm_256(p_in_256, realInput.length);
-    var p_out_256 = Module.ccall('getOut256Ptr', 'number', [], []);
+    var p_out_256 = Module_Oink.ccall('getOut256Ptr', 'number', [], []);
     // Return the result array
-    return new Float32Array(Module.HEAPF32.buffer, p_out_256, 512);
+    return new Float32Array(Module_Oink.HEAPF32.buffer, p_out_256, 512);
 }
 
 function fftReal128(realInput) {
     // Check if the input length exceeds the maximum length
     if (realInput.length > 128) { throw new Error("Input length exceeds maximum length"); }
     // Copy input data to the preallocated memory buffer
-    Module.HEAPF32.set(realInput, p_in_128 / Float32Array.BYTES_PER_ELEMENT);
+    Module_Oink.HEAPF32.set(realInput, p_in_128 / Float32Array.BYTES_PER_ELEMENT);
     // Perform FFT
     fft_wasm_128(p_in_128, realInput.length);
-    var p_out_128 = Module.ccall('getOut128Ptr', 'number', [], []);
+    var p_out_128 = Module_Oink.ccall('getOut128Ptr', 'number', [], []);
     // Return the result array
-    return new Float32Array(Module.HEAPF32.buffer, p_out_128, 256);
+    return new Float32Array(Module_Oink.HEAPF32.buffer, p_out_128, 256);
 }
 
 
