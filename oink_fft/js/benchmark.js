@@ -172,7 +172,7 @@ const measureSlicing = (type, fftSize, testData) => {
     return elapsedTime;
 };
 
-const measureFFT = (type, fftSize, testData) => {
+const measureFFT = (type, size, testData) => {
     let testData32 = testData.slice();
     let testData64 = Float64Array.from(testData.slice());
     let func;
