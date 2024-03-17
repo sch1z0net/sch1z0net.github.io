@@ -160,6 +160,11 @@ function runPerformance(type){
     let j = 0;
     for (var size = 128; size <= 1024; size *= 2) {
         let avrg_ops = 0;
+        // WARM UP
+        for(let i = 0; i<4; i++){
+           measureFFT(type, size, SIGNAL[j][i]);
+        }
+        // Run Measurement
         for(let i = 0; i<RUNS; i++){
           let eT_slice = measureSlicing(type, size, SIGNAL[j][i]);
           let eT_FFT   = measureFFT(type, size, SIGNAL[j][i]);
