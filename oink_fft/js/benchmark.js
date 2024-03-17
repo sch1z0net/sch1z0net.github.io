@@ -284,7 +284,7 @@ function resetData(){
     KISS_FFT_RESULTS    = new Map();
 }
 
-function runAllPerformanceTests(){
+async function runAllPerformanceTests(){
     var j = 0;
     for (var size = 128; size <= 1024; size *= 2) {
        var SIGNALS = [];
