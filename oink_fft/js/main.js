@@ -31,6 +31,21 @@ let testData4096   = generateTestData(4096);
 
 //////////////////////////////////////
 //////////////////////////////////////
+// PREPARE AND PERFORM OOURA
+//////////////////////////////////////
+let ooura_oo_128 = new ooura(128, {"type":"real", "radix":4} );
+let ooura_oo_256 = new ooura(256, {"type":"real", "radix":4} );
+let ooura_oo_512 = new ooura(512, {"type":"real", "radix":4} );
+let ooura_oo_1024 = new ooura(1024, {"type":"real", "radix":4} );
+const perform_OOURA = (fftSize, testData) => {
+    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { let ooura_data = Float64Array.from(testData.slice()); ooura_oo_128.fftInPlace(ooura_data.buffer); } }
+    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { let ooura_data = Float64Array.from(testData.slice()); ooura_oo_256.fftInPlace(ooura_data.buffer); } }
+    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { let ooura_data = Float64Array.from(testData.slice()); ooura_oo_512.fftInPlace(ooura_data.buffer); } }
+    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { let ooura_data = Float64Array.from(testData.slice()); ooura_oo_1024.fftInPlace(ooura_data.buffer); } }
+};
+
+//////////////////////////////////////
+//////////////////////////////////////
 // PREPARE AND PERFORM INDUTNY
 //////////////////////////////////////
 const indutny_f_128 = new FFT(128);
@@ -67,6 +82,7 @@ const perform_OINK = (fftSize, testData) => {
 //////////////////////////////////////
 const measureTime = (type, fftSize, testData) => {
     const startTime = performance.now(); // Start time
+    if(type == "OOURA"){ perform_OOURA(fftSize, testData); }
     if(type == "INDUTNY"){ perform_INDUTNY(fftSize, testData); }
     if(type == "OINK"){ perform_OINK(fftSize, testData); }
     const endTime = performance.now(); // End time
@@ -84,6 +100,7 @@ const measureTime = (type, fftSize, testData) => {
 
 var OINK_FFT_RESULTS = new Map();
 var INDUTNY_FFT_RESULTS = new Map();
+var OOURA_FFT_RESULTS = new Map();
 
 function runPerformance(type){
     //console.log("\n\nPerformance Test:");
@@ -97,6 +114,7 @@ function runPerformance(type){
         avrg_ops = Math.floor(avrg_ops/RUNS);
         if(type == "OINK"){ OINK_FFT_RESULTS.set(size, avrg_ops); }
         if(type == "INDUTNY"){ INDUTNY_FFT_RESULTS.set(size, avrg_ops); } 
+        if(type == "OOURA"){ OOURA_FFT_RESULTS.set(size, avrg_ops); }
     }
 }
 
