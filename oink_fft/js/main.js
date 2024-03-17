@@ -258,7 +258,7 @@ $(document).ready(function(){
 
         // OOURA FFT
         var $tr2 = $("<tr>").appendTo($tbody); 
-        $("<td>").text("OOURA FFT").appendTo($tr2);
+        $("<td>").text("OOURA (audioplastic)").appendTo($tr2);
         for (var size = 128; size <= 1024; size *= 2) {
             $("<td>").text( OOURA_FFT_RESULTS.get(size)).appendTo($tr2);
         }
@@ -272,7 +272,7 @@ $(document).ready(function(){
 
         // OINK FFT
         var $tr4 = $("<tr>").appendTo($tbody); 
-        $("<td>").text("OINK FFT").appendTo($tr4);
+        $("<td>").text("OINK (sch1z0net)").appendTo($tr4);
         for (var size = 128; size <= 1024; size *= 2) {
             $("<td>").text( OINK_FFT_RESULTS.get(size)).appendTo($tr4);
         }
