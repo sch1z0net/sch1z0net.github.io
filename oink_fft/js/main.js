@@ -316,9 +316,9 @@ $(document).ready(function(){
         var $table = $("<table>").attr("id", "fft-table");
         // Create table header
         var $thead = $("<thead>").appendTo($table);
-        var $trHead = $("<tr>").appendTo($thead);
         // Create the loading circle element
-        $loading.show().appendTo($trHead);
+        $loading.show().appendTo($thead);
+        var $trHead = $("<tr>").appendTo($thead);
         // Create Header Text
         $("<th>").text("FFT Performance (measured in OINKS per second)").attr("colspan", 6).appendTo($trHead); // colspan to span all columns
         // Create table body
@@ -362,15 +362,13 @@ $(document).ready(function(){
           //runForthAndBack();        
     }
     
-    run_already();
-
     let initialized = 0;
     Module_KISS().then(function(Module) {
         Module_KISS_ = Module;
         initializeModuleKISS();
         console.log("INITIALIZED KISS");
         runPerformance("KISS");    addPerformanceRow("KISS", KISS_FFT_RESULTS);
-        if(initialized++ == 2){ $loading.hide(); }
+        if(++initialized == 2){ $loading.hide(); }
     });
 
     Module_OINK().then(function(Module) {
@@ -378,8 +376,9 @@ $(document).ready(function(){
         initializeModuleOINK();
         console.log("INITIALIZED OINK");
         runPerformance("OINK");    addPerformanceRow("OINK", OINK_FFT_RESULTS);
-        if(initialized++ == 2){ $loading.hide(); }
+        if(++initialized == 2){ $loading.hide(); }
     });
-
+    
+    run_already();
 
 });
