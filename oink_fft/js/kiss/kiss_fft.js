@@ -1,4 +1,4 @@
-var Module_KISS_ = (() => {
+var Module_KISS = (() => {
   var _scriptDir = typeof document !== 'undefined' && document.currentScript ? document.currentScript.src : undefined;
   if (typeof __filename !== 'undefined') _scriptDir ||= __filename;
   return (
@@ -12,6 +12,6 @@ var Module=moduleArg;var readyPromiseResolve,readyPromiseReject;Module["ready"]=
 );
 })();
 if (typeof exports === 'object' && typeof module === 'object')
-  module.exports = Module_KISS_;
+  module.exports = Module_KISS;
 else if (typeof define === 'function' && define['amd'])
-  define([], () => Module_KISS_);
+  define([], () => Module_KISS);
