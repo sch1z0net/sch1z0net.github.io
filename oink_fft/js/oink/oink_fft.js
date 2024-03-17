@@ -18,65 +18,65 @@ var p_in_512, fft_wasm_512;
 var p_in_1024, fft_wasm_1024;
 
 function initializeModuleOINK() {
-    fft_wasm_128 = Module_OINK_ls.cwrap('fftReal128', null, ['number', 'number', 'number']);
-    p_in_128     = Module_OINK_ls._malloc(128 * Float32Array.BYTES_PER_ELEMENT);
+    fft_wasm_128 = Module_OINK_.cwrap('fftReal128', null, ['number', 'number', 'number']);
+    p_in_128     = Module_OINK_._malloc(128 * Float32Array.BYTES_PER_ELEMENT);
 
-    fft_wasm_256 = Module_OINK_ls.cwrap('fftReal256', null, ['number', 'number', 'number']);
-    p_in_256     = Module_OINK_ls._malloc(256 * Float32Array.BYTES_PER_ELEMENT);
+    fft_wasm_256 = Module_OINK_.cwrap('fftReal256', null, ['number', 'number', 'number']);
+    p_in_256     = Module_OINK_._malloc(256 * Float32Array.BYTES_PER_ELEMENT);
 
-    fft_wasm_512 = Module_OINK_ls.cwrap('fftReal512', null, ['number', 'number', 'number']);
-    p_in_512     = Module_OINK_ls._malloc(512 * Float32Array.BYTES_PER_ELEMENT);
+    fft_wasm_512 = Module_OINK_.cwrap('fftReal512', null, ['number', 'number', 'number']);
+    p_in_512     = Module_OINK_._malloc(512 * Float32Array.BYTES_PER_ELEMENT);
 
-    fft_wasm_1024= Module_OINK_ls.cwrap('fftReal1024', null, ['number', 'number', 'number']);
-    p_in_1024    = Module_OINK_ls._malloc(1024* Float32Array.BYTES_PER_ELEMENT);
+    fft_wasm_1024= Module_OINK_.cwrap('fftReal1024', null, ['number', 'number', 'number']);
+    p_in_1024    = Module_OINK_._malloc(1024* Float32Array.BYTES_PER_ELEMENT);
 }
 
 function fftReal1024(realInput) {
     // Check if the input length exceeds the maximum length
     if (realInput.length > 1024) { throw new Error("Input length exceeds maximum length"); }
     // Copy input data to the preallocated memory buffer
-    Module_OINK_ls.HEAPF32.set(realInput, p_in_1024 / Float32Array.BYTES_PER_ELEMENT);
+    Module_OINK_.HEAPF32.set(realInput, p_in_1024 / Float32Array.BYTES_PER_ELEMENT);
     // Perform FFT
     fft_wasm_1024(p_in_1024, realInput.length);
-    var p_out_1024 = Module_OINK_ls.ccall('getOut1024Ptr', 'number', [], []);
+    var p_out_1024 = Module_OINK_.ccall('getOut1024Ptr', 'number', [], []);
     // Return the result array
-    return new Float32Array(Module_OINK_ls.HEAPF32.buffer, p_out_1024, 2048);
+    return new Float32Array(Module_OINK_.HEAPF32.buffer, p_out_1024, 2048);
 }
 
 function fftReal512(realInput) {
     // Check if the input length exceeds the maximum length
     if (realInput.length > 512) { throw new Error("Input length exceeds maximum length"); }
     // Copy input data to the preallocated memory buffer
-    Module_OINK_ls.HEAPF32.set(realInput, p_in_512 / Float32Array.BYTES_PER_ELEMENT);
+    Module_OINK_.HEAPF32.set(realInput, p_in_512 / Float32Array.BYTES_PER_ELEMENT);
     // Perform FFT
     fft_wasm_512(p_in_512, realInput.length);
-    var p_out_512 = Module_OINK_ls.ccall('getOut512Ptr', 'number', [], []);
+    var p_out_512 = Module_OINK_.ccall('getOut512Ptr', 'number', [], []);
     // Return the result array
-    return new Float32Array(Module_OINK_ls.HEAPF32.buffer, p_out_512, 1024);
+    return new Float32Array(Module_OINK_.HEAPF32.buffer, p_out_512, 1024);
 }
 
 function fftReal256(realInput) {
     // Check if the input length exceeds the maximum length
     if (realInput.length > 256) { throw new Error("Input length exceeds maximum length"); }
     // Copy input data to the preallocated memory buffer
-    Module_OINK_ls.HEAPF32.set(realInput, p_in_256 / Float32Array.BYTES_PER_ELEMENT);
+    Module_OINK_.HEAPF32.set(realInput, p_in_256 / Float32Array.BYTES_PER_ELEMENT);
     // Perform FFT
     fft_wasm_256(p_in_256, realInput.length);
-    var p_out_256 = Module_OINK_ls.ccall('getOut256Ptr', 'number', [], []);
+    var p_out_256 = Module_OINK_.ccall('getOut256Ptr', 'number', [], []);
     // Return the result array
-    return new Float32Array(Module_OINK_ls.HEAPF32.buffer, p_out_256, 512);
+    return new Float32Array(Module_OINK_.HEAPF32.buffer, p_out_256, 512);
 }
 
 function fftReal128(realInput) {
     // Check if the input length exceeds the maximum length
     if (realInput.length > 128) { throw new Error("Input length exceeds maximum length"); }
     // Copy input data to the preallocated memory buffer
-    Module_OINK_ls.HEAPF32.set(realInput, p_in_128 / Float32Array.BYTES_PER_ELEMENT);
+    Module_OINK_.HEAPF32.set(realInput, p_in_128 / Float32Array.BYTES_PER_ELEMENT);
     // Perform FFT
     fft_wasm_128(p_in_128, realInput.length);
-    var p_out_128 = Module_OINK_ls.ccall('getOut128Ptr', 'number', [], []);
+    var p_out_128 = Module_OINK_.ccall('getOut128Ptr', 'number', [], []);
     // Return the result array
-    return new Float32Array(Module_OINK_ls.HEAPF32.buffer, p_out_128, 256);
+    return new Float32Array(Module_OINK_.HEAPF32.buffer, p_out_128, 256);
 }
 
 

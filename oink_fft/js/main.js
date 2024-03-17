@@ -28,8 +28,8 @@ let testData2048   = generateTestData(2048);
 let testData4096   = generateTestData(4096);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-let Module_KISS_ls;
-let Module_OINK_ls;
+let Module_KISS_;
+let Module_OINK_;
 
 //////////////////////////////////////
 //////////////////////////////////////
@@ -41,13 +41,13 @@ let kiss_fft_512, kiss_input_512;
 let kiss_fft_1024,kiss_input_1024;
 
 function initializeModuleKISS(){
-    kiss_fft_128 = new Module_KISS_ls.KissFftReal(128);
+    kiss_fft_128 = new Module_KISS_.KissFftReal(128);
     kiss_input_128 = kiss_fft_128.getInputTimeDataBuffer();
-    kiss_fft_256 = new Module_KISS_ls.KissFftReal(256);
+    kiss_fft_256 = new Module_KISS_.KissFftReal(256);
     kiss_input_256 = kiss_fft_256.getInputTimeDataBuffer();
-    kiss_fft_512 = new Module_KISS_ls.KissFftReal(512);
+    kiss_fft_512 = new Module_KISS_.KissFftReal(512);
     kiss_input_512 = kiss_fft_512.getInputTimeDataBuffer();
-    kiss_fft_1024 = new Module_KISS_ls.KissFftReal(1024);
+    kiss_fft_1024 = new Module_KISS_.KissFftReal(1024);
     kiss_input_1024 = kiss_fft_1024.getInputTimeDataBuffer();
 };
 
@@ -385,28 +385,26 @@ $(document).ready(function(){
         }
     }
     
-    Module_OINK_ls = moduleOINK();
     // Check if the module is already initialized, otherwise wait for initialization
-    if (Module_OINK_ls.isRuntimeInitialized) {
+    if (Module_OINK_.isRuntimeInitialized) {
         initializeModuleOINK();
         console.log("INITIALIZED OINK");
         run();
     } else {
-        Module_OINK_ls.onRuntimeInitialized = function(){
+        Module_OINK_.onRuntimeInitialized = function(){
             initializeModuleOINK();
             console.log("INITIALIZED OINK");
             run();
         };
     }
 
-    Module_KISS_ls = moduleKISS();
     // Check if the module is already initialized, otherwise wait for initialization
-    if (Module_KISS_ls.isRuntimeInitialized) {
+    if (Module_KISS_.isRuntimeInitialized) {
         initializeModuleKISS();
         console.log("INITIALIZED KISS");
         run();
     } else {
-        Module_KISS_ls.onRuntimeInitialized = function(){
+        Module_KISS_.onRuntimeInitialized = function(){
             initializeModuleKISS();
             console.log("INITIALIZED KISS");
             run();
