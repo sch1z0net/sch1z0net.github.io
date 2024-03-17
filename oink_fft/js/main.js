@@ -4,8 +4,7 @@
 /////////////////////////////////// TESTING PERFORMANCE ///////////////////////////////////////////////
 
 // Define the number of FFT operations to perform
-//const numOperations = 10000;
-const numOperations = 5000;
+const numOPs = 10000;
 
 // Generate test data as Float32Array
 const generateTestData = (size) => {
@@ -202,7 +201,7 @@ function runPerformance(type){
         for(let i = 0; i<RUNS; i++){
           let eT_slice = measureSlicing(type, size, SIGNAL[j][i]);
           let eT_FFT   = measureFFT(type, size, SIGNAL[j][i]);
-          let ops = Math.floor(numOperations / ((eT_FFT-eT_slice) / 1000));
+          let ops = Math.floor(numOPs / ((eT_FFT-eT_slice) / 1000));
           avrg_ops += ops;
         }
         avrg_ops = Math.floor(avrg_ops/RUNS);
@@ -308,8 +307,13 @@ $(document).ready(function(){
     var $loading = $('<div class="loading-circle"></div>');
     $stats_div.append($loading);
 
-    function createPerformanceTable(){
+    function resetPerformanceTable(){
         $stats_div.empty();
+    }
+
+    var $tbody;
+    function createPerformanceTable(){
+        resetPerformanceTable();
 
         // Create a table element
         var $table = $("<table>").attr("id", "fft-table");
@@ -318,7 +322,7 @@ $(document).ready(function(){
         var $trHead = $("<tr>").appendTo($thead);
         $("<th>").text("FFT Performance (measured in OINKS per second)").attr("colspan", 6).appendTo($trHead); // colspan to span all columns
         // Create table body
-        var $tbody = $("<tbody>").appendTo($table);
+        $tbody = $("<tbody>").appendTo($table);
 
         // HEADER
         var $tr_sizes = $("<tr>").attr("id", "tr_header").appendTo($tbody); 
@@ -327,60 +331,35 @@ $(document).ready(function(){
             $("<td>").text(size).appendTo($tr_sizes);
         }
 
-        // INDUTNY FFT
-        var $tr1 = $("<tr>").appendTo($tbody); 
-        $("<td>").text("fft.js (indutny)").appendTo($tr1);
-        for (var size = 128; size <= 1024; size *= 2) {
-            $("<td>").text( INDUTNY_FFT_RESULTS.get(size)).appendTo($tr1);
-        }
-
-        // OOURA FFT
-        var $tr2 = $("<tr>").appendTo($tbody); 
-        $("<td>").text("OOURA (audioplastic)").appendTo($tr2);
-        for (var size = 128; size <= 1024; size *= 2) {
-            $("<td>").text( OOURA_FFT_RESULTS.get(size)).appendTo($tr2);
-        }
-
-        // DSP FFT
-        var $tr3 = $("<tr>").appendTo($tbody); 
-        $("<td>").text("dsp.js (corbanbrook)").appendTo($tr3);
-        for (var size = 128; size <= 1024; size *= 2) {
-            $("<td>").text( DSP_FFT_RESULTS.get(size)).appendTo($tr3);
-        }
-
-        // KISS FFT
-        var $tr4 = $("<tr>").appendTo($tbody); 
-        $("<td>").text("KISS (mborgerding)").appendTo($tr4);
-        for (var size = 128; size <= 1024; size *= 2) {
-            $("<td>").text( KISS_FFT_RESULTS.get(size)).appendTo($tr4);
-        }
-
-        // OINK FFT
-        var $tr5 = $("<tr>").appendTo($tbody); 
-        $("<td>").text("OINK (sch1z0net)").appendTo($tr5);
-        for (var size = 128; size <= 1024; size *= 2) {
-            $("<td>").text( OINK_FFT_RESULTS.get(size)).appendTo($tr5);
-        }
-
         // Append the table to the body
         $stats_div.append($table);
     }
 
+    function addPerformanceRow(name, results){
+        var $tr = $("<tr>").appendTo($tbody); 
+        $("<td>").text(name).appendTo($tr);
+        for (var size = 128; size <= 1024; size *= 2) {
+            $("<td>").text( results.get(size) ).appendTo($tr);
+        }
+    }
 
     var $descr_div = $("<div>").attr("id", "descr_div");
     $("#root").append($descr_div);
     $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
     
+
     
     let init_count = 0;
     function run(){
         init_count++;
         if(init_count == 2){
-          runPerformance("INDUTNY");
-          runPerformance("OOURA");
-          runPerformance("DSP");
-          runPerformance("KISS");
-          runPerformance("OINK");
+          createPerformanceTable();
+
+          runPerformance("INDUTNY"); addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS);
+          runPerformance("OOURA");   addPerformanceRow("OOURA", OOURA_FFT_RESULTS);
+          runPerformance("DSP");     addPerformanceRow("DSP", DSP_FFT_RESULTS);
+          runPerformance("KISS");    addPerformanceRow("KISS", KISS_FFT_RESULTS);
+          runPerformance("OINK");    addPerformanceRow("OINK", OINK_FFT_RESULTS);
           //runComparison();
           //runForthAndBack();
           createPerformanceTable();           
