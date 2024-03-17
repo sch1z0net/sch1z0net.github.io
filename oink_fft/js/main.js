@@ -60,19 +60,6 @@ var $descr_div = $("<div>").attr("id", "descr_div");
 $("#root").append($descr_div);
 $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
 
-
-function run_already(){
-      createPerformanceTable();
-
-      runPerformance("INDUTNY"); addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS);
-      runPerformance("OOURA");   addPerformanceRow("OOURA", OOURA_FFT_RESULTS);
-      runPerformance("DSP");     addPerformanceRow("DSP", DSP_FFT_RESULTS);
-
-      //runComparison();
-      //runForthAndBack();        
-}
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -364,9 +351,21 @@ function runForthAndBack(){
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
 
+function run_already(){
+      createPerformanceTable();
+
+      runPerformance("INDUTNY"); addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS);
+      runPerformance("OOURA");   addPerformanceRow("OOURA", OOURA_FFT_RESULTS);
+      runPerformance("DSP");     addPerformanceRow("DSP", DSP_FFT_RESULTS);
+
+      //runComparison();
+      //runForthAndBack();        
+}
+
 $(document).ready(function(){
     run_already();
     
+    /*
     let initialized = 0;
     Module_KISS().then(function(Module) {
         Module_KISS_ = Module;
@@ -382,5 +381,5 @@ $(document).ready(function(){
         console.log("INITIALIZED OINK");
         runPerformance("OINK");    addPerformanceRow("OINK", OINK_FFT_RESULTS);
         if(++initialized == 2){ $loading.hide(); }
-    });
+    });*/
 });
