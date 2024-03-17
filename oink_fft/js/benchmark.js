@@ -333,6 +333,7 @@ $(document).ready(async function(){
     $loading_info.text("Initializing OOURA...");   await initializeOOURA();
     $loading_info.text("Initializing KISS...");    Module_KISS_ = await Module_KISS(); await initializeKISS();
     $loading_info.text("Initializing OINK...");    Module_OINK_ = await Module_OINK(); await initializeModuleOINK();
+   
     runAllPerformanceTests();
 });
 
