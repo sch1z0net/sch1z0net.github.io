@@ -1,13 +1,13 @@
 @font-face {
     font-family: 'Varela';
-    src: url('./fonts/Varela-Regular.ttf') format('truetype');
+    src: url('../fonts/Varela-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Sue Ellen Francisco';
-    src: url('./fonts/SueEllenFrancisco-Regular.ttf') format('truetype');
+    src: url('../fonts/SueEllenFrancisco-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
