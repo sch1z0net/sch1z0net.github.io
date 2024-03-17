@@ -9,6 +9,7 @@ var $subtitle;
 var $stats_div;
 var $tbody;
 var $loading;
+var $loading_info;
 var $descr_div;
 
 function resetPerformanceTable(){
@@ -20,12 +21,13 @@ function createPerformanceTable(){
 
     // Create a table element
     var $table = $("<table>").attr("id", "fft-table");
+    // Create the dots
+    $loading = $('<div id="loading" class="loading-dots">').appendTo($table);
+    $loading_info = $('<div id="loading_info">').appendTo($table);
     // Create table header
     var $thead = $("<thead>").appendTo($table);
     // Create the loading circle element
     //$loading.show().appendTo($table);
-    // Create the dots
-    $loading = $('<div id="loading-dots" class="loading-dots">').appendTo($table);
     for (var i = 0; i < 3; i++) {
       $loading.append('<span class="dot"></span>');
     }

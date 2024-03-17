@@ -150,11 +150,17 @@ body {
   }
 }
 
+#loading_info {
+    position: absolute;
+    left: 50%;
+    bottom: 2px;
+    font-size: 10px;
+}
 
 #loading {
     position: absolute;
     left: 50%;
-    bottom: 5px;
+    bottom: 8px;
 }
 
 .loading-dots {

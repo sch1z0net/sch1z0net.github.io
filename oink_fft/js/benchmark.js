@@ -277,13 +277,11 @@ const runPerformance = async (type) => {
 
 $(document).ready(async function(){
     // Call each initialization function asynchronously using await
-    await initializeINDUTNY();
-    await initializeDSP();
-    await initializeOOURA();
-    Module_KISS_ = await Module_KISS();
-    await initializeKISS();
-    Module_OINK_ = await Module_OINK();
-    await initializeModuleOINK();
+    $loading_info.text("Initializing INDUTNY..."); await initializeINDUTNY();
+    $loading_info.text("Initializing DSP...");     await initializeDSP();
+    $loading_info.text("Initializing OOURA...");   await initializeOOURA();
+    $loading_info.text("Initializing KISS...");    Module_KISS_ = await Module_KISS(); await initializeKISS();
+    $loading_info.text("Initializing OINK...");   Module_OINK_ = await Module_OINK(); await initializeModuleOINK();
     
     var j = 0;
     for (var size = 128; size <= 1024; size *= 2) {
@@ -297,17 +295,22 @@ $(document).ready(async function(){
     }
 
     // After all initialization is done, run performance tests and add performance rows
+    $loading_info.text("Measure INDUTNY..."); 
     await runPerformance("INDUTNY");
     await addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS);
+    $loading_info.text("Measure DSP..."); 
     await runPerformance("DSP");
     await addPerformanceRow("DSP", DSP_FFT_RESULTS);
+    $loading_info.text("Measure OOURA..."); 
     await runPerformance("OOURA");
     await addPerformanceRow("OOURA", OOURA_FFT_RESULTS);
-    
+    $loading_info.text("Measure KISS..."); 
     await runPerformance("KISS");    
     await addPerformanceRow("KISS", KISS_FFT_RESULTS);
+    $loading_info.text("Measure OINK..."); 
     await runPerformance("OINK");    
     await addPerformanceRow("OINK", OINK_FFT_RESULTS);
+    $loading_info.text("Finished!"); 
 
     $loading.hide();
 });
