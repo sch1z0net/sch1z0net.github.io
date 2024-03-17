@@ -325,13 +325,33 @@ function runForthAndBack(){
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
 
+
+$(document).ready(async function(){
+    // Call each initialization function asynchronously using await
+    await initializeINDUTNY();
+    await initializeDSP();
+    await initializeOOURA();
+
+    // After all initialization is done, run performance tests and add performance rows
+    runPerformance("INDUTNY");
+    addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS);
+
+    runPerformance("DSP");
+    addPerformanceRow("DSP", DSP_FFT_RESULTS);
+
+    runPerformance("OOURA");
+    addPerformanceRow("OOURA", OOURA_FFT_RESULTS);
+});
+
+
+/*
 $(document).ready(function(){
     
     initializeINDUTNY().then(() => { runPerformance("INDUTNY"); addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS); });
-    /*initializeDSP().then(() => {     runPerformance("DSP");     addPerformanceRow("DSP", DSP_FFT_RESULTS); });
+    initializeDSP().then(() => {     runPerformance("DSP");     addPerformanceRow("DSP", DSP_FFT_RESULTS); });
     initializeOOURA().then(() => {   runPerformance("OOURA");   addPerformanceRow("OOURA", OOURA_FFT_RESULTS); });
-    */
-    /*
+    
+    
     let initialized = 0;
     Module_KISS().then(function(Module) {
         Module_KISS_ = Module;
@@ -347,5 +367,5 @@ $(document).ready(function(){
         console.log("INITIALIZED OINK");
         runPerformance("OINK");    addPerformanceRow("OINK", OINK_FFT_RESULTS);
         if(++initialized == 2){ $loading.hide(); }
-    });*/
-});
+    });
+});*/
