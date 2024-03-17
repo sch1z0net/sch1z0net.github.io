@@ -2,7 +2,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// TESTING PERFORMANCE ///////////////////////////////////////////////
-$(document).ready(function(){
 
 // Define the number of FFT operations to perform
 const numOperations = 10000; // You can adjust this number based on your requirements
@@ -288,6 +287,8 @@ function runForthAndBack(){
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
 
+
+$(document).ready(function(){
     var $title_div = $("<div>").attr("id", "title_div");
     $("#root").append($title_div);
 
@@ -396,7 +397,7 @@ function runForthAndBack(){
         };
     }
 
-    Module_KISS_ls = ModuleKISS();
+    Module_KISS_ls = moduleKISS();
     // Check if the module is already initialized, otherwise wait for initialization
     if (Module_KISS_ls.isRuntimeInitialized) {
         initializeModuleKISS();
