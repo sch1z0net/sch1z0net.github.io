@@ -39,13 +39,13 @@ let kiss_fft_256, kiss_input_256;
 let kiss_fft_512, kiss_input_512;
 let kiss_fft_1024,kiss_input_1024;
 function initializeModuleKISS(){
-    kiss_fft_128 = new Module_KISS.KissFftReal(128);
+    kiss_fft_128 = new Module_KISS_.KissFftReal(128);
     kiss_input_128 = kiss_fft_128.getInputTimeDataBuffer();
-    kiss_fft_256 = new Module_KISS.KissFftReal(256);
+    kiss_fft_256 = new Module_KISS_.KissFftReal(256);
     kiss_input_256 = kiss_fft_256.getInputTimeDataBuffer();
-    kiss_fft_512 = new Module_KISS.KissFftReal(512);
+    kiss_fft_512 = new Module_KISS_.KissFftReal(512);
     kiss_input_512 = kiss_fft_512.getInputTimeDataBuffer();
-    kiss_fft_1024 = new Module_KISS.KissFftReal(1024);
+    kiss_fft_1024 = new Module_KISS_.KissFftReal(1024);
     kiss_input_1024 = kiss_fft_1024.getInputTimeDataBuffer();
 };
 
