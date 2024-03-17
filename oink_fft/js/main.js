@@ -51,7 +51,6 @@ $(document).ready(function(){
         $tr.appendTo($tbody);
     }
 
-
     $title_div = $("<div>").attr("id", "title_div");
     $title = $("<h1>").text("OINK FFT").attr("id", "title");
     $subtitle = $("<h2>").text("the oinkiest FFT in the web").attr("id", "subtitle");
@@ -67,4 +66,4 @@ $(document).ready(function(){
     $("#root").append($descr_div);
     $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
     createPerformanceTable();
-}
+});
