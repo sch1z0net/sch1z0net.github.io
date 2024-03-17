@@ -283,6 +283,8 @@ $(document).ready(async function(){
     await initializeOOURA();
     Module_KISS_ = await Module_KISS();
     await initializeKISS();
+    Module_OINK_ = await Module_OINK();
+    await initializeModuleOINK();
     
     var j = 0;
     for (var size = 128; size <= 1024; size *= 2) {
@@ -305,32 +307,11 @@ $(document).ready(async function(){
     
     await runPerformance("KISS");    
     await addPerformanceRow("KISS", KISS_FFT_RESULTS);
+    await runPerformance("OINK");    
+    await addPerformanceRow("OINK", OINK_FFT_RESULTS);
 
+    $loading.hide();
 });
-
-
-/*
-$(document).ready(function(){
-    let initialized = 0;
-    Module_KISS().then(function(Module) {
-        Module_KISS_ = Module;
-        initializeKISS();
-        console.log("INITIALIZED KISS");
-        runPerformance("KISS");    addPerformanceRow("KISS", KISS_FFT_RESULTS);
-        if(++initialized == 2){ $loading.hide(); }
-    });
-
-    Module_OINK().then(function(Module) {
-        Module_OINK_ = Module;
-        initializeModuleOINK();
-        console.log("INITIALIZED OINK");
-        runPerformance("OINK");    addPerformanceRow("OINK", OINK_FFT_RESULTS);
-        if(++initialized == 2){ $loading.hide(); }
-    });
-});*/
-
-
-
 
 
 
