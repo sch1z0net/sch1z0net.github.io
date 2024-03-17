@@ -28,8 +28,8 @@ let testData2048   = generateTestData(2048);
 let testData4096   = generateTestData(4096);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-let Module_OINK_ = Module_OINK();
-let Module_KISS_ = Module_KISS();
+let Module_OINK_;
+let Module_KISS_;
 
 //////////////////////////////////////
 //////////////////////////////////////
@@ -385,6 +385,19 @@ $(document).ready(function(){
         }
     }
     
+    Module_KISS().then(function(Module) {
+        initializeModuleKISS();
+        console.log("INITIALIZED KISS");
+        run();
+    });
+
+    Module_OINK().then(function(Module) {
+        initializeModuleOINK();
+        console.log("INITIALIZED OINK");
+        run();
+    });
+
+    /*
     // Check if the module is already initialized, otherwise wait for initialization
     if (Module_OINK_.isRuntimeInitialized) {
         initializeModuleOINK();
@@ -410,4 +423,6 @@ $(document).ready(function(){
             run();
         };
     }
+    */
+
 });
