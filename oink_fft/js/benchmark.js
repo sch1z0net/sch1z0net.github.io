@@ -178,38 +178,38 @@ const measureFFT = (type, size, testData) => {
     let func;
 
     if(type == "INDUTNY"){
-        if(size ==  128){ func = perform_INDUTNY(indutny_f_128,  indutny_out_128,  testData32); }
-        if(size ==  256){ func = perform_INDUTNY(indutny_f_256,  indutny_out_256,  testData32); }
-        if(size ==  512){ func = perform_INDUTNY(indutny_f_512,  indutny_out_512,  testData32); }
-        if(size == 1024){ func = perform_INDUTNY(indutny_f_1024, indutny_out_1024, testData32); }
+        if(size ==  128){ func = () => { perform_INDUTNY(indutny_f_128,  indutny_out_128,  testData32); }; }
+        if(size ==  256){ func = () => { perform_INDUTNY(indutny_f_256,  indutny_out_256,  testData32); }; }
+        if(size ==  512){ func = () => { perform_INDUTNY(indutny_f_512,  indutny_out_512,  testData32); }; }
+        if(size == 1024){ func = () => { perform_INDUTNY(indutny_f_1024, indutny_out_1024, testData32); }; }
     }
 
     if(type == "DSP"){
-        if(size ==  128){ func = perform_DSP(dsp_fft_128, testData64); }
-        if(size ==  256){ func = perform_DSP(dsp_fft_256, testData64); }
-        if(size ==  512){ func = perform_DSP(dsp_fft_512, testData64); }
-        if(size == 1024){ func = perform_DSP(dsp_fft_1024, testData64); }
+        if(size ==  128){ func = () => { perform_DSP(dsp_fft_128, testData64); }; }
+        if(size ==  256){ func = () => { perform_DSP(dsp_fft_256, testData64); }; }
+        if(size ==  512){ func = () => { perform_DSP(dsp_fft_512, testData64); }; }
+        if(size == 1024){ func = () => { perform_DSP(dsp_fft_1024, testData64); }; }
     }
 
     if(type == "OOURA"){
-        if(size ==  128){ func = perform_OOURA(ooura_oo_128, testData64); }
-        if(size ==  256){ func = perform_OOURA(ooura_oo_256, testData64); }
-        if(size ==  512){ func = perform_OOURA(ooura_oo_512, testData64); }
-        if(size == 1024){ func = perform_OOURA(ooura_oo_1024, testData64); }
+        if(size ==  128){ func = () => { perform_OOURA(ooura_oo_128, testData64); }; }
+        if(size ==  256){ func = () => { perform_OOURA(ooura_oo_256, testData64); }; }
+        if(size ==  512){ func = () => { perform_OOURA(ooura_oo_512, testData64); }; }
+        if(size == 1024){ func = () => { perform_OOURA(ooura_oo_1024, testData64); }; }
     }
 
     if(type == "KISS"){
-        if(size ==  128){ func = perform_KISS(kiss_input_128, kiss_fft_128, testData64); }
-        if(size ==  256){ func = perform_KISS(kiss_input_256, kiss_fft_256, testData64); }
-        if(size ==  512){ func = perform_KISS(kiss_input_512, kiss_fft_512, testData64); }
-        if(size == 1024){ func = perform_KISS(kiss_input_1024, kiss_fft_1024, testData64); }
+        if(size ==  128){ func = () => { perform_KISS(kiss_input_128, kiss_fft_128, testData64); }; }
+        if(size ==  256){ func = () => { perform_KISS(kiss_input_256, kiss_fft_256, testData64); }; }
+        if(size ==  512){ func = () => { perform_KISS(kiss_input_512, kiss_fft_512, testData64); }; }
+        if(size == 1024){ func = () => { perform_KISS(kiss_input_1024, kiss_fft_1024, testData64); }; }
     }
 
     if(type == "OINK"){
-        if(size ==  128){ func = perform_OINK(fftReal128, testData32); }
-        if(size ==  256){ func = perform_OINK(fftReal256, testData32); }
-        if(size ==  512){ func = perform_OINK(fftReal512, testData32); }
-        if(size == 1024){ func = perform_OINK(fftReal1024, testData32); }
+        if(size ==  128){ func = () => { perform_OINK(fftReal128, testData32); }; }
+        if(size ==  256){ func = () => { perform_OINK(fftReal256, testData32); }; }
+        if(size ==  512){ func = () => { perform_OINK(fftReal512, testData32); }; }
+        if(size == 1024){ func = () => { perform_OINK(fftReal1024, testData32); }; }
     }
 
     const startTime = performance.now(); // Start time
