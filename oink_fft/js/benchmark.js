@@ -54,11 +54,8 @@ function initializeKISS(){
     });
 };
 
-const perform_KISS = (fftSize, testData) => {
-    if(fftSize == 128){ for (let i = 0; i < numOPs; i++) { kiss_input_128.set(testData.slice()); kiss_fft_128.transform(); } }
-    if(fftSize == 256){ for (let i = 0; i < numOPs; i++) { kiss_input_256.set(testData.slice()); kiss_fft_256.transform(); } }
-    if(fftSize == 512){ for (let i = 0; i < numOPs; i++) { kiss_input_512.set(testData.slice()); kiss_fft_512.transform(); } }
-    if(fftSize == 1024){for (let i = 0; i < numOPs; i++) { kiss_input_1024.set(testData.slice()); kiss_fft_1024.transform(); } }
+const perform_KISS = (input, instance, testData) => {
+    input.set(testData.slice()); instance.transform();
 };
 
 //////////////////////////////////////
@@ -80,11 +77,8 @@ function initializeDSP(){
     });
 }    
 
-const perform_DSP = (fftSize, testData) => {
-    if(fftSize == 128){ for (let i = 0; i < numOPs; i++) { dsp_fft_128.forward(testData.slice()); } }
-    if(fftSize == 256){ for (let i = 0; i < numOPs; i++) { dsp_fft_256.forward(testData.slice()); } }
-    if(fftSize == 512){ for (let i = 0; i < numOPs; i++) { dsp_fft_512.forward(testData.slice()); } }
-    if(fftSize == 1024){for (let i = 0; i < numOPs; i++) { dsp_fft_1024.forward(testData.slice()); } }
+const perform_DSP = (instance, testData) => {
+    instance.forward(testData.slice());
 };
 
 //////////////////////////////////////
@@ -106,11 +100,8 @@ function initializeOOURA(){
     });
 }
 
-const perform_OOURA = (fftSize, testData) => {
-    if(fftSize == 128){ for (let i = 0; i < numOPs; i++) { let ooura_data = testData.slice(); ooura_oo_128.fftInPlace(ooura_data.buffer); } }
-    if(fftSize == 256){ for (let i = 0; i < numOPs; i++) { let ooura_data = testData.slice(); ooura_oo_256.fftInPlace(ooura_data.buffer); } }
-    if(fftSize == 512){ for (let i = 0; i < numOPs; i++) { let ooura_data = testData.slice(); ooura_oo_512.fftInPlace(ooura_data.buffer); } }
-    if(fftSize == 1024){for (let i = 0; i < numOPs; i++) { let ooura_data = testData.slice(); ooura_oo_1024.fftInPlace(ooura_data.buffer); } }
+const perform_OOURA = (instance, testData) => {
+    let ooura_data = testData.slice(); instance.fftInPlace(ooura_data.buffer);
 };
 
 //////////////////////////////////////
@@ -136,22 +127,16 @@ function initializeINDUTNY(){
     });
 }
 
-const perform_INDUTNY = (fftSize, testData) => {
-    if(fftSize == 128){ for (let i = 0; i < numOPs; i++) { indutny_f_128.realTransform(indutny_out_128, testData.slice()); } }
-    if(fftSize == 256){ for (let i = 0; i < numOPs; i++) { indutny_f_256.realTransform(indutny_out_256, testData.slice()); } }
-    if(fftSize == 512){ for (let i = 0; i < numOPs; i++) { indutny_f_512.realTransform(indutny_out_512, testData.slice()); } }
-    if(fftSize == 1024){for (let i = 0; i < numOPs; i++) { indutny_f_1024.realTransform(indutny_out_1024, testData.slice()); } }
+const perform_INDUTNY = (instance, out, testData) => {
+    instance.realTransform(out, testData.slice());
 };
 
 //////////////////////////////////////
 //////////////////////////////////////
 // PREPARE AND PERFORM OINK
 //////////////////////////////////////
-const perform_OINK = (fftSize, testData) => {
-    if(fftSize == 128){ for (let i = 0; i < numOPs; i++) { fftReal128(testData.slice()); } }
-    if(fftSize == 256){ for (let i = 0; i < numOPs; i++) { fftReal256(testData.slice()); } }
-    if(fftSize == 512){ for (let i = 0; i < numOPs; i++) { fftReal512(testData.slice()); } }
-    if(fftSize == 1024){for (let i = 0; i < numOPs; i++) { fftReal1024(testData.slice());} }
+const perform_OINK = (instance, testData) => {
+    instance(testData.slice());
 };
 
 //////////////////////////////////////
@@ -172,14 +157,15 @@ const perform_slice = (fftSize, testData) => {
 // Measure the time taken to perform FFT operations
 //////////////////////////////////////
 const measureSlicing = (type, fftSize, testData) => {
+    let testData32 = testData.slice();
     let testData64 = Float64Array.from(testData.slice());
 
     const startTime = performance.now(); // Start time
-    if(type == "INDUTNY"){ perform_slice(fftSize, testData); }
-    if(type == "OOURA"){ perform_slice(fftSize, testData64); }
-    if(type == "DSP"){ perform_slice(fftSize, testData64); }
-    if(type == "KISS"){ perform_slice(fftSize, testData64); }
-    if(type == "OINK"){ perform_slice(fftSize, testData); }
+    if(type == "INDUTNY"){ perform_slice(fftSize, testData32); }
+    if(type == "DSP"){     perform_slice(fftSize, testData64); }
+    if(type == "OOURA"){   perform_slice(fftSize, testData64); }
+    if(type == "KISS"){    perform_slice(fftSize, testData64); }
+    if(type == "OINK"){    perform_slice(fftSize, testData32); }
     const endTime = performance.now(); // End time
     const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
 
@@ -187,14 +173,49 @@ const measureSlicing = (type, fftSize, testData) => {
 };
 
 const measureFFT = (type, fftSize, testData) => {
+    let testData32 = testData.slice();
     let testData64 = Float64Array.from(testData.slice());
+    let func;
+
+    if(type == "INDUTNY"){
+        if(size ==  128){ func = perform_INDUTNY(indutny_f_128,  indutny_out_128,  testData32); }
+        if(size ==  256){ func = perform_INDUTNY(indutny_f_256,  indutny_out_256,  testData32); }
+        if(size ==  512){ func = perform_INDUTNY(indutny_f_512,  indutny_out_512,  testData32); }
+        if(size == 1024){ func = perform_INDUTNY(indutny_f_1024, indutny_out_1024, testData32); }
+    }
+
+    if(type == "DSP"){
+        if(size ==  128){ func = perform_DSP(dsp_fft_128, testData64); }
+        if(size ==  256){ func = perform_DSP(dsp_fft_256, testData64); }
+        if(size ==  512){ func = perform_DSP(dsp_fft_512, testData64); }
+        if(size == 1024){ func = perform_DSP(dsp_fft_1024, testData64); }
+    }
+
+    if(type == "OOURA"){
+        if(size ==  128){ func = perform_OOURA(ooura_oo_128, testData64); }
+        if(size ==  256){ func = perform_OOURA(ooura_oo_256, testData64); }
+        if(size ==  512){ func = perform_OOURA(ooura_oo_512, testData64); }
+        if(size == 1024){ func = perform_OOURA(ooura_oo_1024, testData64); }
+    }
+
+    if(type == "KISS"){
+        if(size ==  128){ func = perform_KISS(kiss_input_128, kiss_fft_128, testData64); }
+        if(size ==  256){ func = perform_KISS(kiss_input_256, kiss_fft_256, testData64); }
+        if(size ==  512){ func = perform_KISS(kiss_input_512, kiss_fft_512, testData64); }
+        if(size == 1024){ func = perform_KISS(kiss_input_1024, kiss_fft_1024, testData64); }
+    }
+
+    if(type == "OINK"){
+        if(size ==  128){ func = perform_OINK(fftReal128, testData32); }
+        if(size ==  256){ func = perform_OINK(fftReal256, testData32); }
+        if(size ==  512){ func = perform_OINK(fftReal512, testData32); }
+        if(size == 1024){ func = perform_OINK(fftReal1024, testData32); }
+    }
 
     const startTime = performance.now(); // Start time
-    if(type == "INDUTNY"){ perform_INDUTNY(fftSize, testData); }
-    if(type == "OOURA"){ perform_OOURA(fftSize, testData64); }
-    if(type == "DSP"){ perform_DSP(fftSize, testData64); }
-    if(type == "KISS"){ perform_KISS(fftSize, testData64); }
-    if(type == "OINK"){ perform_OINK(fftSize, testData); }
+    for (let i = 0; i < numOPs; i++){
+        func();
+    }
     const endTime = performance.now(); // End time
     const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
 
@@ -234,10 +255,10 @@ const runPerformanceLoop = async (type) => {
 
         avrg_ops = Math.floor(avrg_ops / RUNS);
         if (type == "INDUTNY") { INDUTNY_FFT_RESULTS.set(size, avrg_ops); }
-        if (type == "OOURA") { OOURA_FFT_RESULTS.set(size, avrg_ops); }
-        if (type == "DSP") { DSP_FFT_RESULTS.set(size, avrg_ops); }
-        if (type == "KISS") { KISS_FFT_RESULTS.set(size, avrg_ops); }
-        if (type == "OINK") { OINK_FFT_RESULTS.set(size, avrg_ops); }
+        if (type == "OOURA") {   OOURA_FFT_RESULTS.set(size, avrg_ops); }
+        if (type == "DSP") {     DSP_FFT_RESULTS.set(size, avrg_ops); }
+        if (type == "KISS") {    KISS_FFT_RESULTS.set(size, avrg_ops); }
+        if (type == "OINK") {    OINK_FFT_RESULTS.set(size, avrg_ops); }
         j++;
     }
 };
