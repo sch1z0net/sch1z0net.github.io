@@ -9,7 +9,7 @@ function runPerformance(){
         for(let i = 0; i<RUNS; i++){
           avrg_ops += measureTime(size, generateTestData(size));
         }
-        avrg_ops = Math.floor(avrg_ops/10);
+        avrg_ops = Math.floor(avrg_ops/RUNS);
         FFT_RESULTS.set(size, avrg_ops);
     }
 }
