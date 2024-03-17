@@ -281,7 +281,7 @@ $(document).ready(async function(){
     await initializeINDUTNY();
     await initializeDSP();
     await initializeOOURA();
-    await Module_KISS_ = Module_KISS();
+    Module_KISS_ = await Module_KISS();
     await initializeKISS();
     
     var j = 0;
