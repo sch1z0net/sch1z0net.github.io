@@ -2,10 +2,10 @@ var FFT_RESULTS = new Map();
 
 function runPerformance(){
     console.log("\n\nPerformance Test:");
-    let RUNS = 10;
+    let RUNS = 5;
 
     for (var size = 128; size <= 1024; size *= 2) {
-        let avrg_ops;
+        let avrg_ops = 0;
         for(let i = 0; i<RUNS; i++){
           avrg_ops += measureTime(size, generateTestData(size));
         }

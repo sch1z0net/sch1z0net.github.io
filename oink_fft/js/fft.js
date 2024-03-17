@@ -436,7 +436,7 @@ function IFFT1024onHalf(halfSpectrum) {
 /********************************* TESTING PERFORMANCE ****************************************/
 
 // Define the number of FFT operations to perform
-const numOperations = 20000; // You can adjust this number based on your requirements
+const numOperations = 10000; // You can adjust this number based on your requirements
 
 // Generate test data as Float32Array
 const generateTestData = (size) => {
@@ -492,7 +492,7 @@ const measureTime = (fftSize, testData) => {
 
     // Calculate the number of FFT operations per second
     const operationsPerSecond = Math.floor(numOperations / (elapsedTime / 1000));
-    console.log("Number of FFT",fftSize,"operations per second:", operationsPerSecond);
+    //console.log("Number of FFT",fftSize,"operations per second:", operationsPerSecond);
 
     return operationsPerSecond;
 };
