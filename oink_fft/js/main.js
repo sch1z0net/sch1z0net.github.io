@@ -63,13 +63,13 @@ const perform_OOURA = (fftSize, testData) => {
 //////////////////////////////////////
 // PREPARE AND PERFORM INDUTNY
 //////////////////////////////////////
-const indutny_f_128 = new FFT(128);
+const indutny_f_128 = new IND_FFT(128);
 const indutny_out_128 = indutny_f_128.createComplexArray();
-const indutny_f_256 = new FFT(256);
+const indutny_f_256 = new IND_FFT(256);
 const indutny_out_256 = indutny_f_256.createComplexArray();
-const indutny_f_512 = new FFT(512);
+const indutny_f_512 = new IND_FFT(512);
 const indutny_out_512 = indutny_f_512.createComplexArray();
-const indutny_f_1024 = new FFT(1024);
+const indutny_f_1024 = new IND_FFT(1024);
 const indutny_out_1024 = indutny_f_1024.createComplexArray();
 const perform_INDUTNY = (fftSize, testData) => {
     if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { indutny_f_128.realTransform(indutny_out_128, testData.slice()); } }
