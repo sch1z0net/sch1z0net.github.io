@@ -83,8 +83,6 @@ $(document).ready(function(){
     $("#root").append($stats_div);
     $("#root").append($descr_div);
     $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
-    createPerformanceTable();
-
 
     // Create select boxes for the number of operations and the amount of runs
     $numOpsSelect = $('<select id="numOpsSelect"></select>');
@@ -114,4 +112,5 @@ $(document).ready(function(){
     // Append the image to the container div
     $title_div.append($oinkImage);
 
+    createPerformanceTable();
 });
