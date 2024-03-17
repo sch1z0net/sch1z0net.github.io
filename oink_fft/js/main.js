@@ -400,7 +400,7 @@ $(document).ready(function(){
 
     
     // Check if the module is already initialized, otherwise wait for initialization
-    if (ModuleKISS.isRuntimeInitialized) {
+    if (Module_KISS.isRuntimeInitialized) {
         initializeModuleKISS();
         console.log("INITIALIZED KISS");
         run();
