@@ -250,31 +250,30 @@ $(document).ready(function(){
         }
 
         // INDUTNY FFT
-        var $tr = $("<tr>").appendTo($tbody); 
-        $("<td>").text("fft.js (indutny)").appendTo($tr);
+        var $tr1 = $("<tr>").appendTo($tbody); 
+        $("<td>").text("fft.js (indutny)").appendTo($tr1);
         for (var size = 128; size <= 1024; size *= 2) {
-            $("<td>").text( INDUTNY_FFT_RESULTS.get(size)).appendTo($tr);
+            $("<td>").text( INDUTNY_FFT_RESULTS.get(size)).appendTo($tr1);
         }
 
         // OOURA FFT
-        var $tr = $("<tr>").appendTo($tbody); 
-        $("<td>").text("OOURA FFT").appendTo($tr);
+        var $tr2 = $("<tr>").appendTo($tbody); 
+        $("<td>").text("OOURA FFT").appendTo($tr2);
         for (var size = 128; size <= 1024; size *= 2) {
-            $("<td>").text( OOURA_FFT_RESULTS.get(size)).appendTo($tr);
+            $("<td>").text( OOURA_FFT_RESULTS.get(size)).appendTo($tr2);
         }
 
         // DSP FFT
-        var $tr = $("<tr>").appendTo($tbody); 
-        $("<td>").text("dsp.js (corbanbrook)").appendTo($tr);
+        var $tr3 = $("<tr>").appendTo($tbody); 
         for (var size = 128; size <= 1024; size *= 2) {
-            $("<td>").text( DSP_FFT_RESULTS.get(size)).appendTo($tr);
+            $("<td>").text( DSP_FFT_RESULTS.get(size)).appendTo($tr3);
         }
 
         // OINK FFT
-        var $tr = $("<tr>").appendTo($tbody); 
-        $("<td>").text("OINK FFT").appendTo($tr);
+        var $tr4 = $("<tr>").appendTo($tbody); 
+        $("<td>").text("OINK FFT").appendTo($tr4);
         for (var size = 128; size <= 1024; size *= 2) {
-            $("<td>").text( OINK_FFT_RESULTS.get(size)).appendTo($tr);
+            $("<td>").text( OINK_FFT_RESULTS.get(size)).appendTo($tr4);
         }
 
         // Append the table to the body
