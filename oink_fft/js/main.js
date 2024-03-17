@@ -386,10 +386,12 @@ $(document).ready(function(){
     // Check if the module is already initialized, otherwise wait for initialization
     if (Module_Oink.isRuntimeInitialized) {
         initializeModuleOink();
+        console.log("INITIALIZED OINK");
         run();
     } else {
         Module_Oink.onRuntimeInitialized = function(){
             initializeModuleOink();
+            console.log("INITIALIZED OINK");
             run();
         };
     }
@@ -397,10 +399,12 @@ $(document).ready(function(){
     // Check if the module is already initialized, otherwise wait for initialization
     if (Module_KISS.isRuntimeInitialized) {
         initializeModuleKISS();
+        console.log("INITIALIZED KISS");
         run();
     } else {
         Module_KISS.onRuntimeInitialized = function(){
             initializeModuleKISS();
+            console.log("INITIALIZED KISS");
             run();
         };
     }
