@@ -86,16 +86,16 @@ $(document).ready(function(){
     var $numOpsSelect = $('<select id="numOpsSelect"></select>');
     var $runsSelect = $('<select id="runsSelect"></select>');
     
-    $numOpsSelect.append('<option value="' + 5000 + '">' +  5000 + 'ITERATIONS </option>');
-    $numOpsSelect.append('<option value="' + 7500 + '">' +  7500 + 'ITERATIONS </option>');
-    $numOpsSelect.append('<option value="' + 10000 + '">' + 10000 + 'ITERATIONS </option>');
-    $numOpsSelect.append('<option value="' + 15000 + '">' + 15000 + 'ITERATIONS </option>');
-    $numOpsSelect.append('<option value="' + 20000 + '">' + 20000 + 'ITERATIONS </option>');
-    $runsSelect.append('<option value="' + 1 + '">' + 1 + 'RUNS </option>');
-    $runsSelect.append('<option value="' + 2 + '">' + 2 + 'RUNS </option>');
-    $runsSelect.append('<option value="' + 4 + '">' + 4 + 'RUNS </option>');
-    $runsSelect.append('<option value="' + 8 + '">' + 8 + 'RUNS </option>');
-    $runsSelect.append('<option value="' + 16 + '">' + 16 + 'RUNS </option>');
+    $numOpsSelect.append('<option value="' + 5000 + '">' +  5000 + '</option>');
+    $numOpsSelect.append('<option value="' + 7500 + '">' +  7500 + '</option>');
+    $numOpsSelect.append('<option value="' + 10000 + '">' + 10000 + '</option>');
+    $numOpsSelect.append('<option value="' + 15000 + '">' + 15000 + '</option>');
+    $numOpsSelect.append('<option value="' + 20000 + '">' + 20000 + '</option>');
+    $runsSelect.append('<option value="' + 1 + '">' + 1 + '</option>');
+    $runsSelect.append('<option value="' + 2 + '">' + 2 + '</option>');
+    $runsSelect.append('<option value="' + 4 + '">' + 4 + '</option>');
+    $runsSelect.append('<option value="' + 8 + '">' + 8 + '</option>');
+    $runsSelect.append('<option value="' + 16 + '">' + 16 + '</option>');
 
     // Set default values for the select boxes
     $numOpsSelect.val("10000"); // Default value for number of operations

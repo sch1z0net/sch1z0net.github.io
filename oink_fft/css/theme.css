@@ -215,15 +215,27 @@ body {
   }
 }
 
+button {
+   background-color: white;
+   border-color: black;
+}
+
+select {
+   background-color: white;
+   border-color: black;
+}
+
 #numOpsSelect{
    width: 100px;
    position: absolute;
-   right: 100px;
+   right: 20px;
+   bottom: 5px;
 }
 
 #runsSelect{
    width: 100px;
    position: absolute;
-   right: 210px;
+   right: 130px;
+   bottom: 5px;
 }
 
