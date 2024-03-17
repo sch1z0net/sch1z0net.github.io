@@ -396,6 +396,7 @@ $(document).ready(function(){
         };
     }
 
+    /*
     // Check if the module is already initialized, otherwise wait for initialization
     if (Module_KISS.isRuntimeInitialized) {
         initializeModuleKISS();
@@ -407,5 +408,5 @@ $(document).ready(function(){
             console.log("INITIALIZED KISS");
             run();
         };
-    }
+    }*/
 });
