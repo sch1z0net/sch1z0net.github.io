@@ -52,10 +52,10 @@ function initializeModuleKISS(){
 };
 
 const perform_KISS = (fftSize, testData) => {
-    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { kiss_input_128.set(testData.slice()); kiss_fft_128.transform(); } }
-    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { kiss_input_256.set(testData.slice()); kiss_fft_256.transform(); } }
-    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { kiss_input_512.set(testData.slice()); kiss_fft_512.transform(); } }
-    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { kiss_input_1024.set(testData.slice()); kiss_fft_1024.transform(); } }
+    if(fftSize == 128){ for (let i = 0; i < numOPs; i++) { kiss_input_128.set(testData.slice()); kiss_fft_128.transform(); } }
+    if(fftSize == 256){ for (let i = 0; i < numOPs; i++) { kiss_input_256.set(testData.slice()); kiss_fft_256.transform(); } }
+    if(fftSize == 512){ for (let i = 0; i < numOPs; i++) { kiss_input_512.set(testData.slice()); kiss_fft_512.transform(); } }
+    if(fftSize == 1024){for (let i = 0; i < numOPs; i++) { kiss_input_1024.set(testData.slice()); kiss_fft_1024.transform(); } }
 };
 
 //////////////////////////////////////
@@ -67,10 +67,10 @@ var dsp_fft_256 = new FFT(256, 44100);
 var dsp_fft_512 = new FFT(512, 44100);
 var dsp_fft_1024 = new FFT(1024, 44100);
 const perform_DSP = (fftSize, testData) => {
-    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { dsp_fft_128.forward(testData.slice()); } }
-    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { dsp_fft_256.forward(testData.slice()); } }
-    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { dsp_fft_512.forward(testData.slice()); } }
-    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { dsp_fft_1024.forward(testData.slice()); } }
+    if(fftSize == 128){ for (let i = 0; i < numOPs; i++) { dsp_fft_128.forward(testData.slice()); } }
+    if(fftSize == 256){ for (let i = 0; i < numOPs; i++) { dsp_fft_256.forward(testData.slice()); } }
+    if(fftSize == 512){ for (let i = 0; i < numOPs; i++) { dsp_fft_512.forward(testData.slice()); } }
+    if(fftSize == 1024){for (let i = 0; i < numOPs; i++) { dsp_fft_1024.forward(testData.slice()); } }
 };
 
 //////////////////////////////////////
@@ -82,10 +82,10 @@ let ooura_oo_256 = new Ooura(256, {"type":"real", "radix":4} );
 let ooura_oo_512 = new Ooura(512, {"type":"real", "radix":4} );
 let ooura_oo_1024 = new Ooura(1024, {"type":"real", "radix":4} );
 const perform_OOURA = (fftSize, testData) => {
-    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { let ooura_data = testData.slice(); ooura_oo_128.fftInPlace(ooura_data.buffer); } }
-    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { let ooura_data = testData.slice(); ooura_oo_256.fftInPlace(ooura_data.buffer); } }
-    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { let ooura_data = testData.slice(); ooura_oo_512.fftInPlace(ooura_data.buffer); } }
-    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { let ooura_data = testData.slice(); ooura_oo_1024.fftInPlace(ooura_data.buffer); } }
+    if(fftSize == 128){ for (let i = 0; i < numOPs; i++) { let ooura_data = testData.slice(); ooura_oo_128.fftInPlace(ooura_data.buffer); } }
+    if(fftSize == 256){ for (let i = 0; i < numOPs; i++) { let ooura_data = testData.slice(); ooura_oo_256.fftInPlace(ooura_data.buffer); } }
+    if(fftSize == 512){ for (let i = 0; i < numOPs; i++) { let ooura_data = testData.slice(); ooura_oo_512.fftInPlace(ooura_data.buffer); } }
+    if(fftSize == 1024){for (let i = 0; i < numOPs; i++) { let ooura_data = testData.slice(); ooura_oo_1024.fftInPlace(ooura_data.buffer); } }
 };
 
 //////////////////////////////////////
@@ -101,10 +101,10 @@ const indutny_out_512 = indutny_f_512.createComplexArray();
 const indutny_f_1024 = new IND_FFT(1024);
 const indutny_out_1024 = indutny_f_1024.createComplexArray();
 const perform_INDUTNY = (fftSize, testData) => {
-    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { indutny_f_128.realTransform(indutny_out_128, testData.slice()); } }
-    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { indutny_f_256.realTransform(indutny_out_256, testData.slice()); } }
-    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { indutny_f_512.realTransform(indutny_out_512, testData.slice()); } }
-    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { indutny_f_1024.realTransform(indutny_out_1024, testData.slice()); } }
+    if(fftSize == 128){ for (let i = 0; i < numOPs; i++) { indutny_f_128.realTransform(indutny_out_128, testData.slice()); } }
+    if(fftSize == 256){ for (let i = 0; i < numOPs; i++) { indutny_f_256.realTransform(indutny_out_256, testData.slice()); } }
+    if(fftSize == 512){ for (let i = 0; i < numOPs; i++) { indutny_f_512.realTransform(indutny_out_512, testData.slice()); } }
+    if(fftSize == 1024){for (let i = 0; i < numOPs; i++) { indutny_f_1024.realTransform(indutny_out_1024, testData.slice()); } }
 };
 
 //////////////////////////////////////
@@ -112,10 +112,10 @@ const perform_INDUTNY = (fftSize, testData) => {
 // PREPARE AND PERFORM OINK
 //////////////////////////////////////
 const perform_OINK = (fftSize, testData) => {
-    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { fftReal128(testData.slice()); } }
-    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { fftReal256(testData.slice()); } }
-    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { fftReal512(testData.slice()); } }
-    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { fftReal1024(testData.slice());} }
+    if(fftSize == 128){ for (let i = 0; i < numOPs; i++) { fftReal128(testData.slice()); } }
+    if(fftSize == 256){ for (let i = 0; i < numOPs; i++) { fftReal256(testData.slice()); } }
+    if(fftSize == 512){ for (let i = 0; i < numOPs; i++) { fftReal512(testData.slice()); } }
+    if(fftSize == 1024){for (let i = 0; i < numOPs; i++) { fftReal1024(testData.slice());} }
 };
 
 //////////////////////////////////////
@@ -123,10 +123,10 @@ const perform_OINK = (fftSize, testData) => {
 // Only Copy per Slicing
 //////////////////////////////////////
 const perform_slice = (fftSize, testData) => {
-    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { testData.slice(); } }
-    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { testData.slice(); } }
-    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { testData.slice(); } }
-    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { testData.slice(); } }
+    if(fftSize == 128){ for (let i = 0; i < numOPs; i++) { testData.slice(); } }
+    if(fftSize == 256){ for (let i = 0; i < numOPs; i++) { testData.slice(); } }
+    if(fftSize == 512){ for (let i = 0; i < numOPs; i++) { testData.slice(); } }
+    if(fftSize == 1024){for (let i = 0; i < numOPs; i++) { testData.slice(); } }
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
