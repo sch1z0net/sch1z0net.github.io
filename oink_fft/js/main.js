@@ -34,14 +34,21 @@ let testData4096   = generateTestData(4096);
 //////////////////////////////////////
 // PREPARE AND PERFORM KISS
 //////////////////////////////////////
-const kiss_fft_128 = new Module.KissFftReal(128);
-const kiss_input_128 = kiss_fft_128.getInputTimeDataBuffer();
-const kiss_fft_256 = new Module.KissFftReal(256);
-const kiss_input_256 = kiss_fft_256.getInputTimeDataBuffer();
-const kiss_fft_512 = new Module.KissFftReal(512);
-const kiss_input_512 = kiss_fft_512.getInputTimeDataBuffer();
-const kiss_fft_1024 = new Module.KissFftReal(1024);
-const kiss_input_1024 = kiss_fft_1024.getInputTimeDataBuffer();
+let kiss_fft_128, kiss_input_128;
+let kiss_fft_256, kiss_input_256;
+let kiss_fft_512, kiss_input_512;
+let kiss_fft_1024,kiss_input_1024;
+function initializeModuleKISS(){
+    kiss_fft_128 = new Module.KissFftReal(128);
+    kiss_input_128 = kiss_fft_128.getInputTimeDataBuffer();
+    kiss_fft_256 = new Module.KissFftReal(256);
+    kiss_input_256 = kiss_fft_256.getInputTimeDataBuffer();
+    kiss_fft_512 = new Module.KissFftReal(512);
+    kiss_input_512 = kiss_fft_512.getInputTimeDataBuffer();
+    kiss_fft_1024 = new Module.KissFftReal(1024);
+    kiss_input_1024 = kiss_fft_1024.getInputTimeDataBuffer();
+};
+
 const perform_KISS = (fftSize, testData) => {
     if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { kiss_input_128.set(testData.slice()); kiss_fft_128.transform(); } }
     if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { kiss_input_256.set(testData.slice()); kiss_fft_256.transform(); } }
@@ -361,29 +368,40 @@ $(document).ready(function(){
     $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
     
     
+    let init_count = 0;
+    function run(){
+        init_count++;
+        if(init_count == 2){
+          runPerformance("INDUTNY");
+          runPerformance("OOURA");
+          runPerformance("DSP");
+          runPerformance("KISS");
+          runPerformance("OINK");
+          //runComparison();
+          //runForthAndBack();
+          createPerformanceTable();           
+        }
+    }
+
+    // Check if the module is already initialized, otherwise wait for initialization
+    if (Module_Oink.isRuntimeInitialized) {
+        initializeModuleOink();
+        run();
+    } else {
+        Module_Oink.onRuntimeInitialized = function(){
+            initializeModuleOink();
+            run();
+        };
+    }
 
     // Check if the module is already initialized, otherwise wait for initialization
     if (Module.isRuntimeInitialized) {
-        initializeModule();
-        runPerformance("INDUTNY");
-        runPerformance("OOURA");
-        runPerformance("DSP");
-        runPerformance("KISS");
-        runPerformance("OINK");
-        //runComparison();
-        //runForthAndBack();
-        createPerformanceTable();
+        initializeModuleKISS();
+        run();
     } else {
-        Module.onRuntimeInitialized = function(){
-            initializeModule();
-            runPerformance("INDUTNY");
-            runPerformance("OOURA");
-            runPerformance("DSP");
-            runPerformance("KISS");
-            runPerformance("OINK");
-            //runComparison();
-            //runForthAndBack();
-            createPerformanceTable();
+        Module_Oink.onRuntimeInitialized = function(){
+            initializeModuleKISS();
+            run();
         };
     }
 });

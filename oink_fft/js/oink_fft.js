@@ -17,7 +17,7 @@ var p_in_256, fft_wasm_256;
 var p_in_512, fft_wasm_512;
 var p_in_1024, fft_wasm_1024;
 
-function initializeModule() {
+function initializeModuleOink() {
     fft_wasm_128 = Module_Oink.cwrap('fftReal128', null, ['number', 'number', 'number']);
     p_in_128     = Module_Oink._malloc(128 * Float32Array.BYTES_PER_ELEMENT);
 
@@ -42,7 +42,6 @@ function fftReal1024(realInput) {
     // Return the result array
     return new Float32Array(Module_Oink.HEAPF32.buffer, p_out_1024, 2048);
 }
-
 
 function fftReal512(realInput) {
     // Check if the input length exceeds the maximum length
