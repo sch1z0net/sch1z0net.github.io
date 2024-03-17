@@ -28,8 +28,7 @@ let testData2048   = generateTestData(2048);
 let testData4096   = generateTestData(4096);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-let Module_KISS = ModuleKISS();
-
+let Module_KISS;
 
 //////////////////////////////////////
 //////////////////////////////////////
@@ -398,7 +397,7 @@ $(document).ready(function(){
         };
     }
 
-    
+    Module_KISS = ModuleKISS();
     // Check if the module is already initialized, otherwise wait for initialization
     if (Module_KISS.isRuntimeInitialized) {
         initializeModuleKISS();
