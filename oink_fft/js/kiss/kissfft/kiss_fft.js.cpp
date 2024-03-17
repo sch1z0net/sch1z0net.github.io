@@ -28,22 +28,6 @@ emscripten::val toJSFloat64Array(const std::vector<double> &v) {
   return result;
 }
 
-struct KissFftRealExtraCopy : KissFftBase {
-  KissFftRealExtraCopy(size_t size) : KissFftBase{ size, FftDirection::Direct } {}
-
-  auto transform(const emscripten::val &input) const {
-    const auto data = emscripten::convertJSArrayToNumberVector<double>(input);  // copy data from argument into local memory
-
-    std::vector<double> output;      // real and imaginary components are interleaved,
-    output.resize(data.size() + 2);  // need +1 bin (+2 elements) for Nyquist frequency
-
-    kiss_fftr(state, data.data(), reinterpret_cast<kiss_fft_cpx*>(output.data()));  // reinterpret_cast is needed to call the API
-
-    return toJSFloat64Array(output);  // copy data to a JS Float64Array object and return the object
-  }
-};
-
-
 //...
 struct KissFftReal : KissFftBase {
   KissFftReal(size_t size) : KissFftBase{ size, FftDirection::Direct } {
