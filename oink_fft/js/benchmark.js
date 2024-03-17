@@ -318,13 +318,13 @@ async function runAllPerformanceTests(){
     $reload.show();
 }
 
-$reload.click(function(){
-    createPerformanceTable();
-    resetData();
-    runAll();
-});
-
 $(document).ready(async function(){
+    $reload.click(function(){
+       createPerformanceTable();
+       resetData();
+       runAll();
+    });
+
     // Call each initialization function asynchronously using await
     $loading_info.text("Initializing INDUTNY..."); await initializeINDUTNY();
     $loading_info.text("Initializing DSP...");     await initializeDSP();
