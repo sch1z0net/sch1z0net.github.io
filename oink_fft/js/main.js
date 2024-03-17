@@ -265,6 +265,7 @@ $(document).ready(function(){
 
         // DSP FFT
         var $tr3 = $("<tr>").appendTo($tbody); 
+        $("<td>").text("dsp.js (corbanbrook)").appendTo($tr3);
         for (var size = 128; size <= 1024; size *= 2) {
             $("<td>").text( DSP_FFT_RESULTS.get(size)).appendTo($tr3);
         }
