@@ -10,6 +10,7 @@ var $stats_div;
 var $tbody;
 var $loading;
 var $loading_info;
+var $reload;
 var $descr_div;
 
 function resetPerformanceTable(){
@@ -24,6 +25,8 @@ function createPerformanceTable(){
     // Create the dots
     $loading = $('<div id="loading" class="loading-dots">').appendTo($table);
     $loading_info = $('<div id="loading_info">').appendTo($table);
+    $reload = $('<button id="reload">').hide().appendTo($table);
+
     // Create table header
     var $thead = $("<thead>").appendTo($table);
     // Create the loading circle element

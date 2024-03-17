@@ -9,6 +9,16 @@ const RUNS = 6;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
+// Reset on each new Run
+let SIGNALS_FOR_EACH_FFT = [];
+let OINK_FFT_RESULTS    = new Map();
+let INDUTNY_FFT_RESULTS = new Map();
+let OOURA_FFT_RESULTS   = new Map();
+let DSP_FFT_RESULTS     = new Map();
+let KISS_FFT_RESULTS    = new Map();
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 // Generate test data as Float32Array
 const generateTestData = (size) => {
     const testData = new Float32Array(size);
@@ -226,14 +236,6 @@ const measureFFT = (type, size, testData) => {
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-var SIGNALS_FOR_EACH_FFT = [];
-
-var OINK_FFT_RESULTS    = new Map();
-var INDUTNY_FFT_RESULTS = new Map();
-var OOURA_FFT_RESULTS   = new Map();
-var DSP_FFT_RESULTS     = new Map();
-var KISS_FFT_RESULTS    = new Map();
-
 const runPerformance = async (type) => {
     let s = 0;
     for (let size = 128; size <= 1024; size *= 2) {
@@ -273,16 +275,16 @@ const runPerformance = async (type) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
+function resetData(){
+    SIGNALS_FOR_EACH_FFT = [];
+    OINK_FFT_RESULTS    = new Map();
+    INDUTNY_FFT_RESULTS = new Map();
+    OOURA_FFT_RESULTS   = new Map();
+    DSP_FFT_RESULTS     = new Map();
+    KISS_FFT_RESULTS    = new Map();
+}
 
-
-$(document).ready(async function(){
-    // Call each initialization function asynchronously using await
-    $loading_info.text("Initializing INDUTNY..."); await initializeINDUTNY();
-    $loading_info.text("Initializing DSP...");     await initializeDSP();
-    $loading_info.text("Initializing OOURA...");   await initializeOOURA();
-    $loading_info.text("Initializing KISS...");    Module_KISS_ = await Module_KISS(); await initializeKISS();
-    $loading_info.text("Initializing OINK...");   Module_OINK_ = await Module_OINK(); await initializeModuleOINK();
-    
+function runAllPerformanceTests(){
     var j = 0;
     for (var size = 128; size <= 1024; size *= 2) {
        var SIGNALS = [];
@@ -313,6 +315,23 @@ $(document).ready(async function(){
     $loading_info.text("Finished!"); 
 
     $loading.hide();
+    $reload.show();
+}
+
+$reload.click(function(){
+    createPerformanceTable();
+    resetData();
+    runAll();
+});
+
+$(document).ready(async function(){
+    // Call each initialization function asynchronously using await
+    $loading_info.text("Initializing INDUTNY..."); await initializeINDUTNY();
+    $loading_info.text("Initializing DSP...");     await initializeDSP();
+    $loading_info.text("Initializing OOURA...");   await initializeOOURA();
+    $loading_info.text("Initializing KISS...");    Module_KISS_ = await Module_KISS(); await initializeKISS();
+    $loading_info.text("Initializing OINK...");    Module_OINK_ = await Module_OINK(); await initializeModuleOINK();
+    runAllPerformanceTests();
 });
 
 

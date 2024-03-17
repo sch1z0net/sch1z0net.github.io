@@ -155,6 +155,15 @@ body {
     left: 50%;
     bottom: 2px;
     font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#reload {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
 }
 
 #loading {
