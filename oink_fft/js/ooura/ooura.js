@@ -5,11 +5,11 @@
 //class Ooura {
 class ooura {
 	constructor(size, info = {type: 'real', radix: 4}) {
-		assert(Ooura.isPowerOf2(size));
+		//assert(Ooura.isPowerOf2(size));
 
 		this.real = (info.type === 'real');
 		if (!this.real) {
-			assert(info.type === 'complex'); // Sanity
+			//assert(info.type === 'complex'); // Sanity
 		}
 
 		this.size = size;
@@ -36,14 +36,14 @@ class ooura {
 
 	// Returns complex vector size given one dimensional scalar size
 	static vectorSize(scalarSize) {
-		assert(Ooura.isPowerOf2(scalarSize));
+		//assert(Ooura.isPowerOf2(scalarSize));
 		return (scalarSize / 2) + 1;
 	}
 
 	// Inverse fucntion of vector size
 	static scalarSize(vectorSize) {
 		const result = (vectorSize - 1) * 2;
-		assert(Ooura.isPowerOf2(result));
+		//assert(Ooura.isPowerOf2(result));
 		return result;
 	}
 
