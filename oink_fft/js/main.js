@@ -25,7 +25,7 @@ function createPerformanceTable(){
     // Create the loading circle element
     //$loading.show().appendTo($table);
     // Create the dots
-    $loading = $('<div id="loading-dots" class="loading-dots>"').show().appendTo($table);
+    $loading = $('<div id="loading-dots" class="loading-dots">').appendTo($table);
     for (var i = 0; i < 3; i++) {
       $loading.append('<span class="dot"></span>');
     }
