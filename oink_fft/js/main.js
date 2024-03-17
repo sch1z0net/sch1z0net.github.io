@@ -166,7 +166,8 @@ const measureFFT = (type, fftSize, testData) => {
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-let RUNS = 10;
+let WARMUPS = 3;
+let RUNS = 6;
 
 var SIGNAL = [];
 
@@ -193,7 +194,7 @@ function runPerformance(type){
     for (var size = 128; size <= 1024; size *= 2) {
         let avrg_ops = 0;
         // WARM UP
-        for(let i = 0; i<4; i++){
+        for(let i = 0; i<WARMUPS; i++){
            measureFFT(type, size, SIGNAL[j][i]);
         }
         // Run Measurement
@@ -377,7 +378,7 @@ $(document).ready(function(){
           runPerformance("INDUTNY");
           runPerformance("OOURA");
           runPerformance("DSP");
-          //runPerformance("KISS");
+          runPerformance("KISS");
           runPerformance("OINK");
           //runComparison();
           //runForthAndBack();
@@ -399,34 +400,5 @@ $(document).ready(function(){
         run();
     });
 
-
-
-    /*
-    // Check if the module is already initialized, otherwise wait for initialization
-    if (Module_OINK_.isRuntimeInitialized) {
-        initializeModuleOINK();
-        console.log("INITIALIZED OINK");
-        run();
-    } else {
-        Module_OINK_.onRuntimeInitialized = function(){
-            initializeModuleOINK();
-            console.log("INITIALIZED OINK");
-            run();
-        };
-    }
-
-    // Check if the module is already initialized, otherwise wait for initialization
-    if (Module_KISS_.isRuntimeInitialized) {
-        initializeModuleKISS();
-        console.log("INITIALIZED KISS");
-        run();
-    } else {
-        Module_KISS_.onRuntimeInitialized = function(){
-            initializeModuleKISS();
-            console.log("INITIALIZED KISS");
-            run();
-        };
-    }
-    */
 
 });
