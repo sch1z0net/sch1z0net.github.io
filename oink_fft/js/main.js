@@ -12,23 +12,6 @@ var $loading;
 var $descr_div;
 
 $(document).ready(function(){
-
-$title_div = $("<div>").attr("id", "title_div");
-$title = $("<h1>").text("OINK FFT").attr("id", "title");
-$subtitle = $("<h2>").text("the oinkiest FFT in the web").attr("id", "subtitle");
-$stats_div = $("<div>").attr("id", "stats_div");
-$tbody;
-$loading = $('<div id="loading-circle"></div>');
-$descr_div = $("<div>").attr("id", "descr_div");
-
-$("#root").append($title_div);
-$title_div.append($title);
-$title_div.append($subtitle);
-$("#root").append($stats_div);
-$("#root").append($descr_div);
-$descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
-
-
     function resetPerformanceTable(){
         $stats_div.empty();
     }
@@ -67,4 +50,21 @@ $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane,
         }
         $tr.appendTo($tbody);
     }
+
+
+    $title_div = $("<div>").attr("id", "title_div");
+    $title = $("<h1>").text("OINK FFT").attr("id", "title");
+    $subtitle = $("<h2>").text("the oinkiest FFT in the web").attr("id", "subtitle");
+    $stats_div = $("<div>").attr("id", "stats_div");
+    $tbody;
+    $loading = $('<div id="loading-circle"></div>');
+    $descr_div = $("<div>").attr("id", "descr_div");
+
+    $("#root").append($title_div);
+    $title_div.append($title);
+    $title_div.append($subtitle);
+    $("#root").append($stats_div);
+    $("#root").append($descr_div);
+    $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
+    createPerformanceTable();
 }
