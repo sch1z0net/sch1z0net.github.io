@@ -4,7 +4,8 @@
 /////////////////////////////////// TESTING PERFORMANCE ///////////////////////////////////////////////
 
 // Define the number of FFT operations to perform
-const numOperations = 10000; // You can adjust this number based on your requirements
+//const numOperations = 10000;
+const numOperations = 5000;
 
 // Generate test data as Float32Array
 const generateTestData = (size) => {
@@ -351,7 +352,7 @@ $(document).ready(function(){
         var $tr4 = $("<tr>").appendTo($tbody); 
         $("<td>").text("KISS (mborgerding)").appendTo($tr4);
         for (var size = 128; size <= 1024; size *= 2) {
-            $("<td>").text( DSP_FFT_RESULTS.get(size)).appendTo($tr4);
+            $("<td>").text( KISS_FFT_RESULTS.get(size)).appendTo($tr4);
         }
 
         // OINK FFT
