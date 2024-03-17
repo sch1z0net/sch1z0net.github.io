@@ -4,7 +4,7 @@
 /////////////////////////////////// TESTING PERFORMANCE ///////////////////////////////////////////////
 
 // Define the number of FFT operations to perform
-const numOperations = 1000; // You can adjust this number based on your requirements
+const numOperations = 10000; // You can adjust this number based on your requirements
 
 // Generate test data as Float32Array
 const generateTestData = (size) => {
@@ -101,7 +101,7 @@ const measureTime = (type, fftSize, testData) => {
     const startTime = performance.now(); // Start time
     if(type == "INDUTNY"){ perform_INDUTNY(fftSize, testData); }
     if(type == "OOURA"){ perform_OOURA(fftSize, testData64); }
-    if(type == "DSP"){ perform_DSP(fftSize, testData); }
+    if(type == "DSP"){ perform_DSP(fftSize, testData64); }
     if(type == "OINK"){ perform_OINK(fftSize, testData); }
     const endTime = performance.now(); // End time
     const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
