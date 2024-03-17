@@ -336,11 +336,12 @@ $(document).ready(function(){
     }
 
     function addPerformanceRow(name, results){
-        var $tr = $("<tr>").appendTo($tbody); 
+        var $tr = $("<tr>");
         $("<td>").text(name).appendTo($tr);
         for (var size = 128; size <= 1024; size *= 2) {
             $("<td>").text( results.get(size) ).appendTo($tr);
         }
+        $tr.appendTo($tbody);
     }
 
     var $descr_div = $("<div>").attr("id", "descr_div");
