@@ -794,11 +794,11 @@ class Ooura {
 		this.w = new Float64Array(size / 2);
 		this.internal = new Float64Array(size);
 
-		init.makewt(size / 4, this.ip.buffer, this.w.buffer);
+		makewt(size / 4, this.ip.buffer, this.w.buffer);
 
 		// Perform additional modification if real
 		if (this.real) {
-			init.makect(size / 4, this.ip.buffer, this.w.buffer, size / 4);
+			makect(size / 4, this.ip.buffer, this.w.buffer, size / 4);
 			this.fft = this.fftReal;
 			this.ifft = this.ifftReal;
 			this.fftInPlace = this.fftInPlaceReal;
