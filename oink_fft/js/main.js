@@ -399,7 +399,7 @@ $(document).ready(function(){
         initializeModuleKISS();
         run();
     } else {
-        Module_Oink.onRuntimeInitialized = function(){
+        Module.onRuntimeInitialized = function(){
             initializeModuleKISS();
             run();
         };
