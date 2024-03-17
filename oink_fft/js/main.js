@@ -1,5 +1,3 @@
-import ooura from './ooura/ooura.js';
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,10 +33,10 @@ let testData4096   = generateTestData(4096);
 //////////////////////////////////////
 // PREPARE AND PERFORM OOURA
 //////////////////////////////////////
-let ooura_oo_128 = new ooura(128, {"type":"real", "radix":4} );
-let ooura_oo_256 = new ooura(256, {"type":"real", "radix":4} );
-let ooura_oo_512 = new ooura(512, {"type":"real", "radix":4} );
-let ooura_oo_1024 = new ooura(1024, {"type":"real", "radix":4} );
+let ooura_oo_128 = new Ooura(128, {"type":"real", "radix":4} );
+let ooura_oo_256 = new Ooura(256, {"type":"real", "radix":4} );
+let ooura_oo_512 = new Ooura(512, {"type":"real", "radix":4} );
+let ooura_oo_1024 = new Ooura(1024, {"type":"real", "radix":4} );
 const perform_OOURA = (fftSize, testData) => {
     if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { let ooura_data = Float64Array.from(testData.slice()); ooura_oo_128.fftInPlace(ooura_data.buffer); } }
     if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { let ooura_data = Float64Array.from(testData.slice()); ooura_oo_256.fftInPlace(ooura_data.buffer); } }
