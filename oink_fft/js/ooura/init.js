@@ -1,4 +1,4 @@
-const child = require('./child.js');
+//const child = require('./child.js');
 
 exports.makewt = function (nw, ipBuffer, wBuffer) {
 	let nwh;
@@ -28,7 +28,8 @@ exports.makewt = function (nw, ipBuffer, wBuffer) {
 				w[nw - j] = y;
 				w[nw - j + 1] = x;
 			}
-			child.bitrv2(nw, ip.buffer, 2, w.buffer);
+			bitrv2(nw, ip.buffer, 2, w.buffer);
+			//child.bitrv2(nw, ip.buffer, 2, w.buffer);
 		}
 	}
 };

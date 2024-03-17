@@ -1,6 +1,6 @@
-const assert = require('assert');
-const init = require('./init.js');
-const trans = require('./transform.js');
+//const assert = require('assert');
+//const init = require('./init.js');
+//const trans = require('./transform.js');
 
 class Ooura {
 	constructor(size, info = {type: 'real', radix: 4}) {
