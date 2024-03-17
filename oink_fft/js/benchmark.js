@@ -227,9 +227,10 @@ const runPerformanceLoop = async (type) => {
         // Run Measurement
         for (let i = 0; i < RUNS; i++) {
             let eT_slice = await measureSlicing(type, size, SIGNALS_FOR_EACH_FFT[j][i]);
-            let eT_FFT = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[j][i]);
+            let eT_FFT   = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[j][i]);
             let ops = Math.floor(numOPs / ((eT_FFT - eT_slice) / 1000));
             avrg_ops += ops;
+            console.log(avrg_ops);
         }
 
         avrg_ops = Math.floor(avrg_ops / RUNS);
