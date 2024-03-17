@@ -205,25 +205,13 @@ const measureFFT = (type, fftSize, testData) => {
 let WARMUPS = 3;
 let RUNS = 6;
 
-var SIGNAL = [];
+var SIGNALS_FOR_EACH_FFT = [];
 
 var OINK_FFT_RESULTS    = new Map();
 var INDUTNY_FFT_RESULTS = new Map();
 var OOURA_FFT_RESULTS   = new Map();
 var DSP_FFT_RESULTS     = new Map();
 var KISS_FFT_RESULTS    = new Map();
-
-var j = 0;
-for (var size = 128; size <= 1024; size *= 2) {
-   var SIGNALS = [];
-   for(let i = 0; i<RUNS; i++){
-      let signal = generateTestData(size);
-      SIGNALS.push(signal);
-   }
-   SIGNAL.push(SIGNALS);
-   j++;
-}
-
 
 // Define a function to execute the loop asynchronously
 const runPerformanceLoop = async (type) => {
@@ -232,13 +220,13 @@ const runPerformanceLoop = async (type) => {
 
         // Warm up
         for (let i = 0; i < WARMUPS; i++) {
-            await measureFFT(type, size, SIGNAL[j][i]);
+            await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[j][i]);
         }
 
         // Run Measurement
         for (let i = 0; i < RUNS; i++) {
-            let eT_slice = await measureSlicing(type, size, SIGNAL[j][i]);
-            let eT_FFT = await measureFFT(type, size, SIGNAL[j][i]);
+            let eT_slice = await measureSlicing(type, size, SIGNALS_FOR_EACH_FFT[j][i]);
+            let eT_FFT = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[j][i]);
             let ops = Math.floor(numOPs / ((eT_FFT - eT_slice) / 1000));
             avrg_ops += ops;
         }
@@ -282,7 +270,7 @@ const runPerformance = (type) => {
             if(type == "OINK"){ OINK_FFT_RESULTS.set(size, avrg_ops); }
             j++;
         }*/
-        
+
         resolve();
     });
 };
@@ -368,6 +356,17 @@ $(document).ready(async function(){
     await initializeINDUTNY();
     await initializeDSP();
     await initializeOOURA();
+    
+    var j = 0;
+    for (var size = 128; size <= 1024; size *= 2) {
+       var SIGNALS = [];
+       for(let i = 0; i<RUNS; i++){
+          let signal = generateTestData(size);
+          SIGNALS.push(signal);
+       }
+       SIGNALS_FOR_EACH_FFT.push(SIGNALS);
+       j++;
+    }
 
     // After all initialization is done, run performance tests and add performance rows
     await runPerformance("INDUTNY");
