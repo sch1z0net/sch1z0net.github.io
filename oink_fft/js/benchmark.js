@@ -235,7 +235,7 @@ var DSP_FFT_RESULTS     = new Map();
 var KISS_FFT_RESULTS    = new Map();
 
 // Define a function to execute the loop asynchronously
-const runPerformanceLoop = async (type) => {
+const runPerformance = async (type) => {
     let j = 0;
     for (let size = 128; size <= 1024; size *= 2) {
         let avrg_ops = 0;
@@ -261,14 +261,6 @@ const runPerformanceLoop = async (type) => {
         if (type == "OINK") {    OINK_FFT_RESULTS.set(size, avrg_ops); }
         j++;
     }
-};
-
-
-const runPerformance = (type) => {
-    return new Promise((resolve, reject) => {
-        runPerformanceLoop(type);
-        resolve();
-    });
 };
 
 
