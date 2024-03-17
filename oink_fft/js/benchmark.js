@@ -281,6 +281,8 @@ $(document).ready(async function(){
     await initializeINDUTNY();
     await initializeDSP();
     await initializeOOURA();
+    await Module_KISS_ = Module_KISS();
+    await initializeKISS();
     
     var j = 0;
     for (var size = 128; size <= 1024; size *= 2) {
@@ -300,6 +302,10 @@ $(document).ready(async function(){
     await addPerformanceRow("DSP", DSP_FFT_RESULTS);
     await runPerformance("OOURA");
     await addPerformanceRow("OOURA", OOURA_FFT_RESULTS);
+    
+    await runPerformance("KISS");    
+    await addPerformanceRow("KISS", KISS_FFT_RESULTS);
+
 });
 
 
