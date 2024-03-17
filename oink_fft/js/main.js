@@ -52,6 +52,10 @@ function createPerformanceTable(){
 
     // Append the table to the body
     $stats_div.append($table);
+
+    // Append select boxes to the stats_div
+    $stats_div.append($numOpsSelect);
+    $stats_div.append($runsSelect);
 }
 
 function addPerformanceRow(name, results){
@@ -100,12 +104,6 @@ $(document).ready(function(){
     // Set default values for the select boxes
     $numOpsSelect.val("10000"); // Default value for number of operations
     $runsSelect.val("8");   // Default value for amount of runs
-
-    // Append select boxes to the stats_div
-    $stats_div.append($numOpsSelect);
-    $stats_div.append($runsSelect);
-
-
 
     // Create the image element
     var $oinkImage = $("<img>", {
