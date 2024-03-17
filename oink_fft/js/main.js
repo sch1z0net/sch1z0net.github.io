@@ -113,22 +113,26 @@ const measureTime = (type, fftSize, testData) => {
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
+let RUNS = 5;
 
-
+var SIGNAL = [];
 
 var OINK_FFT_RESULTS = new Map();
 var INDUTNY_FFT_RESULTS = new Map();
 var OOURA_FFT_RESULTS = new Map();
 var DSP_FFT_RESULTS = new Map();
 
+for(let i = 0; i<RUNS; i++){
+   let signal = generateTestData(size);
+   SIGNAL[i] = signal;
+}
+
 function runPerformance(type){
     //console.log("\n\nPerformance Test:");
-    let RUNS = 5;
-
     for (var size = 128; size <= 1024; size *= 2) {
         let avrg_ops = 0;
         for(let i = 0; i<RUNS; i++){
-          avrg_ops += measureTime(type, size, generateTestData(size));
+          avrg_ops += measureTime(type, size, SIGNAL[i]);
         }
         avrg_ops = Math.floor(avrg_ops/RUNS);
         if(type == "INDUTNY"){ INDUTNY_FFT_RESULTS.set(size, avrg_ops); } 
