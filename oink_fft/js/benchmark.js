@@ -326,11 +326,11 @@ function runForthAndBack(){
 /////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
 
 $(document).ready(function(){
-    
+    /*
     initializeINDUTNY().then(() => { runPerformance("INDUTNY"); addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS); });
     initializeDSP().then(() => {     runPerformance("DSP");     addPerformanceRow("DSP", DSP_FFT_RESULTS); });
     initializeOOURA().then(() => {   runPerformance("OOURA");   addPerformanceRow("OOURA", OOURA_FFT_RESULTS); });
-
+    */
     /*
     let initialized = 0;
     Module_KISS().then(function(Module) {
