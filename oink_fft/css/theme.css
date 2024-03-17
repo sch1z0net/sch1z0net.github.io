@@ -41,7 +41,7 @@ body {
   margin: 0;
   height: 140px;
   white-space: nowrap;
-  filter: drop-shadow(4px 4px 4px black);
+  filter: drop-shadow(4px 4px 4px rgba(0,0,0,0.2));
 }
 
 #subtitle {
@@ -51,7 +51,7 @@ body {
   margin: 0;
   font-size: 40px;
   white-space: nowrap;
-  filter: drop-shadow(4px 4px 4px black);
+  filter: drop-shadow(4px 4px 4px rgba(0,0,0,0.2));
 }
 
 #descr_div {
