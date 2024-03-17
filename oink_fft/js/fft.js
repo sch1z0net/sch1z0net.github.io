@@ -460,92 +460,42 @@ let testData2048   = generateTestData(2048);
 let testData4096   = generateTestData(4096);
 
 // Perform FFT operations
-const performFFTOperations = (fftSize) => {
+const performFFTOperations = (fftSize, testData) => {
     if(fftSize == 128){
         for (let i = 0; i < numOperations; i++) {
-             fftReal128(testData128);
+             fftReal128(testData);
         }
     }
     if(fftSize == 256){
         for (let i = 0; i < numOperations; i++) {
-             fftReal256(testData256);
+             fftReal256(testData);
         }
     }
     if(fftSize == 512){
         for (let i = 0; i < numOperations; i++) {
-             fftReal512(testData512);
+             fftReal512(testData);
         }
     }
     if(fftSize == 1024){
         for (let i = 0; i < numOperations; i++) {
-             fftReal1024(testData1024);
+             fftReal1024(testData);
         }
     }
 };
 
 // Measure the time taken to perform FFT operations
-const measureTime = (fftSize) => {
+const measureTime = (fftSize, testData) => {
     const startTime = performance.now(); // Start time
-    performFFTOperations(fftSize); // Perform FFT operations
+    performFFTOperations(fftSize, testData); // Perform FFT operations
     const endTime = performance.now(); // End time
     const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
 
     // Calculate the number of FFT operations per second
     const operationsPerSecond = Math.floor(numOperations / (elapsedTime / 1000));
     console.log("Number of FFT",fftSize,"operations per second:", operationsPerSecond);
+
+    return operationsPerSecond;
 };
-
-function runPerformance(){
-        console.log("\n\nPerformance Test:");
-
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        testData1024 = generateTestData(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        testData1024 = generateTestData(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-
-        measureTime(512);
-        measureTime(512);
-        measureTime(512);
-        testData512  = generateTestData(512);
-        measureTime(512);
-        measureTime(512);
-        measureTime(512);
-        testData512  = generateTestData(512);
-        measureTime(512);
-        measureTime(512);
-        measureTime(512);
-
-        measureTime(256);
-        measureTime(256);
-        measureTime(256);
-        testData256  = generateTestData(256);
-        measureTime(256);
-        measureTime(256);
-        measureTime(256);
-        testData256  = generateTestData(256);
-        measureTime(256);
-        measureTime(256);
-        measureTime(256);
-    
-        measureTime(128);
-        measureTime(128);
-        measureTime(128);
-        testData128  = generateTestData(128);
-        measureTime(128);
-        measureTime(128);
-        measureTime(128);
-        testData128  = generateTestData(128);
-        measureTime(128);
-        measureTime(128);
-        measureTime(128);
-}
 
 function compareFFTResults(array1, array2, error) {
     // Check if arrays have the same length
@@ -571,89 +521,4 @@ function compareFFTResults(array1, array2, error) {
 //const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
 //const signal4 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
 //const signal5 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
-
-function runComparison(){
-    let error;
-    error = 1e-3;
-    console.log("\n\nCompare to Reference with acceptable Error ",error," :");
-    console.log("128:  ",compareFFTResults(fftReal_ref(testData128), fftReal128(testData128),error));
-    console.log("256:  ",compareFFTResults(fftReal_ref(testData256), fftReal256(testData256),error));
-    console.log("512:  ",compareFFTResults(fftReal_ref(testData512), fftReal512(testData512),error));
-    console.log("1024: ",compareFFTResults(fftReal_ref(testData1024),fftReal1024(testData1024),error));
-
-    error = 1e-4;
-    console.log("\n\nCompare to Reference with acceptable Error ",error," :");
-    console.log("128:  ",compareFFTResults(fftReal_ref(testData128), fftReal128(testData128),error));
-    console.log("256:  ",compareFFTResults(fftReal_ref(testData256), fftReal256(testData256),error));
-    console.log("512:  ",compareFFTResults(fftReal_ref(testData512), fftReal512(testData512),error));
-    console.log("1024: ",compareFFTResults(fftReal_ref(testData1024),fftReal1024(testData1024),error));
-
-    error = 1e-5;
-    console.log("\n\nCompare to Reference with acceptable Error ",error," :");
-    console.log("128:  ",compareFFTResults(fftReal_ref(testData128), fftReal128(testData128),error));
-    console.log("256:  ",compareFFTResults(fftReal_ref(testData256), fftReal256(testData256),error));
-    console.log("512:  ",compareFFTResults(fftReal_ref(testData512), fftReal512(testData512),error));
-    console.log("1024: ",compareFFTResults(fftReal_ref(testData1024),fftReal1024(testData1024),error));
-
-    error = 1e-6;
-    console.log("\n\nCompare to Reference with acceptable Error ",error," :");
-    console.log("128:  ",compareFFTResults(fftReal_ref(testData128), fftReal128(testData128),error));
-    console.log("256:  ",compareFFTResults(fftReal_ref(testData256), fftReal256(testData256),error));
-    console.log("512:  ",compareFFTResults(fftReal_ref(testData512), fftReal512(testData512),error));
-    console.log("1024: ",compareFFTResults(fftReal_ref(testData1024),fftReal1024(testData1024),error));
-}
-
-function runForthAndBack(){
-    let error;
-    
-    let signal128  = IFFT128onHalf(fftReal128(testData128).slice(0,128+2));
-    let signal256  = IFFT256onHalf(fftReal256(testData256).slice(0,256+2));
-    let signal512  = IFFT512onHalf(fftReal512(testData512).slice(0,512+2));
-    let signal1024 = IFFT1024onHalf(fftReal1024(testData1024).slice(0,1024+2));
-
-    error = 1e-3;
-    console.log("\n\nCompare after Forth and Back with acceptable Error ",error," :");
-    console.log("128:   ",compareFFTResults(testData128, signal128 ,error));
-    console.log("256:   ",compareFFTResults(testData256, signal256 ,error));
-    console.log("512:   ",compareFFTResults(testData512, signal512 ,error));
-    console.log("1024:  ",compareFFTResults(testData1024, signal1024 ,error));
-
-    error = 1e-4;
-    console.log("\n\nCompare after Forth and Back with acceptable Error ",error," :");
-    console.log("128:   ",compareFFTResults(testData128, signal128 ,error));
-    console.log("256:   ",compareFFTResults(testData256, signal256 ,error));
-    console.log("512:   ",compareFFTResults(testData512, signal512 ,error));
-    console.log("1024:  ",compareFFTResults(testData1024, signal1024 ,error));
-
-    error = 1e-5;
-    console.log("\n\nCompare after Forth and Back with acceptable Error ",error," :");
-    console.log("128:   ",compareFFTResults(testData128, signal128 ,error));
-    console.log("256:   ",compareFFTResults(testData256, signal256 ,error));
-    console.log("512:   ",compareFFTResults(testData512, signal512 ,error));
-    console.log("1024:  ",compareFFTResults(testData1024, signal1024 ,error));
-
-    error = 1e-6;
-    console.log("\n\nCompare after Forth and Back with acceptable Error ",error," :");
-    console.log("128:   ",compareFFTResults(testData128, signal128 ,error));
-    console.log("256:   ",compareFFTResults(testData256, signal256 ,error));
-    console.log("512:   ",compareFFTResults(testData512, signal512 ,error));
-    console.log("1024:  ",compareFFTResults(testData1024, signal1024 ,error));
-}
-
-
-// Check if the module is already initialized, otherwise wait for initialization
-if (Module.isRuntimeInitialized) {
-    initializeModule();
-    runPerformance();
-    runComparison();
-    runForthAndBack();
-} else {
-    Module.onRuntimeInitialized = function(){
-        initializeModule();
-        runPerformance();
-        runComparison();
-        runForthAndBack();
-    };
-}
-
 

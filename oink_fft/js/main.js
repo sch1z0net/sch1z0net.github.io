@@ -1,53 +1,17 @@
+var FFT_RESULTS = new Map();
+
 function runPerformance(){
-        console.log("\n\nPerformance Test:");
+    console.log("\n\nPerformance Test:");
+    let RUNS = 10;
 
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        testData1024 = generateTestData(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-        testData1024 = generateTestData(1024);
-        measureTime(1024);
-        measureTime(1024);
-        measureTime(1024);
-
-        measureTime(512);
-        measureTime(512);
-        measureTime(512);
-        testData512  = generateTestData(512);
-        measureTime(512);
-        measureTime(512);
-        measureTime(512);
-        testData512  = generateTestData(512);
-        measureTime(512);
-        measureTime(512);
-        measureTime(512);
-
-        measureTime(256);
-        measureTime(256);
-        measureTime(256);
-        testData256  = generateTestData(256);
-        measureTime(256);
-        measureTime(256);
-        measureTime(256);
-        testData256  = generateTestData(256);
-        measureTime(256);
-        measureTime(256);
-        measureTime(256);
-    
-        measureTime(128);
-        measureTime(128);
-        measureTime(128);
-        testData128  = generateTestData(128);
-        measureTime(128);
-        measureTime(128);
-        measureTime(128);
-        testData128  = generateTestData(128);
-        measureTime(128);
-        measureTime(128);
-        measureTime(128);
+    for (var size = 128; size <= 1024; size *= 2) {
+        let avrg_ops;
+        for(let i = 0; i<RUNS; i++){
+          avrg_ops += measureTime(size, generateTestData(size));
+        }
+        avrg_ops = Math.floor(avrg_ops/10);
+        FFT_RESULTS.set(size, avrg_ops);
+    }
 }
 
 function runComparison(){
@@ -132,31 +96,31 @@ $(document).ready(function(){
     $("#root").append($stats_div);
     
 
-    // Create a table element
-    var $table = $("<table>").attr("id", "fft-table");
-    // Create table header
-    var $thead = $("<thead>").appendTo($table);
-    var $trHead = $("<tr>").appendTo($thead);
-    $("<th>").text("FFT Performance").attr("colspan", 8).appendTo($trHead); // colspan to span all columns
-    // Create table body
-    var $tbody = $("<tbody>").appendTo($table);
-    var $tr_sizes = $("<tr>").attr("id", "tr_header").appendTo($tbody); 
-    $("<td>").text("FFT size").appendTo($tr_sizes);
-    for (var size = 128; size <= 4096; size *= 2) {
-        $("<td>").text(size).appendTo($tr_sizes);
+    function createPerformanceTable(){
+        $stats_div.empty();
+
+        // Create a table element
+        var $table = $("<table>").attr("id", "fft-table");
+        // Create table header
+        var $thead = $("<thead>").appendTo($table);
+        var $trHead = $("<tr>").appendTo($thead);
+        $("<th>").text("FFT Performance (measured in OINKS per second)").attr("colspan", 6).appendTo($trHead); // colspan to span all columns
+        // Create table body
+        var $tbody = $("<tbody>").appendTo($table);
+        var $tr_sizes = $("<tr>").attr("id", "tr_header").appendTo($tbody); 
+        $("<td>").text("FFT size").appendTo($tr_sizes);
+        for (var size = 128; size <= 1024; size *= 2) {
+            $("<td>").text(size).appendTo($tr_sizes);
+        }
+        var $tr = $("<tr>").appendTo($tbody); 
+        $("<td>").text("OINK FFT").appendTo($tr);
+        for (var size = 128; size <= 1024; size *= 2) {
+            $("<td>").text( FFT_RESULTS.get(size)).appendTo($tr);
+        }
+
+        // Append the table to the body
+        $stats_div.append($table);
     }
-    var $tr = $("<tr>").appendTo($tbody); 
-    $("<td>").text("OINK FFT").appendTo($tr);
-    for (var size = 128; size <= 4096; size *= 2) {
-        $("<td>").text(size).appendTo($tr);
-    }
-
-    // Append the table to the body
-    $stats_div.append($table);
-
-
-
-
 
 
     var $descr_div = $("<div>").attr("id", "descr_div");
@@ -167,25 +131,20 @@ $(document).ready(function(){
 
     
 
-
-
-
-
-
-    
-
     // Check if the module is already initialized, otherwise wait for initialization
     if (Module.isRuntimeInitialized) {
         initializeModule();
         runPerformance();
         runComparison();
         runForthAndBack();
+        createPerformanceTable();
     } else {
         Module.onRuntimeInitialized = function(){
             initializeModule();
             runPerformance();
             runComparison();
             runForthAndBack();
+            createPerformanceTable();
         };
     }
 });
