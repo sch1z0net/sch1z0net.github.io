@@ -262,6 +262,7 @@ var KISS_FFT_RESULTS    = new Map();
         s++;
     }
 };*/
+const DELAY_BETWEEN_ITERATIONS = 2;
 
 const runPerformance = async (type) => {
     let s = 0;
