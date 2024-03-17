@@ -289,8 +289,6 @@ function runForthAndBack(){
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
 
-
-$(document).ready(function(){
     var $title_div = $("<div>").attr("id", "title_div");
     $("#root").append($title_div);
 
@@ -360,6 +358,8 @@ $(document).ready(function(){
           //runForthAndBack();        
     }
 
+
+$(document).ready(function(){
     run_already();
     
     let initialized = 0;
@@ -378,5 +378,4 @@ $(document).ready(function(){
         runPerformance("OINK");    addPerformanceRow("OINK", OINK_FFT_RESULTS);
         if(++initialized == 2){ $loading.hide(); }
     });
-
 });
