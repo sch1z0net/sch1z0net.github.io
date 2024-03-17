@@ -384,13 +384,13 @@ $(document).ready(function(){
     }
 
     // Check if the module is already initialized, otherwise wait for initialization
-    if (Module_Oink.isRuntimeInitialized) {
-        initializeModuleOink();
+    if (Module_OINK.isRuntimeInitialized) {
+        initializeModuleOINK();
         console.log("INITIALIZED OINK");
         run();
     } else {
-        Module_Oink.onRuntimeInitialized = function(){
-            initializeModuleOink();
+        Module_OINK.onRuntimeInitialized = function(){
+            initializeModuleOINK();
             console.log("INITIALIZED OINK");
             run();
         };
