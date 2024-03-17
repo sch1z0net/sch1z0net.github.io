@@ -224,31 +224,34 @@ for (var size = 128; size <= 1024; size *= 2) {
    j++;
 }
 
-function runPerformance(type){
-    //console.log("\n\nPerformance Test:");
-    let j = 0;
-    for (var size = 128; size <= 1024; size *= 2) {
-        let avrg_ops = 0;
-        // WARM UP
-        for(let i = 0; i<WARMUPS; i++){
-           measureFFT(type, size, SIGNAL[j][i]);
+const runPerformance = (type) => {
+    return new Promise((resolve, reject) => {
+        //console.log("\n\nPerformance Test:");
+        let j = 0;
+        for (var size = 128; size <= 1024; size *= 2) {
+            let avrg_ops = 0;
+            // WARM UP
+            for(let i = 0; i<WARMUPS; i++){
+               measureFFT(type, size, SIGNAL[j][i]);
+            }
+            // Run Measurement
+            for(let i = 0; i<RUNS; i++){
+              let eT_slice = measureSlicing(type, size, SIGNAL[j][i]);
+              let eT_FFT   = measureFFT(type, size, SIGNAL[j][i]);
+              let ops = Math.floor(numOPs / ((eT_FFT-eT_slice) / 1000));
+              avrg_ops += ops;
+            }
+            avrg_ops = Math.floor(avrg_ops/RUNS);
+            if(type == "INDUTNY"){ INDUTNY_FFT_RESULTS.set(size, avrg_ops); } 
+            if(type == "OOURA"){ OOURA_FFT_RESULTS.set(size, avrg_ops); }
+            if(type == "DSP"){ DSP_FFT_RESULTS.set(size, avrg_ops); }
+            if(type == "KISS"){ KISS_FFT_RESULTS.set(size, avrg_ops); }
+            if(type == "OINK"){ OINK_FFT_RESULTS.set(size, avrg_ops); }
+            j++;
         }
-        // Run Measurement
-        for(let i = 0; i<RUNS; i++){
-          let eT_slice = measureSlicing(type, size, SIGNAL[j][i]);
-          let eT_FFT   = measureFFT(type, size, SIGNAL[j][i]);
-          let ops = Math.floor(numOPs / ((eT_FFT-eT_slice) / 1000));
-          avrg_ops += ops;
-        }
-        avrg_ops = Math.floor(avrg_ops/RUNS);
-        if(type == "INDUTNY"){ INDUTNY_FFT_RESULTS.set(size, avrg_ops); } 
-        if(type == "OOURA"){ OOURA_FFT_RESULTS.set(size, avrg_ops); }
-        if(type == "DSP"){ DSP_FFT_RESULTS.set(size, avrg_ops); }
-        if(type == "KISS"){ KISS_FFT_RESULTS.set(size, avrg_ops); }
-        if(type == "OINK"){ OINK_FFT_RESULTS.set(size, avrg_ops); }
-        j++;
-    }
-}
+        resolve();
+    });
+};
 
 /*
 function runComparison(){
@@ -333,13 +336,13 @@ $(document).ready(async function(){
     await initializeOOURA();
 
     // After all initialization is done, run performance tests and add performance rows
-    /*runPerformance("INDUTNY");
+    await runPerformance("INDUTNY");
     addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS);
 
-    runPerformance("DSP");
+    /*await runPerformance("DSP");
     addPerformanceRow("DSP", DSP_FFT_RESULTS);
 
-    runPerformance("OOURA");
+    await runPerformance("OOURA");
     addPerformanceRow("OOURA", OOURA_FFT_RESULTS);*/
 });
 
