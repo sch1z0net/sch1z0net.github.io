@@ -333,14 +333,14 @@ $(document).ready(async function(){
     await initializeOOURA();
 
     // After all initialization is done, run performance tests and add performance rows
-    runPerformance("INDUTNY");
+    /*runPerformance("INDUTNY");
     addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS);
 
     runPerformance("DSP");
     addPerformanceRow("DSP", DSP_FFT_RESULTS);
 
     runPerformance("OOURA");
-    addPerformanceRow("OOURA", OOURA_FFT_RESULTS);
+    addPerformanceRow("OOURA", OOURA_FFT_RESULTS);*/
 });
 
 
