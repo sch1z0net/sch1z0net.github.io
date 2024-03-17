@@ -29,6 +29,7 @@ let testData4096   = generateTestData(4096);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 let Module_KISS_ls;
+let Module_OINK_ls;
 
 //////////////////////////////////////
 //////////////////////////////////////
@@ -383,14 +384,15 @@ $(document).ready(function(){
           createPerformanceTable();           
         }
     }
-
+    
+    Module_OINK_ls = moduleOINK();
     // Check if the module is already initialized, otherwise wait for initialization
-    if (Module_OINK.isRuntimeInitialized) {
+    if (Module_OINK_ls.isRuntimeInitialized) {
         initializeModuleOINK();
         console.log("INITIALIZED OINK");
         run();
     } else {
-        Module_OINK.onRuntimeInitialized = function(){
+        Module_OINK_ls.onRuntimeInitialized = function(){
             initializeModuleOINK();
             console.log("INITIALIZED OINK");
             run();
