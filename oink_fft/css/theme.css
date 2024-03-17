@@ -1,3 +1,17 @@
+@font-face {
+    font-family: 'Varela';
+    src: url('./fonts/Varela-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Sue Ellen Francisco';
+    src: url('./fonts/SueEllenFrancisco-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 html, body {
     min-height: 200px; /* Set your desired minimum height here */
     font-family: "Varela", sans-serif;
