@@ -158,18 +158,21 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    transform: translateX(-50%);
 }
 
 #reload {
     position: absolute;
     left: 50%;
-    bottom: 8px;
+    bottom: 16px;
+    transform: translateX(-50%);
 }
 
 #loading {
     position: absolute;
     left: 50%;
     bottom: 8px;
+    transform: translateX(-50%);
 }
 
 .loading-dots {
