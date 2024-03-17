@@ -284,8 +284,8 @@ function resetData(){
 }
 
 async function runAllPerformanceTests(){
-    NUM_OPS = $numOpsSelect.val();
-    RUNS    = $runsSelect.val();
+    NUM_OPS = parseInt($numOpsSelect.val());
+    RUNS    = parseInt($runsSelect.val());
 
     var j = 0;
     for (var size = 128; size <= 1024; size *= 2) {
@@ -322,9 +322,9 @@ async function runAllPerformanceTests(){
 
 $(document).ready(async function(){
     $reload.click(function(){
-       await createPerformanceTable();
-       await resetData();
-       await runAllPerformanceTests();
+       createPerformanceTable();
+       resetData();
+       runAllPerformanceTests();
     });
 
     // Call each initialization function asynchronously using await
