@@ -31,6 +31,21 @@ let testData4096   = generateTestData(4096);
 
 //////////////////////////////////////
 //////////////////////////////////////
+// PREPARE AND PERFORM DSP
+//////////////////////////////////////
+var dsp_fft_128 = new FFT(128, 44100);
+var dsp_fft_256 = new FFT(256, 44100);
+var dsp_fft_512 = new FFT(512, 44100);
+var dsp_fft_1024 = new FFT(1024, 44100);
+const perform_DSP = (fftSize, testData) => {
+    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { dsp_fft_128.forward(testData.slice()); } }
+    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { dsp_fft_256.forward(testData.slice()); } }
+    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { dsp_fft_512.forward(testData.slice()); } }
+    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { dsp_fft_1024.forward(testData.slice()); } }
+};
+
+//////////////////////////////////////
+//////////////////////////////////////
 // PREPARE AND PERFORM OOURA
 //////////////////////////////////////
 let ooura_oo_128 = new Ooura(128, {"type":"real", "radix":4} );
@@ -82,8 +97,9 @@ const perform_OINK = (fftSize, testData) => {
 //////////////////////////////////////
 const measureTime = (type, fftSize, testData) => {
     const startTime = performance.now(); // Start time
-    if(type == "OOURA"){ perform_OOURA(fftSize, testData); }
     if(type == "INDUTNY"){ perform_INDUTNY(fftSize, testData); }
+    if(type == "OOURA"){ perform_OOURA(fftSize, testData); }
+    if(type == "DSP"){ perform_DSP(fftSize, testData); }
     if(type == "OINK"){ perform_OINK(fftSize, testData); }
     const endTime = performance.now(); // End time
     const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
@@ -101,6 +117,7 @@ const measureTime = (type, fftSize, testData) => {
 var OINK_FFT_RESULTS = new Map();
 var INDUTNY_FFT_RESULTS = new Map();
 var OOURA_FFT_RESULTS = new Map();
+var DSP_FFT_RESULTS = new Map();
 
 function runPerformance(type){
     //console.log("\n\nPerformance Test:");
@@ -112,9 +129,10 @@ function runPerformance(type){
           avrg_ops += measureTime(type, size, generateTestData(size));
         }
         avrg_ops = Math.floor(avrg_ops/RUNS);
-        if(type == "OINK"){ OINK_FFT_RESULTS.set(size, avrg_ops); }
         if(type == "INDUTNY"){ INDUTNY_FFT_RESULTS.set(size, avrg_ops); } 
         if(type == "OOURA"){ OOURA_FFT_RESULTS.set(size, avrg_ops); }
+        if(type == "DSP"){ DSP_FFT_RESULTS.set(size, avrg_ops); }
+        if(type == "OINK"){ OINK_FFT_RESULTS.set(size, avrg_ops); }
     }
 }
 
@@ -241,6 +259,13 @@ $(document).ready(function(){
         $("<td>").text("OOURA FFT").appendTo($tr);
         for (var size = 128; size <= 1024; size *= 2) {
             $("<td>").text( OOURA_FFT_RESULTS.get(size)).appendTo($tr);
+        }
+
+        // DSP FFT
+        var $tr = $("<tr>").appendTo($tbody); 
+        $("<td>").text("dsp.js (corbanbrook)").appendTo($tr);
+        for (var size = 128; size <= 1024; size *= 2) {
+            $("<td>").text( DSP_FFT_RESULTS.get(size)).appendTo($tr);
         }
 
         // OINK FFT
