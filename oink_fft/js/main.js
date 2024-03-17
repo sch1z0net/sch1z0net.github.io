@@ -293,6 +293,7 @@ $(document).ready(function(){
         initializeModule();
         runPerformance("INDUTNY");
         runPerformance("OOURA");
+        runPerformance("DSP");
         runPerformance("OINK");
         //runComparison();
         //runForthAndBack();
@@ -302,6 +303,7 @@ $(document).ready(function(){
             initializeModule();
             runPerformance("INDUTNY");
             runPerformance("OOURA");
+            runPerformance("DSP");
             runPerformance("OINK");
             //runComparison();
             //runForthAndBack();
