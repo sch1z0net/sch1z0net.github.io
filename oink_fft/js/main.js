@@ -229,18 +229,25 @@ $(document).ready(function(){
             $("<td>").text(size).appendTo($tr_sizes);
         }
 
-        // OINK FFT
-        var $tr = $("<tr>").appendTo($tbody); 
-        $("<td>").text("OINK FFT").appendTo($tr);
-        for (var size = 128; size <= 1024; size *= 2) {
-            $("<td>").text( OINK_FFT_RESULTS.get(size)).appendTo($tr);
-        }
-
         // INDUTNY FFT
         var $tr = $("<tr>").appendTo($tbody); 
         $("<td>").text("fft.js (indutny)").appendTo($tr);
         for (var size = 128; size <= 1024; size *= 2) {
             $("<td>").text( INDUTNY_FFT_RESULTS.get(size)).appendTo($tr);
+        }
+
+        // OOURA FFT
+        var $tr = $("<tr>").appendTo($tbody); 
+        $("<td>").text("OOURA FFT").appendTo($tr);
+        for (var size = 128; size <= 1024; size *= 2) {
+            $("<td>").text( OOURA_FFT_RESULTS.get(size)).appendTo($tr);
+        }
+
+        // OINK FFT
+        var $tr = $("<tr>").appendTo($tbody); 
+        $("<td>").text("OINK FFT").appendTo($tr);
+        for (var size = 128; size <= 1024; size *= 2) {
+            $("<td>").text( OINK_FFT_RESULTS.get(size)).appendTo($tr);
         }
 
         // Append the table to the body
@@ -260,8 +267,8 @@ $(document).ready(function(){
         runPerformance("INDUTNY");
         runPerformance("OOURA");
         runPerformance("OINK");
-        runComparison();
-        runForthAndBack();
+        //runComparison();
+        //runForthAndBack();
         createPerformanceTable();
     } else {
         Module.onRuntimeInitialized = function(){
@@ -269,8 +276,8 @@ $(document).ready(function(){
             runPerformance("INDUTNY");
             runPerformance("OOURA");
             runPerformance("OINK");
-            runComparison();
-            runForthAndBack();
+            //runComparison();
+            //runForthAndBack();
             createPerformanceTable();
         };
     }
