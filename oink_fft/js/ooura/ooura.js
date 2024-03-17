@@ -708,8 +708,6 @@ const DIRECTION = {
 	FORWARDS: +1,
 	BACKWARDS: -1
 };
-let DIRECTION = DIRECTION;
-
 
 let rdft = function (n, dir, aBuffer, ipBuffer, wBuffer) {
 	const ip = new Int16Array(ipBuffer);
