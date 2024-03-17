@@ -1,16 +1,102 @@
-var FFT_RESULTS = new Map();
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////// TESTING PERFORMANCE ///////////////////////////////////////////////
 
-function runPerformance(){
-    console.log("\n\nPerformance Test:");
+// Define the number of FFT operations to perform
+const numOperations = 10000; // You can adjust this number based on your requirements
+
+// Generate test data as Float32Array
+const generateTestData = (size) => {
+    const testData = new Float32Array(size);
+    for (let i = 0; i < size; i++) {
+        // For demonstration purposes, generate random data between -1 and 1
+        testData[i] = Math.random() * 2 - 1;
+    }
+    return testData;
+};
+
+let testData8      = generateTestData(8);
+let testData16     = generateTestData(16);
+let testData32     = generateTestData(32);
+let testData64     = generateTestData(64);
+let testData128    = generateTestData(128);
+let testData256    = generateTestData(256);
+let testData512    = generateTestData(512);
+let testData1024   = generateTestData(1024);
+let testData2048   = generateTestData(2048);
+let testData4096   = generateTestData(4096);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////
+//////////////////////////////////////
+// PREPARE AND PERFORM INDUTNY
+//////////////////////////////////////
+const indutny_f_128 = new FFT(128);
+const indutny_out_128 = indutny_f_128.createComplexArray();
+const indutny_f_256 = new FFT(256);
+const indutny_out_256 = indutny_f_256.createComplexArray();
+const indutny_f_512 = new FFT(512);
+const indutny_out_512 = indutny_f_512.createComplexArray();
+const indutny_f_1024 = new FFT(1024);
+const indutny_out_1024 = indutny_f_1024.createComplexArray();
+const perform_INDUTNY = (fftSize, testData) => {
+    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { indutny_f_128.realTransform(indutny_out_128, testData); } }
+    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { indutny_f_256.realTransform(indutny_out_256, testData); } }
+    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { indutny_f_512.realTransform(indutny_out_512, testData); } }
+    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { indutny_f_1024.realTransform(indutny_out_1024, testData); } }
+};
+
+//////////////////////////////////////
+//////////////////////////////////////
+// PREPARE AND PERFORM OINK
+//////////////////////////////////////
+const perform_OINK = (fftSize, testData) => {
+    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { fftReal128(testData); } }
+    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { fftReal256(testData); } }
+    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { fftReal512(testData); } }
+    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { fftReal1024(testData);} }
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////
+//////////////////////////////////////
+// Measure the time taken to perform FFT operations
+//////////////////////////////////////
+const measureTime = (type, fftSize, testData) => {
+    const startTime = performance.now(); // Start time
+    if(type == "INDUTNY"){ perform_INDUTNY(fftSize, testData); }
+    if(type == "OINK"){ perform_OINK(fftSize, testData); }
+    const endTime = performance.now(); // End time
+    const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
+
+    // Calculate the number of FFT operations per second
+    const operationsPerSecond = Math.floor(numOperations / (elapsedTime / 1000));
+
+    return operationsPerSecond;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+var OINK_FFT_RESULTS = new Map();
+var INDUTNY_FFT_RESULTS = new Map();
+
+function runPerformance(type){
+    //console.log("\n\nPerformance Test:");
     let RUNS = 5;
 
     for (var size = 128; size <= 1024; size *= 2) {
         let avrg_ops = 0;
         for(let i = 0; i<RUNS; i++){
-          avrg_ops += measureTime(size, generateTestData(size));
+          avrg_ops += measureTime(type, size, generateTestData(size));
         }
         avrg_ops = Math.floor(avrg_ops/RUNS);
-        FFT_RESULTS.set(size, avrg_ops);
+        if(type == "OINK"){ OINK_FFT_RESULTS.set(size, avrg_ops); }
+        if(type == "INDUTNY"){ INDUTNY_FFT_RESULTS.set(size, avrg_ops); } 
     }
 }
 
@@ -82,6 +168,13 @@ function runForthAndBack(){
     console.log("1024:  ",compareFFTResults(testData1024, signal1024 ,error));
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
+
+
 $(document).ready(function(){
     var $title_div = $("<div>").attr("id", "title_div");
     $("#root").append($title_div);
@@ -110,15 +203,26 @@ $(document).ready(function(){
         $("<th>").text("FFT Performance (measured in OINKS per second)").attr("colspan", 6).appendTo($trHead); // colspan to span all columns
         // Create table body
         var $tbody = $("<tbody>").appendTo($table);
+
+        // HEADER
         var $tr_sizes = $("<tr>").attr("id", "tr_header").appendTo($tbody); 
         $("<td>").text("FFT size").appendTo($tr_sizes);
         for (var size = 128; size <= 1024; size *= 2) {
             $("<td>").text(size).appendTo($tr_sizes);
         }
+
+        // OINK FFT
         var $tr = $("<tr>").appendTo($tbody); 
         $("<td>").text("OINK FFT").appendTo($tr);
         for (var size = 128; size <= 1024; size *= 2) {
-            $("<td>").text( FFT_RESULTS.get(size)).appendTo($tr);
+            $("<td>").text( OINK_FFT_RESULTS.get(size)).appendTo($tr);
+        }
+
+        // INDUTNY FFT
+        var $tr = $("<tr>").appendTo($tbody); 
+        $("<td>").text("fft.js (indutny)").appendTo($tr);
+        for (var size = 128; size <= 1024; size *= 2) {
+            $("<td>").text( INDUTNY_FFT_RESULTS.get(size)).appendTo($tr);
         }
 
         // Append the table to the body
@@ -132,19 +236,19 @@ $(document).ready(function(){
     
     
 
-    
-
     // Check if the module is already initialized, otherwise wait for initialization
     if (Module.isRuntimeInitialized) {
         initializeModule();
-        runPerformance();
+        runPerformance("INDUTNY");
+        runPerformance("OINK");
         runComparison();
         runForthAndBack();
         createPerformanceTable();
     } else {
         Module.onRuntimeInitialized = function(){
             initializeModule();
-            runPerformance();
+            runPerformance("INDUTNY");
+            runPerformance("OINK");
             runComparison();
             runForthAndBack();
             createPerformanceTable();

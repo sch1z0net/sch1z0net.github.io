@@ -435,68 +435,6 @@ function IFFT1024onHalf(halfSpectrum) {
 /**********************************************************************************************/
 /********************************* TESTING PERFORMANCE ****************************************/
 
-// Define the number of FFT operations to perform
-const numOperations = 10000; // You can adjust this number based on your requirements
-
-// Generate test data as Float32Array
-const generateTestData = (size) => {
-    const testData = new Float32Array(size);
-    for (let i = 0; i < size; i++) {
-        // For demonstration purposes, generate random data between -1 and 1
-        testData[i] = Math.random() * 2 - 1;
-    }
-    return testData;
-};
-
-let testData8      = generateTestData(8);
-let testData16     = generateTestData(16);
-let testData32     = generateTestData(32);
-let testData64     = generateTestData(64);
-let testData128    = generateTestData(128);
-let testData256    = generateTestData(256);
-let testData512    = generateTestData(512);
-let testData1024   = generateTestData(1024);
-let testData2048   = generateTestData(2048);
-let testData4096   = generateTestData(4096);
-
-// Perform FFT operations
-const performFFTOperations = (fftSize, testData) => {
-    if(fftSize == 128){
-        for (let i = 0; i < numOperations; i++) {
-             fftReal128(testData);
-        }
-    }
-    if(fftSize == 256){
-        for (let i = 0; i < numOperations; i++) {
-             fftReal256(testData);
-        }
-    }
-    if(fftSize == 512){
-        for (let i = 0; i < numOperations; i++) {
-             fftReal512(testData);
-        }
-    }
-    if(fftSize == 1024){
-        for (let i = 0; i < numOperations; i++) {
-             fftReal1024(testData);
-        }
-    }
-};
-
-// Measure the time taken to perform FFT operations
-const measureTime = (fftSize, testData) => {
-    const startTime = performance.now(); // Start time
-    performFFTOperations(fftSize, testData); // Perform FFT operations
-    const endTime = performance.now(); // End time
-    const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
-
-    // Calculate the number of FFT operations per second
-    const operationsPerSecond = Math.floor(numOperations / (elapsedTime / 1000));
-    //console.log("Number of FFT",fftSize,"operations per second:", operationsPerSecond);
-
-    return operationsPerSecond;
-};
-
 function compareFFTResults(array1, array2, error) {
     // Check if arrays have the same length
     if (array1.length !== array2.length) {
