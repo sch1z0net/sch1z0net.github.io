@@ -122,9 +122,15 @@ var INDUTNY_FFT_RESULTS = new Map();
 var OOURA_FFT_RESULTS = new Map();
 var DSP_FFT_RESULTS = new Map();
 
-for(let i = 0; i<RUNS; i++){
-   let signal = generateTestData(size);
-   SIGNAL[i] = signal;
+var j = 0;
+for (var size = 128; size <= 1024; size *= 2) {
+   var SIGNALS = [];
+   for(let i = 0; i<RUNS; i++){
+      let signal = generateTestData(size);
+      SIGNALS[i] = signal;
+   }
+   SIGNAL[j] = SIGNALS;
+   j++;
 }
 
 function runPerformance(type){
