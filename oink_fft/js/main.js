@@ -140,7 +140,7 @@ $(document).ready(function(){
     $("<th>").text("FFT Performance").attr("colspan", 8).appendTo($trHead); // colspan to span all columns
     // Create table body
     var $tbody = $("<tbody>").appendTo($table);
-    var $tr_sizes = $("<tr>").appendTo($tbody); 
+    var $tr_sizes = $("<tr>").attr("id", "tr_header").appendTo($tbody); 
     $("<td>").text("FFT size").appendTo($tr_sizes);
     for (var size = 128; size <= 4096; size *= 2) {
         $("<td>").text(size).appendTo($tr_sizes);
