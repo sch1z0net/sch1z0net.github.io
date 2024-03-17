@@ -23,7 +23,7 @@ function createPerformanceTable(){
     // Create table header
     var $thead = $("<thead>").appendTo($table);
     // Create the loading circle element
-    $loading.show().appendTo($thead);
+    $loading.show().appendTo($table);
     var $trHead = $("<tr>").appendTo($thead);
     // Create Header Text
     $("<th>").text("FFT Performance (measured in OINKS per second)").attr("colspan", 6).appendTo($trHead); // colspan to span all columns
