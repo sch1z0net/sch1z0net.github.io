@@ -230,7 +230,6 @@ const runPerformanceLoop = async (type) => {
             let eT_FFT   = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[j][i]);
             let ops = Math.floor(numOPs / ((eT_FFT - eT_slice) / 1000));
             avrg_ops += ops;
-            console.log(avrg_ops);
         }
 
         avrg_ops = Math.floor(avrg_ops / RUNS);
@@ -246,36 +245,78 @@ const runPerformanceLoop = async (type) => {
 
 const runPerformance = (type) => {
     return new Promise((resolve, reject) => {
-
         runPerformanceLoop(type);
-
-        /*
-        let j = 0;
-        for (var size = 128; size <= 1024; size *= 2) {
-            let avrg_ops = 0;
-            // WARM UP
-            for(let i = 0; i<WARMUPS; i++){
-               measureFFT(type, size, SIGNAL[j][i]);
-            }
-            // Run Measurement
-            for(let i = 0; i<RUNS; i++){
-              let eT_slice = measureSlicing(type, size, SIGNAL[j][i]);
-              let eT_FFT   = measureFFT(type, size, SIGNAL[j][i]);
-              let ops = Math.floor(numOPs / ((eT_FFT-eT_slice) / 1000));
-              avrg_ops += ops;
-            }
-            avrg_ops = Math.floor(avrg_ops/RUNS);
-            if(type == "INDUTNY"){ INDUTNY_FFT_RESULTS.set(size, avrg_ops); } 
-            if(type == "OOURA"){ OOURA_FFT_RESULTS.set(size, avrg_ops); }
-            if(type == "DSP"){ DSP_FFT_RESULTS.set(size, avrg_ops); }
-            if(type == "KISS"){ KISS_FFT_RESULTS.set(size, avrg_ops); }
-            if(type == "OINK"){ OINK_FFT_RESULTS.set(size, avrg_ops); }
-            j++;
-        }*/
-
         resolve();
     });
 };
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
+
+
+$(document).ready(async function(){
+    // Call each initialization function asynchronously using await
+    await initializeINDUTNY();
+    await initializeDSP();
+    await initializeOOURA();
+    
+    var j = 0;
+    for (var size = 128; size <= 1024; size *= 2) {
+       var SIGNALS = [];
+       for(let i = 0; i<RUNS; i++){
+          let signal = generateTestData(size);
+          SIGNALS.push(signal);
+       }
+       SIGNALS_FOR_EACH_FFT.push(SIGNALS);
+       j++;
+    }
+
+    // After all initialization is done, run performance tests and add performance rows
+    await runPerformance("INDUTNY");
+    await addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS);
+
+    /*await runPerformance("DSP");
+    addPerformanceRow("DSP", DSP_FFT_RESULTS);
+
+    await runPerformance("OOURA");
+    addPerformanceRow("OOURA", OOURA_FFT_RESULTS);*/
+});
+
+
+/*
+$(document).ready(function(){
+    
+    initializeINDUTNY().then(() => { runPerformance("INDUTNY"); addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS); });
+    initializeDSP().then(() => {     runPerformance("DSP");     addPerformanceRow("DSP", DSP_FFT_RESULTS); });
+    initializeOOURA().then(() => {   runPerformance("OOURA");   addPerformanceRow("OOURA", OOURA_FFT_RESULTS); });
+    
+    
+    let initialized = 0;
+    Module_KISS().then(function(Module) {
+        Module_KISS_ = Module;
+        initializeKISS();
+        console.log("INITIALIZED KISS");
+        runPerformance("KISS");    addPerformanceRow("KISS", KISS_FFT_RESULTS);
+        if(++initialized == 2){ $loading.hide(); }
+    });
+
+    Module_OINK().then(function(Module) {
+        Module_OINK_ = Module;
+        initializeModuleOINK();
+        console.log("INITIALIZED OINK");
+        runPerformance("OINK");    addPerformanceRow("OINK", OINK_FFT_RESULTS);
+        if(++initialized == 2){ $loading.hide(); }
+    });
+});*/
+
+
+
+
+
+
 
 /*
 function runComparison(){
@@ -346,64 +387,3 @@ function runForthAndBack(){
     console.log("1024:  ",compareFFTResults(testData1024, signal1024 ,error));
 }
 */
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
-
-
-$(document).ready(async function(){
-    // Call each initialization function asynchronously using await
-    await initializeINDUTNY();
-    await initializeDSP();
-    await initializeOOURA();
-    
-    var j = 0;
-    for (var size = 128; size <= 1024; size *= 2) {
-       var SIGNALS = [];
-       for(let i = 0; i<RUNS; i++){
-          let signal = generateTestData(size);
-          SIGNALS.push(signal);
-       }
-       SIGNALS_FOR_EACH_FFT.push(SIGNALS);
-       j++;
-    }
-
-    // After all initialization is done, run performance tests and add performance rows
-    await runPerformance("INDUTNY");
-    addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS);
-
-    /*await runPerformance("DSP");
-    addPerformanceRow("DSP", DSP_FFT_RESULTS);
-
-    await runPerformance("OOURA");
-    addPerformanceRow("OOURA", OOURA_FFT_RESULTS);*/
-});
-
-
-/*
-$(document).ready(function(){
-    
-    initializeINDUTNY().then(() => { runPerformance("INDUTNY"); addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS); });
-    initializeDSP().then(() => {     runPerformance("DSP");     addPerformanceRow("DSP", DSP_FFT_RESULTS); });
-    initializeOOURA().then(() => {   runPerformance("OOURA");   addPerformanceRow("OOURA", OOURA_FFT_RESULTS); });
-    
-    
-    let initialized = 0;
-    Module_KISS().then(function(Module) {
-        Module_KISS_ = Module;
-        initializeKISS();
-        console.log("INITIALIZED KISS");
-        runPerformance("KISS");    addPerformanceRow("KISS", KISS_FFT_RESULTS);
-        if(++initialized == 2){ $loading.hide(); }
-    });
-
-    Module_OINK().then(function(Module) {
-        Module_OINK_ = Module;
-        initializeModuleOINK();
-        console.log("INITIALIZED OINK");
-        runPerformance("OINK");    addPerformanceRow("OINK", OINK_FFT_RESULTS);
-        if(++initialized == 2){ $loading.hide(); }
-    });
-});*/
