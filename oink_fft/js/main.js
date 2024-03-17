@@ -47,7 +47,7 @@ function addPerformanceRow(name, results){
     for (var size = 128; size <= 1024; size *= 2) {
         $("<td>").text( results.get(size) ).appendTo($tr);
     }
-    $tr.classList.add('fade-up');
+    $tr.addClass('fade-up');
     $tr.appendTo($tbody);
 }
 
