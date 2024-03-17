@@ -29,6 +29,26 @@ let testData4096   = generateTestData(4096);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+//////////////////////////////////////
+//////////////////////////////////////
+// PREPARE AND PERFORM KISS
+//////////////////////////////////////
+const kiss_fft_128 = new Module.KissFftReal(128);
+const kiss_input_128 = kiss_fft_128.getInputTimeDataBuffer();
+const kiss_fft_256 = new Module.KissFftReal(256);
+const kiss_input_256 = kiss_fft_256.getInputTimeDataBuffer();
+const kiss_fft_512 = new Module.KissFftReal(512);
+const kiss_input_512 = kiss_fft_512.getInputTimeDataBuffer();
+const kiss_fft_1024 = new Module.KissFftReal(1024);
+const kiss_input_1024 = kiss_fft_1024.getInputTimeDataBuffer();
+const perform_KISS = (fftSize, testData) => {
+    if(fftSize == 128){ for (let i = 0; i < numOperations; i++) { kiss_input_128.set(testData.slice()); kiss_fft_128.transform(); } }
+    if(fftSize == 256){ for (let i = 0; i < numOperations; i++) { kiss_input_256.set(testData.slice()); kiss_fft_256.transform(); } }
+    if(fftSize == 512){ for (let i = 0; i < numOperations; i++) { kiss_input_512.set(testData.slice()); kiss_fft_512.transform(); } }
+    if(fftSize == 1024){for (let i = 0; i < numOperations; i++) { kiss_input_1024.set(testData.slice()); kiss_fft_1024.transform(); } }
+};
+
 //////////////////////////////////////
 //////////////////////////////////////
 // PREPARE AND PERFORM DSP
@@ -113,6 +133,7 @@ const measureSlicing = (type, fftSize, testData) => {
     if(type == "INDUTNY"){ perform_slice(fftSize, testData); }
     if(type == "OOURA"){ perform_slice(fftSize, testData64); }
     if(type == "DSP"){ perform_slice(fftSize, testData64); }
+    if(type == "KISS"){ perform_slice(fftSize, testData64); }
     if(type == "OINK"){ perform_slice(fftSize, testData); }
     const endTime = performance.now(); // End time
     const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
@@ -127,6 +148,7 @@ const measureFFT = (type, fftSize, testData) => {
     if(type == "INDUTNY"){ perform_INDUTNY(fftSize, testData); }
     if(type == "OOURA"){ perform_OOURA(fftSize, testData64); }
     if(type == "DSP"){ perform_DSP(fftSize, testData64); }
+    if(type == "KISS"){ perform_KISS(fftSize, testData64); }
     if(type == "OINK"){ perform_OINK(fftSize, testData); }
     const endTime = performance.now(); // End time
     const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
@@ -143,6 +165,7 @@ var OINK_FFT_RESULTS = new Map();
 var INDUTNY_FFT_RESULTS = new Map();
 var OOURA_FFT_RESULTS = new Map();
 var DSP_FFT_RESULTS = new Map();
+var KISS_FFT_RESULTS = new Map();
 
 var j = 0;
 for (var size = 128; size <= 1024; size *= 2) {
@@ -175,11 +198,13 @@ function runPerformance(type){
         if(type == "INDUTNY"){ INDUTNY_FFT_RESULTS.set(size, avrg_ops); } 
         if(type == "OOURA"){ OOURA_FFT_RESULTS.set(size, avrg_ops); }
         if(type == "DSP"){ DSP_FFT_RESULTS.set(size, avrg_ops); }
+        if(type == "KISS"){ KISS_FFT_RESULTS.set(size, avrg_ops); }
         if(type == "OINK"){ OINK_FFT_RESULTS.set(size, avrg_ops); }
         j++;
     }
 }
 
+/*
 function runComparison(){
     let error;
     error = 1e-3;
@@ -247,7 +272,7 @@ function runForthAndBack(){
     console.log("512:   ",compareFFTResults(testData512, signal512 ,error));
     console.log("1024:  ",compareFFTResults(testData1024, signal1024 ,error));
 }
-
+*/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -312,11 +337,18 @@ $(document).ready(function(){
             $("<td>").text( DSP_FFT_RESULTS.get(size)).appendTo($tr3);
         }
 
-        // OINK FFT
+        // KISS FFT
         var $tr4 = $("<tr>").appendTo($tbody); 
-        $("<td>").text("OINK (sch1z0net)").appendTo($tr4);
+        $("<td>").text("KISS (mborgerding)").appendTo($tr4);
         for (var size = 128; size <= 1024; size *= 2) {
-            $("<td>").text( OINK_FFT_RESULTS.get(size)).appendTo($tr4);
+            $("<td>").text( DSP_FFT_RESULTS.get(size)).appendTo($tr4);
+        }
+
+        // OINK FFT
+        var $tr5 = $("<tr>").appendTo($tbody); 
+        $("<td>").text("OINK (sch1z0net)").appendTo($tr5);
+        for (var size = 128; size <= 1024; size *= 2) {
+            $("<td>").text( OINK_FFT_RESULTS.get(size)).appendTo($tr5);
         }
 
         // Append the table to the body
@@ -336,6 +368,7 @@ $(document).ready(function(){
         runPerformance("INDUTNY");
         runPerformance("OOURA");
         runPerformance("DSP");
+        runPerformance("KISS");
         runPerformance("OINK");
         //runComparison();
         //runForthAndBack();
@@ -346,6 +379,7 @@ $(document).ready(function(){
             runPerformance("INDUTNY");
             runPerformance("OOURA");
             runPerformance("DSP");
+            runPerformance("KISS");
             runPerformance("OINK");
             //runComparison();
             //runForthAndBack();
