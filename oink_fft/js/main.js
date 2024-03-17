@@ -95,6 +95,9 @@ $(document).ready(function(){
     var $stats_div = $("<div>").attr("id", "stats_div");
     $("#root").append($stats_div);
     
+    // Create the loading circle element
+    var $loading = $('<div class="loading-circle"></div>');
+    $stats_div.append($loading);
 
     function createPerformanceTable(){
         $stats_div.empty();
