@@ -322,9 +322,9 @@ async function runAllPerformanceTests(){
 
 $(document).ready(async function(){
     $reload.click(function(){
-       createPerformanceTable();
-       resetData();
-       runAllPerformanceTests();
+       await createPerformanceTable();
+       await resetData();
+       await runAllPerformanceTests();
     });
 
     // Call each initialization function asynchronously using await
