@@ -25,7 +25,7 @@ function createPerformanceTable(){
     // Create the dots
     $loading = $('<div id="loading" class="loading-dots">').appendTo($table);
     $loading_info = $('<div id="loading_info">').appendTo($table);
-    $reload = $('<button id="reload">').hide().appendTo($table);
+    $reload = $('<button id="reload">Reload</button>').hide().appendTo($table);
 
     // Create table header
     var $thead = $("<thead>").appendTo($table);
