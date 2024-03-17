@@ -12,6 +12,8 @@ var $loading;
 var $loading_info;
 var $reload;
 var $descr_div;
+var $numOpsSelect;
+var $runsSelect;
 
 function resetPerformanceTable(){
     $stats_div.empty();
@@ -78,4 +80,29 @@ $(document).ready(function(){
     $("#root").append($descr_div);
     $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
     createPerformanceTable();
+
+
+    // Create select boxes for the number of operations and the amount of runs
+    var $numOpsSelect = $('<select id="numOpsSelect"></select>');
+    var $runsSelect = $('<select id="runsSelect"></select>');
+    
+    $numOpsSelect.append('<option value="' + 5000 + '">' +  5000 + 'ITERATIONS </option>');
+    $numOpsSelect.append('<option value="' + 7500 + '">' +  7500 + 'ITERATIONS </option>');
+    $numOpsSelect.append('<option value="' + 10000 + '">' + 10000 + 'ITERATIONS </option>');
+    $numOpsSelect.append('<option value="' + 15000 + '">' + 15000 + 'ITERATIONS </option>');
+    $numOpsSelect.append('<option value="' + 20000 + '">' + 20000 + 'ITERATIONS </option>');
+    $runsSelect.append('<option value="' + 1 + '">' + 1 + 'RUNS </option>');
+    $runsSelect.append('<option value="' + 2 + '">' + 2 + 'RUNS </option>');
+    $runsSelect.append('<option value="' + 4 + '">' + 4 + 'RUNS </option>');
+    $runsSelect.append('<option value="' + 8 + '">' + 8 + 'RUNS </option>');
+    $runsSelect.append('<option value="' + 16 + '">' + 16 + 'RUNS </option>');
+
+    // Set default values for the select boxes
+    $numOpsSelect.val("10000"); // Default value for number of operations
+    $runsSelect.val("8");   // Default value for amount of runs
+
+    // Append select boxes to the stats_div
+    $stats_div.append($numOpsSelect);
+    $stats_div.append($runsSelect);
+
 });

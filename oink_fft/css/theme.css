@@ -215,3 +215,15 @@ body {
   }
 }
 
+#numOpsSelect{
+   width: 100px;
+   position: absolute;
+   right: 100px;
+}
+
+#runsSelect{
+   width: 100px;
+   position: absolute;
+   right: 210px;
+}
+

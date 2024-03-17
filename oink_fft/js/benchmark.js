@@ -2,12 +2,11 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// TESTING PERFORMANCE ///////////////////////////////////////////////
-const numOPs = 10000;
-const DELAY_BETWEEN_ITERATIONS = 0.2;
-const WARMUPS = 3;
-const RUNS = 6;
+let NUM_OPS = 10000;
+let WARMUPS = 3;
+let RUNS = 8;
 
-
+let DELAY_BETWEEN_ITERATIONS = 0.05;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 // Reset on each new Run
 let SIGNALS_FOR_EACH_FFT = [];
@@ -157,10 +156,10 @@ const perform_OINK = (instance, testData) => {
 // Only Copy per Slicing
 //////////////////////////////////////
 const perform_slice = (fftSize, testData) => {
-    if(fftSize == 128){ for (let i = 0; i < numOPs; i++) { testData.slice(); } }
-    if(fftSize == 256){ for (let i = 0; i < numOPs; i++) { testData.slice(); } }
-    if(fftSize == 512){ for (let i = 0; i < numOPs; i++) { testData.slice(); } }
-    if(fftSize == 1024){for (let i = 0; i < numOPs; i++) { testData.slice(); } }
+    if(fftSize == 128){ for (let i = 0; i < NUM_OPS; i++) { testData.slice(); } }
+    if(fftSize == 256){ for (let i = 0; i < NUM_OPS; i++) { testData.slice(); } }
+    if(fftSize == 512){ for (let i = 0; i < NUM_OPS; i++) { testData.slice(); } }
+    if(fftSize == 1024){for (let i = 0; i < NUM_OPS; i++) { testData.slice(); } }
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -226,7 +225,7 @@ const measureFFT = (type, size, testData) => {
     }
 
     const startTime = performance.now(); // Start time
-    for (let i = 0; i < numOPs; i++){
+    for (let i = 0; i < NUM_OPS; i++){
         func();
     }
     const endTime = performance.now(); // End time
@@ -250,7 +249,7 @@ const runPerformance = async (type) => {
         for (let run = 0; run < RUNS; run++) {
             let eT_slice = await measureSlicing(type, size, SIGNALS_FOR_EACH_FFT[s][run]);
             let eT_FFT = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[s][run]);
-            let ops = Math.floor(numOPs / ((eT_FFT - eT_slice) / 1000));
+            let ops = Math.floor(NUM_OPS / ((eT_FFT - eT_slice) / 1000));
             avrg_ops += ops;
 
             // Introduce a delay between iterations
@@ -285,6 +284,9 @@ function resetData(){
 }
 
 async function runAllPerformanceTests(){
+    NUM_OPS = $numOpsSelect.val();
+    RUNS    = $runsSelect.val();
+
     var j = 0;
     for (var size = 128; size <= 1024; size *= 2) {
        var SIGNALS = [];
