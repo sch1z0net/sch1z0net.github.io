@@ -251,3 +251,13 @@ select {
    bottom: 5px;
 }
 
+
+#oinkImage {
+   position: absolute;
+   width: 100px;
+   height: 100px;
+   top: 80%;
+   left: 20%;
+   transform: translate(-50%, -50%);
+}
+

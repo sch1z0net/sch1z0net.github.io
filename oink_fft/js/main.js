@@ -105,4 +105,15 @@ $(document).ready(function(){
     $stats_div.append($numOpsSelect);
     $stats_div.append($runsSelect);
 
+
+
+    // Create the image element
+    var $oinkImage = $("<img>", {
+        id: "oinkImage",
+        src: "oink.png"
+    });
+
+    // Append the image to the container div
+    $title_div.append($oinkImage);
+
 });
