@@ -302,10 +302,6 @@ $(document).ready(function(){
 
     var $stats_div = $("<div>").attr("id", "stats_div");
     $("#root").append($stats_div);
-    
-    // Create the loading circle element
-    var $loading = $('<div class="loading-circle"></div>');
-    $stats_div.append($loading);
 
     function resetPerformanceTable(){
         $stats_div.empty();
@@ -320,6 +316,9 @@ $(document).ready(function(){
         // Create table header
         var $thead = $("<thead>").appendTo($table);
         var $trHead = $("<tr>").appendTo($thead);
+        // Create the loading circle element
+        $('<div class="loading-circle"></div>').appendTo($trHead);
+        // Create Header Text
         $("<th>").text("FFT Performance (measured in OINKS per second)").attr("colspan", 6).appendTo($trHead); // colspan to span all columns
         // Create table body
         $tbody = $("<tbody>").appendTo($table);
