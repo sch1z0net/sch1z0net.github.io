@@ -53,11 +53,10 @@ function addPerformanceRow(name, results){
 
 $(document).ready(function(){
     $title_div = $("<div>").attr("id", "title_div");
-    $title = $("<h1>").text("OINK FFT").attr("id", "title");
-    $subtitle = $("<h2>").text("the oinkiest FFT in the web").attr("id", "subtitle");
+    $title     = $("<h1>").text("OINK FFT").attr("id", "title");
+    $subtitle  = $("<h2>").text("the oinkiest FFT in the web").attr("id", "subtitle");
     $stats_div = $("<div>").attr("id", "stats_div");
-    $tbody;
-    $loading = $('<div id="loading-circle"></div>');
+    $loading   = $('<div id="loading-circle"></div>');
     $descr_div = $("<div>").attr("id", "descr_div");
 
     $("#root").append($title_div);
