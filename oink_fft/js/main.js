@@ -135,16 +135,18 @@ for (var size = 128; size <= 1024; size *= 2) {
 
 function runPerformance(type){
     //console.log("\n\nPerformance Test:");
+    let j = 0;
     for (var size = 128; size <= 1024; size *= 2) {
         let avrg_ops = 0;
         for(let i = 0; i<RUNS; i++){
-          avrg_ops += measureTime(type, size, SIGNAL[i]);
+          avrg_ops += measureTime(type, size, SIGNAL[j][i]);
         }
         avrg_ops = Math.floor(avrg_ops/RUNS);
         if(type == "INDUTNY"){ INDUTNY_FFT_RESULTS.set(size, avrg_ops); } 
         if(type == "OOURA"){ OOURA_FFT_RESULTS.set(size, avrg_ops); }
         if(type == "DSP"){ DSP_FFT_RESULTS.set(size, avrg_ops); }
         if(type == "OINK"){ OINK_FFT_RESULTS.set(size, avrg_ops); }
+        j++;
     }
 }
 
