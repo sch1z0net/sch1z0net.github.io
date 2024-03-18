@@ -169,6 +169,17 @@ body {
   color: rgba(10, 10, 10, 0.5);
 }
 
+
+#performanceChart{
+   width: 100%;
+   font-family: "Varela", sans-serif;
+   font-size: 12px;
+   padding:10px;
+   border: 1px solid aliceblue;
+   padding-top: 4px;
+}
+
+
 #loading-circle {
     position: absolute;
     border: 4px solid #333333;
