@@ -92,7 +92,17 @@ function createPerformanceChart(fft_size){
               title: {
                 display: true,
                 text: 'FFT '+fft_size
-              }
+              },
+               datalabels: {
+                anchor: "end",
+                align: "left",
+                formatter: function(context) {
+                  return context / 1000 + "k";
+                },
+                font: {
+                  color: "black"
+                }
+               }
            },
            tooltips: {
                 callbacks: {
