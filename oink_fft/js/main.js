@@ -66,6 +66,45 @@ function addPerformanceRow(name, results){
 }
 
 
+
+
+function createPerformanceChart(){
+    $chart = $('<canvas id="performanceChart" width="800" height="800"></canvas>');
+
+    const ctx = document.getElementById('performanceChart').getContext('2d');
+
+    const chart = new Chart(ctx, {
+        type: 'bar',
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    // Append the table to the body
+    $tab_chart.append($chart);
+}
+
+function updateChart(name, results) {
+    const labels = Array.from(results.keys());
+    const data   = Array.from(results.values());
+
+    // Push new data to the chart
+    chart.data.labels = labels;
+    chart.data.datasets[0].data = data;
+    chart.data.datasets[0].backgroundColor = 'rgba(255, 99, 132, 0.2)'; // Set bar color
+    chart.data.datasets[0].borderColor = 'rgba(255, 99, 132, 1)'; // Set border color
+
+    // Update the chart
+    chart.update();
+}
+
+
 $(document).ready(function(){
     $title_div   = $("<div>").attr("id", "title_div");
     $title       = $("<h1>").text("OINK FFT").attr("id", "title");
@@ -74,6 +113,7 @@ $(document).ready(function(){
     $stats_head  = $("<div>").attr("id", "stats_head");
     $tab_table   = $("<div>").attr("id", "tab_table").addClass("tab").show();
     $tab_chart   = $("<div>").attr("id", "tab_chart").addClass("tab").hide();
+    
     $loading     = $('<div id="loading-circle"></div>');
     $stats_footer= $("<div>").attr("id", "stats_footer");
     $loading     = $('<div id="loading" class="loading-dots">');
@@ -124,7 +164,7 @@ $(document).ready(function(){
     $reload = $('<button id="reload">Reload</button>').hide().appendTo($stats_footer);
 
     createPerformanceTable();
-
+    createPerformanceChart();
 
 
 

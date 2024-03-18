@@ -335,18 +335,23 @@ async function runAllPerformanceTests(){
     $loading_info.text("Measure INDUTNY..."); 
     await runPerformance("INDUTNY");
     await addPerformanceRow("INDUTNY", INDUTNY_FFT_RESULTS);
+    await updateChart("INDUTNY", INDUTNY_FFT_RESULTS);
     $loading_info.text("Measure DSP..."); 
     await runPerformance("DSP");
     await addPerformanceRow("DSP", DSP_FFT_RESULTS);
+    await updateChart("INDUTNY", INDUTNY_FFT_RESULTS);
     $loading_info.text("Measure OOURA..."); 
     await runPerformance("OOURA");
     await addPerformanceRow("OOURA", OOURA_FFT_RESULTS);
+    await updateChart("OOURA", OOURA_FFT_RESULTS);
     $loading_info.text("Measure KISS..."); 
     await runPerformance("KISS");    
     await addPerformanceRow("KISS", KISS_FFT_RESULTS);
+    await updateChart("KISS", KISS_FFT_RESULTS);
     $loading_info.text("Measure OINK..."); 
     await runPerformance("OINK");    
     await addPerformanceRow("OINK", OINK_FFT_RESULTS);
+    await updateChart("OINK", OINK_FFT_RESULTS);
     $loading_info.text("Finished!"); 
     
     await highlightComparison();
