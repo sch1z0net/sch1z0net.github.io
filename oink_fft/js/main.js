@@ -147,9 +147,9 @@ $(document).ready(function(){
         $(".icon-link").removeClass("active-icon");
         $(icon).addClass("active-icon");
     }
-    $iconLink1.click(function(ev){ changeTab("#tab_table", ev.target); });
-    $iconLink2.click(function(ev){ changeTab("#tab_chart", ev.target); });
-    $iconLink3.click(function(ev){ changeTab("#tab_table", ev.target); });
+    $iconLink1.click(function(){ changeTab("#tab_table", this); });
+    $iconLink2.click(function(){ changeTab("#tab_chart", this); });
+    $iconLink3.click(function(){ changeTab("#tab_table", this); });
 
     // Append the icon row to the document body
     $stats_head.append($iconRow);
