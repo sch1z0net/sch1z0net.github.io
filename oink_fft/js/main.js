@@ -17,7 +17,7 @@ var $numOpsSelect;
 var $runsSelect;
 
 function resetPerformanceTable(){
-    $table && $table.empty();
+    if($table != null){ $table.empty(); }
 }
 
 function createPerformanceTable(){
@@ -28,6 +28,7 @@ function createPerformanceTable(){
     // Create the dots
     $loading = $('<div id="loading" class="loading-dots">').appendTo($table);
     $loading_info = $('<div id="loading_info">').appendTo($table);
+    $reload = $('<button id="reload">Reload</button>').hide().appendTo($table);
 
     // Create table header
     var $thead = $("<thead>").appendTo($table);
@@ -107,9 +108,6 @@ $(document).ready(function(){
     // Append select boxes to the stats_div
     $stats_div.append($numOpsSelect);
     $stats_div.append($runsSelect);
-
-    // Append the reload to the stats_div
-    $reload = $('<button id="reload">Reload</button>').hide().appendTo($stats_div);
 
     createPerformanceTable();
 });
