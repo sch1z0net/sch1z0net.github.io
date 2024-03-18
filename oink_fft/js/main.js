@@ -115,9 +115,7 @@ function updateChart(name, results) {
     //const labels = Array.from(results.keys());
     const data = Array.from(results.values());
     // Push new data to the chart
-    for(let i = 0; i<data.length; i++){
-        chart.data.datasets[i].data.push(data[i]);
-    }
+    chart.data.datasets[0].data.push(data[0]);
     
     // Update the chart
     chart.update();
