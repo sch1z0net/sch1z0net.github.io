@@ -364,6 +364,7 @@ $(document).ready(async function(){
     $reload.click(function(){
        $reload.hide();
        createPerformanceTable();
+       createPerformanceCharts();
        resetData();
        runAllPerformanceTests();
     });

@@ -65,12 +65,16 @@ function addPerformanceRow(name, results){
     $tr.appendTo($tbody);
 }
 
-let charts = new Map();
+
+let charts;
+function resetPerformanceCharts(){
+    charts = new Map();
+    if($(".chart_panel")){ $(".chart_panel").remove(); }
+}
+
 function createPerformanceChart(fft_size){
-    let $perf_chart = $('<canvas width="1600" height="800"></canvas>').attr("class", "performanceChart");
-    let $chart_panel = $('<div>').attr("class","chart_panel fade-in").attr("id","panel_"+fft_size).append($perf_chart);
-    // Append the table to the body
-    $tab_chart.append($chart_panel);
+    let $chart_panel = $('<div>').attr("class","chart_panel fade-in").attr("id","panel_"+fft_size).appendTo($tab_chart);
+    let $perf_chart = $('<canvas width="1600" height="800"></canvas>').attr("class", "performanceChart").appendTo($chart_panel);  
 
     const ctx = $perf_chart[0].getContext('2d');
 
@@ -113,6 +117,13 @@ function createPerformanceChart(fft_size){
 
     charts.set(fft_size, chart);
     return $chart_panel;
+}
+
+function createPerformanceCharts(){
+    resetPerformanceCharts();
+    for (let size = 128; size <= 1024; size *= 2) {
+        createPerformanceChart(size).hide();
+    }
 }
 
 function updateChart(name, results) {
@@ -190,9 +201,7 @@ $(document).ready(function(){
     $reload = $('<button id="reload">Reload</button>').hide().appendTo($stats_footer);
     
     createPerformanceTable();
-    for (let size = 128; size <= 1024; size *= 2) {
-        createPerformanceChart(size).hide();
-    }
+    createPerformanceCharts();
     let panels = [128, 256, 512, 1024];
     let p = 0;
     $("#panel_"+panels[p]).show();
