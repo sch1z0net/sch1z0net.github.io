@@ -146,9 +146,6 @@ $(document).ready(function(){
     $loading_info= $('<div id="loading_info">');
     $descr_div   = $("<div>").attr("id", "descr_div");
 
-    $chart_l = $('<button id="chart_l">←</button>').appendTo($tab_chart);
-    $chart_r = $('<button id="chart_r">→</button>').appendTo($tab_chart);
-
     $("#root").append($title_div);
     $title_div.append($title);
     $title_div.append($subtitle);
@@ -196,7 +193,13 @@ $(document).ready(function(){
     for (let size = 128; size <= 1024; size *= 2) {
         createPerformanceChart(size).hide();
     }
-    $("#panel_"+128).show();
+    let panels = [128, 256, 512, 1024];
+    let p = 0;
+    $("#panel_"+panels[p]).show();
+    $chart_l = $('<button id="chart_l">←</button>').appendTo($tab_chart);
+    $chart_r = $('<button id="chart_r">→</button>').appendTo($tab_chart);
+    $chart_l.click(function(){ $(".chart_panel").hide(); p=(p-1)%4; $("#panel_"+panels[p]).show();});
+    $chart_r.click(function(){ $(".chart_panel").hide(); p=(p+1)%4; $("#panel_"+panels[p]).show();});
 
     // Create a div element for the icon row
     var $iconRow = $("<div>").attr("id", "icon-row");
