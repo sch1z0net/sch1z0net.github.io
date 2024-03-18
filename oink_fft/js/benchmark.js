@@ -319,6 +319,8 @@ function resetData(){
 async function runAllPerformanceTests(){
     NUM_OPS = parseInt($numOpsSelect.val());
     RUNS    = parseInt($runsSelect.val());
+    
+    alert(RUNS);
 
     var j = 0;
     for (var size = 128; size <= 1024; size *= 2) {
