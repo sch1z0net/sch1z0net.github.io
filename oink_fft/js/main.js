@@ -84,10 +84,14 @@ function createPerformanceChart(fft_size){
         },
         options: {
            responsive: true,
-           aspectRatio: 3,
+           aspectRatio: 4,
            plugins: {
               legend: { 
                 display: false 
+              },
+              title: {
+                display: true,
+                text: 'FFT '+fft_size
               }
            },
            tooltips: {
