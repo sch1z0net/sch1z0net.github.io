@@ -9,7 +9,7 @@ var $subtitle;
 var $stats_div;
 var $tab_table;
 var $perf_table;
-var $chart;
+var $perf_chart;
 var $tbody;
 var $loading;
 var $loading_info;
@@ -68,13 +68,13 @@ function addPerformanceRow(name, results){
 
 
 
-
+let chart;
 function createPerformanceChart(){
-    $chart = $('<canvas id="performanceChart" width="800" height="800"></canvas>');
+    $perf_chart = $('<canvas width="800" height="800"></canvas>').attr("id", "performanceChart");
 
-    const ctx = document.getElementById('performanceChart').getContext('2d');
+    const ctx = $perf_chart[0].getContext('2d');
 
-    const chart = new Chart(ctx, {
+    chart = new Chart(ctx, {
         type: 'bar',
         options: {
             scales: {
