@@ -68,7 +68,7 @@ function addPerformanceRow(name, results){
 let charts = new Map();
 function createPerformanceChart(fft_size){
     let $perf_chart = $('<canvas width="1600" height="800"></canvas>').attr("class", "performanceChart");
-    let $chart_panel = $('<div>').attr("class","chart_panel").append($perf_chart);
+    let $chart_panel = $('<div>').attr("class","chart_panel").attr("id","panel_"+fft_size).append($perf_chart);
     // Append the table to the body
     $tab_chart.append($chart_panel);
 
@@ -112,6 +112,7 @@ function createPerformanceChart(fft_size){
     });
 
     charts.set(fft_size, chart);
+    return $chart_panel;
 }
 
 function updateChart(name, results) {
@@ -190,9 +191,10 @@ $(document).ready(function(){
 
     createPerformanceTable();
     for (let size = 128; size <= 1024; size *= 2) {
-        createPerformanceChart(size);
+        createPerformanceChart(size).hide();
     }
-
+    $("#panel_"+128).show();
+    
 
     // Create a div element for the icon row
     var $iconRow = $("<div>").attr("id", "icon-row");
