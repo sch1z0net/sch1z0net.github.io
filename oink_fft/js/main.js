@@ -114,4 +114,38 @@ $(document).ready(function(){
     $reload = $('<button id="reload">Reload</button>').hide().appendTo($stats_div);
 
     createPerformanceTable();
+
+
+
+
+
+    // Create an array of SVG file paths
+    var svgFiles = [
+        "./icons/table.svg",
+        "./icons/chart.svg",
+        "./icons/micro.svg"
+    ];
+
+    // Create a div element for the icon row
+    var $iconRow = $("<div>").attr("id", "icon-row");
+
+    // Iterate over the SVG file paths and create image elements with SVG as the source
+    $.each(svgFiles, function(index, svgFile) {
+        var $iconImage = $("<img>").attr("src", svgFile).addClass("icon-image");
+        var $iconLink = $("<a>").attr("href", "#").addClass("icon-link").append($iconImage);
+        $iconRow.append($iconLink);
+    });
+
+    // Append the icon row to the document body
+    $stats_div.append($iconRow);
+
+    // Attach click event handler to all icon links
+    $(".icon-link").click(function(event) {
+        event.preventDefault(); // Prevent default link behavior
+        
+    });
 });
+
+
+
+

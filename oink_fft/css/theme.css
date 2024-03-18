@@ -276,3 +276,19 @@ select {
   }
 }
 
+
+
+
+#icon-row {
+    display: flex;
+    justify-content: space-between; /* Adjust as needed */
+    align-items: center; /* Align icons vertically in the center */
+    position: absolute;
+    top: 10px;
+    right: 50px;
+}
+
+.icon-link {
+    margin: 0 10px; /* Adjust margin as needed */
+}
+
