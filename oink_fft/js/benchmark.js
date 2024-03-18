@@ -274,6 +274,10 @@ const runPerformance = async (type) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
+function highlightComparison(){
+    
+}
+
 function resetData(){
     SIGNALS_FOR_EACH_FFT = [];
     OINK_FFT_RESULTS    = new Map();
@@ -315,6 +319,8 @@ async function runAllPerformanceTests(){
     await runPerformance("OINK");    
     await addPerformanceRow("OINK", OINK_FFT_RESULTS);
     $loading_info.text("Finished!"); 
+    
+    await highlightComparison();
 
     $loading.hide();
     $reload.show();
