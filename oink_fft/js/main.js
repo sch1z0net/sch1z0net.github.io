@@ -76,6 +76,16 @@ function createPerformanceChart(){
 
     chart = new Chart(ctx, {
         type: 'bar',
+        data: {
+            labels: [], // Add your labels here
+            datasets: [{
+                label: 'Performance Chart',
+                data: [], // Add your data here
+                backgroundColor: 'rgba(255, 99, 132, 0.2)', // Set bar color
+                borderColor: 'rgba(255, 99, 132, 1)', // Set border color
+                borderWidth: 1 // Set border width
+            }]
+        },
         options: {
             scales: {
                 yAxes: [{
@@ -86,6 +96,7 @@ function createPerformanceChart(){
             }
         }
     });
+
 
     // Append the table to the body
     $tab_chart.append($chart);
