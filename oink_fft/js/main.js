@@ -108,7 +108,7 @@ $(document).ready(function(){
     $title_div.append($oinkImage);
 
     // Append select boxes to the stats_div
-    $stats_div.append($numOpsSelect.val(10000));
+    $stats_div.append($numOpsSelect.val(7500));
     $stats_div.append($runsSelect.val(8));
 
     $reload = $('<button id="reload">Reload</button>').hide().appendTo($stats_div);
