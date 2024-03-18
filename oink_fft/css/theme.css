@@ -117,7 +117,6 @@ body {
   display: block;
   background-color: rgba(200,0,0,0.2);
   margin: 0px;
-  /*! position: absolute; */
 }
 
 .tab {
@@ -128,7 +127,6 @@ body {
   display: block;
   display: flex;
   justify-content: center;
-  /*! position: absolute; */
   flex: 1;
 }
 
@@ -223,7 +221,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 24px; /* Adjust height as needed */
+  height: 24px;
 }
 
 .dot {
@@ -323,14 +321,14 @@ select {
 
 #icon-row {
     display: flex;
-    justify-content: space-between; /* Adjust as needed */
-    align-items: center; /* Align icons vertically in the center */
+    justify-content: space-between;
+    align-items: center;
     position: absolute;
     top: 10px;
     right: 30px;
 }
 
 .icon-link {
-    margin: 0 10px; /* Adjust margin as needed */
+    margin: 0 10px;
 }
 

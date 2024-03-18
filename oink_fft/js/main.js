@@ -146,7 +146,7 @@ $(document).ready(function(){
     $iconLink3.click(function(){ $(".tab").hide(); $("#tab_chart").show(); });
 
     // Append the icon row to the document body
-    $stats_div.append($iconRow);
+    $stats_head.append($iconRow);
 
     // Attach click event handler to all icon links
     $(".icon-link").click(function(event) {
