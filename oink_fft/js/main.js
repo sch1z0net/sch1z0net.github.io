@@ -85,8 +85,8 @@ $(document).ready(function(){
     $title_div.append($subtitle);
     $("#root").append($stats_div);
     $stats_div.append($stats_head);
-    $stats_div.append($stats_footer);
     $stats_div.append($tab_table);
+    $stats_div.append($stats_footer);
     $("#root").append($descr_div);
     $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
 
