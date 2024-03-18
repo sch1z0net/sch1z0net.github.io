@@ -77,13 +77,9 @@ function createPerformanceChart(){
     chart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: ["FFT 128", "FFT 256", "FFT 512", "FFT 1024"],
+          labels: [],
           datasets: [ 
             {data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)'},
-            {data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.4)'},
-            {data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.6)'},
-            {data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.8)'},
-            {data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 1.0)'}
           ]
         },
         options: {
@@ -115,6 +111,7 @@ function updateChart(name, results) {
     //const labels = Array.from(results.keys());
     const data = Array.from(results.values());
     // Push new data to the chart
+    chart.data.datasets[0].labels.push(name);
     chart.data.datasets[0].data.push(data[0]);
     
     // Update the chart
