@@ -79,13 +79,14 @@ function createPerformanceChart(){
         data: {
           labels: ["INDUTNY", "DSP", "OOURA", "KISS", "OINK"],
           datasets: [ 
-            {label: '# for FFT 128',  data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)'},
-            {label: '# for FFT 256',  data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)'},
-            {label: '# for FFT 512',  data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)'},
-            {label: '# for FFT 1024', data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)'},
+            {data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)'},
+            {data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)'},
+            {data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)'},
+            {data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)'},
           ]
         },
         options: {
+          indexAxis: 'y',
           scales: {
             y: {
               beginAtZero: true
@@ -97,7 +98,7 @@ function createPerformanceChart(){
 
 function updateChart(name, results) {
     //const labels = Array.from(results.keys());
-    const data   = Array.from(results.values());
+    const data = Array.from(results.values());
 
     // Push new data to the chart
     for(let i = 0; i<data.length; i++){
