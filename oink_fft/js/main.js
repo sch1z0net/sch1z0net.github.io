@@ -49,11 +49,11 @@ function createPerformanceTable(){
     $tab_table.append($perf_table);
 }
 
-function addPerformanceRow(name, results){
+function addPerformanceRow(idname, fullname, results){
     var $tr = $("<tr>");
-    $("<td>").text(name).appendTo($tr).css("background-color","rgba(200,0,0,0.2)");;
+    $("<td>").text(fullname).appendTo($tr).css("background-color","rgba(200,0,0,0.2)");;
     for (var size = 128; size <= 1024; size *= 2) {
-        let id = name+"_"+size;
+        let id = idname+"_"+size;
         let result = parseInt(results.get(size));
         if(result < 0){ result = "(ERROR)" }
         $("<td id='"+id+"' >").text( result ).appendTo($tr);
