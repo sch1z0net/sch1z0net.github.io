@@ -28,7 +28,6 @@ function createPerformanceTable(){
     $perf_table = $("<table>").attr("id", "fft-table");
     // Create the dots
     $loading = $('<div id="loading" class="loading-dots">').appendTo($perf_table);
-    $loading_info = $('<div id="loading_info">').appendTo($perf_table);
 
     // Create table header
     var $thead = $("<thead>").appendTo($perf_table);
@@ -79,6 +78,7 @@ $(document).ready(function(){
     $tab_chart   = $("<div>").attr("id", "tab_chart").addClass("tab").hide();
     $loading     = $('<div id="loading-circle"></div>');
     $stats_footer= $("<div>").attr("id", "stats_footer");
+    $loading_info= $('<div id="loading_info">');
     $descr_div   = $("<div>").attr("id", "descr_div");
 
     $("#root").append($title_div);
@@ -89,6 +89,7 @@ $(document).ready(function(){
     $stats_div.append($tab_table);
     $stats_div.append($tab_chart);
     $stats_div.append($stats_footer);
+    $stats_footer.append($loading_info);
     $("#root").append($descr_div);
     $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
 
@@ -132,7 +133,7 @@ $(document).ready(function(){
     var $iconRow = $("<div>").attr("id", "icon-row");
 
     var $iconImage1 = $("<img>").attr("src", "./icons/table.svg").addClass("icon-image");
-    var $iconLink1  = $("<a>").attr("id", "icon_table").addClass("icon-link").append($iconImage1);
+    var $iconLink1  = $("<a>").attr("id", "icon_table").addClass("icon-link").append($iconImage1).addClass("active-icon");
     $iconRow.append($iconLink1);
     var $iconImage2 = $("<img>").attr("src", "./icons/chart.svg").addClass("icon-image");
     var $iconLink2  = $("<a>").attr("id", "icon_chart").addClass("icon-link").append($iconImage2);
