@@ -54,8 +54,8 @@ function createPerformanceTable(){
     $stats_div.append($table);
 
     // Append select boxes to the stats_div
-    $stats_div.append($numOpsSelect);
-    $stats_div.append($runsSelect);
+    $stats_div.append($numOpsSelect.clone());
+    $stats_div.append($runsSelect.clone());
 }
 
 function addPerformanceRow(name, results){
