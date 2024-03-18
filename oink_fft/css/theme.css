@@ -131,8 +131,7 @@ body {
 }
 
 .icon-link{ cursor: pointer; }
-.icon-image{ fill: red; }
-.icon-image:hover{ filter: drop-shadow(0px 0px 2px rgba(255, 0, 0, 0.7)); }
+.icon-link:hover{ filter: drop-shadow(0px 0px 1px white); }
 
 #fft-table {
    width: 100%;
