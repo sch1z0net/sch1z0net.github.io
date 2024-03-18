@@ -388,20 +388,26 @@ function runErrorComparison(){
     let testData64 = Float64Array.from(testData.slice());
 
     let out_1 = output_INDUTNY(indutny_f_1024, indutny_out_1024, testData32.slice());
-    let out_2 = output_DSP(dsp_fft_1024, testData64.slice());
+    //let out_2 = output_DSP(dsp_fft_1024, testData64.slice());
     let out_3 = output_OOURA(ooura_oo_1024, testData64.slice());
     let out_4 = output_KISS(kiss_input_1024, kiss_fft_1024, testData64.slice());
     let out_5 = output_OINK(fftReal1024, testData32.slice());
 
+    
     for(let i = 0; i<20; i++){
         console.log(
             out_1[i].toFixed(3), 
-            out_2[i].toFixed(3), 
+            //out_2[i].toFixed(3), 
             out_3[i].toFixed(3), 
             out_4[i].toFixed(3), 
             out_5[i].toFixed(3)
         )
     }
+
+    console.log(out_1);
+    console.log(out_3);
+    console.log(out_4);
+    console.log(out_5);
 }
 
 
