@@ -294,6 +294,8 @@ button {
    color: black;
    border: 1px solid black;
    border-radius: 10px;
+   z-index: 10;
+   cursor: pointer;
 }
 
 button:hover {
@@ -312,15 +314,15 @@ select {
 #chart_l{
   position: absolute;
   left: 50%;
-  top: 100px;
-  tranform: translate(-30px);
+  top: 50px;
+  transform: translateX(-50px);
 }
 
 #chart_r{
   position: absolute;
   left: 50%;
-  top: 100px;
-  tranform: translate(30px);
+  top: 50px;
+  transform: translateX(50px);
 }
 
 #numOpsSelect{
