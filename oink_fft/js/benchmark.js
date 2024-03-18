@@ -389,7 +389,7 @@ function runErrorComparison(){
 
     console.log(output_INDUTNY(indutny_f_1024, indutny_out_1024, testData32.slice()));
     console.log(output_DSP(dsp_fft_1024, testData64.slice()));
-    console.log(output_OOURA(ooura_oo_1024, testData64 testData32.slice()));
+    console.log(output_OOURA(ooura_oo_1024, testData64.slice()));
     console.log(output_KISS(kiss_input_1024, kiss_fft_1024, testData64.slice()));
     console.log(output_OINK(fftReal1024, testData32.slice()));
 }
