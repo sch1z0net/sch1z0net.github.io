@@ -28,7 +28,6 @@ function createPerformanceTable(){
     // Create the dots
     $loading = $('<div id="loading" class="loading-dots">').appendTo($perf_table);
     $loading_info = $('<div id="loading_info">').appendTo($perf_table);
-    $reload = $('<button id="reload">Reload</button>').hide().appendTo($perf_table);
 
     // Create table header
     var $thead = $("<thead>").appendTo($perf_table);
@@ -108,6 +107,8 @@ $(document).ready(function(){
     // Append select boxes to the stats_div
     $stats_div.append($numOpsSelect.val(10000));
     $stats_div.append($runsSelect.val(8));
+
+    $reload = $('<button id="reload">Reload</button>').hide().appendTo($stats_div);
 
     createPerformanceTable();
 });
