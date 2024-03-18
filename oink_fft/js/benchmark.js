@@ -339,7 +339,7 @@ async function runAllPerformanceTests(){
     $loading_info.text("Measure DSP..."); 
     await runPerformance("DSP");
     await addPerformanceRow("DSP", DSP_FFT_RESULTS);
-    await updateChart("INDUTNY", INDUTNY_FFT_RESULTS);
+    await updateChart("DSP", DSP_FFT_RESULTS);
     $loading_info.text("Measure OOURA..."); 
     await runPerformance("OOURA");
     await addPerformanceRow("OOURA", OOURA_FFT_RESULTS);

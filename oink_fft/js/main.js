@@ -77,7 +77,7 @@ function createPerformanceChart(){
     chart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: ["INDUTNY", "DSP", "OOURA", "KISS", "OINK"],
+          labels: [],
           datasets: [ 
             {data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)'},
             {data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)'},
@@ -88,7 +88,7 @@ function createPerformanceChart(){
         options: {
            responsive: true,
            aspectRatio: 3,
-           legend: { display: false },
+           plugins.legend: { display: false },
            tooltips: {
                 callbacks: {
                    label: function(tooltipItem) {
