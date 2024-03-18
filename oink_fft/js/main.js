@@ -84,7 +84,7 @@ function createPerformanceChart(fft_size){
         },
         options: {
            responsive: true,
-           aspectRatio: 4,
+           //aspectRatio: 4,
            plugins: {
               legend: { 
                 display: false 
@@ -93,16 +93,14 @@ function createPerformanceChart(fft_size){
                 display: true,
                 text: 'FFT '+fft_size
               },
-               datalabels: {
-                anchor: "end",
-                align: "left",
-                formatter: function(context) {
-                  return context / 1000 + "k";
+              datalabels: {
+                anchor: 'end',
+                align: 'top',
+                formatter: function(value, context) {
+                    return value / 1000 + 'k';
                 },
-                font: {
-                  color: "black"
-                }
-               }
+                color: 'black' // Color of the data labels
+              }
            },
            tooltips: {
                 callbacks: {
