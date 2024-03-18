@@ -141,9 +141,15 @@ $(document).ready(function(){
     var $iconLink3  = $("<a>").attr("id", "icon_micro").addClass("icon-link").append($iconImage3);
     $iconRow.append($iconLink3);
 
-    $iconLink1.click(function(){ $(".tab").hide(); $("#tab_table").show(); });
-    $iconLink2.click(function(){ $(".tab").hide(); $("#tab_chart").show(); });
-    $iconLink3.click(function(){ $(".tab").hide(); $("#tab_chart").show(); });
+    function changeTab(id, icon){
+        $(".tab").hide(); 
+        $(id).show(); 
+        $(".icon-link").removeClass("active-icon");
+        $(icon).addClass("active-icon");
+    }
+    $iconLink1.click(function(ev){ changeTab("#tab_table", ev.target); });
+    $iconLink2.click(function(ev){ changeTab("#tab_chart", ev.target); });
+    $iconLink3.click(function(ev){ changeTab("#tab_table", ev.target); });
 
     // Append the icon row to the document body
     $stats_head.append($iconRow);
