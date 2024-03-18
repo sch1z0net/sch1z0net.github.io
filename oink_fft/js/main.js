@@ -75,8 +75,8 @@ $(document).ready(function(){
     $subtitle    = $("<h2>").text("the oinkiest FFT in the web").attr("id", "subtitle");
     $stats_div   = $("<div>").attr("id", "stats_div");
     $stats_head  = $("<div>").attr("id", "stats_head");
-    $tab_table   = $("<div>").attr("id", "stats_tab").addClass("tab").show();
-    $tab_chart   = $("<div>").attr("id", "stats_tab").addClass("tab").hide();
+    $tab_table   = $("<div>").attr("id", "tab_table").addClass("tab").show();
+    $tab_chart   = $("<div>").attr("id", "tab_chart").addClass("tab").hide();
     $loading     = $('<div id="loading-circle"></div>');
     $stats_footer= $("<div>").attr("id", "stats_footer");
     $descr_div   = $("<div>").attr("id", "descr_div");
@@ -127,12 +127,6 @@ $(document).ready(function(){
 
 
 
-    // Create an array of SVG file paths
-    var svgFiles = [
-        "./icons/table.svg",
-        "./icons/chart.svg",
-        "./icons/micro.svg"
-    ];
 
     // Create a div element for the icon row
     var $iconRow = $("<div>").attr("id", "icon-row");
