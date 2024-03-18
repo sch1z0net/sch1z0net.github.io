@@ -89,7 +89,9 @@ function createPerformanceChart(){
            responsive: true,
            aspectRatio: 3,
            plugins: {
-              legend: { display: false }
+              legend: { 
+                display: true 
+              }
            },
            tooltips: {
                 callbacks: {
