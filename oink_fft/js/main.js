@@ -75,7 +75,8 @@ $(document).ready(function(){
     $subtitle    = $("<h2>").text("the oinkiest FFT in the web").attr("id", "subtitle");
     $stats_div   = $("<div>").attr("id", "stats_div");
     $stats_head  = $("<div>").attr("id", "stats_head");
-    $tab_table   = $("<div>").attr("id", "stats_tab");
+    $tab_table   = $("<div>").attr("id", "stats_tab").show();
+    $tab_chart   = $("<div>").attr("id", "stats_tab").hide();
     $loading     = $('<div id="loading-circle"></div>');
     $stats_footer= $("<div>").attr("id", "stats_footer");
     $descr_div   = $("<div>").attr("id", "descr_div");
@@ -86,6 +87,7 @@ $(document).ready(function(){
     $("#root").append($stats_div);
     $stats_div.append($stats_head);
     $stats_div.append($tab_table);
+    $stats_div.append($tab_chart);
     $stats_div.append($stats_footer);
     $("#root").append($descr_div);
     $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
@@ -125,7 +127,6 @@ $(document).ready(function(){
 
 
 
-
     // Create an array of SVG file paths
     var svgFiles = [
         "./icons/table.svg",
@@ -136,12 +137,15 @@ $(document).ready(function(){
     // Create a div element for the icon row
     var $iconRow = $("<div>").attr("id", "icon-row");
 
-    // Iterate over the SVG file paths and create image elements with SVG as the source
-    $.each(svgFiles, function(index, svgFile) {
-        var $iconImage = $("<img>").attr("src", svgFile).addClass("icon-image");
-        var $iconLink = $("<a>").attr("href", "#").addClass("icon-link").append($iconImage);
-        $iconRow.append($iconLink);
-    });
+    var $iconImage1 = $("<img>").attr("src", "./icons/table.svg").addClass("icon-image");
+    var $iconLink1  = $("<a>").attr("id", "tab_table").addClass("icon-link").append($iconImage1);
+    $iconRow.append($iconLink1);
+    var $iconImage2 = $("<img>").attr("src", "./icons/chart.svg").addClass("icon-image");
+    var $iconLink2  = $("<a>").attr("id", "tab_chart").addClass("icon-link").append($iconImage2);
+    $iconRow.append($iconLink2);
+    var $iconImage3 = $("<img>").attr("src", "./icons/micro.svg").addClass("icon-image");
+    var $iconLink3  = $("<a>").attr("id", "tab_table").addClass("icon-link").append($iconImage3);
+    $iconRow.append($iconLink3);
 
     // Append the icon row to the document body
     $stats_div.append($iconRow);

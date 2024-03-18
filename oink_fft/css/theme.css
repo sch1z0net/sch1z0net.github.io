@@ -158,6 +158,11 @@ body {
 }
 
 
+#tab_chart{
+  background-color: black;
+}
+
+
 #loading-circle {
     position: absolute;
     border: 4px solid #333333;
