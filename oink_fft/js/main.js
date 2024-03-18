@@ -66,15 +66,15 @@ function addPerformanceRow(name, results){
     $tr.appendTo($tbody);
 }
 
-let chart;
-function createPerformanceChart(){
-    $perf_chart = $('<canvas width="1600" height="800"></canvas>').attr("id", "performanceChart");
+let charts = new Map();
+function createPerformanceChart(fft_size){
+    $perf_chart = $('<canvas width="1600" height="800"></canvas>').attr("class", "performanceChart");
     // Append the table to the body
     $tab_chart.append($perf_chart);
 
     const ctx = $perf_chart[0].getContext('2d');
 
-    chart = new Chart(ctx, {
+    let chart = new Chart(ctx, {
         type: 'bar',
         data: {
           labels: [],
@@ -105,17 +105,23 @@ function createPerformanceChart(){
           }
         }
     });
+
+    charts.set(fft_size, chart);
 }
 
 function updateChart(name, results) {
     //const labels = Array.from(results.keys());
     const data = Array.from(results.values());
     // Push new data to the chart
-    chart.data.labels.push(name);
-    chart.data.datasets[0].data.push(data[0]);
-    
-    // Update the chart
-    chart.update();
+    let k = 0;
+    for (let size = 128; size <= 1024; size *= 2) {
+       let chart = charts.get(size);
+       chart.data.labels.push(name);
+       chart.data.datasets[0].data.push(data[k]);
+       // Update the chart
+       chart.update();
+       k++;
+    }
 }
 
 
@@ -178,9 +184,9 @@ $(document).ready(function(){
     $reload = $('<button id="reload">Reload</button>').hide().appendTo($stats_footer);
 
     createPerformanceTable();
-    createPerformanceChart();
-
-
+    for (let size = 128; size <= 1024; size *= 2) {
+        createPerformanceChart(size);
+    }
 
 
     // Create a div element for the icon row
