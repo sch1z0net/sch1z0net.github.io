@@ -7,6 +7,7 @@ var $title_div;
 var $title;
 var $subtitle;
 var $stats_div;
+var $table;
 var $tbody;
 var $loading;
 var $loading_info;
@@ -16,14 +17,14 @@ var $numOpsSelect;
 var $runsSelect;
 
 function resetPerformanceTable(){
-    $stats_div.empty();
+    $table.empty();
 }
 
 function createPerformanceTable(){
     resetPerformanceTable();
 
     // Create a table element
-    var $table = $("<table>").attr("id", "fft-table");
+    $table = $("<table>").attr("id", "fft-table");
     // Create the dots
     $loading = $('<div id="loading" class="loading-dots">').appendTo($table);
     $loading_info = $('<div id="loading_info">').appendTo($table);
@@ -52,10 +53,6 @@ function createPerformanceTable(){
 
     // Append the table to the body
     $stats_div.append($table);
-
-    // Append select boxes to the stats_div
-    $stats_div.append($numOpsSelect.clone());
-    $stats_div.append($runsSelect.clone());
 }
 
 function addPerformanceRow(name, results){
@@ -99,10 +96,6 @@ $(document).ready(function(){
     $runsSelect.append('<option value="' + 8 + '">' + 8 + '</option>');
     $runsSelect.append('<option value="' + 16 + '">' + 16 + '</option>');
 
-    // Set default values for the select boxes
-    $numOpsSelect.val("10000"); // Default value for number of operations
-    $runsSelect.val("8");   // Default value for amount of runs
-
     // Create the image element
     var $oinkImage = $("<img>", {
         id: "oinkImage",
@@ -111,6 +104,10 @@ $(document).ready(function(){
 
     // Append the image to the container div
     $title_div.append($oinkImage);
+
+    // Append select boxes to the stats_div
+    $stats_div.append($numOpsSelect);
+    $stats_div.append($runsSelect);
 
     createPerformanceTable();
 });
