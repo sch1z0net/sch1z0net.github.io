@@ -130,8 +130,9 @@ body {
   flex: 1;
 }
 
+.icon-link{ cursor: pointer; }
 .icon-image{ fill: red; }
-.icon-image:hover{  }
+.icon-image:hover{ box-shadow: 0 0 3px rgba(255, 0, 0, 0.7); }
 
 #fft-table {
    width: 100%;
