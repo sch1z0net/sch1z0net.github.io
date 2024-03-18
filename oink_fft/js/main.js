@@ -151,12 +151,12 @@ $(document).ready(function(){
     $tab_table   = $("<div>").attr("id", "tab_table").addClass("tab").show();
     $tab_chart   = $("<div>").attr("id", "tab_chart").addClass("tab").hide();
     
-    $loading     = $('<div id="loading-circle"></div>');
+    //$loading     = $('<div id="loading-circle"></div>');
+    $stats_footer= $("<div>").attr("id", "stats_footer");
+    $loading     = $('<div id="loading" class="loading-dots">');
     for (var i = 0; i < 3; i++) {
       $loading.append('<span class="dot"></span>');
     }
-    $stats_footer= $("<div>").attr("id", "stats_footer");
-    $loading     = $('<div id="loading" class="loading-dots">');
     $loading_info= $('<div id="loading_info">');
     $descr_div   = $("<div>").attr("id", "descr_div");
 
