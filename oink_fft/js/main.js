@@ -8,7 +8,8 @@ var $title;
 var $subtitle;
 var $stats_div;
 var $tab_table;
-var $perf_table
+var $perf_table;
+var $chart;
 var $tbody;
 var $loading;
 var $loading_info;
