@@ -98,7 +98,7 @@ const perform_DSP = (instance, testData) => {
 };
 
 const output_DSP = (instance, testData) => {
-    return instance.forward(testData.slice());
+    instance.forward(testData.slice()); return instance.spectrum;
 };
 
 //////////////////////////////////////
@@ -375,9 +375,9 @@ function runErrorComparison(){
     let testData64 = Float64Array.from(testData.slice());
 
     //output_INDUTNY(indutny_f_1024, indutny_out_1024, testData32);
-    console.log(output_DSP(dsp_fft_1024, testData64));
+    console.log(output_DSP(dsp_fft_1024, testData64.slice()));
     //output_OOURA(ooura_oo_1024, testData64);
-    console.log(output_KISS(kiss_input_1024, kiss_fft_1024, testData64));
+    console.log(output_KISS(kiss_input_1024, kiss_fft_1024, testData64.slice()));
     //output_OINK(fftReal1024, testData32);
 }
 
