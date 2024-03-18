@@ -103,7 +103,7 @@ function updateChart(name, results) {
     for(let i = 0; i<data.length; i++){
         chart.data.datasets[i].data.push(data[i]);
     }
-
+    
     // Update the chart
     chart.update();
 }
