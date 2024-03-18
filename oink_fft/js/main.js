@@ -84,15 +84,8 @@ function createPerformanceChart(fft_size){
         },
         options: {
            responsive: true,
-           
-           scales: {
-              y: {
-                ticks: {
-                  callback: v => `${v}K`
-                }
-              }
-           },
-
+           maintainAspectRatio: false,
+           //aspectRatio: 4,
            plugins: {
               legend: { 
                 display: false 
@@ -101,33 +94,20 @@ function createPerformanceChart(fft_size){
                 display: true,
                 text: 'FFT '+fft_size
               },
-             
-              tooltip: {
-                 callbacks: {
-                    label: (ctx) => `${ctx.dataset.label}: ${ctx.formattedValue}K`
-                 }
-              },
-              datalabels: {
-                 formatter: function(context) {
-                    return context + "k";
-                 }
-              },
            },
-           /*
            tooltips: {
                 callbacks: {
                    label: function(tooltipItem) {
                           return tooltipItem.yLabel;
                    }
                 }
-           },*/
-
-           indexAxis: 'y',
-           scales: {
-               y: {
-                   beginAtZero: true
-               }
-           }
+          },
+          indexAxis: 'y',
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
         }
     });
 
