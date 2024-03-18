@@ -257,6 +257,8 @@ const runPerformance = async (type) => {
             }
             let ops = Math.floor(1000*NUM_OPS  / diff); //let ops = Math.floor(NUM_OPS  / (diff / 1000));
             avrg_ops += ops;
+            if (    isNaN(avrg_ops)){ avrg_ops = -1; break; }
+            if (!isFinite(avrg_ops)){ break; }
             
             // Introduce a delay between iterations
             await new Promise(resolve => setTimeout(resolve, DELAY_BETWEEN_ITERATIONS));
