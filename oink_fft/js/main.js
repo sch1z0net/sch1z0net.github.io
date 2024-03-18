@@ -77,7 +77,7 @@ function createPerformanceChart(){
     chart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: [],
+          labels: ["FFT 128", "FFT 256", "FFT 512", "FFT 1024"],
           datasets: [ 
             {data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)'},
             {data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.4)'},
@@ -90,7 +90,7 @@ function createPerformanceChart(){
            aspectRatio: 3,
            plugins: {
               legend: { 
-                display: true 
+                display: false 
               }
            },
            tooltips: {
