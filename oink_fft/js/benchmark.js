@@ -70,6 +70,10 @@ const perform_KISS = (input, instance, testData) => {
     input.set(testData.slice()); instance.transform();
 };
 
+const output_KISS = (input, instance, testData) => {
+    input.set(testData.slice()); return instance.transform();
+};
+
 //////////////////////////////////////
 //////////////////////////////////////
 // PREPARE AND PERFORM DSP
@@ -91,6 +95,10 @@ function initializeDSP(){
 
 const perform_DSP = (instance, testData) => {
     instance.forward(testData.slice());
+};
+
+const output_DSP = (instance, testData) => {
+    return instance.forward(testData.slice());
 };
 
 //////////////////////////////////////
@@ -360,6 +368,23 @@ async function runAllPerformanceTests(){
     $reload.show();
 }
 
+
+function runErrorComparison(){
+    let testData   = generateTestData(1024);
+    let testData32 = testData.slice();
+    let testData64 = Float64Array.from(testData.slice());
+
+    //output_INDUTNY(indutny_f_1024, indutny_out_1024, testData32);
+    console.log(output_DSP(dsp_fft_1024, testData64));
+    //output_OOURA(ooura_oo_1024, testData64);
+    console.log(output_KISS(kiss_input_1024, kiss_fft_1024, testData64));
+    //output_OINK(fftReal1024, testData32);
+}
+
+
+
+
+
 $(document).ready(async function(){
     $reload.click(function(){
        $loading.show();
@@ -377,8 +402,7 @@ $(document).ready(async function(){
     $loading_info.text("Initializing KISS...");    Module_KISS_ = await Module_KISS(); await initializeKISS();
     $loading_info.text("Initializing OINK...");    Module_OINK_ = await Module_OINK(); await initializeModuleOINK();
 
-    
-
+    await runErrorComparison();
     await runAllPerformanceTests();
 });
 
