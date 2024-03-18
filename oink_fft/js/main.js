@@ -73,7 +73,7 @@ function resetPerformanceCharts(){
 }
 
 function createPerformanceChart(fft_size){
-    let $chart_panel = $('<div>').attr("class","chart_panel fade-in").attr("id","panel_"+fft_size).appendTo($tab_chart);
+    let $chart_panel = $('<div>').attr("class","chart_panel fade-in").attr("id","panel_"+fft_size).appendTo($tab_chart).hide();
     let $perf_chart = $('<canvas width="1600" height="800"></canvas>').attr("class", "performanceChart").appendTo($chart_panel);  
 
     const ctx = $perf_chart[0].getContext('2d');
@@ -119,11 +119,14 @@ function createPerformanceChart(fft_size){
     return $chart_panel;
 }
 
+let panels = [128, 256, 512, 1024];
+let p_idx = 0;
 function createPerformanceCharts(){
     resetPerformanceCharts();
     for (let size = 128; size <= 1024; size *= 2) {
-        createPerformanceChart(size).hide();
+        createPerformanceChart(size);
     }
+    $("#panel_"+panels[p_idx]).show();
 }
 
 function updateChart(name, results) {
@@ -202,13 +205,11 @@ $(document).ready(function(){
     
     createPerformanceTable();
     createPerformanceCharts();
-    let panels = [128, 256, 512, 1024];
-    let p = 0;
-    $("#panel_"+panels[p]).show();
+
     $chart_l = $('<button id="chart_l">←</button>').appendTo($tab_chart);
     $chart_r = $('<button id="chart_r">→</button>').appendTo($tab_chart);
-    $chart_l.click(function(){ $(".chart_panel").hide(); p=(p==0)?3:(p-1); $("#panel_"+panels[p]).show();});
-    $chart_r.click(function(){ $(".chart_panel").hide(); p=(p+1)%4; $("#panel_"+panels[p]).show();});
+    $chart_l.click(function(){ $(".chart_panel").hide(); p_idx=(p_idx==0)?3:(p_idx-1); $("#panel_"+panels[p_idx]).show();});
+    $chart_r.click(function(){ $(".chart_panel").hide(); p_idx=(p_idx+1)%4; $("#panel_"+panels[p_idx]).show();});
 
     // Create a div element for the icon row
     var $iconRow = $("<div>").attr("id", "icon-row");
