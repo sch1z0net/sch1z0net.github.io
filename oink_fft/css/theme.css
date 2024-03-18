@@ -183,8 +183,6 @@ body {
 }
 
 .performanceChart{
-   width: 100%;
-   height: 100%;
    font-family: "Varela", sans-serif;
    font-size: 12px;
    padding:10px;
