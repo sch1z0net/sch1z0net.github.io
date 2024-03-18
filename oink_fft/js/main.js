@@ -111,16 +111,16 @@ function createPerformanceChart(){
     });
 }
 
-var k = 0;
 function updateChart(name, results) {
     //const labels = Array.from(results.keys());
     const data = Array.from(results.values());
     // Push new data to the chart
-    chart.data.datasets[k].data = data;
+    for(let i = 0; i<data.length; i++){
+        chart.data.datasets[i].data.push(data[i]);
+    }
     
     // Update the chart
     chart.update();
-    k++;
 }
 
 
