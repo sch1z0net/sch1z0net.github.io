@@ -31,9 +31,6 @@ function createPerformanceTable(){
     var $thead = $("<thead>").appendTo($perf_table);
     // Create the loading circle element
     //$loading.show().appendTo($table);
-    for (var i = 0; i < 3; i++) {
-      $loading.append('<span class="dot"></span>');
-    }
 
     var $trHead = $("<tr>").appendTo($thead);
     // Create Header Text
@@ -155,6 +152,9 @@ $(document).ready(function(){
     $tab_chart   = $("<div>").attr("id", "tab_chart").addClass("tab").hide();
     
     $loading     = $('<div id="loading-circle"></div>');
+    for (var i = 0; i < 3; i++) {
+      $loading.append('<span class="dot"></span>');
+    }
     $stats_footer= $("<div>").attr("id", "stats_footer");
     $loading     = $('<div id="loading" class="loading-dots">');
     $loading_info= $('<div id="loading_info">');
