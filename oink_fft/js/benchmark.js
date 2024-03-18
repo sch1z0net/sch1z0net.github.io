@@ -274,8 +274,29 @@ const runPerformance = async (type) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
-function highlightComparison(){
+let MAX_ = new Map();
+function updateMax(size, ops, name){
+    if(MAX_.get(size).ops < ops){ 
+        MAX_.set(size, {name: name, ops: ops }); 
+    }
+}
 
+function highlightComparison(){
+    for (var size = 128; size <= 1024; size *= 2) {
+         MAX_.set(size, {name: '-', ops: 0 });
+    }
+    for (var size = 128; size <= 1024; size *= 2) {
+         updateMax(size, OINK_FFT_RESULTS.get(size),    "OINK");
+         updateMax(size, INDUTNY_FFT_RESULTS.get(size), "INDUTNY");
+         updateMax(size, OOURA_FFT_RESULTS.get(size),   "OOURA");
+         updateMax(size, DSP_FFT_RESULTS.get(size),     "DSP");
+         updateMax(size, KISS_FFT_RESULTS.get(size),    "KISS");
+    }
+    for (var size = 128; size <= 1024; size *= 2) {
+         let best = MAX_.get(size).name;
+         let id = best+"_"+size;
+         $("#"+id).setClass("bestPerf");
+    }
 }
 
 function resetData(){

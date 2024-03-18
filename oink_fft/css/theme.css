@@ -261,3 +261,18 @@ select {
    transform: translate(-20%, 50%);
 }
 
+
+.bestPerf {
+  animation: fadeGreen 2.5s ease-out forwards;
+}
+
+@keyframes fadeGreen {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    background-color: rgba(50, 230, 50, 0.5);
+  }
+}
+
