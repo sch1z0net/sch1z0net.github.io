@@ -7,6 +7,7 @@ var $title_div;
 var $title;
 var $subtitle;
 var $stats_div;
+var $stats_tab;
 var $perf_table
 var $tbody;
 var $loading;
@@ -51,7 +52,7 @@ function createPerformanceTable(){
     }
 
     // Append the table to the body
-    $stats_div.append($perf_table);
+    $stats_tab.append($perf_table);
 }
 
 function addPerformanceRow(name, results){
@@ -73,6 +74,7 @@ $(document).ready(function(){
     $title     = $("<h1>").text("OINK FFT").attr("id", "title");
     $subtitle  = $("<h2>").text("the oinkiest FFT in the web").attr("id", "subtitle");
     $stats_div = $("<div>").attr("id", "stats_div");
+    $stats_tab = $("<div>").attr("id", "stats_tab");
     $loading   = $('<div id="loading-circle"></div>');
     $descr_div = $("<div>").attr("id", "descr_div");
 
@@ -80,6 +82,7 @@ $(document).ready(function(){
     $title_div.append($title);
     $title_div.append($subtitle);
     $("#root").append($stats_div);
+    $stats_div.append($stats_tab);
     $("#root").append($descr_div);
     $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
 
@@ -142,7 +145,7 @@ $(document).ready(function(){
     // Attach click event handler to all icon links
     $(".icon-link").click(function(event) {
         event.preventDefault(); // Prevent default link behavior
-        
+
     });
 });
 
