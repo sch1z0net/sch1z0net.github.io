@@ -7,7 +7,7 @@ var $title_div;
 var $title;
 var $subtitle;
 var $stats_div;
-var $table;
+var $perf_table
 var $tbody;
 var $loading;
 var $loading_info;
@@ -17,21 +17,21 @@ var $numOpsSelect;
 var $runsSelect;
 
 function resetPerformanceTable(){
-    $table.empty();
+    $stats_div.empty();
 }
 
 function createPerformanceTable(){
     resetPerformanceTable();
 
     // Create a table element
-    $table = $("<table>").attr("id", "fft-table");
+    $perf_table = $("<table>").attr("id", "fft-table");
     // Create the dots
-    $loading = $('<div id="loading" class="loading-dots">').appendTo($table);
-    $loading_info = $('<div id="loading_info">').appendTo($table);
-    $reload = $('<button id="reload">Reload</button>').hide().appendTo($table);
+    $loading = $('<div id="loading" class="loading-dots">').appendTo($perf_table);
+    $loading_info = $('<div id="loading_info">').appendTo($perf_table);
+    $reload = $('<button id="reload">Reload</button>').hide().appendTo($perf_table);
 
     // Create table header
-    var $thead = $("<thead>").appendTo($table);
+    var $thead = $("<thead>").appendTo($perf_table);
     // Create the loading circle element
     //$loading.show().appendTo($table);
     for (var i = 0; i < 3; i++) {
@@ -42,7 +42,7 @@ function createPerformanceTable(){
     // Create Header Text
     $("<th>").text("FFT Performance (measured in OINKS per second)").attr("colspan", 6).appendTo($trHead); // colspan to span all columns
     // Create table body
-    $tbody = $("<tbody>").appendTo($table);
+    $tbody = $("<tbody>").appendTo($perf_table);
 
     // HEADER
     var $tr_sizes = $("<tr>").attr("id", "tr_header").appendTo($tbody); 
@@ -52,11 +52,11 @@ function createPerformanceTable(){
     }
 
     // Append the table to the body
-    $stats_div.append($table);
+    $stats_div.append($perf_table);
 
     // Append select boxes to the stats_div
-    $stats_div.append($numOpsSelect);
-    $stats_div.append($runsSelect);
+    $stats_div.append($numOpsSelect.clone().val(10000));
+    $stats_div.append($runsSelect.clone().val(8));
 }
 
 function addPerformanceRow(name, results){
