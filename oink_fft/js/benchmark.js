@@ -349,6 +349,7 @@ async function runAllPerformanceTests(){
 
 $(document).ready(async function(){
     $reload.click(function(){
+       $reload.hide();
        createPerformanceTable();
        resetData();
        runAllPerformanceTests();
