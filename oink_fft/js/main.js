@@ -17,7 +17,7 @@ var $numOpsSelect;
 var $runsSelect;
 
 function resetPerformanceTable(){
-    $perf_table && $perf_table.empty();
+    $perf_table && $perf_table.remove();
 }
 
 function createPerformanceTable(){
