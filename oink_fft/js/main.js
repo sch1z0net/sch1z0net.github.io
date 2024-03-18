@@ -66,15 +66,14 @@ function addPerformanceRow(name, results){
     $tr.appendTo($tbody);
 }
 
-
-
 let chart;
 function createPerformanceChart(){
     $perf_chart = $('<canvas width="800" height="800"></canvas>').attr("id", "performanceChart");
 
     const ctx = $perf_chart[0].getContext('2d');
 
-    new Chart(ctx, {
+
+   chart = new Chart(ctx, {
         type: 'bar',
         data: {
           labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
