@@ -207,7 +207,7 @@ $(document).ready(function(){
     $("#panel_"+panels[p]).show();
     $chart_l = $('<button id="chart_l">←</button>').appendTo($tab_chart);
     $chart_r = $('<button id="chart_r">→</button>').appendTo($tab_chart);
-    $chart_l.click(function(){ $(".chart_panel").hide(); p=(p-1)%4; $("#panel_"+panels[p]).show();});
+    $chart_l.click(function(){ $(".chart_panel").hide(); p=(p==0)?3:(p-1); $("#panel_"+panels[p]).show();});
     $chart_r.click(function(){ $(".chart_panel").hide(); p=(p+1)%4; $("#panel_"+panels[p]).show();});
 
     // Create a div element for the icon row
