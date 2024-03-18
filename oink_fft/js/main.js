@@ -59,7 +59,9 @@ function addPerformanceRow(name, results){
     $("<td>").text(name).appendTo($tr);
     for (var size = 128; size <= 1024; size *= 2) {
         let id = name+"_"+size;
-        $("<td id='"+id+"' >").text( results.get(size) ).appendTo($tr);
+        let result = parseInt(results.get(size));
+        if(result < 0){ result = "(ERROR)" }
+        $("<td id='"+id+"' >").text( result ).appendTo($tr);
     }
     $tr.addClass('fade-up');
     $tr.appendTo($tbody);

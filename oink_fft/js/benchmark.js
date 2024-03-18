@@ -295,7 +295,7 @@ function highlightComparison(){
     for (var size = 128; size <= 1024; size *= 2) {
          let best = MAX_.get(size).name;
          let id = best+"_"+size;
-         $("#"+id).setClass("bestPerf");
+         $("#"+id).addClass("bestPerf");
     }
 }
 
