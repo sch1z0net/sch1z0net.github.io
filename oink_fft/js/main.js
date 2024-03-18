@@ -132,13 +132,13 @@ $(document).ready(function(){
     var $iconRow = $("<div>").attr("id", "icon-row");
 
     var $iconImage1 = $("<img>").attr("src", "./icons/table.svg").addClass("icon-image");
-    var $iconLink1  = $("<a>").attr("id", "tab_table").addClass("icon-link").append($iconImage1);
+    var $iconLink1  = $("<a>").attr("id", "icon_table").addClass("icon-link").append($iconImage1);
     $iconRow.append($iconLink1);
     var $iconImage2 = $("<img>").attr("src", "./icons/chart.svg").addClass("icon-image");
-    var $iconLink2  = $("<a>").attr("id", "tab_chart").addClass("icon-link").append($iconImage2);
+    var $iconLink2  = $("<a>").attr("id", "icon_chart").addClass("icon-link").append($iconImage2);
     $iconRow.append($iconLink2);
     var $iconImage3 = $("<img>").attr("src", "./icons/micro.svg").addClass("icon-image");
-    var $iconLink3  = $("<a>").attr("id", "tab_micro").addClass("icon-link").append($iconImage3);
+    var $iconLink3  = $("<a>").attr("id", "icon_micro").addClass("icon-link").append($iconImage3);
     $iconRow.append($iconLink3);
 
     $iconLink1.click(function(){ $(".tab").hide(); $("#tab_table").show(); });

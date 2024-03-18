@@ -130,6 +130,9 @@ body {
   flex: 1;
 }
 
+.icon-image{ fill: red; }
+.icon-image:hover{  }
+
 #fft-table {
    width: 100%;
    font-family: "Varela", sans-serif;
@@ -153,10 +156,6 @@ body {
 #fft-table th {
   height: 10px;
   color: rgba(10, 10, 10, 0.5);
-}
-
-#tab_chart{
-  background-color: black;
 }
 
 #loading-circle {
