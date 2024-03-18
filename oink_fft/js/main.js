@@ -77,12 +77,13 @@ function createPerformanceChart(){
     chart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-          datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            borderWidth: 1
-          }]
+          labels: ["INDUTNY", "DSP", "OOURA", "KISS", "OINK"],
+          datasets: [ 
+            {label: '# for FFT 128',  data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)'},
+            {label: '# for FFT 256',  data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)'},
+            {label: '# for FFT 512',  data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)'},
+            {label: '# for FFT 1024', data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)'},
+          ]
         },
         options: {
           scales: {
@@ -95,14 +96,13 @@ function createPerformanceChart(){
 }
 
 function updateChart(name, results) {
-    const labels = Array.from(results.keys());
+    //const labels = Array.from(results.keys());
     const data   = Array.from(results.values());
 
     // Push new data to the chart
-    chart.data.labels = labels;
-    chart.data.datasets[0].data = data;
-    chart.data.datasets[0].backgroundColor = 'rgba(255, 99, 132, 0.2)'; // Set bar color
-    chart.data.datasets[0].borderColor = 'rgba(255, 99, 132, 1)'; // Set border color
+    for(let i = 0; i<data.length; i++){
+        chart.data.datasets[i].data.push(data[i]);
+    }
 
     // Update the chart
     chart.update();
