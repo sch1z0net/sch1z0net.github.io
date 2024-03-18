@@ -17,7 +17,7 @@ var $numOpsSelect;
 var $runsSelect;
 
 function resetPerformanceTable(){
-    $stats_div.empty();
+    $perf_table && $perf_table.empty();
 }
 
 function createPerformanceTable(){
@@ -53,10 +53,6 @@ function createPerformanceTable(){
 
     // Append the table to the body
     $stats_div.append($perf_table);
-
-    // Append select boxes to the stats_div
-    $stats_div.append($numOpsSelect.clone().val(10000));
-    $stats_div.append($runsSelect.clone().val(8));
 }
 
 function addPerformanceRow(name, results){
@@ -108,6 +104,10 @@ $(document).ready(function(){
 
     // Append the image to the container div
     $title_div.append($oinkImage);
+
+    // Append select boxes to the stats_div
+    $stats_div.append($numOpsSelect.val(10000));
+    $stats_div.append($runsSelect.val(8));
 
     createPerformanceTable();
 });
