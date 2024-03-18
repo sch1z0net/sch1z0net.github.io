@@ -146,6 +146,9 @@ $(document).ready(function(){
     $loading_info= $('<div id="loading_info">');
     $descr_div   = $("<div>").attr("id", "descr_div");
 
+    $chart_l = $('<button id="chart_l">←</button>').appendTo($tab_chart);
+    $chart_r = $('<button id="chart_r">→</button>').appendTo($tab_chart);
+
     $("#root").append($title_div);
     $title_div.append($title);
     $title_div.append($subtitle);
@@ -188,13 +191,12 @@ $(document).ready(function(){
     $stats_footer.append($runsSelect.val(8));
 
     $reload = $('<button id="reload">Reload</button>').hide().appendTo($stats_footer);
-
+    
     createPerformanceTable();
     for (let size = 128; size <= 1024; size *= 2) {
         createPerformanceChart(size).hide();
     }
     $("#panel_"+128).show();
-    
 
     // Create a div element for the icon row
     var $iconRow = $("<div>").attr("id", "icon-row");

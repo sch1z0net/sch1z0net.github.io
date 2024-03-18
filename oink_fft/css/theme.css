@@ -309,6 +309,20 @@ select {
    border-radius: 10px;
 }
 
+#chart_l{
+  position: absolute;
+  left: 50%;
+  top: 100px;
+  tranform: translate(-30px);
+}
+
+#chart_r{
+  position: absolute;
+  left: 50%;
+  top: 100px;
+  tranform: translate(30px);
+}
+
 #numOpsSelect{
    width: 100px;
    position: absolute;
