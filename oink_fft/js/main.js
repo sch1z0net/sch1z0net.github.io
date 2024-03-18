@@ -138,7 +138,7 @@ $(document).ready(function(){
     var $iconLink2  = $("<a>").attr("id", "tab_chart").addClass("icon-link").append($iconImage2);
     $iconRow.append($iconLink2);
     var $iconImage3 = $("<img>").attr("src", "./icons/micro.svg").addClass("icon-image");
-    var $iconLink3  = $("<a>").attr("id", "tab_table").addClass("icon-link").append($iconImage3);
+    var $iconLink3  = $("<a>").attr("id", "tab_micro").addClass("icon-link").append($iconImage3);
     $iconRow.append($iconLink3);
 
     $iconLink1.click(function(){ $(".tab").hide(); $("#tab_table").show(); });
@@ -147,12 +147,6 @@ $(document).ready(function(){
 
     // Append the icon row to the document body
     $stats_head.append($iconRow);
-
-    // Attach click event handler to all icon links
-    $(".icon-link").click(function(event) {
-        event.preventDefault(); // Prevent default link behavior
-
-    });
 });
 
 
