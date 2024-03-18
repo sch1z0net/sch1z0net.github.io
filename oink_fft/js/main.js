@@ -74,32 +74,27 @@ function createPerformanceChart(){
 
     const ctx = $perf_chart[0].getContext('2d');
 
-    chart = new Chart(ctx, {
+    new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: [], // Add your labels here
-            datasets: [{
-                label: 'Performance Chart',
-                data: [], // Add your data here
-                backgroundColor: 'rgba(255, 99, 132, 0.2)', // Set bar color
-                borderColor: 'rgba(255, 99, 132, 1)', // Set border color
-                borderWidth: 1 // Set border width
-            }]
+          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            borderWidth: 1
+          }]
         },
         options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
+          scales: {
+            y: {
+              beginAtZero: true
             }
+          }
         }
     });
 
-
     // Append the table to the body
-    $tab_chart.append($chart);
+    $tab_chart.append($perf_chart);
 }
 
 function updateChart(name, results) {
