@@ -246,12 +246,18 @@ const runPerformance = async (type) => {
         }
 
         // Run Measurement
+        let errors = 0;
         for (let run = 0; run < RUNS; run++) {
             let eT_slice = await measureSlicing(type, size, SIGNALS_FOR_EACH_FFT[s][run]);
             let eT_FFT = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[s][run]);
-            let ops = Math.floor(NUM_OPS / ((eT_FFT - eT_slice) / 1000));
+            let diff = eT_FFT - eT_slice;
+            if(diff <= 0){ 
+                if(errors < 3){ run--; errors++; continue; }
+                avrg_ops = -1; break;
+            }
+            let ops = Math.floor(1000*NUM_OPS  / diff); //let ops = Math.floor(NUM_OPS  / (diff / 1000));
             avrg_ops += ops;
-
+            
             // Introduce a delay between iterations
             await new Promise(resolve => setTimeout(resolve, DELAY_BETWEEN_ITERATIONS));
         }
