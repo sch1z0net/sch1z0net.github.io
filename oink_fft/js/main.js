@@ -83,6 +83,7 @@ function createPerformanceChart(){
             {data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.4)'},
             {data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.6)'},
             {data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.8)'},
+            {data: [], borderWidth: 1, borderColor : 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 1.0)'}
           ]
         },
         options: {
@@ -110,17 +111,16 @@ function createPerformanceChart(){
     });
 }
 
+var k = 0;
 function updateChart(name, results) {
     //const labels = Array.from(results.keys());
     const data = Array.from(results.values());
-    alert(data.length);
     // Push new data to the chart
-    for(let i = 0; i<data.length; i++){
-        chart.data.datasets[i].data.push(data[i]);
-    }
+    chart.data.datasets[k].data = data;
     
     // Update the chart
     chart.update();
+    k++;
 }
 
 
