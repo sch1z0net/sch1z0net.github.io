@@ -247,7 +247,7 @@ const runPerformance = async (type) => {
 
         // Run Measurement
         let errors = 0;
-        for (let run = 0; run < RUNS; run++) {
+        for (let run = WARMUPS; run < RUNS+WARMUPS; run++) {
             let eT_slice = await measureSlicing(type, size, SIGNALS_FOR_EACH_FFT[s][run]);
             let eT_FFT = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[s][run]);
             let diff = eT_FFT - eT_slice;
@@ -323,8 +323,8 @@ async function runAllPerformanceTests(){
     var j = 0;
     for (var size = 128; size <= 1024; size *= 2) {
        var SIGNALS = [];
-       for(let i = 0; i<RUNS; i++){
-          let signal = await generateTestData(size);
+       for(let i = 0; i<RUNS+WARMUPS; i++){
+          let signal = generateTestData(size);
           SIGNALS.push(signal);
        }
        SIGNALS_FOR_EACH_FFT.push(SIGNALS);
