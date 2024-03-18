@@ -42,7 +42,7 @@ function createPerformanceTable(){
     var $tr_sizes = $("<tr>").attr("id", "tr_header").appendTo($tbody); 
     $("<td>").text("FFT size").appendTo($tr_sizes);
     for (var size = 128; size <= 1024; size *= 2) {
-        $("<td>").text(size).appendTo($tr_sizes).css("background-color","rgba(10,10,10,0.4)");
+        $("<td>").text(size).appendTo($tr_sizes).css("background-color","rgba(200,0,0,0.2);");
     }
 
     // Append the table to the body
@@ -51,7 +51,7 @@ function createPerformanceTable(){
 
 function addPerformanceRow(name, results){
     var $tr = $("<tr>");
-    $("<td>").text(name).appendTo($tr);
+    $("<td>").text(name).appendTo($tr).css("background-color","rgba(200,0,0,0.2);");;
     for (var size = 128; size <= 1024; size *= 2) {
         let id = name+"_"+size;
         let result = parseInt(results.get(size));
