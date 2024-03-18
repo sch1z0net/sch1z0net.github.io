@@ -75,9 +75,9 @@ $(document).ready(function(){
     $subtitle    = $("<h2>").text("the oinkiest FFT in the web").attr("id", "subtitle");
     $stats_div   = $("<div>").attr("id", "stats_div");
     $stats_head  = $("<div>").attr("id", "stats_head");
-    $stats_footer= $("<div>").attr("id", "stats_footer");
     $tab_table   = $("<div>").attr("id", "stats_tab");
     $loading     = $('<div id="loading-circle"></div>');
+    $stats_footer= $("<div>").attr("id", "stats_footer");
     $descr_div   = $("<div>").attr("id", "descr_div");
 
     $("#root").append($title_div);
