@@ -68,7 +68,7 @@ function addPerformanceRow(name, results){
 
 let chart;
 function createPerformanceChart(){
-    $perf_chart = $('<canvas width="800" height="800"></canvas>').attr("id", "performanceChart");
+    $perf_chart = $('<canvas width="1600" height="800"></canvas>').attr("id", "performanceChart");
     // Append the table to the body
     $tab_chart.append($perf_chart);
 
@@ -86,6 +86,16 @@ function createPerformanceChart(){
           ]
         },
         options: {
+           responsive: true,
+           aspectRatio: 3,
+           legend: { display: false },
+           tooltips: {
+                callbacks: {
+                   label: function(tooltipItem) {
+                          return tooltipItem.yLabel;
+                   }
+                }
+          }
           indexAxis: 'y',
           scales: {
             y: {
