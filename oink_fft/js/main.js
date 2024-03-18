@@ -7,7 +7,7 @@ var $title_div;
 var $title;
 var $subtitle;
 var $stats_div;
-var $stats_tab;
+var $tab_table;
 var $perf_table
 var $tbody;
 var $loading;
@@ -52,7 +52,7 @@ function createPerformanceTable(){
     }
 
     // Append the table to the body
-    $stats_tab.append($perf_table);
+    $tab_table.append($perf_table);
 }
 
 function addPerformanceRow(name, results){
@@ -74,7 +74,8 @@ $(document).ready(function(){
     $title     = $("<h1>").text("OINK FFT").attr("id", "title");
     $subtitle  = $("<h2>").text("the oinkiest FFT in the web").attr("id", "subtitle");
     $stats_div = $("<div>").attr("id", "stats_div");
-    $stats_tab = $("<div>").attr("id", "stats_tab");
+    $stats_head= $("<div>").attr("id", "stats_head");
+    $tab_table = $("<div>").attr("id", "stats_tab");
     $loading   = $('<div id="loading-circle"></div>');
     $descr_div = $("<div>").attr("id", "descr_div");
 
@@ -82,7 +83,8 @@ $(document).ready(function(){
     $title_div.append($title);
     $title_div.append($subtitle);
     $("#root").append($stats_div);
-    $stats_div.append($stats_tab);
+    $stats_div.append($stats_head);
+    $stats_div.append($tab_table);
     $("#root").append($descr_div);
     $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
 
