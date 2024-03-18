@@ -68,7 +68,7 @@ function addPerformanceRow(name, results){
 let charts = new Map();
 function createPerformanceChart(fft_size){
     let $perf_chart = $('<canvas width="1600" height="800"></canvas>').attr("class", "performanceChart");
-    let $chart_panel = $('<div>').attr("class","chart_panel").attr("id","panel_"+fft_size).append($perf_chart);
+    let $chart_panel = $('<div>').attr("class","chart_panel fade-in").attr("id","panel_"+fft_size).append($perf_chart);
     // Append the table to the body
     $tab_chart.append($chart_panel);
 
