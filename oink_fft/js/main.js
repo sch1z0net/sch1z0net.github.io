@@ -9,7 +9,6 @@ var $subtitle;
 var $stats_div;
 var $tab_table;
 var $perf_table;
-var $perf_chart;
 var $tbody;
 var $loading;
 var $loading_info;
@@ -68,9 +67,10 @@ function addPerformanceRow(name, results){
 
 let charts = new Map();
 function createPerformanceChart(fft_size){
-    $perf_chart = $('<canvas width="1600" height="800"></canvas>').attr("class", "performanceChart");
+    let $perf_chart = $('<canvas width="1600" height="800"></canvas>').attr("class", "performanceChart");
+    let $chart_panel = $('<div>').attr("class","chart_panel").append($perf_chart);
     // Append the table to the body
-    $tab_chart.append($perf_chart);
+    $tab_chart.append($chart_panel);
 
     const ctx = $perf_chart[0].getContext('2d');
 

@@ -170,11 +170,17 @@ body {
 }
 
 #tab_chart {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); 
-    grid-auto-rows: minmax(200px, auto);
-    gap: 5px;
+   display: grid;
+   gap: 5px;
+   grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 columns with equal width */
+   grid-template-rows: repeat(2, minmax(0, 1fr)); /* 2 rows with equal height */
 }
+
+.chart_panel {
+   width: 100%;
+   height: 100%;
+}
+
 .performanceChart{
    width: 100%;
    height: 100%;
