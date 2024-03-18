@@ -95,7 +95,7 @@ function createPerformanceChart(){
                           return tooltipItem.yLabel;
                    }
                 }
-          }
+          },
           indexAxis: 'y',
           scales: {
             y: {
