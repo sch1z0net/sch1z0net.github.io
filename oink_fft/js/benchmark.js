@@ -124,6 +124,10 @@ const perform_OOURA = (instance, testData) => {
     let ooura_data = testData.slice(); instance.fftInPlace(ooura_data.buffer);
 };
 
+const output_OOURA = (instance, testData) => {
+    let ooura_data = testData.slice(); instance.fftInPlace(ooura_data.buffer); return ooura_data;
+};
+
 //////////////////////////////////////
 //////////////////////////////////////
 // PREPARE AND PERFORM INDUTNY
@@ -151,12 +155,21 @@ const perform_INDUTNY = (instance, out, testData) => {
     instance.realTransform(out, testData.slice());
 };
 
+const output_INDUTNY = (instance, out, testData) => {
+    instance.realTransform(out, testData.slice()); return out;
+};
+
+
 //////////////////////////////////////
 //////////////////////////////////////
 // PREPARE AND PERFORM OINK
 //////////////////////////////////////
 const perform_OINK = (instance, testData) => {
     instance(testData.slice());
+};
+
+const output_OINK = (instance, testData) => {
+    return instance(testData.slice());
 };
 
 //////////////////////////////////////
@@ -374,11 +387,11 @@ function runErrorComparison(){
     let testData32 = testData.slice();
     let testData64 = Float64Array.from(testData.slice());
 
-    //output_INDUTNY(indutny_f_1024, indutny_out_1024, testData32);
+    console.log(output_INDUTNY(indutny_f_1024, indutny_out_1024, testData32));
     console.log(output_DSP(dsp_fft_1024, testData64.slice()));
-    //output_OOURA(ooura_oo_1024, testData64);
+    console.log(output_OOURA(ooura_oo_1024, testData64));
     console.log(output_KISS(kiss_input_1024, kiss_fft_1024, testData64.slice()));
-    //output_OINK(fftReal1024, testData32);
+    console.log(output_OINK(fftReal1024, testData32));
 }
 
 
