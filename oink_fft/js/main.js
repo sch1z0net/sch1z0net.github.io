@@ -197,7 +197,10 @@ function createOutputFields(){
             let str = outs[i][bin];
             let value = parseFloat(str);
             vals.set(type, value);
-            if(isNaN(value)){ continue; }
+            if(isNaN(value)){ 
+                $("#output_"+type).val("-");
+                continue; 
+            }
 
             let formatted = ""+str;
             let neg = false;
