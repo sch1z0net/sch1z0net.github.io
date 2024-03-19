@@ -160,18 +160,16 @@ function createOutputFields(){
         let label = $('<label>').attr('for', `output_${type}`).text(`${type}:`);
         let inputText = $('<input>').attr({type: 'text', id: `output_${type}`}).addClass('float-input');
         let checkbox = $('<input>').attr({type: 'checkbox', id: `check_${type}`}).addClass('check_ref');
-        
-        outputRow.append(label, inputText, checkbox);
-        $outputs.append(outputRow);
-    }
-    for (let i = 0; i < types.length; i++) {
-        let type = types[i];
-        $('#check_'+type).on('change',function() {
+        checkbox.on('change',function() {
             $('.check_ref').prop('checked', false);
             $(this).prop('checked', true);
             ref_output = i;
         });
+
+        outputRow.append(label, inputText, checkbox);
+        $outputs.append(outputRow);
     }
+
     $('#check_' + types[ref_output]).click();
 
     // Create container div
