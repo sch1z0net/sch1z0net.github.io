@@ -146,6 +146,7 @@ function updateChart(name, results) {
 
 let outs = [];
 let ref_output = 4;
+let vals = new Map();
 function createOutputFields(){
     const $output_div = $("<div>").attr("id","output-div");
 
@@ -186,13 +187,12 @@ function createOutputFields(){
         let bin = parseInt($(this).val());
 
         $sliderValue.text(bin);
-        let vals = [];
         for (let i = 0; i < types.length; i++) {
             let type = types[i];
-            $("#output_"+type).css("background-color", "transparent");
+            $("#output_"+type).css("background-color", "white");
             let str = outs[i][bin];
             let value = parseFloat(str);
-            vals[i] = value;
+            vals.set(type, value);
             if(isNaN(value)){ continue; }
             let formatted = ""+str;
             let neg = false;
@@ -213,7 +213,7 @@ function createOutputFields(){
 
         for (let i = 0; i < types.length; i++) {
             let type = types[i];
-            if(vals[i]-vals[ref_output] <= 0.0000001){
+            if(vals.get(type)-vals.get(types[ref_output]) <= 0.0000001){
                 $("#output_"+type).css("background-color", "#A6F1A6");
             }
         }
