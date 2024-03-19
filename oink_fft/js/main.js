@@ -189,7 +189,8 @@ function createOutputFields(){
                 formatted = formatted.replace("-", ""); 
                 neg = true;
             }
-            formatted = formatted.padStart(20, " ");
+            let spl = formatted.split(".");
+            formatted = spl[0].padStart(4, " ")+"."+spl[1];
             if(neg){ 
                 formatted = "- "+formatted;
             }else{
