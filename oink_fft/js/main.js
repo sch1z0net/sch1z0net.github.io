@@ -171,6 +171,8 @@ function createOutputFields(){
             ref_output = i;
         });
     }
+    $("#check_" + types[ref_output]).click();
+
 
     // Create container div
     const $slider_div = $("<div>").addClass("slider-container");
