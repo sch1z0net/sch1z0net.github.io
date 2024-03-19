@@ -181,9 +181,24 @@ function createOutputFields(){
 
         for (let i = 0; i < types.length; i++) {
             let type = types[i];
-            $("#output_"+type).val(outs[i][bin]);
+            let str = outs[i][bin];
+            let value = parseFloat(str);
+            let formatted;
+            let neg = false;
+            if(value < 0){ 
+                formatted = str.replace("-", ""); 
+                neg = true;
+            }
+            formatted = formatted.padStart(20, " ");
+            if(neg){ 
+                formatted = "- "+formatted;
+            }else{
+                formatted = "+ "+formatted;
+            }
+            
+            $("#output_"+type).val(formatted);
         }
-        
+
     });
 
     $slider_div.appendTo($output_div);

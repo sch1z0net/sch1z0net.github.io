@@ -412,7 +412,7 @@ select {
     padding: 10px;
     height: fit-content;
     background-color: rgba(100,100,100,0.8);
-    width: fit-content;
+    width: 600px;
 }
 
 .output-row {
@@ -436,7 +436,7 @@ label {
 
 
 .slider-container {
-    width: 300px;
+    width: 600px;
     height: 25px;
     justify-content: center;
     display: flex;
