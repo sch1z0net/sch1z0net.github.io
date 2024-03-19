@@ -145,7 +145,7 @@ function updateChart(name, results) {
 }
 
 let outs = [];
-
+let ref_output = 4;
 function createOutputFields(){
     const $output_div = $("<div>").attr("id","output-div");
 
@@ -159,9 +159,17 @@ function createOutputFields(){
             <div class="output-row">
                 <label for="output_${type}">${type}:</label>
                 <input type="text" id="output_${type}" class="float-input">
+                <input type="checkbox" id="check_${type}" class="check_ref">
             </div>
         `);
+        $("#check_"+type).click(function(){
+            $(".check_ref").prop('checked', false);
+            this.prop('checked', true);
+            ref_output = i;
+        });
     }
+
+
 
     // Create container div
     const $slider_div = $("<div>").addClass("slider-container");
@@ -205,7 +213,7 @@ function createOutputFields(){
 
         for (let i = 0; i < types.length; i++) {
             let type = types[i];
-            if(vals[i]-vals[4] <= 0.0000001){
+            if(vals[i]-vals[ref_output] <= 0.0000001){
                 $("#output_"+type).css("background-color", "green");
             }
         }
