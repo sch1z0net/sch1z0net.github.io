@@ -124,7 +124,6 @@ body {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  display: block;
   display: flex;
   justify-content: center;
   flex: 1;
@@ -394,6 +393,7 @@ select {
 
 #tab_micro{
   background-color: rgba(0,0,0,0.8);
+  flex-direction: column;
 }
 
 #outputs{
@@ -406,6 +406,7 @@ select {
     padding: 10px;
     height: fit-content;
     background-color: rgba(100,100,100,0.8);
+    width: fit-content;
 }
 
 .output-row {
@@ -429,7 +430,9 @@ label {
 
 .slider-container {
     width: 300px;
-    margin: 50px auto;
+    height: 25px;
+    justify-content: center;
+    display: flex;
 }
 
 .slider {
@@ -437,6 +440,7 @@ label {
 }
 
 .slider-value {
-    margin-top: 10px;
-    text-align: center;
+    display: inline;
+    margin: 2px;
+    color: rgb(50,100,200);
 }
