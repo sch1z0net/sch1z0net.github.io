@@ -165,14 +165,13 @@ function createOutputFields(){
     }
     for (let i = 0; i < types.length; i++) {
         let type = types[i];
-        $("#check_" + type).change(function() {
+        $("#check_" + type).on('change',function() {
             $(".check_ref").prop('checked', false);
             $(this).prop('checked', true);
             ref_output = i;
         });
     }
     $("#check_" + types[ref_output]).click();
-
 
     // Create container div
     const $slider_div = $("<div>").addClass("slider-container");
@@ -192,12 +191,14 @@ function createOutputFields(){
 
         $sliderValue.text(bin);
         for (let i = 0; i < types.length; i++) {
+
             let type = types[i];
             $("#output_"+type).css("background-color", "white");
             let str = outs[i][bin];
             let value = parseFloat(str);
             vals.set(type, value);
             if(isNaN(value)){ continue; }
+
             let formatted = ""+str;
             let neg = false;
             if(value < 0){ 
