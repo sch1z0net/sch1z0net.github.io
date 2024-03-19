@@ -147,9 +147,12 @@ function updateChart(name, results) {
 let outs = [];
 
 function createOutputFields(){
+    const $output_div = $("<div>").addClass("output-div");
+
+    
     let types = ["INDUTNY","DSP","OOURA","KISS","OINK"];
 
-    $outputs = $('<div>').attr("id","outputs");
+    $outputs = $('<div>').attr("id","outputs").appendTo($output_div);
     // Create rows dynamically
     for (let i = 0; i < types.length; i++) {
         let type = types[i];
@@ -161,9 +164,8 @@ function createOutputFields(){
         `);
     }
 
-
     // Create container div
-    const $slider_div = $("<div>").addClass("slider-container");
+    const $slider_div = $("<div>").addClass("slider-container").appendTo($output_div);
     // Create slider element
     const $slider = $("<input>").attr({type: "range", min: 0, max: 1024, value: 0, id: "out_slider"});
     // Create div to display slider value
@@ -197,10 +199,7 @@ function createOutputFields(){
 
 
 
-
-
-    $tab_micro.append($slider_div);
-    $tab_micro.append($outputs);
+    $tab_micro.append($output_div);
 }
 
 
