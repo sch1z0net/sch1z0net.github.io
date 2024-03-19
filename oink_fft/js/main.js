@@ -214,6 +214,7 @@ function createOutputFields(){
                 neg = true;
             }
             let spl = formatted.split(".");
+            if(spl.length == 1){ spl[1] = 0; }
             formatted = spl[0].padStart(4, " ")+"."+spl[1];
             if(neg){ 
                 formatted = "- "+formatted;
