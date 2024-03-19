@@ -103,7 +103,14 @@ const perform_DSP = (instance, testData) => {
 };
 
 const output_DSP = (instance, testData) => {
-    instance.forward(testData.slice()); return instance.spectrum;
+    instance.forward(testData.slice()); 
+    let result = [];
+    for(let i = 0; i < testData.length; i++){
+        result.push(instance.real);
+        result.push(instance.imag);
+    }
+
+    return result;
 };
 
 //////////////////////////////////////
