@@ -52,9 +52,12 @@ function createPerformanceTable(){
     $tab_table.append($perf_table);
 }
 
-function addPerformanceRow(idname, fullname, results){
+function addPerformanceRow(idname, fullname, url, results){
     var $tr = $("<tr>");
-    $("<td>").text(fullname).appendTo($tr).css("background-color","rgba(200,0,0,0.2)");;
+    var $dev = $("<td>").addClass("dev").text(fullname).appendTo($tr).css("background-color","rgba(200,0,0,0.2)");
+    $dev.click(function(){
+         window.open(url, '_blank');
+    });
     for (var size = 128; size <= 2048; size *= 2) {
         let id = idname+"_"+size;
         let result = parseInt(results.get(size));

@@ -380,23 +380,46 @@ async function runAllPerformanceTests(){
     // After all initialization is done, run performance tests and add performance rows
     $loading_info.text("Measure INDUTNY..."); 
     await runPerformance("INDUTNY");
-    await addPerformanceRow("FFT", "FFT.JS (indutny)", INDUTNY_FFT_RESULTS);
+    await addPerformanceRow(
+        "FFT", 
+        "FFT.JS (indutny)", 
+        "https://github.com/indutny/fft.js/", 
+        INDUTNY_FFT_RESULTS
+    );
     await updateChart("INDUTNY", INDUTNY_FFT_RESULTS);
     $loading_info.text("Measure DSP..."); 
     await runPerformance("DSP");
-    await addPerformanceRow("DSP", "DSP.JS (corbanbrook)", DSP_FFT_RESULTS);
+    await addPerformanceRow(
+        "DSP", 
+        "DSP.JS (corbanbrook)", 
+        "https://github.com/corbanbrook/dsp.js/",
+        DSP_FFT_RESULTS
+    );
     await updateChart("DSP", DSP_FFT_RESULTS);
     $loading_info.text("Measure OOURA..."); 
     await runPerformance("OOURA");
-    await addPerformanceRow("OOURA", "OOURA (audioplastic)", OOURA_FFT_RESULTS);
+    await addPerformanceRow(
+        "OOURA", 
+        "OOURA (audioplastic)", 
+        "https://github.com/audioplastic/ooura"
+        OOURA_FFT_RESULTS);
     await updateChart("OOURA", OOURA_FFT_RESULTS);
     $loading_info.text("Measure KISS..."); 
     await runPerformance("KISS");    
-    await addPerformanceRow("KISS", "KISS (mborgerding)", KISS_FFT_RESULTS);
+    await addPerformanceRow(
+        "KISS", 
+        "KISS (mborgerding)", 
+        "https://github.com/mborgerding/kissfft",
+        KISS_FFT_RESULTS
+    );
     await updateChart("KISS", KISS_FFT_RESULTS);
     $loading_info.text("Measure OINK..."); 
     await runPerformance("OINK");    
-    await addPerformanceRow("OINK", "OINK (sch1z0net)", OINK_FFT_RESULTS);
+    await addPerformanceRow(
+        "OINK", 
+        "OINK (sch1z0net)", 
+        "https://github.com/sch1z0net/oink",
+        OINK_FFT_RESULTS);
     await updateChart("OINK", OINK_FFT_RESULTS);
     $loading_info.text("Finished!"); 
     

@@ -159,6 +159,10 @@ body {
   background-color: white;
 }
 
+.dev{
+  cursor: pointer;
+}
+
 #tr_header > td {
    background-color: transparent;
 }
