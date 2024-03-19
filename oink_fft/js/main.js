@@ -162,14 +162,15 @@ function createOutputFields(){
                 <input type="checkbox" id="check_${type}" class="check_ref">
             </div>
         `);
+    }
+    for (let i = 0; i < types.length; i++) {
+        let type = types[i];
         $("#check_"+type).click(function(){
             $(".check_ref").prop('checked', false);
             this.prop('checked', true);
             ref_output = i;
         });
     }
-
-
 
     // Create container div
     const $slider_div = $("<div>").addClass("slider-container");
