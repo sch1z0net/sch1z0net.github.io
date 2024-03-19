@@ -217,19 +217,16 @@ function createOutputFields(){
             let type = types[i];
             let diff = Math.abs(vals.get(type)-vals.get(types[ref_output]));
             if(diff <= 0.0000001){
-                $("#output_"+type).css("background-color", "rgb(100,230,100)");
-            }else
-            if(diff <= 0.000001){
-                $("#output_"+type).css("background-color", "rgb(100,210,100)");
+                $("#output_"+type).css("background-color", "rgb(100,250,100)");
             }else
             if(diff <= 0.00001){
-                $("#output_"+type).css("background-color", "rgb(100,190,100)");
+                $("#output_"+type).css("background-color", "rgb(210,210,100)");
             }else
-            if(diff <= 0.0001){
-                $("#output_"+type).css("background-color", "rgb(190,190,50)");
-            }else
+            if(diff <= 0.001){
+                $("#output_"+type).css("background-color", "rgb(210,130,100)");
+            }
             if(diff > 0.1){
-                $("#output_"+type).css("background-color", "rgb(190,50,50)");
+                $("#output_"+type).css("background-color", "rgb(210,50,50)");
             }
         }
     });
