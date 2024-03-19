@@ -183,7 +183,7 @@ function createOutputFields(){
             let type = types[i];
             let str = outs[i][bin];
             let value = parseFloat(str);
-            let formatted = str;
+            let formatted = ""+str;
             let neg = false;
             if(value < 0){ 
                 formatted = str.replace("-", ""); 
