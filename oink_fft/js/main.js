@@ -166,13 +166,13 @@ function createOutputFields(){
     }
     for (let i = 0; i < types.length; i++) {
         let type = types[i];
-        $("#check_"+type).on('input',function() {
-            $(".check_ref").prop('checked', false);
+        $('#check_'+type).on('change',function() {
+            $('.check_ref').prop('checked', false);
             $(this).prop('checked', true);
             ref_output = i;
         });
     }
-    $("#check_" + types[ref_output]).click();
+    $('#check_' + types[ref_output]).click();
 
     // Create container div
     const $slider_div = $("<div>").addClass("slider-container");
