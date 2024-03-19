@@ -401,8 +401,9 @@ async function runAllPerformanceTests(){
     await addPerformanceRow(
         "OOURA", 
         "OOURA (audioplastic)", 
-        "https://github.com/audioplastic/ooura"
-        OOURA_FFT_RESULTS);
+        "https://github.com/audioplastic/ooura",
+        OOURA_FFT_RESULTS
+    );
     await updateChart("OOURA", OOURA_FFT_RESULTS);
     $loading_info.text("Measure KISS..."); 
     await runPerformance("KISS");    
@@ -419,7 +420,8 @@ async function runAllPerformanceTests(){
         "OINK", 
         "OINK (sch1z0net)", 
         "https://github.com/sch1z0net/oink",
-        OINK_FFT_RESULTS);
+        OINK_FFT_RESULTS
+    );
     await updateChart("OINK", OINK_FFT_RESULTS);
     $loading_info.text("Finished!"); 
     
