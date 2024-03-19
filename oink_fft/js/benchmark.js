@@ -105,9 +105,11 @@ const perform_DSP = (instance, testData) => {
 const output_DSP = (instance, testData) => {
     instance.forward(testData.slice()); 
     let result = [];
+    let real = instance.real;
+    let imag = instance.imag;
     for(let i = 0; i < testData.length; i++){
-        result.push(instance.real);
-        result.push(instance.imag);
+        result.push(real[i]);
+        result.push(imag[i]);
     }
 
     return result;
