@@ -148,6 +148,7 @@ let outs = [];
 let ref_output = 4;
 function createOutputFields(){
     const $output_div = $("<div>").attr("id","output-div");
+    $tab_micro.append($output_div);
 
     let types = ["INDUTNY","DSP","OOURA","KISS","OINK"];
 
@@ -170,6 +171,7 @@ function createOutputFields(){
         outputRow.append(label, inputText, checkbox);
         $outputs.append(outputRow);
     }
+    $outputs.appendTo($output_div);
 
     $('#check_' + types[ref_output]).prop('checked', true);
 
@@ -237,10 +239,7 @@ function createOutputFields(){
             }
         }
     });
-
     $slider_div.appendTo($output_div);
-    $outputs.appendTo($output_div);
-    $tab_micro.append($output_div);
 }
 
 
