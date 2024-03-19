@@ -186,7 +186,7 @@ function createOutputFields(){
             let formatted = ""+str;
             let neg = false;
             if(value < 0){ 
-                formatted = str.replace("-", ""); 
+                formatted = formatted.replace("-", ""); 
                 neg = true;
             }
             formatted = formatted.padStart(20, " ");
