@@ -214,7 +214,7 @@ function createOutputFields(){
         for (let i = 0; i < types.length; i++) {
             let type = types[i];
             if(vals[i]-vals[ref_output] <= 0.0000001){
-                $("#output_"+type).css("background-color", "green");
+                $("#output_"+type).css("background-color", "#A6F1A6");
             }
         }
 
