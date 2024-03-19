@@ -166,8 +166,8 @@ function createOutputFields(){
     for (let i = 0; i < types.length; i++) {
         let type = types[i];
         $("#check_"+type).click(function(){
-            $(".check_ref").prop('checked', false);
-            this.prop('checked', true);
+            $(".check_ref").removeAttr('checked');
+            this.addAttr('checked');
             ref_output = i;
         });
     }
