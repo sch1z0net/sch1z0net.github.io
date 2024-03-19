@@ -170,7 +170,8 @@ function createOutputFields(){
         $outputs.append(outputRow);
     }
 
-    $('#check_' + types[ref_output]).click();
+    $('#check_' + types[ref_output]).prop('checked', true);
+
 
     // Create container div
     const $slider_div = $("<div>").addClass("slider-container");
@@ -235,6 +236,8 @@ function createOutputFields(){
             }
         }
     });
+    
+    $slider.trigger('input');
 
     $slider_div.appendTo($output_div);
     $outputs.appendTo($output_div);
