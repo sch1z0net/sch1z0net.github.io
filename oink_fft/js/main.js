@@ -196,12 +196,12 @@ function createOutputFields(){
         for (let i = 0; i < types.length; i++) {
 
             let type = types[i];
-            $("#output_"+type).css("background-color", "white");
+            $("#output_"+type).css("background-color", "transparent");
             let str = outs[i][bin];
             let value = parseFloat(str);
             vals.set(type, value);
             if(isNaN(value)){ 
-                $("#output_"+type).val("-");
+                $("#output_"+type).val("");
                 continue; 
             }
 
@@ -233,8 +233,7 @@ function createOutputFields(){
             }else
             if(diff <= 0.001){
                 $("#output_"+type).css("background-color", "rgb(210,130,100)");
-            }
-            if(diff > 0.1){
+            }else{
                 $("#output_"+type).css("background-color", "rgb(210,50,50)");
             }
         }
