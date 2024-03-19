@@ -11,6 +11,7 @@ var $subtitle;
 var $stats_div;
 var $tab_table;
 var $perf_table;
+var $outputs;
 var $tbody;
 var $loading;
 var $loading_info;
@@ -143,6 +144,25 @@ function updateChart(name, results) {
     }
 }
 
+function createOutputFields(){
+    let types = ["INDUTNY","DSP","OOURA","KISS","OINK"];
+
+    $outputs = $('<div>').attr("id","outputs");
+
+    // Create rows dynamically
+    for (let i = 0; i < types.length; i++) {
+        let type = types[i];
+        $outputs.append(`
+            <div class="output-row">
+                <label for="output_${type}">${type}:</label>
+                <input type="text" id="output_${type}" class="float-input" readonly>
+            </div>
+        `);
+    }
+
+    $tab_micro.append($outputs);
+}
+
 
 $(document).ready(function(){
     $title_div   = $("<div>").attr("id", "title_div");
@@ -209,6 +229,7 @@ $(document).ready(function(){
     
     createPerformanceTable();
     createPerformanceCharts();
+    createOutputFields();
 
     $chart_l = $('<button id="chart_l">←</button>').appendTo($tab_chart);
     $chart_r = $('<button id="chart_r">→</button>').appendTo($tab_chart);
