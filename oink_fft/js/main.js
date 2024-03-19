@@ -3,6 +3,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
 
+let MAX_PERF_SIZE = 2048;
+
 var $title_div;
 var $title;
 var $subtitle;
@@ -41,7 +43,7 @@ function createPerformanceTable(){
     // HEADER
     var $tr_sizes = $("<tr>").attr("id", "tr_header").appendTo($tbody); 
     $("<td>").text("FFT size").appendTo($tr_sizes);
-    for (var size = 128; size <= 1024; size *= 2) {
+    for (var size = 128; size <= 2048; size *= 2) {
         $("<td>").text(size).appendTo($tr_sizes).css("background-color","rgba(200,0,0,0.2)");
     }
 
@@ -52,7 +54,7 @@ function createPerformanceTable(){
 function addPerformanceRow(idname, fullname, results){
     var $tr = $("<tr>");
     $("<td>").text(fullname).appendTo($tr).css("background-color","rgba(200,0,0,0.2)");;
-    for (var size = 128; size <= 1024; size *= 2) {
+    for (var size = 128; size <= 2048; size *= 2) {
         let id = idname+"_"+size;
         let result = parseInt(results.get(size));
         if(result < 0){ result = "(ERROR)" }
@@ -116,11 +118,11 @@ function createPerformanceChart(fft_size){
     return $chart_panel;
 }
 
-let panels = [128, 256, 512, 1024];
+let panels = [128, 256, 512, 1024, 2048];
 let p_idx = 0;
 function createPerformanceCharts(){
     resetPerformanceCharts();
-    for (let size = 128; size <= 1024; size *= 2) {
+    for (let size = 128; size <= MAX_PERF_SIZE; size *= 2) {
         createPerformanceChart(size);
     }
     $("#panel_"+panels[p_idx]).show();
@@ -131,7 +133,7 @@ function updateChart(name, results) {
     const data = Array.from(results.values());
     // Push new data to the chart
     let k = 0;
-    for (let size = 128; size <= 1024; size *= 2) {
+    for (let size = 128; size <= MAX_PERF_SIZE; size *= 2) {
        let chart = charts.get(size);
        chart.data.labels.push(name);
        chart.data.datasets[0].data.push(data[k]);
@@ -196,7 +198,7 @@ $(document).ready(function(){
 
     // Append the image to the container div
     $title_div.append($oinkImage);
-
+    
     // Append select boxes to the stats_div
     $stats_footer.append($numOpsSelect.val(7500));
     $stats_footer.append($runsSelect.val(8));
@@ -208,8 +210,8 @@ $(document).ready(function(){
 
     $chart_l = $('<button id="chart_l">←</button>').appendTo($tab_chart);
     $chart_r = $('<button id="chart_r">→</button>').appendTo($tab_chart);
-    $chart_l.click(function(){ $(".chart_panel").hide(); p_idx=(p_idx==0)?3:(p_idx-1); $("#panel_"+panels[p_idx]).show();});
-    $chart_r.click(function(){ $(".chart_panel").hide(); p_idx=(p_idx+1)%4; $("#panel_"+panels[p_idx]).show();});
+    $chart_l.click(function(){ $(".chart_panel").hide(); p_idx=(p_idx==0)?(MAX_PERF_SIZE-1):(p_idx-1); $("#panel_"+panels[p_idx]).show();});
+    $chart_r.click(function(){ $(".chart_panel").hide(); p_idx=(p_idx+1)%MAX_PERF_SIZE; $("#panel_"+panels[p_idx]).show();});
 
     // Create a div element for the icon row
     var $iconRow = $("<div>").attr("id", "icon-row");

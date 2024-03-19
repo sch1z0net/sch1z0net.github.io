@@ -28,8 +28,15 @@ float* precalculateFFTFactorsRADIX2flattened(int N) {
         float angle1 = (2 * M_PI * i) / N;
         factors[i * 2]     = cos(angle1); // Cosine of angle1
         factors[i * 2 + 1] = sin(angle1); // Sine of angle1
+
+        printf("%a,", factors[i * 2    ]);
+        printf("%a,", factors[i * 2 + 1]);
+        if((i+1) % 64 == 0){
+            printf("\n");
+        }
     }
 
+    
     return factors;
 }
 
@@ -220,24 +227,23 @@ void generate_code(int FFT_N, int size, FILE *fp) {
     free(FAC);
 }
 
-/*
-int main() {
-    FILE *fp = fopen("generated_code.c", "w");
-    if (fp == NULL) {
-        printf("Error opening file.\n");
-        return 0;
+
+int main() { 
+    int N = 2048;
+
+    printf("float ____F[%d] = {",N*2-2);
+    for (int size = 2; size < N; size*=2) {
+       float* FAC = precalculateFFTFactorsRADIX2flattened(size);
+       printf("\n\n");
+       free(FAC);
     }
-
-    float* FAC = precalculateFFTFactorsRADIX2flattened(256);
-    free(FAC);
-
-    fclose(fp);
+    printf("};");
 
     return 0;
-}*/
+}
 
 
-
+/*
 int main() {
     FILE *fp = fopen("generated_code.c", "w");
     if (fp == NULL) {
@@ -256,20 +262,24 @@ int main() {
     //generate_code_unrolled(256, 128, fp);
     //generate_code_unrolled(256, 256, fp);
 
-    generate_code_unrolled(128, 128, fp);
+    generate_code_unrolled(2048, 128, fp);
 
     printf("Generated code written to generated_code.c\n");
 
     fclose(fp);
 
     return 0;
-}
+}*/
 
 /*
 int main() {
+    bitReversalMap(2048);
+    //bitReversalMap(1024);
     //bitReversalMap(512);
-    bitReversalMap(128);
+    //bitReversalMap(256);
+    //bitReversalMap(128);
     return 0;
-}*/
+}
+*/
 
 

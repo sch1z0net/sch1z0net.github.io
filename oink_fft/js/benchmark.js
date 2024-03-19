@@ -51,6 +51,7 @@ let kiss_fft_128, kiss_input_128;
 let kiss_fft_256, kiss_input_256;
 let kiss_fft_512, kiss_input_512;
 let kiss_fft_1024,kiss_input_1024;
+let kiss_fft_2048,kiss_input_2048;
 
 function initializeKISS(){
     return new Promise((resolve, reject) => {
@@ -62,6 +63,8 @@ function initializeKISS(){
         kiss_input_512 = kiss_fft_512.getInputTimeDataBuffer();
         kiss_fft_1024 = new Module_KISS_.KissFftReal(1024);
         kiss_input_1024 = kiss_fft_1024.getInputTimeDataBuffer();
+        kiss_fft_2048 = new Module_KISS_.KissFftReal(2048);
+        kiss_input_2048 = kiss_fft_2048.getInputTimeDataBuffer();
         resolve();
     });
 };
@@ -82,6 +85,7 @@ let dsp_fft_128;
 let dsp_fft_256;
 let dsp_fft_512;
 let dsp_fft_1024;
+let dsp_fft_2048;
 
 function initializeDSP(){
     return new Promise((resolve, reject) => {
@@ -89,6 +93,7 @@ function initializeDSP(){
         dsp_fft_256 = new FFT(256, 44100);
         dsp_fft_512 = new FFT(512, 44100);
         dsp_fft_1024 = new FFT(1024, 44100);
+        dsp_fft_2048 = new FFT(2048, 44100);
         resolve();
     });
 }    
@@ -109,6 +114,7 @@ let ooura_oo_128;
 let ooura_oo_256;
 let ooura_oo_512;
 let ooura_oo_1024;
+let ooura_oo_2048;
 
 function initializeOOURA(){
     return new Promise((resolve, reject) => {
@@ -116,6 +122,7 @@ function initializeOOURA(){
         ooura_oo_256 = new Ooura(256, {"type":"real", "radix":4} );
         ooura_oo_512 = new Ooura(512, {"type":"real", "radix":4} );
         ooura_oo_1024 = new Ooura(1024, {"type":"real", "radix":4} );
+        ooura_oo_2048 = new Ooura(2048, {"type":"real", "radix":4} );
         resolve();
     });
 }
@@ -136,6 +143,7 @@ let indutny_f_128,  indutny_out_128;
 let indutny_f_256,  indutny_out_256;
 let indutny_f_512,  indutny_out_512;
 let indutny_f_1024, indutny_out_1024;
+let indutny_f_2048, indutny_out_2048;
 
 function initializeINDUTNY(){
     return new Promise((resolve, reject) => {
@@ -147,6 +155,8 @@ function initializeINDUTNY(){
         indutny_out_512 = indutny_f_512.createComplexArray();
         indutny_f_1024 = new IND_FFT(1024);
         indutny_out_1024 = indutny_f_1024.createComplexArray();
+        indutny_f_2048 = new IND_FFT(2048);
+        indutny_out_2048 = indutny_f_2048.createComplexArray();
         resolve();
     });
 }
@@ -181,6 +191,7 @@ const perform_slice = (fftSize, testData) => {
     if(fftSize == 256){ for (let i = 0; i < NUM_OPS; i++) { testData.slice(); } }
     if(fftSize == 512){ for (let i = 0; i < NUM_OPS; i++) { testData.slice(); } }
     if(fftSize == 1024){for (let i = 0; i < NUM_OPS; i++) { testData.slice(); } }
+    if(fftSize == 2048){for (let i = 0; i < NUM_OPS; i++) { testData.slice(); } }
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -215,6 +226,7 @@ const measureFFT = (type, size, testData) => {
         if(size ==  256){ func = () => { perform_INDUTNY(indutny_f_256,  indutny_out_256,  testData32); }; }
         if(size ==  512){ func = () => { perform_INDUTNY(indutny_f_512,  indutny_out_512,  testData32); }; }
         if(size == 1024){ func = () => { perform_INDUTNY(indutny_f_1024, indutny_out_1024, testData32); }; }
+        if(size == 2048){ func = () => { perform_INDUTNY(indutny_f_2048, indutny_out_2048, testData32); }; }
     }
 
     if(type == "DSP"){
@@ -222,6 +234,7 @@ const measureFFT = (type, size, testData) => {
         if(size ==  256){ func = () => { perform_DSP(dsp_fft_256, testData64); }; }
         if(size ==  512){ func = () => { perform_DSP(dsp_fft_512, testData64); }; }
         if(size == 1024){ func = () => { perform_DSP(dsp_fft_1024, testData64); }; }
+        if(size == 2048){ func = () => { perform_DSP(dsp_fft_2048, testData64); }; }
     }
 
     if(type == "OOURA"){
@@ -229,6 +242,7 @@ const measureFFT = (type, size, testData) => {
         if(size ==  256){ func = () => { perform_OOURA(ooura_oo_256, testData64); }; }
         if(size ==  512){ func = () => { perform_OOURA(ooura_oo_512, testData64); }; }
         if(size == 1024){ func = () => { perform_OOURA(ooura_oo_1024, testData64); }; }
+        if(size == 2048){ func = () => { perform_OOURA(ooura_oo_2048, testData64); }; }
     }
 
     if(type == "KISS"){
@@ -236,6 +250,7 @@ const measureFFT = (type, size, testData) => {
         if(size ==  256){ func = () => { perform_KISS(kiss_input_256, kiss_fft_256, testData64); }; }
         if(size ==  512){ func = () => { perform_KISS(kiss_input_512, kiss_fft_512, testData64); }; }
         if(size == 1024){ func = () => { perform_KISS(kiss_input_1024, kiss_fft_1024, testData64); }; }
+        if(size == 2048){ func = () => { perform_KISS(kiss_input_2048, kiss_fft_2048, testData64); }; }
     }
 
     if(type == "OINK"){
@@ -243,6 +258,7 @@ const measureFFT = (type, size, testData) => {
         if(size ==  256){ func = () => { perform_OINK(fftReal256, testData32); }; }
         if(size ==  512){ func = () => { perform_OINK(fftReal512, testData32); }; }
         if(size == 1024){ func = () => { perform_OINK(fftReal1024, testData32); }; }
+        if(size == 2048){ func = () => { perform_OINK(fftReal2048, testData32); }; }
     }
 
     const startTime = performance.now(); // Start time
@@ -258,7 +274,7 @@ const measureFFT = (type, size, testData) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 const runPerformance = async (type) => {
     let s = 0;
-    for (let size = 128; size <= 1024; size *= 2) {
+    for (let size = 128; size <= MAX_PERF_SIZE; size *= 2) {
         let avrg_ops = 0;
 
         // Warm up
@@ -311,17 +327,17 @@ function updateMax(size, ops, name){
 }
 
 function highlightComparison(){
-    for (var size = 128; size <= 1024; size *= 2) {
+    for (var size = 128; size <= MAX_PERF_SIZE; size *= 2) {
          MAX_.set(size, {name: '-', ops: 0 });
     }
-    for (var size = 128; size <= 1024; size *= 2) {
+    for (var size = 128; size <= MAX_PERF_SIZE; size *= 2) {
          updateMax(size, OINK_FFT_RESULTS.get(size),    "OINK");
          updateMax(size, INDUTNY_FFT_RESULTS.get(size), "INDUTNY");
          updateMax(size, OOURA_FFT_RESULTS.get(size),   "OOURA");
          updateMax(size, DSP_FFT_RESULTS.get(size),     "DSP");
          updateMax(size, KISS_FFT_RESULTS.get(size),    "KISS");
     }
-    for (var size = 128; size <= 1024; size *= 2) {
+    for (var size = 128; size <= MAX_PERF_SIZE; size *= 2) {
          let best = MAX_.get(size).name;
          let id = best+"_"+size;
          $("#"+id).addClass("bestPerf");
@@ -342,7 +358,7 @@ async function runAllPerformanceTests(){
     RUNS    = parseInt($runsSelect.val());
 
     var j = 0;
-    for (var size = 128; size <= 1024; size *= 2) {
+    for (var size = 128; size <= MAX_PERF_SIZE; size *= 2) {
        var SIGNALS = [];
        for(let i = 0; i<RUNS+WARMUPS; i++){
           let signal = generateTestData(size);
@@ -431,79 +447,6 @@ $(document).ready(async function(){
     $loading_info.text("Initializing KISS...");    Module_KISS_ = await Module_KISS(); await initializeKISS();
     $loading_info.text("Initializing OINK...");    Module_OINK_ = await Module_OINK(); await initializeModuleOINK();
 
-    await runErrorComparison();
+    //await runErrorComparison();
     await runAllPerformanceTests();
 });
-
-
-
-
-/*
-function runComparison(){
-    let error;
-    error = 1e-3;
-    console.log("\n\nCompare to Reference with acceptable Error ",error," :");
-    console.log("128:  ",compareFFTResults(fftReal_ref(testData128), fftReal128(testData128),error));
-    console.log("256:  ",compareFFTResults(fftReal_ref(testData256), fftReal256(testData256),error));
-    console.log("512:  ",compareFFTResults(fftReal_ref(testData512), fftReal512(testData512),error));
-    console.log("1024: ",compareFFTResults(fftReal_ref(testData1024),fftReal1024(testData1024),error));
-
-    error = 1e-4;
-    console.log("\n\nCompare to Reference with acceptable Error ",error," :");
-    console.log("128:  ",compareFFTResults(fftReal_ref(testData128), fftReal128(testData128),error));
-    console.log("256:  ",compareFFTResults(fftReal_ref(testData256), fftReal256(testData256),error));
-    console.log("512:  ",compareFFTResults(fftReal_ref(testData512), fftReal512(testData512),error));
-    console.log("1024: ",compareFFTResults(fftReal_ref(testData1024),fftReal1024(testData1024),error));
-
-    error = 1e-5;
-    console.log("\n\nCompare to Reference with acceptable Error ",error," :");
-    console.log("128:  ",compareFFTResults(fftReal_ref(testData128), fftReal128(testData128),error));
-    console.log("256:  ",compareFFTResults(fftReal_ref(testData256), fftReal256(testData256),error));
-    console.log("512:  ",compareFFTResults(fftReal_ref(testData512), fftReal512(testData512),error));
-    console.log("1024: ",compareFFTResults(fftReal_ref(testData1024),fftReal1024(testData1024),error));
-
-    error = 1e-6;
-    console.log("\n\nCompare to Reference with acceptable Error ",error," :");
-    console.log("128:  ",compareFFTResults(fftReal_ref(testData128), fftReal128(testData128),error));
-    console.log("256:  ",compareFFTResults(fftReal_ref(testData256), fftReal256(testData256),error));
-    console.log("512:  ",compareFFTResults(fftReal_ref(testData512), fftReal512(testData512),error));
-    console.log("1024: ",compareFFTResults(fftReal_ref(testData1024),fftReal1024(testData1024),error));
-}
-
-function runForthAndBack(){
-    let error;
-    
-    let signal128  = IFFT128onHalf(fftReal128(testData128).slice(0,128+2));
-    let signal256  = IFFT256onHalf(fftReal256(testData256).slice(0,256+2));
-    let signal512  = IFFT512onHalf(fftReal512(testData512).slice(0,512+2));
-    let signal1024 = IFFT1024onHalf(fftReal1024(testData1024).slice(0,1024+2));
-
-    error = 1e-3;
-    console.log("\n\nCompare after Forth and Back with acceptable Error ",error," :");
-    console.log("128:   ",compareFFTResults(testData128, signal128 ,error));
-    console.log("256:   ",compareFFTResults(testData256, signal256 ,error));
-    console.log("512:   ",compareFFTResults(testData512, signal512 ,error));
-    console.log("1024:  ",compareFFTResults(testData1024, signal1024 ,error));
-
-    error = 1e-4;
-    console.log("\n\nCompare after Forth and Back with acceptable Error ",error," :");
-    console.log("128:   ",compareFFTResults(testData128, signal128 ,error));
-    console.log("256:   ",compareFFTResults(testData256, signal256 ,error));
-    console.log("512:   ",compareFFTResults(testData512, signal512 ,error));
-    console.log("1024:  ",compareFFTResults(testData1024, signal1024 ,error));
-
-    error = 1e-5;
-    console.log("\n\nCompare after Forth and Back with acceptable Error ",error," :");
-    console.log("128:   ",compareFFTResults(testData128, signal128 ,error));
-    console.log("256:   ",compareFFTResults(testData256, signal256 ,error));
-    console.log("512:   ",compareFFTResults(testData512, signal512 ,error));
-    console.log("1024:  ",compareFFTResults(testData1024, signal1024 ,error));
-
-    error = 1e-6;
-    console.log("\n\nCompare after Forth and Back with acceptable Error ",error," :");
-    console.log("128:   ",compareFFTResults(testData128, signal128 ,error));
-    console.log("256:   ",compareFFTResults(testData256, signal256 ,error));
-    console.log("512:   ",compareFFTResults(testData512, signal512 ,error));
-    console.log("1024:  ",compareFFTResults(testData1024, signal1024 ,error));
-}
-*/

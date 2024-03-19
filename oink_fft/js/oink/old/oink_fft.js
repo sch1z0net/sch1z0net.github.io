@@ -16,7 +16,6 @@ var p_in_128, fft_wasm_128;
 var p_in_256, fft_wasm_256;
 var p_in_512, fft_wasm_512;
 var p_in_1024, fft_wasm_1024;
-var p_in_2048, fft_wasm_2048;
 
 function initializeModuleOINK() {
     fft_wasm_128 = Module_OINK_.cwrap('fftReal128', null, ['number', 'number', 'number']);
@@ -30,21 +29,6 @@ function initializeModuleOINK() {
 
     fft_wasm_1024= Module_OINK_.cwrap('fftReal1024', null, ['number', 'number', 'number']);
     p_in_1024    = Module_OINK_._malloc(1024* Float32Array.BYTES_PER_ELEMENT);
-
-    fft_wasm_2048= Module_OINK_.cwrap('fftReal2048', null, ['number', 'number', 'number']);
-    p_in_2048    = Module_OINK_._malloc(2048* Float32Array.BYTES_PER_ELEMENT);
-}
-
-function fftReal2048(realInput) {
-    // Check if the input length exceeds the maximum length
-    if (realInput.length > 2048) { throw new Error("Input length exceeds maximum length"); }
-    // Copy input data to the preallocated memory buffer
-    Module_OINK_.HEAPF32.set(realInput, p_in_2048 / Float32Array.BYTES_PER_ELEMENT);
-    // Perform FFT
-    fft_wasm_2048(p_in_2048, realInput.length);
-    var p_out_2048 = Module_OINK_.ccall('getOut2048Ptr', 'number', [], []);
-    // Return the result array
-    return new Float32Array(Module_OINK_.HEAPF32.buffer, p_out_2048, 4096);
 }
 
 function fftReal1024(realInput) {
@@ -327,21 +311,6 @@ function ifft1024(input) {
     return result1024;
 }
 
-let result2048 = new Float32Array(2048);
-function ifft2048(input) {
-    // Take the complex conjugate of the input spectrum in place
-    for (let i = 0; i < 4096; i += 2) {
-        input[i + 1] = -input[i + 1]; // Negate the imaginary part
-    }
-
-    // Apply FFT to the conjugate spectrum
-    const result_ = fftComplex_ref(input);
-    for (let i = 0; i < 2048; i++) {
-        result2048[i] = result_[i*2] / 2048; // Scale the real part
-    }
-    return result2048;
-}
-
 let fullSpectrum128 = new Float32Array(256);
 // Function to compute inverse FFT of a spectrum
 function IFFT128onHalf(halfSpectrum) {
@@ -455,30 +424,38 @@ function IFFT1024onHalf(halfSpectrum) {
     return audioSignal;
 }
 
-let fullSpectrum2048 = new Float32Array(4096);
-// Function to compute inverse FFT of a spectrum
-function IFFT2048onHalf(halfSpectrum) {
-    // Copy DC component (index 0)
-    fullSpectrum2048[0] = halfSpectrum[0]; // Copy the real part
-    fullSpectrum2048[1] = halfSpectrum[1]; // Copy the imaginary part
-    
-    // Copy Nyquist frequency component (index paddedSize)
-    fullSpectrum2048[2048    ] = halfSpectrum[2048]; // Copy the real part
-    fullSpectrum2048[2048 + 1] = halfSpectrum[2048 + 1]; // Invert the imaginary part
 
-    // Apply symmetry to fill the rest of the spectrum
-    for (let i = 1; i < 1024; i++) {
-        let re = halfSpectrum[i * 2    ];
-        let im = halfSpectrum[i * 2 + 1];
-        fullSpectrum2048[i * 2    ] = re; // Copy the real part
-        fullSpectrum2048[i * 2 + 1] = im; // Copy imaginary part
-        // Fill the mirrored part of the spectrum
-        fullSpectrum2048[4096 - (i * 2)    ] =  re;     // Copy the real part
-        fullSpectrum2048[4096 - (i * 2) + 1] = -im; // Invert the imaginary part
+
+
+
+
+/**********************************************************************************************/
+/**********************************************************************************************/
+/**********************************************************************************************/
+/********************************* TESTING PERFORMANCE ****************************************/
+
+function compareFFTResults(array1, array2, error) {
+    // Check if arrays have the same length
+    if (array1.length !== array2.length) {
+        return false;
     }
 
-    // Perform the IFFT on the full spectrum
-    const audioSignal = ifft2048(fullSpectrum2048);
+    // Check each element in the arrays for equality
+    for (let i = 0; i < array1.length; i++) {
+        // Compare elements with a small tolerance for floating-point imprecision
+        if (Math.abs(array1[i] - array2[i]) > error) { //1e-6
+            console.log("Mismatch at ",i," between ",array1[i],array2[i]);
+            return false;
+        }
+    }
 
-    return audioSignal;
+    // If all elements are equal within tolerance, arrays are considered equal
+    return true;
 }
+
+//const signal1 = [ 1.0, 0.4, 0.0, 0.2 ];
+//const signal2 = [ 0.0, 0.5, 1.0, 0.5, 0.0,-0.5, 1.0,-0.5 ];
+//const signal3 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
+//const signal4 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
+//const signal5 = [ 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1, 0.0, 0.1, 0.5, 0.9, 1.0, 0.9, 0.5, 0.1, 0.0,-0.1,-0.5,-0.9,-1.0,-0.9,-0.5,-0.1 ];
+
