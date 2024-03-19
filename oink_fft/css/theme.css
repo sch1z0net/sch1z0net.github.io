@@ -431,6 +431,8 @@ label {
 .float-input {
     width: 300px;
     border-radius: 10px
+    font-family: monospace;
+    text-emphasis: bold;
 }
 
 
