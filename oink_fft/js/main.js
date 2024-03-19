@@ -147,7 +147,7 @@ function updateChart(name, results) {
 let outs = [];
 
 function createOutputFields(){
-    const $output_div = $("<div>").addClass("output-div");
+    const $output_div = $("<div>").attr("id","output-div");
 
     let types = ["INDUTNY","DSP","OOURA","KISS","OINK"];
 
@@ -174,28 +174,16 @@ function createOutputFields(){
     // Initial slider value
     $sliderValue.text($slider.val());
     // Update slider value on input change
-    $slider.on("input", function() { $sliderValue.text($(this).val()); });
-    // Update slider value on scroll
-    $slider.on("wheel", function(event) {
-        event.preventDefault(); // Prevent page scrolling
+    $slider.on("input", function() { 
+        let bin = parseInt($(this).val());
 
-        // Calculate new value based on scroll direction
-        const delta = Math.sign(event.originalEvent.deltaY); // Get scroll direction (1 for up, -1 for down)
-        const step = parseInt($(this).attr("step")) || 1; // Get step value (default to 1 if not defined)
-        let bin = parseInt($(this).val()) + (delta * step);
-
-        // Ensure bin stays within min and max range
-        bin = Math.max(parseInt($(this).attr("min")), Math.min(bin, parseInt($(this).attr("max"))));
-
-        // Update slider value and slider value display
-        $(this).val(bin).trigger("input"); // Trigger input event to update value display
+        $sliderValue.text(bin);
 
         for (let i = 0; i < types.length; i++) {
             let type = types[i];
             $("#output_"+type).val(outs[i][bin]);
         }
-
-        console.log(outs);
+        
     });
 
     $slider_div.appendTo($output_div);
