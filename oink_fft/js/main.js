@@ -181,10 +181,11 @@ function createOutputFields(){
         let vals = [];
         for (let i = 0; i < types.length; i++) {
             let type = types[i];
+            $("#output_"+type).css("background-color", "none");
             let str = outs[i][bin];
             let value = parseFloat(str);
             vals[i] = value;
-            if(!isNumber(value)){ continue; }
+            if(isNaN(value)){ continue; }
             let formatted = ""+str;
             let neg = false;
             if(value < 0){ 
@@ -206,8 +207,6 @@ function createOutputFields(){
             let type = types[i];
             if(vals[i]-vals[4] <= 0.0000001){
                 $("#output_"+type).css("background-color", "green");
-            }else{
-                $("#output_"+type).css("background-color", "none");
             }
         }
 
