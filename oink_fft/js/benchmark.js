@@ -6,7 +6,7 @@ let NUM_OPS = 7500;
 let WARMUPS = 3;
 let RUNS = 8;
 
-let DELAY_BETWEEN_ITERATIONS = 0.15;
+let DELAY_BETWEEN_ITERATIONS = 0.35;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 // Reset on each new Run
 let SIGNALS_FOR_EACH_FFT = [];
