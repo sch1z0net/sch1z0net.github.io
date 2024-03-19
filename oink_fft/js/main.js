@@ -184,7 +184,7 @@ function createOutputFields(){
     // Update slider value on input change
     $slider.on("input", function() { 
         let vals = new Map();
-        
+
         let bin = parseInt($(this).val());
 
         $sliderValue.text(bin);
@@ -215,7 +215,7 @@ function createOutputFields(){
         for (let i = 0; i < types.length; i++) {
             let type = types[i];
             if(vals.get(type)-vals.get(types[ref_output]) <= 0.0000001){
-                $("#output_"+type).css("background-color", "#A6F1A6");
+                $("#output_"+type).css("background-color", "#E6F4EA");
             }
         }
     });
