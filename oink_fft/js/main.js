@@ -189,7 +189,7 @@ function createOutputFields(){
         let vals = [];
         for (let i = 0; i < types.length; i++) {
             let type = types[i];
-            $("#output_"+type).css("background-color", "none");
+            $("#output_"+type).css("background-color", "transparent");
             let str = outs[i][bin];
             let value = parseFloat(str);
             vals[i] = value;
