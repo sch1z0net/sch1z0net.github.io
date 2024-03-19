@@ -152,7 +152,8 @@ $(document).ready(function(){
     $stats_head  = $("<div>").attr("id", "stats_head");
     $tab_table   = $("<div>").attr("id", "tab_table").addClass("tab").show();
     $tab_chart   = $("<div>").attr("id", "tab_chart").addClass("tab").hide();
-    
+    $tab_micro   = $("<div>").attr("id", "tab_micro").addClass("tab").hide();
+
     //$loading     = $('<div id="loading-circle"></div>');
     $stats_footer= $("<div>").attr("id", "stats_footer");
     $loading     = $('<div id="loading" class="loading-dots">');
@@ -169,6 +170,7 @@ $(document).ready(function(){
     $stats_div.append($stats_head);
     $stats_div.append($tab_table);
     $stats_div.append($tab_chart);
+    $stats_div.append($tab_micro);
     $stats_div.append($stats_footer);
     $stats_footer.append($loading);
     $stats_footer.append($loading_info);
@@ -234,7 +236,7 @@ $(document).ready(function(){
     }
     $iconLink1.click(function(){ changeTab("#tab_table", this); });
     $iconLink2.click(function(){ changeTab("#tab_chart", this); });
-    $iconLink3.click(function(){ changeTab("#tab_table", this); });
+    $iconLink3.click(function(){ changeTab("#tab_micro", this); });
 
     // Append the icon row to the document body
     $stats_head.append($iconRow);
