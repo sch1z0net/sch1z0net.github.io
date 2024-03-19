@@ -149,10 +149,10 @@ let outs = [];
 function createOutputFields(){
     const $output_div = $("<div>").addClass("output-div");
 
-    
+
     let types = ["INDUTNY","DSP","OOURA","KISS","OINK"];
 
-    $outputs = $('<div>').attr("id","outputs").appendTo($output_div);
+    $outputs = $('<div>').attr("id","outputs");
     // Create rows dynamically
     for (let i = 0; i < types.length; i++) {
         let type = types[i];
@@ -165,7 +165,7 @@ function createOutputFields(){
     }
 
     // Create container div
-    const $slider_div = $("<div>").addClass("slider-container").appendTo($output_div);
+    const $slider_div = $("<div>").addClass("slider-container");
     // Create slider element
     const $slider = $("<input>").attr({type: "range", min: 0, max: 1024, value: 0, id: "out_slider"});
     // Create div to display slider value
@@ -197,8 +197,8 @@ function createOutputFields(){
         }
     });
 
-
-
+    $slider_div.appendTo($output_div);
+    $outputs.appendTo($output_div);
     $tab_micro.append($output_div);
 }
 

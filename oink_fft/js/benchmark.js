@@ -420,11 +420,6 @@ function runErrorComparison(){
             out_5[i].toFixed(3)
         )
     }*/
-
-    console.log(out_1);
-    console.log(out_3);
-    console.log(out_4);
-    console.log(out_5);
 }
 
 
