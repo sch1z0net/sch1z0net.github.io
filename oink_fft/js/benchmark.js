@@ -410,16 +410,7 @@ function runErrorComparison(){
     let out_5 = output_OINK(fftReal1024, testData32.slice());
     outs.push(out_1,out_2,out_3,out_4,out_5);
     
-    /*
-    for(let i = 0; i<20; i++){
-        console.log(
-            out_1[i].toFixed(3), 
-            out_2[i].toFixed(3), 
-            out_3[i].toFixed(3), 
-            out_4[i].toFixed(3), 
-            out_5[i].toFixed(3)
-        )
-    }*/
+    $("#out_slider").trigger('input');
 }
 
 

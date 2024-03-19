@@ -164,6 +164,7 @@ function createOutputFields(){
             $('.check_ref').prop('checked', false);
             $(this).prop('checked', true);
             ref_output = i;
+            $("#out_slider").trigger('input');
         });
 
         outputRow.append(label, inputText, checkbox);
@@ -236,8 +237,6 @@ function createOutputFields(){
             }
         }
     });
-    
-    $slider.trigger('input');
 
     $slider_div.appendTo($output_div);
     $outputs.appendTo($output_div);
