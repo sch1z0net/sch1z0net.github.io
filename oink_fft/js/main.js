@@ -223,6 +223,7 @@ function createOutputFields(){
         }
 
         for (let i = 0; i < types.length; i++) {
+            if(vals.get(type) == null){ continue; }
             let type = types[i];
             let diff = Math.abs(vals.get(type)-vals.get(types[ref_output]));
             if(diff <= 0.0000001){
