@@ -159,7 +159,7 @@ function createOutputFields(){
         $outputs.append(`
             <div class="output-row">
                 <label for="output_${type}">${type}:</label>
-                <input type="text" id="output_${type}" class="float-input" readonly>
+                <input type="text" id="output_${type}" class="float-input">
             </div>
         `);
     }
