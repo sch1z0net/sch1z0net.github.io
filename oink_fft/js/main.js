@@ -146,7 +146,6 @@ function updateChart(name, results) {
 
 let outs = [];
 let ref_output = 4;
-let vals = new Map();
 function createOutputFields(){
     const $output_div = $("<div>").attr("id","output-div");
 
@@ -184,6 +183,8 @@ function createOutputFields(){
     $sliderValue.text($slider.val());
     // Update slider value on input change
     $slider.on("input", function() { 
+        let vals = new Map();
+        
         let bin = parseInt($(this).val());
 
         $sliderValue.text(bin);
@@ -217,7 +218,6 @@ function createOutputFields(){
                 $("#output_"+type).css("background-color", "#A6F1A6");
             }
         }
-
     });
 
     $slider_div.appendTo($output_div);
