@@ -179,7 +179,7 @@ function createOutputFields(){
     // Create container div
     const $slider_div = $("<div>").addClass("slider-container");
     // Create slider element
-    const $slider = $("<input>").attr({type: "range", min: 0, max: 1024, value: 0, id: "out_slider"});
+    const $slider = $("<input>").attr({type: "range", min: 0, max: 1023, value: 0, id: "out_slider"});
     // Create div to display slider value
     const $sliderValue = $("<div>").addClass("slider-value").attr("id", "sliderValue").text("50");
     // Append slider and slider value to container
