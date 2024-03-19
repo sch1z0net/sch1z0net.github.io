@@ -230,10 +230,10 @@ function createOutputFields(){
             if(valsRE.get(type) == null){ continue; }
             let diff = Math.abs(valsRE.get(type)-valsRE.get(types[ref_output]));
             if(diff <= 0.0){
-                $("#outputRE_"+type).css("background-color", "rgb(50,250,50)");
+                $("#outputRE_"+type).css("background-color", "rgb(100,250,100)");
             }else 
             if(diff <= 0.0000001){
-                $("#outputRE_"+type).css("background-color", "rgb(100,250,100)");
+                $("#outputRE_"+type).css("background-color", "rgb(200,250,180)");
             }else
             if(diff <= 0.00001){
                 $("#outputRE_"+type).css("background-color", "rgb(210,210,100)");
@@ -279,10 +279,10 @@ function createOutputFields(){
             if(valsIM.get(type) == null){ continue; }
             let diff = Math.abs(valsIM.get(type)-valsIM.get(types[ref_output]));
             if(diff <= 0.0){
-                $("#outputIM_"+type).css("background-color", "rgb(50,250,50)");
+                $("#outputIM_"+type).css("background-color", "rgb(100,250,100)");
             }else 
             if(diff <= 0.0000001){
-                $("#outputIM_"+type).css("background-color", "rgb(100,250,100)");
+                $("#outputIM_"+type).css("background-color", "rgb(200,250,180)");
             }else
             if(diff <= 0.00001){
                 $("#outputIM_"+type).css("background-color", "rgb(210,210,100)");
