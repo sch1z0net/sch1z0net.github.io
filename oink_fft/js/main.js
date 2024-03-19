@@ -227,7 +227,7 @@ function createOutputFields(){
         for (let i = 0; i < types.length; i++) {
             let type = types[i];
             if(valsRE.get(type) == null){ continue; }
-            let diff = Math.abs(vals.get(type)-vals.get(types[ref_output]));
+            let diff = Math.abs(valsRE.get(type)-valsRE.get(types[ref_output]));
             if(diff <= 0.0000001){
                 $("#outputRE_"+type).css("background-color", "rgb(100,250,100)");
             }else
@@ -273,7 +273,7 @@ function createOutputFields(){
         for (let i = 0; i < types.length; i++) {
             let type = types[i];
             if(valsIM.get(type) == null){ continue; }
-            let diff = Math.abs(vals.get(type)-vals.get(types[ref_output]));
+            let diff = Math.abs(valsIM.get(type)-valsIM.get(types[ref_output]));
             if(diff <= 0.0000001){
                 $("#outputIM_"+type).css("background-color", "rgb(100,250,100)");
             }else
