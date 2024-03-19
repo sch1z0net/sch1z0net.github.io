@@ -371,8 +371,8 @@ $(document).ready(function(){
 
     $chart_l = $('<button id="chart_l">←</button>').appendTo($tab_chart);
     $chart_r = $('<button id="chart_r">→</button>').appendTo($tab_chart);
-    $chart_l.click(function(){ $(".chart_panel").hide(); p_idx=(p_idx==0)?(MAX_PERF_SIZE-1):(p_idx-1); $("#panel_"+panels[p_idx]).show();});
-    $chart_r.click(function(){ $(".chart_panel").hide(); p_idx=(p_idx+1)%MAX_PERF_SIZE; $("#panel_"+panels[p_idx]).show();});
+    $chart_l.click(function(){ $(".chart_panel").hide(); p_idx=(p_idx==0)?(panels.length-1):(p_idx-1); $("#panel_"+panels[p_idx]).show();});
+    $chart_r.click(function(){ $(".chart_panel").hide(); p_idx=(p_idx+1)%panels.length; $("#panel_"+panels[p_idx]).show();});
 
     // Create a div element for the icon row
     var $iconRow = $("<div>").attr("id", "icon-row");
