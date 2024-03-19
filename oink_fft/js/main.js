@@ -144,11 +144,12 @@ function updateChart(name, results) {
     }
 }
 
+let outs = [];
+
 function createOutputFields(){
     let types = ["INDUTNY","DSP","OOURA","KISS","OINK"];
 
     $outputs = $('<div>').attr("id","outputs");
-
     // Create rows dynamically
     for (let i = 0; i < types.length; i++) {
         let type = types[i];
@@ -160,6 +161,45 @@ function createOutputFields(){
         `);
     }
 
+
+    // Create container div
+    const $slider_div = $("<div>").addClass("slider-container");
+    // Create slider element
+    const $slider = $("<input>").attr({type: "range", min: 0, max: 1024, value: 0, id: "out_slider"});
+    // Create div to display slider value
+    const $sliderValue = $("<div>").addClass("slider-value").attr("id", "sliderValue").text("50");
+    // Append slider and slider value to container
+    $slider_div.append($slider, $sliderValue);
+    // Initial slider value
+    $sliderValue.text($slider.val());
+    // Update slider value on input change
+    $slider.on("input", function() { $sliderValue.text($(this).val()); });
+    // Update slider value on scroll
+    $slider.on("wheel", function(event) {
+        event.preventDefault(); // Prevent page scrolling
+
+        // Calculate new value based on scroll direction
+        const delta = Math.sign(event.originalEvent.deltaY); // Get scroll direction (1 for up, -1 for down)
+        const step = parseInt($(this).attr("step")) || 1; // Get step value (default to 1 if not defined)
+        let bin = parseInt($(this).val()) + (delta * step);
+
+        // Ensure bin stays within min and max range
+        bin = Math.max(parseInt($(this).attr("min")), Math.min(bin, parseInt($(this).attr("max"))));
+
+        // Update slider value and slider value display
+        $(this).val(bin).trigger("input"); // Trigger input event to update value display
+
+        for (let i = 0; i < types.length; i++) {
+            let type = types[i];
+            $("#output_"+type).val(outs[i][bin]);
+        }
+    });
+
+
+
+
+
+    $tab_micro.append($slider_div);
     $tab_micro.append($outputs);
 }
 
