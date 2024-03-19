@@ -149,7 +149,6 @@ let outs = [];
 function createOutputFields(){
     const $output_div = $("<div>").addClass("output-div");
 
-
     let types = ["INDUTNY","DSP","OOURA","KISS","OINK"];
 
     $outputs = $('<div>').attr("id","outputs");
@@ -195,6 +194,8 @@ function createOutputFields(){
             let type = types[i];
             $("#output_"+type).val(outs[i][bin]);
         }
+
+        console.log(outs);
     });
 
     $slider_div.appendTo($output_div);

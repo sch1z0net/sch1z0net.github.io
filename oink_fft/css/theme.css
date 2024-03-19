@@ -396,6 +396,12 @@ select {
   flex-direction: column;
 }
 
+#output-div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #outputs{
     display: flex;
     flex-direction: column;
@@ -426,6 +432,7 @@ label {
     width: 200px;
     border-radius: 10px
 }
+
 
 
 .slider-container {
