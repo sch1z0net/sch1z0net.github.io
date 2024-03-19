@@ -223,8 +223,8 @@ function createOutputFields(){
         }
 
         for (let i = 0; i < types.length; i++) {
-            if(vals.get(type) == null){ continue; }
             let type = types[i];
+            if(vals.get(type) == null){ continue; }
             let diff = Math.abs(vals.get(type)-vals.get(types[ref_output]));
             if(diff <= 0.0000001){
                 $("#output_"+type).css("background-color", "rgb(100,250,100)");
