@@ -144,7 +144,7 @@ function updateChart(name, results) {
     }
 }
 
-let outs = [];
+let output_values = [];
 let ref_output = 4;
 function createOutputFields(){
     const $output_div = $("<div>").attr("id","output-div");
@@ -159,7 +159,8 @@ function createOutputFields(){
 
         let outputRow = $('<div>').addClass('output-row');
         let label = $('<label>').attr('for', `output_${type}`).text(`${type}:`);
-        let inputText = $('<input>').attr({type: 'text', id: `output_${type}`}).addClass('float-input');
+        let outputRE = $('<input>').attr({type: 'text', id: `outputRE_${type}`}).addClass('float-input');
+        let outputIM = $('<input>').attr({type: 'text', id: `outputIM_${type}`}).addClass('float-input');
         let checkbox = $('<input>').attr({type: 'checkbox', id: `check_${type}`}).addClass('check_ref');
         checkbox.on('change',function() {
             $('.check_ref').prop('checked', false);
@@ -168,7 +169,7 @@ function createOutputFields(){
             $("#out_slider").trigger('input');
         });
 
-        outputRow.append(label, inputText, checkbox);
+        outputRow.append(label, outputRE, outputIM, checkbox);
         $outputs.append(outputRow);
     }
     $outputs.appendTo($output_div);
@@ -179,7 +180,7 @@ function createOutputFields(){
     // Create container div
     const $slider_div = $("<div>").addClass("slider-container");
     // Create slider element
-    const $slider = $("<input>").attr({type: "range", min: 0, max: 1023, value: 0, id: "out_slider"});
+    const $slider = $("<input>").attr({type: "range", min: 0, max: 511, value: 0, id: "out_slider"});
     // Create div to display slider value
     const $sliderValue = $("<div>").addClass("slider-value").attr("id", "sliderValue").text("50");
     // Append slider and slider value to container
@@ -188,20 +189,21 @@ function createOutputFields(){
     $sliderValue.text($slider.val());
     // Update slider value on input change
     $slider.on("input", function() { 
-        let vals = new Map();
+        let valsRE = new Map();
+        let valsIM = new Map();
 
         let bin = parseInt($(this).val());
-
         $sliderValue.text(bin);
+        
+        // RE VALUES
         for (let i = 0; i < types.length; i++) {
-
             let type = types[i];
-            $("#output_"+type).css("background-color", "transparent");
-            let str = outs[i][bin];
+            $("#outputRE_"+type).css("background-color", "transparent");
+            let str = output_values[i][bin*2+0];
             let value = parseFloat(str);
-            vals.set(type, value);
+            valsRE.set(type, value);
             if(isNaN(value)){ 
-                $("#output_"+type).val("");
+                $("#outputRE_"+type).val("");
                 continue; 
             }
 
@@ -219,23 +221,69 @@ function createOutputFields(){
                 formatted = "+ "+formatted;
             }
             
-            $("#output_"+type).val(formatted);
+            $("#outputRE_"+type).val(formatted);
         }
 
         for (let i = 0; i < types.length; i++) {
             let type = types[i];
-            if(vals.get(type) == null){ continue; }
+            if(valsRE.get(type) == null){ continue; }
             let diff = Math.abs(vals.get(type)-vals.get(types[ref_output]));
             if(diff <= 0.0000001){
-                $("#output_"+type).css("background-color", "rgb(100,250,100)");
+                $("#outputRE_"+type).css("background-color", "rgb(100,250,100)");
             }else
             if(diff <= 0.00001){
-                $("#output_"+type).css("background-color", "rgb(210,210,100)");
+                $("#outputRE_"+type).css("background-color", "rgb(210,210,100)");
             }else
             if(diff <= 0.001){
-                $("#output_"+type).css("background-color", "rgb(210,130,100)");
+                $("#outputRE_"+type).css("background-color", "rgb(210,130,100)");
             }else{
-                $("#output_"+type).css("background-color", "rgb(210,50,50)");
+                $("#outputRE_"+type).css("background-color", "rgb(210,50,50)");
+            }
+        }
+
+        // IM VALUES
+        for (let i = 0; i < types.length; i++) {
+            let type = types[i];
+            $("#outputIM_"+type).css("background-color", "transparent");
+            let str = output_values[i][bin*2+1];
+            let value = parseFloat(str);
+            valsIM.set(type, value);
+            if(isNaN(value)){ 
+                $("#outputIM_"+type).val("");
+                continue; 
+            }
+
+            let formatted = ""+str;
+            let neg = false;
+            if(value < 0){ 
+                formatted = formatted.replace("-", ""); 
+                neg = true;
+            }
+            let spl = formatted.split(".");
+            formatted = spl[0].padStart(4, " ")+"."+spl[1];
+            if(neg){ 
+                formatted = "- "+formatted;
+            }else{
+                formatted = "+ "+formatted;
+            }
+            
+            $("#outputIM_"+type).val(formatted);
+        }
+
+        for (let i = 0; i < types.length; i++) {
+            let type = types[i];
+            if(valsIM.get(type) == null){ continue; }
+            let diff = Math.abs(vals.get(type)-vals.get(types[ref_output]));
+            if(diff <= 0.0000001){
+                $("#outputIM_"+type).css("background-color", "rgb(100,250,100)");
+            }else
+            if(diff <= 0.00001){
+                $("#outputIM_"+type).css("background-color", "rgb(210,210,100)");
+            }else
+            if(diff <= 0.001){
+                $("#outputIM_"+type).css("background-color", "rgb(210,130,100)");
+            }else{
+                $("#outputIM_"+type).css("background-color", "rgb(210,50,50)");
             }
         }
     });
