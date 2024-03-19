@@ -408,7 +408,7 @@ function runErrorComparison(){
     let out_3 = output_OOURA(ooura_oo_1024, testData64.slice()).slice();
     let out_4 = output_KISS(kiss_input_1024, kiss_fft_1024, testData64.slice()).slice();
     let out_5 = output_OINK(fftReal1024, testData32.slice()).slice();
-    outs.push(out_1,out_2,out_3,out_4,out_5);
+    output_values.push(out_1,out_2,out_3,out_4,out_5);
     
     $("#out_slider").trigger('input');
 }
