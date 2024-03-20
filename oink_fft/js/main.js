@@ -58,7 +58,7 @@ function createPerformanceTable(){
     // Create Header Text
     $("<th>").text("FFT Performance (measured in OINKS per second)").attr("colspan", 6).appendTo($trHead); // colspan to span all columns
     // Create table body
-    $tbody = $("<tbody>").appendTo($perf_table);
+    $tbody = $("<tbody>").attr("id","fft-body").appendTo($perf_table);
 
     // HEADER
     var $tr_sizes = $("<tr>").attr("id", "tr_header").appendTo($tbody); 

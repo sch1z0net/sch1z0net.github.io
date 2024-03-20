@@ -162,7 +162,7 @@ function addPerformanceRow(idname, fullname, url, results, PANELS){
         $("<td id='"+id+"' >").text( result ).appendTo($tr);
     }
     $tr.addClass('fade-up');
-    $tr.appendTo($tbody);
+    $tr.appendTo($("#fft-body"));
 }
 
 
