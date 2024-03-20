@@ -83,13 +83,13 @@ const runPerformance = async (type) => {
         for (let run = 0; run < WARMUPS; run++) {
             await measureFFT(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run]);
         }
-
+        
         // Run Measurement
         let errors = 0;
         for (let run = WARMUPS; run < RUNS+WARMUPS; run++) {
             let str = "Measure " + type;
-            str    += "(FFT "+size+")";
-            str    += "... (RUN "+(run+1-WARMUPS)+"/"+RUNS+")";
+            str    += " (FFT "+size+")";
+            str    += " ... (RUN "+(run+1-WARMUPS)+"/"+RUNS+")";
             $loading_info.text( str );
 
             let eT_slice = await measureSlicing(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run]);
@@ -151,7 +151,7 @@ function runErrorComparison(){
     let testData = generateTestData(1024);
 
     FFT_BANK.forEach((value, key) => {
-        output_values.push( value.example(testData) );
+        output_values.push( value.example(testData).slice() );
     });
     
     $("#out_slider").trigger('input');
