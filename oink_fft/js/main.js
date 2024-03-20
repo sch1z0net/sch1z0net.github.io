@@ -380,8 +380,8 @@ $(document).ready(function(){
     createPerformanceCharts();
     createOutputFields();
 
-    $chart_l = $('<button id="chart_l">←</button>').appendTo($tab_chart);
-    $chart_r = $('<button id="chart_r">→</button>').appendTo($tab_chart);
+    let $chart_l = $('<button id="chart_l">←</button>').appendTo($tab_chart);
+    let $chart_r = $('<button id="chart_r">→</button>').appendTo($tab_chart);
     $chart_l.click(function(){ $(".chart_panel").hide(); P_IDX=(P_IDX==0)?(PANELS.length-1):(P_IDX-1); $("#panel_"+PANELS[P_IDX]).show();});
     $chart_r.click(function(){ $(".chart_panel").hide(); P_IDX=(P_IDX+1)%PANELS.length; $("#panel_"+PANELS[P_IDX]).show();});
 
@@ -414,7 +414,10 @@ $(document).ready(function(){
 
 
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////// BENCHMARKING        ///////////////////////////////////////////////
 
 $(document).ready(async function(){
     $reload.click(function(){
