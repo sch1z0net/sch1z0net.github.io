@@ -134,7 +134,7 @@ async function setup(){
         }
     );
 
-    await FFT_BANK.get(PLUGIN_INDUTNY.idname).init();
+    await FFT_BANK.get(PLUGIN_INDUTNY.idname()).init();
 
     // Call each initialization function asynchronously using await
     //$loading_info.text("Initializing INDUTNY..."); await initializeINDUTNY();
