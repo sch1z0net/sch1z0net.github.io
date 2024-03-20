@@ -87,7 +87,10 @@ const runPerformance = async (type) => {
         // Run Measurement
         let errors = 0;
         for (let run = WARMUPS; run < RUNS+WARMUPS; run++) {
-            $loading_info.text("Measure " + type "(FFT "+size+")" + "... (RUN "+(run+1-WARMUPS)+"/"+RUNS+")");
+            let str = "Measure " + type;
+            str    += "(FFT "+size+")";
+            str    += "... (RUN "+(run+1-WARMUPS)+"/"+RUNS+")";
+            $loading_info.text( str );
 
             let eT_slice = await measureSlicing(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run]);
             let eT_FFT   = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run]);
