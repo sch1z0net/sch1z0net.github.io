@@ -1,3 +1,7 @@
+//////////////////////////////////////
+//////////////////////////////////////
+// IMPORT THE FFT LIBRARY
+//////////////////////////////////////
 import * as INDUTNY_ from '/oink_fft/js/indutny/fft.js';
 
 //////////////////////////////////////
@@ -50,7 +54,8 @@ const PLUGIN_INDUTNY = {
   example:  function(testData) { return perform_INDUTNY(indutny_f_1024,  indutny_out_1024,  testData); },
 };
 
+//////////////////////////////////////
+//////////////////////////////////////
+// EXPORT
+//////////////////////////////////////
 export default PLUGIN_INDUTNY;
-
-// Test if PLUGIN implements the INTERFACE
-//console.log(implementsInterface(PLUGIN_INDUTNY, interface));

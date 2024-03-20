@@ -1,3 +1,5 @@
+import { setup } from './setup.js';
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -221,20 +223,5 @@ function runErrorComparison(){
     $("#out_slider").trigger('input');
 }
 
-
-
-$(document).ready(async function(){
-    $reload.click(function(){
-       $loading.show();
-       $reload.hide();
-       createPerformanceTable();
-       createPerformanceCharts();
-       resetData();
-       runErrorComparison();
-       runAllPerformanceTests();
-    });
-    
-    await setup();
-    await runErrorComparison();
-    await runAllPerformanceTests();
-});
+export runAllPerformanceTests;
+export runErrorComparison;

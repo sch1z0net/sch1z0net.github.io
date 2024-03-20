@@ -61,3 +61,4 @@ async function setup(){
     $loading_info.text("Initializing OINK...");    Module_OINK_ = await Module_OINK(); await initializeModuleOINK();*/
 };
 
+export default setup;
