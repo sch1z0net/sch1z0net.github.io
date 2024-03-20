@@ -27,7 +27,7 @@ function highlightComparison(){
     }
     for (var size = 128; size <= MAX_PERF_SIZE; size *= 2) {
          FFT_BANK.forEach((value, key) => {
-               updateMax(size, key.res.get(size), key.idname);
+               updateMax(size, value.res.get(size), value.idname);
          });
     }
     for (var size = 128; size <= MAX_PERF_SIZE; size *= 2) {
@@ -100,10 +100,10 @@ async function runAllPerformanceTests(){
     }
 
     FFT_BANK.forEach(async (value, key) => {
-        let idname   = key.idname;
-        let fullname = key.fullname;
-        let url      = key.url;
-        let results  = key.res;
+        let idname   = value.idname;
+        let fullname = value.fullname;
+        let url      = value.url;
+        let results  = value.res;
 
         $loading_info.text("Measure "+idname+"..."); 
         await runPerformance(idname);
