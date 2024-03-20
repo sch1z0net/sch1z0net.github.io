@@ -376,10 +376,8 @@ $(document).ready(function(){
     $stats_footer.append($runsSelect.val(8));
 
     $reload = $('<button id="reload">Reload</button>').hide().appendTo($stats_footer);
-    
-    createPerformanceTable();
-    createPerformanceCharts();
-    createOutputFields();
+
+
 
     let $chart_l = $('<button id="chart_l">←</button>').appendTo($tab_chart);
     let $chart_r = $('<button id="chart_r">→</button>').appendTo($tab_chart);
@@ -432,6 +430,11 @@ $(document).ready(async function(){
     });
     
     await setup(FFT_BANK);
+
+    await createPerformanceTable();
+    await createPerformanceCharts();
+    await createOutputFields();
+
     await runErrorComparison();
     await runAllPerformanceTests();
 });
