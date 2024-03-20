@@ -16,6 +16,7 @@ var $title;
 var $subtitle;
 var $stats_div;
 var $stats_head;
+var $stats_footer;
 
 var $tab_table;
 var $tab_chart;
