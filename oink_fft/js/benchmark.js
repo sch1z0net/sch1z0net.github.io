@@ -54,7 +54,7 @@ function highlightComparison(){
          MAX_.set(size, {name: '-', ops: 0 });
     }
     for (let size of PANELS) {
-         FFT_BANK.forEach((key, value) => {
+         FFT_BANK.forEach((value, key) => {
                updateMax(size, value.res.get(size), value.idname);
          });
     }
@@ -67,7 +67,7 @@ function highlightComparison(){
 
 function resetData(){
     SIGNALS_FOR_EACH_FFT = new Map();
-    FFT_BANK.forEach((key, value) => {
+    FFT_BANK.forEach((value, key) => {
         value.res = new Map();
     });
 }
@@ -87,7 +87,7 @@ const runPerformance = async (type) => {
         let errors = 0;
         for (let run = WARMUPS; run < RUNS+WARMUPS; run++) {
             let eT_slice = await measureSlicing(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run]);
-            let eT_FFT = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run]);
+            let eT_FFT   = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run]);
             let diff = eT_FFT - eT_slice;
             if(diff <= 0){ 
                 if(errors < 5){ run--; errors++; continue; }
@@ -145,7 +145,7 @@ async function runAllPerformanceTests(){
 function runErrorComparison(){
     let testData = generateTestData(1024);
 
-    FFT_BANK.forEach((key, value) => {
+    FFT_BANK.forEach((value, key) => {
         output_values.push( value.example(testData) );
     });
     
