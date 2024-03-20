@@ -133,7 +133,7 @@ const runPerformance = async (FFT_BANK, type, PARAMS) => {
                 if(errors < 5){ run--; errors++; continue; }
                 avrg_ops = -1; break;
             }
-            let ops = Math.floor(1000*NUM_OPS  / diff); //let ops = Math.floor(NUM_OPS  / (diff / 1000));
+            let ops = Math.floor(1000*PARAMS.NUM_OPS  / diff);
             avrg_ops += ops;
             if (    isNaN(avrg_ops)){ avrg_ops = -1; break; }
             if (!isFinite(avrg_ops)){ break; }
