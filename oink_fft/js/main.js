@@ -440,9 +440,11 @@ $(document).ready(async function(){
        $reload.show();
        $loading_info.text("Finished!"); 
     });
-    
-    await setup(FFT_BANK);
 
+    await setup(FFT_BANK);
+    await $reload.trigger('click');
+    
+    /*
     await createPerformanceTable();
     await createPerformanceCharts();
     await createOutputFields();
@@ -453,6 +455,7 @@ $(document).ready(async function(){
     $loading.hide();
     $reload.show();
     $loading_info.text("Finished!"); 
+    */
 });
 
 
