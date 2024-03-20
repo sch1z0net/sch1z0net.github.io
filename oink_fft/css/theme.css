@@ -469,6 +469,11 @@ section{
 #section_usage{
     padding-top: 20px;
     background-color: #C89B;
+    text-align: center;
+
+    font-family: "Sue Ellen Francisco", cursive !important;
+    font-style: normal;
+    font-size: 50px;
 }
 
 
