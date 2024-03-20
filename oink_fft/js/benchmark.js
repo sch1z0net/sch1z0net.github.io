@@ -124,8 +124,6 @@ function runErrorComparison(){
     FFT_BANK.forEach((value, key) => {
         output_values.push( value.example(testData) );
     });
-
-    output_values.push(out_1,out_2,out_3,out_4,out_5);
     
     $("#out_slider").trigger('input');
 }
