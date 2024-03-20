@@ -99,17 +99,17 @@ async function runAllPerformanceTests(){
        j++;
     }
 
-    FFT_BANK.forEach(async (value, key) => {
+    for (let [key, value] of FFT_BANK) {
         let idname   = value.idname;
         let fullname = value.fullname;
         let url      = value.url;
         let results  = value.res;
 
-        $loading_info.text("Measure "+idname+"..."); 
+        $loading_info.text("Measure " + idname + "...");
         await runPerformance(idname);
         await addPerformanceRow(idname, fullname, url, results);
         await updateChart(idname, results);
-    });
+    }
 
     $loading_info.text("Finished!"); 
     
