@@ -121,7 +121,8 @@ async function runAllPerformanceTests(){
        SIGNALS_FOR_EACH_FFT.set(size, SIGNALS);
     }
 
-    for (let [key, value] of FFT_BANK) {
+    for (let i = 0; i < FFT_BANK.length; i++) {
+        let value = FFT_BANK[i];
         let idname   = value.idname;
         let fullname = value.fullname;
         let url      = value.url;

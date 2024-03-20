@@ -178,6 +178,8 @@ const measureSlicing = (type, fftSize, testData) => {
     }else 
     if(precision == "float"){
         perform_slice(fftSize, testData32);
+    }else{
+        throw Error("wrong precision defined in setup")
     }
     const endTime = performance.now(); // End time
     const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
