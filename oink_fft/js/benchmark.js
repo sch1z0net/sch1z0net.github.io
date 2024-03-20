@@ -57,7 +57,7 @@ const perform_slice = (fftSize, testData, NUM_OPS) => {
 //////////////////////////////////////
 // Measure the time taken to perform FFT operations
 //////////////////////////////////////
-const measureSlicing = (type, fftSize, testData, FFT_BANK) => {
+const measureSlicing = (FFT_BANK, type, fftSize, testData) => {
     let testData32 = testData.slice();
     let testData64 = Float64Array.from(testData.slice());
 
@@ -78,7 +78,7 @@ const measureSlicing = (type, fftSize, testData, FFT_BANK) => {
     return elapsedTime;
 };
 
-const measureFFT = (type, size, testData, NUM_OPS, FFT_BANK) => {
+const measureFFT = (FFT_BANK, type, size, testData, NUM_OPS) => {
     let tD;
     let func;
     let precision = FFT_BANK.get(type).precision;
@@ -108,26 +108,26 @@ const measureFFT = (type, size, testData, NUM_OPS, FFT_BANK) => {
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-const runPerformance = async (type, RUNS, NUM_OPS, FFT_BANK, PANELS) => {
-    for (let size of PANELS) {
+const runPerformance = async (FFT_BANK, type, PARAMS) => {
+    for (let size of PARAMS.PANELS) {
         let avrg_ops = 0;
 
         $loading_info.text("Warm Up " + type + "...");
         // Warm up
-        for (let run = 0; run < WARMUPS; run++) {
-            await measureFFT(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run]);
+        for (let run = 0; run < PARAMS.WARMUPS; run++) {
+            await measureFFT(FFT_BANK, type, size, SIGNALS_FOR_EACH_FFT.get(size)[run], PARAMS.NUM_OPS);
         }
         
         // Run Measurement
         let errors = 0;
-        for (let run = WARMUPS; run < RUNS+WARMUPS; run++) {
+        for (let run = PARAMS.WARMUPS; run < PARAMS.RUNS+PARAMS.WARMUPS; run++) {
             let str = "Measure " + type;
             str    += " (FFT "+size+")";
-            str    += " ... (RUN "+(run+1-WARMUPS)+"/"+RUNS+")";
+            str    += " ... (RUN "+(run+1-PARAMS.WARMUPS)+"/"+RUNS+")";
             $loading_info.text( str );
 
-            let eT_slice = await measureSlicing(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run], NUM_OPS, FFT_BANK);
-            let eT_FFT   = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run], NUM_OPS, FFT_BANK);
+            let eT_slice = await measureSlicing(FFT_BANK, type, size, SIGNALS_FOR_EACH_FFT.get(size)[run], PARAMS.NUM_OPS);
+            let eT_FFT   = await measureFFT(FFT_BANK, type, size, SIGNALS_FOR_EACH_FFT.get(size)[run], PARAMS.NUM_OPS);
             let diff = eT_FFT - eT_slice;
             if(diff <= 0){ 
                 if(errors < 5){ run--; errors++; continue; }
@@ -148,10 +148,10 @@ const runPerformance = async (type, RUNS, NUM_OPS, FFT_BANK, PANELS) => {
 };
 
 
-async function runAllPerformanceTests(FFT_BANK, RUNS, NUM_OPS, PANELS){
-    for (let size of PANELS) {
+async function runAllPerformanceTests(FFT_BANK, PARAMS){
+    for (let size of PARAMS.PANELS) {
        var SIGNALS = [];
-       for(let i = 0; i<RUNS+WARMUPS; i++){
+       for(let i = 0; i<PARAMS.RUNS+PARAMS.WARMUPS; i++){
           let signal = generateTestData(size);
           SIGNALS.push(signal);
        }
@@ -164,7 +164,7 @@ async function runAllPerformanceTests(FFT_BANK, RUNS, NUM_OPS, PANELS){
         let url      = value.url;
         let results  = value.res;
 
-        await runPerformance(idname, RUNS, NUM_OPS);
+        await runPerformance(FFT_BANK, idname, PARAMS);
         await addPerformanceRow(idname, fullname, url, results);
         await updateChart(idname, results);
     }
