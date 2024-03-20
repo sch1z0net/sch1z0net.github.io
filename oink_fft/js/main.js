@@ -16,7 +16,11 @@ var $title;
 var $subtitle;
 var $stats_div;
 var $stats_head;
+
 var $tab_table;
+var $tab_chart;
+var $tab_micro;
+
 var $perf_table;
 var $outputs;
 var $tbody;
