@@ -2,7 +2,7 @@ const FFT_BANK = new Map();
 
 
 // Define an interface-like object
-const interface = {
+const plugin = {
   idname:   function() { },
   fullname: function() { },
   url:      function() { },
