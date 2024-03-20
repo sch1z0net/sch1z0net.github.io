@@ -49,9 +49,9 @@ let dsp_fft_2048;
 
 function initializeDSP(){
     return new Promise((resolve, reject) => {
-        dsp_fft_128 = new FFT(128, 44100);
-        dsp_fft_256 = new FFT(256, 44100);
-        dsp_fft_512 = new FFT(512, 44100);
+        dsp_fft_128  = new FFT(128, 44100);
+        dsp_fft_256  = new FFT(256, 44100);
+        dsp_fft_512  = new FFT(512, 44100);
         dsp_fft_1024 = new FFT(1024, 44100);
         dsp_fft_2048 = new FFT(2048, 44100);
         resolve();
@@ -88,9 +88,9 @@ let ooura_oo_2048;
 
 function initializeOOURA(){
     return new Promise((resolve, reject) => {
-        ooura_oo_128 = new Ooura(128, {"type":"real", "radix":4} );
-        ooura_oo_256 = new Ooura(256, {"type":"real", "radix":4} );
-        ooura_oo_512 = new Ooura(512, {"type":"real", "radix":4} );
+        ooura_oo_128  = new Ooura(128,  {"type":"real", "radix":4} );
+        ooura_oo_256  = new Ooura(256,  {"type":"real", "radix":4} );
+        ooura_oo_512  = new Ooura(512,  {"type":"real", "radix":4} );
         ooura_oo_1024 = new Ooura(1024, {"type":"real", "radix":4} );
         ooura_oo_2048 = new Ooura(2048, {"type":"real", "radix":4} );
         resolve();
@@ -246,24 +246,6 @@ const measureFFT = (type, size, testData) => {
 
 const FFT_BANK = new Map();
 
-FFT_BANK.set("KISS",{
-    idname: "KISS", 
-    fullname: "KISS (mborgerding)", 
-    url: "https://github.com/mborgerding/kissfft", 
-    res: new Map(),
-    example: example_KISS,
-    precision: "double"
-});
-
-FFT_BANK.set("OINK",{
-    idname: "OINK", 
-    fullname: "OINK (sch1z0net)", 
-    url: "https://github.com/sch1z0net/oink", 
-    res: new Map(),
-    example: example_OINK,
-    precision: "float"
-});
-
 FFT_BANK.set("INDUTNY",{
     idname: "INDUTNY", 
     fullname: "FFT.JS (indutny)", 
@@ -289,6 +271,24 @@ FFT_BANK.set("OOURA",{
     res: new Map(),
     example: example_OOURA,
     precision: "double"
+});
+
+FFT_BANK.set("KISS",{
+    idname: "KISS", 
+    fullname: "KISS (mborgerding)", 
+    url: "https://github.com/mborgerding/kissfft", 
+    res: new Map(),
+    example: example_KISS,
+    precision: "double"
+});
+
+FFT_BANK.set("OINK",{
+    idname: "OINK", 
+    fullname: "OINK (sch1z0net)", 
+    url: "https://github.com/sch1z0net/oink", 
+    res: new Map(),
+    example: example_OINK,
+    precision: "float"
 });
 
 async function setup(){
