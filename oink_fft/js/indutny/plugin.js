@@ -2,7 +2,7 @@
 //////////////////////////////////////
 // IMPORT THE FFT LIBRARY
 //////////////////////////////////////
-import * as INDUTNY_ from '/oink_fft/js/indutny/fft.js';
+import IND_FFT from '/oink_fft/js/indutny/fft.js';
 
 //////////////////////////////////////
 //////////////////////////////////////
@@ -16,15 +16,15 @@ let indutny_f_2048, indutny_out_2048;
 
 function initializeINDUTNY(){
     return new Promise((resolve, reject) => {
-        indutny_f_128 = new INDUTNY_.IND_FFT(128);
+        indutny_f_128 = new IND_FFT(128);
         indutny_out_128 = indutny_f_128.createComplexArray();
-        indutny_f_256 = new INDUTNY_.IND_FFT(256);
+        indutny_f_256 = new IND_FFT(256);
         indutny_out_256 = indutny_f_256.createComplexArray();
-        indutny_f_512 = new INDUTNY_.IND_FFT(512);
+        indutny_f_512 = new IND_FFT(512);
         indutny_out_512 = indutny_f_512.createComplexArray();
-        indutny_f_1024 = new INDUTNY_.IND_FFT(1024);
+        indutny_f_1024 = new IND_FFT(1024);
         indutny_out_1024 = indutny_f_1024.createComplexArray();
-        indutny_f_2048 = new INDUTNY_.IND_FFT(2048);
+        indutny_f_2048 = new IND_FFT(2048);
         indutny_out_2048 = indutny_f_2048.createComplexArray();
         resolve();
     });
