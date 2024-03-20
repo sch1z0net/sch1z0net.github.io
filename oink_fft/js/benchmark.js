@@ -148,6 +148,6 @@ $(document).ready(async function(){
        runAllPerformanceTests();
     });
 
-    await runErrorComparison();
-    await runAllPerformanceTests();
+    //await runErrorComparison();
+    //await runAllPerformanceTests();
 });
