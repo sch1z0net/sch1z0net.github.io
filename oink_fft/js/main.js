@@ -431,7 +431,7 @@ $(document).ready(async function(){
          PANELS: PANELS
        }
 
-       resetData();
+       resetData(FFT_BANK);
        runErrorComparison(FFT_BANK, output_values);
        runAllPerformanceTests(FFT_BANK, PARAMS, charts);
        highlightComparison(FFT_BANK);
