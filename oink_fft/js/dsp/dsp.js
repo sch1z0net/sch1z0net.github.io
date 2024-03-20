@@ -2300,6 +2300,7 @@ Reverb.prototype.process = function (interleavedSamples){
   return outputSamples;
 };
 
+/*
 if (typeof module !== 'undefined' && module && module.exports) {
   module.exports = {
     DSP: DSP,
@@ -2319,4 +2320,7 @@ if (typeof module !== 'undefined' && module && module.exports) {
     SingleDelay: SingleDelay,
     Reverb: Reverb
   };
-}
+}*/
+
+
+export default FFT;
