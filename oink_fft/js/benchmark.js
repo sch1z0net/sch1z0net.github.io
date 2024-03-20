@@ -80,11 +80,7 @@ const runPerformance = async (type) => {
         }
 
         avrg_ops = Math.floor(avrg_ops / RUNS);
-        if (type == "INDUTNY") { INDUTNY_FFT_RESULTS.set(size, avrg_ops); }
-        if (type == "OOURA") { OOURA_FFT_RESULTS.set(size, avrg_ops); }
-        if (type == "DSP") { DSP_FFT_RESULTS.set(size, avrg_ops); }
-        if (type == "KISS") { KISS_FFT_RESULTS.set(size, avrg_ops); }
-        if (type == "OINK") { OINK_FFT_RESULTS.set(size, avrg_ops); }
+        FFT_BANK.get(type).res.set(size, avrg_ops);
         s++;
     }
 };
@@ -105,52 +101,18 @@ async function runAllPerformanceTests(){
        j++;
     }
 
-    // After all initialization is done, run performance tests and add performance rows
-    $loading_info.text("Measure INDUTNY..."); 
-    await runPerformance("INDUTNY");
-    await addPerformanceRow(
-        "FFT", 
-        "FFT.JS (indutny)", 
-        "https://github.com/indutny/fft.js/", 
-        INDUTNY_FFT_RESULTS
-    );
-    await updateChart("INDUTNY", INDUTNY_FFT_RESULTS);
-    $loading_info.text("Measure DSP..."); 
-    await runPerformance("DSP");
-    await addPerformanceRow(
-        "DSP", 
-        "DSP.JS (corbanbrook)", 
-        "https://github.com/corbanbrook/dsp.js/",
-        DSP_FFT_RESULTS
-    );
-    await updateChart("DSP", DSP_FFT_RESULTS);
-    $loading_info.text("Measure OOURA..."); 
-    await runPerformance("OOURA");
-    await addPerformanceRow(
-        "OOURA", 
-        "OOURA (audioplastic)", 
-        "https://github.com/audioplastic/ooura",
-        OOURA_FFT_RESULTS
-    );
-    await updateChart("OOURA", OOURA_FFT_RESULTS);
-    $loading_info.text("Measure KISS..."); 
-    await runPerformance("KISS");    
-    await addPerformanceRow(
-        "KISS", 
-        "KISS (mborgerding)", 
-        "https://github.com/mborgerding/kissfft",
-        KISS_FFT_RESULTS
-    );
-    await updateChart("KISS", KISS_FFT_RESULTS);
-    $loading_info.text("Measure OINK..."); 
-    await runPerformance("OINK");    
-    await addPerformanceRow(
-        "OINK", 
-        "OINK (sch1z0net)", 
-        "https://github.com/sch1z0net/oink",
-        OINK_FFT_RESULTS
-    );
-    await updateChart("OINK", OINK_FFT_RESULTS);
+    for(let i = 0; i<FFT_BANK.length; i++){
+        let idname   = FFT_BANK[i].idname;
+        let fullname = FFT_BANK[i].fullname;
+        let url      = FFT_BANK[i].url;
+        let results  = FFT_BANK[i].res;
+
+        $loading_info.text("Measure "+idname+"..."); 
+        await runPerformance(idname);
+        await addPerformanceRow(idname, fullname, url, results);
+        await updateChart(idname, results);
+    }
+
     $loading_info.text("Finished!"); 
     
     await highlightComparison();

@@ -266,3 +266,43 @@ const measureFFT = (type, size, testData) => {
 
     return elapsedTime;
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const FFT_BANK = new Map();
+
+FFT_BANK.set("INDUTNY",{
+    idname: "INDUTNY", 
+    fullname: "FFT.JS (indutny)", 
+    url: "https://github.com/indutny/fft.js/", 
+    res: INDUTNY_FFT_RESULTS 
+});
+
+FFT_BANK.set("DSP",{
+    idname: "DSP", 
+    fullname: "DSP.JS (corbanbrook)", 
+    url: "https://github.com/corbanbrook/dsp.js/", 
+    res: DSP_FFT_RESULTS
+});
+
+FFT_BANK.set("OOURA",{
+    idname: "OOURA", 
+    fullname: "OOURA (audioplastic)", 
+    url: "https://github.com/audioplastic/ooura", 
+    res: OOURA_FFT_RESULTS
+});
+
+FFT_BANK.set("KISS",{
+    idname: "KISS", 
+    fullname: "KISS (mborgerding)", 
+    url: "https://github.com/mborgerding/kissfft", 
+    res: KISS_FFT_RESULTS
+});
+
+FFT_BANK.set("OINK",{
+    idname: "OINK", 
+    fullname: "OINK (sch1z0net)", 
+    url: "https://github.com/sch1z0net/oink", 
+    res: OINK_FFT_RESULTS
+});
+
