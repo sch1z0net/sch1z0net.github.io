@@ -1,6 +1,3 @@
-const FFT_BANK = new Map();
-
-
 // Define an interface-like object
 const plugin = {
   idname:   function() { },
@@ -27,7 +24,7 @@ function implementsInterface(obj, intf) {
 }
 
 
-async function registerPlugin(PLUGIN){
+async function registerPlugin(PLUGIN, FFT_BANK){
     console.log( "REGISTER and INIT "+PLUGIN.fullname() );
 
     await FFT_BANK.set(
@@ -51,4 +48,4 @@ async function registerPlugin(PLUGIN){
     await FFT_BANK.get(PLUGIN_INDUTNY.idname()).init()
 }
 
-export {FFT_BANK, registerPlugin};
+export default registerPlugin;

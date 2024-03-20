@@ -1,5 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
+import registerPlugin from './interface.js'
 import PLUGIN_INDUTNY from './indutny/plugin.js'
 
 /*
@@ -50,8 +51,8 @@ FFT_BANK.set("OINK",{
 });
 */
 
-async function setup(){
-    await registerPlugin(PLUGIN_INDUTNY);
+async function setup(FFT_BANK){
+    await registerPlugin(PLUGIN_INDUTNY, FFT_BANK);
 
     // Call each initialization function asynchronously using await
     //$loading_info.text("Initializing INDUTNY..."); await initializeINDUTNY();
