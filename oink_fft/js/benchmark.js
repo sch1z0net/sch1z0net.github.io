@@ -178,7 +178,7 @@ const runPerformance = async (type) => {
 };
 
 
-async function runAllPerformanceTests(){
+async function runAllPerformanceTests(FFT_BANK){
     NUM_OPS = parseInt($numOpsSelect.val());
     RUNS    = parseInt($runsSelect.val());
 
@@ -211,7 +211,7 @@ async function runAllPerformanceTests(){
 }
 
 
-function runErrorComparison(){
+function runErrorComparison(FFT_BANK){
     let testData = generateTestData(1024);
 
     FFT_BANK.forEach((value, key) => {
