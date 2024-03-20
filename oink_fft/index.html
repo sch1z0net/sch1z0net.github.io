@@ -31,7 +31,37 @@
         <h2>Usage</h2>
         
 	</section>
-
+    <script>
+        // Function to scroll to the next section
+        function scrollToNextSection() {
+            // Get the current scroll position
+            const currentScroll = window.scrollY || window.pageYOffset;
+            // Get the height of the viewport
+            const windowHeight = window.innerHeight;
+            // Calculate the threshold (e.g., 80% of the viewport height)
+            const scrollThreshold = windowHeight * 0.8;
+            
+            // Find the next section
+            const sections = document.querySelectorAll('section');
+            let nextSection = null;
+            for (let i = 0; i < sections.length; i++) {
+                const section = sections[i];
+                const sectionTop = section.offsetTop;
+                if (sectionTop > currentScroll + scrollThreshold) {
+                    nextSection = section;
+                    break;
+                }
+            }
+            
+            // Scroll to the next section if found
+            if (nextSection) {
+                nextSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        // Add scroll event listener to trigger scroll to next section
+        window.addEventListener('scroll', scrollToNextSection);
+    </script>
 
 
 
