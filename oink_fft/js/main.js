@@ -458,7 +458,7 @@ $(document).ready(async function(){
        NUM_OPS = parseInt($numOpsSelect.val());
        RUNS    = parseInt($runsSelect.val());
        runErrorComparison(FFT_BANK, output_values);
-       runAllPerformanceTests(FFT_BANK, RUNS, NUM_OPS);
+       runAllPerformanceTests(FFT_BANK, RUNS, NUM_OPS, PANELS);
        highlightComparison(FFT_BANK);
     });
     
@@ -469,7 +469,7 @@ $(document).ready(async function(){
     await createOutputFields();
 
     await runErrorComparison(FFT_BANK, output_values);
-    await runAllPerformanceTests(FFT_BANK, RUNS, NUM_OPS);
+    await runAllPerformanceTests(FFT_BANK, RUNS, NUM_OPS, PANELS);
     await highlightComparison(FFT_BANK);
 });
 

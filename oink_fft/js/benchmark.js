@@ -108,7 +108,7 @@ const measureFFT = (type, size, testData, NUM_OPS, FFT_BANK) => {
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-const runPerformance = async (type, RUNS, NUM_OPS, FFT_BANK) => {
+const runPerformance = async (type, RUNS, NUM_OPS, FFT_BANK, PANELS) => {
     for (let size of PANELS) {
         let avrg_ops = 0;
 
@@ -148,7 +148,7 @@ const runPerformance = async (type, RUNS, NUM_OPS, FFT_BANK) => {
 };
 
 
-async function runAllPerformanceTests(FFT_BANK, RUNS, NUM_OPS){
+async function runAllPerformanceTests(FFT_BANK, RUNS, NUM_OPS, PANELS){
     for (let size of PANELS) {
        var SIGNALS = [];
        for(let i = 0; i<RUNS+WARMUPS; i++){
