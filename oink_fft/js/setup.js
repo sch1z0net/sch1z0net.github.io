@@ -116,9 +116,8 @@ FFT_BANK.set("OINK",{
 */
 async function setup(){
 
-
     await FFT_BANK.set(
-        PLUGIN_INDUTNY.idname,
+        PLUGIN_INDUTNY.idname(),
         {
             idname:   PLUGIN_INDUTNY.idname(), 
             fullname: PLUGIN_INDUTNY.fullname(), 
