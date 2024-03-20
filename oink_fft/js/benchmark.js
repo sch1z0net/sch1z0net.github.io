@@ -99,7 +99,7 @@ async function runAllPerformanceTests(){
        j++;
     }
 
-    FFT_BANK.forEach((value, key) => {
+    FFT_BANK.forEach(async (value, key) => {
         let idname   = key.idname;
         let fullname = key.fullname;
         let url      = key.url;
