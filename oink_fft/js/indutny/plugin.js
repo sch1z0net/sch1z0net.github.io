@@ -34,7 +34,7 @@ const perform_INDUTNY = (instance, out, testData) => {
 //////////////////////////////////////
 // IMPLEMENT GIVEN INTERFACE
 //////////////////////////////////////
-const PLUGIN_INDUTNY = {
+export const PLUGIN_INDUTNY = {
   idname:   function() { return "INDUTNY" },
   fullname: function() { return "FFT.JS (indunty)"},
   url:      function() { return "https://github.com/indutny/fft.js/" },
@@ -50,4 +50,4 @@ const PLUGIN_INDUTNY = {
 
 
 // Test if PLUGIN implements the INTERFACE
-console.log(implementsInterface(PLUGIN_INDUTNY, interface));
+//console.log(implementsInterface(PLUGIN_INDUTNY, interface));

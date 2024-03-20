@@ -72,6 +72,70 @@ function resetData(){
     });
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////
+//////////////////////////////////////
+// Only Copy per Slicing
+//////////////////////////////////////
+const perform_slice = (fftSize, testData) => {
+    for (let i = 0; i < NUM_OPS; i++) { testData.slice(); }
+};
+
+
+//////////////////////////////////////
+//////////////////////////////////////
+// Measure the time taken to perform FFT operations
+//////////////////////////////////////
+const measureSlicing = (type, fftSize, testData) => {
+    let testData32 = testData.slice();
+    let testData64 = Float64Array.from(testData.slice());
+
+    let precision = FFT_BANK.get(type).precision;
+    
+    const startTime = performance.now(); // Start time
+    if(precision == "double"){
+        perform_slice(fftSize, testData64);
+    }else 
+    if(precision == "float"){
+        perform_slice(fftSize, testData32);
+    }else{
+        throw Error("wrong precision defined in setup")
+    }
+    const endTime = performance.now(); // End time
+    const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
+
+    return elapsedTime;
+};
+
+const measureFFT = (type, size, testData) => {
+    let tD;
+    let func;
+    let precision = FFT_BANK.get(type).precision;
+    if (precision == "float"){
+        tD = testData.slice();
+    }else 
+    if(precsion == "double"){
+        tD = Float64Array.from(testData.slice());
+    }else{
+        throw Error("wrong precision defined in setup")
+    }
+
+    if(size ==  128){ func = () => { FFT_BANK.get(type).fft128(tD);  }; }
+    if(size ==  256){ func = () => { FFT_BANK.get(type).fft256(tD);  }; }
+    if(size ==  512){ func = () => { FFT_BANK.get(type).fft512(tD);  }; }
+    if(size == 1024){ func = () => { FFT_BANK.get(type).fft1024(tD); }; }
+    if(size == 2048){ func = () => { FFT_BANK.get(type).fft2048(tD); }; }
+
+    const startTime = performance.now(); // Start time
+    for (let i = 0; i < NUM_OPS; i++){
+        func();
+    }
+    const endTime = performance.now(); // End time
+    const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
+
+    return elapsedTime;
+};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 const runPerformance = async (type) => {
