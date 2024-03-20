@@ -117,7 +117,7 @@ FFT_BANK.set("OINK",{
 async function setup(){
 
 
-    FFT_BANK.set(
+    await FFT_BANK.set(
         PLUGIN_INDUTNY.idname,
         {
             idname:   PLUGIN_INDUTNY.idname(), 
@@ -135,7 +135,7 @@ async function setup(){
         }
     );
 
-    FFT_BANK.get(PLUGIN_INDUTNY.idname).init();
+    await FFT_BANK.get(PLUGIN_INDUTNY.idname).init();
 
     // Call each initialization function asynchronously using await
     //$loading_info.text("Initializing INDUTNY..."); await initializeINDUTNY();
