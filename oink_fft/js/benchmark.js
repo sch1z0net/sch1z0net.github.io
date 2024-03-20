@@ -211,7 +211,7 @@ async function runAllPerformanceTests(FFT_BANK){
 }
 
 
-function runErrorComparison(FFT_BANK){
+function runErrorComparison(FFT_BANK, output_values){
     let testData = generateTestData(1024);
 
     FFT_BANK.forEach((value, key) => {

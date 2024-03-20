@@ -425,7 +425,7 @@ $(document).ready(async function(){
        createPerformanceTable();
        createPerformanceCharts();
        resetData();
-       runErrorComparison(FFT_BANK);
+       runErrorComparison(FFT_BANK, output_values);
        runAllPerformanceTests(FFT_BANK);
     });
     
@@ -435,7 +435,7 @@ $(document).ready(async function(){
     await createPerformanceCharts();
     await createOutputFields();
 
-    await runErrorComparison(FFT_BANK);
+    await runErrorComparison(FFT_BANK, output_values);
     await runAllPerformanceTests(FFT_BANK);
 });
 
