@@ -122,7 +122,7 @@ function runErrorComparison(){
     let testData = generateTestData(1024);
 
     FFT_BANK.forEach((value, key) => {
-        output_values.push( value.example() );
+        output_values.push( value.example(testData) );
     });
 
     output_values.push(out_1,out_2,out_3,out_4,out_5);
