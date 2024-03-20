@@ -147,7 +147,8 @@ $(document).ready(async function(){
        runErrorComparison();
        runAllPerformanceTests();
     });
-
-    //await runErrorComparison();
-    //await runAllPerformanceTests();
+    
+    await setup();
+    await runErrorComparison();
+    await runAllPerformanceTests();
 });
