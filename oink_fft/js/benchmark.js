@@ -39,11 +39,9 @@ function highlightComparison(){
 
 function resetData(){
     SIGNALS_FOR_EACH_FFT = [];
-    OINK_FFT_RESULTS    = new Map();
-    INDUTNY_FFT_RESULTS = new Map();
-    OOURA_FFT_RESULTS   = new Map();
-    DSP_FFT_RESULTS     = new Map();
-    KISS_FFT_RESULTS    = new Map();
+    FFT_BANK.forEach((value, key) => {
+        value.res = new Map();
+    });
 }
 
 
@@ -121,15 +119,12 @@ async function runAllPerformanceTests(){
 
 
 function runErrorComparison(){
-    let testData   = generateTestData(1024);
-    let testData32 = testData.slice();
-    let testData64 = Float64Array.from(testData.slice());
+    let testData = generateTestData(1024);
 
-    let out_1 = output_INDUTNY(indutny_f_1024, indutny_out_1024, testData32.slice()).slice();
-    let out_2 = output_DSP(dsp_fft_1024, testData64.slice()).slice();
-    let out_3 = output_OOURA(ooura_oo_1024, testData64.slice()).slice();
-    let out_4 = output_KISS(kiss_input_1024, kiss_fft_1024, testData64.slice()).slice();
-    let out_5 = output_OINK(fftReal1024, testData32.slice()).slice();
+    FFT_BANK.forEach((value, key) => {
+        output_values.push( value.example() );
+    });
+
     output_values.push(out_1,out_2,out_3,out_4,out_5);
     
     $("#out_slider").trigger('input');

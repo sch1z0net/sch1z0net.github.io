@@ -61,12 +61,13 @@ function initializeKISS(){
 };
 
 const perform_KISS = (input, instance, testData) => {
-    input.set(testData.slice()); instance.transform();
-};
-
-const output_KISS = (input, instance, testData) => {
     input.set(testData.slice()); return instance.transform();
 };
+
+const example_KISS = (testData) => {
+    let testData64 = Float64Array.from(testData.slice());
+    return perform_INDUTNY(indutny_f_1024, indutny_out_1024, testData64.slice()).slice();
+}
 
 //////////////////////////////////////
 //////////////////////////////////////
@@ -90,10 +91,6 @@ function initializeDSP(){
 }    
 
 const perform_DSP = (instance, testData) => {
-    instance.forward(testData.slice());
-};
-
-const output_DSP = (instance, testData) => {
     instance.forward(testData.slice()); 
     let result = [];
     let real = instance.real;
@@ -105,6 +102,11 @@ const output_DSP = (instance, testData) => {
 
     return result;
 };
+
+const example_DSP = (testData) => {
+    let testData64 = Float64Array.from(testData.slice());
+    return perform_DSP(dsp_fft_1024, testData64.slice()).slice();
+}
 
 //////////////////////////////////////
 //////////////////////////////////////
@@ -128,12 +130,13 @@ function initializeOOURA(){
 }
 
 const perform_OOURA = (instance, testData) => {
-    let ooura_data = testData.slice(); instance.fftInPlace(ooura_data.buffer);
-};
-
-const output_OOURA = (instance, testData) => {
     let ooura_data = testData.slice(); instance.fftInPlace(ooura_data.buffer); return ooura_data;
 };
+
+const example_OOURA = (testData) => {
+    let testData64 = Float64Array.from(testData.slice());
+    return perform_OOURA(ooura_oo_1024, testData64.slice()).slice();
+}
 
 //////////////////////////////////////
 //////////////////////////////////////
@@ -162,25 +165,24 @@ function initializeINDUTNY(){
 }
 
 const perform_INDUTNY = (instance, out, testData) => {
-    instance.realTransform(out, testData.slice());
-};
-
-const output_INDUTNY = (instance, out, testData) => {
     instance.realTransform(out, testData.slice()); return out;
 };
 
+const example_INDUTNY = (testData) => {
+    return perform_KISS(kiss_input_1024, kiss_fft_1024, testData.slice()).slice();
+}
 
 //////////////////////////////////////
 //////////////////////////////////////
 // PREPARE AND PERFORM OINK
 //////////////////////////////////////
 const perform_OINK = (instance, testData) => {
-    instance(testData.slice());
-};
-
-const output_OINK = (instance, testData) => {
     return instance(testData.slice());
 };
+
+const example_OINK = (testData) => {
+    return perform_OINK(fftReal1024, testData.slice()).slice();
+}
 
 //////////////////////////////////////
 //////////////////////////////////////
@@ -275,35 +277,40 @@ FFT_BANK.set("INDUTNY",{
     idname: "INDUTNY", 
     fullname: "FFT.JS (indutny)", 
     url: "https://github.com/indutny/fft.js/", 
-    res: INDUTNY_FFT_RESULTS 
+    res: INDUTNY_FFT_RESULTS,
+    example: example_INDUTNY
 });
 
 FFT_BANK.set("DSP",{
     idname: "DSP", 
     fullname: "DSP.JS (corbanbrook)", 
     url: "https://github.com/corbanbrook/dsp.js/", 
-    res: DSP_FFT_RESULTS
+    res: DSP_FFT_RESULTS,
+    example: example_DSP
 });
 
 FFT_BANK.set("OOURA",{
     idname: "OOURA", 
     fullname: "OOURA (audioplastic)", 
     url: "https://github.com/audioplastic/ooura", 
-    res: OOURA_FFT_RESULTS
+    res: OOURA_FFT_RESULTS,
+    example: example_OOURA
 });
 
 FFT_BANK.set("KISS",{
     idname: "KISS", 
     fullname: "KISS (mborgerding)", 
     url: "https://github.com/mborgerding/kissfft", 
-    res: KISS_FFT_RESULTS
+    res: KISS_FFT_RESULTS,
+    example: example_KISS
 });
 
 FFT_BANK.set("OINK",{
     idname: "OINK", 
     fullname: "OINK (sch1z0net)", 
     url: "https://github.com/sch1z0net/oink", 
-    res: OINK_FFT_RESULTS
+    res: OINK_FFT_RESULTS,
+    example: example_OINK
 });
 
 async function setup(){
