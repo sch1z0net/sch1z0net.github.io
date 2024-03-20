@@ -40,7 +40,7 @@ function IND_FFT(size) {
   this._data = null;
   this._inv = 0;
 }
-//module.exports = IND_FFT;
+module.exports = IND_FFT;
 
 IND_FFT.prototype.fromComplexArray = function fromComplexArray(complex, storage) {
   var res = storage || new Array(complex.length >>> 1);
