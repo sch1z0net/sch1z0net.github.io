@@ -8,6 +8,9 @@ const FFT_BANK = new Map();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
+let NUM_OPS = 7500;
+let RUNS = 8;
+let WARMUPS = 3;
 
 let PANELS = [128, 256, 512, 1024, 2048];
 let P_IDX = 0;
@@ -314,6 +317,31 @@ function createOutputFields(){
 }
 
 
+let MAX_ = new Map();
+function updateMax(size, ops, name){
+    if(MAX_.get(size).ops < ops){ 
+        MAX_.set(size, {name: name, ops: ops }); 
+    }
+}
+
+function highlightComparison(FFT_BANK){
+    for (let size of PANELS) {
+         MAX_.set(size, {name: '-', ops: 0 });
+    }
+    for (let size of PANELS) {
+         FFT_BANK.forEach((value, key) => {
+               updateMax(size, value.res.get(size), value.idname);
+         });
+    }
+    for (let size of PANELS) {
+         let best = MAX_.get(size).name;
+         let id = best+"_"+size;
+         $("#"+id).addClass("bestPerf");
+    }
+}
+
+
+
 $(document).ready(function(){
     $title_div   = $("<div>").attr("id", "title_div");
     $title       = $("<h1>").text("OINK FFT").attr("id", "title");
@@ -418,6 +446,8 @@ $(document).ready(function(){
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// BENCHMARKING        ///////////////////////////////////////////////
 
+
+
 $(document).ready(async function(){
     $reload.click(function(){
        $loading.show();
@@ -425,8 +455,11 @@ $(document).ready(async function(){
        createPerformanceTable();
        createPerformanceCharts();
        resetData();
+       NUM_OPS = parseInt($numOpsSelect.val());
+       RUNS    = parseInt($runsSelect.val());
        runErrorComparison(FFT_BANK, output_values);
-       runAllPerformanceTests(FFT_BANK);
+       runAllPerformanceTests(FFT_BANK, RUNS, NUM_OPS);
+       highlightComparison(FFT_BANK);
     });
     
     await setup(FFT_BANK);
@@ -436,7 +469,8 @@ $(document).ready(async function(){
     await createOutputFields();
 
     await runErrorComparison(FFT_BANK, output_values);
-    await runAllPerformanceTests(FFT_BANK);
+    await runAllPerformanceTests(FFT_BANK, RUNS, NUM_OPS);
+    await highlightComparison(FFT_BANK);
 });
 
 

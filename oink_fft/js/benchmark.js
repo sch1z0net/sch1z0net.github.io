@@ -2,18 +2,11 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// TESTING PERFORMANCE ///////////////////////////////////////////////
-let NUM_OPS = 7500;
-let WARMUPS = 3;
-let RUNS = 8;
-
 let DELAY_BETWEEN_ITERATIONS = 0.35;
-
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 // Reset on each new Run
 let SIGNALS_FOR_EACH_FFT = new Map();
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 // Generate test data as Float32Array
@@ -42,30 +35,7 @@ let testData4096   = generateTestData(4096);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
-let MAX_ = new Map();
-function updateMax(size, ops, name){
-    if(MAX_.get(size).ops < ops){ 
-        MAX_.set(size, {name: name, ops: ops }); 
-    }
-}
-
-function highlightComparison(){
-    for (let size of PANELS) {
-         MAX_.set(size, {name: '-', ops: 0 });
-    }
-    for (let size of PANELS) {
-         FFT_BANK.forEach((value, key) => {
-               updateMax(size, value.res.get(size), value.idname);
-         });
-    }
-    for (let size of PANELS) {
-         let best = MAX_.get(size).name;
-         let id = best+"_"+size;
-         $("#"+id).addClass("bestPerf");
-    }
-}
-
-function resetData(){
+function resetData(FFT_BANK){
     SIGNALS_FOR_EACH_FFT = new Map();
     FFT_BANK.forEach((value, key) => {
         value.res = new Map();
@@ -78,7 +48,7 @@ function resetData(){
 //////////////////////////////////////
 // Only Copy per Slicing
 //////////////////////////////////////
-const perform_slice = (fftSize, testData) => {
+const perform_slice = (fftSize, testData, NUM_OPS) => {
     for (let i = 0; i < NUM_OPS; i++) { testData.slice(); }
 };
 
@@ -87,7 +57,7 @@ const perform_slice = (fftSize, testData) => {
 //////////////////////////////////////
 // Measure the time taken to perform FFT operations
 //////////////////////////////////////
-const measureSlicing = (type, fftSize, testData) => {
+const measureSlicing = (type, fftSize, testData, FFT_BANK) => {
     let testData32 = testData.slice();
     let testData64 = Float64Array.from(testData.slice());
 
@@ -108,14 +78,14 @@ const measureSlicing = (type, fftSize, testData) => {
     return elapsedTime;
 };
 
-const measureFFT = (type, size, testData) => {
+const measureFFT = (type, size, testData, NUM_OPS, FFT_BANK) => {
     let tD;
     let func;
     let precision = FFT_BANK.get(type).precision;
     if (precision == "float"){
         tD = testData.slice();
     }else 
-    if(precsion == "double"){
+    if(precision == "double"){
         tD = Float64Array.from(testData.slice());
     }else{
         throw Error("wrong precision defined in setup")
@@ -138,7 +108,7 @@ const measureFFT = (type, size, testData) => {
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-const runPerformance = async (type) => {
+const runPerformance = async (type, RUNS, NUM_OPS, FFT_BANK) => {
     for (let size of PANELS) {
         let avrg_ops = 0;
 
@@ -156,8 +126,8 @@ const runPerformance = async (type) => {
             str    += " ... (RUN "+(run+1-WARMUPS)+"/"+RUNS+")";
             $loading_info.text( str );
 
-            let eT_slice = await measureSlicing(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run]);
-            let eT_FFT   = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run]);
+            let eT_slice = await measureSlicing(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run], NUM_OPS, FFT_BANK);
+            let eT_FFT   = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run], NUM_OPS, FFT_BANK);
             let diff = eT_FFT - eT_slice;
             if(diff <= 0){ 
                 if(errors < 5){ run--; errors++; continue; }
@@ -178,10 +148,7 @@ const runPerformance = async (type) => {
 };
 
 
-async function runAllPerformanceTests(FFT_BANK){
-    NUM_OPS = parseInt($numOpsSelect.val());
-    RUNS    = parseInt($runsSelect.val());
-
+async function runAllPerformanceTests(FFT_BANK, RUNS, NUM_OPS){
     for (let size of PANELS) {
        var SIGNALS = [];
        for(let i = 0; i<RUNS+WARMUPS; i++){
@@ -197,14 +164,12 @@ async function runAllPerformanceTests(FFT_BANK){
         let url      = value.url;
         let results  = value.res;
 
-        await runPerformance(idname);
+        await runPerformance(idname, RUNS, NUM_OPS);
         await addPerformanceRow(idname, fullname, url, results);
         await updateChart(idname, results);
     }
 
     $loading_info.text("Finished!"); 
-    
-    await highlightComparison();
 
     $loading.hide();
     $reload.show();
