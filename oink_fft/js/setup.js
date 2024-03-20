@@ -2,7 +2,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 import registerPlugin from './interface.js'
 import PLUGIN_INDUTNY from './indutny/plugin.js'
-import PLUGIN_INDUTNY from './dsp/plugin.js'
+import PLUGIN_DSP     from './dsp/plugin.js'
 
 /*
 FFT_BANK.set("INDUTNY",{
