@@ -71,23 +71,6 @@ function createPerformanceTable(){
     $tab_table.append($perf_table);
 }
 
-function addPerformanceRow(idname, fullname, url, results){
-    var $tr = $("<tr>");
-    var $dev = $("<td>").addClass("dev").text(fullname).appendTo($tr).css("background-color","rgba(200,0,0,0.2)");
-    $dev.click(function(){
-         window.open(url, '_blank');
-    });
-    for (let size of PANELS) {
-        let id = idname+"_"+size;
-        let result = parseInt(results.get(size));
-        if(result < 0){ result = "(ERROR)" }
-        $("<td id='"+id+"' >").text( result ).appendTo($tr);
-    }
-    $tr.addClass('fade-up');
-    $tr.appendTo($tbody);
-}
-
-
 let charts;
 function resetPerformanceCharts(){
     charts = new Map();
@@ -147,21 +130,6 @@ function createPerformanceCharts(){
         createPerformanceChart(size);
     }
     $("#panel_"+PANELS[P_IDX]).show();
-}
-
-function updateChart(name, results) {
-    //const labels = Array.from(results.keys());
-    const data = Array.from(results.values());
-    // Push new data to the chart
-    let k = 0;
-    for (let size of PANELS) {
-       let chart = charts.get(size);
-       chart.data.labels.push(name);
-       chart.data.datasets[0].data.push(data[k]);
-       // Update the chart
-       chart.update();
-       k++;
-    }
 }
 
 let output_values = [];
@@ -466,7 +434,7 @@ $(document).ready(async function(){
        }
 
        runErrorComparison(FFT_BANK, output_values);
-       runAllPerformanceTests(FFT_BANK, PARAMS);
+       runAllPerformanceTests(FFT_BANK, PARAMS, charts);
        highlightComparison(FFT_BANK);
        $loading.hide();
        $reload.show();
@@ -480,7 +448,7 @@ $(document).ready(async function(){
     await createOutputFields();
 
     await runErrorComparison(FFT_BANK, output_values);
-    await runAllPerformanceTests(FFT_BANK, PARAMS);
+    await runAllPerformanceTests(FFT_BANK, PARAMS, charts);
     await highlightComparison(FFT_BANK);
     $loading.hide();
     $reload.show();

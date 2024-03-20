@@ -148,7 +148,42 @@ const runPerformance = async (FFT_BANK, type, PARAMS) => {
 };
 
 
-async function runAllPerformanceTests(FFT_BANK, PARAMS){
+
+function addPerformanceRow(idname, fullname, url, results, PANELS){
+    var $tr = $("<tr>");
+    var $dev = $("<td>").addClass("dev").text(fullname).appendTo($tr).css("background-color","rgba(200,0,0,0.2)");
+    $dev.click(function(){
+         window.open(url, '_blank');
+    });
+    for (let size of PANELS) {
+        let id = idname+"_"+size;
+        let result = parseInt(results.get(size));
+        if(result < 0){ result = "(ERROR)" }
+        $("<td id='"+id+"' >").text( result ).appendTo($tr);
+    }
+    $tr.addClass('fade-up');
+    $tr.appendTo($tbody);
+}
+
+
+function updateChart(charts, name, results, PANELS) {
+    //const labels = Array.from(results.keys());
+    const data = Array.from(results.values());
+    // Push new data to the chart
+    let k = 0;
+    for (let size of PANELS) {
+       let chart = charts.get(size);
+       chart.data.labels.push(name);
+       chart.data.datasets[0].data.push(data[k]);
+       // Update the chart
+       chart.update();
+       k++;
+    }
+}
+
+
+
+async function runAllPerformanceTests(FFT_BANK, PARAMS, charts){
     for (let size of PARAMS.PANELS) {
        var SIGNALS = [];
        for(let i = 0; i<PARAMS.RUNS+PARAMS.WARMUPS; i++){
@@ -165,8 +200,8 @@ async function runAllPerformanceTests(FFT_BANK, PARAMS){
         let results  = value.res;
 
         await runPerformance(FFT_BANK, idname, PARAMS);
-        await addPerformanceRow(idname, fullname, url, results);
-        await updateChart(idname, results);
+        await addPerformanceRow(idname, fullname, url, results, PARAMS.PANELS);
+        await updateChart(charts, idname, results, PARAMS.PANELS);
     }
 }
 
