@@ -29,7 +29,7 @@ const perform_INDUTNY = (instance, out, testData) => {
 };
 
 const example_INDUTNY = (testData) => {
-    return perform_KISS(kiss_input_1024, kiss_fft_1024, testData.slice()).slice();
+    return perform_INDUTNY(indutny_f_1024, indutny_out_1024, testData);
 }
 
 
