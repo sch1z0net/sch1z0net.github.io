@@ -45,7 +45,7 @@ async function registerPlugin(PLUGIN, FFT_BANK){
         }
     );
 
-    await FFT_BANK.get(PLUGIN_INDUTNY.idname()).init()
+    await FFT_BANK.get(PLUGIN.idname()).init()
 }
 
 export default registerPlugin;
