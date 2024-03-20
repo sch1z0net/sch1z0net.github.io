@@ -65,7 +65,7 @@ const PLUGIN_KISS = {
   fullname: function() { return "KISS (mborgerding)"},
   url:      function() { return "https://github.com/mborgerding/kissfft" },
   precision:function() { return "double" },
-  init:     function() { return async function() { const initializeKISS(); } },
+  init:     function() { initializeKISS(); },
   fft128:   function(testData) { perform_KISS(kiss_input_128,   kiss_fft_128,   testData); },
   fft256:   function(testData) { perform_KISS(kiss_input_256,   kiss_fft_256,   testData); },
   fft512:   function(testData) { perform_KISS(kiss_input_512,   kiss_fft_512,   testData); },
