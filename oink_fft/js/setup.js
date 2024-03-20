@@ -306,3 +306,12 @@ FFT_BANK.set("OINK",{
     res: OINK_FFT_RESULTS
 });
 
+$(document).ready(async function(){
+    // Call each initialization function asynchronously using await
+    $loading_info.text("Initializing INDUTNY..."); await initializeINDUTNY();
+    $loading_info.text("Initializing DSP...");     await initializeDSP();
+    $loading_info.text("Initializing OOURA...");   await initializeOOURA();
+    $loading_info.text("Initializing KISS...");    Module_KISS_ = await Module_KISS(); await initializeKISS();
+    $loading_info.text("Initializing OINK...");    Module_OINK_ = await Module_OINK(); await initializeModuleOINK();
+});
+
