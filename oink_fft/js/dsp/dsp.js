@@ -74,10 +74,10 @@ function setupTypedArray(name, fallback) {
   }
 }
 
-setupTypedArray("Float64Array", "WebGLFloatArray");
+/*setupTypedArray("Float64Array", "WebGLFloatArray");
 setupTypedArray("Int32Array",   "WebGLIntArray");
 setupTypedArray("Uint16Array",  "WebGLUnsignedShortArray");
-setupTypedArray("Uint8Array",   "WebGLUnsignedByteArray");
+setupTypedArray("Uint8Array",   "WebGLUnsignedByteArray");*/
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2301,6 +2301,7 @@ Reverb.prototype.process = function (interleavedSamples){
 };
 
 
+/*
 if (typeof module !== 'undefined' && module && module.exports) {
   module.exports = {
     DSP: DSP,
@@ -2320,7 +2321,7 @@ if (typeof module !== 'undefined' && module && module.exports) {
     SingleDelay: SingleDelay,
     Reverb: Reverb
   };
-}
+}*/
 
 
 export default FFT;
