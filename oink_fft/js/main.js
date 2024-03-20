@@ -418,7 +418,7 @@ $(document).ready(function(){
 /////////////////////////////////// BENCHMARKING        ///////////////////////////////////////////////
 
 $(document).ready(async function(){
-    $reload.click(function(){
+    $reload.click(async function(){
        $loading.show();
        $reload.hide();
        createPerformanceTable();
@@ -431,10 +431,10 @@ $(document).ready(async function(){
          PANELS: PANELS
        }
 
-       resetData(FFT_BANK);
-       runErrorComparison(FFT_BANK, output_values);
-       runAllPerformanceTests(FFT_BANK, PARAMS, charts);
-       highlightComparison(FFT_BANK);
+       await resetData(FFT_BANK);
+       await runErrorComparison(FFT_BANK, output_values);
+       await runAllPerformanceTests(FFT_BANK, PARAMS, charts);
+       await highlightComparison(FFT_BANK);
        $loading.hide();
        $reload.show();
        $loading_info.text("Finished!"); 
