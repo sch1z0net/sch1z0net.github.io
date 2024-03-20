@@ -35,16 +35,6 @@ const perform_KISS = (input, instance, testData) => {
     input.set(testData.slice()); return instance.transform();
 };
 
-async function importModule() {
-  try {
-    const Module_KISS = await import('/oink_fft/js/kiss/kiss_fft.js');
-    Module_KISS_ = Module_KISS;
-  } catch (error) {
-    // Handle any errors that occur during import
-    console.error('Error importing module:', error);
-  }
-}
-
 
 //////////////////////////////////////
 //////////////////////////////////////
