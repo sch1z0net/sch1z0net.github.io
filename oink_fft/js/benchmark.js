@@ -121,21 +121,7 @@ async function runAllPerformanceTests(){
        SIGNALS_FOR_EACH_FFT.set(size, SIGNALS);
     }
 
-    /*
-    for (let [key, value] of FFT_BANK) {
-        let idname   = value.idname;
-        let fullname = value.fullname;
-        let url      = value.url;
-        let results  = value.res;
-
-        $loading_info.text("Measure " + idname + "...");
-        await runPerformance(idname);
-        await addPerformanceRow(idname, fullname, url, results);
-        await updateChart(idname, results);
-    }*/
-    let keys = FFT_BANK.keys();
-    for (let i = 0; i < FFT_BANK.size; i++) {
-        let value = FFT_BANK.get(keys[i]);
+    for (let [key, value] of FFT_BANK.entries()) {
         let idname   = value.idname;
         let fullname = value.fullname;
         let url      = value.url;
