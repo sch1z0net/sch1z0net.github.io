@@ -54,7 +54,7 @@ function highlightComparison(){
          MAX_.set(size, {name: '-', ops: 0 });
     }
     for (let size of PANELS) {
-         FFT_BANK.forEach((value, key) => {
+         FFT_BANK.forEach((key, value) => {
                updateMax(size, value.res.get(size), value.idname);
          });
     }
@@ -67,7 +67,7 @@ function highlightComparison(){
 
 function resetData(){
     SIGNALS_FOR_EACH_FFT = new Map();
-    FFT_BANK.forEach((value, key) => {
+    FFT_BANK.forEach((key, value) => {
         value.res = new Map();
     });
 }
@@ -145,7 +145,7 @@ async function runAllPerformanceTests(){
 function runErrorComparison(){
     let testData = generateTestData(1024);
 
-    FFT_BANK.forEach((value, key) => {
+    FFT_BANK.forEach((key, value) => {
         output_values.push( value.example(testData) );
     });
     
