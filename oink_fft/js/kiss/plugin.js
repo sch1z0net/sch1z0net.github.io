@@ -2,7 +2,7 @@
 //////////////////////////////////////
 // IMPORT THE FFT LIBRARY
 //////////////////////////////////////
-let Module_KISS_;
+
 
 //////////////////////////////////////
 //////////////////////////////////////
@@ -15,7 +15,7 @@ let kiss_fft_512, kiss_input_512;
 let kiss_fft_1024,kiss_input_1024;
 let kiss_fft_2048,kiss_input_2048;
 
-function initializeKISS(){
+function initializeKISS(Module_KISS_){
     return new Promise((resolve, reject) => {
         kiss_fft_128    = new Module_KISS_.KissFftReal(128);
         kiss_input_128  = kiss_fft_128.getInputTimeDataBuffer();
@@ -45,7 +45,7 @@ const PLUGIN_KISS = {
   fullname: function() { return "KISS (mborgerding)"},
   url:      function() { return "https://github.com/mborgerding/kissfft" },
   precision:function() { return "double" },
-  init:     function() { return async function() { Module_KISS_ = await import('/oink_fft/js/kiss/kiss_fft.js'); await initializeKISS(); } },
+  init:     function() { return async function() { let Module_KISS_ = await import('/oink_fft/js/kiss/kiss_fft.js'); await initializeKISS(Module_KISS_);} },
   fft128:   function(testData) { perform_KISS(kiss_input_128,   kiss_fft_128,   testData); },
   fft256:   function(testData) { perform_KISS(kiss_input_256,   kiss_fft_256,   testData); },
   fft512:   function(testData) { perform_KISS(kiss_input_512,   kiss_fft_512,   testData); },
