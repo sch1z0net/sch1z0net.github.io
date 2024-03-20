@@ -29,12 +29,6 @@ const perform_OOURA = (instance, testData) => {
     let ooura_data = testData.slice(); instance.fftInPlace(ooura_data.buffer); return ooura_data;
 };
 
-const example_OOURA = (testData) => {
-    let testData64 = Float64Array.from(testData.slice());
-    return perform_OOURA(ooura_oo_1024, testData64.slice()).slice();
-}
-
-
 //////////////////////////////////////
 //////////////////////////////////////
 // IMPLEMENT GIVEN INTERFACE

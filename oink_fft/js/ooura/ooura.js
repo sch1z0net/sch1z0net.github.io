@@ -952,6 +952,7 @@ class Ooura {
 }
 
 
+export default Ooura;
 
 
 

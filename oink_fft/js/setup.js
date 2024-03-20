@@ -4,6 +4,7 @@ import registerPlugin from './interface.js'
 import PLUGIN_INDUTNY from './indutny/plugin.js'
 import PLUGIN_DSP     from './dsp/plugin.js'
 import PLUGIN_OOURA   from './ooura/plugin.js'
+import PLUGIN_KISS    from './kiss/plugin.js'
 
 /*
 FFT_BANK.set("INDUTNY",{
@@ -57,6 +58,7 @@ async function setup(FFT_BANK){
     await registerPlugin(PLUGIN_INDUTNY, FFT_BANK);
     await registerPlugin(PLUGIN_DSP, FFT_BANK);
     await registerPlugin(PLUGIN_OOURA, FFT_BANK);
+    await registerPlugin(PLUGIN_KISS, FFT_BANK);
     // Call each initialization function asynchronously using await
     //$loading_info.text("Initializing INDUTNY..."); await initializeINDUTNY();
     /*$loading_info.text("Initializing DSP...");     await initializeDSP();

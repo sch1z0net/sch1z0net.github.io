@@ -38,11 +38,6 @@ const perform_DSP = (instance, testData) => {
     return result;
 };
 
-const example_DSP = (testData) => {
-    let testData64 = Float64Array.from(testData.slice());
-    return perform_DSP(dsp_fft_1024, testData64.slice()).slice();
-}
-
 
 //////////////////////////////////////
 //////////////////////////////////////
