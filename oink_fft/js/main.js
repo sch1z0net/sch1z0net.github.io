@@ -423,7 +423,8 @@ $(document).ready(async function(){
        $reload.hide();
        createPerformanceTable();
        createPerformanceCharts();
-       
+       createOutputFields();
+
        PARAMS = { 
          NUM_OPS: parseInt($numOpsSelect.val()), 
          RUNS:    parseInt($runsSelect.val()),
@@ -442,19 +443,6 @@ $(document).ready(async function(){
 
     await setup(FFT_BANK);
     await $reload.trigger('click');
-    
-    /*
-    await createPerformanceTable();
-    await createPerformanceCharts();
-    await createOutputFields();
-
-    await runErrorComparison(FFT_BANK, output_values);
-    await runAllPerformanceTests(FFT_BANK, PARAMS, charts);
-    await highlightComparison(FFT_BANK);
-    $loading.hide();
-    $reload.show();
-    $loading_info.text("Finished!"); 
-    */
 });
 
 
