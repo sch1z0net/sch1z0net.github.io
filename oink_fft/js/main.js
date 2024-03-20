@@ -8,12 +8,15 @@ const FFT_BANK = new Map();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
-let NUM_OPS = 7500;
-let RUNS = 8;
-let WARMUPS = 3;
-
 let PANELS = [128, 256, 512, 1024, 2048];
 let P_IDX = 0;
+let PARAMS = { 
+   NUM_OPS: 7500, 
+   RUNS:    8,
+   WARMUPS: 3,
+   PANELS: PANELS
+}
+
 
 var $title_div;
 var $title;
@@ -446,8 +449,6 @@ $(document).ready(function(){
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// BENCHMARKING        ///////////////////////////////////////////////
 
-
-
 $(document).ready(async function(){
     $reload.click(function(){
        $loading.show();
@@ -456,9 +457,16 @@ $(document).ready(async function(){
        createPerformanceCharts();
        resetData();
        NUM_OPS = parseInt($numOpsSelect.val());
-       RUNS    = parseInt($runsSelect.val());
+       
+       PARAMS = { 
+         NUM_OPS: parseInt($numOpsSelect.val()), 
+         RUNS:    parseInt($runsSelect.val()),
+         WARMUPS: 5,
+         PANELS: PANELS
+       }
+
        runErrorComparison(FFT_BANK, output_values);
-       runAllPerformanceTests(FFT_BANK, RUNS, NUM_OPS, PANELS);
+       runAllPerformanceTests(FFT_BANK, PARAMS);
        highlightComparison(FFT_BANK);
     });
     
@@ -469,7 +477,7 @@ $(document).ready(async function(){
     await createOutputFields();
 
     await runErrorComparison(FFT_BANK, output_values);
-    await runAllPerformanceTests(FFT_BANK, RUNS, NUM_OPS, PANELS);
+    await runAllPerformanceTests(FFT_BANK, PARAMS);
     await highlightComparison(FFT_BANK);
 });
 
