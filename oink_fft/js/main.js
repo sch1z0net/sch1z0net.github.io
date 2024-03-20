@@ -147,12 +147,13 @@ function updateChart(name, results) {
 }
 
 let output_values = [];
-let ref_output = 4;
+let ref_output = 0;
 function createOutputFields(){
     const $output_div = $("<div>").attr("id","output-div");
     $tab_micro.append($output_div);
 
-    let types = ["INDUTNY","DSP","OOURA","KISS","OINK"];
+    //let types = ["INDUTNY","DSP","OOURA","KISS","OINK"];
+    let types = FFT_BANK.keys();
 
     $outputs = $('<div>').attr("id","outputs");
     // Create rows dynamically
