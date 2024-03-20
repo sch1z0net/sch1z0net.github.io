@@ -223,5 +223,4 @@ function runErrorComparison(){
     $("#out_slider").trigger('input');
 }
 
-export runAllPerformanceTests;
-export runErrorComparison;
+export { runAllPerformanceTests, runErrorComparison };
