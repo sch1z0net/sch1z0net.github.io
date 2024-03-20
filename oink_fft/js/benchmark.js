@@ -78,7 +78,7 @@ const runPerformance = async (type) => {
     for (let size of PANELS) {
         let avrg_ops = 0;
 
-        $loading_info.text("Warm Up " + idname + "...");
+        $loading_info.text("Warm Up " + type + "...");
         // Warm up
         for (let run = 0; run < WARMUPS; run++) {
             await measureFFT(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run]);
@@ -87,7 +87,7 @@ const runPerformance = async (type) => {
         // Run Measurement
         let errors = 0;
         for (let run = WARMUPS; run < RUNS+WARMUPS; run++) {
-            $loading_info.text("Measure " + idname + "... (RUN "+run+")");
+            $loading_info.text("Measure " + type + "... (RUN "+run+")");
 
             let eT_slice = await measureSlicing(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run]);
             let eT_FFT   = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run]);
