@@ -216,4 +216,4 @@ function runErrorComparison(FFT_BANK, output_values){
     $("#out_slider").trigger('input');
 }
 
-export { runAllPerformanceTests, runErrorComparison };
+export { runAllPerformanceTests, runErrorComparison, resetData };

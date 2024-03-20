@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 import setup from './setup.js';
-import {runAllPerformanceTests, runErrorComparison} from './benchmark.js'
+import {runAllPerformanceTests, runErrorComparison, resetData} from './benchmark.js'
 
 const FFT_BANK = new Map();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -423,8 +423,6 @@ $(document).ready(async function(){
        $reload.hide();
        createPerformanceTable();
        createPerformanceCharts();
-       resetData();
-       NUM_OPS = parseInt($numOpsSelect.val());
        
        PARAMS = { 
          NUM_OPS: parseInt($numOpsSelect.val()), 
@@ -433,6 +431,7 @@ $(document).ready(async function(){
          PANELS: PANELS
        }
 
+       resetData();
        runErrorComparison(FFT_BANK, output_values);
        runAllPerformanceTests(FFT_BANK, PARAMS, charts);
        highlightComparison(FFT_BANK);
