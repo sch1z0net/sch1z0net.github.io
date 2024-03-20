@@ -15,6 +15,7 @@ var $title_div;
 var $title;
 var $subtitle;
 var $stats_div;
+var $stats_head;
 var $tab_table;
 var $perf_table;
 var $outputs;
