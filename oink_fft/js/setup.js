@@ -246,24 +246,6 @@ const measureFFT = (type, size, testData) => {
 
 const FFT_BANK = new Map();
 
-FFT_BANK.set("OINK",{
-    idname: "OINK", 
-    fullname: "OINK (sch1z0net)", 
-    url: "https://github.com/sch1z0net/oink", 
-    res: new Map(),
-    example: example_OINK,
-    precision: "float"
-});
-
-FFT_BANK.set("KISS",{
-    idname: "KISS", 
-    fullname: "KISS (mborgerding)", 
-    url: "https://github.com/mborgerding/kissfft", 
-    res: new Map(),
-    example: example_KISS,
-    precision: "double"
-});
-
 FFT_BANK.set("INDUTNY",{
     idname: "INDUTNY", 
     fullname: "FFT.JS (indutny)", 
@@ -289,6 +271,24 @@ FFT_BANK.set("OOURA",{
     res: new Map(),
     example: example_OOURA,
     precision: "double"
+});
+
+FFT_BANK.set("KISS",{
+    idname: "KISS", 
+    fullname: "KISS (mborgerding)", 
+    url: "https://github.com/mborgerding/kissfft", 
+    res: new Map(),
+    example: example_KISS,
+    precision: "double"
+});
+
+FFT_BANK.set("OINK",{
+    idname: "OINK", 
+    fullname: "OINK (sch1z0net)", 
+    url: "https://github.com/sch1z0net/oink", 
+    res: new Map(),
+    example: example_OINK,
+    precision: "float"
 });
 
 async function setup(){
