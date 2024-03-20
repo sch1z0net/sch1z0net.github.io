@@ -137,8 +137,6 @@ function runErrorComparison(){
 
 
 
-
-
 $(document).ready(async function(){
     $reload.click(function(){
        $loading.show();
