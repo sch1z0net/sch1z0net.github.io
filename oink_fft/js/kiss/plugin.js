@@ -2,7 +2,7 @@
 //////////////////////////////////////
 // IMPORT THE FFT LIBRARY
 //////////////////////////////////////
-// Module_KISS_ = await Module_KISS(); is doing the job, see below
+import { Module_KISS } from '/oink_fft/js/kiss/kiss_fft.js';
 
 
 //////////////////////////////////////
