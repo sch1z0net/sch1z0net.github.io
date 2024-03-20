@@ -40,6 +40,12 @@ body {
   position: relative;
 }
 
+.anchor{
+  display: block;
+  width:100%;
+  text-align: center;
+}
+
 #title_div {
   position: absolute;
   top: 50px;
@@ -466,9 +472,12 @@ section{
 
     height: 100vh;
     display: flex;
-    justify-content: center;
     align-items: center;
     transition: background-color 0.5s ease; /* Smooth background color transition */
+}
+
+#section_main{
+    justify-content: center;
 }
 
 #section_usage{
