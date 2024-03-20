@@ -1,5 +1,11 @@
 //////////////////////////////////////
 //////////////////////////////////////
+// IMPORT THE FFT LIBRARY
+//////////////////////////////////////
+import Ooura from '/oink_fft/js/ooura/ooura.js';
+
+//////////////////////////////////////
+//////////////////////////////////////
 // PREPARE AND PERFORM OOURA
 //////////////////////////////////////
 let ooura_oo_128;
@@ -27,3 +33,28 @@ const example_OOURA = (testData) => {
     let testData64 = Float64Array.from(testData.slice());
     return perform_OOURA(ooura_oo_1024, testData64.slice()).slice();
 }
+
+
+//////////////////////////////////////
+//////////////////////////////////////
+// IMPLEMENT GIVEN INTERFACE
+//////////////////////////////////////
+const PLUGIN_OOURA = {
+  idname:   function() { return "OOURA";  },
+  fullname: function() { return "OOURA (audioplastic)"; },
+  url:      function() { return "https://github.com/audioplastic/ooura"; },
+  precision:function() { return "double"; },
+  init:     function() { return initializeOOURA(); },
+  fft128:   function(testData) { perform_OOURA(ooura_oo_128,   testData); },
+  fft256:   function(testData) { perform_OOURA(ooura_oo_256,   testData); },
+  fft512:   function(testData) { perform_OOURA(ooura_oo_512,   testData); },
+  fft1024:  function(testData) { perform_OOURA(ooura_oo_1024,  testData); },
+  fft2048:  function(testData) { perform_OOURA(ooura_oo_2048,  testData); },
+  example:  function(testData) { return perform_OOURA(ooura_oo_1024,  testData); },
+};
+
+//////////////////////////////////////
+//////////////////////////////////////
+// EXPORT
+//////////////////////////////////////
+export default PLUGIN_OOURA;
