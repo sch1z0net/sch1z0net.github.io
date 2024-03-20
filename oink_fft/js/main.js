@@ -468,6 +468,9 @@ $(document).ready(async function(){
        runErrorComparison(FFT_BANK, output_values);
        runAllPerformanceTests(FFT_BANK, PARAMS);
        highlightComparison(FFT_BANK);
+       $loading.hide();
+       $reload.show();
+       $loading_info.text("Finished!"); 
     });
     
     await setup(FFT_BANK);
@@ -479,6 +482,9 @@ $(document).ready(async function(){
     await runErrorComparison(FFT_BANK, output_values);
     await runAllPerformanceTests(FFT_BANK, PARAMS);
     await highlightComparison(FFT_BANK);
+    $loading.hide();
+    $reload.show();
+    $loading_info.text("Finished!"); 
 });
 
 

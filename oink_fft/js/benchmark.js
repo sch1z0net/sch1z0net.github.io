@@ -112,7 +112,7 @@ const runPerformance = async (FFT_BANK, type, PARAMS) => {
     for (let size of PARAMS.PANELS) {
         let avrg_ops = 0;
 
-        $loading_info.text("Warm Up " + type + "...");
+        $("#loading_info").text("Warm Up " + type + "...");
         // Warm up
         for (let run = 0; run < PARAMS.WARMUPS; run++) {
             await measureFFT(FFT_BANK, type, size, SIGNALS_FOR_EACH_FFT.get(size)[run], PARAMS.NUM_OPS);
@@ -124,7 +124,7 @@ const runPerformance = async (FFT_BANK, type, PARAMS) => {
             let str = "Measure " + type;
             str    += " (FFT "+size+")";
             str    += " ... (RUN "+(run+1-PARAMS.WARMUPS)+"/"+RUNS+")";
-            $loading_info.text( str );
+            $("#loading_info").text( str );
 
             let eT_slice = await measureSlicing(FFT_BANK, type, size, SIGNALS_FOR_EACH_FFT.get(size)[run], PARAMS.NUM_OPS);
             let eT_FFT   = await measureFFT(FFT_BANK, type, size, SIGNALS_FOR_EACH_FFT.get(size)[run], PARAMS.NUM_OPS);
@@ -168,11 +168,6 @@ async function runAllPerformanceTests(FFT_BANK, PARAMS){
         await addPerformanceRow(idname, fullname, url, results);
         await updateChart(idname, results);
     }
-
-    $loading_info.text("Finished!"); 
-
-    $loading.hide();
-    $reload.show();
 }
 
 
