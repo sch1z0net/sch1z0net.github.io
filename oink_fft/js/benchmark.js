@@ -65,7 +65,7 @@ const runPerformance = async (type) => {
             let eT_FFT = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[s][run]);
             let diff = eT_FFT - eT_slice;
             if(diff <= 0){ 
-                if(errors < 3){ run--; errors++; continue; }
+                if(errors < 5){ run--; errors++; continue; }
                 avrg_ops = -1; break;
             }
             let ops = Math.floor(1000*NUM_OPS  / diff); //let ops = Math.floor(NUM_OPS  / (diff / 1000));
