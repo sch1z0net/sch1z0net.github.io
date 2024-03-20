@@ -153,7 +153,7 @@ function createOutputFields(){
     $tab_micro.append($output_div);
 
     //let types = ["INDUTNY","DSP","OOURA","KISS","OINK"];
-    let types = FFT_BANK.keys();
+    let types = Array.from(FFT_BANK.keys());
 
     $outputs = $('<div>').attr("id","outputs");
     // Create rows dynamically
