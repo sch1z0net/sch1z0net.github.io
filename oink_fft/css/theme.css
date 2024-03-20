@@ -42,8 +42,9 @@ body {
 
 .anchor{
   display: block;
-  width:100%;
+  width:40%;
   text-align: center;
+  display: inline;
 }
 
 #title_div {
@@ -470,9 +471,9 @@ section{
     margin: 0px;
     padding: 0px;
 
-    height: 100vh;
+    height: 700px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     transition: background-color 0.5s ease; /* Smooth background color transition */
 }
 
@@ -491,4 +492,12 @@ section{
 }
 
 
+#anchors{
+  width: 100%;
+}
 
+a{
+  text-decoration: none;
+  color: rgba(200,50,50,0.5);
+  text-emphasis: bold;
+}
