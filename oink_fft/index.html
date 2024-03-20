@@ -26,13 +26,24 @@
 	<section id="section_main">
 	    <div id="root">
 	    </div>
+	    <a href="#section_usage">Usage</a>
+	    <a href="#section_donate">Donate</a>
 	</section>
 	<section id="section_usage">
         <h2>Usage</h2>
 	</section>
+	<script>
+	// Smooth scrolling behavior
+	document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+	    anchor.addEventListener('click', function (e) {
+	        e.preventDefault();
 
-
-
+	        document.querySelector(this.getAttribute('href')).scrollIntoView({
+	            behavior: 'smooth'
+	        });
+	    });
+	});
+	</script>
 
 
 
