@@ -12,7 +12,7 @@ let DELAY_BETWEEN_ITERATIONS = 0.35;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 // Reset on each new Run
-let SIGNALS_FOR_EACH_FFT = [];
+let SIGNALS_FOR_EACH_FFT = new Map();
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,7 +66,7 @@ function highlightComparison(){
 }
 
 function resetData(){
-    SIGNALS_FOR_EACH_FFT = [];
+    SIGNALS_FOR_EACH_FFT = new Map();
     FFT_BANK.forEach((value, key) => {
         value.res = new Map();
     });
@@ -80,14 +80,14 @@ const runPerformance = async (type) => {
 
         // Warm up
         for (let run = 0; run < WARMUPS; run++) {
-            await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[size][run]);
+            await measureFFT(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run]);
         }
 
         // Run Measurement
         let errors = 0;
         for (let run = WARMUPS; run < RUNS+WARMUPS; run++) {
-            let eT_slice = await measureSlicing(type, size, SIGNALS_FOR_EACH_FFT[size][run]);
-            let eT_FFT = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[size][run]);
+            let eT_slice = await measureSlicing(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run]);
+            let eT_FFT = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT.get(size)[run]);
             let diff = eT_FFT - eT_slice;
             if(diff <= 0){ 
                 if(errors < 5){ run--; errors++; continue; }
@@ -118,7 +118,7 @@ async function runAllPerformanceTests(){
           let signal = generateTestData(size);
           SIGNALS.push(signal);
        }
-       SIGNALS_FOR_EACH_FFT.push(SIGNALS);
+       SIGNALS_FOR_EACH_FFT.set(size, SIGNALS);
     }
 
     for (let [key, value] of FFT_BANK) {
