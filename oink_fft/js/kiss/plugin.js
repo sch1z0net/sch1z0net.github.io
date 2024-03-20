@@ -4,12 +4,6 @@
 //////////////////////////////////////
 let Module_KISS_;
 
-import Module_KISS from '/oink_fft/js/kiss/kiss_fft.js';
-
-Module_KISS().then(function(mymod) {
-    
-});
-
 //////////////////////////////////////
 //////////////////////////////////////
 // PREPARE AND PERFORM KISS
