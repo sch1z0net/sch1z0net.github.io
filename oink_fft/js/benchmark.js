@@ -123,7 +123,7 @@ const runPerformance = async (FFT_BANK, type, PARAMS) => {
         for (let run = PARAMS.WARMUPS; run < PARAMS.RUNS+PARAMS.WARMUPS; run++) {
             let str = "Measure " + type;
             str    += " (FFT "+size+")";
-            str    += " ... (RUN "+(run+1-PARAMS.WARMUPS)+"/"+RUNS+")";
+            str    += " ... (RUN "+(run+1-PARAMS.WARMUPS)+"/"+PARAMS.RUNS+")";
             $("#loading_info").text( str );
 
             let eT_slice = await measureSlicing(FFT_BANK, type, size, SIGNALS_FOR_EACH_FFT.get(size)[run], PARAMS.NUM_OPS);
@@ -142,7 +142,7 @@ const runPerformance = async (FFT_BANK, type, PARAMS) => {
             await new Promise(resolve => setTimeout(resolve, DELAY_BETWEEN_ITERATIONS));
         }
 
-        avrg_ops = Math.floor(avrg_ops / RUNS);
+        avrg_ops = Math.floor(avrg_ops / PARAMS.RUNS);
         FFT_BANK.get(type).res.set(size, avrg_ops);
     }
 };
