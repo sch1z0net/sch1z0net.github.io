@@ -1,36 +1,4 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-// Reset on each new Run
-let SIGNALS_FOR_EACH_FFT = [];
-let OINK_FFT_RESULTS    = new Map();
-let INDUTNY_FFT_RESULTS = new Map();
-let OOURA_FFT_RESULTS   = new Map();
-let DSP_FFT_RESULTS     = new Map();
-let KISS_FFT_RESULTS    = new Map();
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-// Generate test data as Float32Array
-const generateTestData = (size) => {
-    const testData = new Float32Array(size);
-    for (let i = 0; i < size; i++) {
-        // For demonstration purposes, generate random data between -1 and 1
-        testData[i] = Math.random() * 2 - 1;
-    }
-    return testData;
-};
-
-let testData8      = generateTestData(8);
-let testData16     = generateTestData(16);
-let testData32     = generateTestData(32);
-let testData64     = generateTestData(64);
-let testData128    = generateTestData(128);
-let testData256    = generateTestData(256);
-let testData512    = generateTestData(512);
-let testData1024   = generateTestData(1024);
-let testData2048   = generateTestData(2048);
-let testData4096   = generateTestData(4096);
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
 let Module_OINK_;
 let Module_KISS_;
 
@@ -202,12 +170,15 @@ const measureSlicing = (type, fftSize, testData) => {
     let testData32 = testData.slice();
     let testData64 = Float64Array.from(testData.slice());
 
+    let precision = FFT_BANK.get(type).precision;
+    
     const startTime = performance.now(); // Start time
-    if(type == "INDUTNY"){ perform_slice(fftSize, testData32); }
-    if(type == "DSP"){     perform_slice(fftSize, testData64); }
-    if(type == "OOURA"){   perform_slice(fftSize, testData64); }
-    if(type == "KISS"){    perform_slice(fftSize, testData64); }
-    if(type == "OINK"){    perform_slice(fftSize, testData32); }
+    if(precision == "double"){
+        perform_slice(fftSize, testData64);
+    }else 
+    if(precision == "float"){
+        perform_slice(fftSize, testData32);
+    }
     const endTime = performance.now(); // End time
     const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
 
@@ -277,40 +248,45 @@ FFT_BANK.set("INDUTNY",{
     idname: "INDUTNY", 
     fullname: "FFT.JS (indutny)", 
     url: "https://github.com/indutny/fft.js/", 
-    res: INDUTNY_FFT_RESULTS,
-    example: example_INDUTNY
+    res: new Map(),
+    example: example_INDUTNY,
+    precision: "float"
 });
 
 FFT_BANK.set("DSP",{
     idname: "DSP", 
     fullname: "DSP.JS (corbanbrook)", 
     url: "https://github.com/corbanbrook/dsp.js/", 
-    res: DSP_FFT_RESULTS,
-    example: example_DSP
+    res: new Map(),
+    example: example_DSP,
+    precision: "double"
 });
 
 FFT_BANK.set("OOURA",{
     idname: "OOURA", 
     fullname: "OOURA (audioplastic)", 
     url: "https://github.com/audioplastic/ooura", 
-    res: OOURA_FFT_RESULTS,
-    example: example_OOURA
+    res: new Map(),
+    example: example_OOURA,
+    precision: "double"
 });
 
 FFT_BANK.set("KISS",{
     idname: "KISS", 
     fullname: "KISS (mborgerding)", 
     url: "https://github.com/mborgerding/kissfft", 
-    res: KISS_FFT_RESULTS,
-    example: example_KISS
+    res: new Map(),
+    example: example_KISS,
+    precision: "double"
 });
 
 FFT_BANK.set("OINK",{
     idname: "OINK", 
     fullname: "OINK (sch1z0net)", 
     url: "https://github.com/sch1z0net/oink", 
-    res: OINK_FFT_RESULTS,
-    example: example_OINK
+    res: new Map(),
+    example: example_OINK,
+    precision: "float"
 });
 
 async function setup(){

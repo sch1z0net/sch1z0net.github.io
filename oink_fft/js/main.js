@@ -3,7 +3,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
 
-let MAX_PERF_SIZE = 2048;
+let PANELS = [128, 256, 512, 1024, 2048];
+let P_IDX = 0;
 
 var $title_div;
 var $title;
@@ -122,14 +123,13 @@ function createPerformanceChart(fft_size){
     return $chart_panel;
 }
 
-let panels = [128, 256, 512, 1024, 2048];
-let p_idx = 0;
 function createPerformanceCharts(){
     resetPerformanceCharts();
-    for (let size = 128; size <= MAX_PERF_SIZE; size *= 2) {
+    for (let s = 0; s < PANELS.length; s++) {
+        let size = PANELS[s];
         createPerformanceChart(size);
     }
-    $("#panel_"+panels[p_idx]).show();
+    $("#panel_"+PANELS[P_IDX]).show();
 }
 
 function updateChart(name, results) {
@@ -137,7 +137,8 @@ function updateChart(name, results) {
     const data = Array.from(results.values());
     // Push new data to the chart
     let k = 0;
-    for (let size = 128; size <= MAX_PERF_SIZE; size *= 2) {
+    for (let s = 0; s < PANELS.length; s++) {
+       let size = PANELS[s];
        let chart = charts.get(size);
        chart.data.labels.push(name);
        chart.data.datasets[0].data.push(data[k]);
@@ -371,8 +372,8 @@ $(document).ready(function(){
 
     $chart_l = $('<button id="chart_l">←</button>').appendTo($tab_chart);
     $chart_r = $('<button id="chart_r">→</button>').appendTo($tab_chart);
-    $chart_l.click(function(){ $(".chart_panel").hide(); p_idx=(p_idx==0)?(panels.length-1):(p_idx-1); $("#panel_"+panels[p_idx]).show();});
-    $chart_r.click(function(){ $(".chart_panel").hide(); p_idx=(p_idx+1)%panels.length; $("#panel_"+panels[p_idx]).show();});
+    $chart_l.click(function(){ $(".chart_panel").hide(); P_IDX=(P_IDX==0)?(PANELS.length-1):(P_IDX-1); $("#panel_"+PANELS[P_IDX]).show();});
+    $chart_r.click(function(){ $(".chart_panel").hide(); P_IDX=(P_IDX+1)%PANELS.length; $("#panel_"+PANELS[P_IDX]).show();});
 
     // Create a div element for the icon row
     var $iconRow = $("<div>").attr("id", "icon-row");

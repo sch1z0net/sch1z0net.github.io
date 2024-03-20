@@ -11,6 +11,34 @@ let DELAY_BETWEEN_ITERATIONS = 0.35;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
+// Reset on each new Run
+let SIGNALS_FOR_EACH_FFT = [];
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+// Generate test data as Float32Array
+const generateTestData = (size) => {
+    const testData = new Float32Array(size);
+    for (let i = 0; i < size; i++) {
+        // For demonstration purposes, generate random data between -1 and 1
+        testData[i] = Math.random() * 2 - 1;
+    }
+    return testData;
+};
+
+let testData8      = generateTestData(8);
+let testData16     = generateTestData(16);
+let testData32     = generateTestData(32);
+let testData64     = generateTestData(64);
+let testData128    = generateTestData(128);
+let testData256    = generateTestData(256);
+let testData512    = generateTestData(512);
+let testData1024   = generateTestData(1024);
+let testData2048   = generateTestData(2048);
+let testData4096   = generateTestData(4096);
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
@@ -47,20 +75,20 @@ function resetData(){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 const runPerformance = async (type) => {
-    let s = 0;
-    for (let size = 128; size <= MAX_PERF_SIZE; size *= 2) {
+    for (let s = 0; s < PANELS.length; s++) {
+        let size = PANELS[s];
         let avrg_ops = 0;
 
         // Warm up
         for (let run = 0; run < WARMUPS; run++) {
-            await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[s][run]);
+            await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[size][run]);
         }
 
         // Run Measurement
         let errors = 0;
         for (let run = WARMUPS; run < RUNS+WARMUPS; run++) {
-            let eT_slice = await measureSlicing(type, size, SIGNALS_FOR_EACH_FFT[s][run]);
-            let eT_FFT = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[s][run]);
+            let eT_slice = await measureSlicing(type, size, SIGNALS_FOR_EACH_FFT[size][run]);
+            let eT_FFT = await measureFFT(type, size, SIGNALS_FOR_EACH_FFT[size][run]);
             let diff = eT_FFT - eT_slice;
             if(diff <= 0){ 
                 if(errors < 5){ run--; errors++; continue; }
@@ -77,7 +105,6 @@ const runPerformance = async (type) => {
 
         avrg_ops = Math.floor(avrg_ops / RUNS);
         FFT_BANK.get(type).res.set(size, avrg_ops);
-        s++;
     }
 };
 
@@ -87,7 +114,9 @@ async function runAllPerformanceTests(){
     RUNS    = parseInt($runsSelect.val());
 
     var j = 0;
-    for (var size = 128; size <= MAX_PERF_SIZE; size *= 2) {
+    for (let s = 0; s < PANELS.length; s++) {
+       let size = PANELS[s];
+
        var SIGNALS = [];
        for(let i = 0; i<RUNS+WARMUPS; i++){
           let signal = generateTestData(size);
