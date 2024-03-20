@@ -55,11 +55,11 @@ const PLUGIN_KISS = {
   fullname: function() { return "KISS (mborgerding)"},
   url:      function() { return "https://github.com/mborgerding/kissfft" },
   precision:function() { return "double" },
-  init:     function() { 
-    return async function(){ 
-      const Module_KISS = await import('/oink_fft/js/kiss/kiss_fft.js');  
-      Module_KISS().then(function(mod) {  Module_KISS_ = mod;  initializeKISS(); });
-  };},
+  init: async function() {
+    const Module_KISS = await import('/oink_fft/js/kiss/kiss_fft.js');
+    Module_KISS_ = await Module_KISS();
+    await initializeKISS();
+  }
   fft128:   function(testData) { perform_KISS(kiss_input_128,   kiss_fft_128,   testData); },
   fft256:   function(testData) { perform_KISS(kiss_input_256,   kiss_fft_256,   testData); },
   fft512:   function(testData) { perform_KISS(kiss_input_512,   kiss_fft_512,   testData); },
