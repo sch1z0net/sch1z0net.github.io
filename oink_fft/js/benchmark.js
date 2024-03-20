@@ -50,15 +50,15 @@ function updateMax(size, ops, name){
 }
 
 function highlightComparison(){
-    for (var size = 128; size <= MAX_PERF_SIZE; size *= 2) {
+    for (let size of PANELS) {
          MAX_.set(size, {name: '-', ops: 0 });
     }
-    for (var size = 128; size <= MAX_PERF_SIZE; size *= 2) {
+    for (let size of PANELS) {
          FFT_BANK.forEach((value, key) => {
                updateMax(size, value.res.get(size), value.idname);
          });
     }
-    for (var size = 128; size <= MAX_PERF_SIZE; size *= 2) {
+    for (let size of PANELS) {
          let best = MAX_.get(size).name;
          let id = best+"_"+size;
          $("#"+id).addClass("bestPerf");
@@ -75,8 +75,7 @@ function resetData(){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 const runPerformance = async (type) => {
-    for (let s = 0; s < PANELS.length; s++) {
-        let size = PANELS[s];
+    for (let size of PANELS) {
         let avrg_ops = 0;
 
         // Warm up
@@ -113,17 +112,13 @@ async function runAllPerformanceTests(){
     NUM_OPS = parseInt($numOpsSelect.val());
     RUNS    = parseInt($runsSelect.val());
 
-    var j = 0;
-    for (let s = 0; s < PANELS.length; s++) {
-       let size = PANELS[s];
-
+    for (let size of PANELS) {
        var SIGNALS = [];
        for(let i = 0; i<RUNS+WARMUPS; i++){
           let signal = generateTestData(size);
           SIGNALS.push(signal);
        }
        SIGNALS_FOR_EACH_FFT.push(SIGNALS);
-       j++;
     }
 
     for (let [key, value] of FFT_BANK) {

@@ -45,7 +45,7 @@ function createPerformanceTable(){
     // HEADER
     var $tr_sizes = $("<tr>").attr("id", "tr_header").appendTo($tbody); 
     $("<td>").text("FFT size").appendTo($tr_sizes);
-    for (var size = 128; size <= 2048; size *= 2) {
+        for (let size of PANELS) {
         $("<td>").text(size).appendTo($tr_sizes).css("background-color","rgba(200,0,0,0.2)");
     }
 
@@ -59,7 +59,7 @@ function addPerformanceRow(idname, fullname, url, results){
     $dev.click(function(){
          window.open(url, '_blank');
     });
-    for (var size = 128; size <= 2048; size *= 2) {
+    for (let size of PANELS) {
         let id = idname+"_"+size;
         let result = parseInt(results.get(size));
         if(result < 0){ result = "(ERROR)" }
@@ -125,8 +125,7 @@ function createPerformanceChart(fft_size){
 
 function createPerformanceCharts(){
     resetPerformanceCharts();
-    for (let s = 0; s < PANELS.length; s++) {
-        let size = PANELS[s];
+    for (let size of PANELS) {
         createPerformanceChart(size);
     }
     $("#panel_"+PANELS[P_IDX]).show();
@@ -137,8 +136,7 @@ function updateChart(name, results) {
     const data = Array.from(results.values());
     // Push new data to the chart
     let k = 0;
-    for (let s = 0; s < PANELS.length; s++) {
-       let size = PANELS[s];
+    for (let size of PANELS) {
        let chart = charts.get(size);
        chart.data.labels.push(name);
        chart.data.datasets[0].data.push(data[k]);
