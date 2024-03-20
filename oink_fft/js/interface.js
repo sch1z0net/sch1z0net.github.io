@@ -51,4 +51,4 @@ async function registerPlugin(PLUGIN){
     await FFT_BANK.get(PLUGIN_INDUTNY.idname()).init()
 }
 
-export default registerPlugin;
+export {FFT_BANK, registerPlugin};
