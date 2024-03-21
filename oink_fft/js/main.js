@@ -350,8 +350,8 @@ $(document).ready(function(){
 
     let $paramsDiv =  $('<div id="paramsDiv">');
     let $numOpsLabel = $('<label>').text("# Operations").appendTo($paramsDiv);
-    $numOpsSelect = $('<select id="numOpsSelect"></select>').appendTo($paramsDiv).val(7500);
     let $runsLabel = $('<label>').text("# Runs").appendTo($paramsDiv);
+    $numOpsSelect = $('<select id="numOpsSelect"></select>').appendTo($paramsDiv).val(7500);
     $runsSelect = $('<select id="runsSelect"></select>').appendTo($paramsDiv).val(8);
     
     $numOpsSelect.append('<option value="' + 5000 + '">' +  5000 + '</option>');
