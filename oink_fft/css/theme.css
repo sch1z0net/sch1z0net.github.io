@@ -151,31 +151,43 @@ body {
   z-index: 100;
   color: rgba(200, 0, 0, 0.3);
   flex-direction: column;
+  align-items: center;
 }
 
 .pulse{ 
-   animation: pulsate 0.2s ease-in-out infinite;
    height: 100px;
-   display: block;
-   width: 100%;
-   font-size: 60px;
+   display: flex;
+   width: 300px;
+   font-size: 30px;
    font-weight: bolder;
+   text-align: center;
+}
+
+.pulse:hover{
+     animation: pulsate 0.5s linear infinite;
 }
 
 @keyframes pulsate {
   0% {
+    opacity: 0.45;
     transform: scale(1.0) skewX(0deg);
   }
-  25% {
-    transform: scale(0.995) skewX(20deg);
+  35% {
+    opacity: 0.5;
+    transform: scale(0.998) skewX(20deg);
   }
   50% {
-    transform: scale(0.995) skewX(0deg);
+    filter: saturate(80%);
+    opacity: 0.5;
+    transform: scale(0.99) skewX(0deg);
+    letter-spacing: 4px
   }
-  75% {
-    transform: scale(0.995) skewX(-20deg);
+  65% {
+    opacity: 0.5;
+    transform: scale(0.998) skewX(-20deg);
   }
   100% {
+    opacity: 0.45;
     transform: scale(1.0) skewX(0deg);
   }
 }
