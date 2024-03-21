@@ -110,7 +110,7 @@ body {
 #stats_head {
   text-align: center;
   width: 100%;
-  height: 40px;
+  height: 50px;
   box-sizing: border-box;
   display: block;
   background-color: rgba(200,0,0,0.2);
@@ -340,6 +340,10 @@ select {
    border-radius: 10px;
 }
 
+input[type="checkbox"] {
+   filter: hue-rotate(125deg) saturate(70%);
+}
+
 #chart_l{
   position: absolute;
   left: 50%;
@@ -360,12 +364,22 @@ select {
    left: 20px;
    bottom: 5px;
    display: block;
+}
+
+#selectionsDiv fieldset{
    border-radius: 10px;
-   border: solid 1px rgba(200,0,0,0.5);
+   border: solid 1px rgba(200,0,0,0.2);
+   padding: 0px;
+}
+
+#selectionsDiv legend{
+   font-size: 10px;
+   color: white;
 }
 
 #selectionsDiv div{
   display: inline-block;
+  width: 30px;
 }
 
 #selectionsDiv input{
@@ -375,6 +389,7 @@ select {
 #selectionsDiv label{
   display: block;
   font-size: 10px;
+  margin-top: -4px;
 }
 
 
