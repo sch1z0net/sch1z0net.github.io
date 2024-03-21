@@ -42,7 +42,7 @@
 	    	</code>
 	    </pre>
 
-	    <h3>2. Initialization</h3>
+	    <h3>2. Setup</h3>
 	    <p>Now, to make the FFT functions accessible, you need to call the WASM setup.</p>
 	    <pre>
 	    	<code>
@@ -53,6 +53,7 @@
 
 	    <h3>3. Usage</h3>
 	    <p>Here's how you can use the Forward FFT of size 1024</p>
+	    <p>It returns the spectrum, a Float32Array of length = 2048</p>
 	    <pre>
 	    	<code>
 	    		<span>let realInput = new Float32Array([/* Fill with 1024 Float Values */]);</span>
@@ -62,8 +63,11 @@
 
 	    <p>Provided FFTs for different sizes:</p>
 	    <pre>
-	    	<code>
-            </code>
+	    	<code><span>let spectrum  = fftReal128(realInput);</span></code>
+	    	<code><span>let spectrum  = fftReal256(realInput);</span></code>
+	    	<code><span>let spectrum  = fftReal512(realInput);</span></code>
+	    	<code><span>let spectrum  = fftReal1024(realInput);</span></code>
+	    	<code><span>let spectrum  = fftReal2048(realInput);</span></code>
         </pre>
 
 	</section>
