@@ -152,6 +152,7 @@ body {
   color: rgba(200, 0, 0, 0.3);
   flex-direction: column;
   align-items: center;
+  background-color: #FDDDE6;
 }
 
 .pulse{ 
