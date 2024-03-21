@@ -343,7 +343,7 @@ $(document).ready(function(){
 
     //$loading     = $('<div id="loading-circle"></div>');
     $stats_footer= $("<div>").attr("id", "stats_footer");
-    $loading     = $('<div id="loading" class="loading-dots">');
+    $loading     = $('<div id="loading" class="loading-dots">').hide();
     for (var i = 0; i < 3; i++) {
       $loading.append('<span class="dot"></span>');
     }
