@@ -61,7 +61,7 @@ const measureSlicing = (FFT_BANK, type, fftSize, testData) => {
     let testData32 = testData.slice();
     let testData64 = Float64Array.from(testData.slice());
 
-    let precision = FFT_BANK.get(type).precision();
+    let precision = FFT_BANK.get(type).precision;
     
     const startTime = performance.now(); // Start time
     if(precision == "double"){
@@ -81,7 +81,7 @@ const measureSlicing = (FFT_BANK, type, fftSize, testData) => {
 const measureFFT = (FFT_BANK, type, size, testData, NUM_OPS) => {
     let tD;
     let func;
-    let precision = FFT_BANK.get(type).precision();
+    let precision = FFT_BANK.get(type).precision;
     if (precision == "float"){
         tD = testData.slice();
     }else 
@@ -215,7 +215,7 @@ function runErrorComparison(FFT_BANK, output_values){
     let testData64 = Float64Array.from(testData.slice());
 
     FFT_BANK.forEach((value, key) => {
-        let precision = value.precision();
+        let precision = value.precision;
         if(precision == "double"){      output_values.push( value.example(testData64).slice() );
         }else if(precision == "float"){ output_values.push( value.example(testData32).slice() ); }
     });
