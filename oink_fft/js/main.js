@@ -382,12 +382,15 @@ $(document).ready(function(){
     var $legend = $('<legend>Choose FFT sizes:</legend>');
     $fieldset.append($legend);
 
-    function updatePANELS(){
+    function updatePANELS(checkbox){
         PANELS_FOR_NEXT_RUN = [];
         for(let i = 0; i < FFT_SIZES.length; i++){
             if ($("#check_"+FFT_SIZES[i]).prop("checked")) { 
                 PANELS_FOR_NEXT_RUN.push( FFT_SIZES[i] ); 
             }
+        }
+        if(PANELS_FOR_NEXT_RUN.length == 0){
+            checkbox.prop("checked",true);
         }
     }
 
@@ -401,7 +404,7 @@ $(document).ready(function(){
       $div.append($label);
       $fieldset.append($div);
       
-      $checkbox.change(updatePANELS);
+      $checkbox.change(function(){ updatePANELS(this); });
     });
 
     // Append the fieldset to the features div
