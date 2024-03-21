@@ -35,6 +35,7 @@
         <h2>Usage</h2>
 	</section>
 	<script>
+      $(document).ready(function(){
 		// Smooth scrolling behavior
 		document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 		    anchor.addEventListener('click', function (e) {
@@ -58,6 +59,7 @@
         
 		// Attach event listener to the scroll event
 		window.addEventListener('scroll', updateBackgroundOpacity);
+	  });
 	</script>
 
     <script type="module" src="/oink_fft/js/main.js" defer></script>
