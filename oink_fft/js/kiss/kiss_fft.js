@@ -1,7 +1,7 @@
 
 var Module_KISS = (() => {
   var _scriptDir = typeof document !== 'undefined' && document.currentScript ? document.currentScript.src : undefined;
-  _scriptDir += "/kiss";
+  _scriptDir += "kiss/";
   if (typeof __filename !== 'undefined') _scriptDir ||= __filename;
   return (
 function(moduleArg = {}) {
