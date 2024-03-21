@@ -61,7 +61,7 @@ function createPerformanceTable(){
 
     var $trHead = $("<tr>").appendTo($thead);
     // Create Header Text
-    $("<th>").text("FFT Performance (measured in OINKS per second)").attr("colspan", 6).appendTo($trHead); // colspan to span all columns
+    $("<th>").text("FFT Performance (measured in OINKS per second)").attr("colspan", 1+PARAMS.PANELS.length).appendTo($trHead); // colspan to span all columns
     // Create table body
     $tbody = $("<tbody>").attr("id","fft-body").appendTo($perf_table);
 
@@ -467,9 +467,6 @@ $(document).ready(async function(){
     $reload.click(async function(){
        $loading.show();
        $reload.hide();
-       createPerformanceTable();
-       createPerformanceCharts();
-       createOutputFields();
 
        PARAMS = { 
          NUM_OPS: parseInt($numOpsSelect.val()), 
@@ -477,6 +474,10 @@ $(document).ready(async function(){
          WARMUPS: 5,
          PANELS: PANELS_FOR_NEXT_RUN.slice()
        }
+
+       createPerformanceTable();
+       createPerformanceCharts();
+       createOutputFields();
 
        await resetData(FFT_BANK);
        await runErrorComparison(FFT_BANK, output_values);
