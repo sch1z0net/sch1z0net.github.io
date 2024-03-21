@@ -335,7 +335,7 @@ $(document).ready(function(){
     $title_div   = $("<div>").attr("id", "title_div");
     $title       = $("<h1>").text("OINK FFT").attr("id", "title");
     $title.click(function(){ window.open("https://sch1z0net.github.io/oink_fft/"); });
-    
+
     $subtitle    = $("<h2>").text("the oinkiest FFT in the web").attr("id", "subtitle");
     $stats_div   = $("<div>").attr("id", "stats_div");
     $stats_head  = $("<div>").attr("id", "stats_head");
