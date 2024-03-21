@@ -504,7 +504,7 @@ $(document).ready(async function(){
     await setup(FFT_BANK);
 
     await $tab_intro.click(function(){
-         $tab_intro.fadeOut(2000);
+         $tab_intro.addClass(fade_hide);
          $reload.trigger('click');
     });
 });

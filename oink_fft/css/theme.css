@@ -193,6 +193,30 @@ body {
   }
 }
 
+.fade_hide{
+   animation: fade_hide 1.4s ease-out forward;
+}
+
+@keyframes fade_hide {
+  0% {
+     opacity: 1.0;
+  }
+  25% {
+     transform: translateY(-20px);
+  }
+  50% {
+     
+  }
+  75% {
+     transform: translateY(200px);
+  }
+  100% {
+      opacity: 0;
+      display: none;
+  }
+}
+
+
 .icon-link{ 
    cursor: pointer; 
    filter: invert(30%) sepia(50%); 
