@@ -41,6 +41,47 @@ body {
   position: relative;
 }
 
+h2{
+  margin: 0px;
+  font-size: 40px
+}
+
+h3{
+  margin: 0px;
+  font-size: 30px;
+  /*! margin-top: 10px; */
+  border-top: 1px solid white;
+  width: 70%;
+  border-bottom: 1px solid white;
+  height: 50px;
+}
+
+p {
+  margin: 0px;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+pre{
+  margin: 0px;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+code{
+  background-color: black;
+  border-radius: 5px;
+  font-size: 14px;
+  margin: 0px;
+  border: 1px solid white;
+  color: white;
+  text-align: left;
+  padding: 10px;
+  width: 600px;
+}
+
 .anchor{
   display: block;
   width:40%;
@@ -594,8 +635,9 @@ section{
 
     font-family: "Sue Ellen Francisco", cursive !important;
     font-style: normal;
-    font-size: 50px;
     color: #FDDDE6;
+    align-items: center;
+    height: fit-content;
 }
 
 
