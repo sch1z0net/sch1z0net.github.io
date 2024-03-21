@@ -147,7 +147,7 @@ function createOutputFields(){
         let type = types[i];
 
         let outputRow = $('<div>').addClass('output-row');
-        let label = $('<label>').attr('for', `output_${type}`).text(`${type}:`);
+        let label = $('<label>').text(`${type}:`);
         let outputRE = $('<input>').attr({type: 'text', id: `outputRE_${type}`}).addClass('float-input');
         let outputIM = $('<input>').attr({type: 'text', id: `outputIM_${type}`}).addClass('float-input');
         let checkbox = $('<input>').attr({type: 'checkbox', id: `check_${type}`}).addClass('check_ref');
@@ -347,8 +347,12 @@ $(document).ready(function(){
     $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
 
     // Create select boxes for the number of operations and the amount of runs
-    $numOpsSelect = $('<select id="numOpsSelect"></select>');
-    $runsSelect = $('<select id="runsSelect"></select>');
+
+    $paramsDiv =  $('<div id="paramsDiv">');
+    $numOpsLabel = $('<label>').text("# Operations").appendTo($paramsDiv);
+    $numOpsSelect = $('<select id="numOpsSelect"></select>').appendTo($paramsDiv).val(7500);
+    $runsLabel = $('<label>').text("# Runs").appendTo($paramsDiv);
+    $runsSelect = $('<select id="runsSelect"></select>').appendTo($paramsDiv).val(8);
     
     $numOpsSelect.append('<option value="' + 5000 + '">' +  5000 + '</option>');
     $numOpsSelect.append('<option value="' + 7500 + '">' +  7500 + '</option>');
@@ -371,8 +375,7 @@ $(document).ready(function(){
     $title_div.append($oinkImage);
     
     // Append select boxes to the stats_div
-    $stats_footer.append($numOpsSelect.val(7500));
-    $stats_footer.append($runsSelect.val(8));
+    $stats_footer.append($paramsDiv);
 
     $reload = $('<button id="reload">Reload</button>').hide().appendTo($stats_footer);
 

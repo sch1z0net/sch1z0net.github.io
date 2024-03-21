@@ -354,18 +354,19 @@ select {
   transform: translateX(60px);
 }
 
-#numOpsSelect{
+#paramsDiv{
    width: 100px;
    position: absolute;
    right: 20px;
    bottom: 5px;
 }
 
+#numOpsSelect{
+   display: inline;
+}
+
 #runsSelect{
-   width: 100px;
-   position: absolute;
-   right: 130px;
-   bottom: 5px;
+   display: inline;
 }
 
 
