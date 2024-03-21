@@ -354,6 +354,25 @@ select {
   transform: translateX(60px);
 }
 
+#selectionsDiv{
+   width: 200px;
+   position: absolute;
+   left: 20px;
+   bottom: 5px;
+   display: grid;
+   grid-template-columns: auto auto;
+   grid-template-rows: auto auto;
+}
+
+#selectionsDiv div{
+  display: inline-block;
+}
+
+#selectionsDiv label{
+  font-size: 10px;
+}
+
+
 #paramsDiv{
    width: 200px;
    position: absolute;
@@ -366,14 +385,6 @@ select {
 
 #paramsDiv label{
   font-size: 10px;
-}
-
-#numOpsSelect{
-
-}
-
-#runsSelect{
-
 }
 
 

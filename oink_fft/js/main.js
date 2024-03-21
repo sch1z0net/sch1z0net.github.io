@@ -365,6 +365,37 @@ $(document).ready(function(){
     $runsSelect.append('<option value="' + 8 + '">' + 8 + '</option>');
     $runsSelect.append('<option value="' + 16 + '">' + 16 + '</option>');
 
+
+    // Create the fieldset element
+    var fieldset = $('<fieldset></fieldset>');
+    var legend = $('<legend>Choose FFT sizes:</legend>');
+    fieldset.append(legend);
+
+    // Array of features with their IDs and labels
+    var features = [
+      { id: 'size128' , label: '128'  },
+      { id: 'size256' , label: '256'  },
+      { id: 'size512' , label: '512'  },
+      { id: 'size1024', label: '1024' },
+      { id: 'size2048', label: '2048' }
+    ];
+
+    // Create checkbox inputs and labels for each feature
+    features.forEach(function(feature) {
+      var div = $('<div></div>');
+      var checkbox = $('<input type="checkbox" id="' + feature.id + '" name="' + feature.id + '" checked>');
+      var label = $('<label for="' + feature.id + '">' + feature.label + '</label>');
+
+      div.append(checkbox);
+      div.append(label);
+      fieldset.append(div);
+    });
+
+    // Append the fieldset to the features div
+    let $selectionsDiv = $('<div id="selectionsDiv">').append(fieldset);
+    $stats_footer.append($selectionsDiv);
+
+
     // Create the image element
     var $oinkImage = $("<img>", {
         id: "oinkImage",
@@ -378,7 +409,6 @@ $(document).ready(function(){
     $stats_footer.append($paramsDiv);
 
     $reload = $('<button id="reload">Reload</button>').hide().appendTo($stats_footer);
-
 
 
     let $chart_l = $('<button id="chart_l">←</button>').appendTo($tab_chart);
