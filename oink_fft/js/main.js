@@ -370,6 +370,8 @@ $(document).ready(function(){
 
     
     let $intro = $("<div class='pulse'>RUN BENCHMARK</div>");
+    let $intro_text = $("<div>Welcome to my Benchmarking Suite</div>");
+    $tab_intro.append($intro_text);
     $tab_intro.append($intro);
     
 
