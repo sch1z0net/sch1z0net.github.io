@@ -48,38 +48,39 @@ h2{
 
 h3{
   margin: 0px;
-  font-size: 30px;
-  /*! margin-top: 10px; */
+  font-size: 20px;
   border-top: 1px solid white;
   width: 70%;
   border-bottom: 1px solid white;
-  height: 50px;
+  height: 40px;
+  background: linear-gradient(to right, transparent, grey, transparent);
 }
 
 p {
   margin: 0px;
-  font-size: 18px;
-  margin-top: 20px;
+  font-size: 15px;
+  margin-top: 5px;
 }
 
 pre{
   margin: 0px;
   display: flex;
   justify-content: center;
-  margin-top: 10px;
-  margin-bottom: 30px;
+  margin-top: 2px;
+  margin-bottom: 20px;
 }
 
 code{
   background-color: black;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 12px;
   margin: 0px;
   border: 1px solid white;
   color: white;
   text-align: left;
   padding: 10px;
   width: 600px;
+  white-space: pre-line;
 }
 
 .anchor{

@@ -38,7 +38,7 @@
 	    <p>To use this library, you first need to include it in your project.</p>
 	    <pre>
 	    	<code>
-	    		import * as OINK from 'oink_fft.js';
+	    		<span>import * as OINK from 'oink_fft.js';</span>
 	    	</code>
 	    </pre>
 
@@ -46,8 +46,8 @@
 	    <p>Now, to make the FFT functions accessible, you need to call the WASM setup.</p>
 	    <pre>
 	    	<code>
-	    		const Module_OINK = import('fft_wasm.js');
-	    	    initializeModuleOINK(Module_OINK.default());
+	    		<span>const Module_OINK = import('fft_wasm.js');</span>
+	    	    <span>initializeModuleOINK(Module_OINK.default());</span>
 	    	</code>
 	    </pre>
 
@@ -55,8 +55,8 @@
 	    <p>Here's how you can use the Forward FFT of size 1024</p>
 	    <pre>
 	    	<code>
-	    		let realInput = new Float32Array([/* Fill with 1024 Float Values */]);
-	    	    let spectrum  = fftReal1024(realInput);
+	    		<span>let realInput = new Float32Array([/* Fill with 1024 Float Values */]);</span>
+	    	    <span>let spectrum  = fftReal1024(realInput);</span>
 	    	</code>
 	    </pre>
 
