@@ -2,7 +2,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// TESTING PERFORMANCE ///////////////////////////////////////////////
-let DELAY_BETWEEN_ITERATIONS = 1.35;
+let DELAY_BETWEEN_RUNS = 1.35;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 // Reset on each new Run
@@ -100,14 +100,6 @@ const measureFFT = (FFT_BANK, type, size, testData, NUM_OPS) => {
       default: throw Error("wrong size for FFT Performance"); break;
     }
 
-/*
-    if(size ==  128){ func = () => { FFT_BANK.get(type).fft128(tD);  }; }
-    if(size ==  256){ func = () => { FFT_BANK.get(type).fft256(tD);  }; }
-    if(size ==  512){ func = () => { FFT_BANK.get(type).fft512(tD);  }; }
-    if(size == 1024){ func = () => { FFT_BANK.get(type).fft1024(tD); }; }
-    if(size == 2048){ func = () => { FFT_BANK.get(type).fft2048(tD); }; }
-*/
-
     const startTime = performance.now(); // Start time
     for (let i = 0; i < NUM_OPS; i++){
         func(tD);
@@ -149,8 +141,8 @@ const runPerformance = async (FFT_BANK, type, PARAMS) => {
             if (    isNaN(avrg_ops)){ avrg_ops = -1; break; }
             if (!isFinite(avrg_ops)){ break; }
             
-            // Introduce a delay between iterations
-            await new Promise(resolve => setTimeout(resolve, DELAY_BETWEEN_ITERATIONS));
+            // Introduce a delay between runs
+            await new Promise(resolve => setTimeout(resolve, DELAY_BETWEEN_RUNS));
         }
 
         avrg_ops = Math.floor(avrg_ops / PARAMS.RUNS);

@@ -41,10 +41,10 @@ const perform_INDUTNY = (instance, out, testData) => {
 // IMPLEMENT GIVEN INTERFACE
 //////////////////////////////////////
 const PLUGIN_INDUTNY = {
-  idname:   function() { return "INDUTNY" },
-  fullname: function() { return "FFT.JS (indunty)"},
-  url:      function() { return "https://github.com/indutny/fft.js/" },
-  precision:function() { return "float" },
+  idname:   function() { return "INDUTNY"; },
+  fullname: function() { return "FFT.JS (indunty)"; },
+  url:      function() { return "https://github.com/indutny/fft.js/"; },
+  precision:function() { return "float"; },
   init:     function() { return initializeINDUTNY(); },
   fft128:   function(testData) { perform_INDUTNY(indutny_f_128,   indutny_out_128,   testData); },
   fft256:   function(testData) { perform_INDUTNY(indutny_f_256,   indutny_out_256,   testData); },

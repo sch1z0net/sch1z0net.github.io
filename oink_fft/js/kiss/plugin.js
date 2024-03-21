@@ -41,10 +41,10 @@ const perform_KISS = (input, instance, testData) => {
 // IMPLEMENT GIVEN INTERFACE
 //////////////////////////////////////
 const PLUGIN_KISS = {
-  idname:   function() { return "KISS" },
-  fullname: function() { return "KISS (mborgerding)"},
-  url:      function() { return "https://github.com/mborgerding/kissfft" },
-  precision:function() { return "double" },
+  idname:   function() { return "KISS"; },
+  fullname: function() { return "KISS (mborgerding)"; },
+  url:      function() { return "https://github.com/mborgerding/kissfft"; },
+  precision:function() { return "double"; },
   init: async function() {
     const Module_KISS = await import('/oink_fft/js/kiss/kiss_fft.js');
     Module_KISS_ = await Module_KISS.default();
