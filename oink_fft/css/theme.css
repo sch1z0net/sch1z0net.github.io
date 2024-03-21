@@ -552,14 +552,20 @@ section{
 
 
 .pulse{ 
-   animation: pulsate 2.5s ease-out alternate;
+   animation: pulsate 2.5s ease-out infinity;
 }
 
 @keyframes pulsate {
-  from {
+  0% {
     transform: scale(1.0);
+    filter: hue-rotate(0deg);
   }
-  to {
+  50% {
     transform: scale(0.9);
+    filter: hue-rotate(360deg);
+  }
+  100% {
+    transform: scale(1.0);
+    filter: hue-rotate(0deg);
   }
 }
