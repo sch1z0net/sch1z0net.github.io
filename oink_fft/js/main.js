@@ -18,7 +18,7 @@ let PARAMS = {
    NUM_OPS: numOpsOptions[1], 
    RUNS:    runsOptions[1],
    WARMUPS: 3,
-   PANELS: PANELS_FOR_NEXT_RUN.slice();
+   PANELS: PANELS_FOR_NEXT_RUN.slice()
 }
 
 
