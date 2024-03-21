@@ -8,11 +8,15 @@ const FFT_BANK = new Map();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
-let PANELS = [128, 256, 512, 1024, 2048];
+const numOpsOptions = [5000, 7500, 10000, 15000, 20000];
+const runsOptions = [1, 2, 4, 8, 16];
+const FFT_SIZES = [ 128, 256, 512, 1024, 2048 ];
+
+let PANELS = FFT_SIZES.slice();
 let P_IDX = 0;
 let PARAMS = {
-   NUM_OPS: 7500, 
-   RUNS:    2,
+   NUM_OPS: numOpsOptions[1], 
+   RUNS:    runsOptions[1],
    WARMUPS: 3,
    PANELS: PANELS
 }
@@ -352,17 +356,11 @@ $(document).ready(function(){
     let $runsLabel = $('<label>').text("# Runs").appendTo($paramsDiv);
     $numOpsSelect = $('<select id="numOpsSelect"></select>').appendTo($paramsDiv);
     $runsSelect = $('<select id="runsSelect"></select>').appendTo($paramsDiv);
-    
-    $numOpsSelect.append('<option value="' + 5000 + '">' +  5000 + '</option>');
-    $numOpsSelect.append('<option value="' + 7500 + '">' +  7500 + '</option>');
-    $numOpsSelect.append('<option value="' + 10000 + '">' + 10000 + '</option>');
-    $numOpsSelect.append('<option value="' + 15000 + '">' + 15000 + '</option>');
-    $numOpsSelect.append('<option value="' + 20000 + '">' + 20000 + '</option>');
-    $runsSelect.append('<option value="' + 1 + '">' + 1 + '</option>');
-    $runsSelect.append('<option value="' + 2 + '">' + 2 + '</option>');
-    $runsSelect.append('<option value="' + 4 + '">' + 4 + '</option>');
-    $runsSelect.append('<option value="' + 8 + '">' + 8 + '</option>');
-    $runsSelect.append('<option value="' + 16 + '">' + 16 + '</option>');
+
+    // Append options to numOpsSelect
+    numOpsOptions.forEach(option => { $numOpsSelect.append('<option value="' + option + '">' + option + '</option>'); });
+    // Append options to runsSelect
+    runsOptions.forEach(option => { $runsSelect.append('<option value="' + option + '">' + option + '</option>'); });
 
     $numsOpsSelect.val(PARAMS.NUM_OPS);
     $runsSelect.val(PARAMS.RUNS);
@@ -372,29 +370,20 @@ $(document).ready(function(){
     var $legend = $('<legend>Choose FFT sizes:</legend>');
     $fieldset.append($legend);
 
-    // Array of features with their IDs and labels
-    var FFT_SIZES = [
-      { id: 'size128' , label: '128'  },
-      { id: 'size256' , label: '256'  },
-      { id: 'size512' , label: '512'  },
-      { id: 'size1024', label: '1024' },
-      { id: 'size2048', label: '2048' }
-    ];
-
     function updatePANELS(){
         PANELS = [];
         for(let i = 0; i < FFT_SIZES.length; i++){
-            if ($("#"+FFT_SIZES[i].id).prop("checked")) { 
-                PANELS.push( parseInt(FFT_SIZES[i].label)); 
+            if ($("#check_"+FFT_SIZES[i]).prop("checked")) { 
+                PANELS.push( FFT_SIZES[i] ); 
             }
         }
     }
 
     // Create checkbox inputs and labels for each feature
-    FFT_SIZES.forEach(function(feature) {
+    FFT_SIZES.forEach(function(size) {
       var $div = $('<div></div>');
-      var $checkbox = $('<input type="checkbox" class="check_size" id="' + feature.id + '" name="' + feature.id + '" checked>');
-      var $label = $('<label for="' + feature.id + '">' + feature.label + '</label>');
+      var $checkbox = $('<input type="checkbox" class="check_size" id="check_' + size + '" name="check_' + size + '" checked>');
+      var $label = $('<label for="check_' + size + '">' + size + '</label>');
 
       $div.append($checkbox);
       $div.append($label);
