@@ -91,15 +91,26 @@ const measureFFT = (FFT_BANK, type, size, testData, NUM_OPS) => {
         throw Error("wrong precision defined in setup")
     }
 
+    switch (size) {
+      case 128:  func = FFT_BANK.get(type).fft128; break;
+      case 256:  func = FFT_BANK.get(type).fft256; break;
+      case 512:  func = FFT_BANK.get(type).fft512; break;
+      case 1024: func = FFT_BANK.get(type).fft1024;break;
+      case 2048: func = FFT_BANK.get(type).fft2048;break;
+      default: throw Error("wrong size for FFT Performance"); break;
+    }
+
+/*
     if(size ==  128){ func = () => { FFT_BANK.get(type).fft128(tD);  }; }
     if(size ==  256){ func = () => { FFT_BANK.get(type).fft256(tD);  }; }
     if(size ==  512){ func = () => { FFT_BANK.get(type).fft512(tD);  }; }
     if(size == 1024){ func = () => { FFT_BANK.get(type).fft1024(tD); }; }
     if(size == 2048){ func = () => { FFT_BANK.get(type).fft2048(tD); }; }
+*/
 
     const startTime = performance.now(); // Start time
     for (let i = 0; i < NUM_OPS; i++){
-        func();
+        func(tD);
     }
     const endTime = performance.now(); // End time
     const elapsedTime = endTime - startTime; // Elapsed time in milliseconds
