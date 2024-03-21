@@ -12,13 +12,13 @@ const numOpsOptions = [5000, 7500, 10000, 15000, 20000];
 const runsOptions = [1, 2, 4, 8, 16];
 const FFT_SIZES = [ 128, 256, 512, 1024, 2048 ];
 
-let PANELS = FFT_SIZES.slice();
+let PANELS_FOR_NEXT_RUN = FFT_SIZES.slice();
 let P_IDX = 0;
 let PARAMS = {
    NUM_OPS: numOpsOptions[1], 
    RUNS:    runsOptions[1],
    WARMUPS: 3,
-   PANELS: PANELS
+   PANELS: PANELS_FOR_NEXT_RUN.slice();
 }
 
 
@@ -68,7 +68,7 @@ function createPerformanceTable(){
     // HEADER
     var $tr_sizes = $("<tr>").attr("id", "tr_header").appendTo($tbody); 
     $("<td>").text("FFT size").appendTo($tr_sizes);
-        for (let size of PANELS) {
+        for (let size of PARAMS.PANELS) {
         $("<td>").text(size).appendTo($tr_sizes).css("background-color","rgba(200,0,0,0.2)");
     }
 
@@ -130,11 +130,14 @@ function createPerformanceChart(fft_size){
 }
 
 function createPerformanceCharts(){
+    P_IDX = 0;
     resetPerformanceCharts();
-    for (let size of PANELS) {
+    for (let size of PARAMS.PANELS) {
         createPerformanceChart(size);
     }
-    $("#panel_"+PANELS[P_IDX]).show();
+    if(PARAMS.PANELS.length > 0){
+        $("#panel_"+PARAMS.PANELS[P_IDX]).show();
+    }
 }
 
 
@@ -309,15 +312,15 @@ function updateMax(size, ops, name){
 }
 
 function highlightComparison(FFT_BANK){
-    for (let size of PANELS) {
+    for (let size of PARAMS.PANELS) {
          MAX_.set(size, {name: '-', ops: 0 });
     }
-    for (let size of PANELS) {
+    for (let size of PARAMS.PANELS) {
          FFT_BANK.forEach((value, key) => {
                updateMax(size, value.res.get(size), value.idname);
          });
     }
-    for (let size of PANELS) {
+    for (let size of PARAMS.PANELS) {
          let best = MAX_.get(size).name;
          let id = best+"_"+size;
          $("#"+id).addClass("bestPerf");
@@ -380,10 +383,10 @@ $(document).ready(function(){
     $fieldset.append($legend);
 
     function updatePANELS(){
-        PANELS = [];
+        PANELS_FOR_NEXT_RUN = [];
         for(let i = 0; i < FFT_SIZES.length; i++){
             if ($("#check_"+FFT_SIZES[i]).prop("checked")) { 
-                PANELS.push( FFT_SIZES[i] ); 
+                PANELS_FOR_NEXT_RUN.push( FFT_SIZES[i] ); 
             }
         }
     }
@@ -420,8 +423,8 @@ $(document).ready(function(){
 
     let $chart_l = $('<button id="chart_l">←</button>').appendTo($tab_chart);
     let $chart_r = $('<button id="chart_r">→</button>').appendTo($tab_chart);
-    $chart_l.click(function(){ $(".chart_panel").hide(); P_IDX=(P_IDX==0)?(PANELS.length-1):(P_IDX-1); $("#panel_"+PANELS[P_IDX]).show();});
-    $chart_r.click(function(){ $(".chart_panel").hide(); P_IDX=(P_IDX+1)%PANELS.length; $("#panel_"+PANELS[P_IDX]).show();});
+    $chart_l.click(function(){ $(".chart_panel").hide(); P_IDX=(P_IDX==0)?(PARAMS.PANELS.length-1):(P_IDX-1); $("#panel_"+PARAMS.PANELS[P_IDX]).show();});
+    $chart_r.click(function(){ $(".chart_panel").hide(); P_IDX=(P_IDX+1)%PARAMS.PANELS.length; $("#panel_"+PARAMS.PANELS[P_IDX]).show();});
 
     // Create a div element for the icon row
     var $iconRow = $("<div>").attr("id", "icon-row");
@@ -469,7 +472,7 @@ $(document).ready(async function(){
          NUM_OPS: parseInt($numOpsSelect.val()), 
          RUNS:    parseInt($runsSelect.val()),
          WARMUPS: 5,
-         PANELS: PANELS
+         PANELS: PANELS_FOR_NEXT_RUN.slice()
        }
 
        await resetData(FFT_BANK);
