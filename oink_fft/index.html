@@ -45,17 +45,17 @@
 		        });
 		    });
 		});
-
+        
 		// Function to update background opacity based on scroll position
 		function updateBackgroundOpacity() {
 		    // Get the scroll position relative to the top of the page
 		    const scrollPosition = window.scrollY || window.pageYOffset;
 		    // Determine the opacity based on the scroll position
-		    const opacity = scrollPosition / $("#section_main").offsetTop; // Adjust section2 with the appropriate section
+		    const opacity = scrollPosition / $("#section_main").offsetTop;
 		    // Apply the opacity to the section background
-		    $("#section_usage").style.backgroundColor = `rgba(255, 255, 255, ${opacity})`; // Change the color values as needed
+		    $("#section_usage").css("background-color",`rgba(255, 255, 255, ${opacity})`);
 		}
-
+        
 		// Attach event listener to the scroll event
 		window.addEventListener('scroll', updateBackgroundOpacity);
 	</script>
