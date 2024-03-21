@@ -34,6 +34,7 @@ var $tab_chart;
 var $tab_micro;
 
 var $perf_table;
+var $output_div;
 var $outputs;
 var $tbody;
 var $loading;
@@ -136,10 +137,18 @@ function createPerformanceCharts(){
     $("#panel_"+PANELS[P_IDX]).show();
 }
 
+
 let output_values = [];
 let ref_output = 0;
+function resetOutputFields(){
+    output_values = [];
+    $output_div && $output_div.remove();
+}
+
 function createOutputFields(){
-    const $output_div = $("<div>").attr("id","output-div");
+    resetOutputFields();
+
+    $output_div = $("<div>").attr("id","output-div");
     $tab_micro.append($output_div);
 
     //let types = ["INDUTNY","DSP","OOURA","KISS","OINK"];
