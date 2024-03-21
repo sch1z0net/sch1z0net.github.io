@@ -19,7 +19,7 @@ const perform_OINK = (instance, testData) => {
 //////////////////////////////////////
 // IMPLEMENT GIVEN INTERFACE
 //////////////////////////////////////
-const OINK = {
+const PLUGIN_OINK = {
   idname:   function() { return "OINK" },
   fullname: function() { return "OINK (sch1z0net)"},
   url:      function() { return "https://github.com/sch1z0net/oink" },
