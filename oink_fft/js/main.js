@@ -347,8 +347,7 @@ $(document).ready(function(){
     $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
 
     // Create select boxes for the number of operations and the amount of runs
-
-    let $paramsDiv =  $('<div id="paramsDiv">');
+    let $paramsDiv =  $('<div id="paramsDiv">').appendTo($stats_footer);
     let $numOpsLabel = $('<label>').text("# Operations").appendTo($paramsDiv);
     let $runsLabel = $('<label>').text("# Runs").appendTo($paramsDiv);
     $numOpsSelect = $('<select id="numOpsSelect"></select>').appendTo($paramsDiv);
@@ -383,8 +382,6 @@ $(document).ready(function(){
     ];
 
     function updatePANELS(){
-        
-
         PANELS = [];
         for(let i = 0; i < FFT_SIZES.length; i++){
             if ($("#"+FFT_SIZES[i].id).prop("checked")) { 
@@ -419,9 +416,6 @@ $(document).ready(function(){
 
     // Append the image to the container div
     $title_div.append($oinkImage);
-    
-    // Append select boxes to the stats_div
-    $stats_footer.append($paramsDiv);
 
     $reload = $('<button id="reload">Reload</button>').hide().appendTo($stats_footer);
 
