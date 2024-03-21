@@ -1,7 +1,14 @@
 
 var Module_KISS = (() => {
   var _scriptDir = typeof document !== 'undefined' && document.currentScript ? document.currentScript.src : undefined;
-  _scriptDir += "kiss/";
+
+if (_scriptDir) {
+    // Extract the directory path from the script URL
+    var currentScriptDir = _scriptDir.substring(0, _scriptDir.lastIndexOf('/') + 1);
+    // Navigate to another directory relative to the current script
+    _scriptDir = currentScriptDir + "kiss/";
+}
+
   if (typeof __filename !== 'undefined') _scriptDir ||= __filename;
   return (
 function(moduleArg = {}) {
