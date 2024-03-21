@@ -367,12 +367,12 @@ $(document).ready(function(){
 
 
     // Create the fieldset element
-    var fieldset = $('<fieldset></fieldset>');
-    var legend = $('<legend>Choose FFT sizes:</legend>');
-    fieldset.append(legend);
+    var $fieldset = $('<fieldset></fieldset>');
+    var $legend = $('<legend>Choose FFT sizes:</legend>');
+    $fieldset.append($legend);
 
     // Array of features with their IDs and labels
-    var features = [
+    var FFT_SIZES = [
       { id: 'size128' , label: '128'  },
       { id: 'size256' , label: '256'  },
       { id: 'size512' , label: '512'  },
@@ -380,19 +380,30 @@ $(document).ready(function(){
       { id: 'size2048', label: '2048' }
     ];
 
-    // Create checkbox inputs and labels for each feature
-    features.forEach(function(feature) {
-      var div = $('<div></div>');
-      var checkbox = $('<input type="checkbox" id="' + feature.id + '" name="' + feature.id + '" checked>');
-      var label = $('<label for="' + feature.id + '">' + feature.label + '</label>');
+    function updatePANELS(){
+        PANELS = [];
+        for(let i = 0; i < FFT_SIZES.length; i++){
+            if ($("#"+FFT_SIZES[i].id).prop("checked")) { 
+                PANELS.push( parseInt(FFT_SIZES[i].label)); 
+            }
+        }
+    }
 
-      div.append(checkbox);
-      div.append(label);
-      fieldset.append(div);
+    // Create checkbox inputs and labels for each feature
+    FFT_SIZES.forEach(function(feature) {
+      var $div = $('<div></div>');
+      var $checkbox = $('<input type="checkbox" class="check_size" id="' + feature.id + '" name="' + feature.id + '" checked>');
+      var $label = $('<label for="' + feature.id + '">' + feature.label + '</label>');
+
+      $div.append($checkbox);
+      $div.append($label);
+      $fieldset.append($div);
+      
+      $checkbox.change(updatePANELS);
     });
 
     // Append the fieldset to the features div
-    let $selectionsDiv = $('<div id="selectionsDiv">').append(fieldset);
+    let $selectionsDiv = $('<div id="selectionsDiv">').append($fieldset);
     $stats_head.append($selectionsDiv);
 
 
