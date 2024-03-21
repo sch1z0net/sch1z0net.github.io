@@ -482,3 +482,8 @@ function IFFT2048onHalf(halfSpectrum) {
 
     return audioSignal;
 }
+
+
+
+
+export { initializeModuleOINK, fftReal2048, fftReal1024, fftReal512, fftReal256, fftReal128 };
