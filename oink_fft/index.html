@@ -30,22 +30,34 @@
           	<a href="#section_usage" class="anchor">Usage</a>
 	        <a href="#section_donate" class="anchor">Donate</a>
 	    </div>
-
 	</section>
 	<section id="section_usage">
         <h2>Usage</h2>
 	</section>
 	<script>
-	// Smooth scrolling behavior
-	document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-	    anchor.addEventListener('click', function (e) {
-	        e.preventDefault();
+		// Smooth scrolling behavior
+		document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+		    anchor.addEventListener('click', function (e) {
+		        e.preventDefault();
 
-	        document.querySelector(this.getAttribute('href')).scrollIntoView({
-	            behavior: 'smooth'
-	        });
-	    });
-	});
+		        document.querySelector(this.getAttribute('href')).scrollIntoView({
+		            behavior: 'smooth'
+		        });
+		    });
+		});
+
+		// Function to update background opacity based on scroll position
+		function updateBackgroundOpacity() {
+		    // Get the scroll position relative to the top of the page
+		    const scrollPosition = window.scrollY || window.pageYOffset;
+		    // Determine the opacity based on the scroll position
+		    const opacity = scrollPosition / $("#section_main").offsetTop; // Adjust section2 with the appropriate section
+		    // Apply the opacity to the section background
+		    $("#section_usage").style.backgroundColor = `rgba(255, 255, 255, ${opacity})`; // Change the color values as needed
+		}
+
+		// Attach event listener to the scroll event
+		window.addEventListener('scroll', updateBackgroundOpacity);
 	</script>
 
     <script type="module" src="/oink_fft/js/main.js" defer></script>
