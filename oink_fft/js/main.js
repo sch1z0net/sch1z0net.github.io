@@ -497,7 +497,11 @@ $(document).ready(async function(){
     });
 
     await setup(FFT_BANK);
-    await $reload.trigger('click');
+
+    await $tab_intro.click(function(){
+         $tab_intro.hide(); 
+         $reload.trigger('click');
+    });
 });
 
 
