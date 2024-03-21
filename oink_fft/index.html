@@ -47,19 +47,22 @@
 		    });
 		});
         
-		// Function to update background opacity based on scroll position
-		function updateBackgroundOpacity() {
-		    // Get the scroll position relative to the top of the page
-		    const scrollPosition = window.scrollY || window.pageYOffset;
-		    // Determine the opacity based on the scroll position
-		    const opacity = scrollPosition / $("#section_main").offsetTop;
-		    // Apply the opacity to the section background
-		    $("#section_usage").css("background-color",`rgba(255, 255, 255, ${opacity})`);
-		}
-        
-		// Attach event listener to the scroll event
-		window.addEventListener('scroll', updateBackgroundOpacity);
-	  });
+	    // Function to update background opacity based on scroll position
+	    function updateBackgroundOpacity() {
+	        // Get the scroll position relative to the top of the page
+	        const scrollPosition = $(window).scrollTop();
+	        // Determine the opacity based on the scroll position
+	        const opacity = scrollPosition / $("#section_main").offset().top;
+	        // Apply the opacity to the section background
+	        $("#section_usage").css("background-color", `rgba(255, 255, 255, ${opacity})`);
+	    }
+
+	    // Attach event listener to the scroll event
+	    $(window).scroll(updateBackgroundOpacity);
+
+	    // Call the function initially to set the initial background opacity
+	    updateBackgroundOpacity();
+	});
 	</script>
 
     <script type="module" src="/oink_fft/js/main.js" defer></script>
