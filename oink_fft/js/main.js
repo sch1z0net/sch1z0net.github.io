@@ -10,9 +10,9 @@ const FFT_BANK = new Map();
 /////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
 let PANELS = [128, 256, 512, 1024, 2048];
 let P_IDX = 0;
-let PARAMS = { 
+let PARAMS = {
    NUM_OPS: 7500, 
-   RUNS:    8,
+   RUNS:    2,
    WARMUPS: 3,
    PANELS: PANELS
 }
@@ -351,8 +351,8 @@ $(document).ready(function(){
     let $paramsDiv =  $('<div id="paramsDiv">');
     let $numOpsLabel = $('<label>').text("# Operations").appendTo($paramsDiv);
     let $runsLabel = $('<label>').text("# Runs").appendTo($paramsDiv);
-    $numOpsSelect = $('<select id="numOpsSelect"></select>').appendTo($paramsDiv).val(7500);
-    $runsSelect = $('<select id="runsSelect"></select>').appendTo($paramsDiv).val(8);
+    $numOpsSelect = $('<select id="numOpsSelect"></select>').appendTo($paramsDiv);
+    $runsSelect = $('<select id="runsSelect"></select>').appendTo($paramsDiv);
     
     $numOpsSelect.append('<option value="' + 5000 + '">' +  5000 + '</option>');
     $numOpsSelect.append('<option value="' + 7500 + '">' +  7500 + '</option>');
@@ -365,6 +365,8 @@ $(document).ready(function(){
     $runsSelect.append('<option value="' + 8 + '">' + 8 + '</option>');
     $runsSelect.append('<option value="' + 16 + '">' + 16 + '</option>');
 
+    $numsOpsSelect.val(PARAMS.NUM_OPS);
+    $runsSelect.val(PARAMS.RUNS);
 
     // Create the fieldset element
     var $fieldset = $('<fieldset></fieldset>');
@@ -381,6 +383,8 @@ $(document).ready(function(){
     ];
 
     function updatePANELS(){
+        
+
         PANELS = [];
         for(let i = 0; i < FFT_SIZES.length; i++){
             if ($("#"+FFT_SIZES[i].id).prop("checked")) { 
