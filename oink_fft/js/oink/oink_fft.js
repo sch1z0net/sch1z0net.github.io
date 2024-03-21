@@ -11,6 +11,8 @@ function nextPowerOf2(n) {
 /**********************************************************************************************/
 /**********************************************************************************************/
 /**********************************************************************************************/
+let Module_OINK_;
+
 
 var p_in_128, fft_wasm_128;
 var p_in_256, fft_wasm_256;
@@ -18,7 +20,9 @@ var p_in_512, fft_wasm_512;
 var p_in_1024, fft_wasm_1024;
 var p_in_2048, fft_wasm_2048;
 
-function initializeModuleOINK() {
+function initializeModuleOINK(Module_OINK) {
+    Module_OINK_ = Module_OINK;
+
     fft_wasm_128 = Module_OINK_.cwrap('fftReal128', null, ['number', 'number', 'number']);
     p_in_128     = Module_OINK_._malloc(128 * Float32Array.BYTES_PER_ELEMENT);
 

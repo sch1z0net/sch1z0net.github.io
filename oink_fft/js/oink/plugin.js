@@ -3,7 +3,6 @@
 // IMPORT THE FFT LIBRARY
 //////////////////////////////////////
 import { initializeModuleOINK, fftReal2048, fftReal1024, fftReal512, fftReal256, fftReal128 } from '/oink_fft/js/oink/oink_fft.js';
-let Module_OINK_;
 
 //////////////////////////////////////
 //////////////////////////////////////
@@ -27,8 +26,8 @@ const PLUGIN_OINK = {
   example:  function() { return perform_OINK(fftReal1024, testData.slice()).slice(); },
   init: async function() {
     const Module_OINK = await import('/oink_fft/js/oink/fft_wasm.js');
-    Module_OINK_ = await Module_OINK.default();
-    await initializeModuleOINK();
+    _Module_OINK_ = await Module_OINK.default();
+    await initializeModuleOINK(_Module_OINK_);
   },
   fft128:   function(testData) { perform_OINK(fftReal128,  testData); },
   fft256:   function(testData) { perform_OINK(fftReal256,  testData); },
