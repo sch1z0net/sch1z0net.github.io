@@ -549,3 +549,17 @@ section{
   border-radius: 10px;
   padding: 4px;
 }
+
+
+.pulse{ 
+   animation: pulsate 2.5s ease-out alternate;
+}
+
+@keyframes pulsate {
+  from {
+    transform: scale(1.0);
+  }
+  to {
+    transform: scale(0.9);
+  }
+}

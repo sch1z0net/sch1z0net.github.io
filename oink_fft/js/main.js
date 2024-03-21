@@ -366,7 +366,7 @@ $(document).ready(function(){
     $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
 
     
-    let $intro = $("<div>RUN PERFORMANCE TEST</div>");
+    let $intro = $("<div class='pulse'>RUN PERFORMANCE TEST</div>");
     $tab_intro.append($intro);
     
 
