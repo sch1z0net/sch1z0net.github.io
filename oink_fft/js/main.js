@@ -29,6 +29,7 @@ var $stats_div;
 var $stats_head;
 var $stats_footer;
 
+var $tabs;
 var $tab_intro;
 var $tab_table;
 var $tab_chart;
@@ -336,6 +337,7 @@ $(document).ready(function(){
     $subtitle    = $("<h2>").text("the oinkiest FFT in the web").attr("id", "subtitle");
     $stats_div   = $("<div>").attr("id", "stats_div");
     $stats_head  = $("<div>").attr("id", "stats_head");
+    $tabs        = $("<div>").attr("id", "tabs");
     $tab_intro   = $("<div>").attr("id", "tab_intro").addClass("tab").show();
     $tab_table   = $("<div>").attr("id", "tab_table").addClass("tab").show();
     $tab_chart   = $("<div>").attr("id", "tab_chart").addClass("tab").hide();
@@ -355,10 +357,11 @@ $(document).ready(function(){
     $title_div.append($subtitle);
     $("#root").append($stats_div);
     $stats_div.append($stats_head);
-    $stats_div.append($tab_intro);
-    $stats_div.append($tab_table);
-    $stats_div.append($tab_chart);
-    $stats_div.append($tab_micro);
+    $stats_div.append($tabs);
+    $tabs.append($tab_intro);
+    $tabs.append($tab_table);
+    $tabs.append($tab_chart);
+    $tabs.append($tab_micro);
     $stats_div.append($stats_footer);
     $stats_footer.append($loading);
     $stats_footer.append($loading_info);

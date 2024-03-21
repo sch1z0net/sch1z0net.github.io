@@ -127,7 +127,13 @@ body {
   margin: 0px;
 }
 
+#tabs {
+  width: 100%;
+  height: 100%;
+}
+
 .tab {
+  position: absolute;
   text-align: center;
   width: 100%;
   height: 100%;
