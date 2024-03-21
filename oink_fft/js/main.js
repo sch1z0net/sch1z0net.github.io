@@ -337,7 +337,7 @@ $(document).ready(function(){
     $stats_div   = $("<div>").attr("id", "stats_div");
     $stats_head  = $("<div>").attr("id", "stats_head");
     $tab_intro   = $("<div>").attr("id", "tab_intro").addClass("tab").show();
-    $tab_table   = $("<div>").attr("id", "tab_table").addClass("tab").hide();
+    $tab_table   = $("<div>").attr("id", "tab_table").addClass("tab").show();
     $tab_chart   = $("<div>").attr("id", "tab_chart").addClass("tab").hide();
     $tab_micro   = $("<div>").attr("id", "tab_micro").addClass("tab").hide();
 
