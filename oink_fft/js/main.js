@@ -362,7 +362,7 @@ $(document).ready(function(){
     // Append options to runsSelect
     runsOptions.forEach(option => { $runsSelect.append('<option value="' + option + '">' + option + '</option>'); });
 
-    $numsOpsSelect.val(PARAMS.NUM_OPS);
+    $numOpsSelect.val(PARAMS.NUM_OPS);
     $runsSelect.val(PARAMS.RUNS);
 
     // Create the fieldset element
