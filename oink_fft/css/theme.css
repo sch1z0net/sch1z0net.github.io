@@ -65,6 +65,7 @@ body {
   height: 140px;
   white-space: nowrap;
   filter: drop-shadow(4px 4px 4px rgba(0,0,0,0.2));
+  cursor: pointer;
 }
 
 #subtitle {
