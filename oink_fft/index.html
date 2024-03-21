@@ -53,9 +53,9 @@
             const scrollPosition = $(window).scrollTop();
             // Determine the opacity based on the scroll position
             const totalHeight = $("#section_main").height();
-            const opacity = 1 - (scrollPosition / totalHeight);
+            const opacity = (scrollPosition / totalHeight);
             // Apply the opacity to the section background
-            $("#section_usage").css("background-color", `rgba(100, 50, 50, ${opacity})`);
+            $("#section_usage").css("background-color", `rgba(200, 125, 150, ${opacity})`);
         }
 
         // Attach event listener to the scroll event
