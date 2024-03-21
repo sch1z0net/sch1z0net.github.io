@@ -219,9 +219,13 @@ async function runAllPerformanceTests(FFT_BANK, PARAMS, charts){
 
 function runErrorComparison(FFT_BANK, output_values){
     let testData = generateTestData(1024);
+    let testData32 = testData.slice();
+    let testData64 = Float64Array.from(testData.slice());
 
     FFT_BANK.forEach((value, key) => {
-        output_values.push( value.example(testData).slice() );
+        let precision = value.precision();
+        if(precision == "double"){      output_values.push( value.example(testData64).slice() );
+        }else if(precision == "float"){ output_values.push( value.example(testData32).slice() ); }
     });
     
     $("#out_slider").trigger('input');
