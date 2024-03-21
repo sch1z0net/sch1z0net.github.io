@@ -393,7 +393,7 @@ $(document).ready(function(){
 
     // Append the fieldset to the features div
     let $selectionsDiv = $('<div id="selectionsDiv">').append(fieldset);
-    $stats_footer.append($selectionsDiv);
+    $stats_head.append($selectionsDiv);
 
 
     // Create the image element
