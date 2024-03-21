@@ -202,22 +202,22 @@ body {
 @keyframes fade_hide {
   0% {
      opacity: 1.0;
-     transform: translateX(0px);
+     transform: translateY(0px);
   }
   10% {
      opacity: 1.0;
-     transform: translateX(-20px);
+     transform: translateY(-20px);
   }
   20% {
      opacity: 1.0;
-     transform: translateX(0px);
+     transform: translateY(0px);
   }
   99% {
-     opacity: 0;
-     transform: translateX(1000px);
+     opacity: 0.0;
+     transform: translateY(1000px);
   }
   100% {
-      display: none;
+      visibility: hidden;
   }
 }
 
