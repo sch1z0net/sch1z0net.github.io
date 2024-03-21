@@ -29,6 +29,7 @@ var $stats_div;
 var $stats_head;
 var $stats_footer;
 
+var $tab_intro;
 var $tab_table;
 var $tab_chart;
 var $tab_micro;
@@ -335,7 +336,8 @@ $(document).ready(function(){
     $subtitle    = $("<h2>").text("the oinkiest FFT in the web").attr("id", "subtitle");
     $stats_div   = $("<div>").attr("id", "stats_div");
     $stats_head  = $("<div>").attr("id", "stats_head");
-    $tab_table   = $("<div>").attr("id", "tab_table").addClass("tab").show();
+    $tab_intro   = $("<div>").attr("id", "tab_intro").addClass("tab").show();
+    $tab_table   = $("<div>").attr("id", "tab_table").addClass("tab").hide();
     $tab_chart   = $("<div>").attr("id", "tab_chart").addClass("tab").hide();
     $tab_micro   = $("<div>").attr("id", "tab_micro").addClass("tab").hide();
 
@@ -353,6 +355,7 @@ $(document).ready(function(){
     $title_div.append($subtitle);
     $("#root").append($stats_div);
     $stats_div.append($stats_head);
+    $stats_div.append($tab_intro);
     $stats_div.append($tab_table);
     $stats_div.append($tab_chart);
     $stats_div.append($tab_micro);
@@ -361,6 +364,11 @@ $(document).ready(function(){
     $stats_footer.append($loading_info);
     $("#root").append($descr_div);
     $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
+
+    
+    $intro = $("<div>RUN PERFORMANCE TEST</div>");
+    $tab_intro.append($intro);
+    
 
     // Create select boxes for the number of operations and the amount of runs
     let $paramsDiv =  $('<div id="paramsDiv">').appendTo($stats_footer);

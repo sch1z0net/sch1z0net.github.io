@@ -137,6 +137,10 @@ body {
   flex: 1;
 }
 
+#tab_intro{
+  font-size: 50px;
+}
+
 .icon-link{ 
    cursor: pointer; 
    filter: invert(30%) sepia(50%); 
