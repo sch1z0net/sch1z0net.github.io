@@ -348,9 +348,9 @@ $(document).ready(function(){
 
     // Create select boxes for the number of operations and the amount of runs
 
-    $paramsDiv =  $('<div id="paramsDiv">');
-    $numOpsLabel = $('<label>').text("# Operations").appendTo($paramsDiv);
-    $numOpsSelect = $('<select id="numOpsSelect"></select>').appendTo($paramsDiv).val(7500);
+    let $paramsDiv =  $('<div id="paramsDiv">');
+    let $numOpsLabel = $('<label>').text("# Operations").appendTo($paramsDiv);
+    let $numOpsSelect = $('<select id="numOpsSelect"></select>').appendTo($paramsDiv).val(7500);
     $runsLabel = $('<label>').text("# Runs").appendTo($paramsDiv);
     $runsSelect = $('<select id="runsSelect"></select>').appendTo($paramsDiv).val(8);
     
