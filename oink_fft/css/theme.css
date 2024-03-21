@@ -27,6 +27,7 @@ body {
   margin: 0px;
   overflow-y: scroll;
   background-color: #FDDDE6;
+  overflow-x: hidden;
 }
 
 #root {
@@ -202,21 +203,21 @@ body {
      opacity: 1.0;
      transform: translateX(0px);
   }
-  25% {
+  10% {
      opacity: 1.0;
      transform: translateX(-20px);
   }
-  50% {
+  20% {
      opacity: 1.0;
      transform: translateX(0px);
   }
-  75% {
+  90% {
      opacity: 0.5;
-     transform: translateX(100px);
+     transform: translateX(500px);
   }
   100% {
       opacity: 0;
-      transform: translateX(200px);
+      transform: translateX(500px);
       display: none;
   }
 }
