@@ -47,7 +47,7 @@ const PLUGIN_KISS = {
   precision:function() { return "double" },
   init: async function() {
     const Module_KISS = await import('/oink_fft/js/kiss/kiss_fft.js');
-    Module_KISS_ = await Module_KISS();
+    Module_KISS_ = await Module_KISS.default();
     await initializeKISS();
   },
   fft128:   function(testData) { perform_KISS(kiss_input_128,   kiss_fft_128,   testData); },
