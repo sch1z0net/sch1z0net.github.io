@@ -390,7 +390,7 @@ $(document).ready(function(){
             }
         }
         if(PANELS_FOR_NEXT_RUN.length == 0){
-            checkbox.prop("checked",true);
+            $(checkbox).prop("checked",true);
         }
     }
 
