@@ -35,18 +35,6 @@ const perform_KISS = (input, instance, testData) => {
     input.set(testData.slice()); return instance.transform();
 };
 
-async function importModule() {
-  try {
-    const Module_KISS = await import('/oink_fft/js/kiss/kiss_fft.js');
-    Module_KISS_ = await Module_KISS();
-    await initializeKISS();
-
-  } catch (error) {
-    // Handle any errors that occur during import
-    console.error('Error importing module:', error);
-  }
-}
-
 
 //////////////////////////////////////
 //////////////////////////////////////
@@ -58,7 +46,8 @@ const PLUGIN_KISS = {
   url:      function() { return "https://github.com/mborgerding/kissfft" },
   precision:function() { return "double" },
   init: async function() {
-    Module_KISS_ = await import('/oink_fft/js/kiss/kiss_fft.js');
+    const Module_KISS = await import('/oink_fft/js/kiss/kiss_fft.js');
+    Module_KISS_ = await Module_KISS();
     await initializeKISS();
   },
   fft128:   function(testData) { perform_KISS(kiss_input_128,   kiss_fft_128,   testData); },
