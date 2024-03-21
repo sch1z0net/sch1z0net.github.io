@@ -359,14 +359,16 @@ select {
    position: absolute;
    right: 20px;
    bottom: 5px;
+   display: flex;
+   flex-direction: row;
 }
 
 #numOpsSelect{
-   display: inline;
+
 }
 
 #runsSelect{
-   display: inline;
+
 }
 
 
