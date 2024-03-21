@@ -505,7 +505,10 @@ $(document).ready(async function(){
 
     await $tab_intro.click(function(){
          $tab_intro.addClass("fade_hide");
-         $reload.trigger('click');
+         setTimeout(function() {
+             $tab_intro.hide();
+             $reload.trigger('click');
+         }, 500); // 1000 milliseconds = 1 second
     });
 });
 

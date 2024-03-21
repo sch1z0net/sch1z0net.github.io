@@ -196,27 +196,18 @@ body {
 }
 
 .fade_hide{
-   animation: fade_hide 1.0s ease-out forwards;
+   animation: fade_hide 0.5s ease-out forwards;
 }
 
 @keyframes fade_hide {
   0% {
      opacity: 1.0;
-     transform: translateY(0px);
-  }
-  10% {
-     opacity: 1.0;
-     transform: translateY(-20px);
-  }
-  20% {
-     opacity: 1.0;
-     transform: translateY(0px);
   }
   99% {
      opacity: 0.0;
-     transform: translateY(1000px);
   }
   100% {
+      opacity: 0.0;
       visibility: hidden;
   }
 }
