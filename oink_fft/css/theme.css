@@ -750,6 +750,10 @@ section{
   cursor: pointer;
 }
 
+#d_2, #d_3{
+  display: none;
+}
+
 #d_1, #d_2, #d_3{
   animation: blend_in 0.5s ease forwards;
 }
