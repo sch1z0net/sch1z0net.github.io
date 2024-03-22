@@ -25,7 +25,7 @@ const PLUGIN_OINK = {
   precision:function() { return "float" },
   example:  function() { return perform_OINK(fftReal1024, testData.slice()).slice(); },
   init: async function() {
-    const Module_OINK = await import('https://cdn.jsdelivr.net/gh/sch1z0net/oink/fft_wasm.js');
+    const Module_OINK = await import('https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.0-alpha/fft_wasm.js');
     const _Module_OINK_ = await Module_OINK.default();
     await initializeModuleOINK(_Module_OINK_("./js/oink'"));
   },
