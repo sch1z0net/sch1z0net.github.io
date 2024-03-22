@@ -29,7 +29,7 @@
     <section id="section_intro">
 		<h1>Introducing Oink FFT: A Quick and Dirty JavaScript FFT Implementation</h1>
 
-		<p>Are you looking to dive into Fourier analysis without getting lost in complex algorithms and mathematical intricacies? Meet Oink FFT - your quick and dirty solution for Fast Fourier Transform in JavaScript.</p>
+		<p>Are you looking to dive into Fourier analysis without getting lost in complex algorithms and mathematical intricacies?<br>Meet Oink FFT - your quick and dirty solution for Fast Fourier Transform in JavaScript.</p>
 
 		<h2>What is FFT?</h2>
 
@@ -127,8 +127,20 @@
             $("#section_intro").css("background-color", `rgba(50, 50, 50, ${opacity})`);
         }
 
+        // Function to update background opacity based on scroll position
+        function updateBackgroundOpacity2() {
+            // Get the scroll position relative to the top of the page
+            const scrollPosition = $(window).scrollTop();
+            // Determine the opacity based on the scroll position
+            const totalHeight = $("#section_usage").height();
+            const opacity = (scrollPosition / totalHeight);
+            // Apply the opacity to the section background
+            $("#section_usage").css("background-color", `rgba(100, 50, 50, ${opacity})`);
+        }
+
         // Attach event listener to the scroll event
         $(window).scroll(updateBackgroundOpacity);
+        $(window).scroll(updateBackgroundOpacity2);
 
         // Call the function initially to set the initial background opacity
         updateBackgroundOpacity();
