@@ -622,7 +622,35 @@ function ISTFT_1024(spectrogram, hopSize) {
 
 
 
+const synthesisWindow_2048 = hanningWindow(2048);
+// Function to perform Inverse Short-Time Fourier Transform (ISTFT) using Web Workers
+function ISTFT_2048(spectrogram, hopSize) {
+        let spectra = spectrogram.length;
+        const outputSignal = new Float32Array(spectra * hopSize);
 
+        for (let i = 0; i < spectra; i++) {
+            // Compute inverse FFT of the spectrum to obtain the frame in time domain
+            let spectrum = spectrogram[i];
+            let frame = OINK.IFFT2048onHalf(spectrum);
+            const weightedFrame = applySynthesisWindow(frame, synthesisWindow_2048);
+            // Overlap-add the weighted frame to the output signal
+            const startIdx = i * hopSize;
+            for (let j = 0; j < 2048; j++) {
+                // Check if there's no existing value at the current index in the output signal chunk
+                if (!outputSignal[startIdx + j]) {
+                    // If there's no existing value, initialize it with the value from the current frame
+                    outputSignal[startIdx + j] = frame[j];
+                } else {
+                    outputSignal[startIdx + j] += weightedFrame[j];
+                }
+            }
+        }
+
+        // Normalize the output signal
+        normalizeOutput(outputSignal);
+
+        return outputSignal;
+}
 
 
 
@@ -1142,10 +1170,12 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, windowType, h
     try {
         const startTime1 = performance.now();
         let preSpectrogram; 
+        if(windowSize == 128){   preSpectrogram = await STFT_128(inputSignal, hopSize); }
         if(windowSize == 256){   preSpectrogram = await STFT_256(inputSignal, hopSize); }
         if(windowSize == 512){   preSpectrogram = await STFT_512(inputSignal, hopSize); }
         if(windowSize == 1024){  preSpectrogram = await STFT_1024(inputSignal, hopSize); }
-        
+        if(windowSize == 2048){  preSpectrogram = await STFT_2048(inputSignal, hopSize); }
+
         const endTime1 = performance.now();
 
         const startTime2 = performance.now();
@@ -1154,9 +1184,11 @@ async function timeStretch(inputSignal, stretchFactor, windowSize, windowType, h
 
         const startTime3 = performance.now();
         let processedSignal;
+        if(windowSize == 128){   processedSignal = await ISTFT_128(postSpectrogram, hopSize); }
         if(windowSize == 256){   processedSignal = await ISTFT_256(postSpectrogram, hopSize); }
         if(windowSize == 512){   processedSignal = await ISTFT_512(postSpectrogram, hopSize); }
         if(windowSize == 1024){  processedSignal = await ISTFT_1024(postSpectrogram, hopSize); }
+        if(windowSize == 2048){  processedSignal = await ISTFT_2048(postSpectrogram, hopSize); }
         const endTime3 = performance.now();
         
         if(ch == 0){
@@ -1403,5 +1435,5 @@ const resynthesizedSignal = timeStretchSpectralModeling(inputSignal, stretchFact
 
 */
 
-export { phaseVocoder };
+export { phaseVocoder, plotSpectrogram };
 
