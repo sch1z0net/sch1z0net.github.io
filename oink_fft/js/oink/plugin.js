@@ -3,7 +3,7 @@
 // IMPORT THE FFT LIBRARY
 //////////////////////////////////////
 import { initializeModuleOINK, fftReal2048, fftReal1024, fftReal512, fftReal256, fftReal128 } 
-from "https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.0-alpha/oink_fft.js";
+from "https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.1-alpha/oink_fft.js";
 //from '/oink_fft/js/oink/oink_fft.js';
 //////////////////////////////////////
 //////////////////////////////////////
@@ -25,7 +25,7 @@ const PLUGIN_OINK = {
   precision:function() { return "float" },
   example:  function() { return perform_OINK(fftReal1024, testData.slice()).slice(); },
   init: async function() {
-    const Module_OINK = await import('https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.0-alpha/fft_wasm.js');
+    const Module_OINK = await import('https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.1-alpha/fft_wasm.js');
     const _Module_OINK_ = await Module_OINK.default();
     await initializeModuleOINK(_Module_OINK_("./js/oink'"));
   },
