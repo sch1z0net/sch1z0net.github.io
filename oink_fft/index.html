@@ -29,28 +29,31 @@
 	<div class="split_section">
 	    <section id="section_intro">
 
-			<h1>Introducing Oink FFT: A Quick and Dirty JavaScript FFT Implementation</h1>
+			<h1 id="h_1">Introducing Oink FFT: A Quick and Dirty JavaScript FFT Implementation</h1>
+            <div id="d_1" class="collapsable">
+				<p id="d_1">Are you looking to dive into Fourier analysis without getting lost in complex algorithms and mathematical intricacies?<br>Meet Oink FFT - your quick and dirty solution for Fast Fourier Transform in JavaScript.<br>
+				Whether you're exploring signal processing concepts, building audio visualizations, or experimenting with frequency analysis, Oink FFT provides a simple and effective solution to get you started quickly. Dive into the world of Fourier analysis with Oink FFT and unlock the secrets hidden within your data.</p>
+            </div>
 
-			<p>Are you looking to dive into Fourier analysis without getting lost in complex algorithms and mathematical intricacies?<br>Meet Oink FFT - your quick and dirty solution for Fast Fourier Transform in JavaScript.<br>
-			Whether you're exploring signal processing concepts, building audio visualizations, or experimenting with frequency analysis, Oink FFT provides a simple and effective solution to get you started quickly. Dive into the world of Fourier analysis with Oink FFT and unlock the secrets hidden within your data.</p>
+			<h2 id="h_2">What is FFT?</h2>
+            <div id="d_2" class="collapsable">
+				<p>FFT, or Fast Fourier Transform, is a powerful algorithm used in digital signal processing to efficiently compute the Discrete Fourier Transform (DFT) of a sequence. It transforms a signal from its time-domain representation to its frequency-domain representation, revealing the underlying frequencies present in the signal.</p>
+            </div>
 
-			<h2>What is FFT?</h2>
+			<h2 id="h_3">Why Oink FFT?</h2>
+            <div id="d_3" class="collapsable">
+				<p>Oink FFT is designed for simplicity and ease of use. It provides a pretty quick FFT algorithm in JavaScript, allowing you to perform frequency analysis on your data with minimal effort.</p>
 
-			<p>FFT, or Fast Fourier Transform, is a powerful algorithm used in digital signal processing to efficiently compute the Discrete Fourier Transform (DFT) of a sequence. It transforms a signal from its time-domain representation to its frequency-domain representation, revealing the underlying frequencies present in the signal.</p>
+				<h3>Key Features:</h3>
 
-			<h2>Why Oink FFT?</h2>
-
-			<p>Oink FFT is designed for simplicity and ease of use. It provides a pretty quick FFT algorithm in JavaScript, allowing you to perform frequency analysis on your data with minimal effort.</p>
-
-			<h3>Key Features:</h3>
-
-			<ol>
-			  <li><strong>Simplicity:</strong> Oink FFT is designed to be easy to understand and use, making it perfect for beginners and casual users.</li>
-			  <li><strong>Quick and Dirty:</strong> This FFT implementation prioritizes simplicity and speed, making it suitable for rapid prototyping and experimentation.</li>
-			  <li><strong>JavaScript-Based:</strong> Oink FFT is written in JavaScript, making it accessible to web developers and compatible with modern web applications.</li>
-			  <li><strong>Speed-Optimized:</strong> Leveraging WebAssembly (WASM) and harnessing specific mathematical Fourier Intrinsics, this implementation is finely tuned for exceptional speed.</li>
-			  <li><strong>Competitive Performance:</strong> With its optimized speed, Oink FFT can effectively compete with other available FFT implementations."</li>
-			</ol>
+				<ol>
+				  <li><strong>Simplicity:</strong> Oink FFT is designed to be easy to understand and use, making it perfect for beginners and casual users.</li>
+				  <li><strong>Quick and Dirty:</strong> This FFT implementation prioritizes simplicity and speed, making it suitable for rapid prototyping and experimentation.</li>
+				  <li><strong>JavaScript-Based:</strong> Oink FFT is written in JavaScript, making it accessible to web developers and compatible with modern web applications.</li>
+				  <li><strong>Speed-Optimized:</strong> Leveraging WebAssembly (WASM) and harnessing specific mathematical Fourier Intrinsics, this implementation is finely tuned for exceptional speed.</li>
+				  <li><strong>Competitive Performance:</strong> With its optimized speed, Oink FFT can effectively compete with other available FFT implementations."</li>
+				</ol>
+		    </div>
 	    </section>
 		<section id="section_usage">
 	        <h2>Getting Started:</h2>
@@ -113,6 +116,10 @@
 		            behavior: 'smooth'
 		        });
 		    });
+
+		    $("#h_1").click(function(){ $(".collapsable").hide(); $("#d_1").show(); });
+		    $("#h_2").click(function(){ $(".collapsable").hide(); $("#d_2").show(); });
+		    $("#h_3").click(function(){ $(".collapsable").hide(); $("#d_3").show(); });
 		});
         
         // Function to update background opacity based on scroll position
