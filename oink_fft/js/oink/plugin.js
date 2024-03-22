@@ -26,7 +26,7 @@ const PLUGIN_OINK = {
   example:  function() { return perform_OINK(fftReal1024, testData.slice()).slice(); },
   init: async function() {
     const Module_OINK = await import('https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.2-alpha/fft_wasm.js');
-    const _Module_OINK_ = await Module_OINK();
+    const _Module_OINK_ = await Module_OINK.default();
 
     await initializeModuleOINK(_Module_OINK_);
   },
