@@ -26,8 +26,8 @@ const PLUGIN_OINK = {
   example:  function() { return perform_OINK(fftReal1024, testData.slice()).slice(); },
   init: async function() {
     const Module_OINK = await import('https://cdn.jsdelivr.net/gh/sch1z0net/oink/fft_wasm.js');
-    const _Module_OINK_ = await Module_OINK.default("./js/oink/");
-    await initializeModuleOINK(_Module_OINK_);
+    const _Module_OINK_ = await Module_OINK.default();
+    await initializeModuleOINK(_Module_OINK_("./js/oink/"));
   },
   fft128:   function(testData) { perform_OINK(fftReal128,  testData); },
   fft256:   function(testData) { perform_OINK(fftReal256,  testData); },
