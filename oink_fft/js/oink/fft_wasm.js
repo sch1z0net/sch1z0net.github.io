@@ -1,7 +1,6 @@
-var Module_OINK = ((scriptDir) => {
-  //var _scriptDir = typeof document !== 'undefined' && document.currentScript ? document.currentScript.src : undefined;
-  var _scriptDir = scriptDir;
-  //if (typeof __filename !== 'undefined') _scriptDir ||= __filename;
+var Module_OINK = (() => {
+  var _scriptDir = typeof document !== 'undefined' && document.currentScript ? document.currentScript.src : undefined;
+  if (typeof __filename !== 'undefined') _scriptDir ||= __filename;
   return (
 function(moduleArg = {}) {
 
