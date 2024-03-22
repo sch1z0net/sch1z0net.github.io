@@ -1775,6 +1775,12 @@ let hopFactor = 2; // Default value
 let smoothFactor = 1;
 let windowTypeWOLA = 0;
 let halfSpec = 0;
+let range_mode     = 2;
+let scale_mode     = 1; 
+let smoothing_mode = 1;  
+let liveSpectrumFFTsize        = 2048; 
+let liveSpectrumSmoothingSize  = 3; 
+let liveSpectrumRefreshRate    = 40; 
 $(document).ready(function(){
   // Function to update global variables when select boxes change
   function updateVariables() {
