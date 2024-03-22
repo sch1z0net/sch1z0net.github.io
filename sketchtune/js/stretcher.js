@@ -397,7 +397,41 @@ function STFT_1024(inputSignal, hopSize) {
 
                     const spectrum = OINK.fftReal1024(windowedFrame);
                     // Assuming spectrum is the array containing the full spectrum obtained from FFT
-                    const halfSpectrum = spectrum.slice(0, 1024);
+                    const halfSpectrum = spectrum.slice(0, 1024+2);
+                    spectrogram[i] = halfSpectrum;
+                    // Clear memory by reusing variables
+                    frame = null;
+                    windowedFrame = null;
+                }
+
+                // Resolve the promise with the final spectrogram
+                resolve(spectrogram);
+            } catch (error) {
+                throw error;
+            }
+        };
+
+        processFrames();
+        
+    });
+}
+
+function STFT_2048(inputSignal, hopSize) {
+    return new Promise((resolve) => {
+        const frames = Math.floor((inputSignal.length - 2048) / hopSize) + 1;
+        const spectrogram = new Array(frames); // Preallocate memory
+        
+        const processFrames = async () => {
+            try {
+                for (let i = 0; i <= frames; i++) {
+                    const startIdx = i * hopSize;
+                    const endIdx = startIdx + 2048;
+                    let frame = inputSignal.slice(startIdx, endIdx);
+                    let windowedFrame = applyHanningWindow(frame);
+
+                    const spectrum = OINK.fftReal2048(windowedFrame);
+                    // Assuming spectrum is the array containing the full spectrum obtained from FFT
+                    const halfSpectrum = spectrum.slice(0, 2048+2);
                     spectrogram[i] = halfSpectrum;
                     // Clear memory by reusing variables
                     frame = null;
