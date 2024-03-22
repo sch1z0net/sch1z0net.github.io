@@ -1911,7 +1911,7 @@ async function playSample(audioContext, audioBuffer, time, offset, duration) {
         const { resampledBuffer, spectrogramA, spectrogramB } = await STRETCHER.phaseVocoder(audioContext, audioBuffer, stretchFactor, windowSize, hopFactor, smoothFactor, windowTypeWOLA, halfSpec); 
         outputBuffer = resampledBuffer;
         // Start the execution of plotSpectrogram asynchronously
-        Promise.resolve().then(() => {  plotSpectrogram(spectrogramA, spectrogramB);  });
+        Promise.resolve().then(() => {  STRETCHER.plotSpectrogram(spectrogramA, spectrogramB);  });
     }
 
     const sampleSource = new AudioBufferSourceNode(audioContext, {
