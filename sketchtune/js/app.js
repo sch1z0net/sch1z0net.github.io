@@ -1,3 +1,5 @@
+import * as STRETCHER from "/sketchtune/js/stretcher.js";
+
   /***************************************************************/
   // SOUND PROCESSING
 
@@ -1906,7 +1908,7 @@ async function playSample(audioContext, audioBuffer, time, offset, duration) {
 
     //if (stretchFactor !== 1) {
     if (true) {
-        const { resampledBuffer, spectrogramA, spectrogramB } = await phaseVocoder(audioContext, audioBuffer, stretchFactor, windowSize, hopFactor, smoothFactor, windowTypeWOLA, halfSpec); 
+        const { resampledBuffer, spectrogramA, spectrogramB } = await STRETCHER.phaseVocoder(audioContext, audioBuffer, stretchFactor, windowSize, hopFactor, smoothFactor, windowTypeWOLA, halfSpec); 
         outputBuffer = resampledBuffer;
         // Start the execution of plotSpectrogram asynchronously
         Promise.resolve().then(() => {  plotSpectrogram(spectrogramA, spectrogramB);  });

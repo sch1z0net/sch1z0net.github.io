@@ -1375,4 +1375,5 @@ const resynthesizedSignal = timeStretchSpectralModeling(inputSignal, stretchFact
 
 */
 
+export { phaseVocoder };
 
