@@ -32,7 +32,6 @@
 	    <pre>
 	    	<code>
 	    		<span class="comment">//To use this library, you first need to include it in your project.</span>
-	    		<span></span>
 	    		<span>import * as OINK from 'https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.5-alpha/oink_fft.js';</span>
 	    	</code>
 	    </pre>
@@ -42,7 +41,8 @@
 	    	<code>
 	            <span class="comment">//Here's how you can use the Forward FFT of size 1024</span>
 	            <span class="comment">//It returns the spectrum, a Float32Array of length = 2048</span>
-	            <span></span>
+	            <span class="comment">//with real and imaginary values in alterning order</span>
+	            <span class="comment">//[re, im, re, im, re, im ...]</span>
 	    		<span>let realInput = new Float32Array([/* Fill with 1024 Float Values */]);</span>
 	    	    <span>let spectrum  = OINK.fftReal1024(realInput);</span>
 	    	</code>
@@ -53,16 +53,12 @@
 	    	<code>
 	    		<span class="comment">// 128 input -> 256 spectrum</span>
 	    		<span>let spectrum  = OINK.fftReal128(realInput);</span>
-	    		<span></span>
 	    		<span class="comment">// 256 input -> 512 spectrum</span>
 	    	    <span>let spectrum  = OINK.fftReal256(realInput);</span>
-	    	    <span></span>
 	    	    <span class="comment">// 512 input -> 1024 spectrum</span>
 	    	    <span>let spectrum  = OINK.fftReal512(realInput);</span>
-	    	    <span></span>
 	    	    <span class="comment">// 1024 input -> 2048 spectrum</span>
 	    	    <span>let spectrum  = OINK.fftReal1024(realInput);</span>
-	    	    <span></span>
 	    	    <span class="comment">// 2048 input -> 4096 spectrum</span>
 	    	    <span>let spectrum  = OINK.fftReal2048(realInput);</span>
 	    	</code>
