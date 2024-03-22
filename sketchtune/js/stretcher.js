@@ -1,3 +1,25 @@
+import { initializeModuleOINK, fftReal2048, fftReal1024, fftReal512, fftReal256, fftReal128 } 
+from "https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.3-alpha/oink_fft.js";
+
+async function() {
+    // Import the WASM file and initialize the module
+    const Module_OINK = await import('https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.3-alpha/fft_wasm.js');
+    await OINK.initializeModuleOINK(await Module_OINK.default());
+}();
+
+
+// Function to apply Hanning window to the input signal
+function applyHanningWindow(frame) {
+    const windowedFrame = new Float32Array(frame.length);
+    for (let i = 0; i < frame.length; i++) {
+        windowedFrame[i] = frame[i] * 0.5 * (1 - Math.cos(2 * Math.PI * i / (frame.length - 1)));
+    }
+    return windowedFrame;
+}
+
+
+
+
 const NUM_WORKERS = 4;
 const maxWorkers = navigator.hardwareConcurrency || 1; // Fallback to 1 if hardwareConcurrency is not available
 //console.log("Maximum number of workers:", maxWorkers);
@@ -237,7 +259,7 @@ function STFT_128(inputSignal, hopSize) {
                     const endIdx = startIdx + 128;
                     let frame = inputSignal.slice(startIdx, endIdx);
                     let windowedFrame = applyHanningWindow(frame);
-                    const spectrum = fftReal128(windowedFrame);
+                    const spectrum = OINK.fftReal128(windowedFrame);
                     // Assuming spectrum is the array containing the full spectrum obtained from FFT
                     const halfSpectrum = spectrum.slice(0, 128+2);
                     spectrogram[i] = halfSpectrum;
@@ -270,7 +292,7 @@ function STFT_256(inputSignal, hopSize) {
                     const endIdx = startIdx + 256;
                     let frame = inputSignal.slice(startIdx, endIdx);
                     let windowedFrame = applyHanningWindow(frame);
-                    const spectrum = fftReal256(windowedFrame);
+                    const spectrum = OINK.fftReal256(windowedFrame);
                     // Assuming spectrum is the array containing the full spectrum obtained from FFT
                     const halfSpectrum = spectrum.slice(0, 256+2);
                     spectrogram[i] = halfSpectrum;
@@ -303,7 +325,7 @@ function STFT_512(inputSignal, hopSize) {
                     const endIdx = startIdx + 512;
                     let frame = inputSignal.slice(startIdx, endIdx);
                     let windowedFrame = applyHanningWindow(frame);
-                    const spectrum = fftReal512(windowedFrame);
+                    const spectrum = OINK.fftReal512(windowedFrame);
                     // Assuming spectrum is the array containing the full spectrum obtained from FFT
                     const halfSpectrum = spectrum.slice(0, 512+2);
                     spectrogram[i] = halfSpectrum;
@@ -337,7 +359,7 @@ function STFT_1024(inputSignal, hopSize) {
                     let frame = inputSignal.slice(startIdx, endIdx);
                     let windowedFrame = applyHanningWindow(frame);
 
-                    const spectrum = fftReal1024(windowedFrame);
+                    const spectrum = OINK.fftReal1024(windowedFrame);
                     // Assuming spectrum is the array containing the full spectrum obtained from FFT
                     const halfSpectrum = spectrum.slice(0, 1024);
                     spectrogram[i] = halfSpectrum;

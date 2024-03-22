@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8"/>
+    <link rel="icon" type="image/png" href="/oink_fft/favicon/favicon-96x96.png"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="OINK FFT" content="The oinkiest FFT in the web"/>
+    <title>OINK FFT</title>
+
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous">
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body{font-family: monospace;background-color:rgb(30,30,30);align-content: center;}
+        #root{text-align:center;display:flex;flex-direction: column;}
+        h1{font-size:24px;margin:15px;color:white;}
+        select{margin:10px;}
+        canvas{margin-top: 20px;display:block;border:1px solid white;}
+    </style>
+
+
+</head>
+<body>
+    <div id="root">
+        <h1 id="title"></h1>
+        <div id="selects">
+          <select id="waveSelect">
+            <option value="sine"    >sine</option>
+            <option value="square"  >square</option>
+            <option value="triangle">triangle</option>
+            <option value="sawtooth">sawtooth</option>
+          </select>
+
+          <select id="fftSelect">
+            <option value="128">128</option>
+            <option value="256">256</option>
+            <option value="512">512</option>
+            <option value="1024">1024</option>
+            <option value="2048">2048</option>
+          </select>
+
+        <select id="frequencySelect">
+            <option value="32.70">C1 (32.70 Hz)</option>
+            <option value="41.20">E1 (41.20 Hz)</option>
+            <option value="65.41">C2 (65.41 Hz)</option>
+            <option value="82.41">E2 (82.41 Hz)</option>
+            <option value="130.81">C3 (130.81 Hz)</option>
+            <option value="164.81">E3 (164.81 Hz)</option>
+            <option value="261.63">C4 (261.63 Hz)</option>
+            <option value="329.63">E4 (329.63 Hz)</option>
+            <option value="523.25">C5 (523.25 Hz)</option>
+            <option value="659.25">E5 (659.25 Hz)</option>
+            <option value="1046.50">C6 (1046.50 Hz)</option>
+            <option value="1318.51">E6 (1318.51 Hz)</option>
+            <option value="2093.00">C7 (2093.00 Hz)</option>
+            <option value="2637.02">E7 (2637.02 Hz)</option>
+            <option value="4186.01">C8 (4186.01 Hz)</option>
+            <option value="5274.04">E8 (5274.04 Hz)</option>
+            <!-- Add more options for other notes -->
+        </select>
+
+        </div>
+        
+        <canvas id="spectrumCanvas" width="1600" height="800"></canvas>
+    </div>
+    <script type="module">
+        //To use this library, you first need to include it in your project.
+        import * as OINK from 'https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.3-alpha/oink_fft.js';
+
+        let FFT_SIZE = 512;
+        let WAVE_TYPE = "sawtooth";
+        const minFreq = 20; // Minimum frequency (Hz)
+        const maxFreq = 8000; // Max frequency (Hz)
+        
+        const samplingRate = 44100; // Sampling rate of the input signal in Hz
+        // Calculate the Nyquist frequency
+        const nyquistFrequency = samplingRate / 2;
+        // Calculate the frequency resolution per bin
+        let frequencyResolution = nyquistFrequency / (FFT_SIZE / 2);
+
+        // Generate a Float32Array with various types of waveforms
+        function generateWaveform(length, frequency, sampleRate, type) {
+            const buffer = new Float32Array(length);
+            const amplitude = 0.5;
+            for (let i = 0; i < length; i++) {
+                const t = i / sampleRate; // Time in seconds
+                switch (type) {
+                    case 'sine':
+                        buffer[i] = amplitude * Math.sin(2 * Math.PI * frequency * t);
+                        break;
+                    case 'square':
+                        buffer[i] = amplitude * Math.sign(Math.sin(2 * Math.PI * frequency * t));
+                        break;
+                    case 'triangle':
+                        buffer[i] = amplitude * Math.asin(Math.sin(2 * Math.PI * frequency * t));
+                        break;
+                    case 'sawtooth':
+                        buffer[i] = amplitude * (2 * (frequency * t - Math.floor(frequency * t + 0.5)));
+                        break;
+                    default:
+                        buffer[i] = amplitude * Math.sin(2 * Math.PI * frequency * t); // Default to sine wave
+                        break;
+                }
+            }
+            return buffer;
+        }
+
+
+        // Initialize Module
+        async function initialize() {
+            // Import the WASM file and initialize the module
+            const Module_OINK = await import('https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.3-alpha/fft_wasm.js');
+            await OINK.initializeModuleOINK(await Module_OINK.default());
+        }
+
+        // Apply Hann window function to the input signal
+        function applyHannWindow(signal) {
+            const windowedSignal = new Float32Array(signal.length);
+            for (let i = 0; i < signal.length; i++) {
+                windowedSignal[i] = signal[i] * (0.5 * (1 - Math.cos((2 * Math.PI * i) / (signal.length - 1))));
+            }
+            return windowedSignal;
+        }
+
+        // Convert the returned (RE/IM) Spectrum to an Array of Magnitudes
+        function toMagnitudes(spectrum){
+            let magnitudes = [];
+            const halfSpectrum = spectrum.slice(0, spectrum.length / 2);
+            const numBins = halfSpectrum.length / 2;
+
+            for (let i = 0; i < numBins; i++) {
+                // Calculate magnitude from real and imaginary parts
+                const real = halfSpectrum[2*i + 0];
+                const imag = halfSpectrum[2*i + 1];
+                const magnitude = Math.sqrt(real * real + imag * imag);
+                magnitudes.push(magnitude);
+            }
+
+            return magnitudes;
+        }
+
+        // Function to find the bin index for a given frequency
+        function findBinIndex(frequency) {
+            return Math.round(frequency / frequencyResolution);
+        }
+
+
+
+        // Update spectrum display based on selected frequency
+        async function updateSpectrumDisplay() {
+            $("#title").text(FFT_SIZE+" FFT Spectrum of a "+WAVE_TYPE+" Wave");
+
+            const frequency = parseInt($('#frequencySelect').val());
+
+            // Generate sine wave with updated frequency
+            let sineWave = generateWaveform(FFT_SIZE, frequency, samplingRate, WAVE_TYPE);
+
+            // Apply Hann window to the sine wave
+            //let windowedSineWave = applyHannWindow(sineWave);
+            let windowedSineWave = sineWave;
+
+            // Calculate spectrum
+            let realInput = new Float32Array(windowedSineWave);
+
+            let spectrum;
+
+            switch (FFT_SIZE) {
+                case 128:  spectrum = OINK.fftReal128(realInput);  break;
+                case 256:  spectrum = OINK.fftReal256(realInput);  break;
+                case 512:  spectrum = OINK.fftReal512(realInput);  break;
+                case 1024: spectrum = OINK.fftReal1024(realInput); break;
+                case 2048: spectrum = OINK.fftReal2048(realInput); break;
+                default: throw Error("wrong size for FFT Performance"); break;
+            }
+            
+            let magnitudes = toMagnitudes(spectrum);
+            magnitudes[0] = 0;
+            // Display spectrum
+            plotSpectrum(magnitudes);
+        }
+        
+
+        // Global variable to store the chart instance
+        let chartInstance;
+
+        // Plot spectrum on canvas using Chart.js
+        function plotSpectrum(magnitudes) {
+            const numBins = magnitudes.length;
+            const canvas = document.getElementById('spectrumCanvas');
+            const ctx = canvas.getContext('2d');
+
+            const frequencies = [];
+            const sampledMagnitudes = [];
+
+            for (let i = 0; i < numBins; i++) {
+                const frequency = i * frequencyResolution;
+                if(frequency < minFreq || frequency > maxFreq){ continue; }
+                frequencies.push(frequency);
+
+                const magnitude = magnitudes[findBinIndex(frequency)];
+                sampledMagnitudes.push(magnitude);
+            }
+
+            const data = {
+                labels: frequencies,
+                datasets: [{
+                    label: 'Magnitude',
+                    data: sampledMagnitudes,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            const options = {
+                scales: {
+                    x: {
+                        offset: 0,
+                        min: 0,
+                        type: 'linear',
+                        title: {
+                            display: true,
+                            text: 'Frequency (Hz)'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Magnitude'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    }
+                },
+                indexAxis: 'x',
+                barPercentage: 1,
+                categoryPercentage: 1
+            };
+
+            // Destroy existing chart if it exists
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            // Create new chart instance
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: options
+            });
+        }
+
+
+
+
+
+        $(document).ready(async function() {
+             $('#fftSelect').val(FFT_SIZE);
+             $('#waveSelect').val(WAVE_TYPE);
+             $('#frequencySelect').val("2093.00");
+
+            // Initialize Module
+            await initialize();
+            // Initial Display
+            await updateSpectrumDisplay();
+
+            // Update spectrum display when frequency is changed
+            $('#frequencySelect').on('change', function() {
+                updateSpectrumDisplay();
+            });
+
+            // Update spectrum display when FFT is changed
+            $('#fftSelect').on('change', function() {
+                FFT_SIZE = parseInt($(this).val());
+                frequencyResolution = nyquistFrequency / (FFT_SIZE / 2);
+                updateSpectrumDisplay();
+            });
+
+            // Update spectrum display when FFT is changed
+            $('#waveSelect').on('change', function() {
+                WAVE_TYPE = $(this).val();
+                updateSpectrumDisplay();
+            });
+
+                            
+        });
+    </script>
+
+</body>
+</html>
