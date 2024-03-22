@@ -623,7 +623,7 @@ section{
     margin: 0px;
     padding: 0px;
 
-    height: 700px;
+    min-height:100%;
     display: flex;
     flex-direction: column;
     transition: background-color 0.5s ease; /* Smooth background color transition */

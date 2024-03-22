@@ -46,7 +46,7 @@ const PLUGIN_KISS = {
   url:      function() { return "https://github.com/mborgerding/kissfft"; },
   precision:function() { return "double"; },
   init: async function() {
-    const Module_KISS = await import('/oink_fft/js/kiss/kiss_fft.js');
+    const Module_KISS = await import('./kiss_fft.js');
     Module_KISS_ = await Module_KISS.default();
     await initializeKISS();
   },
