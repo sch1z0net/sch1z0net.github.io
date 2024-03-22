@@ -2,9 +2,9 @@
 //////////////////////////////////////
 // IMPORT THE FFT LIBRARY
 //////////////////////////////////////
-import { initializeModuleOINK, fftReal2048, fftReal1024, fftReal512, fftReal256, fftReal128 } from "https://cdn.jsdelivr.net/gh/sch1z0net/oink/oink_fft.js";
+import { initializeModuleOINK, fftReal2048, fftReal1024, fftReal512, fftReal256, fftReal128 } 
+from "https://cdn.jsdelivr.net/gh/sch1z0net/oink@0.1.0-alpha/oink_fft.js";
 //from '/oink_fft/js/oink/oink_fft.js';
-
 //////////////////////////////////////
 //////////////////////////////////////
 // PREPARE AND PERFORM KISS
