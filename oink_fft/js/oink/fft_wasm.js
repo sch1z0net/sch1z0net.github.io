@@ -1,4 +1,4 @@
-var Module_OINK = ((scriptDir) => {
+var Module_OINK = (scriptDir => {
   //var _scriptDir = typeof document !== 'undefined' && document.currentScript ? document.currentScript.src : undefined;
   var _scriptDir = scriptDir;
 
