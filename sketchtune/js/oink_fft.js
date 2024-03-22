@@ -487,6 +487,11 @@ function IFFT2048onHalf(halfSpectrum) {
 }
 
 
-
-
-export { initializeModuleOINK, fftReal2048, fftReal1024, fftReal512, fftReal256, fftReal128 };
+export { 
+    initializeModuleOINK, 
+    fftReal2048, IFFT2048onHalf,
+    fftReal1024, IFFT1024onHalf,
+    fftReal512,  IFFT512onHalf,
+    fftReal256,  IFFT256onHalf,
+    fftReal128,  IFFT128onHalf
+};
