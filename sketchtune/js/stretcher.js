@@ -34,6 +34,26 @@ function applySynthesisWindow(frame, synthesisWindow) {
     return weightedFrame;
 }
 
+// Function to normalize the output signal
+function normalizeOutput(outputSignalChunk) {
+    // Find the maximum absolute value in the output signal
+    let maxAbsValue = 0;
+    for (let i = 0; i < outputSignalChunk.length; i++) {
+        const absValue = Math.abs(outputSignalChunk[i]);
+        if (absValue > maxAbsValue) {
+            maxAbsValue = absValue;
+        }
+    }
+
+    // Normalize the output signal
+    if (maxAbsValue > 0) {
+        const scaleFactor = 1 / maxAbsValue;
+        for (let i = 0; i < outputSignalChunk.length; i++) {
+            outputSignalChunk[i] *= scaleFactor;
+        }
+    }
+}
+
 
 
 const NUM_WORKERS = 4;
