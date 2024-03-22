@@ -1,7 +1,7 @@
 
 var Module_KISS = (() => {
   //var _scriptDir = typeof document !== 'undefined' && document.currentScript ? document.currentScript.src : undefined;
-  var _scriptDir = "./js/kiss/";
+  var _scriptDir = "./js/fft_libs/kiss/";
 
   if (typeof __filename !== 'undefined') _scriptDir ||= __filename;
   return (
