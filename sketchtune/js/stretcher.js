@@ -1,8 +1,8 @@
-import * as OINK from "https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.3-alpha/oink_fft.js";
+import * as OINK from "https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.4-alpha/oink_fft.js";
 
 (async () => {
     // Import the WASM file and initialize the module
-    const Module_OINK = await import('https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.3-alpha/fft_wasm.js');
+    const Module_OINK = await import('https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.4-alpha/fft_wasm.js');
     await OINK.initializeModuleOINK(await Module_OINK.default());
 })();
 
@@ -25,6 +25,14 @@ function applyHanningWindow(frame) {
     return windowedFrame;
 }
 
+// Function to apply synthesis window to a frame
+function applySynthesisWindow(frame, synthesisWindow) {
+    const weightedFrame = new Float32Array(frame.length);
+    for (let i = 0; i < frame.length; i++) {
+        weightedFrame[i] = frame[i] * synthesisWindow[i];
+    }
+    return weightedFrame;
+}
 
 
 
@@ -476,7 +484,7 @@ function ISTFT_128(spectrogram, hopSize) {
         for (let i = 0; i < spectra; i++) {
             // Compute inverse FFT of the spectrum to obtain the frame in time domain
             let spectrum = spectrogram[i];
-            let frame = IFFT128onHalf(spectrum);
+            let frame = OINK.IFFT128onHalf(spectrum);
             const weightedFrame = applySynthesisWindow(frame, synthesisWindow_128);
             // Overlap-add the weighted frame to the output signal
             const startIdx = i * hopSize;
@@ -508,7 +516,7 @@ function ISTFT_256(spectrogram, hopSize) {
         for (let i = 0; i < spectra; i++) {
             // Compute inverse FFT of the spectrum to obtain the frame in time domain
             let spectrum = spectrogram[i];
-            let frame = IFFT256onHalf(spectrum);
+            let frame = OINK.IFFT256onHalf(spectrum);
             const weightedFrame = applySynthesisWindow(frame, synthesisWindow_256);
             // Overlap-add the weighted frame to the output signal
             const startIdx = i * hopSize;
@@ -540,7 +548,7 @@ function ISTFT_512(spectrogram, hopSize) {
         for (let i = 0; i < spectra; i++) {
             // Compute inverse FFT of the spectrum to obtain the frame in time domain
             let spectrum = spectrogram[i];
-            let frame = IFFT512onHalf(spectrum);
+            let frame = OINK.IFFT512onHalf(spectrum);
             const weightedFrame = applySynthesisWindow(frame, synthesisWindow_512);
             // Overlap-add the weighted frame to the output signal
             const startIdx = i * hopSize;
@@ -571,7 +579,7 @@ function ISTFT_1024(spectrogram, hopSize) {
         for (let i = 0; i < spectra; i++) {
             // Compute inverse FFT of the spectrum to obtain the frame in time domain
             let spectrum = spectrogram[i];
-            let frame = IFFT1024onHalf(spectrum);
+            let frame = OINK.IFFT1024onHalf(spectrum);
             const weightedFrame = applySynthesisWindow(frame, synthesisWindow_1024);
             // Overlap-add the weighted frame to the output signal
             const startIdx = i * hopSize;
