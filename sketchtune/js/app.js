@@ -1808,7 +1808,7 @@ $(document).ready(function(){
   const $liveSpectrumRefreshRateSelect   = $("<select>").attr("id", "lsRefreshRateSelect");
 
   // Options for window size select box
-  [256, 512, 1024, 2048, 4096, 8192].forEach(function(size) {
+  [128, 256, 512, 1024, 2048, 4096, 8192].forEach(function(size) {
     $windowSizeSelect.append($("<option>").attr("value", size).text(size));
   });
 
