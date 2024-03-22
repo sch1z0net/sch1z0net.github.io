@@ -1,14 +1,6 @@
 //import * as OINK from "https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.4-alpha/oink_fft.js";
 import * as OINK from "./oink_fft.js";
 
-(async () => {
-    // Import the WASM file and initialize the module
-    //const Module_OINK = await import('https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.4-alpha/fft_wasm.js');
-    const Module_OINK = await import('./fft_wasm.js');
-    await OINK.initializeModuleOINK(await Module_OINK.default());
-})();
-
-
 function hanningWindow(windowSize) {
     const window = new Float32Array(windowSize);
     const alpha = 0.5;
