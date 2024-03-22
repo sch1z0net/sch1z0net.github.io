@@ -54,6 +54,7 @@ h3{
   border-bottom: 1px solid white;
   height: 40px;
   background: linear-gradient(to right, transparent, grey, transparent);
+  color: white;
 }
 
 p {
@@ -67,7 +68,6 @@ pre{
   display: flex;
   justify-content: center;
   margin-top: 2px;
-  margin-bottom: 20px;
   flex-direction: column;
 }
 
