@@ -693,4 +693,35 @@ section{
   padding: 30px;
   box-sizing: border-box;
   color: white;
+  max-width: 600px;
+}
+
+#section_intro h1{
+  color: pink;
+  font-size: 22px;
+}
+
+#section_intro h2{  
+  margin: 0px;
+  margin-top: 20px;
+  padding: 0px;
+  color: pink;
+  font-size: 18px;
+}
+
+#section_intro h3{
+  margin: 0px;
+  margin-top: 10px;
+  padding: 0px;
+  font-size: 15px;
+}
+
+#section_intro p{
+  margin: 0px;
+  padding: 0px;
+  font-size:13px;
+}
+
+#section_intro li{
+  font-size:13px;
 }
