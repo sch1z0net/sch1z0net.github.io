@@ -13,7 +13,6 @@ function nextPowerOf2(n) {
 /**********************************************************************************************/
 let Module_OINK_;
 
-
 var p_in_128, fft_wasm_128;
 var p_in_256, fft_wasm_256;
 var p_in_512, fft_wasm_512;
