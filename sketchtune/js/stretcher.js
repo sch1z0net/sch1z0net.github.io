@@ -1,11 +1,11 @@
 import { initializeModuleOINK, fftReal2048, fftReal1024, fftReal512, fftReal256, fftReal128 } 
 from "https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.3-alpha/oink_fft.js";
 
-async function() {
+(async () => {
     // Import the WASM file and initialize the module
     const Module_OINK = await import('https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.3-alpha/fft_wasm.js');
     await OINK.initializeModuleOINK(await Module_OINK.default());
-}();
+})();
 
 
 // Function to apply Hanning window to the input signal
