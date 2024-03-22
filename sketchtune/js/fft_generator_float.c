@@ -227,7 +227,7 @@ void generate_code(int FFT_N, int size, FILE *fp) {
     free(FAC);
 }
 
-
+/*
 int main() { 
     int N = 2048;
 
@@ -240,10 +240,10 @@ int main() {
     printf("};");
 
     return 0;
-}
+}*/
 
 
-/*
+
 int main() {
     FILE *fp = fopen("generated_code.c", "w");
     if (fp == NULL) {
@@ -262,14 +262,15 @@ int main() {
     //generate_code_unrolled(256, 128, fp);
     //generate_code_unrolled(256, 256, fp);
 
-    generate_code_unrolled(2048, 128, fp);
+    //generate_code_unrolled(2048, 128, fp);
+    generate_code_unrolled(2048, 256, fp);
 
     printf("Generated code written to generated_code.c\n");
 
     fclose(fp);
 
     return 0;
-}*/
+}
 
 /*
 int main() {
