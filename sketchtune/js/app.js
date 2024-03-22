@@ -1705,7 +1705,7 @@ async function createSpectrumTracker(audioContext, audioSource) {
             });
             //const frequencyData = getFrequencyData();
             //plotSpectrumLive(frequencyData, audioContext.sampleRate);
-        }, displayRefreshRate);
+        }, liveSpectrumRefreshRate);
     }
 
     // Start the interval if the AudioContext is in a playing state
@@ -1889,7 +1889,7 @@ $(document).ready(function(){
     .append($liveSpectrumSmoothingSizeSelect.val(liveSpectrumSmoothingSize))
     .append($("<label>").attr("for", "liveSpectrumSmoothingSize").text("Smoothing Size"))
     .append("<br>")
-    .append($liveSpectrumRefreshRateSelect.val(displayRefreshRate))
+    .append($liveSpectrumRefreshRateSelect.val(liveSpectrumRefreshRate))
     .append($("<label>").attr("for", "liveSpectrumRefreshRate").text("Display Refresh Rate"));
 
 
