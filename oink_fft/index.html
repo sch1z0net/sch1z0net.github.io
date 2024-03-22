@@ -35,27 +35,28 @@
         <h2>How To Use OINK FFT</h2>
 
 	    <h3>1. Installation</h3>
-	    <p>To use this library, you first need to include it in your project.</p>
 	    <pre>
 	    	<code>
+	    		<span>//To use this library, you first need to include it in your project.</span>
 	    		<span>import * as OINK from 'oink_fft.js';</span>
 	    	</code>
 	    </pre>
 
 	    <h3>2. Setup</h3>
-	    <p>Now, to make the FFT functions accessible, you need to call the WASM setup.</p>
 	    <pre>
 	    	<code>
+	    		<span>//Now, to make the FFT functions accessible, </span>
+	    	    <span>//you need to import the WASM file and call the WASM binding setup.</span>
 	    		<span>const Module_OINK = import('fft_wasm.js');</span>
 	    	    <span>initializeModuleOINK(Module_OINK.default());</span>
 	    	</code>
 	    </pre>
 
 	    <h3>3. Usage</h3>
-	    <p>Here's how you can use the Forward FFT of size 1024</p>
-	    <p>It returns the spectrum, a Float32Array of length = 2048</p>
 	    <pre>
 	    	<code>
+	            <span>//Here's how you can use the Forward FFT of size 1024</span>
+	            <span>//It returns the spectrum, a Float32Array of length = 2048</span>
 	    		<span>let realInput = new Float32Array([/* Fill with 1024 Float Values */]);</span>
 	    	    <span>let spectrum  = fftReal1024(realInput);</span>
 	    	</code>
@@ -63,11 +64,18 @@
 
 	    <p>Provided FFTs for different sizes:</p>
 	    <pre>
-	    	<code><span>let spectrum  = fftReal128(realInput);</span></code>
-	    	<code><span>let spectrum  = fftReal256(realInput);</span></code>
-	    	<code><span>let spectrum  = fftReal512(realInput);</span></code>
-	    	<code><span>let spectrum  = fftReal1024(realInput);</span></code>
-	    	<code><span>let spectrum  = fftReal2048(realInput);</span></code>
+	    	<code>
+	    		<span>// 128 input -> 256 spectrum</span>
+	    		<span>let spectrum  = fftReal128(realInput);</span>
+	    		<span>// 256 input -> 512 spectrum</span>
+	    	    <span>let spectrum  = fftReal256(realInput);</span>
+	    	    <span>// 512 input -> 1024 spectrum</span>
+	    	    <span>let spectrum  = fftReal512(realInput);</span>
+	    	    <span>// 1024 input -> 2048 spectrum</span>
+	    	    <span>let spectrum  = fftReal1024(realInput);</span>
+	    	    <span>// 2048 input -> 4096 spectrum</span>
+	    	    <span>let spectrum  = fftReal2048(realInput);</span>
+	    	</code>
         </pre>
 
 	</section>

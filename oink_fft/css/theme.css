@@ -68,13 +68,14 @@ pre{
   justify-content: center;
   margin-top: 2px;
   margin-bottom: 20px;
+  flex-direction: column;
 }
 
 code{
   background-color: black;
   border-radius: 5px;
   font-size: 12px;
-  margin: 0px;
+  margin: 3px;
   border: 1px solid white;
   color: white;
   text-align: left;
