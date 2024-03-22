@@ -1,5 +1,4 @@
-import { initializeModuleOINK, fftReal2048, fftReal1024, fftReal512, fftReal256, fftReal128 } 
-from "https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.3-alpha/oink_fft.js";
+import * as OINK from "https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.3-alpha/oink_fft.js";
 
 (async () => {
     // Import the WASM file and initialize the module
@@ -7,6 +6,15 @@ from "https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.3-alpha/oink_fft.js";
     await OINK.initializeModuleOINK(await Module_OINK.default());
 })();
 
+
+function hanningWindow(windowSize) {
+    const window = new Float32Array(windowSize);
+    const alpha = 0.5;
+    for (let i = 0; i < windowSize; i++) {
+        window[i] = (1 - alpha) - (alpha * Math.cos(2 * Math.PI * i / (windowSize - 1)));
+    }
+    return window;
+}
 
 // Function to apply Hanning window to the input signal
 function applyHanningWindow(frame) {
