@@ -39,12 +39,12 @@ body {
   box-sizing: border-box;
 }
 
-h2{
+#section_usage h2{
   margin: 0px;
   font-size: 40px
 }
 
-h3{
+#section_usage h3{
   margin: 0px;
   font-size: 20px;
   border-top: 1px solid white;
@@ -687,4 +687,10 @@ section{
   border: solid 1px;
   border-radius: 10px;
   padding: 4px;
+}
+
+#section_intro{
+  padding: 30px;
+  box-sizing: border-box;
+  color: white;
 }
