@@ -649,6 +649,21 @@ section{
   color: grey;
 }
 
+#examples {
+   width: 100%;
+   text-align: center;
+}
+
+#examples a{
+  display: inline;
+  margin: 10px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  border: 1px solid white;
+  border-radius: 5px;
+}
+
 #anchors{
   width: 100%;
   text-align: center;
