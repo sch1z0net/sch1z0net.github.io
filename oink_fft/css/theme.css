@@ -644,6 +644,9 @@ section{
     height: fit-content;
 }
 
+.comment {
+  color: grey;
+}
 
 #anchors{
   width: 100%;
