@@ -32,4 +32,4 @@ if (typeof exports === 'object' && typeof module === 'object')
 else if (typeof define === 'function' && define['amd'])
   define([], () => Module);
 
-module.exports = Module_OINK;
+export default Module_OINK;
