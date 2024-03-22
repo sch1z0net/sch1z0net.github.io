@@ -1,8 +1,8 @@
+
 var Module_OINK = (() => {
   //var _scriptDir = typeof document !== 'undefined' && document.currentScript ? document.currentScript.src : undefined;
   //var _scriptDir = "https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.3-alpha/";
   var _scriptDir = "./js/";
-  if (typeof __filename !== 'undefined') _scriptDir ||= __filename;
   return (
 function(moduleArg = {}) {
 
@@ -28,8 +28,8 @@ if(b.preInit)for("function"==typeof b.preInit&&(b.preInit=[b.preInit]);0<b.preIn
 );
 })();
 if (typeof exports === 'object' && typeof module === 'object')
-  module.exports = Module_OINK;
+  module.exports = Module;
 else if (typeof define === 'function' && define['amd'])
-  define([], () => Module_OINK);
+  define([], () => Module);
 
-export default Module_OINK;
+module.exports = Module_OINK;

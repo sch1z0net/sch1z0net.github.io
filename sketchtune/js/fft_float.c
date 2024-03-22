@@ -21357,10 +21357,10 @@ void fftReal2048(float* realInput, int size) {
             int oI  = j + 1024;
 
             if(j > 512){
-              out2048[eI * 2]      =  out2048[2048 - eI * 2] ;
-              out2048[eI * 2 + 1]  = -out2048[2048 - eI * 2 + 1];
-              out2048[oI * 2]      =  out2048[2048 - oI * 2];
-              out2048[oI * 2 + 1]  = -out2048[2048 - oI * 2 + 1];
+              out2048[eI * 2]      =  out2048[4096 - eI * 2] ;
+              out2048[eI * 2 + 1]  = -out2048[4096 - eI * 2 + 1];
+              out2048[oI * 2]      =  out2048[4096 - oI * 2];
+              out2048[oI * 2 + 1]  = -out2048[4096 - oI * 2 + 1];
               continue;
             }
 
