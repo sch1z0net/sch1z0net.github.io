@@ -1652,7 +1652,7 @@ function checkAndCreateSpectrumTracker(audioContext, audioSource) {
 
 var liveSpectrumFFTsize = 2048;
 var liveSpectrumSmoothingSize = 3;
-var displayRefreshRate = 20;
+var liveSpectrumRefreshRate = 20;
 async function createSpectrumTracker(audioContext, audioSource) {
     // BUILT IN WEB API ANALYZER
     //const analyserNode = audioContext.createAnalyser();
@@ -1778,9 +1778,6 @@ let halfSpec = 0;
 let range_mode     = 2;
 let scale_mode     = 1; 
 let smoothing_mode = 1;  
-let liveSpectrumFFTsize        = 2048; 
-let liveSpectrumSmoothingSize  = 3; 
-let liveSpectrumRefreshRate    = 40; 
 $(document).ready(function(){
   // Function to update global variables when select boxes change
   function updateVariables() {
