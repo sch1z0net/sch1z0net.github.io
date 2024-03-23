@@ -166,7 +166,7 @@
 		window.addEventListener('scroll', function() {
 			if(!scrolling){
 		        // Get the next or previous section based on the direction of scrolling
-		        const newSection = currentSection.next(".snapable");
+		        const newSection = currentSection.nextAll(".snapable").first();
 
 		        // If there is a new section, scroll to it smoothly
 		        if (newSection.length !== 0) {
