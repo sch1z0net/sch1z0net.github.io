@@ -830,6 +830,7 @@ body > section, .split_section {
 }
 
 .giphy-round {
+    display: none;
     position: absolute;
     transform: translateX(120%);
     left: 50%;

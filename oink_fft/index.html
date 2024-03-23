@@ -285,16 +285,19 @@
               handleSnap(dir); 
 		  }
 		}, { passive: false });
-        
-        $(".giphy-round").hide();
+    });
+	</script>
+
+    <script type="module" src="/oink_fft/js/main.js" defer></script>
+
+	<script>
+    $(document).ready(function(){
         $("#oinkImage").click(function(){
             $(".giphy-round").show();
         });
 
     });
-	</script>
-
-    <script type="module" src="/oink_fft/js/main.js" defer></script>
+    </script>
 
 </body>
 </html>
