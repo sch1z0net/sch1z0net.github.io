@@ -181,15 +181,17 @@
 		        currentSection = newSection;
 		        setTimeout(() => { 
 		             snapping = false;
-		             currentScrollPosition = currentSection.offset().top; 
+		             lastScrollPosition = currentSection.offset().top; 
 		        }, 2000); // Adjust delay as needed
 		    }
         }
 
 		// Function to handle scrolling
 		window.addEventListener('scroll', function(event) {
-		   if(snapping){ return }
+		   if(snapping){ return; }
+
            let dir;
+           const currentScrollPosition = window.scrollY;
            if (currentScrollPosition > lastScrollPosition) {
                dir = "up";
            } else if (currentScrollPosition < lastScrollPosition) {
