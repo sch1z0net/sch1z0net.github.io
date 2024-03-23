@@ -820,8 +820,3 @@ section{
 body > section, .split_section {
   min-height: 1000px!important;
 }
-
-/* Hide scrollbar for webkit browsers */
-body::-webkit-scrollbar {
-    width: 0;
-}

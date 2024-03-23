@@ -257,9 +257,14 @@
               	&& $(window).scrollTop() > currentSection.offset().top) {
                    return;
               }
-              if (dir === "down" 
-              	&& $(window).scrollTop() < currentSection.offset().top + currentSection.outerHeight() - $(window).height()) {
+              if (dir === "down"){
+              	if($(window).scrollTop() < currentSection.offset().top + currentSection.outerHeight() - $(window).height()) {
                    return;
+                }else
+                if(Math.abs(deltaY) < 10){
+              	  event.preventDefault();
+              	  return;
+                }
               }
 
               snapping = true;
