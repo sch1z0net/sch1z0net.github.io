@@ -188,8 +188,8 @@
         function updateCurrentSection(section){
         	currentSection = section;
             var anchor = $('a[href="#'+section[0].id+'"]');
-            $(".anchor").removeClass(".current_anchor");
-            anchor.addClass(".current_anchor");
+            $(".anchor").removeClass("current_anchor");
+            anchor.addClass("current_anchor");
             
         }
 
@@ -219,7 +219,7 @@
 		        // Scroll to the captured offset
 		        $('html, body').animate({
 		            scrollTop: offsetTop
-		        }, 400, 'swing', () => {
+		        }, 800, 'swing', () => {
 		            blockWheel = false;
 		            snapping = false;
 		        });
