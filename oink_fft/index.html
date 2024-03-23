@@ -220,7 +220,7 @@
 		        // Scroll to the captured offset
 		        $('html, body').animate({
 		            scrollTop: offsetTop
-		        }, 800, 'swing', () => {
+		        }, 1000, 'swing', () => {
 		            blockWheel = false;
 		            snapping = false;
 		        });
@@ -253,15 +253,21 @@
            	    dir = "down";
               }
 
-              if (dir ===   "up" 
-              	&& $(window).scrollTop() > currentSection.offset().top) {
+              if (dir ===   "up"){
+                if($(window).scrollTop() > currentSection.offset().top) {
                    return;
+                }else
+                if(Math.abs(deltaY) < 50){
+              	  event.preventDefault();
+              	  return;
+                }
+
               }
               if (dir === "down"){
               	if($(window).scrollTop() < currentSection.offset().top + currentSection.outerHeight() - $(window).height()) {
                    return;
                 }else
-                if(Math.abs(deltaY) < 10){
+                if(Math.abs(deltaY) < 50){
               	  event.preventDefault();
               	  return;
                 }
