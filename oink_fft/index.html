@@ -187,14 +187,15 @@
 
         function updateCurrentSection(section){
         	currentSection = section;
-            var anchor = $('a[href="#'+section[0].id+'"]');
+            var anchor = $('a[href="#'+currentSection[0].id+'"]');
             $(".anchor").removeClass("current_anchor");
+            $(".snappable").removeClass("current_section");
             anchor.addClass("current_anchor");
-            
+            currentSection.addClass("current_section");
         }
 
         $(".anchor").click(function(){
-            updateCurrentSection( $("#"+this.href) );
+            updateCurrentSection( $("#"+this.href.split('#')[1]) );
         });
 
         async function handleSnap(dir){
