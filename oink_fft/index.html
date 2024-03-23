@@ -196,6 +196,7 @@
 		  if(snapping){ 
 		  	  event.preventDefault(); 
 		  }else{
+		  	  snapping = true;
 		  	  const deltaY = event.deltaY;
 		  	  let dir;
 		  	  if (deltaY < 0) {
@@ -204,7 +205,6 @@
            	    dir = "down";
               }
               setTimeout(() => { 
-                 snapping = true;
 		   	     handleSnap(dir); 
 		      }, 100);
 		  }
