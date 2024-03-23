@@ -161,31 +161,47 @@
         let currentSection = $("#section_main");
 
 		let snapping = false;
+        let lastScrollPosition = window.scrollY;
 
-        function handleSnap(){
+        function handleSnap(dir){
         	if(snapping){ return; }
         	snapping = true;
-            // Get the next or previous section based on the direction of scrolling
-		    const newSection = currentSection.nextAll(".snappable").first();
+
+        	let newSection;
+        	if(dir == "up"){
+                newSection = currentSection.nextAll(".snappable").first();
+        	}else 
+        	if(dir == "down"){
+                newSection = currentSection.prevAll(".snappable").first();
+        	}
 
 		    // If there is a new section, scroll to it smoothly
 		    if (newSection.length !== 0) {
 		        newSection[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
 		        currentSection = newSection;
-		        setTimeout(() => { snapping = false; }, 2000); // Adjust delay as needed
+		        setTimeout(() => { 
+		             snapping = false;
+		             currentScrollPosition = currentSection.offset().top; 
+		        }, 2000); // Adjust delay as needed
 		    }
         }
-        
+
 		// Function to handle scrolling
 		window.addEventListener('scroll', function(event) {
-		   if(snapping){
-		   }else{
-		   	   event.preventDefault();
-		       event.stopPropagation();
-		       window.scrollTo(currentSection.offset().top, 0);
-		       setTimeout(() => { handleSnap(); }, 100); // Adjust delay as needed
-		   }
+		   if(snapping){ return }
+           let dir;
+           if (currentScrollPosition > lastScrollPosition) {
+               dir = "up";
+           } else if (currentScrollPosition < lastScrollPosition) {
+           	   dir = "down";
+           }
+
+		   event.preventDefault();
+		   event.stopPropagation();
+		   window.scrollTo(currentSection.offset().top, 0); // Sticky
+		   setTimeout(() => { handleSnap(dir); }, 100);
 		});
+
 
     });
 	</script>
