@@ -174,10 +174,12 @@
 
 		    // If there is a new section, scroll to it smoothly
 		    if (newSection.length !== 0) {
+		    	// During Snapping
 		    	blockWheel = true;
 		        newSection[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
-		        currentSection = newSection;
+		        // After Snapping
 		        setTimeout(() => { 
+		        	 currentSection = newSection;
 		        	 blockWheel = false;
 		             snapping = false;
 		        }, 3000); // Adjust delay as needed
