@@ -487,7 +487,7 @@ $(document).ready(async function(){
                 scaleY: 1
         }, {
                 duration: 1000, // Animation duration in milliseconds
-                easing: "easeInOutExpo", // Easing function for smooth animation (optional)
+                easing: "easeOutBounce",
                 complete: function() {
                     
                 }
