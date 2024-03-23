@@ -164,6 +164,9 @@
 		let blockWheel = false;
 
         function handleSnap(dir){
+        	console.log("handle snap");
+        	snapping = true;
+
         	let newSection;
         	if(dir == "down"){
                 newSection = currentSection.nextAll(".snappable").first();
@@ -176,9 +179,11 @@
 		    if (newSection.length !== 0) {
 		    	// During Snapping
 		    	blockWheel = true;
+		    	console.log("start snapping");
 		        newSection[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
 		        // After Snapping
 		        setTimeout(() => { 
+		        	 console.log("release");
 		        	 currentSection = newSection;
 		        	 blockWheel = false;
 		             snapping = false;
@@ -197,9 +202,9 @@
 	    // Prevent scrolling
 		window.addEventListener('wheel', function(event) {
 		  if(blockWheel){ 
+		  	  console.log("wheel blocked");
 		  	  event.preventDefault(); 
 		  }else{
-		  	  snapping = true;
 		  	  const deltaY = event.deltaY;
 		  	  let dir;
 		  	  if (deltaY < 0) {
