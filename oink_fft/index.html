@@ -188,7 +188,7 @@
 		document.addEventListener("wheel", (event) => {
 		  event.preventDefault();
 		  event.stopPropagation();
-		  
+		  if(!scrolling){
           		// Get the next or previous section based on the direction of scrolling
 		        const newSection = currentSection.nextAll(".snappable").first();
 
@@ -197,7 +197,9 @@
 		        	scrolling = true;
 		            newSection[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
 		            currentSection = newSection;
+		            setTimeout(() => { scrolling = false; }, 1000); // Adjust delay as needed
 		        }
+		  }
 
 		}, { passive: false });
 
