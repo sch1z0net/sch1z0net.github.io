@@ -432,6 +432,21 @@ $(document).ready(function(){
         id: "oinkImage",
         src: "./favicon/oink.png"
     });
+    
+    $oinkImage.click(function(){
+        $(".giphy-round").css("visibility","visible!important").css("display","block!important");
+        $(".giphy-round").animate({
+                // Scale the div to 100%
+                scaleX: 1,
+                scaleY: 1
+        }, {
+                duration: 1000, // Animation duration in milliseconds
+                complete: function() {
+                    
+                }
+        });
+    });
+
 
     // Append the image to the container div
     $title_div.append($oinkImage);
@@ -479,21 +494,6 @@ $(document).ready(function(){
 /////////////////////////////////// BENCHMARKING        ///////////////////////////////////////////////
 
 $(document).ready(async function(){
-    $("#oinkImage").click(function(){
-        $(".giphy-round").css("visibility","visible!important").css("display","block!important");
-        $(".giphy-round").animate({
-                // Scale the div to 100%
-                scaleX: 1,
-                scaleY: 1
-        }, {
-                duration: 1000, // Animation duration in milliseconds
-                complete: function() {
-                    
-                }
-        });
-    });
-
-
     $reload.click(async function(){
        $loading.show();
        $reload.hide();
