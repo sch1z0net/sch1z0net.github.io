@@ -173,7 +173,7 @@
 		    const sectionTop = rect.top;
 
 		    // Check if the current section is 95% out of the viewport
-		    if (sectionTop >= 0.95 * viewportHeight || sectionTop <= -0.95 * viewportHeight) {
+		    if (sectionTop >= 0.05 * viewportHeight || sectionTop <= -0.05 * viewportHeight) {
 		        // Determine the direction of scrolling (up or down)
 		        const direction = sectionTop < 0 ? 'up' : 'down';
 		        
