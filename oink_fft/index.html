@@ -161,8 +161,10 @@
         let currentSection = $("#section_main");
 
 		let snapping = false;
+		let blockWheel = false;
 
         function handleSnap(dir){
+        	blockWheel = true;
         	let newSection;
         	if(dir == "down"){
                 newSection = currentSection.nextAll(".snappable").first();
@@ -176,6 +178,7 @@
 		        newSection[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
 		        currentSection = newSection;
 		        setTimeout(() => { 
+		        	 blockWheel = false;
 		             snapping = false;
 		        }, 3000); // Adjust delay as needed
 		    }
@@ -191,7 +194,7 @@
 
 	    // Prevent scrolling
 		window.addEventListener('wheel', function(event) {
-		  if(snapping){ 
+		  if(blockWheel){ 
 		  	  event.preventDefault(); 
 		  }else{
 		  	  snapping = true;
