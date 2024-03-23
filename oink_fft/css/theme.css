@@ -750,6 +750,7 @@ section{
   padding: 0px;
   box-sizing: border-box;
   margin: 0px;
+  position: relative;
 }
 
 #h_1, #h_2, #h_3{
@@ -778,6 +779,7 @@ section{
 @media screen and (max-width: 850px) {
     .split_section {
         flex-direction: column;
+        height: auto;
     }
   #section_intro, #section_usage{
     max-width: 100%;
