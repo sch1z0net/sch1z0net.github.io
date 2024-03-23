@@ -163,15 +163,15 @@
 		let snapping = false;
 		let blockWheel = false;
 
-        function handleSnap(dir){
+        async function handleSnap(dir){
         	console.log("handle snap");
 
         	let newSection;
         	if(dir == "down"){
-                newSection = currentSection.nextAll(".snappable").first();
+                newSection = await currentSection.nextAll(".snappable").first();
         	}else 
         	if(dir == "up"){
-                newSection = currentSection.prevAll(".snappable").first();
+                newSection = await currentSection.prevAll(".snappable").first();
         	}
 
 	        // If there is a new section, scroll to it smoothly
@@ -179,7 +179,7 @@
 	            // During Snapping
 	            blockWheel = true;
 	            console.log("start snapping");
-	            newSection[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
+	            await newSection[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
 	                .then(() => {
 	                    console.log("release");
 	                    currentSection = newSection;
