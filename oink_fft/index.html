@@ -162,6 +162,7 @@
 
 		let scrolling = false;
 
+        /*
 		// Function to handle scrolling
 		window.addEventListener('scroll', function(event) {
             // Prevent default scrolling behavior
@@ -182,6 +183,23 @@
 		        }
 		    }
 		});
+		*/
+
+		document.addEventListener("wheel", (event) => {
+		  event.preventDefault();
+		  event.stopPropagation();
+		  
+          		// Get the next or previous section based on the direction of scrolling
+		        const newSection = currentSection.nextAll(".snappable").first();
+
+		        // If there is a new section, scroll to it smoothly
+		        if (newSection.length !== 0) {
+		        	scrolling = true;
+		            newSection[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
+		            currentSection = newSection;
+		        }
+
+		}, { passive: false });
 
 
 
