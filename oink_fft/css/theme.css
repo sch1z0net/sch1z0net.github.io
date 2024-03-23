@@ -822,3 +822,28 @@ section{
 body > section, .split_section {
   min-height: 1000px!important;
 }
+
+
+
+.giphy-embed{
+  pointer-events: none;
+}
+
+.giphy-round {
+    position: absolute;
+    right: 100px;
+    top: 100px;
+    width: 200px; /* Adjust the width and height as needed */
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%; /* Ensure the container is also round */
+}
+
+.giphy-round iframe {
+    width: 100%; /* Ensure the iframe fills the container */
+    height: 100%;
+    border: none; /* Remove default border */
+    border-radius: 50%; /* Apply circular clipping to the iframe */
+}
+
+
