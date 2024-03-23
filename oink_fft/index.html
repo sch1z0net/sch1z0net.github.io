@@ -202,6 +202,12 @@
 		   setTimeout(() => { handleSnap(dir); }, 100);
 		});
 
+	    // Prevent scrolling
+		window.addEventListener('wheel', function(event) {
+		  if(snapping){ 
+		  	event.preventDefault(); 
+		  }
+		}, { passive: false });
 
     });
 	</script>
