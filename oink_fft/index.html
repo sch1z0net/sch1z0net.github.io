@@ -165,7 +165,6 @@
 
         function handleSnap(dir){
         	console.log("handle snap");
-        	snapping = true;
 
         	let newSection;
         	if(dir == "down"){
@@ -205,6 +204,9 @@
 		  	  console.log("wheel blocked");
 		  	  event.preventDefault(); 
 		  }else{
+              if(snapping){ return; }
+              
+              snapping = true;
 		  	  const deltaY = event.deltaY;
 		  	  let dir;
 		  	  if (deltaY < 0) {
