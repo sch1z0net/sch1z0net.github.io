@@ -166,6 +166,8 @@
 		window.addEventListener('scroll', function(event) {
             // Prevent default scrolling behavior
             event.preventDefault();
+            // Set scroll position to top/left (optional)
+            window.scrollTo(0, 0); // To scroll to the top/left
 
 			if(!scrolling){
 		        // Get the next or previous section based on the direction of scrolling
