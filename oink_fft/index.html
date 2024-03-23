@@ -182,7 +182,7 @@
 		   }else{
 		   	   event.preventDefault();
 		       event.stopPropagation();
-		       handleSnap();
+		       setTimeout(() => { handleSnap(); }, 500); // Adjust delay as needed
 		   }
 		});
 
