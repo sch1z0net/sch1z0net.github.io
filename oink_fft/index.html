@@ -162,13 +162,13 @@
         // Get the sticky section element
 		const stickySection = document.getElementById('section_main');
 	    // Get the initial offset position of the sticky section
-		const stickyOffset = 50;
+		const stickyOffset = 100;
 
 		// Function to handle scrolling
 		window.addEventListener('scroll', function() {
 		    // Check if the current scroll position is past the sticky offset
 		    if (window.pageYOffset >= stickyOffset) {
-		        $("#a2").scrollIntoView({ behavior: 'smooth', block: 'start' });
+		        $("#a2")[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
 		    } else {
 		      
 		    }
