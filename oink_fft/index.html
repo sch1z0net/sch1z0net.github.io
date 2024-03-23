@@ -157,38 +157,50 @@
         // Call the function initially to set the initial background opacity
         updateBackgroundOpacity();
 
-// Function to handle scrolling
-window.addEventListener('scroll', function() {
-    // Get all the sections
-    const sections = document.querySelectorAll('section');
-    
-    // Loop through each section
-    sections.forEach((section, index) => {
-        // Get the position of the section relative to the viewport
-        const rect = section.getBoundingClientRect();
-        
-        // Calculate the height of the viewport
-        const viewportHeight = window.innerHeight;
-        
-        // Calculate the height of the section
-        const sectionHeight = rect.bottom - rect.top;
-        
-        // Calculate the distance from the top of the section to the top of the viewport
-        const sectionTop = rect.top;
-        
-        // Calculate the distance from the bottom of the section to the bottom of the viewport
-        const sectionBottom = viewportHeight - rect.bottom;
+        let currentSection = $("section_main");
 
-        // Check if the section is at least 75% in the viewport
-        if (sectionTop <= 0.75 * viewportHeight && sectionBottom > 0) {
-            // If the current section is 75% in the viewport, scroll to the next section
-            const nextSection = sections[index + 1];
-            if (nextSection) {
-                nextSection.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
-            }
-        }
-    });
-});
+		// Function to handle scrolling
+		window.addEventListener('scroll', function() {
+		    // Get all the sections
+		    const sections = document.querySelectorAll('section');
+		    // Calculate the height of the viewport
+		    const viewportHeight = window.innerHeight;
+		    // Loop through each section
+		    sections.forEach(section => {
+                if(section == currentSection){ break; }
+                
+		        // Get the position of the section relative to the viewport
+		        const rect = section.getBoundingClientRect();
+		        // Calculate the distance from the top of the section to the top of the viewport
+		        const sectionTop = rect.top;
+
+
+                let next = section.next();
+                let prev = section.previous();
+                
+                if(next){
+                	// Check if the current section is at least 75% out of the viewport
+		            if (sectionTop >= 0.75 * viewportHeight) {
+		               // If the current section is 75% out of the viewport, scroll to it
+		               next.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
+		               currentSection = next;
+		            }
+                }
+
+                if(prev){
+                	// Check if the current section is at least 75% out of the viewport
+		            if (sectionTop <= -0.75 * viewportHeight) {
+		               // If the current section is 75% out of the viewport, scroll to it
+		               prev.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
+		               currentSection = prev;
+		            }	
+                }
+
+
+		    });
+		});
+
+
 
 
     });
