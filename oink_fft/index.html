@@ -161,7 +161,6 @@
         let currentSection = $("#section_main");
 
 		let snapping = false;
-        let lastScrollPosition = window.scrollY;
 
         function handleSnap(dir){
         	let newSection;
@@ -178,7 +177,6 @@
 		        currentSection = newSection;
 		        setTimeout(() => { 
 		             snapping = false;
-		             lastScrollPosition = currentSection.offset().top; 
 		        }, 3000); // Adjust delay as needed
 		    }
         }
@@ -204,9 +202,7 @@
               } else {
            	    dir = "down";
               }
-              setTimeout(() => { 
-		   	     handleSnap(dir); 
-		      }, 100);
+              handleSnap(dir); 
 		  }
 		}, { passive: false });
 
