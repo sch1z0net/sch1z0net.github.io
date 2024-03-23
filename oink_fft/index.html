@@ -164,7 +164,6 @@
 		let blockWheel = false;
 
         function handleSnap(dir){
-        	blockWheel = true;
         	let newSection;
         	if(dir == "down"){
                 newSection = currentSection.nextAll(".snappable").first();
@@ -175,6 +174,7 @@
 
 		    // If there is a new section, scroll to it smoothly
 		    if (newSection.length !== 0) {
+		    	blockWheel = true;
 		        newSection[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
 		        currentSection = newSection;
 		        setTimeout(() => { 
