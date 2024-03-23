@@ -168,10 +168,10 @@
         	snapping = true;
 
         	let newSection;
-        	if(dir == "up"){
+        	if(dir == "down"){
                 newSection = currentSection.nextAll(".snappable").first();
         	}else 
-        	if(dir == "down"){
+        	if(dir == "up"){
                 newSection = currentSection.prevAll(".snappable").first();
         	}
 
@@ -189,18 +189,18 @@
 		// Function to handle scrolling
 		window.addEventListener('scroll', function(event) {
 		   if(snapping){ return; }
+		   window.scrollTo(currentSection.offset().top, 0); // Sticky
 
            let dir;
            const currentScrollPosition = window.scrollY;
-           if (currentScrollPosition > lastScrollPosition) {
+           if (currentScrollPosition < lastScrollPosition) {
                dir = "up";
-           } else if (currentScrollPosition < lastScrollPosition) {
+           } else if (currentScrollPosition > lastScrollPosition) {
            	   dir = "down";
            }
 
 		   event.preventDefault();
 		   event.stopPropagation();
-		   window.scrollTo(currentSection.offset().top, 0); // Sticky
 		   setTimeout(() => { handleSnap(dir); }, 100);
 		});
 
