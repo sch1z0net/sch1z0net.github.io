@@ -167,7 +167,7 @@
         	let i = 0;
         	let sections = $(".snappable");
             for(section of sections){
-            	 if(section.id === currentSection.id){
+            	 if(section.id === currentSection[0].id){
                       return sections[i+1];
             	 };
             	 i++;
@@ -178,7 +178,7 @@
         	let i = 0;
         	let sections = $(".snappable");
             for(section of sections){
-            	 if(section.id === currentSection.id){
+            	 if(section.id === currentSection[0].id){
                       return sections[i-1];
             	 };
             	 i++;
