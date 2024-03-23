@@ -253,10 +253,12 @@
            	    dir = "down";
               }
 
-              if (dir ===   "up" && $(window).scrollTop() > currentSection.offset().top) {
+              if (dir ===   "up" 
+              	&& $(window).scrollTop() > currentSection.offset().top) {
                    return;
               }
-              if (dir === "down" && $(window).scrollBottom() < currentSection.offset().bottom) {
+              if (dir === "down" 
+              	&& $(window).scrollTop() < currentSection.offset().top + currentSection.outerHeight() - $(window).height()) {
                    return;
               }
 
