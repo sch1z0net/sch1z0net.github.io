@@ -546,9 +546,9 @@ input[type="checkbox"] {
    cursor: pointer;
 }
 
-#oinkImage : hover{
-   width: 34px;
-   height: 34px;
+#oinkImage:hover{
+   width: 32px!important;
+   height: 32px!important;
 }
 
 .bestPerf {
