@@ -787,6 +787,9 @@ section{
 }
 
 #footer{
-  height: 100px;
-  background-color: black;
+  height: 50px;
+  width: 100%;
+  bottom: 0;
+  background-color: pink;
+  position: fixed;
 }
