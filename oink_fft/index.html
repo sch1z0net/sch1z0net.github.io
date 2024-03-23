@@ -17,12 +17,12 @@
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
 </head>
 <body>
-	<section id="section_main">
+	<section class="snappable" id="section_main">
 	    <div id="root">
 	    </div>
 	</section>
 	<div class="split_section">
-	    <section id="section_intro">
+	    <section class="snappable" id="section_intro">
 
 			<h1 id="h_1">Introducing Oink FFT: A Quick and Dirty JavaScript FFT Implementation</h1>
             <div id="d_1" class="collapsable">
@@ -50,7 +50,7 @@
 				</ol>
 		    </div>
 	    </section>
-		<section id="section_usage">
+		<section class="snappable" id="section_usage">
 	        <h2>Getting Started:</h2>
 
 			<p>To start using Oink FFT, simply import the library into your JavaScript project and follow the intuitive API to perform FFT operations on your data.</p>
@@ -100,7 +100,7 @@
 	        </div>
 		</section>
     </div>
-    <section id="section_donate">
+    <section class="snappable" id="section_donate">
 
     </section>
 	<div id="footer">
@@ -166,7 +166,7 @@
 		window.addEventListener('scroll', function() {
 			if(!scrolling){
 		        // Get the next or previous section based on the direction of scrolling
-		        const newSection = currentSection.next();
+		        const newSection = currentSection.next(".snappable");
 
 		        // If there is a new section, scroll to it smoothly
 		        if (newSection.length !== 0) {
