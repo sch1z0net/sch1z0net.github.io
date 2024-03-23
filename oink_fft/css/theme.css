@@ -632,7 +632,7 @@ label {
 
 
 section{
-    border-bottom: solid 1px rgba(100, 10, 10, 0.3);
+    border-bottom: solid 1px white;
     margin: 0px;
     padding: 0px;
 
@@ -780,6 +780,10 @@ section{
   #section_intro, #section_usage{
     max-width: 100%;
   }
+}
+
+#section_donate{
+  background-color: rgba(20,20,20);
 }
 
 #footer{
