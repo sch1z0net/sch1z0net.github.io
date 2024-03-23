@@ -157,21 +157,22 @@
         // Call the function initially to set the initial background opacity
         updateBackgroundOpacity();
 
-
-
-        // Get the sticky section element
-		const stickySection = document.getElementById('section_main');
-	    // Get the initial offset position of the sticky section
-		const stickyOffset = 100;
-
 		// Function to handle scrolling
 		window.addEventListener('scroll', function() {
-		    // Check if the current scroll position is past the sticky offset
-		    if (window.pageYOffset >= stickyOffset) {
-		        $("#a2")[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
-		    } else {
-		      
-		    }
+		    // Get all the sections that you want to transition to
+		    const sections = document.querySelectorAll('.section');
+
+		    // Loop through each section
+		    sections.forEach(section => {
+		        // Get the position of the section relative to the viewport
+		        const rect = section.getBoundingClientRect();
+
+		        // Check if the section is in the viewport
+		        if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+		            // If the section is in the viewport, scroll to it smoothly
+		            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		        }
+		    });
 		});
     });
 	</script>
