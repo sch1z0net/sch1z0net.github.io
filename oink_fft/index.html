@@ -189,25 +189,24 @@
 		   event.preventDefault();
 		   event.stopPropagation();
 		   window.scrollTo(currentSection.offset().top, 0); // Sticky
-
-           let dir;
-           const currentScrollPosition = window.scrollY;
-           if (currentScrollPosition < lastScrollPosition) {
-               dir = "up";
-           } else {
-           	   dir = "down";
-           }
-
-		   setTimeout(() => { 
-             snapping = true;
-		   	 handleSnap(dir); 
-		   }, 100);
 		});
 
 	    // Prevent scrolling
 		window.addEventListener('wheel', function(event) {
 		  if(snapping){ 
-		  	event.preventDefault(); 
+		  	  event.preventDefault(); 
+		  }else{
+		  	  const deltaY = event.deltaY;
+		  	  let dir;
+		  	  if (deltaY < 0) {
+                dir = "up";
+              } else {
+           	    dir = "down";
+              }
+              setTimeout(() => { 
+                 snapping = true;
+		   	     handleSnap(dir); 
+		      }, 300);
 		  }
 		}, { passive: false });
 
