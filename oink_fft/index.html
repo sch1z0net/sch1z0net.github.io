@@ -164,9 +164,6 @@
         let lastScrollPosition = window.scrollY;
 
         function handleSnap(dir){
-        	if(snapping){ return; }
-        	snapping = true;
-
         	let newSection;
         	if(dir == "down"){
                 newSection = currentSection.nextAll(".snappable").first();
@@ -189,6 +186,8 @@
 		// Function to handle scrolling
 		window.addEventListener('scroll', function(event) {
 		   if(snapping){ return; }
+		   
+           snapping = true;
 		   window.scrollTo(currentSection.offset().top, 0); // Sticky
 
            let dir;
