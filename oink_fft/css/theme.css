@@ -837,7 +837,6 @@ body > section, .split_section {
 
 .giphy-round {
     visibility: hidden;
-    display: none;
 
     position: absolute;
     transform: translateX(120%);

@@ -435,8 +435,7 @@ $(document).ready(function(){
 
     $oinkImage.click(function(){
         $(".giphy-round").css({
-            visibility: "visible",
-            display: "block"
+            visibility: "visible"
         });
         $(".giphy-round").animate({
                 // Scale the div to 100%
