@@ -163,15 +163,35 @@
 		let snapping = false;
 		let blockWheel = false;
 
-        async function handleSnap(dir){
-        	console.log("handle snap");
+        function getNext(){
+        	let i = 0;
+        	let sections = $(".snappable");
+            for(section of sections){
+            	 if(section == currentSection){
+                      return sections[i+1];
+            	 };
+            	 i++;
+            }           
+        }
 
+        function getPrev(){
+        	let i = 0;
+        	let sections = $(".snappable");
+            for(section of sections){
+            	 if(section == currentSection){
+                      return sections[i-1];
+            	 };
+            	 i++;
+            }           
+        }
+
+        async function handleSnap(dir){
         	let newSection;
         	if(dir == "down"){
-                newSection = await currentSection.nextAll(".snappable").first();
+                newSection = await getNext();
         	}else 
         	if(dir == "up"){
-                newSection = await currentSection.prevAll(".snappable").first();
+                newSection = await getPrev();
         	}
 
 		    // If there is a new section, scroll to it smoothly
@@ -188,7 +208,6 @@
 		        $('html, body').animate({
 		            scrollTop: offsetTop
 		        }, 1000, 'swing', () => {
-		            console.log("release");
 		            blockWheel = false;
 		            snapping = false;
 		        });
@@ -204,13 +223,11 @@
 		   if(snapping){ return; }
 		   event.preventDefault();
 		   event.stopPropagation();
-		   //window.scrollTo(currentSection.offset().top, 0); // Sticky
 		});
 
 	    // Prevent scrolling
 		window.addEventListener('wheel', function(event) {
 		  if(blockWheel){ 
-		  	  console.log("wheel blocked");
 		  	  event.preventDefault(); 
 		  }else{
               if(snapping){ return; }
