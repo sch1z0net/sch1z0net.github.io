@@ -114,6 +114,7 @@ code{
   transform: translate(-50%, -50%);
   text-align: center;
   height: 100px;
+  filter: drop-shadow(4px 4px 4px rgba(0,0,0,0.2));
 }
 
 #title {
@@ -123,8 +124,9 @@ code{
   margin: 0;
   height: 140px;
   white-space: nowrap;
-  filter: drop-shadow(4px 4px 4px rgba(0,0,0,0.2));
+  filter: drop-shadow(1px 1px 2px black);
   cursor: pointer;
+  color: pink;
 }
 
 #subtitle {
@@ -134,7 +136,8 @@ code{
   margin: 0;
   font-size: 40px;
   white-space: nowrap;
-  filter: drop-shadow(4px 4px 4px rgba(0,0,0,0.2));
+  filter: drop-shadow(1px 1px 2px black);
+  color: white;
 }
 
 #descr_div {
@@ -147,6 +150,7 @@ code{
   height: 50px;
   width: 100%;
   font-size: 15px;
+  color: rgb(200,130,140);
 }
 
 #stats_div {
@@ -839,7 +843,7 @@ body > section, .split_section {
     visibility: hidden;
 
     position: absolute;
-    transform: translateX(120%);
+    transform: translateX(-50%);
     left: 50%;
     top: 50px;
     width: 150px; /* Adjust the width and height as needed */
@@ -853,6 +857,7 @@ body > section, .split_section {
 }
 
 .giphy-round iframe {
+    transform: translateX(-80px);
     width: 400px; /* Ensure the iframe fills the container */
     height: 400px;
     border: none; /* Remove default border */
