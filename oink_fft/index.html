@@ -182,13 +182,13 @@
 		        // During Snapping
 		        blockWheel = true;
 		        console.log("start snapping");
+		        currentSection = newSection;
 
 		        // Scroll to the captured offset
 		        $('html, body').animate({
 		            scrollTop: offsetTop
 		        }, 1000, 'swing', () => {
 		            console.log("release");
-		            currentSection = newSection;
 		            blockWheel = false;
 		            snapping = false;
 		        });
