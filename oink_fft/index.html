@@ -21,9 +21,9 @@
 	    <div id="root">
 	    </div>
 	    <div id="anchors">
-	    	<a href="#section_intro" class="anchor">Intro</a>
-          	<a href="#section_usage" class="anchor">Usage</a>
-	        <a href="#section_donate" class="anchor">Donate</a>
+	    	<a id="a1" href="#section_intro" class="anchor">Intro</a>
+          	<a id="a2" href="#section_usage" class="anchor">Usage</a>
+	        <a id="a3" href="#section_donate" class="anchor">Donate</a>
 	    </div>
 	</section>
 	<div class="split_section">
@@ -162,17 +162,15 @@
         // Get the sticky section element
 		const stickySection = document.getElementById('section_main');
 	    // Get the initial offset position of the sticky section
-		const stickyOffset = 100;
+		const stickyOffset = 400;
 
 		// Function to handle scrolling
 		window.addEventListener('scroll', function() {
 		    // Check if the current scroll position is past the sticky offset
 		    if (window.pageYOffset >= stickyOffset) {
-		      // Add the 'sticky' class to make the section sticky
-		      stickySection.classList.add('sticky');
+		        $("#a2").scrollIntoView({ behavior: 'smooth', block: 'start' });
 		    } else {
-		      // Remove the 'sticky' class if the scroll position is before the sticky offset
-		      stickySection.classList.remove('sticky');
+		      
 		    }
 		});
     });

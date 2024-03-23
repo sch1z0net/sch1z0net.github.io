@@ -786,10 +786,3 @@ section{
   height: 100px;
   background-color: black;
 }
-
-
-.sticky {
-    position: sticky;
-    top: 50px; /* Adjust the desired offset from the top */
-    z-index: 1000; /* Ensure the sticky element is above other content */
-}
