@@ -182,7 +182,8 @@
 		   }else{
 		   	   event.preventDefault();
 		       event.stopPropagation();
-		       setTimeout(() => { handleSnap(); }, 500); // Adjust delay as needed
+		       window.scrollTo(currentSection.offset().top, 0);
+		       setTimeout(() => { handleSnap(); }, 100); // Adjust delay as needed
 		   }
 		});
 
