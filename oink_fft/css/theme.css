@@ -642,6 +642,8 @@ section{
     flex-direction: column;
     transition: background-color 0.5s ease; /* Smooth background color transition */
     position: relative;
+  
+    box-sizing: border-box;
 }
 
 #section_main{
@@ -804,5 +806,14 @@ section{
 }
 
 .current_anchor{
+   transition: filter 3s;
+   transition: background-color 1s;
    border-color: white;
+   background-color: white;
+   filter: sepia(20%);
 }
+
+.current_section{
+   
+}
+

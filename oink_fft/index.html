@@ -245,7 +245,6 @@
 		  }else{
               if(snapping){ return; }
 
-              snapping = true;
 		  	  const deltaY = event.deltaY;
 		  	  let dir;
 		  	  if (deltaY < 0) {
@@ -253,6 +252,18 @@
               } else {
            	    dir = "down";
               }
+
+              const currentSectionOffset = currentSection.offset().top;
+              const scrollPosition = $(window).scrollTop();
+
+              if (dir ===   "up" && scrollPosition > currentSectionOffset) {
+                   return;
+              }
+              if (dir === "down" && scrollPosition < currentSectionOffset) {
+                   return;
+              }
+
+              snapping = true;
               handleSnap(dir); 
 		  }
 		}, { passive: false });
