@@ -186,9 +186,10 @@
 		// Function to handle scrolling
 		window.addEventListener('scroll', function(event) {
 		   if(snapping){ return; }
-		   
-           snapping = true;
+		   event.preventDefault();
+		   event.stopPropagation();
 		   window.scrollTo(currentSection.offset().top, 0); // Sticky
+		   snapping = true;
 
            let dir;
            const currentScrollPosition = window.scrollY;
@@ -198,8 +199,6 @@
            	   dir = "down";
            }
 
-		   event.preventDefault();
-		   event.stopPropagation();
 		   setTimeout(() => { handleSnap(dir); }, 100);
 		});
 
