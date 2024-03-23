@@ -174,19 +174,26 @@
                 newSection = await currentSection.prevAll(".snappable").first();
         	}
 
-	        // If there is a new section, scroll to it smoothly
-	        if (newSection && newSection.length > 0) {
-	            // During Snapping
-	            blockWheel = true;
-	            console.log("start snapping");
-	            await newSection[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
-	                .then(() => {
-	                    console.log("release");
-	                    currentSection = newSection;
-	                    blockWheel = false;
-	                    snapping = false;
-	                });
-	        }
+    // If there is a new section, scroll to it smoothly
+    if (newSection && newSection.length > 0) {
+        // Create a closure to capture the current value of newSection
+        (async () => {
+            const sectionElement = newSection[0];
+
+            // During Snapping
+            blockWheel = true;
+            console.log("start snapping");
+
+            // Scroll to the captured reference
+            await sectionElement.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
+                .then(() => {
+                    console.log("release");
+                    currentSection = newSection;
+                    blockWheel = false;
+                    snapping = false;
+                });
+        })();
+    }
         }
 
 		// Function to handle scrolling
