@@ -16,6 +16,7 @@ html, body {
     min-height: 200px; /* Set your desired minimum height here */
     font-family: "Varela", sans-serif;
     user-select: none;
+    overscroll-behavior: none;
 }
 
 body {
@@ -29,6 +30,7 @@ body {
   background-color: #FDDDE6;
   overflow-x: hidden;
   box-sizing: border-box;
+
 }
 
 #root {
@@ -778,4 +780,16 @@ section{
   #section_intro, #section_usage{
     max-width: 100%;
   }
+}
+
+#footer{
+  height: 100px;
+  background-color: black;
+}
+
+
+.sticky {
+    position: sticky;
+    top: 50px; /* Adjust the desired offset from the top */
+    z-index: 1000; /* Ensure the sticky element is above other content */
 }
