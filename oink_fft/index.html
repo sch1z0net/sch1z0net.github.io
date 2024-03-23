@@ -160,47 +160,34 @@
 
         let currentSection = $("#section_main");
 
-		let scrolling = false;
+		let jump = false;
 
+        function handleJump(){
+        	if(!jump){ return; }
+        	jump = false;
+            // Get the next or previous section based on the direction of scrolling
+		    const newSection = currentSection.nextAll(".snappable").first();
+
+		    // If there is a new section, scroll to it smoothly
+		    if (newSection.length !== 0) {
+		        newSection[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
+		        currentSection = newSection;
+		        setTimeout(() => { true }, 2000); // Adjust delay as needed
+		    }
+        }
         
 		// Function to handle scrolling
 		window.addEventListener('scroll', function(event) {
-			if(!scrolling){
-                // Prevent default scrolling behavior
-                event.preventDefault();
-                // Set scroll position to top/left (optional)
-                window.scrollTo(0, 0); // To scroll to the top/left
-
-		        // Get the next or previous section based on the direction of scrolling
-		        const newSection = currentSection.nextAll(".snappable").first();
-
-		        // If there is a new section, scroll to it smoothly
-		        if (newSection.length !== 0) {
-		        	scrolling = true;
-		            newSection[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
-		            currentSection = newSection;
-		            setTimeout(() => { scrolling = false; }, 1000); // Adjust delay as needed
-		        }
-		    }
+		   event.preventDefault();
+		   event.stopPropagation();
 		});
 		
-
-       /*
-		document.addEventListener("wheel", (event) => {
+		window.addEventListener("wheel", (event) => {
 		  event.preventDefault();
 		  event.stopPropagation();
-          		// Get the next or previous section based on the direction of scrolling
-		        const newSection = currentSection.nextAll(".snappable").first();
-
-		        // If there is a new section, scroll to it smoothly
-		        if (newSection.length !== 0) {
-		            newSection[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
-		            currentSection = newSection;
-		            setTimeout(() => { }, 2000); // Adjust delay as needed
-		        }
-
+		  handleJump();
 		}, { passive: false });
-        */
+        
 
 
     });
