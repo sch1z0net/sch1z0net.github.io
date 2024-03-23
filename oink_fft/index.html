@@ -112,7 +112,7 @@
 	</div>
 
 	<script>
-      $(document).ready(function(){
+    $(document).ready(function(){
 		// Smooth scrolling behavior
 		document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 		    anchor.addEventListener('click', function (e) {
@@ -156,7 +156,26 @@
 
         // Call the function initially to set the initial background opacity
         updateBackgroundOpacity();
-      });
+
+
+
+        // Get the sticky section element
+		const stickySection = document.getElementById('section_main');
+	    // Get the initial offset position of the sticky section
+		const stickyOffset = stickySection.offsetTop;
+
+		// Function to handle scrolling
+		window.addEventListener('scroll', function() {
+		    // Check if the current scroll position is past the sticky offset
+		    if (window.pageYOffset >= stickyOffset) {
+		      // Add the 'sticky' class to make the section sticky
+		      stickySection.classList.add('sticky');
+		    } else {
+		      // Remove the 'sticky' class if the scroll position is before the sticky offset
+		      stickySection.classList.remove('sticky');
+		    }
+		});
+    });
 	</script>
 
     <script type="module" src="/oink_fft/js/main.js" defer></script>
