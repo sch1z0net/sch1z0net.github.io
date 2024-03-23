@@ -188,6 +188,9 @@
         function updateCurrentSection(section){
         	currentSection = section;
             var anchor = $('a[href="#"'+section[0].id+']');
+            $(".anchor").removeClass(".current_anchor");
+            anchor.addClass(".current_anchor");
+            
         }
 
         $(".anchor").click(function(){
