@@ -161,36 +161,33 @@
 
 		// Function to handle scrolling
 		window.addEventListener('scroll', function() {
-		    // Get all the sections
-		    const sections = document.querySelectorAll('section');
 		    // Calculate the height of the viewport
 		    const viewportHeight = window.innerHeight;
 
-		        // Get the position of the section relative to the viewport
-		        const rect = currentSection.getBoundingClientRect();
-		        // Calculate the distance from the top of the section to the top of the viewport
-		        const sectionTop = rect.top;
+	        // Calculate the distance from the top of the section to the top of the viewport
+	        const sectionTop = currentSection.offset().top;
 
-                let next = currentSection.next();
-                let prev = currentSection.previous();
-                
-                if(next){
-                	// Check if the current section is at least 75% out of the viewport
-		            if (sectionTop >= 0.75 * viewportHeight) {
-		               // If the current section is 75% out of the viewport, scroll to it
-		               next.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
-		               currentSection = next;
-		            }
-                }
+            let next = currentSection.next();
+            let prev = currentSection.previous();
+            
+            if(next){
+            	// Check if the current section is at least 75% out of the viewport
+	            if (sectionTop >= 0.75 * viewportHeight) {
+	               // If the current section is 75% out of the viewport, scroll to it
+	               next.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
+	               currentSection = next;
+	            }
+            }
 
-                if(prev){
-                	// Check if the current section is at least 75% out of the viewport
-		            if (sectionTop <= -0.75 * viewportHeight) {
-		               // If the current section is 75% out of the viewport, scroll to it
-		               prev.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
-		               currentSection = prev;
-		            }	
-                }
+            if(prev){
+            	// Check if the current section is at least 75% out of the viewport
+	            if (sectionTop <= -0.75 * viewportHeight) {
+	               // If the current section is 75% out of the viewport, scroll to it
+	               prev.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
+	               currentSection = prev;
+	            }	
+            }
+
 		});
 
 
