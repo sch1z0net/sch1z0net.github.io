@@ -174,20 +174,19 @@
                 newSection = currentSection.prevAll(".snappable").first();
         	}
 
-		    // If there is a new section, scroll to it smoothly
-		    if (newSection.length !== 0) {
-		    	// During Snapping
-		    	blockWheel = true;
-		    	console.log("start snapping");
-		        newSection[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
-		        // After Snapping
-		        setTimeout(() => { 
-		        	 console.log("release");
-		        	 currentSection = newSection;
-		        	 blockWheel = false;
-		             snapping = false;
-		        }, 3000); // Adjust delay as needed
-		    }
+	        // If there is a new section, scroll to it smoothly
+	        if (newSection.length !== 0) {
+	            // During Snapping
+	            blockWheel = true;
+	            console.log("start snapping");
+	            newSection[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
+	                .then(() => {
+	                    console.log("release");
+	                    currentSection = newSection;
+	                    blockWheel = false;
+	                    snapping = false;
+	                });
+	        }
         }
 
 		// Function to handle scrolling
@@ -205,7 +204,7 @@
 		  	  event.preventDefault(); 
 		  }else{
               if(snapping){ return; }
-              
+
               snapping = true;
 		  	  const deltaY = event.deltaY;
 		  	  let dir;
