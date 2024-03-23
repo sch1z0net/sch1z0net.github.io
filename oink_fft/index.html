@@ -175,7 +175,7 @@
         	}
 
 	        // If there is a new section, scroll to it smoothly
-	        if (newSection.length !== 0) {
+	        if (newSection && newSection.length > 0) {
 	            // During Snapping
 	            blockWheel = true;
 	            console.log("start snapping");
