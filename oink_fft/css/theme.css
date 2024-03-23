@@ -100,10 +100,11 @@ code{
 }
 
 .anchor{
-  display: block;
   width:40%;
-  text-align: center;
-  display: inline;
+  /*! text-align: center; */
+  /*! display: inline; */
+  box-sizing: border-box;
+  margin-inline: 2px;
 }
 
 #title_div {
@@ -687,11 +688,12 @@ section{
 }
 
 #anchors{
-  width: 100%;
+  width: 200px;
   text-align: center;
-  height: 40px;
+  height: 30px;
   position: relative;
-  display: block;
+  display: flex;
+  justify-content: center;
 }
 
 .anchor {
@@ -699,7 +701,7 @@ section{
   color: rgba(200,50,50,0.5);
   text-emphasis: none;
   border: solid 1px;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 4px;
 }
 
@@ -787,9 +789,14 @@ section{
 }
 
 #footer{
-  height: 50px;
+  height: 40px;
   width: 100%;
   bottom: 0;
   background-color: pink;
   position: fixed;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
