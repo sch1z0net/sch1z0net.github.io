@@ -105,15 +105,17 @@
     </section>
 	<div id="footer">
 	    <div id="anchors">
-	    	<a href="#section_main" class="anchor">Benchmark</a>
-	    	<a href="#section_intro" class="anchor">Intro</a>
-          	<a href="#section_usage" class="anchor">Usage</a>
+	    	<a href="#section_main"   class="anchor">Benchmark</a>
+	    	<a href="#section_intro"  class="anchor">Intro</a>
+          	<a href="#section_usage"  class="anchor">Usage</a>
 	        <a href="#section_donate" class="anchor">Donate</a>
 	    </div>
 	</div>
 
 	<script>
     $(document).ready(function(){
+        let currentSection = $("#section_main");
+
 		// Smooth scrolling behavior
 		document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 		    anchor.addEventListener('click', function (e) {
@@ -158,8 +160,6 @@
         // Call the function initially to set the initial background opacity
         updateBackgroundOpacity();
 
-        let currentSection = $("#section_main");
-
 		let snapping = false;
 		let blockWheel = false;
 
@@ -185,6 +185,15 @@
             }           
         }
 
+        function updateCurrentSection(section){
+        	currentSection = section;
+            var anchor = $('a[href="#"'+section[0].id+']');
+        }
+
+        $(".anchor").click(function(){
+            updateCurrentSection( $("#"+this.href) );
+        });
+
         async function handleSnap(dir){
         	let newSection;
         	if(dir == "down"){
@@ -202,12 +211,12 @@
 		        // During Snapping
 		        blockWheel = true;
 		        console.log("start snapping");
-		        currentSection = newSection;
+		        updateCurrentSection(newSection);
 
 		        // Scroll to the captured offset
 		        $('html, body').animate({
 		            scrollTop: offsetTop
-		        }, 1000, 'swing', () => {
+		        }, 400, 'swing', () => {
 		            blockWheel = false;
 		            snapping = false;
 		        });
