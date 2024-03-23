@@ -176,7 +176,7 @@
             	// Check if the current section is at least 75% out of the viewport
 	            if (sectionTop >= 0.75 * viewportHeight) {
 	               // If the current section is 75% out of the viewport, scroll to it
-	               next.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
+	               next[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
 	               currentSection = next;
 	            }
             }
@@ -185,7 +185,7 @@
             	// Check if the current section is at least 75% out of the viewport
 	            if (sectionTop <= -0.75 * viewportHeight) {
 	               // If the current section is 75% out of the viewport, scroll to it
-	               prev.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
+	               prev[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
 	               currentSection = prev;
 	            }	
             }
