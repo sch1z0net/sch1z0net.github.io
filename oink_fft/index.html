@@ -160,11 +160,11 @@
 
         let currentSection = $("#section_main");
 
-		let jump = true;
+		let snapping = false;
 
-        function handleJump(){
-        	if(!jump){ return; }
-        	jump = false;
+        function handleSnap(){
+        	if(snapping){ return; }
+        	snapping = true;
             // Get the next or previous section based on the direction of scrolling
 		    const newSection = currentSection.nextAll(".snappable").first();
 
@@ -172,23 +172,19 @@
 		    if (newSection.length !== 0) {
 		        newSection[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
 		        currentSection = newSection;
-		        setTimeout(() => { true }, 2000); // Adjust delay as needed
+		        setTimeout(() => { snapping = false; }, 2000); // Adjust delay as needed
 		    }
         }
         
 		// Function to handle scrolling
 		window.addEventListener('scroll', function(event) {
-		   event.preventDefault();
-		   event.stopPropagation();
+		   if(snapping){
+		   }else{
+		   	   event.preventDefault();
+		       event.stopPropagation();
+		       handleSnap();
+		   }
 		});
-		
-		window.addEventListener("wheel", (event) => {
-		  event.preventDefault();
-		  event.stopPropagation();
-		  handleJump();
-		}, { passive: false });
-        
-
 
     });
 	</script>
