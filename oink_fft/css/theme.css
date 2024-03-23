@@ -124,7 +124,8 @@ code{
   margin: 0;
   height: 140px;
   white-space: nowrap;
-  filter: drop-shadow(1px 1px 2px black);
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+  filter: drop-shadow(1px 1px 1px black);
   cursor: pointer;
   color: pink;
 }
@@ -136,7 +137,8 @@ code{
   margin: 0;
   font-size: 40px;
   white-space: nowrap;
-  filter: drop-shadow(1px 1px 2px black);
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+  filter: drop-shadow(1px 1px 1px black);
   color: white;
 }
 
@@ -235,6 +237,9 @@ code{
    border-radius: 10px;
    background-color: white;
    box-shadow: 2px 2px 2px;
+   text-shadow: -1px 0 grey, 0 1px grey, 1px 0 grey, 0 -1px grey;
+   color: pink;
+  
 }
 
 .pulse:hover{
