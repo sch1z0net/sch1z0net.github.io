@@ -164,6 +164,9 @@
 
 		// Function to handle scrolling
 		window.addEventListener('scroll', function() {
+            // Prevent default scrolling behavior
+            event.preventDefault();
+
 			if(!scrolling){
 		        // Get the next or previous section based on the direction of scrolling
 		        const newSection = currentSection.nextAll(".snappable").first();
