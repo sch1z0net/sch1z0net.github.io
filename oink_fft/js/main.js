@@ -432,9 +432,12 @@ $(document).ready(function(){
         id: "oinkImage",
         src: "./favicon/oink.png"
     });
-    
+
     $oinkImage.click(function(){
-        $(".giphy-round").css("visibility","visible!important").css("display","block!important");
+        $(".giphy-round").css({
+            visibility: "visible",
+            display: "block"
+        });
         $(".giphy-round").animate({
                 // Scale the div to 100%
                 scaleX: 1,
