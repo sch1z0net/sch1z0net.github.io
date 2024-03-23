@@ -487,13 +487,12 @@ $(document).ready(async function(){
                 scaleY: 1
         }, {
                 duration: 1000, // Animation duration in milliseconds
-                easing: "easeOutBounce",
                 complete: function() {
                     
                 }
         });
     });
-    
+
 
     $reload.click(async function(){
        $loading.show();
