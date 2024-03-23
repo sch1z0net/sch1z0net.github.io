@@ -162,15 +162,15 @@
 
 		let scrolling = false;
 
-        /*
+        
 		// Function to handle scrolling
 		window.addEventListener('scroll', function(event) {
-            // Prevent default scrolling behavior
-            event.preventDefault();
-            // Set scroll position to top/left (optional)
-            window.scrollTo(0, 0); // To scroll to the top/left
-
 			if(!scrolling){
+                // Prevent default scrolling behavior
+                event.preventDefault();
+                // Set scroll position to top/left (optional)
+                window.scrollTo(0, 0); // To scroll to the top/left
+
 		        // Get the next or previous section based on the direction of scrolling
 		        const newSection = currentSection.nextAll(".snappable").first();
 
@@ -183,8 +183,9 @@
 		        }
 		    }
 		});
-		*/
+		
 
+       /*
 		document.addEventListener("wheel", (event) => {
 		  event.preventDefault();
 		  event.stopPropagation();
@@ -199,7 +200,7 @@
 		        }
 
 		}, { passive: false });
-
+        */
 
 
     });
