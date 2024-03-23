@@ -817,3 +817,6 @@ section{
    
 }
 
+body > section, .split_section {
+  min-height: 1000px!important;
+}

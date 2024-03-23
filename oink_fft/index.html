@@ -253,13 +253,10 @@
            	    dir = "down";
               }
 
-              const currentSectionOffset = currentSection.offset().top;
-              const scrollPosition = $(window).scrollTop();
-
-              if (dir ===   "up" && scrollPosition > currentSectionOffset) {
+              if (dir ===   "up" && $(window).scrollTop() > currentSection.offset().top;) {
                    return;
               }
-              if (dir === "down" && scrollPosition < currentSectionOffset) {
+              if (dir === "down" && $(window).scrollBottom() < currentSection.offset().bottom;) {
                    return;
               }
 
