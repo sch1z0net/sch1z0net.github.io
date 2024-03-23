@@ -546,6 +546,10 @@ input[type="checkbox"] {
    cursor: pointer;
 }
 
+#oinkImage : hover{
+   width: 34px;
+   height: 34px;
+}
 
 .bestPerf {
   animation: fadeGreen 2.5s ease-out forwards;
