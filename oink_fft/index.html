@@ -258,6 +258,7 @@
                    return;
                 }else
                 if(Math.abs(deltaY) < 50){
+                  $(window).scrollTop( currentSection.offset().top );
               	  event.preventDefault();
               	  return;
                 }
