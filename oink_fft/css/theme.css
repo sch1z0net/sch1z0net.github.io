@@ -832,7 +832,7 @@ section{
 }
 
 #footer.active {
-  opacity: 40px;
+  opacity: 1;
 }
 
 .current_anchor{
