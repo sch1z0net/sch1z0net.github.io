@@ -1,0 +1,52 @@
+#profile_div p {
+    line-height: 14px;
+    margin: 0px;
+    text-align: justify;
+}
+
+#header {
+    width: 90%;
+    border-radius: 6px;
+}
+
+#header_row {
+    display: flex;
+    flex-direction: row;
+}
+
+.header_row_item {
+    margin-right: 20px;
+}
+
+.info {
+    margin: 10px;
+    width: 280px;
+}
+
+#profile_div {
+    display: flex;
+    flex-direction: row;
+    width: 400px;
+    border-right: 1px solid black;
+    padding-right: 20px;
+    filter: drop-shadow(1px 1px 10px rgba(0,0,0,0.5));
+}
+
+#profile {
+    border-radius: 50%;
+    height: 200px; 
+    width: 200px;
+    border: 1px solid white;
+}
+
+.links {
+    width: 30px;
+    height: 30px;
+    mix-blend-mode: multiply;
+    cursor: pointer;
+    filter: grayscale(100%) drop-shadow(1px 1px 10px rgba(0,0,0,0.5));
+}
+
+a {
+    text-decoration: none;
+}
