@@ -6,6 +6,7 @@
     margin-inline: auto;
     background-color: rgba(10,10,10,0.9);
     padding: 20px;
+    min-width: 400px;
 }
 
 #dev_row {
