@@ -826,6 +826,13 @@ section{
   justify-content: center;
   z-index: 2000;
   border-top: 1px solid white;
+
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+#footer.active {
+  opacity: 40px;
 }
 
 .current_anchor{

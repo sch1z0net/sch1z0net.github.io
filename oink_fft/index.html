@@ -388,6 +388,11 @@
 
 	    // Prevent scrolling
 		window.addEventListener('wheel', function(event) {
+		  if(window.benchmarking){
+		  	  event.preventDefault(); 
+		  	  event.stopPropagation();
+		  	  return;
+		  }
 		  if(blockWheel){ 
 		  	  event.preventDefault(); 
 		  }else{

@@ -498,7 +498,8 @@ $(document).ready(async function(){
     $reload.click(async function(){
        window.benchmarking = true;
        $("body").css("overflow-y","hidden");
-       $("#footer").hide();
+       $("#footer").removeClass("active");
+       document.querySelector("#section_main").scrollIntoView({behavior: 'smooth'});
 
        $loading.show();
        $reload.hide();
@@ -523,7 +524,7 @@ $(document).ready(async function(){
        $loading_info.text("Finished!"); 
        window.benchmarking = false;
        $("body").css("overflow-y","scroll");
-       $("#footer").show();
+       $("#footer").addClass("active");
     });
 
     await setup(FFT_BANK);
