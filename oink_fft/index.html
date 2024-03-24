@@ -218,11 +218,7 @@
 		    	}
 		    	$('a[href="#section_intro"]').hide();
 		    	$("section").addClass("snappable");
-                if(currentSection.id == "section_intro"){
-                    $("#section_usage").removeClass("snappable");
-                }else{
-                    $("#section_intro").removeClass("snappable");
-                }
+                $("#section_intro").removeClass("snappable");
 		    }
         }
         updateResponsive();
