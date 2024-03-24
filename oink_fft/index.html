@@ -110,7 +110,21 @@
        </h1>
 
        <div id="about">
-           
+           When working on a music project, I needed a quick and dirty 
+           solution to process FFT as fast as possible. 
+           I didn't want to rely on third party tools, 
+           so I started to study FFT on my own.
+           I figured out how to exploit the symmetry properties 
+           that are intrinsic to the FFT, which could save a lot of
+           execution time already. To make it a little bit dirty (but even faster)
+           I used Float32 Arrays instead of the full double precision.
+           The quality of the resulting sound after FFT processing is pretty acceptable,
+           and if your requirements are even lower than that
+           (like for example just displaying a rough frequency spectrum),
+           then you shouldn't worry about the little 'dirt' that's introduced.
+           Finally I digged even deeper to optimize the execution speed. 
+           So I ended up changing my initial JS code to C and 
+           used Web Assembly (WASM) to get the full potential out of modern Web Development.
        </div>
 
        <div id="dev">

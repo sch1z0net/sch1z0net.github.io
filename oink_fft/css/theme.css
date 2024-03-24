@@ -888,6 +888,7 @@ body > section, .split_section {
     margin-inline: auto;
     background-color: rgba(10,10,10,0.9);
     padding: 20px;
+    color: white;
 }
 
 
