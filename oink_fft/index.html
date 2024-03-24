@@ -169,7 +169,7 @@
 		let snapping = false;
 		let blockWheel = false;
         let expanded = true;
-        $(window).resize(function() {
+        function updateResponsive() {
 		    var windowWidth = $(window).width();
             
             // Smartphone Layout
@@ -190,11 +190,15 @@
 		    	$("section").addClass("snappable");
                 if(currentSection.id == "section_intro"){
                     $("#section_usage").removeClass("snappable");
-                }
-                if(currentSection.id == "section_usage"){
+                }else
                     $("#section_intro").removeClass("snappable");
                 }
 		    }
+        }
+        updateResponsive();
+
+		$(window).resize(function() {
+            updateResponsive();
 		});
 
         function getNext(){
