@@ -374,9 +374,11 @@
 		    }
 
         }
-
+        
+        let benchmarking = false;
 		// Function to handle scrolling
 		window.addEventListener('scroll', function(event) {
+		   if(benchmarking){ return; }
 		   if(snapping){ return; }
 		   event.preventDefault();
 		   event.stopPropagation();
@@ -384,7 +386,7 @@
 
 	    // Prevent scrolling
 		window.addEventListener('wheel', function(event) {
-		  if(blockWheel){ 
+		  if(blockWheel || benchmarking){ 
 		  	  event.preventDefault(); 
 		  }else{
               if(snapping){ return; }
