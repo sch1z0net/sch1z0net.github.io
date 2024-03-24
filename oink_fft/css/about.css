@@ -22,7 +22,7 @@
 }
 
 /* Responsive behavior for smaller screens */
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 1000px) {
 #dev_row {
     display: flex;
     flex-direction: column;
