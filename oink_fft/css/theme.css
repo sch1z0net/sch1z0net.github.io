@@ -658,6 +658,8 @@ section{
     position: relative;
   
     box-sizing: border-box;
+    height: 100%;
+    min-height: 800px;
 }
 
 #section_main{
@@ -674,6 +676,7 @@ section{
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+    min-height: 800px;
 }
 
 .comment {
@@ -726,6 +729,7 @@ section{
   box-sizing: border-box;
   color: white;
   max-width: 320px;
+  min-height: 800px;
   height: 100%;
 }
 
@@ -767,6 +771,7 @@ section{
   box-sizing: border-box;
   margin: 0px;
   position: relative;
+  min-height: 800px;
 }
 
 #h_1, #h_2, #h_3{
@@ -834,7 +839,6 @@ section{
 }
 
 body > section, .split_section {
-  height: 1000px;
 }
 
 
