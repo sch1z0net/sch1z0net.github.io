@@ -168,6 +168,34 @@
 
 		let snapping = false;
 		let blockWheel = false;
+        let expanded = true;
+        $(window).resize(function() {
+		    var windowWidth = $(window).width();
+            
+            // Smartphone Layout
+		    if (windowWidth <= 850) {
+		    	if(expanded){
+                    expanded = false;
+		    	}else{
+		    		return;
+		    	}
+                $("section").addClass("snappable");
+            // Desktop Layout
+		    } else {
+		    	if(!expanded){
+                    expanded = true;
+		    	}else{
+		    		return;
+		    	}
+		    	$("section").addClass("snappable");
+                if(currentSection.id == "section_intro"){
+                    $("#section_usage").removeClass("snappable");
+                }
+                if(currentSection.id == "section_usage"){
+                    $("#section_intro").removeClass("snappable");
+                }
+		    }
+		});
 
         function getNext(){
         	let i = 0;
