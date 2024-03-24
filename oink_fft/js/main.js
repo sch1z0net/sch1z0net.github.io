@@ -496,7 +496,7 @@ $(document).ready(function(){
 
 $(document).ready(async function(){
     $reload.click(async function(){
-       benchmarking = true;
+       window.benchmarking = true;
        $loading.show();
        $reload.hide();
 
@@ -518,7 +518,7 @@ $(document).ready(async function(){
        $loading.hide();
        $reload.show();
        $loading_info.text("Finished!"); 
-       benchmarking = false;
+       window.benchmarking = false;
     });
 
     await setup(FFT_BANK);

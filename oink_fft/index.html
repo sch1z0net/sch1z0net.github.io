@@ -208,7 +208,7 @@
 	    	<a href="#section_main"   class="anchor">Benchmark</a>
 	    	<a href="#section_intro"  class="anchor">Intro</a>
           	<a href="#section_usage"  class="anchor">Usage</a>
-	        <a href="#section_about" class="anchor">About</a>
+	        <a href="#section_about"  class="anchor">About</a>
 	    </div>
 	</div>
 
@@ -375,18 +375,17 @@
 
         }
         
-        let benchmarking = false;
+        let window.benchmarking = false;
 		// Function to handle scrolling
 		window.addEventListener('scroll', function(event) {
-		   if(benchmarking){ return; }
-		   if(snapping){ return; }
+		   if(snapping || window.benchmarking){ return; }
 		   event.preventDefault();
 		   event.stopPropagation();
 		});
 
 	    // Prevent scrolling
 		window.addEventListener('wheel', function(event) {
-		  if(blockWheel || benchmarking){ 
+		  if(blockWheel || window.benchmarking){ 
 		  	  event.preventDefault(); 
 		  }else{
               if(snapping){ return; }
