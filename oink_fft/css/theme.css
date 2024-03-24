@@ -807,6 +807,10 @@ section{
   #section_intro, #section_usage{
     max-width: 100%;
   }
+
+  #section_about{
+    min-height: 1000px;  
+  }
 }
 
 #footer{
@@ -894,6 +898,5 @@ body > section, .split_section {
     padding-bottom: 10px;
     padding-top: 10px;
     color: rgba(200,30,30,0.5);
-  
 }
 
