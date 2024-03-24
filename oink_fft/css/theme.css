@@ -798,6 +798,10 @@ section{
   }
 }
 
+#section_about{
+   min-height: 1100px;  
+}
+
 /* Responsive behavior for smaller screens */
 @media screen and (max-width: 850px) {
     .split_section {
@@ -806,10 +810,6 @@ section{
     }
   #section_intro, #section_usage{
     max-width: 100%;
-  }
-
-  #section_about{
-    min-height: 1100px;  
   }
 }
 
