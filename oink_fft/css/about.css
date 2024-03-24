@@ -12,6 +12,7 @@
 #dev_row {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .dev_row_item {
@@ -24,6 +25,7 @@
 @media screen and (max-width: 850px) {
 #dev_row {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -42,7 +44,7 @@
     display: flex;
     flex-direction: row;
     width: 400px;
-    border-right: 1px solid white;
+    /*! border-right: 1px solid white; */
     padding-right: 20px;
     filter: drop-shadow(1px 1px 10px rgba(0,0,0,0.2));
 }
