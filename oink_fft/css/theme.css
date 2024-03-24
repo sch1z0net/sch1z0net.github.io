@@ -691,14 +691,16 @@ section{
 
 #examples a{
   display: inline-block;
-  margin: 10px;
+  margin: 6px;
+  margin-inline: 0px;
   padding:3px;
-  font-weight: bold;
   border: 1px solid white;
   border-radius: 5px; 
   color: white;
-  font-size: 15px;
-  background-color: rgba(200,140,160);
+  font-size: 14px;
+  background-color: grey;
+  text-decoration: unset;
+  
 }
 
 #examples a:hover{

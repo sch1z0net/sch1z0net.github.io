@@ -103,10 +103,135 @@
 	        </div>
 		</section>
     </div>
-    <section class="snappable" id="section_donate">
+    <section class="snappable" id="section_about">
 
-    </section>
-    <section class="snappable" id="section_pig">
+	  <style>
+        p {
+            line-height: 14px;
+            margin: 0px;
+            text-align: justify;
+        }
+
+        #header {
+            margin: auto auto;
+            width: 90%;
+            border-radius: 6px;
+        }
+
+        #header_row {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .header_row_item {
+            margin-right: 20px;
+        }
+
+        .info {
+            margin: 10px;
+            width: 280px;
+        }
+
+        #profile_div {
+            display: flex;
+            flex-direction: row;
+            width: 400px;
+            border-right: 1px solid black;
+            padding-right: 20px;
+            filter: drop-shadow(1px 1px 10px rgba(0,0,0,0.5));
+        }
+
+        #profile {
+            border-radius: 50%;
+            height: 200px; 
+            width: 200px;
+            border: 1px solid white;
+        }
+
+        .links {
+            width: 30px;
+            height: 30px;
+            mix-blend-mode: multiply;
+            cursor: pointer;
+            filter: grayscale(100%) drop-shadow(1px 1px 10px rgba(0,0,0,0.5));
+        }
+ 
+        a {
+            text-decoration: none;
+        }
+
+      </style>
+
+       <div id="header">
+		 <div id="header_row">
+		    <div class="header_row_item">
+		         <h1>
+		            About me:
+		         </h1>
+
+		         <div id="profile_div">
+		            <img id="profile" src="../profile.png" />
+		            <div>
+		            <p style="padding-left:0px;"> Hi, I'm Sebastian. </p>
+		            <p style="padding-left:10px;"> I am diagnosed with paranoid schizophrenia. </p>
+		            <p style="padding-left:20px;"> Although this illness has taken much quality from my life, </p> 
+		            <p style="padding-left:30px;"> I am still trying to stay creative and sane. </p> 
+		            <p style="padding-left:20px;"> I am into coding with a certain background in computer science. </p>
+		            <p style="padding-left:10px;"> You can learn more about me on www.sch1z0.net</p>
+		            </div>
+		         </div>
+		    </div>
+		    <div class="header_row_item" style="width: 300px">
+		        <div style="border-bottom: solid 1px black;">
+		         <h1>Links:</h1>
+
+		           <a href="https://www.sch1z0.net">
+		            <img class="links" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Home-icon.svg"/>
+		           </a>
+
+		           <a href="https://github.com/sch1z0net">
+		            <img class="links" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/GitHub_Invertocat_Logo.svg/1280px-GitHub_Invertocat_Logo.svg.png"/>
+		           </a>
+
+		           <a href="https://www.instagram.com/sch1z0net/">
+		            <img class="links" src="https://upload.wikimedia.org/wikipedia/commons/2/27/CIS-A2K_Instagram_Icon_%28Black%29.svg"/>
+		           </a>
+
+		           <a href="mailto:sebastianprusak@sch1z0.net">
+		            <img class="links" src="https://upload.wikimedia.org/wikipedia/commons/2/2a/High-contrast-emblem-mail.svg"/>
+		           </a> 
+		        </div>
+		        <div>
+		           <h1>Donate:</h1>
+		           <div style="text-align: justify;">
+		           You can help me through my life with a small donation on Paypal or buymeacoffee.com, if you like my work.
+		         <div style="display:flex; flex-direction: row; margin-left: 10px; margin-top: 10px">
+		           <div id="donate-button-container" style="transform:scale(1.2);  margin-top: 14px;">
+		            <div id="donate-button"></div>
+		               <script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
+		               <script>
+		                 PayPal.Donation.Button({
+		                  env:'production',
+		                  hosted_button_id:'TZW3JS7UQ5KTG',
+		                  image: {
+		                  src:'https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif',
+		                  alt:'Donate with PayPal button',
+		                  title:'PayPal - The safer, easier way to pay online!',
+		                  }
+		                 }).render('#donate-button');
+		               </script>
+		            </div>
+
+		        <div id="coffee-button-container" style="transform:scale(0.7); margin-left: 20px;">
+		           <a href="https://www.buymeacoffee.com/sch1z0"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=sch1z0&button_colour=ffffff&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" /></a>
+		        </div>
+		       </div>
+
+		     </div>
+		   </div>
+		</div>
+
+    </div>
 
     </section>
 	<div id="footer">
@@ -114,7 +239,7 @@
 	    	<a href="#section_main"   class="anchor">Benchmark</a>
 	    	<a href="#section_intro"  class="anchor">Intro</a>
           	<a href="#section_usage"  class="anchor">Usage</a>
-	        <a href="#section_donate" class="anchor">Donate</a>
+	        <a href="#section_about" class="anchor">About</a>
 	    </div>
 	</div>
 
