@@ -168,26 +168,48 @@
 
 		let snapping = false;
 		let blockWheel = false;
-        let expanded = true;
+        let expanded;
+
+        function scrollTo(section){
+    	    // Capture the offset of the new section
+	        const offsetTop = section.offset().top;
+
+	        // During Snapping
+	        blockWheel = true;
+	        console.log("start snapping");
+	        updateCurrentSection(section);
+
+	        // Scroll to the captured offset
+	        $('html, body').animate({
+	            scrollTop: offsetTop
+	        }, 400, 'swing', () => {
+	            blockWheel = false;
+	            snapping = false;
+	        });
+        }
+
+
         function updateResponsive() {
 		    var windowWidth = $(window).width();
             
             // Smartphone Layout
 		    if (windowWidth <= 850) {
-		    	if(expanded){
+		    	if(expanded == null || expanded == true){
                     expanded = false;
 		    	}else{
 		    		return;
 		    	}
+		        scrollTo(currentSection);
 		    	$('a[href="#section_intro"]').show();
                 $("section").addClass("snappable");
             // Desktop Layout
 		    } else {
-		    	if(!expanded){
+		    	if(expanded == null || expanded == false){
                     expanded = true;
 		    	}else{
 		    		return;
 		    	}
+		    	scrollTo(currentSection);
 		    	$('a[href="#section_intro"]').hide();
 		    	$("section").addClass("snappable");
                 if(currentSection.id == "section_intro"){
@@ -249,21 +271,7 @@
 
 		    // If there is a new section, scroll to it smoothly
 		    if (newSection && newSection.length > 0) {
-		        // Capture the offset of the new section
-		        const offsetTop = newSection.offset().top;
-
-		        // During Snapping
-		        blockWheel = true;
-		        console.log("start snapping");
-		        updateCurrentSection(newSection);
-
-		        // Scroll to the captured offset
-		        $('html, body').animate({
-		            scrollTop: offsetTop
-		        }, 400, 'swing', () => {
-		            blockWheel = false;
-		            snapping = false;
-		        });
+                scrollTo(newSection);
 		    }else{
 		    	blockWheel = false;
 		        snapping = false;
