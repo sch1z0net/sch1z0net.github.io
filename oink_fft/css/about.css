@@ -20,6 +20,15 @@
     margin-right: 20px;
 }
 
+/* Responsive behavior for smaller screens */
+@media screen and (max-width: 850px) {
+#dev_row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+}
+
 .dev_row_item h1 {
     margin: 0px;
 }
