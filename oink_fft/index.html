@@ -214,12 +214,17 @@
 
 	<script>
     $(document).ready(function(){
+        window.benchmarking = false;
+
         let currentSection = $("#section_main");
 
 		// Smooth scrolling behavior
 		document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 		    anchor.addEventListener('click', function (e) {
 		        e.preventDefault();
+		        if(window.benchmarking){
+		        	return;
+		        }
 
 		        document.querySelector(this.getAttribute('href')).scrollIntoView({
 		            behavior: 'smooth'
@@ -374,7 +379,6 @@
 
         }
         
-        window.benchmarking = false;
 		// Function to handle scrolling
 		window.addEventListener('scroll', function(event) {
 		   if(snapping){ return; }
