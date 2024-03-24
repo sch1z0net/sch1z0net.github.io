@@ -652,7 +652,6 @@ section{
     margin: 0px;
     padding: 0px;
 
-    min-height:700px;
     display: flex;
     flex-direction: column;
     transition: background-color 0.5s ease; /* Smooth background color transition */
@@ -662,7 +661,7 @@ section{
 }
 
 #section_main{
-    /*! justify-content: center; */
+    max-height: 700px;
 }
 
 #section_usage{
@@ -835,7 +834,7 @@ section{
 }
 
 body > section, .split_section {
-  min-height: 1000px!important;
+  height: 1000px;
 }
 
 
