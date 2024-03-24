@@ -436,25 +436,15 @@ $(document).ready(function(){
     let oinkActive = false;
     $oinkImage.click(function(){
         if(oinkActive){
-            $(".giphy-round").css({
+           $(".giphy-round").css({
                visibility: "hidden"
-            });
-            oinkActive = false;
+           });
+           oinkActive = false;
         }else{
            oinkActive = true;
            $(".giphy-round").css({
             visibility: "visible"
             });
-            $(".giphy-round").animate({
-                    // Scale the div to 100%
-                    scaleX: 2,
-                    scaleY: 2
-            }, {
-                    duration: 1000, // Animation duration in milliseconds
-                    complete: function() {
-                        
-                    }
-            }); 
         }
     });
 
