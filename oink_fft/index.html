@@ -199,6 +199,7 @@
 		    	}else{
 		    		return;
 		    	}
+		    	// On Change to Smartphone View
 		        scrollTo(currentSection);
 		    	$('a[href="#section_intro"]').show();
                 $("section").addClass("snappable");
@@ -209,7 +210,12 @@
 		    	}else{
 		    		return;
 		    	}
-		    	scrollTo(currentSection);
+		    	// On Change to Desktop View
+		    	if(currentSection.id == "section_intro"){
+		    		scrollTo($("#section_usage"));
+		    	}else{
+		    		scrollTo(currentSection);
+		    	}
 		    	$('a[href="#section_intro"]').hide();
 		    	$("section").addClass("snappable");
                 if(currentSection.id == "section_intro"){
