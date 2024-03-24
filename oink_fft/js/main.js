@@ -432,21 +432,30 @@ $(document).ready(function(){
         id: "oinkImage",
         src: "./favicon/oink.png"
     });
-
+    
+    let oinkActive = false;
     $oinkImage.click(function(){
-        $(".giphy-round").css({
+        if(oinkActive){
+            $(".giphy-round").css({
+               visibility: "hidden"
+            });
+            oinkActive = false;
+        }else{
+           oinkActive = true;
+           $(".giphy-round").css({
             visibility: "visible"
-        });
-        $(".giphy-round").animate({
-                // Scale the div to 100%
-                scaleX: 1,
-                scaleY: 1
-        }, {
-                duration: 1000, // Animation duration in milliseconds
-                complete: function() {
-                    
-                }
-        });
+            });
+            $(".giphy-round").animate({
+                    // Scale the div to 100%
+                    scaleX: 2,
+                    scaleY: 2
+            }, {
+                    duration: 1000, // Animation duration in milliseconds
+                    complete: function() {
+                        
+                    }
+            }); 
+        }
     });
 
 
