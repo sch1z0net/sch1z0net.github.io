@@ -809,10 +809,6 @@ section{
   }
 }
 
-#section_donate{
-  background-color: rgba(20,20,20);
-}
-
 #footer{
   height: 40px;
   width: 100%;
@@ -873,8 +869,26 @@ body > section, .split_section {
     border: none; /* Remove default border */
 }
 
+#section_about{
+  text-align: center;
+  font-size: 48px;
+  margin: 0px;
+  font-family: "Sue Ellen Francisco", cursive !important;
+}
+
+#about {
+    margin: 20px;
+    width: 75%;
+    height: 150px;
+    border-radius: 6px;
+    margin-inline: auto;
+    background-color: rgba(10,10,10,0.9);
+    padding: 20px;
+}
+
 
 #imprint {
+    font-size: 22px;
     width: 100%;
     text-align: center;
     padding-bottom: 100px;
