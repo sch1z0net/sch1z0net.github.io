@@ -657,6 +657,9 @@ section{
     position: relative;
   
     box-sizing: border-box;
+}
+
+section.mobile {
     min-height: 100vh !important;
     height: fit-content !important;
 }
