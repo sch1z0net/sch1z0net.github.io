@@ -924,14 +924,16 @@ body > section, .split_section {
 }
 
 
-  #selectionsDiv.mobile {
+
+#selectionsDiv.mobile {
     transform: scale(0.8) translateX(-40px);
-  }
+}
 
-  #icon-row.mobile {
+#icon-row.mobile {
     transform: scale(0.8) translateX(40px);
-  }
+}
 
-  #paramsDiv.mobile {
+#paramsDiv.mobile {
     transform: scale(0.8) translateX(40px);
-  }
+}
+

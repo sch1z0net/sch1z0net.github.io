@@ -81,3 +81,11 @@ a {
 #coffee-button-container{
     filter: hue-rotate(300deg);
 }
+
+#about.mobile {
+    min-width: none!important;
+}
+
+#dev.mobile {
+    min-width: none!important;
+}
