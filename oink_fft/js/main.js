@@ -496,6 +496,10 @@ $(document).ready(function(){
 /////////////////////////////////// BENCHMARKING        ///////////////////////////////////////////////
 
 $(document).ready(async function(){
+    if(window.mobileCheck()){
+        return;
+    }
+
     $reload.click(async function(){
        window.benchmarking = true;
        $("body").css("overflow-y","hidden");

@@ -913,4 +913,8 @@ body > section, .split_section {
 .mobile_hint{
    border-radius: 5px;
    border: 1px solid black;
+   width: 90%;
+   background-color: white;
+   color: black;
+   font-size: 10px;
 }
