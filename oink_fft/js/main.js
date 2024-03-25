@@ -366,9 +366,15 @@ $(document).ready(function(){
 
     
     let $intro = $("<div class='pulse'>RUN BENCHMARK</div>");
+    let $intro_mob = $("<div class='mobile_hint'>Sadly, the Benchmarking is only available on Desktop. But you can still explore the rest of the page!</div>");
     let $intro_text = $("<div>Welcome to my Benchmarking Suite</div>");
     $tab_intro.append($intro_text);
-    $tab_intro.append($intro);
+    if(window.mobileCheck()){
+        $tab_intro.append($intro_mob);
+    }else{
+        $tab_intro.append($intro);
+    }
+    
     
 
     // Create select boxes for the number of operations and the amount of runs
