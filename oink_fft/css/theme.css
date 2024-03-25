@@ -810,6 +810,10 @@ section{
   #section_intro, #section_usage{
     max-width: 100%;
   }
+
+  #selectionsDiv {
+    transform: scale(0.8) translateX(-40px);
+  }
 }
 
 #footer{
