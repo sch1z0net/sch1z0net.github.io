@@ -332,11 +332,8 @@ function highlightComparison(FFT_BANK){
 
 
 $(document).ready(function(){
-    $title_div   = $("<div>").attr("id", "title_div");
-    $title       = $("<h1>").text("OINK FFT").attr("id", "title");
-    $title.click(function(){ window.open("https://sch1z0net.github.io/oink_fft/"); });
+    $("#title").click(function(){ window.open("https://sch1z0net.github.io/oink_fft/"); });
 
-    $subtitle    = $("<h2>").text("the oinkiest FFT in the web").attr("id", "subtitle");
     $stats_div   = $("<div>").attr("id", "stats_div");
     $stats_head  = $("<div>").attr("id", "stats_head");
     $tabs        = $("<div>").attr("id", "tabs");
@@ -354,9 +351,6 @@ $(document).ready(function(){
     $loading_info= $('<div id="loading_info">');
     $descr_div   = $("<div>").attr("id", "descr_div");
 
-    $("#root").append($title_div);
-    $title_div.append($title);
-    $title_div.append($subtitle);
     $("#root").append($stats_div);
     $stats_div.append($stats_head);
     $stats_div.append($tabs);
@@ -450,7 +444,7 @@ $(document).ready(function(){
 
 
     // Append the image to the container div
-    $title_div.append($oinkImage);
+    $("#title_div").append($oinkImage);
 
     $reload = $('<button id="reload">Reload</button>').hide().appendTo($stats_footer);
 
