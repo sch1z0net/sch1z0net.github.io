@@ -375,8 +375,8 @@ $(document).ready(function(){
     let $paramsDiv =  $('<div id="paramsDiv">').appendTo($stats_footer);
     let $numOpsLabel = $('<label>').text("# Operations").appendTo($paramsDiv);
     let $runsLabel = $('<label>').text("# Runs").appendTo($paramsDiv);
-    $numOpsSelect = $('<select id="numOpsSelect"></select>').appendTo($paramsDiv);
-    $runsSelect = $('<select id="runsSelect"></select>').appendTo($paramsDiv);
+    $numOpsSelect = $('<select id="numOpsSelect" label="Number of Operations"></select>').appendTo($paramsDiv);
+    $runsSelect = $('<select id="runsSelect" label="Number of Runs"></select>').appendTo($paramsDiv);
 
     // Append options to numOpsSelect
     numOpsOptions.forEach(option => { $numOpsSelect.append('<option value="' + option + '">' + option + '</option>'); });
