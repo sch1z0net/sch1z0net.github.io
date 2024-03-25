@@ -219,7 +219,6 @@ code{
   display: flex;
   justify-content: center;
 
-  cursor: pointer;
   z-index: 100;
   color: rgba(200, 0, 0, 0.3);
   flex-direction: column;
@@ -238,6 +237,8 @@ code{
    text-shadow: -1px 0 grey, 0 1px grey, 1px 0 grey, 0 -1px grey;
    color: pink;
   
+   cursor: pointer;
+   max-width: 90%;
 }
 
 .pulse:hover{
@@ -910,5 +911,6 @@ body > section, .split_section {
 
 
 .mobile_hint{
-  
+   border-radius: 5px;
+   border: 1px solid black;
 }
