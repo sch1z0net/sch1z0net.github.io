@@ -28,6 +28,7 @@ var $subtitle;
 var $stats_div;
 var $stats_head;
 var $stats_footer;
+var $intro_desk;
 
 var $tabs;
 var $tab_intro;
@@ -365,7 +366,7 @@ $(document).ready(function(){
     $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
 
     
-    let $intro_desk = $("<div class='pulse'>RUN BENCHMARK</div>");
+    $intro_desk = $("<div class='pulse'>RUN BENCHMARK</div>");
     let $intro_mob = $("<div class='mobile_hint'>Sadly, the Benchmarking is only available on Desktop. <br>But you can still explore the rest of the page!</div>");
     let $intro_text = $("<div>Welcome to my Benchmarking Suite</div>");
     $tab_intro.append($intro_text);
