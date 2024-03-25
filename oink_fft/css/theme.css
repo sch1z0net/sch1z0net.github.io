@@ -834,6 +834,10 @@ section{
   opacity: 1;
 }
 
+#footer.mobile {
+  display: none;
+}
+
 .current_anchor{
    transition: filter 3s;
    transition: background-color 1s;

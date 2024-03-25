@@ -451,6 +451,10 @@ Why choose OINK FFT? Our library prioritizes speed and simplicity, making it ide
               handleSnap(dir); 
 		  }
 		}, { passive: false });
+
+		if(window.mobileCheck()){
+           $("#footer").addClass("mobile");
+        }
     });
 	</script>
 

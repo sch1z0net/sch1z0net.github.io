@@ -384,12 +384,6 @@ $(document).ready(function(){
     $numOpsSelect = $('<select id="numOpsSelect"></select>').appendTo($paramsDiv);
     $runsSelect = $('<select id="runsSelect"></select>').appendTo($paramsDiv);
 
-    if(window.mobileCheck()){
-        $numOpsSelect.addClass("mobile");
-        $runsSelect.addClass("mobile");
-        $paramsDiv.addClass("mobile");
-    }
-
     // Append options to numOpsSelect
     numOpsOptions.forEach(option => { $numOpsSelect.append('<option value="' + option + '">' + option + '</option>'); });
     // Append options to runsSelect
@@ -492,6 +486,12 @@ $(document).ready(function(){
 
     // Append the icon row to the document body
     $stats_head.append($iconRow);
+
+    if(window.mobileCheck()){
+        $selectionsDiv.addClass("mobile");
+        $iconRow.addClass("mobile");
+        $paramsDiv.addClass("mobile");
+    }
 });
 
 
