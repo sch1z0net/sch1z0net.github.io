@@ -424,7 +424,8 @@ $(document).ready(function(){
     // Create the image element
     var $oinkImage = $("<img>", {
         id: "oinkImage",
-        src: "./favicon/oink.png"
+        src: "./favicon/oink.png",
+        alt: "icon showing a pig"
     });
     
     let oinkActive = false;
@@ -457,13 +458,13 @@ $(document).ready(function(){
     // Create a div element for the icon row
     var $iconRow = $("<div>").attr("id", "icon-row");
 
-    var $iconImage1 = $("<img>").attr("src", "./icons/table.svg").addClass("icon-image");
+    var $iconImage1 = $("<img>").attr("src", "./icons/table.svg").addClass("icon-image").attr("alt","icon showing a table");
     var $iconLink1  = $("<a>").attr("id", "icon_table").addClass("icon-link").append($iconImage1).addClass("active-icon");
     $iconRow.append($iconLink1);
-    var $iconImage2 = $("<img>").attr("src", "./icons/chart.svg").addClass("icon-image");
+    var $iconImage2 = $("<img>").attr("src", "./icons/chart.svg").addClass("icon-image").attr("alt","icon showing a chart");
     var $iconLink2  = $("<a>").attr("id", "icon_chart").addClass("icon-link").append($iconImage2);
     $iconRow.append($iconLink2);
-    var $iconImage3 = $("<img>").attr("src", "./icons/micro.svg").addClass("icon-image");
+    var $iconImage3 = $("<img>").attr("src", "./icons/micro.svg").addClass("icon-image").attr("alt","icon showing a microscope");
     var $iconLink3  = $("<a>").attr("id", "icon_micro").addClass("icon-link").append($iconImage3);
     $iconRow.append($iconLink3);
 
