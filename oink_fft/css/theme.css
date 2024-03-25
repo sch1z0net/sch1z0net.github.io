@@ -657,8 +657,8 @@ section{
     position: relative;
   
     box-sizing: border-box;
-    height: 100%;
-    min-height: 800px;
+    min-height: 100vh !important;
+    height: fit-content !important;
 }
 
 #section_main{
