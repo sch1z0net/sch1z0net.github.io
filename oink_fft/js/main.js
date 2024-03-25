@@ -365,14 +365,14 @@ $(document).ready(function(){
     $descr_div.text("According to ChatGPT, OINK FFT stands for: Outrageously Insane, Notoriously Quick Fast Fourier Transform!");
 
     
-    let $intro = $("<div class='pulse'>RUN BENCHMARK</div>");
+    let $intro_desk = $("<div class='pulse'>RUN BENCHMARK</div>");
     let $intro_mob = $("<div class='mobile_hint'>Sadly, the Benchmarking is only available on Desktop. But you can still explore the rest of the page!</div>");
     let $intro_text = $("<div>Welcome to my Benchmarking Suite</div>");
     $tab_intro.append($intro_text);
     if(window.mobileCheck()){
         $tab_intro.append($intro_mob);
     }else{
-        $tab_intro.append($intro);
+        $tab_intro.append($intro_desk);
     }
     
     
@@ -530,7 +530,7 @@ $(document).ready(async function(){
 
     await setup(FFT_BANK);
 
-    await $tab_intro.click(function(){
+    await $intro_desk.click(function(){
          $tab_intro.addClass("fade_hide");
          setTimeout(function() {
              $tab_intro.hide();
