@@ -5,7 +5,7 @@ let out256 = new Float32Array(512);
 
 function fftReal256(realInput) { 
     if (size != 256) {
-        for (int i = 0; i < 256; i++) {
+        for (let i = 0; i < 256; i++) {
             iP256[i] = (i < size) ? realInput[i] : 0.0;
         }
         _iP256 = iP256;
@@ -277,7 +277,7 @@ function fftReal256(realInput) {
     // RADIX 4 - FFT step for SIZE 4/8 
     ////////////////////////////////////////////////
 
-    for (int idx = 0, out_idx = 0; idx < 256; idx += 4, out_idx += 8) {
+    for (let idx = 0, out_idx = 0; idx < 256; idx += 4, out_idx += 8) {
         x0aRe = iBR256[idx    ];
         x1aRe = iBR256[idx + 1];
         x2aRe = iBR256[idx + 2];

@@ -5,7 +5,7 @@ let out512 = new Float32Array(1024);
 
 function fftReal512(realInput) { 
     if (size != 512) {
-        for (int i = 0; i < 512; i++) {
+        for (let i = 0; i < 512; i++) {
             iP512[i] = (i < size) ? realInput[i] : 0.0;
         }
         _iP512 = iP512;
@@ -533,7 +533,7 @@ function fftReal512(realInput) {
     // RADIX 4 - FFT step for SIZE 4/8 
     ////////////////////////////////////////////////
 
-    for (int idx = 0, out_idx = 0; idx < 512; idx += 4, out_idx += 8) {
+    for (let idx = 0, out_idx = 0; idx < 512; idx += 4, out_idx += 8) {
         x0aRe = iBR512[idx    ];
         x1aRe = iBR512[idx + 1];
         x2aRe = iBR512[idx + 2];

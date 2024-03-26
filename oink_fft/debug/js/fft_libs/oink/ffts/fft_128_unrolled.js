@@ -5,7 +5,7 @@ let out128 = new Float32Array(256);
 
 function fftReal128(realInput) { 
     if (size != 128) {
-        for (int i = 0; i < 128; i++) {
+        for (let i = 0; i < 128; i++) {
             iP128[i] = (i < size) ? realInput[i] : 0.0;
         }
         _iP128 = iP128;
@@ -149,7 +149,7 @@ function fftReal128(realInput) {
     // RADIX 4 - FFT step for SIZE 4/8 
     ////////////////////////////////////////////////
 
-    for (int idx = 0, out_idx = 0; idx < 128; idx += 4, out_idx += 8) {
+    for (let idx = 0, out_idx = 0; idx < 128; idx += 4, out_idx += 8) {
         x0aRe = iBR128[idx    ];
         x1aRe = iBR128[idx + 1];
         x2aRe = iBR128[idx + 2];
