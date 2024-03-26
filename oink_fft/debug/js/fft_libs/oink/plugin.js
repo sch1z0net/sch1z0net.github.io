@@ -2,7 +2,8 @@
 //////////////////////////////////////
 // IMPORT THE FFT LIBRARY
 //////////////////////////////////////
-import * as OINK from "https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.5-alpha/oink_fft.js";
+//import * as OINK from "https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.5-alpha/oink_fft.js";
+import * as OINK from "./oink_fft.js"
 //////////////////////////////////////
 //////////////////////////////////////
 // PREPARE AND PERFORM KISS
