@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8"/>
+    <link rel="icon" type="image/png" href="/oink_fft/favicon/favicon-96x96.png"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="OINK FFT" content="The oinkiest FFT in the web"/>
+    <title>OINK FFT</title>
+
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous">
+    </script>
+
+    <style>
+        body{font-family: monospace;background-color:rgb(30,30,30);}
+        #root{text-align:center;}
+        h1{font-size:24px;margin:15px;color:white;}
+        table{border-collapse:collapse;width:100%;margin-top:20px;background-color:rgb(200,200,200);}
+        table,th,td{border:1px solid #ddd;}
+        thead{background-color:#f2f2f2;}
+        th,td{padding:8px;text-align:left;}
+        tr:nth-child(even){background-color:#f2f2f2;}
+        tr:hover{background-color:#ddd;}
+    </style>
+
+
+</head>
+<body>
+    <div id="root">
+        <h1 id="title"></h1>
+		<select id="fftSelect">
+		    <option value="128">128</option>
+		    <option value="256">256</option>
+		    <option value="512">512</option>
+		    <option value="1024">1024</option>
+		    <option value="2048">2048</option>
+		</select>
+
+		<select id="frequencySelect">
+		    <option value="27.5">A0</option>
+		    <option value="29.14">A#0 / Bb0</option>
+		    <option value="30.87">B0</option>
+		    <option value="32.70">C1</option>
+		    <option value="34.65">C#1 / Db1</option>
+		    <option value="36.71">D1</option>
+		    <option value="38.89">D#1 / Eb1</option>
+		    <option value="41.20">E1</option>
+		    <option value="43.65">F1</option>
+		    <option value="46.25">F#1 / Gb1</option>
+		    <option value="49.00">G1</option>
+		    <option value="51.91">G#1 / Ab1</option>
+		    <option value="55.00">A1</option>
+		    <!-- Add more options for other notes -->
+		</select>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Real</th>
+                    <th>Imaginary</th>
+                </tr>
+            </thead>
+            <tbody id="spectrumTableBody">
+                <!-- Spectrum values will be populated here -->
+            </tbody>
+        </table>
+    </div>
+    <script type="module">
+        //To use this library, you first need to include it in your project.
+        import * as OINK from 'https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.3-alpha/oink_fft.js';
+
+        let FFT_SIZE = 512;
+
+        // Generate a Float32Array with a Sine Wave
+        function generateSineWave(length, frequency, sampleRate) {
+            const buffer = new Float32Array(length);
+            const amplitude = 0.5; 
+            for (let i = 0; i < length; i++) {
+                const t = i / sampleRate; // Time in seconds
+                buffer[i] = amplitude * Math.sin(2 * Math.PI * frequency * t);
+            }
+            return buffer;
+        }
+
+        // Initialize Module
+        async function initialize() {
+            // Import the WASM file and initialize the module
+            const Module_OINK = await import('https://cdn.jsdelivr.net/gh/sch1z0net/oink@v0.1.3-alpha/fft_wasm.js');
+            await OINK.initializeModuleOINK(await Module_OINK.default());
+        }
+
+        // Update spectrum display based on selected frequency
+        async function updateSpectrumDisplay() {
+            const frequency = parseInt($('#frequencySelect').val());
+
+            // Generate sine wave with updated frequency
+            let sineWave = generateSineWave(FFT_SIZE, frequency, 44100);
+
+            // Calculate spectrum
+            let realInput = new Float32Array(sineWave);
+
+            let spectrum;
+
+            switch (FFT_SIZE) {
+              case 128:  spectrum = OINK.fftReal128(realInput);  break;
+		      case 256:  spectrum = OINK.fftReal256(realInput);  break;
+		      case 512:  spectrum = OINK.fftReal512(realInput);  break;
+		      case 1024: spectrum = OINK.fftReal1024(realInput); break;
+		      case 2048: spectrum = OINK.fftReal2048(realInput); break;
+		      default: throw Error("wrong size for FFT Performance"); break;
+		    }
+
+            // Display spectrum
+            displaySpectrum(spectrum);
+        }
+
+        // Display spectrum in the table
+        function displaySpectrum(spectrum) {
+            $("#title").text(FFT_SIZE+" FFT Spectrum of a Sine Wave");
+
+            const spectrumTableBody = $('#spectrumTableBody');
+            spectrumTableBody.empty(); // Clear existing content
+            for (let i = 0, j = 0; i < spectrum.length; i += 2, j++) {
+                const row = $('<tr>');
+                $('<td>').text("BIN " + j).appendTo(row);
+                $('<td>').text(spectrum[i + 0].toFixed(3)).appendTo(row);
+                $('<td>').text(spectrum[i + 1].toFixed(3)).appendTo(row);
+                spectrumTableBody.append(row);
+            }
+        }
+
+        $(document).ready(async function() {
+            // Initialize Module
+            await initialize();
+            // Initial Display
+            await updateSpectrumDisplay();
+
+            // Update spectrum display when frequency is changed
+            $('#frequencySelect').on('change', function() {
+                updateSpectrumDisplay();
+            });
+
+            // Update spectrum display when FFT is changed
+            $('#fftSelect').on('change', function() {
+            	FFT_SIZE = parseInt($(this).val());
+                updateSpectrumDisplay();
+            });
+        });
+    </script>
+
+</body>
+</html>
+

@@ -1,0 +1,93 @@
+
+#dev {
+    margin: 20px;
+    width: 75%;
+    border-radius: 6px;
+    margin-inline: auto;
+    background-color: rgba(10,10,10,0.9);
+    padding: 20px;
+    min-width: 400px;
+}
+
+#dev_row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.dev_row_item {
+    color: white;
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+/* Responsive behavior for smaller screens */
+@media screen and (max-width: 1000px) {
+#dev_row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+}
+
+.dev_row_item h1 {
+    margin: 0px;
+}
+
+.info {
+    margin: 10px;
+    width: 280px;
+}
+
+#profile_div {
+    display: flex;
+    flex-direction: row;
+    width: 400px;
+    max-width: 75vw;
+    padding-right: 20px;
+    filter: drop-shadow(1px 1px 10px rgba(0,0,0,0.2));
+}
+
+#profile_div p {
+    line-height: 14px;
+    margin: 0px;
+    text-align: justify;
+}
+
+#profile {
+    border-radius: 50%;
+    height: 200px; 
+    width: 200px;
+    border: 1px solid white;
+    max-width: 30vw;
+    max-height: 30vw;
+}
+
+.links {
+    width: 30px;
+    height: 30px;
+    mix-blend-mode: difference;
+    cursor: pointer;
+    filter: grayscale(100%) invert(100%) drop-shadow(0px 0px 2px rgba(200,200,200,0.9));
+}
+
+a {
+    text-decoration: none;
+}
+
+#donate-button-container{
+    filter: invert(100%) hue-rotate(95deg) saturate(40%) brightness(150%);
+}
+
+#coffee-button-container{
+    filter: hue-rotate(300deg);
+}
+
+#about.mobile {
+    min-width: unset!important;
+}
+
+#dev.mobile {
+    min-width: unset!important;
+}
