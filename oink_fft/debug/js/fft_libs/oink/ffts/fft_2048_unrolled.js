@@ -2071,15 +2071,15 @@ function fftReal2048(realInput) {
     ////////////////////////////////////////////////
 
     for (let idx = 0, out_idx = 0; idx < 2048; idx += 4, out_idx += 8) {
-        x0aRe = iBR2048[idx    ];
-        x1aRe = iBR2048[idx + 1];
-        x2aRe = iBR2048[idx + 2];
-        x3aRe = iBR2048[idx + 3];
+        let x0aRe = iBR2048[idx    ];
+        let x1aRe = iBR2048[idx + 1];
+        let x2aRe = iBR2048[idx + 2];
+        let x3aRe = iBR2048[idx + 3];
 
-        sum1  = x0aRe + x1aRe;
-        sum2  = x2aRe + x3aRe;
-        diff1 = x0aRe - x1aRe;
-        diff2 = x2aRe - x3aRe;
+        let sum1  = x0aRe + x1aRe;
+        let sum2  = x2aRe + x3aRe;
+        let diff1 = x0aRe - x1aRe;
+        let diff2 = x2aRe - x3aRe;
 
         out2048[out_idx]     = sum1 + sum2;
         out2048[out_idx + 1] = 0.0;
