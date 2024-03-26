@@ -4,6 +4,7 @@ let _iP1024 = new Float32Array(1024);
 let out1024 = new Float32Array(2048);
 
 function fftReal1024(realInput) { 
+    let size = realInput.length;
     if (size != 1024) {
         for (let i = 0; i < 1024; i++) {
             iP1024[i] = (i < size) ? realInput[i] : 0.0;

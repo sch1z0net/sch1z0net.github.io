@@ -4,6 +4,7 @@ let _iP512 = new Float32Array(512);
 let out512 = new Float32Array(1024);
 
 function fftReal512(realInput) { 
+    let size = realInput.length;
     if (size != 512) {
         for (let i = 0; i < 512; i++) {
             iP512[i] = (i < size) ? realInput[i] : 0.0;

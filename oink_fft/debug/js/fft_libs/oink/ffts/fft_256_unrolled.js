@@ -4,6 +4,7 @@ let _iP256 = new Float32Array(256);
 let out256 = new Float32Array(512);
 
 function fftReal256(realInput) { 
+    let size = realInput.length;
     if (size != 256) {
         for (let i = 0; i < 256; i++) {
             iP256[i] = (i < size) ? realInput[i] : 0.0;

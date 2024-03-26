@@ -4,6 +4,7 @@ let _iP2048 = new Float32Array(2048);
 let out2048 = new Float32Array(4096);
 
 function fftReal2048(realInput) { 
+    let size = realInput.length;
     if (size != 2048) {
         for (let i = 0; i < 2048; i++) {
             iP2048[i] = (i < size) ? realInput[i] : 0.0;

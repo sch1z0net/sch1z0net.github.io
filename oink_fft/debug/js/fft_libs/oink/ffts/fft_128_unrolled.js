@@ -4,6 +4,7 @@ let _iP128 = new Float32Array(128);
 let out128 = new Float32Array(256);
 
 function fftReal128(realInput) { 
+    let size = realInput.length;
     if (size != 128) {
         for (let i = 0; i < 128; i++) {
             iP128[i] = (i < size) ? realInput[i] : 0.0;
