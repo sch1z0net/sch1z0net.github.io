@@ -21199,7 +21199,7 @@ void fftReal2048(float* realInput, int size) {
     ////////////////////////////////////////////////
     // FFT step for SIZE 512
     ////////////////////////////////////////////////
- 
+    
         for (int j = 0; j < 256; j++) {
             int eI = j;
             int oI  = j + 256;
@@ -21351,7 +21351,7 @@ void fftReal2048(float* realInput, int size) {
     ////////////////////////////////////////////////
     // FFT step for SIZE 2048
     ////////////////////////////////////////////////
- 
+    
         for (int j = 0; j < 1024; j++) {
             int eI = j;
             int oI  = j + 1024;

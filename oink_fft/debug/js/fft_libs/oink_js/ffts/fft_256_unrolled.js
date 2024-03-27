@@ -339,1129 +339,744 @@ function fftReal256(realInput) {
     ////////////////////////////////////////////////
     // RADIX 2 (rolled) - FFT step for SIZE 16 
     ////////////////////////////////////////////////
-    for(let idx = 0; idx < 256; idx += 32){ 
-        let oRe0 = out256[idx + 16];
-        let oIm0 = out256[idx + 17];
-        let eRe0 = out256[idx + 0];
-        let eIm0 = out256[idx + 1];
-        let resRe0_s = eRe0 + oRe0;
-        out256[idx] = resRe0_s;
-        let resIm0_s = eIm0 + oIm0;
-        out256[idx + 1] = resRe0_s;
-        let resRe0_d = eRe0 - oRe0;
-        out256[idx + 16] = resRe0_d;
-        let resIm0_d = eIm0 - oIm0;
-        out256[idx + 17] = resIm0_d;
-        
-        let oRe1 = out256[idx + 18];
-        let oIm1 = out256[idx + 19];
-        let eRe1 = out256[idx + 2];
-        let eIm1 = out256[idx + 3];
-        let tRe1 = FFT_FAC_256[idx + 1];
-        let tRe3 = FFT_FAC_256[idx + 3];
-        let resIm1_s = eIm1 + (oRe1 * tRe3 + oIm1 * tRe1);
-        out256[idx + 3] = resIm1_s;
-        out256[idx + 31] = -resIm1_s;
-        let resRe1_s = eRe1 + (oRe1 * tRe1 - oIm1 * tRe3);
-        out256[idx + 30] = resRe1_s;
-        out256[idx + 2] = resRe1_s;
-        let resRe7_s = eRe1 - (oRe1 * tRe1 - oIm1 * tRe3);
-        out256[idx + 18] = resRe7_s;
-        out256[idx + 14] = resRe7_s;
-        let resIm7_s = -eIm1 + (oRe1 * tRe3 + oIm1 * tRe1);
-        out256[idx + 15] = resIm7_s;
-        out256[idx + 19] = -resIm7_s;
-        
-        let oRe2 = out256[idx + 20];
-        let oIm2 = out256[idx + 21];
-        let eRe2 = out256[idx + 4];
-        let eIm2 = out256[idx + 5];
-        let tRe2 = FFT_FAC_256[idx + 2];
-        let resIm2_s = eIm2 + (oRe2 * tRe2 + oIm2 * tRe2);
-        out256[idx + 5] = resIm2_s;
-        out256[idx + 29] = -resIm2_s;
-        let resRe2_s = eRe2 + (oRe2 * tRe2 - oIm2 * tRe2);
-        out256[idx + 28] = resRe2_s;
-        out256[idx + 4] = resRe2_s;
-        let resRe6_s = eRe2 - (oRe2 * tRe2 - oIm2 * tRe2);
-        out256[idx + 20] = resRe6_s;
-        out256[idx + 12] = resRe6_s;
-        let resIm6_s = -eIm2 + (oRe2 * tRe2 + oIm2 * tRe2);
-        out256[idx + 13] = resIm6_s;
-        out256[idx + 21] = -resIm6_s;
-        
-        let oRe3 = out256[idx + 22];
-        let oIm3 = out256[idx + 23];
-        let eRe3 = out256[idx + 6];
-        let eIm3 = out256[idx + 7];
-        let resIm3_s = eIm3 + (oRe3 * tRe1 + oIm3 * tRe3);
-        out256[idx + 7] = resIm3_s;
-        out256[idx + 27] = -resIm3_s;
-        let resRe3_s = eRe3 + (oRe3 * tRe3 - oIm3 * tRe1);
-        out256[idx + 26] = resRe3_s;
-        out256[idx + 6] = resRe3_s;
-        let resRe5_s = eRe3 - (oRe3 * tRe3 - oIm3 * tRe1);
-        out256[idx + 22] = resRe5_s;
-        out256[idx + 10] = resRe5_s;
-        let resIm5_s = -eIm3 + (oRe3 * tRe1 + oIm3 * tRe3);
-        out256[idx + 11] = resIm5_s;
-        out256[idx + 23] = -resIm5_s;
-        
-        let oRe4 = out256[idx + 24];
-        let oIm4 = out256[idx + 25];
-        let eRe4 = out256[idx + 8];
-        let eIm4 = out256[idx + 9];
-        let resIm4_s = eIm4 + oRe4;
-        out256[idx + 9] = resIm4_s;
-        out256[idx + 25] = -resIm4_s;
-        let resRe4_s = eRe4 - oIm4;
-        out256[idx + 24] = resRe4_s;
-        out256[idx + 8] = resRe4_s;
-        
+    { 
+     for (let j = 0; j < 8; j++) { 
+         let eI = 0 + j;
+         let oI = 0 + j + 8;
+         if(j > 4){
+             out256[eI * 2    ] =  out256[32 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[32 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[32 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[32 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 8; j++) { 
+         let eI = 16 + j;
+         let oI = 16 + j + 8;
+         if(j > 4){
+             out256[eI * 2    ] =  out256[32 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[32 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[32 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[32 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 8; j++) { 
+         let eI = 32 + j;
+         let oI = 32 + j + 8;
+         if(j > 4){
+             out256[eI * 2    ] =  out256[32 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[32 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[32 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[32 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 8; j++) { 
+         let eI = 48 + j;
+         let oI = 48 + j + 8;
+         if(j > 4){
+             out256[eI * 2    ] =  out256[32 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[32 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[32 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[32 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 8; j++) { 
+         let eI = 64 + j;
+         let oI = 64 + j + 8;
+         if(j > 4){
+             out256[eI * 2    ] =  out256[32 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[32 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[32 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[32 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 8; j++) { 
+         let eI = 80 + j;
+         let oI = 80 + j + 8;
+         if(j > 4){
+             out256[eI * 2    ] =  out256[32 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[32 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[32 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[32 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 8; j++) { 
+         let eI = 96 + j;
+         let oI = 96 + j + 8;
+         if(j > 4){
+             out256[eI * 2    ] =  out256[32 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[32 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[32 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[32 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 8; j++) { 
+         let eI = 112 + j;
+         let oI = 112 + j + 8;
+         if(j > 4){
+             out256[eI * 2    ] =  out256[32 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[32 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[32 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[32 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 8; j++) { 
+         let eI = 128 + j;
+         let oI = 128 + j + 8;
+         if(j > 4){
+             out256[eI * 2    ] =  out256[32 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[32 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[32 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[32 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 8; j++) { 
+         let eI = 144 + j;
+         let oI = 144 + j + 8;
+         if(j > 4){
+             out256[eI * 2    ] =  out256[32 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[32 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[32 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[32 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 8; j++) { 
+         let eI = 160 + j;
+         let oI = 160 + j + 8;
+         if(j > 4){
+             out256[eI * 2    ] =  out256[32 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[32 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[32 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[32 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 8; j++) { 
+         let eI = 176 + j;
+         let oI = 176 + j + 8;
+         if(j > 4){
+             out256[eI * 2    ] =  out256[32 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[32 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[32 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[32 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 8; j++) { 
+         let eI = 192 + j;
+         let oI = 192 + j + 8;
+         if(j > 4){
+             out256[eI * 2    ] =  out256[32 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[32 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[32 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[32 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 8; j++) { 
+         let eI = 208 + j;
+         let oI = 208 + j + 8;
+         if(j > 4){
+             out256[eI * 2    ] =  out256[32 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[32 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[32 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[32 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 8; j++) { 
+         let eI = 224 + j;
+         let oI = 224 + j + 8;
+         if(j > 4){
+             out256[eI * 2    ] =  out256[32 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[32 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[32 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[32 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 8; j++) { 
+         let eI = 240 + j;
+         let oI = 240 + j + 8;
+         if(j > 4){
+             out256[eI * 2    ] =  out256[32 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[32 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[32 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[32 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
     } 
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     // RADIX 2 (rolled) - FFT step for SIZE 32 
     ////////////////////////////////////////////////
-    for(let idx = 0; idx < 256; idx += 64){ 
-        let oRe0 = out256[idx + 32];
-        let oIm0 = out256[idx + 33];
-        let eRe0 = out256[idx + 0];
-        let eIm0 = out256[idx + 1];
-        let resRe0_s = eRe0 + oRe0;
-        out256[idx] = resRe0_s;
-        let resIm0_s = eIm0 + oIm0;
-        out256[idx + 1] = resRe0_s;
-        let resRe0_d = eRe0 - oRe0;
-        out256[idx + 32] = resRe0_d;
-        let resIm0_d = eIm0 - oIm0;
-        out256[idx + 33] = resIm0_d;
-        
-        let oRe1 = out256[idx + 34];
-        let oIm1 = out256[idx + 35];
-        let eRe1 = out256[idx + 2];
-        let eIm1 = out256[idx + 3];
-        let tRe1 = FFT_FAC_256[idx + 1];
-        let tRe7 = FFT_FAC_256[idx + 7];
-        let resIm1_s = eIm1 + (oRe1 * tRe7 + oIm1 * tRe1);
-        out256[idx + 3] = resIm1_s;
-        out256[idx + 63] = -resIm1_s;
-        let resRe1_s = eRe1 + (oRe1 * tRe1 - oIm1 * tRe7);
-        out256[idx + 62] = resRe1_s;
-        out256[idx + 2] = resRe1_s;
-        let resRe15_s = eRe1 - (oRe1 * tRe1 - oIm1 * tRe7);
-        out256[idx + 34] = resRe15_s;
-        out256[idx + 30] = resRe15_s;
-        let resIm15_s = -eIm1 + (oRe1 * tRe7 + oIm1 * tRe1);
-        out256[idx + 31] = resIm15_s;
-        out256[idx + 35] = -resIm15_s;
-        
-        let oRe2 = out256[idx + 36];
-        let oIm2 = out256[idx + 37];
-        let eRe2 = out256[idx + 4];
-        let eIm2 = out256[idx + 5];
-        let tRe2 = FFT_FAC_256[idx + 2];
-        let tRe6 = FFT_FAC_256[idx + 6];
-        let resIm2_s = eIm2 + (oRe2 * tRe6 + oIm2 * tRe2);
-        out256[idx + 5] = resIm2_s;
-        out256[idx + 61] = -resIm2_s;
-        let resRe2_s = eRe2 + (oRe2 * tRe2 - oIm2 * tRe6);
-        out256[idx + 60] = resRe2_s;
-        out256[idx + 4] = resRe2_s;
-        let resRe14_s = eRe2 - (oRe2 * tRe2 - oIm2 * tRe6);
-        out256[idx + 36] = resRe14_s;
-        out256[idx + 28] = resRe14_s;
-        let resIm14_s = -eIm2 + (oRe2 * tRe6 + oIm2 * tRe2);
-        out256[idx + 29] = resIm14_s;
-        out256[idx + 37] = -resIm14_s;
-        
-        let oRe3 = out256[idx + 38];
-        let oIm3 = out256[idx + 39];
-        let eRe3 = out256[idx + 6];
-        let eIm3 = out256[idx + 7];
-        let tRe3 = FFT_FAC_256[idx + 3];
-        let tRe5 = FFT_FAC_256[idx + 5];
-        let resIm3_s = eIm3 + (oRe3 * tRe5 + oIm3 * tRe3);
-        out256[idx + 7] = resIm3_s;
-        out256[idx + 59] = -resIm3_s;
-        let resRe3_s = eRe3 + (oRe3 * tRe3 - oIm3 * tRe5);
-        out256[idx + 58] = resRe3_s;
-        out256[idx + 6] = resRe3_s;
-        let resRe13_s = eRe3 - (oRe3 * tRe3 - oIm3 * tRe5);
-        out256[idx + 38] = resRe13_s;
-        out256[idx + 26] = resRe13_s;
-        let resIm13_s = -eIm3 + (oRe3 * tRe5 + oIm3 * tRe3);
-        out256[idx + 27] = resIm13_s;
-        out256[idx + 39] = -resIm13_s;
-        
-        let oRe4 = out256[idx + 40];
-        let oIm4 = out256[idx + 41];
-        let eRe4 = out256[idx + 8];
-        let eIm4 = out256[idx + 9];
-        let tRe4 = FFT_FAC_256[idx + 4];
-        let resIm4_s = eIm4 + (oRe4 * tRe4 + oIm4 * tRe4);
-        out256[idx + 9] = resIm4_s;
-        out256[idx + 57] = -resIm4_s;
-        let resRe4_s = eRe4 + (oRe4 * tRe4 - oIm4 * tRe4);
-        out256[idx + 56] = resRe4_s;
-        out256[idx + 8] = resRe4_s;
-        let resRe12_s = eRe4 - (oRe4 * tRe4 - oIm4 * tRe4);
-        out256[idx + 40] = resRe12_s;
-        out256[idx + 24] = resRe12_s;
-        let resIm12_s = -eIm4 + (oRe4 * tRe4 + oIm4 * tRe4);
-        out256[idx + 25] = resIm12_s;
-        out256[idx + 41] = -resIm12_s;
-        
-        let oRe5 = out256[idx + 42];
-        let oIm5 = out256[idx + 43];
-        let eRe5 = out256[idx + 10];
-        let eIm5 = out256[idx + 11];
-        let resIm5_s = eIm5 + (oRe5 * tRe3 + oIm5 * tRe5);
-        out256[idx + 11] = resIm5_s;
-        out256[idx + 55] = -resIm5_s;
-        let resRe5_s = eRe5 + (oRe5 * tRe5 - oIm5 * tRe3);
-        out256[idx + 54] = resRe5_s;
-        out256[idx + 10] = resRe5_s;
-        let resRe11_s = eRe5 - (oRe5 * tRe5 - oIm5 * tRe3);
-        out256[idx + 42] = resRe11_s;
-        out256[idx + 22] = resRe11_s;
-        let resIm11_s = -eIm5 + (oRe5 * tRe3 + oIm5 * tRe5);
-        out256[idx + 23] = resIm11_s;
-        out256[idx + 43] = -resIm11_s;
-        
-        let oRe6 = out256[idx + 44];
-        let oIm6 = out256[idx + 45];
-        let eRe6 = out256[idx + 12];
-        let eIm6 = out256[idx + 13];
-        let resIm6_s = eIm6 + (oRe6 * tRe2 + oIm6 * tRe6);
-        out256[idx + 13] = resIm6_s;
-        out256[idx + 53] = -resIm6_s;
-        let resRe6_s = eRe6 + (oRe6 * tRe6 - oIm6 * tRe2);
-        out256[idx + 52] = resRe6_s;
-        out256[idx + 12] = resRe6_s;
-        let resRe10_s = eRe6 - (oRe6 * tRe6 - oIm6 * tRe2);
-        out256[idx + 44] = resRe10_s;
-        out256[idx + 20] = resRe10_s;
-        let resIm10_s = -eIm6 + (oRe6 * tRe2 + oIm6 * tRe6);
-        out256[idx + 21] = resIm10_s;
-        out256[idx + 45] = -resIm10_s;
-        
-        let oRe7 = out256[idx + 46];
-        let oIm7 = out256[idx + 47];
-        let eRe7 = out256[idx + 14];
-        let eIm7 = out256[idx + 15];
-        let resIm7_s = eIm7 + (oRe7 * tRe1 + oIm7 * tRe7);
-        out256[idx + 15] = resIm7_s;
-        out256[idx + 51] = -resIm7_s;
-        let resRe7_s = eRe7 + (oRe7 * tRe7 - oIm7 * tRe1);
-        out256[idx + 50] = resRe7_s;
-        out256[idx + 14] = resRe7_s;
-        let resRe9_s = eRe7 - (oRe7 * tRe7 - oIm7 * tRe1);
-        out256[idx + 46] = resRe9_s;
-        out256[idx + 18] = resRe9_s;
-        let resIm9_s = -eIm7 + (oRe7 * tRe1 + oIm7 * tRe7);
-        out256[idx + 19] = resIm9_s;
-        out256[idx + 47] = -resIm9_s;
-        
-        let oRe8 = out256[idx + 48];
-        let oIm8 = out256[idx + 49];
-        let eRe8 = out256[idx + 16];
-        let eIm8 = out256[idx + 17];
-        let resIm8_s = eIm8 + oRe8;
-        out256[idx + 17] = resIm8_s;
-        out256[idx + 49] = -resIm8_s;
-        let resRe8_s = eRe8 - oIm8;
-        out256[idx + 48] = resRe8_s;
-        out256[idx + 16] = resRe8_s;
-        
+    { 
+     for (let j = 0; j < 16; j++) { 
+         let eI = 0 + j;
+         let oI = 0 + j + 16;
+         if(j > 8){
+             out256[eI * 2    ] =  out256[64 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[64 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[64 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[64 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 16; j++) { 
+         let eI = 32 + j;
+         let oI = 32 + j + 16;
+         if(j > 8){
+             out256[eI * 2    ] =  out256[64 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[64 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[64 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[64 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 16; j++) { 
+         let eI = 64 + j;
+         let oI = 64 + j + 16;
+         if(j > 8){
+             out256[eI * 2    ] =  out256[64 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[64 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[64 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[64 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 16; j++) { 
+         let eI = 96 + j;
+         let oI = 96 + j + 16;
+         if(j > 8){
+             out256[eI * 2    ] =  out256[64 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[64 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[64 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[64 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 16; j++) { 
+         let eI = 128 + j;
+         let oI = 128 + j + 16;
+         if(j > 8){
+             out256[eI * 2    ] =  out256[64 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[64 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[64 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[64 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 16; j++) { 
+         let eI = 160 + j;
+         let oI = 160 + j + 16;
+         if(j > 8){
+             out256[eI * 2    ] =  out256[64 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[64 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[64 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[64 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 16; j++) { 
+         let eI = 192 + j;
+         let oI = 192 + j + 16;
+         if(j > 8){
+             out256[eI * 2    ] =  out256[64 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[64 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[64 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[64 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 16; j++) { 
+         let eI = 224 + j;
+         let oI = 224 + j + 16;
+         if(j > 8){
+             out256[eI * 2    ] =  out256[64 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[64 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[64 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[64 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
     } 
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     // RADIX 2 (rolled) - FFT step for SIZE 64 
     ////////////////////////////////////////////////
-    for(let idx = 0; idx < 256; idx += 128){ 
-        let oRe0 = out256[idx + 64];
-        let oIm0 = out256[idx + 65];
-        let eRe0 = out256[idx + 0];
-        let eIm0 = out256[idx + 1];
-        let resRe0_s = eRe0 + oRe0;
-        out256[idx] = resRe0_s;
-        let resIm0_s = eIm0 + oIm0;
-        out256[idx + 1] = resRe0_s;
-        let resRe0_d = eRe0 - oRe0;
-        out256[idx + 64] = resRe0_d;
-        let resIm0_d = eIm0 - oIm0;
-        out256[idx + 65] = resIm0_d;
-        
-        let oRe1 = out256[idx + 66];
-        let oIm1 = out256[idx + 67];
-        let eRe1 = out256[idx + 2];
-        let eIm1 = out256[idx + 3];
-        let tRe1 = FFT_FAC_256[idx + 1];
-        let tRe15 = FFT_FAC_256[idx + 15];
-        let resIm1_s = eIm1 + (oRe1 * tRe15 + oIm1 * tRe1);
-        out256[idx + 3] = resIm1_s;
-        out256[idx + 127] = -resIm1_s;
-        let resRe1_s = eRe1 + (oRe1 * tRe1 - oIm1 * tRe15);
-        out256[idx + 126] = resRe1_s;
-        out256[idx + 2] = resRe1_s;
-        let resRe31_s = eRe1 - (oRe1 * tRe1 - oIm1 * tRe15);
-        out256[idx + 66] = resRe31_s;
-        out256[idx + 62] = resRe31_s;
-        let resIm31_s = -eIm1 + (oRe1 * tRe15 + oIm1 * tRe1);
-        out256[idx + 63] = resIm31_s;
-        out256[idx + 67] = -resIm31_s;
-        
-        let oRe2 = out256[idx + 68];
-        let oIm2 = out256[idx + 69];
-        let eRe2 = out256[idx + 4];
-        let eIm2 = out256[idx + 5];
-        let tRe2 = FFT_FAC_256[idx + 2];
-        let tRe14 = FFT_FAC_256[idx + 14];
-        let resIm2_s = eIm2 + (oRe2 * tRe14 + oIm2 * tRe2);
-        out256[idx + 5] = resIm2_s;
-        out256[idx + 125] = -resIm2_s;
-        let resRe2_s = eRe2 + (oRe2 * tRe2 - oIm2 * tRe14);
-        out256[idx + 124] = resRe2_s;
-        out256[idx + 4] = resRe2_s;
-        let resRe30_s = eRe2 - (oRe2 * tRe2 - oIm2 * tRe14);
-        out256[idx + 68] = resRe30_s;
-        out256[idx + 60] = resRe30_s;
-        let resIm30_s = -eIm2 + (oRe2 * tRe14 + oIm2 * tRe2);
-        out256[idx + 61] = resIm30_s;
-        out256[idx + 69] = -resIm30_s;
-        
-        let oRe3 = out256[idx + 70];
-        let oIm3 = out256[idx + 71];
-        let eRe3 = out256[idx + 6];
-        let eIm3 = out256[idx + 7];
-        let tRe3 = FFT_FAC_256[idx + 3];
-        let tRe13 = FFT_FAC_256[idx + 13];
-        let resIm3_s = eIm3 + (oRe3 * tRe13 + oIm3 * tRe3);
-        out256[idx + 7] = resIm3_s;
-        out256[idx + 123] = -resIm3_s;
-        let resRe3_s = eRe3 + (oRe3 * tRe3 - oIm3 * tRe13);
-        out256[idx + 122] = resRe3_s;
-        out256[idx + 6] = resRe3_s;
-        let resRe29_s = eRe3 - (oRe3 * tRe3 - oIm3 * tRe13);
-        out256[idx + 70] = resRe29_s;
-        out256[idx + 58] = resRe29_s;
-        let resIm29_s = -eIm3 + (oRe3 * tRe13 + oIm3 * tRe3);
-        out256[idx + 59] = resIm29_s;
-        out256[idx + 71] = -resIm29_s;
-        
-        let oRe4 = out256[idx + 72];
-        let oIm4 = out256[idx + 73];
-        let eRe4 = out256[idx + 8];
-        let eIm4 = out256[idx + 9];
-        let tRe4 = FFT_FAC_256[idx + 4];
-        let tRe12 = FFT_FAC_256[idx + 12];
-        let resIm4_s = eIm4 + (oRe4 * tRe12 + oIm4 * tRe4);
-        out256[idx + 9] = resIm4_s;
-        out256[idx + 121] = -resIm4_s;
-        let resRe4_s = eRe4 + (oRe4 * tRe4 - oIm4 * tRe12);
-        out256[idx + 120] = resRe4_s;
-        out256[idx + 8] = resRe4_s;
-        let resRe28_s = eRe4 - (oRe4 * tRe4 - oIm4 * tRe12);
-        out256[idx + 72] = resRe28_s;
-        out256[idx + 56] = resRe28_s;
-        let resIm28_s = -eIm4 + (oRe4 * tRe12 + oIm4 * tRe4);
-        out256[idx + 57] = resIm28_s;
-        out256[idx + 73] = -resIm28_s;
-        
-        let oRe5 = out256[idx + 74];
-        let oIm5 = out256[idx + 75];
-        let eRe5 = out256[idx + 10];
-        let eIm5 = out256[idx + 11];
-        let tRe5 = FFT_FAC_256[idx + 5];
-        let tRe11 = FFT_FAC_256[idx + 11];
-        let resIm5_s = eIm5 + (oRe5 * tRe11 + oIm5 * tRe5);
-        out256[idx + 11] = resIm5_s;
-        out256[idx + 119] = -resIm5_s;
-        let resRe5_s = eRe5 + (oRe5 * tRe5 - oIm5 * tRe11);
-        out256[idx + 118] = resRe5_s;
-        out256[idx + 10] = resRe5_s;
-        let resRe27_s = eRe5 - (oRe5 * tRe5 - oIm5 * tRe11);
-        out256[idx + 74] = resRe27_s;
-        out256[idx + 54] = resRe27_s;
-        let resIm27_s = -eIm5 + (oRe5 * tRe11 + oIm5 * tRe5);
-        out256[idx + 55] = resIm27_s;
-        out256[idx + 75] = -resIm27_s;
-        
-        let oRe6 = out256[idx + 76];
-        let oIm6 = out256[idx + 77];
-        let eRe6 = out256[idx + 12];
-        let eIm6 = out256[idx + 13];
-        let tRe6 = FFT_FAC_256[idx + 6];
-        let tRe10 = FFT_FAC_256[idx + 10];
-        let resIm6_s = eIm6 + (oRe6 * tRe10 + oIm6 * tRe6);
-        out256[idx + 13] = resIm6_s;
-        out256[idx + 117] = -resIm6_s;
-        let resRe6_s = eRe6 + (oRe6 * tRe6 - oIm6 * tRe10);
-        out256[idx + 116] = resRe6_s;
-        out256[idx + 12] = resRe6_s;
-        let resRe26_s = eRe6 - (oRe6 * tRe6 - oIm6 * tRe10);
-        out256[idx + 76] = resRe26_s;
-        out256[idx + 52] = resRe26_s;
-        let resIm26_s = -eIm6 + (oRe6 * tRe10 + oIm6 * tRe6);
-        out256[idx + 53] = resIm26_s;
-        out256[idx + 77] = -resIm26_s;
-        
-        let oRe7 = out256[idx + 78];
-        let oIm7 = out256[idx + 79];
-        let eRe7 = out256[idx + 14];
-        let eIm7 = out256[idx + 15];
-        let tRe7 = FFT_FAC_256[idx + 7];
-        let tRe9 = FFT_FAC_256[idx + 9];
-        let resIm7_s = eIm7 + (oRe7 * tRe9 + oIm7 * tRe7);
-        out256[idx + 15] = resIm7_s;
-        out256[idx + 115] = -resIm7_s;
-        let resRe7_s = eRe7 + (oRe7 * tRe7 - oIm7 * tRe9);
-        out256[idx + 114] = resRe7_s;
-        out256[idx + 14] = resRe7_s;
-        let resRe25_s = eRe7 - (oRe7 * tRe7 - oIm7 * tRe9);
-        out256[idx + 78] = resRe25_s;
-        out256[idx + 50] = resRe25_s;
-        let resIm25_s = -eIm7 + (oRe7 * tRe9 + oIm7 * tRe7);
-        out256[idx + 51] = resIm25_s;
-        out256[idx + 79] = -resIm25_s;
-        
-        let oRe8 = out256[idx + 80];
-        let oIm8 = out256[idx + 81];
-        let eRe8 = out256[idx + 16];
-        let eIm8 = out256[idx + 17];
-        let tRe8 = FFT_FAC_256[idx + 8];
-        let resIm8_s = eIm8 + (oRe8 * tRe8 + oIm8 * tRe8);
-        out256[idx + 17] = resIm8_s;
-        out256[idx + 113] = -resIm8_s;
-        let resRe8_s = eRe8 + (oRe8 * tRe8 - oIm8 * tRe8);
-        out256[idx + 112] = resRe8_s;
-        out256[idx + 16] = resRe8_s;
-        let resRe24_s = eRe8 - (oRe8 * tRe8 - oIm8 * tRe8);
-        out256[idx + 80] = resRe24_s;
-        out256[idx + 48] = resRe24_s;
-        let resIm24_s = -eIm8 + (oRe8 * tRe8 + oIm8 * tRe8);
-        out256[idx + 49] = resIm24_s;
-        out256[idx + 81] = -resIm24_s;
-        
-        let oRe9 = out256[idx + 82];
-        let oIm9 = out256[idx + 83];
-        let eRe9 = out256[idx + 18];
-        let eIm9 = out256[idx + 19];
-        let resIm9_s = eIm9 + (oRe9 * tRe7 + oIm9 * tRe9);
-        out256[idx + 19] = resIm9_s;
-        out256[idx + 111] = -resIm9_s;
-        let resRe9_s = eRe9 + (oRe9 * tRe9 - oIm9 * tRe7);
-        out256[idx + 110] = resRe9_s;
-        out256[idx + 18] = resRe9_s;
-        let resRe23_s = eRe9 - (oRe9 * tRe9 - oIm9 * tRe7);
-        out256[idx + 82] = resRe23_s;
-        out256[idx + 46] = resRe23_s;
-        let resIm23_s = -eIm9 + (oRe9 * tRe7 + oIm9 * tRe9);
-        out256[idx + 47] = resIm23_s;
-        out256[idx + 83] = -resIm23_s;
-        
-        let oRe10 = out256[idx + 84];
-        let oIm10 = out256[idx + 85];
-        let eRe10 = out256[idx + 20];
-        let eIm10 = out256[idx + 21];
-        let resIm10_s = eIm10 + (oRe10 * tRe6 + oIm10 * tRe10);
-        out256[idx + 21] = resIm10_s;
-        out256[idx + 109] = -resIm10_s;
-        let resRe10_s = eRe10 + (oRe10 * tRe10 - oIm10 * tRe6);
-        out256[idx + 108] = resRe10_s;
-        out256[idx + 20] = resRe10_s;
-        let resRe22_s = eRe10 - (oRe10 * tRe10 - oIm10 * tRe6);
-        out256[idx + 84] = resRe22_s;
-        out256[idx + 44] = resRe22_s;
-        let resIm22_s = -eIm10 + (oRe10 * tRe6 + oIm10 * tRe10);
-        out256[idx + 45] = resIm22_s;
-        out256[idx + 85] = -resIm22_s;
-        
-        let oRe11 = out256[idx + 86];
-        let oIm11 = out256[idx + 87];
-        let eRe11 = out256[idx + 22];
-        let eIm11 = out256[idx + 23];
-        let resIm11_s = eIm11 + (oRe11 * tRe5 + oIm11 * tRe11);
-        out256[idx + 23] = resIm11_s;
-        out256[idx + 107] = -resIm11_s;
-        let resRe11_s = eRe11 + (oRe11 * tRe11 - oIm11 * tRe5);
-        out256[idx + 106] = resRe11_s;
-        out256[idx + 22] = resRe11_s;
-        let resRe21_s = eRe11 - (oRe11 * tRe11 - oIm11 * tRe5);
-        out256[idx + 86] = resRe21_s;
-        out256[idx + 42] = resRe21_s;
-        let resIm21_s = -eIm11 + (oRe11 * tRe5 + oIm11 * tRe11);
-        out256[idx + 43] = resIm21_s;
-        out256[idx + 87] = -resIm21_s;
-        
-        let oRe12 = out256[idx + 88];
-        let oIm12 = out256[idx + 89];
-        let eRe12 = out256[idx + 24];
-        let eIm12 = out256[idx + 25];
-        let resIm12_s = eIm12 + (oRe12 * tRe4 + oIm12 * tRe12);
-        out256[idx + 25] = resIm12_s;
-        out256[idx + 105] = -resIm12_s;
-        let resRe12_s = eRe12 + (oRe12 * tRe12 - oIm12 * tRe4);
-        out256[idx + 104] = resRe12_s;
-        out256[idx + 24] = resRe12_s;
-        let resRe20_s = eRe12 - (oRe12 * tRe12 - oIm12 * tRe4);
-        out256[idx + 88] = resRe20_s;
-        out256[idx + 40] = resRe20_s;
-        let resIm20_s = -eIm12 + (oRe12 * tRe4 + oIm12 * tRe12);
-        out256[idx + 41] = resIm20_s;
-        out256[idx + 89] = -resIm20_s;
-        
-        let oRe13 = out256[idx + 90];
-        let oIm13 = out256[idx + 91];
-        let eRe13 = out256[idx + 26];
-        let eIm13 = out256[idx + 27];
-        let resIm13_s = eIm13 + (oRe13 * tRe3 + oIm13 * tRe13);
-        out256[idx + 27] = resIm13_s;
-        out256[idx + 103] = -resIm13_s;
-        let resRe13_s = eRe13 + (oRe13 * tRe13 - oIm13 * tRe3);
-        out256[idx + 102] = resRe13_s;
-        out256[idx + 26] = resRe13_s;
-        let resRe19_s = eRe13 - (oRe13 * tRe13 - oIm13 * tRe3);
-        out256[idx + 90] = resRe19_s;
-        out256[idx + 38] = resRe19_s;
-        let resIm19_s = -eIm13 + (oRe13 * tRe3 + oIm13 * tRe13);
-        out256[idx + 39] = resIm19_s;
-        out256[idx + 91] = -resIm19_s;
-        
-        let oRe14 = out256[idx + 92];
-        let oIm14 = out256[idx + 93];
-        let eRe14 = out256[idx + 28];
-        let eIm14 = out256[idx + 29];
-        let resIm14_s = eIm14 + (oRe14 * tRe2 + oIm14 * tRe14);
-        out256[idx + 29] = resIm14_s;
-        out256[idx + 101] = -resIm14_s;
-        let resRe14_s = eRe14 + (oRe14 * tRe14 - oIm14 * tRe2);
-        out256[idx + 100] = resRe14_s;
-        out256[idx + 28] = resRe14_s;
-        let resRe18_s = eRe14 - (oRe14 * tRe14 - oIm14 * tRe2);
-        out256[idx + 92] = resRe18_s;
-        out256[idx + 36] = resRe18_s;
-        let resIm18_s = -eIm14 + (oRe14 * tRe2 + oIm14 * tRe14);
-        out256[idx + 37] = resIm18_s;
-        out256[idx + 93] = -resIm18_s;
-        
-        let oRe15 = out256[idx + 94];
-        let oIm15 = out256[idx + 95];
-        let eRe15 = out256[idx + 30];
-        let eIm15 = out256[idx + 31];
-        let resIm15_s = eIm15 + (oRe15 * tRe1 + oIm15 * tRe15);
-        out256[idx + 31] = resIm15_s;
-        out256[idx + 99] = -resIm15_s;
-        let resRe15_s = eRe15 + (oRe15 * tRe15 - oIm15 * tRe1);
-        out256[idx + 98] = resRe15_s;
-        out256[idx + 30] = resRe15_s;
-        let resRe17_s = eRe15 - (oRe15 * tRe15 - oIm15 * tRe1);
-        out256[idx + 94] = resRe17_s;
-        out256[idx + 34] = resRe17_s;
-        let resIm17_s = -eIm15 + (oRe15 * tRe1 + oIm15 * tRe15);
-        out256[idx + 35] = resIm17_s;
-        out256[idx + 95] = -resIm17_s;
-        
-        let oRe16 = out256[idx + 96];
-        let oIm16 = out256[idx + 97];
-        let eRe16 = out256[idx + 32];
-        let eIm16 = out256[idx + 33];
-        let resIm16_s = eIm16 + oRe16;
-        out256[idx + 33] = resIm16_s;
-        out256[idx + 97] = -resIm16_s;
-        let resRe16_s = eRe16 - oIm16;
-        out256[idx + 96] = resRe16_s;
-        out256[idx + 32] = resRe16_s;
-        
+    { 
+     for (let j = 0; j < 32; j++) { 
+         let eI = 0 + j;
+         let oI = 0 + j + 32;
+         if(j > 16){
+             out256[eI * 2    ] =  out256[128 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[128 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[128 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[128 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 32; j++) { 
+         let eI = 64 + j;
+         let oI = 64 + j + 32;
+         if(j > 16){
+             out256[eI * 2    ] =  out256[128 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[128 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[128 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[128 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 32; j++) { 
+         let eI = 128 + j;
+         let oI = 128 + j + 32;
+         if(j > 16){
+             out256[eI * 2    ] =  out256[128 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[128 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[128 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[128 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 32; j++) { 
+         let eI = 192 + j;
+         let oI = 192 + j + 32;
+         if(j > 16){
+             out256[eI * 2    ] =  out256[128 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[128 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[128 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[128 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
     } 
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     // RADIX 2 (rolled) - FFT step for SIZE 128 
     ////////////////////////////////////////////////
-    for(let idx = 0; idx < 256; idx += 256){ 
-        let oRe0 = out256[idx + 128];
-        let oIm0 = out256[idx + 129];
-        let eRe0 = out256[idx + 0];
-        let eIm0 = out256[idx + 1];
-        let resRe0_s = eRe0 + oRe0;
-        out256[idx] = resRe0_s;
-        let resIm0_s = eIm0 + oIm0;
-        out256[idx + 1] = resRe0_s;
-        let resRe0_d = eRe0 - oRe0;
-        out256[idx + 128] = resRe0_d;
-        let resIm0_d = eIm0 - oIm0;
-        out256[idx + 129] = resIm0_d;
-        
-        let oRe1 = out256[idx + 130];
-        let oIm1 = out256[idx + 131];
-        let eRe1 = out256[idx + 2];
-        let eIm1 = out256[idx + 3];
-        let tRe1 = FFT_FAC_256[idx + 1];
-        let tRe31 = FFT_FAC_256[idx + 31];
-        let resIm1_s = eIm1 + (oRe1 * tRe31 + oIm1 * tRe1);
-        out256[idx + 3] = resIm1_s;
-        out256[idx + 255] = -resIm1_s;
-        let resRe1_s = eRe1 + (oRe1 * tRe1 - oIm1 * tRe31);
-        out256[idx + 254] = resRe1_s;
-        out256[idx + 2] = resRe1_s;
-        let resRe63_s = eRe1 - (oRe1 * tRe1 - oIm1 * tRe31);
-        out256[idx + 130] = resRe63_s;
-        out256[idx + 126] = resRe63_s;
-        let resIm63_s = -eIm1 + (oRe1 * tRe31 + oIm1 * tRe1);
-        out256[idx + 127] = resIm63_s;
-        out256[idx + 131] = -resIm63_s;
-        
-        let oRe2 = out256[idx + 132];
-        let oIm2 = out256[idx + 133];
-        let eRe2 = out256[idx + 4];
-        let eIm2 = out256[idx + 5];
-        let tRe2 = FFT_FAC_256[idx + 2];
-        let tRe30 = FFT_FAC_256[idx + 30];
-        let resIm2_s = eIm2 + (oRe2 * tRe30 + oIm2 * tRe2);
-        out256[idx + 5] = resIm2_s;
-        out256[idx + 253] = -resIm2_s;
-        let resRe2_s = eRe2 + (oRe2 * tRe2 - oIm2 * tRe30);
-        out256[idx + 252] = resRe2_s;
-        out256[idx + 4] = resRe2_s;
-        let resRe62_s = eRe2 - (oRe2 * tRe2 - oIm2 * tRe30);
-        out256[idx + 132] = resRe62_s;
-        out256[idx + 124] = resRe62_s;
-        let resIm62_s = -eIm2 + (oRe2 * tRe30 + oIm2 * tRe2);
-        out256[idx + 125] = resIm62_s;
-        out256[idx + 133] = -resIm62_s;
-        
-        let oRe3 = out256[idx + 134];
-        let oIm3 = out256[idx + 135];
-        let eRe3 = out256[idx + 6];
-        let eIm3 = out256[idx + 7];
-        let tRe3 = FFT_FAC_256[idx + 3];
-        let tRe29 = FFT_FAC_256[idx + 29];
-        let resIm3_s = eIm3 + (oRe3 * tRe29 + oIm3 * tRe3);
-        out256[idx + 7] = resIm3_s;
-        out256[idx + 251] = -resIm3_s;
-        let resRe3_s = eRe3 + (oRe3 * tRe3 - oIm3 * tRe29);
-        out256[idx + 250] = resRe3_s;
-        out256[idx + 6] = resRe3_s;
-        let resRe61_s = eRe3 - (oRe3 * tRe3 - oIm3 * tRe29);
-        out256[idx + 134] = resRe61_s;
-        out256[idx + 122] = resRe61_s;
-        let resIm61_s = -eIm3 + (oRe3 * tRe29 + oIm3 * tRe3);
-        out256[idx + 123] = resIm61_s;
-        out256[idx + 135] = -resIm61_s;
-        
-        let oRe4 = out256[idx + 136];
-        let oIm4 = out256[idx + 137];
-        let eRe4 = out256[idx + 8];
-        let eIm4 = out256[idx + 9];
-        let tRe4 = FFT_FAC_256[idx + 4];
-        let tRe28 = FFT_FAC_256[idx + 28];
-        let resIm4_s = eIm4 + (oRe4 * tRe28 + oIm4 * tRe4);
-        out256[idx + 9] = resIm4_s;
-        out256[idx + 249] = -resIm4_s;
-        let resRe4_s = eRe4 + (oRe4 * tRe4 - oIm4 * tRe28);
-        out256[idx + 248] = resRe4_s;
-        out256[idx + 8] = resRe4_s;
-        let resRe60_s = eRe4 - (oRe4 * tRe4 - oIm4 * tRe28);
-        out256[idx + 136] = resRe60_s;
-        out256[idx + 120] = resRe60_s;
-        let resIm60_s = -eIm4 + (oRe4 * tRe28 + oIm4 * tRe4);
-        out256[idx + 121] = resIm60_s;
-        out256[idx + 137] = -resIm60_s;
-        
-        let oRe5 = out256[idx + 138];
-        let oIm5 = out256[idx + 139];
-        let eRe5 = out256[idx + 10];
-        let eIm5 = out256[idx + 11];
-        let tRe5 = FFT_FAC_256[idx + 5];
-        let tRe27 = FFT_FAC_256[idx + 27];
-        let resIm5_s = eIm5 + (oRe5 * tRe27 + oIm5 * tRe5);
-        out256[idx + 11] = resIm5_s;
-        out256[idx + 247] = -resIm5_s;
-        let resRe5_s = eRe5 + (oRe5 * tRe5 - oIm5 * tRe27);
-        out256[idx + 246] = resRe5_s;
-        out256[idx + 10] = resRe5_s;
-        let resRe59_s = eRe5 - (oRe5 * tRe5 - oIm5 * tRe27);
-        out256[idx + 138] = resRe59_s;
-        out256[idx + 118] = resRe59_s;
-        let resIm59_s = -eIm5 + (oRe5 * tRe27 + oIm5 * tRe5);
-        out256[idx + 119] = resIm59_s;
-        out256[idx + 139] = -resIm59_s;
-        
-        let oRe6 = out256[idx + 140];
-        let oIm6 = out256[idx + 141];
-        let eRe6 = out256[idx + 12];
-        let eIm6 = out256[idx + 13];
-        let tRe6 = FFT_FAC_256[idx + 6];
-        let tRe26 = FFT_FAC_256[idx + 26];
-        let resIm6_s = eIm6 + (oRe6 * tRe26 + oIm6 * tRe6);
-        out256[idx + 13] = resIm6_s;
-        out256[idx + 245] = -resIm6_s;
-        let resRe6_s = eRe6 + (oRe6 * tRe6 - oIm6 * tRe26);
-        out256[idx + 244] = resRe6_s;
-        out256[idx + 12] = resRe6_s;
-        let resRe58_s = eRe6 - (oRe6 * tRe6 - oIm6 * tRe26);
-        out256[idx + 140] = resRe58_s;
-        out256[idx + 116] = resRe58_s;
-        let resIm58_s = -eIm6 + (oRe6 * tRe26 + oIm6 * tRe6);
-        out256[idx + 117] = resIm58_s;
-        out256[idx + 141] = -resIm58_s;
-        
-        let oRe7 = out256[idx + 142];
-        let oIm7 = out256[idx + 143];
-        let eRe7 = out256[idx + 14];
-        let eIm7 = out256[idx + 15];
-        let tRe7 = FFT_FAC_256[idx + 7];
-        let tRe25 = FFT_FAC_256[idx + 25];
-        let resIm7_s = eIm7 + (oRe7 * tRe25 + oIm7 * tRe7);
-        out256[idx + 15] = resIm7_s;
-        out256[idx + 243] = -resIm7_s;
-        let resRe7_s = eRe7 + (oRe7 * tRe7 - oIm7 * tRe25);
-        out256[idx + 242] = resRe7_s;
-        out256[idx + 14] = resRe7_s;
-        let resRe57_s = eRe7 - (oRe7 * tRe7 - oIm7 * tRe25);
-        out256[idx + 142] = resRe57_s;
-        out256[idx + 114] = resRe57_s;
-        let resIm57_s = -eIm7 + (oRe7 * tRe25 + oIm7 * tRe7);
-        out256[idx + 115] = resIm57_s;
-        out256[idx + 143] = -resIm57_s;
-        
-        let oRe8 = out256[idx + 144];
-        let oIm8 = out256[idx + 145];
-        let eRe8 = out256[idx + 16];
-        let eIm8 = out256[idx + 17];
-        let tRe8 = FFT_FAC_256[idx + 8];
-        let tRe24 = FFT_FAC_256[idx + 24];
-        let resIm8_s = eIm8 + (oRe8 * tRe24 + oIm8 * tRe8);
-        out256[idx + 17] = resIm8_s;
-        out256[idx + 241] = -resIm8_s;
-        let resRe8_s = eRe8 + (oRe8 * tRe8 - oIm8 * tRe24);
-        out256[idx + 240] = resRe8_s;
-        out256[idx + 16] = resRe8_s;
-        let resRe56_s = eRe8 - (oRe8 * tRe8 - oIm8 * tRe24);
-        out256[idx + 144] = resRe56_s;
-        out256[idx + 112] = resRe56_s;
-        let resIm56_s = -eIm8 + (oRe8 * tRe24 + oIm8 * tRe8);
-        out256[idx + 113] = resIm56_s;
-        out256[idx + 145] = -resIm56_s;
-        
-        let oRe9 = out256[idx + 146];
-        let oIm9 = out256[idx + 147];
-        let eRe9 = out256[idx + 18];
-        let eIm9 = out256[idx + 19];
-        let tRe9 = FFT_FAC_256[idx + 9];
-        let tRe23 = FFT_FAC_256[idx + 23];
-        let resIm9_s = eIm9 + (oRe9 * tRe23 + oIm9 * tRe9);
-        out256[idx + 19] = resIm9_s;
-        out256[idx + 239] = -resIm9_s;
-        let resRe9_s = eRe9 + (oRe9 * tRe9 - oIm9 * tRe23);
-        out256[idx + 238] = resRe9_s;
-        out256[idx + 18] = resRe9_s;
-        let resRe55_s = eRe9 - (oRe9 * tRe9 - oIm9 * tRe23);
-        out256[idx + 146] = resRe55_s;
-        out256[idx + 110] = resRe55_s;
-        let resIm55_s = -eIm9 + (oRe9 * tRe23 + oIm9 * tRe9);
-        out256[idx + 111] = resIm55_s;
-        out256[idx + 147] = -resIm55_s;
-        
-        let oRe10 = out256[idx + 148];
-        let oIm10 = out256[idx + 149];
-        let eRe10 = out256[idx + 20];
-        let eIm10 = out256[idx + 21];
-        let tRe10 = FFT_FAC_256[idx + 10];
-        let tRe22 = FFT_FAC_256[idx + 22];
-        let resIm10_s = eIm10 + (oRe10 * tRe22 + oIm10 * tRe10);
-        out256[idx + 21] = resIm10_s;
-        out256[idx + 237] = -resIm10_s;
-        let resRe10_s = eRe10 + (oRe10 * tRe10 - oIm10 * tRe22);
-        out256[idx + 236] = resRe10_s;
-        out256[idx + 20] = resRe10_s;
-        let resRe54_s = eRe10 - (oRe10 * tRe10 - oIm10 * tRe22);
-        out256[idx + 148] = resRe54_s;
-        out256[idx + 108] = resRe54_s;
-        let resIm54_s = -eIm10 + (oRe10 * tRe22 + oIm10 * tRe10);
-        out256[idx + 109] = resIm54_s;
-        out256[idx + 149] = -resIm54_s;
-        
-        let oRe11 = out256[idx + 150];
-        let oIm11 = out256[idx + 151];
-        let eRe11 = out256[idx + 22];
-        let eIm11 = out256[idx + 23];
-        let tRe11 = FFT_FAC_256[idx + 11];
-        let tRe21 = FFT_FAC_256[idx + 21];
-        let resIm11_s = eIm11 + (oRe11 * tRe21 + oIm11 * tRe11);
-        out256[idx + 23] = resIm11_s;
-        out256[idx + 235] = -resIm11_s;
-        let resRe11_s = eRe11 + (oRe11 * tRe11 - oIm11 * tRe21);
-        out256[idx + 234] = resRe11_s;
-        out256[idx + 22] = resRe11_s;
-        let resRe53_s = eRe11 - (oRe11 * tRe11 - oIm11 * tRe21);
-        out256[idx + 150] = resRe53_s;
-        out256[idx + 106] = resRe53_s;
-        let resIm53_s = -eIm11 + (oRe11 * tRe21 + oIm11 * tRe11);
-        out256[idx + 107] = resIm53_s;
-        out256[idx + 151] = -resIm53_s;
-        
-        let oRe12 = out256[idx + 152];
-        let oIm12 = out256[idx + 153];
-        let eRe12 = out256[idx + 24];
-        let eIm12 = out256[idx + 25];
-        let tRe12 = FFT_FAC_256[idx + 12];
-        let tRe20 = FFT_FAC_256[idx + 20];
-        let resIm12_s = eIm12 + (oRe12 * tRe20 + oIm12 * tRe12);
-        out256[idx + 25] = resIm12_s;
-        out256[idx + 233] = -resIm12_s;
-        let resRe12_s = eRe12 + (oRe12 * tRe12 - oIm12 * tRe20);
-        out256[idx + 232] = resRe12_s;
-        out256[idx + 24] = resRe12_s;
-        let resRe52_s = eRe12 - (oRe12 * tRe12 - oIm12 * tRe20);
-        out256[idx + 152] = resRe52_s;
-        out256[idx + 104] = resRe52_s;
-        let resIm52_s = -eIm12 + (oRe12 * tRe20 + oIm12 * tRe12);
-        out256[idx + 105] = resIm52_s;
-        out256[idx + 153] = -resIm52_s;
-        
-        let oRe13 = out256[idx + 154];
-        let oIm13 = out256[idx + 155];
-        let eRe13 = out256[idx + 26];
-        let eIm13 = out256[idx + 27];
-        let tRe13 = FFT_FAC_256[idx + 13];
-        let tRe19 = FFT_FAC_256[idx + 19];
-        let resIm13_s = eIm13 + (oRe13 * tRe19 + oIm13 * tRe13);
-        out256[idx + 27] = resIm13_s;
-        out256[idx + 231] = -resIm13_s;
-        let resRe13_s = eRe13 + (oRe13 * tRe13 - oIm13 * tRe19);
-        out256[idx + 230] = resRe13_s;
-        out256[idx + 26] = resRe13_s;
-        let resRe51_s = eRe13 - (oRe13 * tRe13 - oIm13 * tRe19);
-        out256[idx + 154] = resRe51_s;
-        out256[idx + 102] = resRe51_s;
-        let resIm51_s = -eIm13 + (oRe13 * tRe19 + oIm13 * tRe13);
-        out256[idx + 103] = resIm51_s;
-        out256[idx + 155] = -resIm51_s;
-        
-        let oRe14 = out256[idx + 156];
-        let oIm14 = out256[idx + 157];
-        let eRe14 = out256[idx + 28];
-        let eIm14 = out256[idx + 29];
-        let tRe14 = FFT_FAC_256[idx + 14];
-        let tRe18 = FFT_FAC_256[idx + 18];
-        let resIm14_s = eIm14 + (oRe14 * tRe18 + oIm14 * tRe14);
-        out256[idx + 29] = resIm14_s;
-        out256[idx + 229] = -resIm14_s;
-        let resRe14_s = eRe14 + (oRe14 * tRe14 - oIm14 * tRe18);
-        out256[idx + 228] = resRe14_s;
-        out256[idx + 28] = resRe14_s;
-        let resRe50_s = eRe14 - (oRe14 * tRe14 - oIm14 * tRe18);
-        out256[idx + 156] = resRe50_s;
-        out256[idx + 100] = resRe50_s;
-        let resIm50_s = -eIm14 + (oRe14 * tRe18 + oIm14 * tRe14);
-        out256[idx + 101] = resIm50_s;
-        out256[idx + 157] = -resIm50_s;
-        
-        let oRe15 = out256[idx + 158];
-        let oIm15 = out256[idx + 159];
-        let eRe15 = out256[idx + 30];
-        let eIm15 = out256[idx + 31];
-        let tRe15 = FFT_FAC_256[idx + 15];
-        let tRe17 = FFT_FAC_256[idx + 17];
-        let resIm15_s = eIm15 + (oRe15 * tRe17 + oIm15 * tRe15);
-        out256[idx + 31] = resIm15_s;
-        out256[idx + 227] = -resIm15_s;
-        let resRe15_s = eRe15 + (oRe15 * tRe15 - oIm15 * tRe17);
-        out256[idx + 226] = resRe15_s;
-        out256[idx + 30] = resRe15_s;
-        let resRe49_s = eRe15 - (oRe15 * tRe15 - oIm15 * tRe17);
-        out256[idx + 158] = resRe49_s;
-        out256[idx + 98] = resRe49_s;
-        let resIm49_s = -eIm15 + (oRe15 * tRe17 + oIm15 * tRe15);
-        out256[idx + 99] = resIm49_s;
-        out256[idx + 159] = -resIm49_s;
-        
-        let oRe16 = out256[idx + 160];
-        let oIm16 = out256[idx + 161];
-        let eRe16 = out256[idx + 32];
-        let eIm16 = out256[idx + 33];
-        let tRe16 = FFT_FAC_256[idx + 16];
-        let resIm16_s = eIm16 + (oRe16 * tRe16 + oIm16 * tRe16);
-        out256[idx + 33] = resIm16_s;
-        out256[idx + 225] = -resIm16_s;
-        let resRe16_s = eRe16 + (oRe16 * tRe16 - oIm16 * tRe16);
-        out256[idx + 224] = resRe16_s;
-        out256[idx + 32] = resRe16_s;
-        let resRe48_s = eRe16 - (oRe16 * tRe16 - oIm16 * tRe16);
-        out256[idx + 160] = resRe48_s;
-        out256[idx + 96] = resRe48_s;
-        let resIm48_s = -eIm16 + (oRe16 * tRe16 + oIm16 * tRe16);
-        out256[idx + 97] = resIm48_s;
-        out256[idx + 161] = -resIm48_s;
-        
-        let oRe17 = out256[idx + 162];
-        let oIm17 = out256[idx + 163];
-        let eRe17 = out256[idx + 34];
-        let eIm17 = out256[idx + 35];
-        let resIm17_s = eIm17 + (oRe17 * tRe15 + oIm17 * tRe17);
-        out256[idx + 35] = resIm17_s;
-        out256[idx + 223] = -resIm17_s;
-        let resRe17_s = eRe17 + (oRe17 * tRe17 - oIm17 * tRe15);
-        out256[idx + 222] = resRe17_s;
-        out256[idx + 34] = resRe17_s;
-        let resRe47_s = eRe17 - (oRe17 * tRe17 - oIm17 * tRe15);
-        out256[idx + 162] = resRe47_s;
-        out256[idx + 94] = resRe47_s;
-        let resIm47_s = -eIm17 + (oRe17 * tRe15 + oIm17 * tRe17);
-        out256[idx + 95] = resIm47_s;
-        out256[idx + 163] = -resIm47_s;
-        
-        let oRe18 = out256[idx + 164];
-        let oIm18 = out256[idx + 165];
-        let eRe18 = out256[idx + 36];
-        let eIm18 = out256[idx + 37];
-        let resIm18_s = eIm18 + (oRe18 * tRe14 + oIm18 * tRe18);
-        out256[idx + 37] = resIm18_s;
-        out256[idx + 221] = -resIm18_s;
-        let resRe18_s = eRe18 + (oRe18 * tRe18 - oIm18 * tRe14);
-        out256[idx + 220] = resRe18_s;
-        out256[idx + 36] = resRe18_s;
-        let resRe46_s = eRe18 - (oRe18 * tRe18 - oIm18 * tRe14);
-        out256[idx + 164] = resRe46_s;
-        out256[idx + 92] = resRe46_s;
-        let resIm46_s = -eIm18 + (oRe18 * tRe14 + oIm18 * tRe18);
-        out256[idx + 93] = resIm46_s;
-        out256[idx + 165] = -resIm46_s;
-        
-        let oRe19 = out256[idx + 166];
-        let oIm19 = out256[idx + 167];
-        let eRe19 = out256[idx + 38];
-        let eIm19 = out256[idx + 39];
-        let resIm19_s = eIm19 + (oRe19 * tRe13 + oIm19 * tRe19);
-        out256[idx + 39] = resIm19_s;
-        out256[idx + 219] = -resIm19_s;
-        let resRe19_s = eRe19 + (oRe19 * tRe19 - oIm19 * tRe13);
-        out256[idx + 218] = resRe19_s;
-        out256[idx + 38] = resRe19_s;
-        let resRe45_s = eRe19 - (oRe19 * tRe19 - oIm19 * tRe13);
-        out256[idx + 166] = resRe45_s;
-        out256[idx + 90] = resRe45_s;
-        let resIm45_s = -eIm19 + (oRe19 * tRe13 + oIm19 * tRe19);
-        out256[idx + 91] = resIm45_s;
-        out256[idx + 167] = -resIm45_s;
-        
-        let oRe20 = out256[idx + 168];
-        let oIm20 = out256[idx + 169];
-        let eRe20 = out256[idx + 40];
-        let eIm20 = out256[idx + 41];
-        let resIm20_s = eIm20 + (oRe20 * tRe12 + oIm20 * tRe20);
-        out256[idx + 41] = resIm20_s;
-        out256[idx + 217] = -resIm20_s;
-        let resRe20_s = eRe20 + (oRe20 * tRe20 - oIm20 * tRe12);
-        out256[idx + 216] = resRe20_s;
-        out256[idx + 40] = resRe20_s;
-        let resRe44_s = eRe20 - (oRe20 * tRe20 - oIm20 * tRe12);
-        out256[idx + 168] = resRe44_s;
-        out256[idx + 88] = resRe44_s;
-        let resIm44_s = -eIm20 + (oRe20 * tRe12 + oIm20 * tRe20);
-        out256[idx + 89] = resIm44_s;
-        out256[idx + 169] = -resIm44_s;
-        
-        let oRe21 = out256[idx + 170];
-        let oIm21 = out256[idx + 171];
-        let eRe21 = out256[idx + 42];
-        let eIm21 = out256[idx + 43];
-        let resIm21_s = eIm21 + (oRe21 * tRe11 + oIm21 * tRe21);
-        out256[idx + 43] = resIm21_s;
-        out256[idx + 215] = -resIm21_s;
-        let resRe21_s = eRe21 + (oRe21 * tRe21 - oIm21 * tRe11);
-        out256[idx + 214] = resRe21_s;
-        out256[idx + 42] = resRe21_s;
-        let resRe43_s = eRe21 - (oRe21 * tRe21 - oIm21 * tRe11);
-        out256[idx + 170] = resRe43_s;
-        out256[idx + 86] = resRe43_s;
-        let resIm43_s = -eIm21 + (oRe21 * tRe11 + oIm21 * tRe21);
-        out256[idx + 87] = resIm43_s;
-        out256[idx + 171] = -resIm43_s;
-        
-        let oRe22 = out256[idx + 172];
-        let oIm22 = out256[idx + 173];
-        let eRe22 = out256[idx + 44];
-        let eIm22 = out256[idx + 45];
-        let resIm22_s = eIm22 + (oRe22 * tRe10 + oIm22 * tRe22);
-        out256[idx + 45] = resIm22_s;
-        out256[idx + 213] = -resIm22_s;
-        let resRe22_s = eRe22 + (oRe22 * tRe22 - oIm22 * tRe10);
-        out256[idx + 212] = resRe22_s;
-        out256[idx + 44] = resRe22_s;
-        let resRe42_s = eRe22 - (oRe22 * tRe22 - oIm22 * tRe10);
-        out256[idx + 172] = resRe42_s;
-        out256[idx + 84] = resRe42_s;
-        let resIm42_s = -eIm22 + (oRe22 * tRe10 + oIm22 * tRe22);
-        out256[idx + 85] = resIm42_s;
-        out256[idx + 173] = -resIm42_s;
-        
-        let oRe23 = out256[idx + 174];
-        let oIm23 = out256[idx + 175];
-        let eRe23 = out256[idx + 46];
-        let eIm23 = out256[idx + 47];
-        let resIm23_s = eIm23 + (oRe23 * tRe9 + oIm23 * tRe23);
-        out256[idx + 47] = resIm23_s;
-        out256[idx + 211] = -resIm23_s;
-        let resRe23_s = eRe23 + (oRe23 * tRe23 - oIm23 * tRe9);
-        out256[idx + 210] = resRe23_s;
-        out256[idx + 46] = resRe23_s;
-        let resRe41_s = eRe23 - (oRe23 * tRe23 - oIm23 * tRe9);
-        out256[idx + 174] = resRe41_s;
-        out256[idx + 82] = resRe41_s;
-        let resIm41_s = -eIm23 + (oRe23 * tRe9 + oIm23 * tRe23);
-        out256[idx + 83] = resIm41_s;
-        out256[idx + 175] = -resIm41_s;
-        
-        let oRe24 = out256[idx + 176];
-        let oIm24 = out256[idx + 177];
-        let eRe24 = out256[idx + 48];
-        let eIm24 = out256[idx + 49];
-        let resIm24_s = eIm24 + (oRe24 * tRe8 + oIm24 * tRe24);
-        out256[idx + 49] = resIm24_s;
-        out256[idx + 209] = -resIm24_s;
-        let resRe24_s = eRe24 + (oRe24 * tRe24 - oIm24 * tRe8);
-        out256[idx + 208] = resRe24_s;
-        out256[idx + 48] = resRe24_s;
-        let resRe40_s = eRe24 - (oRe24 * tRe24 - oIm24 * tRe8);
-        out256[idx + 176] = resRe40_s;
-        out256[idx + 80] = resRe40_s;
-        let resIm40_s = -eIm24 + (oRe24 * tRe8 + oIm24 * tRe24);
-        out256[idx + 81] = resIm40_s;
-        out256[idx + 177] = -resIm40_s;
-        
-        let oRe25 = out256[idx + 178];
-        let oIm25 = out256[idx + 179];
-        let eRe25 = out256[idx + 50];
-        let eIm25 = out256[idx + 51];
-        let resIm25_s = eIm25 + (oRe25 * tRe7 + oIm25 * tRe25);
-        out256[idx + 51] = resIm25_s;
-        out256[idx + 207] = -resIm25_s;
-        let resRe25_s = eRe25 + (oRe25 * tRe25 - oIm25 * tRe7);
-        out256[idx + 206] = resRe25_s;
-        out256[idx + 50] = resRe25_s;
-        let resRe39_s = eRe25 - (oRe25 * tRe25 - oIm25 * tRe7);
-        out256[idx + 178] = resRe39_s;
-        out256[idx + 78] = resRe39_s;
-        let resIm39_s = -eIm25 + (oRe25 * tRe7 + oIm25 * tRe25);
-        out256[idx + 79] = resIm39_s;
-        out256[idx + 179] = -resIm39_s;
-        
-        let oRe26 = out256[idx + 180];
-        let oIm26 = out256[idx + 181];
-        let eRe26 = out256[idx + 52];
-        let eIm26 = out256[idx + 53];
-        let resIm26_s = eIm26 + (oRe26 * tRe6 + oIm26 * tRe26);
-        out256[idx + 53] = resIm26_s;
-        out256[idx + 205] = -resIm26_s;
-        let resRe26_s = eRe26 + (oRe26 * tRe26 - oIm26 * tRe6);
-        out256[idx + 204] = resRe26_s;
-        out256[idx + 52] = resRe26_s;
-        let resRe38_s = eRe26 - (oRe26 * tRe26 - oIm26 * tRe6);
-        out256[idx + 180] = resRe38_s;
-        out256[idx + 76] = resRe38_s;
-        let resIm38_s = -eIm26 + (oRe26 * tRe6 + oIm26 * tRe26);
-        out256[idx + 77] = resIm38_s;
-        out256[idx + 181] = -resIm38_s;
-        
-        let oRe27 = out256[idx + 182];
-        let oIm27 = out256[idx + 183];
-        let eRe27 = out256[idx + 54];
-        let eIm27 = out256[idx + 55];
-        let resIm27_s = eIm27 + (oRe27 * tRe5 + oIm27 * tRe27);
-        out256[idx + 55] = resIm27_s;
-        out256[idx + 203] = -resIm27_s;
-        let resRe27_s = eRe27 + (oRe27 * tRe27 - oIm27 * tRe5);
-        out256[idx + 202] = resRe27_s;
-        out256[idx + 54] = resRe27_s;
-        let resRe37_s = eRe27 - (oRe27 * tRe27 - oIm27 * tRe5);
-        out256[idx + 182] = resRe37_s;
-        out256[idx + 74] = resRe37_s;
-        let resIm37_s = -eIm27 + (oRe27 * tRe5 + oIm27 * tRe27);
-        out256[idx + 75] = resIm37_s;
-        out256[idx + 183] = -resIm37_s;
-        
-        let oRe28 = out256[idx + 184];
-        let oIm28 = out256[idx + 185];
-        let eRe28 = out256[idx + 56];
-        let eIm28 = out256[idx + 57];
-        let resIm28_s = eIm28 + (oRe28 * tRe4 + oIm28 * tRe28);
-        out256[idx + 57] = resIm28_s;
-        out256[idx + 201] = -resIm28_s;
-        let resRe28_s = eRe28 + (oRe28 * tRe28 - oIm28 * tRe4);
-        out256[idx + 200] = resRe28_s;
-        out256[idx + 56] = resRe28_s;
-        let resRe36_s = eRe28 - (oRe28 * tRe28 - oIm28 * tRe4);
-        out256[idx + 184] = resRe36_s;
-        out256[idx + 72] = resRe36_s;
-        let resIm36_s = -eIm28 + (oRe28 * tRe4 + oIm28 * tRe28);
-        out256[idx + 73] = resIm36_s;
-        out256[idx + 185] = -resIm36_s;
-        
-        let oRe29 = out256[idx + 186];
-        let oIm29 = out256[idx + 187];
-        let eRe29 = out256[idx + 58];
-        let eIm29 = out256[idx + 59];
-        let resIm29_s = eIm29 + (oRe29 * tRe3 + oIm29 * tRe29);
-        out256[idx + 59] = resIm29_s;
-        out256[idx + 199] = -resIm29_s;
-        let resRe29_s = eRe29 + (oRe29 * tRe29 - oIm29 * tRe3);
-        out256[idx + 198] = resRe29_s;
-        out256[idx + 58] = resRe29_s;
-        let resRe35_s = eRe29 - (oRe29 * tRe29 - oIm29 * tRe3);
-        out256[idx + 186] = resRe35_s;
-        out256[idx + 70] = resRe35_s;
-        let resIm35_s = -eIm29 + (oRe29 * tRe3 + oIm29 * tRe29);
-        out256[idx + 71] = resIm35_s;
-        out256[idx + 187] = -resIm35_s;
-        
-        let oRe30 = out256[idx + 188];
-        let oIm30 = out256[idx + 189];
-        let eRe30 = out256[idx + 60];
-        let eIm30 = out256[idx + 61];
-        let resIm30_s = eIm30 + (oRe30 * tRe2 + oIm30 * tRe30);
-        out256[idx + 61] = resIm30_s;
-        out256[idx + 197] = -resIm30_s;
-        let resRe30_s = eRe30 + (oRe30 * tRe30 - oIm30 * tRe2);
-        out256[idx + 196] = resRe30_s;
-        out256[idx + 60] = resRe30_s;
-        let resRe34_s = eRe30 - (oRe30 * tRe30 - oIm30 * tRe2);
-        out256[idx + 188] = resRe34_s;
-        out256[idx + 68] = resRe34_s;
-        let resIm34_s = -eIm30 + (oRe30 * tRe2 + oIm30 * tRe30);
-        out256[idx + 69] = resIm34_s;
-        out256[idx + 189] = -resIm34_s;
-        
-        let oRe31 = out256[idx + 190];
-        let oIm31 = out256[idx + 191];
-        let eRe31 = out256[idx + 62];
-        let eIm31 = out256[idx + 63];
-        let resIm31_s = eIm31 + (oRe31 * tRe1 + oIm31 * tRe31);
-        out256[idx + 63] = resIm31_s;
-        out256[idx + 195] = -resIm31_s;
-        let resRe31_s = eRe31 + (oRe31 * tRe31 - oIm31 * tRe1);
-        out256[idx + 194] = resRe31_s;
-        out256[idx + 62] = resRe31_s;
-        let resRe33_s = eRe31 - (oRe31 * tRe31 - oIm31 * tRe1);
-        out256[idx + 190] = resRe33_s;
-        out256[idx + 66] = resRe33_s;
-        let resIm33_s = -eIm31 + (oRe31 * tRe1 + oIm31 * tRe31);
-        out256[idx + 67] = resIm33_s;
-        out256[idx + 191] = -resIm33_s;
-        
-        let oRe32 = out256[idx + 192];
-        let oIm32 = out256[idx + 193];
-        let eRe32 = out256[idx + 64];
-        let eIm32 = out256[idx + 65];
-        let resIm32_s = eIm32 + oRe32;
-        out256[idx + 65] = resIm32_s;
-        out256[idx + 193] = -resIm32_s;
-        let resRe32_s = eRe32 - oIm32;
-        out256[idx + 192] = resRe32_s;
-        out256[idx + 64] = resRe32_s;
-        
+    { 
+     for (let j = 0; j < 64; j++) { 
+         let eI = 0 + j;
+         let oI = 0 + j + 64;
+         if(j > 32){
+             out256[eI * 2    ] =  out256[256 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[256 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[256 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[256 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 64; j++) { 
+         let eI = 128 + j;
+         let oI = 128 + j + 64;
+         if(j > 32){
+             out256[eI * 2    ] =  out256[256 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[256 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[256 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[256 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
+    } 
+    ////////////////////////////////////////////////
+    ////////////////////////////////////////////////
+    // RADIX 2 (rolled) - FFT step for SIZE 256 
+    ////////////////////////////////////////////////
+    { 
+     for (let j = 0; j < 128; j++) { 
+         let eI = 0 + j;
+         let oI = 0 + j + 128;
+         if(j > 64){
+             out256[eI * 2    ] =  out256[512 - eI * 2    ];
+             out256[eI * 2 + 1] = -out256[512 - eI * 2 + 1];
+             out256[oI * 2    ] =  out256[512 - oI * 2    ];
+             out256[oI * 2 + 1] = -out256[512 - oI * 2 + 1];
+             continue;
+         } 
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let tRe  = FFT_FAC_256[j * 2 + 0];
+         let tIm  = FFT_FAC_256[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+     }
     } 
 
     return out256;
