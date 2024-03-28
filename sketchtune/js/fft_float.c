@@ -43741,7 +43741,7 @@ void fftReal128(float* realInput, int size) {
     // FFT step for SIZE 64
     ////////////////////////////////////////////////
     
-    for(int idx = 0; idx < 512; idx+=128){
+    for(int idx = 0; idx < 512; idx+=128){  // BUG?
         float x0aRe_0 = out128[idx       ];
         float x0bRe_0 = out128[idx   +  2]; float x0bIm_0 = out128[idx   +  3];
         float x0cRe_0 = out128[idx   +  4]; float x0cIm_0 = out128[idx   +  5];
