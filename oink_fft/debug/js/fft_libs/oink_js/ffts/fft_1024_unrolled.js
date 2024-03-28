@@ -1180,7 +1180,7 @@ function fftReal1024(realInput) {
     // RADIX 4 - FFT step for SIZE 4/8 
     ////////////////////////////////////////////////
 
-    for (int idx = 0, out_idx = 0; idx < 1024; idx += 4, out_idx += 8) {
+    for (let idx = 0, out_idx = 0; idx < 1024; idx += 4, out_idx += 8) {
         let x0aRe = iBR1024[idx    ];
         let x1aRe = iBR1024[idx + 1];
         let x2aRe = iBR1024[idx + 2];
@@ -1206,100 +1206,100 @@ function fftReal1024(realInput) {
     // RADIX 4 - FFT step for SIZE 16/32 
     ////////////////////////////////////////////////
 
-    for (int idx = 0; idx < 2048; idx += 32) {
-        float x0aRe = out1024[idx     ];
-        float x0bRe = out1024[idx +  2];
-        float x0bIm = out1024[idx +  3];
-        float x0cRe = out1024[idx +  4];
+    for (let idx = 0; idx < 2048; idx += 32) {
+        let x0aRe = out1024[idx     ];
+        let x0bRe = out1024[idx +  2];
+        let x0bIm = out1024[idx +  3];
+        let x0cRe = out1024[idx +  4];
 
-        float x1aRe = out1024[idx +  8];
+        let x1aRe = out1024[idx +  8];
         out1024[idx +   8] = x0aRe - x1aRe;
-        float x1bRe = out1024[idx + 10];
-        float x1bIm = out1024[idx + 11];
-        float x1cRe = out1024[idx + 12];
+        let x1bRe = out1024[idx + 10];
+        let x1bIm = out1024[idx + 11];
+        let x1cRe = out1024[idx + 12];
 
-        float x2aRe = out1024[idx + 16];
-        float x2bRe = out1024[idx + 18];
-        float x2bIm = out1024[idx + 19];
-        float x2cRe = out1024[idx + 20];
+        let x2aRe = out1024[idx + 16];
+        let x2bRe = out1024[idx + 18];
+        let x2bIm = out1024[idx + 19];
+        let x2cRe = out1024[idx + 20];
 
-        float x3aRe = out1024[idx + 24];
+        let x3aRe = out1024[idx + 24];
         out1024[idx +  24] = x0aRe - x1aRe;
         out1024[idx +  25] = x3aRe - x2aRe;
-        float x3bRe = out1024[idx + 26];
-        float x3bIm = out1024[idx + 27];
-        float x3cRe = out1024[idx + 28];
+        let x3bRe = out1024[idx + 26];
+        let x3bIm = out1024[idx + 27];
+        let x3cRe = out1024[idx + 28];
         out1024[idx      ] = x0aRe + x1aRe + x2aRe + x3aRe;
         out1024[idx +   9] = x2aRe - x3aRe;
         out1024[idx +  16] = x0aRe + x1aRe - x2aRe - x3aRe;
 
-        float t1Re_2c = 0.7071067690849304;
+        let t1Re_2c = 0.7071067690849304;
 
-        float x2cRe_tRe_2c = x2cRe * t1Re_2c;
-        float x3cRe_tRe_2c = x3cRe * t1Re_2c;
+        let x2cRe_tRe_2c = x2cRe * t1Re_2c;
+        let x3cRe_tRe_2c = x3cRe * t1Re_2c;
 
-        float resReC1 = x0cRe + x2cRe_tRe_2c - x3cRe_tRe_2c;
+        let resReC1 = x0cRe + x2cRe_tRe_2c - x3cRe_tRe_2c;
         out1024[idx +  28] =   resReC1;
         out1024[idx +   4] =   resReC1;
-        float resImC1 = x1cRe + x2cRe_tRe_2c + x3cRe_tRe_2c;
+        let resImC1 = x1cRe + x2cRe_tRe_2c + x3cRe_tRe_2c;
         out1024[idx +   5] =   resImC1;
         out1024[idx +  29] = - resImC1;
-        float resReC2 = x0cRe - x2cRe_tRe_2c + x3cRe_tRe_2c;
+        let resReC2 = x0cRe - x2cRe_tRe_2c + x3cRe_tRe_2c;
         out1024[idx +  20] =   resReC2;
         out1024[idx +  12] =   resReC2;
-        float resImC2 = x1cRe - x2cRe_tRe_2c - x3cRe_tRe_2c;
+        let resImC2 = x1cRe - x2cRe_tRe_2c - x3cRe_tRe_2c;
         out1024[idx +  13] = - resImC2;
         out1024[idx +  21] =   resImC2;
 
-        float x1dif = (x1bRe-x1bIm);
-        float x1sum = (x1bRe+x1bIm);
-        float x3dif = (x3bRe-x3bIm);
-        float x3sum = (x3bRe+x3bIm);
+        let x1dif = (x1bRe-x1bIm);
+        let x1sum = (x1bRe+x1bIm);
+        let x3dif = (x3bRe-x3bIm);
+        let x3sum = (x3bRe+x3bIm);
 
-        float t1Re_1b = 0.7071067690849304;
+        let t1Re_1b = 0.7071067690849304;
 
-        float x1dif_tRe_1b = x1dif * t1Re_1b;
-        float x1sum_tRe_1b = x1sum * t1Re_1b;
+        let x1dif_tRe_1b = x1dif * t1Re_1b;
+        let x1sum_tRe_1b = x1sum * t1Re_1b;
 
-        float t1Re_1b2b = 0.6532814502716064;
-        float t1Re_1b2d = 0.2705980539321899;
+        let t1Re_1b2b = 0.6532814502716064;
+        let t1Re_1b2d = 0.2705980539321899;
 
-        float x3dif_tRe_1b2b = x3dif * t1Re_1b2b;
-        float x3dif_tRe_1b2d = x3dif * t1Re_1b2d;
-        float x3sum_tRe_1b2b = x3sum * t1Re_1b2b;
-        float x3sum_tRe_1b2d = x3sum * t1Re_1b2d;
+        let x3dif_tRe_1b2b = x3dif * t1Re_1b2b;
+        let x3dif_tRe_1b2d = x3dif * t1Re_1b2d;
+        let x3sum_tRe_1b2b = x3sum * t1Re_1b2b;
+        let x3sum_tRe_1b2d = x3sum * t1Re_1b2d;
 
-        float t1Re_2b = 0.9238795042037964;
-        float t1Re_2d = 0.3826834261417389;
+        let t1Re_2b = 0.9238795042037964;
+        let t1Re_2d = 0.3826834261417389;
 
-        float tempReB = (x3dif_tRe_1b2b - x3sum_tRe_1b2d + x2bRe*t1Re_2b - x2bIm*t1Re_2d);
-        float tempImB = (x3dif_tRe_1b2d + x3sum_tRe_1b2b + x2bRe*t1Re_2d + x2bIm*t1Re_2b);
-        float tempReD = (x3dif_tRe_1b2d + x3sum_tRe_1b2b - x2bRe*t1Re_2d - x2bIm*t1Re_2b);
-        float tempImD = (x3dif_tRe_1b2b - x3sum_tRe_1b2d - x2bRe*t1Re_2b + x2bIm*t1Re_2d);
+        let tempReB = (x3dif_tRe_1b2b - x3sum_tRe_1b2d + x2bRe*t1Re_2b - x2bIm*t1Re_2d);
+        let tempImB = (x3dif_tRe_1b2d + x3sum_tRe_1b2b + x2bRe*t1Re_2d + x2bIm*t1Re_2b);
+        let tempReD = (x3dif_tRe_1b2d + x3sum_tRe_1b2b - x2bRe*t1Re_2d - x2bIm*t1Re_2b);
+        let tempImD = (x3dif_tRe_1b2b - x3sum_tRe_1b2d - x2bRe*t1Re_2b + x2bIm*t1Re_2d);
 
-        float resReB1 = x0bRe  + x1dif_tRe_1b + tempReB;
+        let resReB1 = x0bRe  + x1dif_tRe_1b + tempReB;
         out1024[idx +   2] =   resReB1;
         out1024[idx +  30] =   resReB1;
-        float resReB2 = x0bRe  + x1dif_tRe_1b - tempReB;
+        let resReB2 = x0bRe  + x1dif_tRe_1b - tempReB;
         out1024[idx +  18] =   resReB2;
         out1024[idx +  14] =   resReB2;
-        float resReD1 = x0bRe  - x1dif_tRe_1b - tempReD;
+        let resReD1 = x0bRe  - x1dif_tRe_1b - tempReD;
         out1024[idx +   6] =   resReD1;
         out1024[idx +  26] =   resReD1;
-        float resReD2 = x0bRe  - x1dif_tRe_1b + tempReD;
+        let resReD2 = x0bRe  - x1dif_tRe_1b + tempReD;
         out1024[idx +  22] =   resReD2;
         out1024[idx +  10] =   resReD2;
 
-        float resImB1 = x0bIm  + x1sum_tRe_1b + tempImB;
+        let resImB1 = x0bIm  + x1sum_tRe_1b + tempImB;
         out1024[idx +   3] =   resImB1;
         out1024[idx +  31] = - resImB1;
-        float resImB2 = x0bIm  + x1sum_tRe_1b - tempImB;
+        let resImB2 = x0bIm  + x1sum_tRe_1b - tempImB;
         out1024[idx +  19] =   resImB2;
         out1024[idx +  15] = - resImB2;
-        float resImD1 =-x0bIm  + x1sum_tRe_1b - tempImD;
+        let resImD1 =-x0bIm  + x1sum_tRe_1b - tempImD;
         out1024[idx +   7] =   resImD1;
         out1024[idx +  27] = - resImD1;
-        float resImD2 =-x0bIm  + x1sum_tRe_1b + tempImD;
+        let resImD2 =-x0bIm  + x1sum_tRe_1b + tempImD;
         out1024[idx +  23] =   resImD2;
         out1024[idx +  11] = - resImD2;
     }
