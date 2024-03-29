@@ -356,27 +356,85 @@ function fftReal128(realInput) {
         out128[(96 + j) * 2 + 1] = eIm2b - t_oIm2b;
     }
     */
+
+
+    for (let j = 0; j < 32; j++) { 
+        let eI = 0 + j;
+        let oI = 0 + j + 32;
+
+        let eRe  = out128[eI * 2    ];
+        let eIm  = out128[eI * 2 + 1];
+        let oRe  = out128[oI * 2    ];
+        let oIm  = out128[oI * 2 + 1];
+        let tRe  = FFT_FAC_128[j * 2 + 0];
+        let tIm  = FFT_FAC_128[j * 2 + 1];
+        let t_oRe = oRe * tRe - oIm * tIm;
+        let t_oIm = oRe * tIm + oIm * tRe;
+        out128[eI * 2    ] = eRe + t_oRe;
+        out128[eI * 2 + 1] = eIm + t_oIm;
+        out128[oI * 2    ] = eRe - t_oRe;
+        out128[oI * 2 + 1] = eIm - t_oIm;
+    }
+
+    for (let j = 0; j < 32; j++) { 
+        let eI = 64 + j;
+        let oI = 64 + j + 32;
+
+        let eRe  = out128[eI * 2    ];
+        let eIm  = out128[eI * 2 + 1];
+        let oRe  = out128[oI * 2    ];
+        let oIm  = out128[oI * 2 + 1];
+        let tRe  = FFT_FAC_128[j * 2 + 0];
+        let tIm  = FFT_FAC_128[j * 2 + 1];
+        let t_oRe = oRe * tRe - oIm * tIm;
+        let t_oIm = oRe * tIm + oIm * tRe;
+        out128[eI * 2    ] = eRe + t_oRe;
+        out128[eI * 2 + 1] = eIm + t_oIm;
+        out128[oI * 2    ] = eRe - t_oRe;
+        out128[oI * 2 + 1] = eIm - t_oIm;
+    }
+
+    for (let j = 0; j < 64; j++) { 
+        let eI = 0 + j;
+        let oI = 0 + j + 64;
+
+        let eRe  = out128[eI * 2    ];
+        let eIm  = out128[eI * 2 + 1];
+        let oRe  = out128[oI * 2    ];
+        let oIm  = out128[oI * 2 + 1];
+        let tRe  = FFT_FAC_128[j * 2 + 0];
+        let tIm  = FFT_FAC_128[j * 2 + 1];
+        let t_oRe = oRe * tRe - oIm * tIm;
+        let t_oIm = oRe * tIm + oIm * tRe;
+        out128[eI * 2    ] = eRe + t_oRe;
+        out128[eI * 2 + 1] = eIm + t_oIm;
+        out128[oI * 2    ] = eRe - t_oRe;
+        out128[oI * 2 + 1] = eIm - t_oIm;
+    }
+
+    /*
     for (let size = 64; size <= 128; size*=2) { 
         for (let i = 0; i < 128; i+=size) { 
-           for (let j = 0; j < size/2; j++) { 
-             let eI = i + j;
-             let oI = i + j + size/2;
-             
-             let eRe  = out128[eI * 2    ];
-             let eIm  = out128[eI * 2 + 1];
-             let oRe  = out128[oI * 2    ];
-             let oIm  = out128[oI * 2 + 1];
-             let tRe  = FFT_FAC_128[j * 2 + 0];
-             let tIm  = FFT_FAC_128[j * 2 + 1];
-             let t_oRe = oRe * tRe - oIm * tIm;
-             let t_oIm = oRe * tIm + oIm * tRe;
-             out128[eI * 2    ] = eRe + t_oRe;
-             out128[eI * 2 + 1] = eIm + t_oIm;
-             out128[oI * 2    ] = eRe - t_oRe;
-             out128[oI * 2 + 1] = eIm - t_oIm;
-           }
+            for (let j = 0; j < size/2; j++) { 
+                let eI = i + j;
+                let oI = i + j + size/2;
+
+                let eRe  = out128[eI * 2    ];
+                let eIm  = out128[eI * 2 + 1];
+                let oRe  = out128[oI * 2    ];
+                let oIm  = out128[oI * 2 + 1];
+                let tRe  = FFT_FAC_128[j * 2 + 0];
+                let tIm  = FFT_FAC_128[j * 2 + 1];
+                let t_oRe = oRe * tRe - oIm * tIm;
+                let t_oIm = oRe * tIm + oIm * tRe;
+                out128[eI * 2    ] = eRe + t_oRe;
+                out128[eI * 2 + 1] = eIm + t_oIm;
+                out128[oI * 2    ] = eRe - t_oRe;
+                out128[oI * 2 + 1] = eIm - t_oIm;
+            }
         }
-    } 
+    }
+    */
 
     return out128;
 } 
