@@ -21,7 +21,6 @@ const PLUGIN_OINK = {
   fullname: function() { return "OINK (sch1z0net)"},
   url:      function() { return "https://github.com/sch1z0net/oink" },
   precision:function() { return "float" },
-  example:  function() { return perform_OINK(OINK.fftReal1024, testData.slice()).slice(); },
   init: async function() { },
   fft128:   function(testData) { perform_OINK(OINK.fftReal128,  testData); },
   fft256:   function(testData) { perform_OINK(OINK.fftReal256,  testData); },
