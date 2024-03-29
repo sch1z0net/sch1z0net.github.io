@@ -719,7 +719,7 @@ function fftReal512(realInput) {
         out512[idx +   9] = x2aRe - x3aRe;
         out512[idx +  16] = x0aRe + x1aRe - x2aRe - x3aRe;
 
-        let t1Re_2c = 0.7071067690849304;
+        let t1Re_2c = 0.9238795042037964;
 
         let x2cRe_tRe_2c = x2cRe * t1Re_2c;
         let x3cRe_tRe_2c = x3cRe * t1Re_2c;
@@ -742,21 +742,21 @@ function fftReal512(realInput) {
         let x3dif = (x3bRe-x3bIm);
         let x3sum = (x3bRe+x3bIm);
 
-        let t1Re_1b = 0.7071067690849304;
+        let t1Re_1b = 0.9238795042037964;
 
         let x1dif_tRe_1b = x1dif * t1Re_1b;
         let x1sum_tRe_1b = x1sum * t1Re_1b;
 
-        let t1Re_1b2b = 0.6532814502716064;
-        let t1Re_1b2d = 0.2705980539321899;
+        let t1Re_1b2b = 0.0000000000000000;
+        let t1Re_1b2d = 0.3535534143447876;
 
         let x3dif_tRe_1b2b = x3dif * t1Re_1b2b;
         let x3dif_tRe_1b2d = x3dif * t1Re_1b2d;
         let x3sum_tRe_1b2b = x3sum * t1Re_1b2b;
         let x3sum_tRe_1b2d = x3sum * t1Re_1b2d;
 
-        let t1Re_2b = 0.9238795042037964;
-        let t1Re_2d = 0.3826834261417389;
+        let t1Re_2b = 0.0000000000000000;
+        let t1Re_2d = 0.3826834559440613;
 
         let tempReB = (x3dif_tRe_1b2b - x3sum_tRe_1b2d + x2bRe*t1Re_2b - x2bIm*t1Re_2d);
         let tempImB = (x3dif_tRe_1b2d + x3sum_tRe_1b2b + x2bRe*t1Re_2d + x2bIm*t1Re_2b);
