@@ -319,8 +319,8 @@ function fftReal128(realInput) {
              let eIm2  = eIm + (oRe * tIm + oIm * tRe);
              let oRe2  = eRe - (oRe * tRe - oIm * tIm);
              let oIm2  = eIm - (oRe * tIm + oIm * tRe);
-             let tRe2  = FFT_FAC_128[j * 2 + 0];
-             let tIm2  = FFT_FAC_128[j * 2 + 1];
+             let tRe2  = FFT_FAC_128[j2 * 2 + 0];
+             let tIm2  = FFT_FAC_128[j2 * 2 + 1];
 
              let eI2 = 0 + j2;
              let oI2 = 0 + j2 + 64;
