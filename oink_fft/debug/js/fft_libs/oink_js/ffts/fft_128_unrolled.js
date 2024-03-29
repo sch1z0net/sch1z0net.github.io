@@ -303,8 +303,8 @@ function fftReal128(realInput) {
     for (let j = 0; j < 32; j++) { 
         let eRe1a  = out128[     j * 2    ];
         let eIm1a  = out128[     j * 2 + 1];
-        let oRe1a  = out128[32 + j * 2    ];
-        let oIm1a  = out128[32 + j * 2 + 1];
+        let oRe1a  = out128[64 + j * 2    ];
+        let oIm1a  = out128[64 + j * 2 + 1];
         let tRe1a  = FFT_FAC_128[j * 2 + 0];
         let tIm1a  = FFT_FAC_128[j * 2 + 1];
         let t_oRe1a = oRe1a * tRe1a - oIm1a * tIm1a;
@@ -314,8 +314,8 @@ function fftReal128(realInput) {
         let res32r = eRe1a - t_oRe1a;
         let res32i = eIm1a - t_oIm1a;
 
-        let eRe1b  = out128[64 + j * 2    ];
-        let eIm1b  = out128[64 + j * 2 + 1];
+        let eRe1b  = out128[32 + j * 2    ];
+        let eIm1b  = out128[32 + j * 2 + 1];
         let oRe1b  = out128[96 + j * 2    ];
         let oIm1b  = out128[96 + j * 2 + 1];
         let tRe1b  = FFT_FAC_128[j * 2 + 0];
@@ -340,7 +340,7 @@ function fftReal128(realInput) {
         out128[(     j) * 2 + 1] = eIm2a + t_oIm2a;
         out128[(64 + j) * 2    ] = eRe2a - t_oRe2a;
         out128[(64 + j) * 2 + 1] = eIm2a - t_oIm2a;
-
+        
         let eRe2b  = res32r;
         let eIm2b  = res32i;
         let oRe2b  = res96r;
