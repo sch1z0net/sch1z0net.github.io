@@ -301,9 +301,6 @@ function fftReal128(realInput) {
     // RADIX 2 (complete)
     ////////////////////////////////////////////////
     for (let j = 0; j < 32; j++) { 
-        let eI = 64 + j;
-        let oI = 64 + j + 32;
-
         let eRe1a  = out128[(     j) * 2    ];
         let eIm1a  = out128[(     j) * 2 + 1];
         let oRe1a  = out128[(32 + j) * 2    ];
