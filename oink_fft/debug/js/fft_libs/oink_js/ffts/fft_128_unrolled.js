@@ -300,36 +300,60 @@ function fftReal128(realInput) {
     ////////////////////////////////////////////////
     // RADIX 2 (complete)
     ////////////////////////////////////////////////
-        for (let j2 = 0, j1 = 0, i1 = 0; j2 < 64; j2++, j1++) { 
-             if(j1 >= 32){ 
-                j1 = 0; 
-                i1 = 64;
-             }
-             let eI = i1 + j1;
-             let oI = i1 + j1 + 32;
+    for (let j = 0; j < 32; j++) { 
+        let eRe1a  = out256[     j * 2    ];
+        let eIm1a  = out256[     j * 2 + 1];
+        let oRe1a  = out256[32 + j * 2    ];
+        let oIm1a  = out256[32 + j * 2 + 1];
+        let tRe1a  = FFT_FAC_128[j * 2 + 0];
+        let tIm1a  = FFT_FAC_128[j * 2 + 1];
+        let t_oRe1a = oRe1a * tRe1a - oIm1a * tIm1a;
+        let t_oIm1a = oRe1a * tIm1a + oIm1a * tRe1a;
+        let res0r  = eRe1a + t_oRe1a;
+        let res0i  = eIm1a + t_oIm1a;
+        let res32r = eRe1a - t_oRe1a;
+        let res32i = eIm1a - t_oIm1a;
 
-             let eRe   = out128[eI * 2    ];
-             let eIm   = out128[eI * 2 + 1];
-             let oRe   = out128[oI * 2    ];
-             let oIm   = out128[oI * 2 + 1];
-             let tRe   = FFT_FAC_128[j1 * 2 + 0];
-             let tIm   = FFT_FAC_128[j1 * 2 + 1];
+        let eRe1b  = out256[64   j * 2    ];
+        let eIm1b  = out256[64   j * 2 + 1];
+        let oRe1b  = out256[96 + j * 2    ];
+        let oIm1b  = out256[96 + j * 2 + 1];
+        let tRe1b  = FFT_FAC_128[j * 2 + 0];
+        let tIm1b  = FFT_FAC_128[j * 2 + 1];
+        let t_oRe1b = oRe1b * tRe1b - oIm1b * tIm1b;
+        let t_oIm1b = oRe1b * tIm1b + oIm1b * tRe1b;
+        res64r = eRe1b + t_oRe1b;
+        res64i = eIm1b + t_oIm1b;
+        res96r = eRe1b - t_oRe1b;
+        res96i = eIm1b - t_oIm1b;
 
-             let eRe2  = eRe + (oRe * tRe - oIm * tIm);
-             let eIm2  = eIm + (oRe * tIm + oIm * tRe);
-             let oRe2  = eRe - (oRe * tRe - oIm * tIm);
-             let oIm2  = eIm - (oRe * tIm + oIm * tRe);
-             let tRe2  = FFT_FAC_128[j2 * 2 + 0];
-             let tIm2  = FFT_FAC_128[j2 * 2 + 1];
 
-             let eI2 = 0 + j2;
-             let oI2 = 0 + j2 + 64;
+        let eRe2a  = res0r;
+        let eIm2a  = res0i;
+        let oRe2a  = res64r;
+        let oIm2a  = res64i;
+        let tRe2a  = FFT_FAC_128[     j * 2 + 0];
+        let tIm2a  = FFT_FAC_128[     j * 2 + 1];
+        let t_oRe2a = oRe2a * tRe2a - oIm2a * tIm2a;
+        let t_oIm2a = oRe2a * tIm2a + oIm2a * tRe2a;
+        out128[(     j) * 2    ] = eRe2a + t_oRe2a;
+        out128[(     j) * 2 + 1] = eIm2a + t_oIm2a;
+        out128[(64 + j) * 2    ] = eRe2a - t_oRe2a;
+        out128[(64 + j) * 2 + 1] = eIm2a - t_oIm2a;
 
-             out128[eI2 * 2    ] = eRe2 + (oRe2 * tRe2 - oIm2 * tIm2);
-             out128[eI2 * 2 + 1] = eIm2 + (oRe2 * tIm2 + oIm2 * tRe2);
-             out128[oI2 * 2    ] = eRe2 - (oRe2 * tRe2 - oIm2 * tIm2);
-             out128[oI2 * 2 + 1] = eIm2 - (oRe2 * tIm2 + oIm2 * tRe2);
-        }
+        let eRe2b  = res32r;
+        let eIm2b  = res32i;
+        let oRe2b  = res96r;
+        let oIm2b  = res96i;
+        let tRe2b  = FFT_FAC_128[32 + j * 2 + 0];
+        let tIm2b  = FFT_FAC_128[32 + j * 2 + 1];
+        let t_oRe2b = oRe2b * tRe2b - oIm2b * tIm2b;
+        let t_oIm2b = oRe2b * tIm2b + oIm2b * tRe2b;
+        out128[(32   j) * 2    ] = eRe2b + t_oRe2b;
+        out128[(32   j) * 2 + 1] = eIm2b + t_oIm2b;
+        out128[(96 + j) * 2    ] = eRe2b - t_oRe2b;
+        out128[(96 + j) * 2 + 1] = eIm2b - t_oIm2b;
+    }
 
     return out128;
 } 
