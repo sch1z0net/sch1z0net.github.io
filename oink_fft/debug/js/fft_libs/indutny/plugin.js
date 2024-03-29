@@ -51,7 +51,7 @@ const PLUGIN_INDUTNY = {
   fft512:   function(testData) { perform_INDUTNY(indutny_f_512,   indutny_out_512,   testData); },
   fft1024:  function(testData) { perform_INDUTNY(indutny_f_1024,  indutny_out_1024,  testData); },
   fft2048:  function(testData) { perform_INDUTNY(indutny_f_2048,  indutny_out_2048,  testData); },
-  example:  function(testData) { return perform_INDUTNY(indutny_f_1024,  indutny_out_1024,  testData); },
+  example:  function(testData) { return perform_INDUTNY(indutny_f_128,  indutny_out_128,  testData); },
 };
 
 //////////////////////////////////////

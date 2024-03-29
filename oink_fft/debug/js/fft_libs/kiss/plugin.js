@@ -55,7 +55,7 @@ const PLUGIN_KISS = {
   fft512:   function(testData) { perform_KISS(kiss_input_512,   kiss_fft_512,   testData); },
   fft1024:  function(testData) { perform_KISS(kiss_input_1024,  kiss_fft_1024,  testData); },
   fft2048:  function(testData) { perform_KISS(kiss_input_2048,  kiss_fft_2048,  testData); },
-  example:  function(testData) { return perform_KISS(kiss_input_1024,  kiss_fft_1024,  testData); },
+  example:  function(testData) { return perform_KISS(kiss_input_128,  kiss_fft_128,  testData); },
 };
 
 //////////////////////////////////////

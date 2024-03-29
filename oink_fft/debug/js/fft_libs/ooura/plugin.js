@@ -44,7 +44,7 @@ const PLUGIN_OOURA = {
   fft512:   function(testData) { perform_OOURA(ooura_oo_512,   testData); },
   fft1024:  function(testData) { perform_OOURA(ooura_oo_1024,  testData); },
   fft2048:  function(testData) { perform_OOURA(ooura_oo_2048,  testData); },
-  example:  function(testData) { return perform_OOURA(ooura_oo_1024,  testData); },
+  example:  function(testData) { return perform_OOURA(ooura_oo_128,  testData); },
 };
 
 //////////////////////////////////////
