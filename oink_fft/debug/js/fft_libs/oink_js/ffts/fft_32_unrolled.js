@@ -59,24 +59,24 @@ function fftReal32(realInput) {
     ////////////////////////////////////////////////
 
     for (let idx = 0, out_idx = 0; idx < 8; idx += 4, out_idx += 8) {
-        let x0aRe = iBR8[idx    ];
-        let x1aRe = iBR8[idx + 1];
-        let x2aRe = iBR8[idx + 2];
-        let x3aRe = iBR8[idx + 3];
+        let x0aRe = iBR32[idx    ];
+        let x1aRe = iBR32[idx + 1];
+        let x2aRe = iBR32[idx + 2];
+        let x3aRe = iBR32[idx + 3];
 
         let sum1  = x0aRe + x1aRe;
         let sum2  = x2aRe + x3aRe;
         let diff1 = x0aRe - x1aRe;
         let diff2 = (x2aRe - x3aRe) * 0.7071067690849304;
 
-        out8[out_idx]     = sum1 + sum2;
-        out8[out_idx + 1] = 0.0;
-        out8[out_idx + 2] = diff1 + diff2;
-        out8[out_idx + 3] =         diff2;
-        out8[out_idx + 4] = sum1 - sum2;
-        out8[out_idx + 5] = 0.0;
-        out8[out_idx + 6] = diff1 - diff2;
-        out8[out_idx + 7] =       - diff2;
+        out32[out_idx]     = sum1 + sum2;
+        out32[out_idx + 1] = 0.0;
+        out32[out_idx + 2] = diff1 + diff2;
+        out32[out_idx + 3] =         diff2;
+        out32[out_idx + 4] = sum1 - sum2;
+        out32[out_idx + 5] = 0.0;
+        out32[out_idx + 6] = diff1 - diff2;
+        out32[out_idx + 7] =       - diff2;
     }
 
 
