@@ -28,7 +28,7 @@ const PLUGIN_OINK_js = {
   fft512:   function(testData) { perform_OINK_js(OINK_js.fftReal512,  testData); },
   fft1024:  function(testData) { perform_OINK_js(OINK_js.fftReal1024, testData); },
   fft2048:  function(testData) { perform_OINK_js(OINK_js.fftReal2048, testData); },
-  example:  function(testData) { return perform_OINK_js(OINK_js.fftReal8,  testData); },
+  example:  function(testData) { return perform_OINK_js(OINK_js.fftReal32,  testData); },
 };
 
 
