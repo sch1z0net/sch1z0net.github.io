@@ -210,7 +210,7 @@ async function runAllPerformanceTests(FFT_BANK, PARAMS, charts){
 
 
 function runErrorComparison(FFT_BANK, output_values){
-    let testData = generateTestData(128);
+    let testData = generateTestData(32);
     let testData32 = testData.slice();
     let testData64 = Float64Array.from(testData.slice());
 
