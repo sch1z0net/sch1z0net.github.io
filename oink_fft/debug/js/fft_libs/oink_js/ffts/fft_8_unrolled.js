@@ -49,16 +49,16 @@ function fftReal8(realInput) {
         let sum1  = x0aRe + x1aRe;
         let sum2  = x2aRe + x3aRe;
         let diff1 = x0aRe - x1aRe;
-        let diff2 = x2aRe - x3aRe;
+        let diff2 = (x2aRe - x3aRe) * 0.7071067690849304;
 
         out8[out_idx]     = sum1 + sum2;
         out8[out_idx + 1] = 0.0;
-        out8[out_idx + 2] = diff1;
-        out8[out_idx + 3] = diff2;
+        out8[out_idx + 2] = diff1 + diff2;
+        out8[out_idx + 3] =         diff2;
         out8[out_idx + 4] = sum1 - sum2;
         out8[out_idx + 5] = 0.0;
-        out8[out_idx + 6] = diff1;
-        out8[out_idx + 7] = -diff2;
+        out8[out_idx + 6] = diff1 - diff2;
+        out8[out_idx + 7] =       - diff2;
     }
 
     ////////////////////////////////////////////////
