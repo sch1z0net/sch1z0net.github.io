@@ -9,7 +9,9 @@ let Module_KISS_;
 // PREPARE AND PERFORM KISS
 //////////////////////////////////////
 
+let kiss_fft_4,   kiss_input_4;
 let kiss_fft_8,   kiss_input_8;
+let kiss_fft_16,  kiss_input_16;
 let kiss_fft_32,  kiss_input_32;
 let kiss_fft_128, kiss_input_128;
 let kiss_fft_256, kiss_input_256;
@@ -19,8 +21,12 @@ let kiss_fft_2048,kiss_input_2048;
 
 function initializeKISS(){
     return new Promise((resolve, reject) => {
+        kiss_fft_4 = new Module_KISS_.KissFftReal(4);
+        kiss_input_4 = kiss_fft_4.getInputTimeDataBuffer();
         kiss_fft_8 = new Module_KISS_.KissFftReal(8);
         kiss_input_8 = kiss_fft_8.getInputTimeDataBuffer();
+        kiss_fft_16 = new Module_KISS_.KissFftReal(16);
+        kiss_input_16 = kiss_fft_16.getInputTimeDataBuffer();
         kiss_fft_32 = new Module_KISS_.KissFftReal(32);
         kiss_input_32 = kiss_fft_32.getInputTimeDataBuffer();
         kiss_fft_128 = new Module_KISS_.KissFftReal(128);
@@ -61,7 +67,7 @@ const PLUGIN_KISS = {
   fft512:   function(testData) { perform_KISS(kiss_input_512,   kiss_fft_512,   testData); },
   fft1024:  function(testData) { perform_KISS(kiss_input_1024,  kiss_fft_1024,  testData); },
   fft2048:  function(testData) { perform_KISS(kiss_input_2048,  kiss_fft_2048,  testData); },
-  example:  function(testData) { return perform_KISS(kiss_input_8,  kiss_fft_8,  testData); },
+  example:  function(testData) { return perform_KISS(kiss_input_4,  kiss_fft_4,  testData); },
 };
 
 //////////////////////////////////////
