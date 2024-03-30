@@ -16,7 +16,7 @@ function fftReal8(realInput) {
         _iP8 = realInput;
     }
 
-    
+    /*
     //Bit Reversal
     {
         iBR8[0]=_iP8[0]; 
@@ -27,7 +27,8 @@ function fftReal8(realInput) {
         iBR8[5]=_iP8[5]; 
         iBR8[6]=_iP8[3]; 
         iBR8[7]=_iP8[7]; 
-    }
+    }*/
+    iBR8 = _iP8;
 
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
