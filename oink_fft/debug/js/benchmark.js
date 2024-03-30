@@ -218,8 +218,8 @@ function runErrorComparison(FFT_BANK, output_values){
 
     FFT_BANK.forEach((value, key) => {
         let precision = value.precision;
-        if(precision == "double"){      output_values.push( value.example(testData64).slice() );
-        }else if(precision == "float"){ output_values.push( value.example(testData32).slice() ); }
+        if(precision == "double"){      output_values.push( value.example(testData64.slice()).slice() );
+        }else if(precision == "float"){ output_values.push( value.example(testData32.slice()).slice() ); }
     });
     
     $("#out_slider").trigger('input');
