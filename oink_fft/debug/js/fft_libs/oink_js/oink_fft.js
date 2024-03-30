@@ -1,3 +1,4 @@
+import { fftReal8  } from './ffts/fft_8_unrolled.js'
 import { fftReal32  } from './ffts/fft_32_unrolled.js'
 import { fftReal128  } from './ffts/fft_128_unrolled.js'
 import { fftReal256  } from './ffts/fft_256_unrolled.js'
@@ -22,4 +23,5 @@ export {
     fftReal256,
     fftReal128,
     fftReal32,
+    fftReal8
 };
