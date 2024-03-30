@@ -67,7 +67,19 @@ const PLUGIN_KISS = {
   fft512:   function(testData) { perform_KISS(kiss_input_512,   kiss_fft_512,   testData); },
   fft1024:  function(testData) { perform_KISS(kiss_input_1024,  kiss_fft_1024,  testData); },
   fft2048:  function(testData) { perform_KISS(kiss_input_2048,  kiss_fft_2048,  testData); },
-  example:  function(testData) { return perform_KISS(kiss_input_8,  kiss_fft_8,  testData); },
+  example:  function(testData) { 
+    switch(testData.length){
+       case    8: return perform_KISS(kiss_input_8,    kiss_fft_8,   testData);
+       case   16: return perform_KISS(kiss_input_16,   kiss_fft_16,  testData);
+       case   32: return perform_KISS(kiss_input_32,   kiss_fft_32,  testData);
+       case   64: return perform_KISS(kiss_input_64,   kiss_fft_64,  testData);
+       case  128: return perform_KISS(kiss_input_128,  kiss_fft_128, testData);
+       case  256: return perform_KISS(kiss_input_256,  kiss_fft_256, testData);
+       case  512: return perform_KISS(kiss_input_512,  kiss_fft_512, testData);
+       case 1024: return perform_KISS(kiss_input_1024, kiss_fft_1024,testData);
+    }
+  }  
+
 };
 
 //////////////////////////////////////

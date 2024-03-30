@@ -63,7 +63,18 @@ const PLUGIN_INDUTNY = {
   fft512:   function(testData) { perform_INDUTNY(indutny_f_512,   indutny_out_512,   testData); },
   fft1024:  function(testData) { perform_INDUTNY(indutny_f_1024,  indutny_out_1024,  testData); },
   fft2048:  function(testData) { perform_INDUTNY(indutny_f_2048,  indutny_out_2048,  testData); },
-  example:  function(testData) { return perform_INDUTNY(indutny_f_8,  indutny_out_8,  testData); },
+  example:  function(testData) { 
+    switch(testData.length){
+       case    8: return perform_INDUTNY(indutny_f_8,    indutny_out_8,   testData);
+       case   16: return perform_INDUTNY(indutny_f_16,   indutny_out_16,  testData);
+       case   32: return perform_INDUTNY(indutny_f_32,   indutny_out_32,  testData);
+       case   64: return perform_INDUTNY(indutny_f_64,   indutny_out_64,  testData);
+       case  128: return perform_INDUTNY(indutny_f_128,  indutny_out_128, testData);
+       case  256: return perform_INDUTNY(indutny_f_256,  indutny_out_256, testData);
+       case  512: return perform_INDUTNY(indutny_f_512,  indutny_out_512, testData);
+       case 1024: return perform_INDUTNY(indutny_f_1024, indutny_out_1024,testData);
+    }
+  }  
 };
 
 //////////////////////////////////////

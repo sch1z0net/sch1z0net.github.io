@@ -62,7 +62,18 @@ const PLUGIN_DSP = {
   fft512:   function(testData) { perform_DSP(dsp_fft_512,  testData); },
   fft1024:  function(testData) { perform_DSP(dsp_fft_1024, testData); },
   fft2048:  function(testData) { perform_DSP(dsp_fft_2048, testData); },
-  example:  function(testData) { return perform_DSP(dsp_fft_8, testData); }
+  example:  function(testData) { 
+    switch(testData.length){
+       case    8: return perform_DSP(dsp_fft_8,    testData);
+       case   16: return perform_DSP(dsp_fft_16,   testData);
+       case   32: return perform_DSP(dsp_fft_32,   testData);
+       case   64: return perform_DSP(dsp_fft_64,   testData);
+       case  128: return perform_DSP(dsp_fft_128,  testData);
+       case  256: return perform_DSP(dsp_fft_256,  testData);
+       case  512: return perform_DSP(dsp_fft_512,  testData);
+       case 1024: return perform_DSP(dsp_fft_1024, testData);
+    }
+  }   
 };
 
 //////////////////////////////////////

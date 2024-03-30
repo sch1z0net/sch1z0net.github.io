@@ -28,7 +28,18 @@ const PLUGIN_OINK_js = {
   fft512:   function(testData) { perform_OINK_js(OINK_js.fftReal512,  testData); },
   fft1024:  function(testData) { perform_OINK_js(OINK_js.fftReal1024, testData); },
   fft2048:  function(testData) { perform_OINK_js(OINK_js.fftReal2048, testData); },
-  example:  function(testData) { return perform_OINK_js(OINK_js.fftReal8,  testData); },
+  example:  function(testData) { 
+    switch(testData.length){
+       case    8: return perform_OINK_js(OINK_js.fftReal8,     testData);
+       case   16: return perform_OINK_js(OINK_js.fftReal16,    testData);
+       case   32: return perform_OINK_js(OINK_js.fftReal32,    testData);
+       case   64: return perform_OINK_js(OINK_js.fftReal64,    testData);
+       case  128: return perform_OINK_js(OINK_js.fftReal128,   testData);
+       case  256: return perform_OINK_js(OINK_js.fftReal256,   testData);
+       case  512: return perform_OINK_js(OINK_js.fftReal512,   testData);
+       case 1024: return perform_OINK_js(OINK_js.fftReal1024,  testData);
+    }
+  }  
 };
 
 
