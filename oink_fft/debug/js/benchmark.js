@@ -19,6 +19,7 @@ const generateTestData = (size) => {
     return testData;
 };
 
+/*
 let testData8      = generateTestData(8);
 let testData16     = generateTestData(16);
 let testData32     = generateTestData(32);
@@ -29,7 +30,7 @@ let testData512    = generateTestData(512);
 let testData1024   = generateTestData(1024);
 let testData2048   = generateTestData(2048);
 let testData4096   = generateTestData(4096);
-
+*/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -208,9 +209,10 @@ async function runAllPerformanceTests(FFT_BANK, PARAMS, charts){
     }
 }
 
+let testData8 = Float32Array([1.0, 0.5, 0.0, -0.5, -1.0, -0.5, 0.0, 0.5]);
 
 function runErrorComparison(FFT_BANK, output_values){
-    let testData = generateTestData(32);
+    let testData = generateTestData(8);
     let testData32 = testData.slice();
     let testData64 = Float64Array.from(testData.slice());
 
