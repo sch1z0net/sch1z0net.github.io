@@ -95,6 +95,136 @@ function fftReal32(realInput) {
         out32[out_idx + 7] = -diff2;
     }
 
+    ////////////////////////////////////////////////
+    ////////////////////////////////////////////////
+    // RADIX 2 (rolled) - FFT step for SIZE 8 
+    ////////////////////////////////////////////////
+    { 
+     for (let j = 0; j < 4; j++) { 
+         let eI = 0 + j;
+         let oI = 0 + j + 4;
+         let eRe  = out32[eI * 2    ];
+         let eIm  = out32[eI * 2 + 1];
+         let oRe  = out32[oI * 2    ];
+         let oIm  = out32[oI * 2 + 1];
+         let tRe  = FFT_FAC_8[j * 2 + 0];
+         let tIm  = FFT_FAC_8[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out32[eI * 2    ] = eRe + t_oRe;
+         out32[eI * 2 + 1] = eIm + t_oIm;
+         out32[oI * 2    ] = eRe - t_oRe;
+         out32[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 4; j++) { 
+         let eI = 8 + j;
+         let oI = 8 + j + 4;
+         let eRe  = out32[eI * 2    ];
+         let eIm  = out32[eI * 2 + 1];
+         let oRe  = out32[oI * 2    ];
+         let oIm  = out32[oI * 2 + 1];
+         let tRe  = FFT_FAC_8[j * 2 + 0];
+         let tIm  = FFT_FAC_8[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out32[eI * 2    ] = eRe + t_oRe;
+         out32[eI * 2 + 1] = eIm + t_oIm;
+         out32[oI * 2    ] = eRe - t_oRe;
+         out32[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 4; j++) { 
+         let eI = 16 + j;
+         let oI = 16 + j + 4;
+         let eRe  = out32[eI * 2    ];
+         let eIm  = out32[eI * 2 + 1];
+         let oRe  = out32[oI * 2    ];
+         let oIm  = out32[oI * 2 + 1];
+         let tRe  = FFT_FAC_8[j * 2 + 0];
+         let tIm  = FFT_FAC_8[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out32[eI * 2    ] = eRe + t_oRe;
+         out32[eI * 2 + 1] = eIm + t_oIm;
+         out32[oI * 2    ] = eRe - t_oRe;
+         out32[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 4; j++) { 
+         let eI = 24 + j;
+         let oI = 24 + j + 4;
+         let eRe  = out32[eI * 2    ];
+         let eIm  = out32[eI * 2 + 1];
+         let oRe  = out32[oI * 2    ];
+         let oIm  = out32[oI * 2 + 1];
+         let tRe  = FFT_FAC_8[j * 2 + 0];
+         let tIm  = FFT_FAC_8[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out32[eI * 2    ] = eRe + t_oRe;
+         out32[eI * 2 + 1] = eIm + t_oIm;
+         out32[oI * 2    ] = eRe - t_oRe;
+         out32[oI * 2 + 1] = eIm - t_oIm;
+     }
+    } 
+    ////////////////////////////////////////////////
+    ////////////////////////////////////////////////
+    // RADIX 2 (rolled) - FFT step for SIZE 16 
+    ////////////////////////////////////////////////
+    { 
+     for (let j = 0; j < 8; j++) { 
+         let eI = 0 + j;
+         let oI = 0 + j + 8;
+         let eRe  = out32[eI * 2    ];
+         let eIm  = out32[eI * 2 + 1];
+         let oRe  = out32[oI * 2    ];
+         let oIm  = out32[oI * 2 + 1];
+         let tRe  = FFT_FAC_16[j * 2 + 0];
+         let tIm  = FFT_FAC_16[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out32[eI * 2    ] = eRe + t_oRe;
+         out32[eI * 2 + 1] = eIm + t_oIm;
+         out32[oI * 2    ] = eRe - t_oRe;
+         out32[oI * 2 + 1] = eIm - t_oIm;
+     }
+     for (let j = 0; j < 8; j++) { 
+         let eI = 16 + j;
+         let oI = 16 + j + 8;
+         let eRe  = out32[eI * 2    ];
+         let eIm  = out32[eI * 2 + 1];
+         let oRe  = out32[oI * 2    ];
+         let oIm  = out32[oI * 2 + 1];
+         let tRe  = FFT_FAC_16[j * 2 + 0];
+         let tIm  = FFT_FAC_16[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out32[eI * 2    ] = eRe + t_oRe;
+         out32[eI * 2 + 1] = eIm + t_oIm;
+         out32[oI * 2    ] = eRe - t_oRe;
+         out32[oI * 2 + 1] = eIm - t_oIm;
+     }
+    } 
+    ////////////////////////////////////////////////
+    ////////////////////////////////////////////////
+    // RADIX 2 (rolled) - FFT step for SIZE 32 
+    ////////////////////////////////////////////////
+    { 
+     for (let j = 0; j < 16; j++) { 
+         let eI = 0 + j;
+         let oI = 0 + j + 16;
+         let eRe  = out32[eI * 2    ];
+         let eIm  = out32[eI * 2 + 1];
+         let oRe  = out32[oI * 2    ];
+         let oIm  = out32[oI * 2 + 1];
+         let tRe  = FFT_FAC_32[j * 2 + 0];
+         let tIm  = FFT_FAC_32[j * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out32[eI * 2    ] = eRe + t_oRe;
+         out32[eI * 2 + 1] = eIm + t_oIm;
+         out32[oI * 2    ] = eRe - t_oRe;
+         out32[oI * 2 + 1] = eIm - t_oIm;
+     }
+    } 
 
     return out32;
 } 

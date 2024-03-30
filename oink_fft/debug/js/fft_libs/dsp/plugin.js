@@ -62,7 +62,7 @@ const PLUGIN_DSP = {
   fft512:   function(testData) { perform_DSP(dsp_fft_512,  testData); },
   fft1024:  function(testData) { perform_DSP(dsp_fft_1024, testData); },
   fft2048:  function(testData) { perform_DSP(dsp_fft_2048, testData); },
-  example:  function(testData) { return perform_DSP(dsp_fft_4, testData); }
+  example:  function(testData) { return perform_DSP(dsp_fft_8, testData); }
 };
 
 //////////////////////////////////////
