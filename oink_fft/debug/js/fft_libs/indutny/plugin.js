@@ -8,6 +8,7 @@ import IND_FFT from './fft.js';
 //////////////////////////////////////
 // PREPARE AND PERFORM INDUTNY
 //////////////////////////////////////
+let indutny_f_32,   indutny_out_32;
 let indutny_f_128,  indutny_out_128;
 let indutny_f_256,  indutny_out_256;
 let indutny_f_512,  indutny_out_512;
@@ -16,6 +17,8 @@ let indutny_f_2048, indutny_out_2048;
 
 function initializeINDUTNY(){
     return new Promise((resolve, reject) => {
+        indutny_f_32 = new IND_FFT(32);
+        indutny_out_32 = indutny_f_32.createComplexArray();
         indutny_f_128 = new IND_FFT(128);
         indutny_out_128 = indutny_f_128.createComplexArray();
         indutny_f_256 = new IND_FFT(256);
@@ -51,7 +54,7 @@ const PLUGIN_INDUTNY = {
   fft512:   function(testData) { perform_INDUTNY(indutny_f_512,   indutny_out_512,   testData); },
   fft1024:  function(testData) { perform_INDUTNY(indutny_f_1024,  indutny_out_1024,  testData); },
   fft2048:  function(testData) { perform_INDUTNY(indutny_f_2048,  indutny_out_2048,  testData); },
-  example:  function(testData) { return perform_INDUTNY(indutny_f_128,  indutny_out_128,  testData); },
+  example:  function(testData) { return perform_INDUTNY(indutny_f_32,  indutny_out_32,  testData); },
 };
 
 //////////////////////////////////////
