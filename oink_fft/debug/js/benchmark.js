@@ -210,7 +210,8 @@ async function runAllPerformanceTests(FFT_BANK, PARAMS, charts){
 }
 
 //let testData = new Float32Array([1.0, 0.5, 0.0, -0.5, -1.0, -0.5, 0.0, 0.5, 1.0, 0.5, 0.0, -0.5, -1.0, -0.5, 0.0, 0.5]);
-let testData = new Float32Array([1.0, 0.5, 0.2, -0.2, -1.0, -0.5, 0.6, 0.5]);
+//let testData = new Float32Array([1.0, 0.5, 0.2, -0.2, -1.0, -0.5, 0.6, 0.5]);
+let testData = new Float32Array([1.0, 0.5, 0.2, -0.2]);
 
 function runErrorComparison(FFT_BANK, output_values){
     //let testData = generateTestData(32);
