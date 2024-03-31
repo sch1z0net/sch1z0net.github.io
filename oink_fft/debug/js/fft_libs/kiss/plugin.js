@@ -69,6 +69,7 @@ const PLUGIN_KISS = {
   fft2048:  function(testData) { perform_KISS(kiss_input_2048,  kiss_fft_2048,  testData); },
   example:  function(testData) { 
     switch(testData.length){
+       case    4: return perform_KISS(kiss_input_4,    kiss_fft_4,   testData);
        case    8: return perform_KISS(kiss_input_8,    kiss_fft_8,   testData);
        case   16: return perform_KISS(kiss_input_16,   kiss_fft_16,  testData);
        case   32: return perform_KISS(kiss_input_32,   kiss_fft_32,  testData);

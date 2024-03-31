@@ -65,6 +65,7 @@ const PLUGIN_INDUTNY = {
   fft2048:  function(testData) { perform_INDUTNY(indutny_f_2048,  indutny_out_2048,  testData); },
   example:  function(testData) { 
     switch(testData.length){
+       case    4: return perform_INDUTNY(indutny_f_4,    indutny_out_4,   testData);
        case    8: return perform_INDUTNY(indutny_f_8,    indutny_out_8,   testData);
        case   16: return perform_INDUTNY(indutny_f_16,   indutny_out_16,  testData);
        case   32: return perform_INDUTNY(indutny_f_32,   indutny_out_32,  testData);

@@ -30,6 +30,7 @@ const PLUGIN_OINK_js = {
   fft2048:  function(testData) { perform_OINK_js(OINK_js.fftReal2048, testData); },
   example:  function(testData) { 
     switch(testData.length){
+       case    4: return perform_OINK_js(OINK_js.fftReal4,     testData);
        case    8: return perform_OINK_js(OINK_js.fftReal8,     testData);
        case   16: return perform_OINK_js(OINK_js.fftReal16,    testData);
        case   32: return perform_OINK_js(OINK_js.fftReal32,    testData);
