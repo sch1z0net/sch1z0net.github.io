@@ -195,7 +195,7 @@ function fftReal128(realInput) {
 
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
-    // RADIX 4 - FFT step for SIZE 4/8 
+    // RADIX 4 - FFT step for SIZE 2/4 
     ////////////////////////////////////////////////
 
     for (let idx = 0, out_idx = 0; idx < 128; idx += 4, out_idx += 8) {
@@ -221,400 +221,107 @@ function fftReal128(realInput) {
 
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
-    // RADIX 2 (rolled) - FFT step for SIZE 8 
+    // RADIX 4 - FFT step for SIZE 8/16 
     ////////////////////////////////////////////////
-    { 
-     for (let j = 0; j < 4; j++) { 
-         let eI = 0 + j;
-         let oI = 0 + j + 4;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_8[j * 2 + 0];
-         let tIm  = FFT_FAC_8[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 4; j++) { 
-         let eI = 8 + j;
-         let oI = 8 + j + 4;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_8[j * 2 + 0];
-         let tIm  = FFT_FAC_8[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 4; j++) { 
-         let eI = 16 + j;
-         let oI = 16 + j + 4;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_8[j * 2 + 0];
-         let tIm  = FFT_FAC_8[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 4; j++) { 
-         let eI = 24 + j;
-         let oI = 24 + j + 4;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_8[j * 2 + 0];
-         let tIm  = FFT_FAC_8[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 4; j++) { 
-         let eI = 32 + j;
-         let oI = 32 + j + 4;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_8[j * 2 + 0];
-         let tIm  = FFT_FAC_8[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 4; j++) { 
-         let eI = 40 + j;
-         let oI = 40 + j + 4;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_8[j * 2 + 0];
-         let tIm  = FFT_FAC_8[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 4; j++) { 
-         let eI = 48 + j;
-         let oI = 48 + j + 4;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_8[j * 2 + 0];
-         let tIm  = FFT_FAC_8[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 4; j++) { 
-         let eI = 56 + j;
-         let oI = 56 + j + 4;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_8[j * 2 + 0];
-         let tIm  = FFT_FAC_8[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 4; j++) { 
-         let eI = 64 + j;
-         let oI = 64 + j + 4;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_8[j * 2 + 0];
-         let tIm  = FFT_FAC_8[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 4; j++) { 
-         let eI = 72 + j;
-         let oI = 72 + j + 4;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_8[j * 2 + 0];
-         let tIm  = FFT_FAC_8[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 4; j++) { 
-         let eI = 80 + j;
-         let oI = 80 + j + 4;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_8[j * 2 + 0];
-         let tIm  = FFT_FAC_8[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 4; j++) { 
-         let eI = 88 + j;
-         let oI = 88 + j + 4;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_8[j * 2 + 0];
-         let tIm  = FFT_FAC_8[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 4; j++) { 
-         let eI = 96 + j;
-         let oI = 96 + j + 4;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_8[j * 2 + 0];
-         let tIm  = FFT_FAC_8[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 4; j++) { 
-         let eI = 104 + j;
-         let oI = 104 + j + 4;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_8[j * 2 + 0];
-         let tIm  = FFT_FAC_8[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 4; j++) { 
-         let eI = 112 + j;
-         let oI = 112 + j + 4;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_8[j * 2 + 0];
-         let tIm  = FFT_FAC_8[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 4; j++) { 
-         let eI = 120 + j;
-         let oI = 120 + j + 4;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_8[j * 2 + 0];
-         let tIm  = FFT_FAC_8[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-    } 
-    ////////////////////////////////////////////////
-    ////////////////////////////////////////////////
-    // RADIX 2 (rolled) - FFT step for SIZE 16 
-    ////////////////////////////////////////////////
-    { 
-     for (let j = 0; j < 8; j++) { 
-         let eI = 0 + j;
-         let oI = 0 + j + 8;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_16[j * 2 + 0];
-         let tIm  = FFT_FAC_16[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 8; j++) { 
-         let eI = 16 + j;
-         let oI = 16 + j + 8;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_16[j * 2 + 0];
-         let tIm  = FFT_FAC_16[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 8; j++) { 
-         let eI = 32 + j;
-         let oI = 32 + j + 8;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_16[j * 2 + 0];
-         let tIm  = FFT_FAC_16[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 8; j++) { 
-         let eI = 48 + j;
-         let oI = 48 + j + 8;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_16[j * 2 + 0];
-         let tIm  = FFT_FAC_16[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 8; j++) { 
-         let eI = 64 + j;
-         let oI = 64 + j + 8;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_16[j * 2 + 0];
-         let tIm  = FFT_FAC_16[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 8; j++) { 
-         let eI = 80 + j;
-         let oI = 80 + j + 8;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_16[j * 2 + 0];
-         let tIm  = FFT_FAC_16[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 8; j++) { 
-         let eI = 96 + j;
-         let oI = 96 + j + 8;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_16[j * 2 + 0];
-         let tIm  = FFT_FAC_16[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     for (let j = 0; j < 8; j++) { 
-         let eI = 112 + j;
-         let oI = 112 + j + 8;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_16[j * 2 + 0];
-         let tIm  = FFT_FAC_16[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-    } 
+
+    for (let idx = 0; idx < 256; idx += 32) {
+        let x0aRe = out128[idx     ];
+        let x0bRe = out128[idx +  2];
+        let x0bIm = out128[idx +  3];
+        let x0cRe = out128[idx +  4];
+
+        let x1aRe = out128[idx +  8];
+        out128[idx +   8] = x0aRe - x1aRe;
+        let x1bRe = out128[idx + 10];
+        let x1bIm = out128[idx + 11];
+        let x1cRe = out128[idx + 12];
+
+        let x2aRe = out128[idx + 16];
+        let x2bRe = out128[idx + 18];
+        let x2bIm = out128[idx + 19];
+        let x2cRe = out128[idx + 20];
+
+        let x3aRe = out128[idx + 24];
+        out128[idx +  24] = x0aRe - x1aRe;
+        out128[idx +  25] = x3aRe - x2aRe;
+        let x3bRe = out128[idx + 26];
+        let x3bIm = out128[idx + 27];
+        let x3cRe = out128[idx + 28];
+        out128[idx      ] = x0aRe + x1aRe + x2aRe + x3aRe;
+        out128[idx +   9] = x2aRe - x3aRe;
+        out128[idx +  16] = x0aRe + x1aRe - x2aRe - x3aRe;
+
+        let t1Re_2c = -0.0000000437113883;
+
+        let x2cRe_tRe_2c = x2cRe * t1Re_2c;
+        let x3cRe_tRe_2c = x3cRe * t1Re_2c;
+
+        let resReC1 = x0cRe + x2cRe_tRe_2c - x3cRe_tRe_2c;
+        out128[idx +  28] =   resReC1;
+        out128[idx +   4] =   resReC1;
+        let resImC1 = x1cRe + x2cRe_tRe_2c + x3cRe_tRe_2c;
+        out128[idx +   5] =   resImC1;
+        out128[idx +  29] = - resImC1;
+        let resReC2 = x0cRe - x2cRe_tRe_2c + x3cRe_tRe_2c;
+        out128[idx +  20] =   resReC2;
+        out128[idx +  12] =   resReC2;
+        let resImC2 = x1cRe - x2cRe_tRe_2c - x3cRe_tRe_2c;
+        out128[idx +  13] = - resImC2;
+        out128[idx +  21] =   resImC2;
+
+        let x1dif = (x1bRe-x1bIm);
+        let x1sum = (x1bRe+x1bIm);
+        let x3dif = (x3bRe-x3bIm);
+        let x3sum = (x3bRe+x3bIm);
+
+        let t1Re_1b = 0.9238795042037964;
+
+        let x1dif_tRe_1b = x1dif * t1Re_1b;
+        let x1sum_tRe_1b = x1sum * t1Re_1b;
+
+        let t1Re_1b2b = 0.6532814502716064;
+        let t1Re_1b2d = -0.6532814502716064;
+
+        let x3dif_tRe_1b2b = x3dif * t1Re_1b2b;
+        let x3dif_tRe_1b2d = x3dif * t1Re_1b2d;
+        let x3sum_tRe_1b2b = x3sum * t1Re_1b2b;
+        let x3sum_tRe_1b2d = x3sum * t1Re_1b2d;
+
+        let t1Re_2b = 0.7071067690849304;
+        let t1Re_2d = -0.7071067690849304;
+
+        let tempReB = (x3dif_tRe_1b2b - x3sum_tRe_1b2d + x2bRe*t1Re_2b - x2bIm*t1Re_2d);
+        let tempImB = (x3dif_tRe_1b2d + x3sum_tRe_1b2b + x2bRe*t1Re_2d + x2bIm*t1Re_2b);
+        let tempReD = (x3dif_tRe_1b2d + x3sum_tRe_1b2b - x2bRe*t1Re_2d - x2bIm*t1Re_2b);
+        let tempImD = (x3dif_tRe_1b2b - x3sum_tRe_1b2d - x2bRe*t1Re_2b + x2bIm*t1Re_2d);
+
+        let resReB1 = x0bRe  + x1dif_tRe_1b + tempReB;
+        out128[idx +   2] =   resReB1;
+        out128[idx +  30] =   resReB1;
+        let resReB2 = x0bRe  + x1dif_tRe_1b - tempReB;
+        out128[idx +  18] =   resReB2;
+        out128[idx +  14] =   resReB2;
+        let resReD1 = x0bRe  - x1dif_tRe_1b - tempReD;
+        out128[idx +   6] =   resReD1;
+        out128[idx +  26] =   resReD1;
+        let resReD2 = x0bRe  - x1dif_tRe_1b + tempReD;
+        out128[idx +  22] =   resReD2;
+        out128[idx +  10] =   resReD2;
+
+        let resImB1 = x0bIm  + x1sum_tRe_1b + tempImB;
+        out128[idx +   3] =   resImB1;
+        out128[idx +  31] = - resImB1;
+        let resImB2 = x0bIm  + x1sum_tRe_1b - tempImB;
+        out128[idx +  19] =   resImB2;
+        out128[idx +  15] = - resImB2;
+        let resImD1 =-x0bIm  + x1sum_tRe_1b - tempImD;
+        out128[idx +   7] =   resImD1;
+        out128[idx +  27] = - resImD1;
+        let resImD2 =-x0bIm  + x1sum_tRe_1b + tempImD;
+        out128[idx +  23] =   resImD2;
+        out128[idx +  11] = - resImD2;
+    }
+
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     // RADIX 2 (rolled) - FFT step for SIZE 32 
