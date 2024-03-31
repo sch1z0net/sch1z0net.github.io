@@ -1,5 +1,5 @@
 let FFT_FAC_4 = new Float32Array([
-1.0000000000000000,0.0000000000000000,-0.0000000437113883,1.0000000000000000
+1.0000000000000000,-0.0000000000000000,-0.0000000437113883,-1.0000000000000000
 ]);
 
 
@@ -39,10 +39,10 @@ function fftReal4(realInput) {
         let x2aRe = iBR4[idx + 2];
         let x3aRe = iBR4[idx + 3];
 
-        let sum1  = x0aRe + x1aRe;
-        let sum2  = x2aRe + x3aRe;
-        let diff1 = x0aRe - x1aRe;
-        let diff2 = x2aRe - x3aRe;
+        let sum1  =   x0aRe + x1aRe;
+        let sum2  =   x2aRe + x3aRe;
+        let diff1 =   x0aRe - x1aRe;
+        let diff2 =   x3aRe - x2aRe;
 
         out4[out_idx]     = sum1 + sum2;
         out4[out_idx + 1] = 0.0;
