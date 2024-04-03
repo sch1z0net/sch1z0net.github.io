@@ -5,8 +5,17 @@ let FFT_FAC_8 = new Float32Array([
 1.0000000000000000,-0.0000000000000000,0.7071067690849304,-0.7071067690849304,-0.0000000437113883,-1.0000000000000000,-0.7071067690849304,-0.7071067690849304
 ]);
 let FFT_FAC_16 = new Float32Array([
-1.0000000000000000,-0.0000000000000000,0.9238795042037964,-0.3826834559440613,0.7071067690849304,-0.7071067690849304,0.3826834261417389,-0.9238795042037964,
--0.0000000437113883,-1.0000000000000000,-0.3826833963394165,-0.9238795638084412,-0.7071067690849304,-0.7071067690849304,-0.9238795042037964,-0.3826834857463837
+1.0000000000000000,-0.0000000000000000,
+
+0.9238795042037964,-0.3826834559440613,
+0.7071067690849304,-0.7071067690849304,
+0.3826834261417389,-0.9238795042037964,
+
+-0.0000000437113883,-1.0000000000000000,
+
+-0.3826833963394165,-0.9238795638084412,
+-0.7071067690849304,-0.7071067690849304,
+-0.9238795042037964,-0.3826834857463837
 ]);
 
 
@@ -77,104 +86,84 @@ function fftReal16(realInput) {
     ////////////////////////////////////////////////
     // RADIX 4 - FFT step for SIZE 8/16 
     ////////////////////////////////////////////////
+    {
+         let x0re = out16[ 0]; let x0im = out16[ 1];
 
-    for (let idx = 0; idx < 32; idx += 32) {
-        let x0aRe = out16[idx     ];
-        let x0bRe = out16[idx +  2];
-        let x0bIm = out16[idx +  3];
-        let x0cRe = out16[idx +  4];
+         let x1re = out16[ 2]; let x1im = out16[ 3];
+         let x2re = out16[ 4]; let x2im = out16[ 5];
+         let x3re = out16[ 6]; let x3im = out16[ 7];
 
-        let x1aRe = out16[idx +  8];
-        out16[idx +   8] = x0aRe - x1aRe;
-        let x1bRe = out16[idx + 10];
-        let x1bIm = out16[idx + 11];
-        let x1cRe = out16[idx + 12];
+         let x4re = out16[ 8]; let x4im = out16[ 9];
+         
+         let x5re = out16[10]; let x5im = out16[11];
+         let x6re = out16[12]; let x6im = out16[13];
+         let x7re = out16[14]; let x7im = out16[15];
 
-        let x2aRe = out16[idx + 16];
-        let x2bRe = out16[idx + 18];
-        let x2bIm = out16[idx + 19];
-        let x2cRe = out16[idx + 20];
+         let x8re = out16[16]; let x8im = out16[17]; //Nyquist
 
-        let x3aRe = out16[idx + 24];
-        out16[idx +  24] = x0aRe - x1aRe;
-        out16[idx +  25] = x3aRe - x2aRe;
-        let x3bRe = out16[idx + 26];
-        let x3bIm = out16[idx + 27];
-        let x3cRe = out16[idx + 28];
-        out16[idx      ] = x0aRe + x1aRe + x2aRe + x3aRe;
-        out16[idx +   9] = x2aRe - x3aRe;
-        out16[idx +  16] = x0aRe + x1aRe - x2aRe - x3aRe;
+         let t1re  = FFT_FAC_16[2];
+         let t2re  = FFT_FAC_16[4];
+         let t3re  = FFT_FAC_16[6];
 
-        let t1Re_2c = 0.7071067690849304;
+         out16[0]  = x0re + x8re;
+         out16[1]  = x0im + x8im;
+         out16[16] = x0re - x8re;
+         out16[17] = x0im - x8im;
 
-        let x2cRe_tRe_2c = x2cRe * t1Re_2c;
-        let x3cRe_tRe_2c = x3cRe * t1Re_2c;
 
-        let resReC1 = x0cRe + x2cRe_tRe_2c - x3cRe_tRe_2c;
-        out16[idx +  28] =   resReC1;
-        out16[idx +   4] =   resReC1;
-        let resImC1 = x1cRe + x2cRe_tRe_2c + x3cRe_tRe_2c;
-        out16[idx +   5] =   resImC1;
-        out16[idx +  29] = - resImC1;
-        let resReC2 = x0cRe - x2cRe_tRe_2c + x3cRe_tRe_2c;
-        out16[idx +  20] =   resReC2;
-        out16[idx +  12] =   resReC2;
-        let resImC2 = x1cRe - x2cRe_tRe_2c - x3cRe_tRe_2c;
-        out16[idx +  13] = - resImC2;
-        out16[idx +  21] =   resImC2;
+         let res2  =  x1re + (x1re *  t1re  + x1im * -t3re);
+         let res3  =  x1im + (x1re * -t3re  - x1im *  t1re); 
+         let res18 =  x1re - (x1re *  t1re  + x1im * -t3re);
+         let res19 =  x1im - (x1re * -t3re  - x1im *  t1re);
+         out16[2]  =  res2;
+         out16[3]  =  res3;
+         out16[18] =  res18;
+         out16[19] =  res19;
 
-        let x1dif = (x1bRe-x1bIm);
-        let x1sum = (x1bRe+x1bIm);
-        let x3dif = (x3bRe-x3bIm);
-        let x3sum = (x3bRe+x3bIm);
+         out16[14] =  res18;
+         out16[15] = -res19;
+         out16[30] =  res2;
+         out16[31] = -res3;
 
-        let t1Re_1b = 0.7071067690849304;
 
-        let x1dif_tRe_1b = x1dif * t1Re_1b;
-        let x1sum_tRe_1b = x1sum * t1Re_1b;
+         let res4  = x2re + (x6re *  t2Re - x6im * -t2re);
+         let res5  = x2im + (x6re * -t2re + x6im *  t2Re);
+         let res20 = x2re - (x6re *  t2Re - x6im * -t2re);
+         let res21 = x2im - (x6re * -t2re + x6im *  t2Re);
+         out16[4]  =  res4;
+         out16[5]  =  res5;
+         out16[20] =  res20;
+         out16[21] =  res21;
 
-        let t1Re_1b2b = 0.6532814502716064;
-        let t1Re_1b2d = 0.2705980539321899;
+         out16[12] =  res20;
+         out16[13] = -res21;
+         out16[27] =  res4;
+         out16[28] = -res5;
 
-        let x3dif_tRe_1b2b = x3dif * t1Re_1b2b;
-        let x3dif_tRe_1b2d = x3dif * t1Re_1b2d;
-        let x3sum_tRe_1b2b = x3sum * t1Re_1b2b;
-        let x3sum_tRe_1b2d = x3sum * t1Re_1b2d;
 
-        let t1Re_2b = 0.9238795042037964;
-        let t1Re_2d = 0.3826834261417389;
+         let res6  = x3re + (x5re *  t3re - x5im * -t1re);
+         let res7  = x3im + (x5re * -t1re + x5im *  t3re);
+         let res22 = x3re - (x5re *  t3re - x5im * -t1re);
+         let res23 = x3im - (x5re * -t1re + x5im *  t3re);
+         out16[6]  =  res6;
+         out16[7]  =  res7;
+         out16[22] =  res22;
+         out16[23] =  res23;
 
-        let tempReB = (x3dif_tRe_1b2b - x3sum_tRe_1b2d + x2bRe*t1Re_2b - x2bIm*t1Re_2d);
-        let tempImB = (x3dif_tRe_1b2d + x3sum_tRe_1b2b + x2bRe*t1Re_2d + x2bIm*t1Re_2b);
-        let tempReD = (x3dif_tRe_1b2d + x3sum_tRe_1b2b - x2bRe*t1Re_2d - x2bIm*t1Re_2b);
-        let tempImD = (x3dif_tRe_1b2b - x3sum_tRe_1b2d - x2bRe*t1Re_2b + x2bIm*t1Re_2d);
+         out16[10] =  res22;
+         out16[11] = -res23;
+         out16[26] =  res6;
+         out16[27] = -res7;
 
-        let resReB1 = x0bRe  + x1dif_tRe_1b + tempReB;
-        out16[idx +   2] =   resReB1;
-        out16[idx +  30] =   resReB1;
-        let resReB2 = x0bRe  + x1dif_tRe_1b - tempReB;
-        out16[idx +  18] =   resReB2;
-        out16[idx +  14] =   resReB2;
-        let resReD1 = x0bRe  - x1dif_tRe_1b - tempReD;
-        out16[idx +   6] =   resReD1;
-        out16[idx +  26] =   resReD1;
-        let resReD2 = x0bRe  - x1dif_tRe_1b + tempReD;
-        out16[idx +  22] =   resReD2;
-        out16[idx +  10] =   resReD2;
 
-        let resImB1 = x0bIm  + x1sum_tRe_1b + tempImB;
-        out16[idx +   3] =   resImB1;
-        out16[idx +  31] = - resImB1;
-        let resImB2 = x0bIm  + x1sum_tRe_1b - tempImB;
-        out16[idx +  19] =   resImB2;
-        out16[idx +  15] = - resImB2;
-        let resImD1 =-x0bIm  + x1sum_tRe_1b - tempImD;
-        out16[idx +   7] =   resImD1;
-        out16[idx +  27] = - resImD1;
-        let resImD2 =-x0bIm  + x1sum_tRe_1b + tempImD;
-        out16[idx +  23] =   resImD2;
-        out16[idx +  11] = - resImD2;
+         let res8  =   x4re + x4im;
+         let res9  =  -x4re + x4im;
+         out16[8]  =   res8;
+         out16[9]  =   res9;
+         out16[24] =  -res9;
+         out16[25] =   res8;
     }
+
 
 
     return out16;
