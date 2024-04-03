@@ -129,12 +129,15 @@ function fftReal16(realInput) {
          let res20 =  x2re;
          let res21 =  x6re;
          out16[4]  =  res4;
-         out16[5]  =  res5;
-
-         out16[12] =  res20;
-         out16[13] = -res21;
+         out16[5]  =  res5;*/
 
 
+/*
+            out16[12] =  xA2re;
+            out16[13] = -xA6re;
+*/
+
+/*
             out16[16]  = out16[16] + out16[24];
             out16[17]  = 0;*/
 
@@ -150,7 +153,7 @@ function fftReal16(realInput) {
          let x4re = xA0re - xA4re; let x4im = 0;
          
          //let x5re = out16[10]; let x5im = out16[11];
-         //let x6re = out16[12]; let x6im = out16[13];
+         //let x6re = xA2re;     let x6im = -xA6re;
          //let x7re = out16[14]; let x7im = out16[15];
 
          let x8re = out16[16] + out16[24]; let x8im = 0; //Nyquist
@@ -181,17 +184,19 @@ function fftReal16(realInput) {
          out16[31] = -res3;
 
 
-         let res4  = x2re + (x2re *  t2re + x2im * -t2re);
-         let res5  = x2im + (x2re * -t2re - x2im *  t2re);
-         let res20 = x2re - (x2re *  t2re + x2im * -t2re);
-         let res21 = x2im - (x2re * -t2re - x2im *  t2re);
-         out16[4]  =  res4;
-         out16[5]  =  res5;
+
+
+         let res4  = x2re + (x2re *  t2re - x2im * -t2re);
+         let res5  = x2im + (x2re * -t2re + x2im *  t2re);
+         let res20 = x2re - (x2re *  t2re - x2im * -t2re);
+         let res21 = x2im - (x2re * -t2re + x2im *  t2re);
+         out16[4]  =  res4;  //
+         out16[5]  =  res5;  //
          out16[20] =  res20;
          out16[21] =  res21;
 
-         out16[12] =  res20;
-         out16[13] = -res21;
+         out16[12] =  res20; //
+         out16[13] = -res21; //
          out16[27] =  res4;
          out16[28] = -res5;
 
@@ -209,12 +214,12 @@ function fftReal16(realInput) {
          out16[11] = -res23;
          out16[26] =  res6;
          out16[27] = -res7;
-         
+
 
          let res8  = x4re + x4re *  t2re;
          let res9  = x4im + x4re * -t2re;
-         out16[8]  =   res8;
-         out16[9]  =   res9;
+         out16[8]  =   res8; //
+         out16[9]  =   res9; //
          out16[24] =  -res9;
          out16[25] =   res8;
     }
