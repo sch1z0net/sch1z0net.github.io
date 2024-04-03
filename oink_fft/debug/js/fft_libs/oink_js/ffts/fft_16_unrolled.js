@@ -124,65 +124,27 @@ function fftReal16(realInput) {
             out16[14]  =  resA2;
             out16[15]  = -resA3;
 
-            out16[4]   =   xA2re;
-            out16[5]   = - xA6re;
-            out16[12]  =   xA2re;
-            out16[13]  =   xA6re;
+         let res4  =  x2re;
+         let res5  = -x6re;
+         let res20 =  x2re;
+         let res21 =  x6re;
+         out16[4]  =  res4;
+         out16[5]  =  res5;
+
+         out16[12] =  res20;
+         out16[13] = -res21;
 
 
             out16[16]  = out16[16] + out16[24];
             out16[17]  = 0;*/
 
 
-/*
-            let x0re  = out16[0+16];
-            let x0im  = out16[1+16];
-            let x4re  = out16[8+16];
-            let x4im  = out16[9+16];
-
-            let x1re  = out16[2+16];
-            let x1im  = out16[3+16];
-            let x5re  = out16[10+16];
-            let x5im  = out16[11+16];
-
-            let x2re  = out16[4+16];
-            let x2im  = out16[5+16];
-            let x6re  = out16[12+16];
-            let x6im  = out16[13+16];
-
-            let t1re  = FFT_FAC_8[2];
-
-            out16[0+16]  = x0re + x4re;
-            out16[1+16]  = x0im + x4im;
-            out16[8+16]  = x0re - x4re;
-            out16[9+16]  = x0im - x4im;
-            
-            let res2   = eRe + (oRe *  t1re - oIm * -t1re);
-            let res3   = eIm + (oRe * -t1re + oIm *  t1re); 
-            let res10  = eRe - (oRe *  t1re - oIm * -t1re);
-            let res11  = eIm - (oRe * -t1re + oIm *  t1re);
-            out16[2+16]   = res2;
-            out16[3+16]   = res3;
-            out16[10+16]  = res10;
-            out16[11+16]  = res11;
-
-            out16[6+16]   =  res10;
-            out16[7+16]   = -res11;
-            out16[14+16]  =  res2;
-            out16[15+16]  = -res3;
-
-            out16[4+16]   = x2re + x6im;
-            out16[5+16]   = x2im - x6re;
-            out16[12+16]  = x2re - x6im;
-            out16[13+16]  = x2im + x6re;
-*/
-
 
 
          let x0re = xA0re + xA4re; let x0im = 0;
 
          let x1re = resA2;         let x1im =   resA3;
-         let x2re = xA2re;         let x2im = - xA6re;
+         let x2re = xA2re;         let x2im = -xA6re;
          let x3re = resA10;        let x3im = -resA11;
 
          let x4re = xA0re - xA4re; let x4im = 0;
