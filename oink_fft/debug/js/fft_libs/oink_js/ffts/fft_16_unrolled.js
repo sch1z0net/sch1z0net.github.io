@@ -191,9 +191,9 @@ function fftReal16(realInput) {
          let res20 = x2re - (x6re *  t2Re - x6im * -t2re);
          let res21 = x2im - (x6re * -t2re + x6im *  t2Re);*/
 
-         let res4  = x2re + (x2re *  t2Re);
+         let res4  = x2re + (x2re *  t2re);
          let res5  =        (x2re * -t2re);
-         let res20 = x2re - (x2re *  t2Re);
+         let res20 = x2re - (x2re *  t2re);
          let res21 =      - (x2re * -t2re);
          out16[4]  =  res4;
          out16[5]  =  res5;
