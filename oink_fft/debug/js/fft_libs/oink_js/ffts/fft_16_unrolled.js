@@ -159,6 +159,8 @@ function fftReal16(realInput) {
          //let x7re = out16[14]; let x7im = out16[15];
 
          let x8re = out16[16] + out16[24]; let x8im = 0; //Nyquist
+         //let x9re  = x7re;
+         //let x10re = x6re; 
 
          let t1re  = FFT_FAC_16[2];
          let t2re  = FFT_FAC_16[4];
@@ -186,17 +188,12 @@ function fftReal16(realInput) {
          out16[31] = -res3;
 
 
-         /*let res4  = x2re + (x6re *  t2Re - x6im * -t2re);
-         let res5  = x2im + (x6re * -t2re + x6im *  t2Re);
-         let res20 = x2re - (x6re *  t2Re - x6im * -t2re);
-         let res21 = x2im - (x6re * -t2re + x6im *  t2Re);*/
-
-         let res4  = x2re + (x2re *  t2re);
-         let res5  =        (x2re * -t2re);
-         let res20 = x2re - (x2re *  t2re);
-         let res21 =      - (x2re * -t2re);
-         out16[4]  =  res4;
-         out16[5]  =  res5;
+         let res4  = x2re + (x6re *  t2re + x6im * -t2re);
+         let res5  = x2im + (x6re * -t2re - x6im *  t2re);
+         let res20 = x2re - (x6re *  t2re + x6im * -t2re);
+         let res21 = x2im - (x6re * -t2re - x6im *  t2re);
+         out16[4]  =  res4;  //
+         out16[5]  =  res5;  //
          out16[20] =  res20;
          out16[21] =  res21;
 
