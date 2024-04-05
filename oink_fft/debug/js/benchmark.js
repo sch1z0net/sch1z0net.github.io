@@ -211,12 +211,12 @@ async function runAllPerformanceTests(FFT_BANK, PARAMS, charts){
 
 
 //let testData = new Float32Array([1.0, 0.5, 0.0, -0.5, -1.0, -0.5, 0.0, 0.5, 1.0, 0.5, 0.0, -0.5, -1.0, -0.5, 0.0, 0.5, 1.0, 0.5, 0.0, -0.5, -1.0, -0.5, 0.0, 0.5, 1.0, 0.5, 0.0, -0.5, -1.0, -0.5, 0.0, 0.5]);
-let testData = new Float32Array([1.0, 0.2, 0.1, -0.5, -1.0, -0.2, 0.1, 0.7, 1.0, 0.2, 0.3, -0.5, -1.0, -0.2, 0.1, 0.5]); //16
+//let testData = new Float32Array([1.0, 0.2, 0.1, -0.5, -1.0, -0.2, 0.1, 0.7, 1.0, 0.2, 0.3, -0.5, -1.0, -0.2, 0.1, 0.5]); //16
 //let testData = new Float32Array([1.0, 0.2, 0.1, -0.5, -1.0, -0.2, 0.1, 0.7]);
 //let testData = new Float32Array([1.0, 0.5, 0.2, -0.2]);
 
 function runErrorComparison(FFT_BANK, output_values){
-    //let testData = generateTestData(32);
+    let testData = generateTestData(128);
     let testData32 = testData.slice();
     let testData64 = Float64Array.from(testData.slice());
 
