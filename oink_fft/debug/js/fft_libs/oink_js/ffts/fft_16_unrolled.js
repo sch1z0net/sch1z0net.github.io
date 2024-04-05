@@ -352,15 +352,15 @@ function fftReal16(realInput) {
          let res5  = x2im + (x10re * -t2re + x10im *  t2re);
          let res20 = x2re - (x10re *  t2re - x10im * -t2re);
          let res21 = x2im - (x10re * -t2re + x10im *  t2re);
-         out16[4]  =  res4;  //
-         out16[5]  =  res5;  //
+         out16[4]  =  res4;
+         out16[5]  =  res5;
          out16[20] =  res20;
          out16[21] =  res21;
 
          out16[12] =  res20;
          out16[13] = -res21;
-         out16[27] =  res4;
-         out16[28] = -res5;
+         out16[28] =  res4;
+         out16[29] = -res5;
 
 
          // float eRe  = out16[6];
