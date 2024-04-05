@@ -62,6 +62,9 @@ const PLUGIN_KISS = {
     Module_KISS_ = await Module_KISS.default();
     await initializeKISS();
   },
+  fft8:     function(testData) { perform_KISS(kiss_input_8,     kiss_fft_8,     testData); },
+  fft16:    function(testData) { perform_KISS(kiss_input_16,    kiss_fft_16,    testData); },
+  fft32:    function(testData) { perform_KISS(kiss_input_32,    kiss_fft_32,    testData); },
   fft128:   function(testData) { perform_KISS(kiss_input_128,   kiss_fft_128,   testData); },
   fft256:   function(testData) { perform_KISS(kiss_input_256,   kiss_fft_256,   testData); },
   fft512:   function(testData) { perform_KISS(kiss_input_512,   kiss_fft_512,   testData); },
