@@ -396,20 +396,18 @@ function fftReal16(realInput) {
          // float oRe  = out16[24];
          // float oIm  = out16[25];
 
-         // float tRe = FFT_FAC_16[8];
-         // float tIm = FFT_FAC_16[9];
+         // float tRe = FFT_FAC_16[8];   0
+         // float tIm = FFT_FAC_16[9];  -1
         
-         // out16[8]  = eRe + (oRe * tRe - oIm * tIm);
-         // out16[9]  = eIm + (oRe * tIm + oIm * tRe);
-         // out16[24] = eRe - (oRe * tRe - oIm * tIm);
-         // out16[25] = eIm - (oRe * tIm + oIm * tRe);
+         // out16[8]  = x4re + (x12im);
+         // out16[9]  = x4im - (x12re);
+         // out16[24] = x4re - (x12im);
+         // out16[25] = x4im + (x12re);
 
-         let res8  = x4re + x12re *  t2re;
-         let res9  = x4im + x12re * -t2re;
-         out16[8]  =   res8; //
-         out16[9]  =   res9; //
-         out16[24] =  -res9;
-         out16[25] =   res8;
+         out16[8]  =   x4re + x12im;
+         out16[9]  =   x4im - x12re;
+         out16[24] =   x4re - x12im;
+         out16[25] =   x4im + x12re;
     }
 
 
