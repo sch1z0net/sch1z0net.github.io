@@ -164,7 +164,7 @@ function fftReal16(realInput) {
 
          //FFT_FAC_8[2]
          //FFT_FAC_8[3]
-         float tRe = 0.7071067690849304;  //FFT_FAC_8[2];
+         let tRe = 0.7071067690849304;  //FFT_FAC_8[2];
          let resA2  = xA1re + (xA9re * tRe - xA9im *-tRe);
          let resA3  = xA1im + (xA9re *-tRe + xA9im * tRe);
          let resA18 = xA1re - (xA9re * tRe - xA9im *-tRe);
