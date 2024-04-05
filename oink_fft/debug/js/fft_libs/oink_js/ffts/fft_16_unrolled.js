@@ -2,7 +2,7 @@ let FFT_FAC_4 = new Float32Array([
 1.0000000000000000,-0.0000000000000000,-0.0000000437113883,-1.0000000000000000
 ]);
 let FFT_FAC_8 = new Float32Array([
-1.0000000000000000,-0.0000000000000000,0.7071067690849304,-0.7071067690849304,-0.0000000437113883,-1.0000000000000000,-0.7071067690849304,-0.7071067690849304
+1.0000000000000000,-0.0000000000000000,0.7071067690849304,-0.707690849304,-0.0000000437113883,-1.0000000000000000,-0.7071067690849304,-0.7071067690849304
 ]);
 let FFT_FAC_16 = new Float32Array([
 1.0000000000000000,-0.0000000000000000,
@@ -103,69 +103,204 @@ function fftReal16(realInput) {
             let xA6re  = out16[12];
             let xA6im  = 0;
 
-            /*out16[0]  = xA0re + xA4re;
-            out16[1]  = 0;
-            out16[8]  = xA0re - xA4re;
-            out16[9]  = 0;*/
-
-            let tA1re  = FFT_FAC_8[2];
-            let resA2   = xA1re + (xA5re *  tA1re - xA5im * -tA1re);
-            let resA3   = xA1im + (xA5re * -tA1re + xA5im *  tA1re); 
-            let resA10  = xA1re - (xA5re *  tA1re - xA5im * -tA1re);
-            let resA11  = xA1im - (xA5re * -tA1re + xA5im *  tA1re);
-            
-            /*out16[2]   = resA2;
-            out16[3]   = resA3;
-            out16[10]  = resA10;
-            out16[11]  = resA11;
-
-            out16[6]   =  resA10;
-            out16[7]   = -resA11;
-            out16[14]  =  resA2;
-            out16[15]  = -resA3;
-
-         let res4  =  x2re;
-         let res5  = -x6re;
-         let res20 =  x2re;
-         let res21 =  x6re;
-         out16[4]  =  res4;
-         out16[5]  =  res5;*/
+            let xA3re  =  xA1re;
+            let xA3im  = -xA1im;
+            let xA7re  =  xA5re;
+            let xA7im  = -xA5im;
 
 
-/*
-            let resA2   = xA2re + (xA6re *  tA2re - xA6im *  im);
-            let resA3   = xA2im + (xA6re *  im + xA6im *  tA2re); 
-            out16[12] =  xA2re;
-            out16[13] = -xA6re;
-*/
+            let xA8re  = out16[16]; 
+            let xA8im  = 0
+            let xA12re = out16[24]; 
+            let xA12im = 0
 
-/*
-            out16[16]  = out16[16] + out16[24];
-            out16[17]  = 0;*/
+            let xA9re  = out16[18]; 
+            let xA9im  = out16[19]; 
+            let xA13re = out16[26]; 
+            let xA13im = out16[27]; 
+
+            let xA10re = out16[20]; 
+            let xA10im = 0
+            let xA14re = out16[28]; 
+            let xA14im = 0
+
+            let xA11re =  xA9re;
+            let xA11im = -xA9im;
+            let xA15re =  xA13re;
+            let xA15im = -xA13im;
 
 
+         // float eRe  = out2048[2];
+         // float eIm  = out2048[3];
+         // float oRe  = out2048[18];
+         // float oIm  = out2048[19];
+
+         // float tRe = FFT_FAC_8[2];
+         // float tIm = FFT_FAC_8[3];
+         // let res2  = eRe + (oRe * tRe - oIm * tIm);
+         // let res3  = eIm + (oRe * tIm + oIm * tRe);
+         // let res18 = eRe - (oRe * tRe - oIm * tIm);
+         // let res19 = eIm - (oRe * tIm + oIm * tRe);
+
+         // out2048[2]  = res2;
+         // out2048[3]  = res3;
+         // out2048[18] = res18;
+         // out2048[19] = res19;
 
 
-         let x0re = xA0re + xA4re; let x0im = 0;
-
-         let x1re = resA2;         let x1im =  resA3;
-         let x2re = xA2re;         let x2im = -xA6re;
-         let x3re = resA10;        let x3im = -resA11;
-
-         let x4re = xA0re - xA4re; let x4im = 0;
          
-         //let x5re = out16[10]; let x5im = out16[11];
-         let x6re = xA2re;     let x6im = -xA6re;
-         //let x7re = out16[14]; let x7im = out16[15];
 
-         let x8re = out16[16] + out16[24]; let x8im = 0; //Nyquist
-         //let x9re  = x7re;
-         //let x10re = x6re; 
+         //FFT_FAC_8[0]
+         //FFT_FAC_8[1]
+         let resA0  = xA0re + xA8re;
+         let resA1  = 0;
+         let resA16 = xA0re - xA8re;
+         let resA17 = 0;
+
+         out2048[0]  = resA0;
+         out2048[1]  = resA1;
+         out2048[16] = resA16;
+         out2048[17] = resA17;
+
+         //FFT_FAC_8[2]
+         //FFT_FAC_8[3]
+         float tRe = 0.7071067690849304;  //FFT_FAC_8[2];
+         let resA2  = xA1re + (xA9re * tRe - xA9im *-tRe);
+         let resA3  = xA1im + (xA9re *-tRe + xA9im * tRe);
+         let resA18 = xA1re - (xA9re * tRe - xA9im *-tRe);
+         let resA19 = xA1im - (xA9re *-tRe + xA9im * tRe);
+
+         out2048[2]  = resA2;
+         out2048[3]  = resA3;
+         out2048[18] = resA18;
+         out2048[19] = resA19;
+
+         //FFT_FAC_8[4]
+         //FFT_FAC_8[5]
+         let resA4  =   xA2re;
+         let resA5  = - xA10re;
+         let resA20 =   xA2re;
+         let resA21 =   xA10re;
+
+         out2048[4]  = resA4;
+         out2048[5]  = resA5;
+         out2048[20] = resA20;
+         out2048[21] = resA21;
+
+         //FFT_FAC_8[6]
+         //FFT_FAC_8[7]
+         let resA6  =  xA1re + (xA9re * -tRe - xA9im * tRe);
+         let resA7  = -xA1im + (xA9re * -tRe + xA9im * tRe);
+         let resA22 =  xA1re - (xA9re * -tRe - xA9im * tRe);
+         let resA23 = -xA1im - (xA9re * -tRe + xA9im * tRe);
+
+         out2048[6]  = resA6;
+         out2048[7]  = resA7;
+         out2048[22] = resA22;
+         out2048[23] = resA23;
+
+
+
+         //FFT_FAC_8[0]
+         //FFT_FAC_8[1]
+         let resA8   = xA4re + xA12re;;
+         let resA9   = 0;
+         let resA24  = xA4re - xA12re;
+         let resA25  = 0;
+
+         out2048[8]   = resA8;
+         out2048[9]   = resA9;
+         out2048[24]  = resA24;
+         out2048[25]  = resA25;
+
+         //FFT_FAC_8[2]
+         //FFT_FAC_8[3]
+         let resA10  = xA5re + (xA13re *  tRe - xA13im * -tRe);
+         let resA11  = xA5im + (xA13re * -tRe + xA13im *  tRe);
+         let resA26  = xA5re - (xA13re *  tRe - xA13im * -tRe);
+         let resA27  = xA5im - (xA13re * -tRe + xA13im *  tRe);
+
+         out2048[10]  = resA10;
+         out2048[11]  = resA11;
+         out2048[26]  = resA26;
+         out2048[27]  = resA27;
+
+         //FFT_FAC_8[4]
+         //FFT_FAC_8[5]
+
+         let resA12  =  xA6re;
+         let resA13  = -xA14re;
+         let resA28  =  xA6re;
+         let resA29  =  xA14re;
+
+         out2048[12]  = resA12;
+         out2048[13]  = resA13;
+         out2048[28]  = resA28;
+         out2048[29]  = resA29;
+
+         //FFT_FAC_8[6]
+         //FFT_FAC_8[7]
+
+         float eRe  =  xA5re;
+         float eIm  = -xA5im;
+         float oRe  =  xA13re;
+         float oIm  = -xA13im;
+
+         let resA14  =  xA5re + (xA13re * -tRe - xA13im * tRe);
+         let resA15  = -xA5im + (xA13re * -tRe + xA13im * tRe);
+         let resA30  =  xA5re - (xA13re * -tRe - xA13im * tRe);
+         let resA31  = -xA5im - (xA13re * -tRe + xA13im * tRe);
+
+         out2048[14]  = resA14;
+         out2048[15]  = resA15;
+         out2048[30]  = resA30;
+         out2048[31]  = resA31;
+
+
+
+
+
+
+
+         let x0re = out16[0];  let x0im = out16[1];
+         let x1re = out16[2];  let x1im = out16[3];
+         let x2re = out16[4];  let x2im = out16[5];
+         let x3re = out16[6];  let x3im = out16[7];
+         let x4re = out16[8];  let x4im = out16[9];
+         let x5re = out16[10]; let x5im = out16[11];
+         let x6re = out16[12]; let x6im = out16[13];
+         let x7re = out16[14]; let x7im = out16[15];
+
+         let x8re = out16[16]; let x8im = out16[17]; //Nyquist
+
+         let x9re  = x7re;     let x9im  = -x7im;
+         let x10re = x6re;     let x10im = -x6im; 
+         let x11re = x5re;     let x11im = -x5im;
+         let x12re = x4re;     let x12im = -x4im; 
+         let x13re = x3re;     let x13im = -x3im;
+         let x14re = x2re;     let x14im = -x2im; 
+         let x15re = x1re;     let x15im = -x1im;
+
+
+
 
          let t1re  = FFT_FAC_16[2];
          let t2re  = FFT_FAC_16[4];
          let t3re  = FFT_FAC_16[6];
 
+
+         // float eRe  = out2048[0];
+         // float eIm  = out2048[1];
+         // float oRe  = out2048[16];
+         // float oIm  = out2048[17];
+
+         // float tRe = FFT_FAC_16[0];
+         // float tIm = FFT_FAC_16[1];
+        
+         // out2048[0]  = eRe + (oRe * tRe - oIm * tIm);
+         // out2048[1]  = eIm + (oRe * tIm + oIm * tRe);
+         // out2048[16] = eRe - (oRe * tRe - oIm * tIm);
+         // out2048[17] = eIm - (oRe * tIm + oIm * tRe);
 
          out16[0]  = x0re + x8re;
          out16[1]  = x0im + x8im;
@@ -173,10 +308,24 @@ function fftReal16(realInput) {
          out16[17] = x0im - x8im;
 
 
-         let res2  =  x1re + (x1re *  t1re  + x1im * -t3re);
-         let res3  =  x1im + (x1re * -t3re  - x1im *  t1re); 
-         let res18 =  x1re - (x1re *  t1re  + x1im * -t3re);
-         let res19 =  x1im - (x1re * -t3re  - x1im *  t1re);
+
+         // float eRe  = out2048[2];
+         // float eIm  = out2048[3];
+         // float oRe  = out2048[18];
+         // float oIm  = out2048[19];
+
+         // float tRe = FFT_FAC_16[2]; 
+         // float tIm = FFT_FAC_16[3]; 
+        
+         // out2048[2]  = eRe + (oRe * tRe - oIm * tIm);
+         // out2048[3]  = eIm + (oRe * tIm + oIm * tRe);
+         // out2048[18] = eRe - (oRe * tRe - oIm * tIm);
+         // out2048[19] = eIm - (oRe * tIm + oIm * tRe);
+
+         let res2  =  x1re + (x7re *  t1re  + x7im * -t3re);
+         let res3  =  x1im + (x7re * -t3re  - x7im *  t1re); 
+         let res18 =  x1re - (x7re *  t1re  + x7im * -t3re);
+         let res19 =  x1im - (x7re * -t3re  - x7im *  t1re);
          out16[2]  =  res2;
          out16[3]  =  res3;
          out16[18] =  res18;
@@ -187,6 +336,19 @@ function fftReal16(realInput) {
          out16[30] =  res2;
          out16[31] = -res3;
 
+
+         // float eRe  = out2048[4];
+         // float eIm  = out2048[5];
+         // float oRe  = out2048[20];
+         // float oIm  = out2048[21];
+
+         // float tRe = FFT_FAC_16[4];
+         // float tIm = FFT_FAC_16[5];
+        
+         // out2048[4]  = eRe + (oRe * tRe - oIm * tIm);
+         // out2048[5]  = eIm + (oRe * tIm + oIm * tRe);
+         // out2048[20] = eRe - (oRe * tRe - oIm * tIm);
+         // out2048[21] = eIm - (oRe * tIm + oIm * tRe);
 
          let res4  = x2re + (x6re *  t2re + x6im * -t2re);
          let res5  = x2im + (x6re * -t2re - x6im *  t2re);
@@ -203,6 +365,19 @@ function fftReal16(realInput) {
          out16[28] = -res5;
 
 
+         // float eRe  = out2048[6];
+         // float eIm  = out2048[7];
+         // float oRe  = out2048[22];
+         // float oIm  = out2048[23];
+
+         // float tRe = FFT_FAC_16[6];
+         // float tIm = FFT_FAC_16[7];
+        
+         // out2048[6]  = eRe + (oRe * tRe - oIm * tIm);
+         // out2048[7]  = eIm + (oRe * tIm + oIm * tRe);
+         // out2048[22] = eRe - (oRe * tRe - oIm * tIm);
+         // out2048[23] = eIm - (oRe * tIm + oIm * tRe);
+
          let res6  = x3re + (x3re *  t3re + x3im * -t1re);
          let res7  = x3im + (x3re * -t1re - x3im *  t3re);
          let res22 = x3re - (x3re *  t3re + x3im * -t1re);
@@ -217,6 +392,19 @@ function fftReal16(realInput) {
          out16[26] =  res6;
          out16[27] = -res7;
 
+
+         // float eRe  = out2048[8];
+         // float eIm  = out2048[9];
+         // float oRe  = out2048[24];
+         // float oIm  = out2048[25];
+
+         // float tRe = FFT_FAC_16[8];
+         // float tIm = FFT_FAC_16[9];
+        
+         // out2048[8]  = eRe + (oRe * tRe - oIm * tIm);
+         // out2048[9]  = eIm + (oRe * tIm + oIm * tRe);
+         // out2048[24] = eRe - (oRe * tRe - oIm * tIm);
+         // out2048[25] = eIm - (oRe * tIm + oIm * tRe);
 
          let res8  = x4re + x4re *  t2re;
          let res9  = x4im + x4re * -t2re;
