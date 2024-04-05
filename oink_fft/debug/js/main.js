@@ -10,7 +10,7 @@ const FFT_BANK = new Map();
 /////////////////////////////////// HTML CREATION       ///////////////////////////////////////////////
 const numOpsOptions = [5000, 7500, 10000, 15000, 20000];
 const runsOptions = [1, 2, 4, 8, 16];
-const FFT_SIZES = [ 8, 128, 256, 512, 1024, 2048 ];
+const FFT_SIZES = [ 8, 16, 32, 128, 256, 512, 1024, 2048 ];
 
 let PANELS_FOR_NEXT_RUN = FFT_SIZES.slice();
 let P_IDX = 0;
