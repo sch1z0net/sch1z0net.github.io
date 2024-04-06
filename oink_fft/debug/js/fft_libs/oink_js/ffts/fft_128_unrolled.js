@@ -318,8 +318,8 @@ function fftReal128(realInput) {
     // RADIX 2 (rolled) - FFT step for SIZE 32 
     ////////////////////////////////////////////////
     { 
-     {
-        /*
+     /*{
+        
         let tA1re  = FFT_FAC_32[2];
         let tA2re  = FFT_FAC_32[4];
         let tA3re  = FFT_FAC_32[6];
