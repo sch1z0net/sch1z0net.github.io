@@ -474,7 +474,6 @@ function fftReal128(realInput) {
         out128[50] =  res14;
         out128[51] = -res15;
 
-
         let xA8re  = out128[16];
         let xA8im  = out128[17];
         let xA24re = out128[48];
@@ -483,6 +482,172 @@ function fftReal128(realInput) {
         out128[17] = xA8im - xA24re;
         out128[48] = xA8re - xA24im;
         out128[49] = xA8im + xA24re;
+
+
+
+
+
+
+
+
+
+
+        let xA32re  = out128[64];
+        let xA32im  = out128[65];
+        let xA48re  = out128[96];
+        let xA48im  = out128[97];
+        out128[64]  = xA32re + xA48re;
+        out128[65]  = xA32im + xA48im;
+        out128[96]  = xA32re - xA48re;
+        out128[97]  = xA32im - xA48im;
+
+
+        let xA33re  = out128[66];
+        let xA33im  = out128[67];
+        let xA49re  = out128[98];
+        let xA49im  = out128[99];
+        let res18   = xA33re + (xA49re *  tA1re - xA49im * -tA7re);
+        let res19   = xA33im + (xA49re * -tA7re + xA49im *  tA1re);
+        let res50   = xA33re - (xA49re *  tA1re - xA49im * -tA7re);
+        let res51   = xA33im - (xA49re * -tA7re + xA49im *  tA1re);
+        out128[66]  = res18;
+        out128[67]  = res19;
+        out128[98]  = res50;
+        out128[99]  = res51;
+        
+        out128[94]  =  res34;
+        out128[95]  = -res35;
+        out128[126] =  res50;
+        out128[127] = -res51;
+
+
+        let xA34re  = out128[68];
+        let xA34im  = out128[69];
+        let xA50re  = out128[100];
+        let xA50im  = out128[101];
+        let res20   = xA34re + (xA50re *  tA2re - xA50im * -tA6re);
+        let res21   = xA34im + (xA50re * -tA6re + xA50im *  tA2re);
+        let res52   = xA34re - (xA50re *  tA2re - xA50im * -tA6re);
+        let res53   = xA34im - (xA50re * -tA6re + xA50im *  tA2re);
+
+        out128[68]  = res20;
+        out128[69]  = res21;
+        out128[100] = res52;
+        out128[101] = res53;
+
+        out128[92]  =  res52;
+        out128[93]  = -res53;
+        out128[124] =  res20;
+        out128[125] = -res21;
+
+
+        let xA35re  = out128[70];
+        let xA35im  = out128[71];
+        let xA51re  = out128[102];
+        let xA51im  = out128[103];
+        let res22   = xA35re + (xA51re *  tA3re - xA51im * -tA5re);
+        let res23   = xA35im + (xA51re * -tA5re + xA51im *  tA3re);
+        let res54   = xA35re - (xA51re *  tA3re - xA51im * -tA5re);
+        let res55   = xA35im - (xA51re * -tA5re + xA51im *  tA3re);
+
+        out128[70]  = res22;
+        out128[71]  = res23;
+        out128[102] = res54;
+        out128[103] = res55;
+
+        out128[90]  =  res54;
+        out128[91]  = -res55;
+        out128[122] =  res22;
+        out128[123] = -res23;
+
+
+        let xA36re  = out128[72];
+        let xA36im  = out128[73];
+        let xA52re  = out128[104];
+        let xA52im  = out128[105];
+        let res24   = xA36re + (xA52re *  tA4re - xA52im * -tA4re);
+        let res25   = xA36im + (xA52re * -tA4re + xA52im *  tA4re);
+        let res56   = xA36re - (xA52re *  tA4re - xA52im * -tA4re);
+        let res57   = xA36im - (xA52re * -tA4re + xA52im *  tA4re);
+
+        out128[72]  = res24;
+        out128[73]  = res25;
+        out128[104] = res56;
+        out128[105] = res57;
+
+        out128[88]  =  res56;
+        out128[89]  = -res57;
+        out128[120] =  res24;
+        out128[121] = -res25;
+
+
+        let xA37re  = out128[74];
+        let xA37im  = out128[75];
+        let xA53re  = out128[106];
+        let xA53im  = out128[107];
+        let res26   = xA37re + (xA53re *  tA5re - xA53im * -tA3re);
+        let res27   = xA37im + (xA53re * -tA3re + xA53im *  tA5re);
+        let res58   = xA37re - (xA53re *  tA5re - xA53im * -tA3re);
+        let res59   = xA37im - (xA53re * -tA3re + xA53im *  tA5re);
+
+        out128[74]  = res26;
+        out128[75]  = res27;
+        out128[106] = res58;
+        out128[107] = res59;
+
+        out128[86]  =  res58;
+        out128[87]  = -res59;
+        out128[118] =  res26;
+        out128[119] = -res27;
+
+
+        let xA38re  = out128[76];
+        let xA38im  = out128[77];
+        let xA54re  = out128[108];
+        let xA54im  = out128[109];
+        let res28   = xA38re + (xA54re *  tA6re - xA54im * -tA2re);
+        let res29   = xA38im + (xA54re * -tA2re + xA54im *  tA6re);
+        let res60   = xA38re - (xA54re *  tA6re - xA54im * -tA2re);
+        let res61   = xA38im - (xA54re * -tA2re + xA54im *  tA6re);
+
+        out128[76]  = res28;
+        out128[77]  = res29;
+        out128[108] = res60;
+        out128[109] = res61;
+
+        out128[84]  =  res60;
+        out128[85]  = -res61;
+        out128[116] =  res28;
+        out128[117] = -res29;
+
+
+        let xA39re  = out128[78];
+        let xA39im  = out128[79];
+        let xA55re  = out128[110];
+        let xA55im  = out128[111];
+        let res30   = xA39re + (xA55re *  tA7re - xA55im * -tA1re);
+        let res31   = xA39im + (xA55re * -tA1re + xA55im *  tA7re);
+        let res62   = xA39re - (xA55re *  tA7re - xA55im * -tA1re);
+        let res63   = xA39im - (xA55re * -tA1re + xA55im *  tA7re);
+
+        out128[78]  = res30;
+        out128[79]  = res31;
+        out128[110] = res62;
+        out128[111] = res63;
+
+        out128[82]  =  res62;
+        out128[83]  = -res63;
+        out128[114] =  res30;
+        out128[115] = -res31;
+
+        let xA40re  = out128[80];
+        let xA40im  = out128[81];
+        let xA56re  = out128[112];
+        let xA56im  = out128[113];
+        out128[80]  = xA40re + xA56im;
+        out128[81]  = xA40im - xA56re;
+        out128[112] = xA40re - xA56im;
+        out128[113] = xA40im + xA56re;
      }
      
      /*
@@ -502,7 +667,7 @@ function fftReal128(realInput) {
          out128[oI * 2    ] = eRe - t_oRe;
          out128[oI * 2 + 1] = eIm - t_oIm;
      }*/
-
+     /*
      for (let j = 0; j < 16; j++) { 
          let eI = 32 + j;
          let oI = 32 + j + 16;
@@ -518,7 +683,7 @@ function fftReal128(realInput) {
          out128[eI * 2 + 1] = eIm + t_oIm;
          out128[oI * 2    ] = eRe - t_oRe;
          out128[oI * 2 + 1] = eIm - t_oIm;
-     }
+     }*/
 
      for (let j = 0; j < 32; j++) { 
          let eI = 0 + j;
