@@ -331,10 +331,10 @@ function fftReal128(realInput) {
         let xA0im  = out128[ 1];
         let xA16re = out128[32];
         let xA16im = out128[33];
-        out128[ 0] = eRe + (oRe);
-        out128[ 1] = eIm + (oIm);
-        out128[32] = eRe - (oRe);
-        out128[33] = eIm - (oIm);
+        out128[ 0] = xA0re + xA16re;
+        out128[ 1] = xA0im + xA16im;
+        out128[32] = xA0re - xA16re;
+        out128[33] = xA0im - xA16im;
 
         let xA1re  = out128[ 2];
         let xA1im  = out128[ 3];
@@ -483,10 +483,10 @@ function fftReal128(realInput) {
         let xA8im  = out128[17];
         let xA24re = out128[48];
         let xA24im = out128[49];
-        out128[16] = eRe + oIm;
-        out128[17] = eIm - oRe;
-        out128[48] = eRe - oIm;
-        out128[49] = eIm + oRe;
+        out128[16] = xA8re + xA24im;
+        out128[17] = xA8im - xA24re;
+        out128[48] = xA8re - xA24im;
+        out128[49] = xA8im + xA24re;
      }
 
      for (let j = 0; j < 32; j++) { 
