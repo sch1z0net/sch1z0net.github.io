@@ -318,38 +318,175 @@ function fftReal128(realInput) {
     // RADIX 2 (rolled) - FFT step for SIZE 32 
     ////////////////////////////////////////////////
     { 
-     for (let j = 0; j < 16; j++) { 
-         let eI = 0 + j;
-         let oI = 0 + j + 16;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_32[j * 2 + 0];
-         let tIm  = FFT_FAC_32[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
+     {
+        let tA1re  = FFT_FAC_32[2];
+        let tA2re  = FFT_FAC_32[4];
+        let tA3re  = FFT_FAC_32[6];
+        let tA4re  = FFT_FAC_32[8];
+        let tA5re  = FFT_FAC_32[10];
+        let tA6re  = FFT_FAC_32[12];
+        let tA7re  = FFT_FAC_32[14];
 
-     for (let j = 0; j < 16; j++) { 
-         let eI = 32 + j;
-         let oI = 32 + j + 16;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_32[j * 2 + 0];
-         let tIm  = FFT_FAC_32[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
+        let xA0re  = out128[ 0];
+        let xA0im  = out128[ 1];
+        let xA16re = out128[32];
+        let xA16im = out128[33];
+        out128[ 0] = eRe + (oRe);
+        out128[ 1] = eIm + (oIm);
+        out128[32] = eRe - (oRe);
+        out128[33] = eIm - (oIm);
+
+        let xA1re  = out128[ 2];
+        let xA1im  = out128[ 3];
+        let xA17re = out128[34];
+        let xA17im = out128[35];
+        let res2  = xA1re + (xA17re *  tA1re - xA17im * -tA7re);
+        let res3  = xA1im + (xA17re * -tA7re + xA17im *  tA1re);
+        let res34 = xA1re - (xA17re *  tA1re - xA17im * -tA7re);
+        let res35 = xA1im - (xA17re * -tA7re + xA17im *  tA1re);
+        out128[ 2] = res2;
+        out128[ 3] = res3;
+        out128[34] = res34;
+        out128[35] = res35;
+        
+        out128[30] =  res34;
+        out128[31] = -res35;
+        out128[62] =  res2;
+        out128[63] = -res3;
+
+
+        let xA2re  = out128[ 4];
+        let xA2im  = out128[ 5];
+        let xA18re = out128[36];
+        let xA18im = out128[37];
+
+        let res4   = xA2re + (xA18re *  tA2re - xA18im * -tA6re);
+        let res5   = xA2im + (xA18re * -tA6re + xA18im *  tA2re);
+        let res36  = xA2re - (xA18re *  tA2re - xA18im * -tA6re);
+        let res37  = xA2im - (xA18re * -tA6re + xA18im *  tA2re);
+
+        out128[ 4] = res4;
+        out128[ 5] = res5;
+        out128[36] = res36;
+        out128[37] = res37;
+
+        out128[28] =  res36;
+        out128[29] = -res37;
+        out128[60] =  res4;
+        out128[61] = -res5;
+
+
+        let xA3re  = out128[ 6];
+        let xA3im  = out128[ 7];
+        let xA19re = out128[38];
+        let xA19im = out128[39];
+
+        let res6   = eRe + (oRe *  tA3re - oIm * -tA5re);
+        let res7   = eIm + (oRe * -tA5re + oIm *  tA3re);
+        let res38  = eRe - (oRe *  tA3re - oIm * -tA5re);
+        let res39  = eIm - (oRe * -tA5re + oIm *  tA3re);
+
+        out128[ 6] = res6;
+        out128[ 7] = res7;
+        out128[38] = res38;
+        out128[39] = res39;
+
+        out128[26] =  res38;
+        out128[27] = -res39;
+        out128[58] =  res6;
+        out128[59] = -res7;
+
+
+        let xA4re  = out128[ 8];
+        let xA4im  = out128[ 9];
+        let xA20re = out128[40];
+        let xA20im = out128[41];
+
+        let res8   = eRe + (oRe *  tA4re - oIm * -tA4re);
+        let res9   = eIm + (oRe * -tA4re + oIm *  tA4re);
+        let res40  = eRe - (oRe *  tA4re - oIm * -tA4re);
+        let res41  = eIm - (oRe * -tA4re + oIm *  tA4re);
+
+        out128[ 8] = res8;
+        out128[ 9] = res9;
+        out128[40] = res40;
+        out128[41] = res41;
+
+        out128[24] =  res40;
+        out128[25] = -res41;
+        out128[56] =  res8;
+        out128[57] = -res9;
+
+
+        let xA5re  = out128[10];
+        let xA5im  = out128[11];
+        let xA21re = out128[42];
+        let xA21im = out128[43];
+
+        let res10  = eRe + (oRe *  tA5re - oIm * -tA3re);
+        let res11  = eIm + (oRe * -tA3re + oIm *  tA5re);
+        let res42  = eRe - (oRe *  tA5re - oIm * -tA3re);
+        let res43  = eIm - (oRe * -tA3re + oIm *  tA5re);
+
+        out128[10] = res10;
+        out128[11] = res11;
+        out128[42] = res42;
+        out128[43] = res43;
+
+        out128[22] =  res42;
+        out128[23] = -res43;
+        out128[54] =  res10;
+        out128[55] = -res11;
+
+
+        let xA6re  = out128[12];
+        let xA6im  = out128[13];
+        let xA22re = out128[44];
+        let xA22im = out128[45];
+        let res12  = eRe + (oRe *  tA6re - oIm * -tA2re);
+        let res13  = eIm + (oRe * -tA2re + oIm *  tA6re);
+        let res44  = eRe - (oRe *  tA6re - oIm * -tA2re);
+        let res45  = eIm - (oRe * -tA2re + oIm *  tA6re);
+
+        out128[12] = res12;
+        out128[13] = res13;
+        out128[44] = res44;
+        out128[45] = res45;
+
+        out128[20] =  res44;
+        out128[21] = -res45;
+        out128[52] =  res12;
+        out128[53] = -res13;
+
+
+        let xA7re  = out128[14];
+        let xA7im  = out128[15];
+        let xA23re = out128[46];
+        let xA23im = out128[47];
+        let res14  = eRe + (oRe *  tA7re - oIm * -tA1re);
+        let res15  = eIm + (oRe * -tA1re + oIm *  tA7re);
+        let res46  = eRe - (oRe *  tA7re - oIm * -tA1re);
+        let res47  = eIm - (oRe * -tA1re + oIm *  tA7re);
+
+        out128[14] = res14;
+        out128[15] = res15;
+        out128[46] = res46;
+        out128[47] = res47;
+
+        out128[18] =  res46;
+        out128[19] = -res47;
+        out128[50] =  res14;
+        out128[51] = -res15;
+
+
+        let xA8re  = out128[16];
+        let xA8im  = out128[17];
+        let xA24re = out128[48];
+        let xA24im = out128[49];
+        out128[16] = eRe + oIm;
+        out128[17] = eIm - oRe;
+        out128[48] = eRe - oIm;
+        out128[49] = eIm + oRe;
      }
 
      for (let j = 0; j < 32; j++) { 
@@ -368,6 +505,12 @@ function fftReal128(realInput) {
          out128[oI * 2    ] = eRe - t_oRe;
          out128[oI * 2 + 1] = eIm - t_oIm;
      }
+
+
+
+
+
+
 
 
 
