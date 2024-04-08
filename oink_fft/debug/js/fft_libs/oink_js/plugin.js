@@ -26,6 +26,7 @@ const PLUGIN_OINK_js = {
   fft8:     function(testData) { perform_OINK_js(OINK_js.fftReal8,    testData); },
   fft16:    function(testData) { perform_OINK_js(OINK_js.fftReal16,   testData); },
   fft32:    function(testData) { perform_OINK_js(OINK_js.fftReal32,   testData); },
+  fft64:    function(testData) { perform_OINK_js(OINK_js.fftReal64,   testData); },
   fft128:   function(testData) { perform_OINK_js(OINK_js.fftReal128,  testData); },
   fft256:   function(testData) { perform_OINK_js(OINK_js.fftReal256,  testData); },
   fft512:   function(testData) { perform_OINK_js(OINK_js.fftReal512,  testData); },

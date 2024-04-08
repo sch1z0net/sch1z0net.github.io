@@ -12,6 +12,7 @@ let dsp_fft_4;
 let dsp_fft_8;
 let dsp_fft_16;
 let dsp_fft_32;
+let dsp_fft_64;
 let dsp_fft_128;
 let dsp_fft_256;
 let dsp_fft_512;
@@ -24,6 +25,7 @@ function initializeDSP(){
         dsp_fft_8    = new FFT(8, 44100);
         dsp_fft_16   = new FFT(16, 44100);
         dsp_fft_32   = new FFT(32, 44100);
+        dsp_fft_64   = new FFT(64, 44100);
         dsp_fft_128  = new FFT(128, 44100);
         dsp_fft_256  = new FFT(256, 44100);
         dsp_fft_512  = new FFT(512, 44100);
@@ -60,6 +62,7 @@ const PLUGIN_DSP = {
   fft8:     function(testData) { perform_DSP(dsp_fft_8,    testData); },
   fft16:    function(testData) { perform_DSP(dsp_fft_16,   testData); },
   fft32:    function(testData) { perform_DSP(dsp_fft_32,   testData); },
+  fft64:    function(testData) { perform_DSP(dsp_fft_64,   testData); },
   fft128:   function(testData) { perform_DSP(dsp_fft_128,  testData); },
   fft256:   function(testData) { perform_DSP(dsp_fft_256,  testData); },
   fft512:   function(testData) { perform_DSP(dsp_fft_512,  testData); },

@@ -12,6 +12,7 @@ let indutny_f_4,    indutny_out_4;
 let indutny_f_8,    indutny_out_8;
 let indutny_f_16,   indutny_out_16;
 let indutny_f_32,   indutny_out_32;
+let indutny_f_64,   indutny_out_64;
 let indutny_f_128,  indutny_out_128;
 let indutny_f_256,  indutny_out_256;
 let indutny_f_512,  indutny_out_512;
@@ -28,6 +29,8 @@ function initializeINDUTNY(){
         indutny_out_16 = indutny_f_16.createComplexArray();
         indutny_f_32 = new IND_FFT(32);
         indutny_out_32 = indutny_f_32.createComplexArray();
+        indutny_f_64 = new IND_FFT(64);
+        indutny_out_64 = indutny_f_64.createComplexArray();
         indutny_f_128 = new IND_FFT(128);
         indutny_out_128 = indutny_f_128.createComplexArray();
         indutny_f_256 = new IND_FFT(256);
@@ -61,6 +64,7 @@ const PLUGIN_INDUTNY = {
   fft8:     function(testData) { perform_INDUTNY(indutny_f_8,     indutny_out_8,     testData); },
   fft16:    function(testData) { perform_INDUTNY(indutny_f_16,    indutny_out_16,    testData); },
   fft32:    function(testData) { perform_INDUTNY(indutny_f_32,    indutny_out_32,    testData); },
+  fft64:    function(testData) { perform_INDUTNY(indutny_f_64,    indutny_out_64,    testData); },
   fft128:   function(testData) { perform_INDUTNY(indutny_f_128,   indutny_out_128,   testData); },
   fft256:   function(testData) { perform_INDUTNY(indutny_f_256,   indutny_out_256,   testData); },
   fft512:   function(testData) { perform_INDUTNY(indutny_f_512,   indutny_out_512,   testData); },
