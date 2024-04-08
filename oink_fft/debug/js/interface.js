@@ -39,6 +39,7 @@ async function registerPlugin(PLUGIN, FFT_BANK){
             fft8:     PLUGIN.fft8, 
             fft16:    PLUGIN.fft16, 
             fft32:    PLUGIN.fft32, 
+            fft64:    PLUGIN.fft64, 
             fft128:   PLUGIN.fft128, 
             fft256:   PLUGIN.fft256, 
             fft512:   PLUGIN.fft512, 
