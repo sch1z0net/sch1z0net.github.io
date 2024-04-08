@@ -344,7 +344,7 @@ function fftReal128(realInput) {
     ////////////////////////////////////////////////
     // RADIX 4 - FFT step for SIZE 32/64
     ////////////////////////////////////////////////
-     for (let idx = 0; idx < 128; idx += 64) {
+     for (let idx = 0; idx < 256; idx += 128) {
         let tA1re  = FFT_FAC_32[2];
         let tA2re  = FFT_FAC_32[4];
         let tA3re  = FFT_FAC_32[6];
