@@ -477,25 +477,27 @@ function fftReal128(realInput) {
 
 
 
-
-        let res6    = xA3re + (xA19re *  tA3re - xA19im * -tA5re);
-        let res7    = xA3im + (xA19re * -tA5re + xA19im *  tA3re);
+        let res6    = xA3re  + (xA19re *  tA3re - xA19im * -tA5re);
+        let res7    = xA3im  + (xA19re * -tA5re + xA19im *  tA3re);
         let res22   = xA35re + (xA51re *  tA3re - xA51im * -tA5re);
         let res23   = xA35im + (xA51re * -tA5re + xA51im *  tA3re);
         let t3Re  = 0.9569403529167175; //FFT_FAC_64[6];
         let t13Re = 0.2902846336364746; //FFT_FAC_64[26];
-        let resB6   =  res6 + (res22 *  t3Re  - res23 * -t13Re);
         let resB7   =  res7 + (res22 * -t13Re + res23 *  t3Re );
-        let resB70  =  res6 - (res22 *  t3Re  - res23 * -t13Re);
-        let resB71  =  res7 - (res22 * -t13Re + res23 *  t3Re );
-        out128[6  + idx]   =  resB6;
-        out128[7  + idx]   =  resB7;
-        out128[70  + idx]  =  resB70;
-        out128[71  + idx]  =  resB71;
-        out128[58  + idx]  =  resB70;
-        out128[59  + idx]  = -resB71;
-        out128[122  + idx] =  resB6;
         out128[123  + idx] = -resB7;
+        let resB6   =  res6 + (res22 *  t3Re  - res23 * -t13Re);
+        out128[122  + idx] =  resB6;
+        let resB71  =  res7 - (res22 * -t13Re + res23 *  t3Re );
+        out128[71  + idx]  =  resB71;
+        let resB70  =  res6 - (res22 *  t3Re  - res23 * -t13Re);
+        out128[70  + idx]  =  resB70;
+
+        out128[59  + idx]  = -resB71;
+        out128[58  + idx]  =  resB70;
+        out128[7  + idx]   =  resB7;
+        out128[6  + idx]   =  resB6;
+
+
 
         let res8    = xA4re + (xA20re *  tA4re - xA20im * -tA4re);
         let res9    = xA4im + (xA20re * -tA4re + xA20im *  tA4re);
@@ -504,17 +506,20 @@ function fftReal128(realInput) {
         let t4Re  = 0.9238795042037964; //FFT_FAC_64[8];
         let t12Re = 0.3826834261417389; //FFT_FAC_64[24];
         let resB8   =  res8 + (res24 *  t4Re  - res25 * -t12Re);
-        let resB9   =  res9 + (res24 * -t12Re + res25 *  t4Re);
-        let resB72  =  res8 - (res24 *  t4Re  - res25 * -t12Re);
-        let resB73  =  res9 - (res24 * -t12Re + res25 *  t4Re);
         out128[8  + idx]   =  resB8;
+        let resB9   =  res9 + (res24 * -t12Re + res25 *  t4Re);
         out128[9  + idx]   =  resB9;
+        let resB72  =  res8 - (res24 *  t4Re  - res25 * -t12Re);
+        out128[56  + idx]  =  resB72;
+        let resB73  =  res9 - (res24 * -t12Re + res25 *  t4Re);
+        out128[57  + idx]  = -resB73;
+
         out128[72  + idx]  =  resB72;
         out128[73  + idx]  =  resB73;
-        out128[56  + idx]  =  resB72;
-        out128[57  + idx]  = -resB73;
         out128[120  + idx] =  resB8;
         out128[121  + idx] = -resB9;
+
+
 
         let res10   = xA5re + (xA21re *  tA5re - xA21im * -tA3re);
         let res11   = xA5im + (xA21re * -tA3re + xA21im *  tA5re);
@@ -522,18 +527,21 @@ function fftReal128(realInput) {
         let res27   = xA37im + (xA53re * -tA3re + xA53im *  tA5re);
         let t5Re  = 0.8819212913513184; //FFT_FAC_64[10];
         let t11Re = 0.4713967740535736; //FFT_FAC_64[22];
-        let resB10  =  res10 + (res26 *  t5Re  - res27 * -t11Re);
         let resB11  =  res11 + (res26 * -t11Re + res27 *  t5Re);
-        let resB74  =  res10 - (res26 *  t5Re  - res27 * -t11Re);
-        let resB75  =  res11 - (res26 * -t11Re + res27 *  t5Re);
-        out128[10  + idx]  =  resB10;
-        out128[11  + idx]  =  resB11;
-        out128[74  + idx]  =  resB74;
-        out128[75  + idx]  =  resB75;
-        out128[54  + idx]  =  resB74;
-        out128[55  + idx]  = -resB75;
-        out128[118  + idx] =  resB10;
         out128[119  + idx] = -resB11;
+        let resB10  =  res10 + (res26 *  t5Re  - res27 * -t11Re);
+        out128[118  + idx] =  resB10;
+        let resB75  =  res11 - (res26 * -t11Re + res27 *  t5Re);
+        out128[75  + idx]  =  resB75;
+        let resB74  =  res10 - (res26 *  t5Re  - res27 * -t11Re);
+        out128[74  + idx]  =  resB74;
+
+        out128[55  + idx]  = -resB75;
+        out128[54  + idx]  =  resB74;
+        out128[11  + idx]  =  resB11;
+        out128[10  + idx]  =  resB10;
+
+
 
         let res12   = xA6re + (xA22re *  tA6re - xA22im * -tA2re);
         let res13   = xA6im + (xA22re * -tA2re + xA22im *  tA6re);
@@ -542,17 +550,21 @@ function fftReal128(realInput) {
         let t6Re  = 0.8314695954322815; //FFT_FAC_64[12];
         let t10Re = 0.5555702447891235; //FFT_FAC_64[20];
         let resB12  =  res12 + (res28 *  t6Re  - res29 * -t10Re);
-        let resB13  =  res13 + (res28 * -t10Re + res29 *  t6Re);
-        let resB76  =  res12 - (res28 *  t6Re  - res29 * -t10Re);
-        let resB77  =  res13 - (res28 * -t10Re + res29 *  t6Re);
         out128[12  + idx]  =  resB12;
+        let resB13  =  res13 + (res28 * -t10Re + res29 *  t6Re);
         out128[13  + idx]  =  resB13;
+        let resB76  =  res12 - (res28 *  t6Re  - res29 * -t10Re);
+        out128[52  + idx]  =  resB76;
+        let resB77  =  res13 - (res28 * -t10Re + res29 *  t6Re);
+        out128[53  + idx]  = -resB77;
+
         out128[76  + idx]  =  resB76;
         out128[77  + idx]  =  resB77;
-        out128[52  + idx]  =  resB76;
-        out128[53  + idx]  = -resB77;
         out128[116  + idx] =  resB12;
         out128[117  + idx] = -resB13;
+
+
+
 
         let res14  = xA7re + (xA23re *  tA7re - xA23im * -tA1re);
         let res15  = xA7im + (xA23re * -tA1re + xA23im *  tA7re);
