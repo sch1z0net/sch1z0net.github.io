@@ -15,14 +15,41 @@ let FFT_FAC_32 = new Float32Array([
 -0.7071067690849304,-0.7071067690849304,-0.8314696550369263,-0.5555701851844788,-0.9238795042037964,-0.3826834857463837,-0.9807853102684021,-0.1950903087854385
 ]);
 let FFT_FAC_64 = new Float32Array([
-1.0000000000000000,-0.0000000000000000,0.9951847195625305,-0.0980171412229538,0.9807852506637573,-0.1950903236865997,0.9569403529167175,-0.2902846634387970,
-0.9238795042037964,-0.3826834559440613,0.8819212913513184,-0.4713967144489288,0.8314695954322815,-0.5555702447891235,0.7730104923248291,-0.6343932747840881,
-0.7071067690849304,-0.7071067690849304,0.6343932747840881,-0.7730104327201843,0.5555702447891235,-0.8314695954322815,0.4713967740535736,-0.8819212317466736,
-0.3826834261417389,-0.9238795042037964,0.2902846336364746,-0.9569403529167175,0.1950903534889221,-0.9807852506637573,0.0980171337723732,-0.9951847195625305,
--0.0000000437113883,-1.0000000000000000,-0.0980171039700508,-0.9951847195625305,-0.1950903236865997,-0.9807852506637573,-0.2902847230434418,-0.9569402933120728,
--0.3826833963394165,-0.9238795638084412,-0.4713966250419617,-0.8819212913513184,-0.5555701851844788,-0.8314696550369263,-0.6343932747840881,-0.7730104923248291,
--0.7071067690849304,-0.7071067690849304,-0.7730104923248291,-0.6343932747840881,-0.8314696550369263,-0.5555701851844788,-0.8819212317466736,-0.4713968336582184,
--0.9238795042037964,-0.3826834857463837,-0.9569403529167175,-0.2902847230434418,-0.9807853102684021,-0.1950903087854385,-0.9951847195625305,-0.0980170965194702
+1.0000000000000000,-0.0000000000000000,
+
+0.9951847195625305,-0.0980171412229538,
+0.9807852506637573,-0.1950903236865997,
+0.9569403529167175,-0.2902846634387970,
+0.9238795042037964,-0.3826834559440613,
+0.8819212913513184,-0.4713967144489288,
+0.8314695954322815,-0.5555702447891235,
+0.7730104923248291,-0.6343932747840881,
+0.7071067690849304,-0.7071067690849304,
+0.6343932747840881,-0.7730104327201843,
+0.5555702447891235,-0.8314695954322815,
+0.4713967740535736,-0.8819212317466736,
+0.3826834261417389,-0.9238795042037964,
+0.2902846336364746,-0.9569403529167175,
+0.1950903534889221,-0.9807852506637573,
+0.0980171337723732,-0.9951847195625305,
+
+-0.0000000437113883,-1.0000000000000000,
+
+-0.0980171039700508,-0.9951847195625305, //34 //35
+-0.1950903236865997,-0.9807852506637573, //-28 -4
+-0.2902847230434418,-0.9569402933120728,
+-0.3826833963394165,-0.9238795638084412,
+-0.4713966250419617,-0.8819212913513184,
+-0.5555701851844788,-0.8314696550369263,
+-0.6343932747840881,-0.7730104923248291,
+-0.7071067690849304,-0.7071067690849304,
+-0.7730104923248291,-0.6343932747840881,
+-0.8314696550369263,-0.5555701851844788,
+-0.8819212317466736,-0.4713968336582184,
+-0.9238795042037964,-0.3826834857463837,
+-0.9569403529167175,-0.2902847230434418,
+-0.9807853102684021,-0.1950903087854385,
+-0.9951847195625305,-0.0980170965194702
 ]);
 let FFT_FAC_128 = new Float32Array([
 1.0000000000000000,-0.0000000000000000,0.9987954497337341,-0.0490676760673523,0.9951847195625305,-0.0980171412229538,0.9891765117645264,-0.1467304676771164,
@@ -331,380 +358,384 @@ function fftReal128(realInput) {
         let xA0im  = out128[ 1];
         let xA16re = out128[32];
         let xA16im = out128[33];
-        out128[ 0] = xA0re + xA16re;
-        out128[ 1] = xA0im + xA16im;
-        out128[32] = xA0re - xA16re;
-        out128[33] = xA0im - xA16im;
 
         let xA1re  = out128[ 2];
         let xA1im  = out128[ 3];
         let xA17re = out128[34];
         let xA17im = out128[35];
-        let res2  = xA1re + (xA17re *  tA1re - xA17im * -tA7re);
-        let res3  = xA1im + (xA17re * -tA7re + xA17im *  tA1re);
-        let res34 = xA1re - (xA17re *  tA1re - xA17im * -tA7re);
-        let res35 = xA1im - (xA17re * -tA7re + xA17im *  tA1re);
-        out128[ 2] = res2;
-        out128[ 3] = res3;
-        out128[34] = res34;
-        out128[35] = res35;
-        
-        out128[30] =  res34;
-        out128[31] = -res35;
-        out128[62] =  res2;
-        out128[63] = -res3;
-
 
         let xA2re  = out128[ 4];
         let xA2im  = out128[ 5];
         let xA18re = out128[36];
         let xA18im = out128[37];
-        let res4   = xA2re + (xA18re *  tA2re - xA18im * -tA6re);
-        let res5   = xA2im + (xA18re * -tA6re + xA18im *  tA2re);
-        let res36  = xA2re - (xA18re *  tA2re - xA18im * -tA6re);
-        let res37  = xA2im - (xA18re * -tA6re + xA18im *  tA2re);
-
-        out128[ 4] = res4;
-        out128[ 5] = res5;
-        out128[36] = res36;
-        out128[37] = res37;
-
-        out128[28] =  res36;
-        out128[29] = -res37;
-        out128[60] =  res4;
-        out128[61] = -res5;
-
 
         let xA3re  = out128[ 6];
         let xA3im  = out128[ 7];
         let xA19re = out128[38];
         let xA19im = out128[39];
-        let res6   = xA3re + (xA19re *  tA3re - xA19im * -tA5re);
-        let res7   = xA3im + (xA19re * -tA5re + xA19im *  tA3re);
-        let res38  = xA3re - (xA19re *  tA3re - xA19im * -tA5re);
-        let res39  = xA3im - (xA19re * -tA5re + xA19im *  tA3re);
-
-        out128[ 6] = res6;
-        out128[ 7] = res7;
-        out128[38] = res38;
-        out128[39] = res39;
-
-        out128[26] =  res38;
-        out128[27] = -res39;
-        out128[58] =  res6;
-        out128[59] = -res7;
-
 
         let xA4re  = out128[ 8];
         let xA4im  = out128[ 9];
         let xA20re = out128[40];
         let xA20im = out128[41];
-        let res8   = xA4re + (xA20re *  tA4re - xA20im * -tA4re);
-        let res9   = xA4im + (xA20re * -tA4re + xA20im *  tA4re);
-        let res40  = xA4re - (xA20re *  tA4re - xA20im * -tA4re);
-        let res41  = xA4im - (xA20re * -tA4re + xA20im *  tA4re);
-
-        out128[ 8] = res8;
-        out128[ 9] = res9;
-        out128[40] = res40;
-        out128[41] = res41;
-
-        out128[24] =  res40;
-        out128[25] = -res41;
-        out128[56] =  res8;
-        out128[57] = -res9;
-
 
         let xA5re  = out128[10];
         let xA5im  = out128[11];
         let xA21re = out128[42];
         let xA21im = out128[43];
-        let res10  = xA5re + (xA21re *  tA5re - xA21im * -tA3re);
-        let res11  = xA5im + (xA21re * -tA3re + xA21im *  tA5re);
-        let res42  = xA5re - (xA21re *  tA5re - xA21im * -tA3re);
-        let res43  = xA5im - (xA21re * -tA3re + xA21im *  tA5re);
-
-        out128[10] = res10;
-        out128[11] = res11;
-        out128[42] = res42;
-        out128[43] = res43;
-
-        out128[22] =  res42;
-        out128[23] = -res43;
-        out128[54] =  res10;
-        out128[55] = -res11;
-
 
         let xA6re  = out128[12];
         let xA6im  = out128[13];
         let xA22re = out128[44];
         let xA22im = out128[45];
-        let res12  = xA6re + (xA22re *  tA6re - xA22im * -tA2re);
-        let res13  = xA6im + (xA22re * -tA2re + xA22im *  tA6re);
-        let res44  = xA6re - (xA22re *  tA6re - xA22im * -tA2re);
-        let res45  = xA6im - (xA22re * -tA2re + xA22im *  tA6re);
-
-        out128[12] = res12;
-        out128[13] = res13;
-        out128[44] = res44;
-        out128[45] = res45;
-
-        out128[20] =  res44;
-        out128[21] = -res45;
-        out128[52] =  res12;
-        out128[53] = -res13;
-
 
         let xA7re  = out128[14];
         let xA7im  = out128[15];
         let xA23re = out128[46];
         let xA23im = out128[47];
-        let res14  = xA7re + (xA23re *  tA7re - xA23im * -tA1re);
-        let res15  = xA7im + (xA23re * -tA1re + xA23im *  tA7re);
-        let res46  = xA7re - (xA23re *  tA7re - xA23im * -tA1re);
-        let res47  = xA7im - (xA23re * -tA1re + xA23im *  tA7re);
-
-        out128[14] = res14;
-        out128[15] = res15;
-        out128[46] = res46;
-        out128[47] = res47;
-
-        out128[18] =  res46;
-        out128[19] = -res47;
-        out128[50] =  res14;
-        out128[51] = -res15;
 
         let xA8re  = out128[16];
         let xA8im  = out128[17];
         let xA24re = out128[48];
         let xA24im = out128[49];
-        out128[16] = xA8re + xA24im;
-        out128[17] = xA8im - xA24re;
-        out128[48] = xA8re - xA24im;
-        out128[49] = xA8im + xA24re;
-
-
-
-
-
-
-
-
-
 
         let xA32re  = out128[64];
         let xA32im  = out128[65];
         let xA48re  = out128[96];
         let xA48im  = out128[97];
-        out128[64]  = xA32re + xA48re;
-        out128[65]  = xA32im + xA48im;
-        out128[96]  = xA32re - xA48re;
-        out128[97]  = xA32im - xA48im;
-
 
         let xA33re  = out128[66];
         let xA33im  = out128[67];
         let xA49re  = out128[98];
         let xA49im  = out128[99];
-        let res18   = xA33re + (xA49re *  tA1re - xA49im * -tA7re);
-        let res19   = xA33im + (xA49re * -tA7re + xA49im *  tA1re);
-        let res50   = xA33re - (xA49re *  tA1re - xA49im * -tA7re);
-        let res51   = xA33im - (xA49re * -tA7re + xA49im *  tA1re);
-        out128[66]  = res18;
-        out128[67]  = res19;
-        out128[98]  = res50;
-        out128[99]  = res51;
-        
-        out128[94]  =  res34;
-        out128[95]  = -res35;
-        out128[126] =  res50;
-        out128[127] = -res51;
-
 
         let xA34re  = out128[68];
         let xA34im  = out128[69];
         let xA50re  = out128[100];
         let xA50im  = out128[101];
-        let res20   = xA34re + (xA50re *  tA2re - xA50im * -tA6re);
-        let res21   = xA34im + (xA50re * -tA6re + xA50im *  tA2re);
-        let res52   = xA34re - (xA50re *  tA2re - xA50im * -tA6re);
-        let res53   = xA34im - (xA50re * -tA6re + xA50im *  tA2re);
-
-        out128[68]  = res20;
-        out128[69]  = res21;
-        out128[100] = res52;
-        out128[101] = res53;
-
-        out128[92]  =  res52;
-        out128[93]  = -res53;
-        out128[124] =  res20;
-        out128[125] = -res21;
-
 
         let xA35re  = out128[70];
         let xA35im  = out128[71];
         let xA51re  = out128[102];
         let xA51im  = out128[103];
-        let res22   = xA35re + (xA51re *  tA3re - xA51im * -tA5re);
-        let res23   = xA35im + (xA51re * -tA5re + xA51im *  tA3re);
-        let res54   = xA35re - (xA51re *  tA3re - xA51im * -tA5re);
-        let res55   = xA35im - (xA51re * -tA5re + xA51im *  tA3re);
-
-        out128[70]  = res22;
-        out128[71]  = res23;
-        out128[102] = res54;
-        out128[103] = res55;
-
-        out128[90]  =  res54;
-        out128[91]  = -res55;
-        out128[122] =  res22;
-        out128[123] = -res23;
-
 
         let xA36re  = out128[72];
         let xA36im  = out128[73];
         let xA52re  = out128[104];
         let xA52im  = out128[105];
-        let res24   = xA36re + (xA52re *  tA4re - xA52im * -tA4re);
-        let res25   = xA36im + (xA52re * -tA4re + xA52im *  tA4re);
-        let res56   = xA36re - (xA52re *  tA4re - xA52im * -tA4re);
-        let res57   = xA36im - (xA52re * -tA4re + xA52im *  tA4re);
-
-        out128[72]  = res24;
-        out128[73]  = res25;
-        out128[104] = res56;
-        out128[105] = res57;
-
-        out128[88]  =  res56;
-        out128[89]  = -res57;
-        out128[120] =  res24;
-        out128[121] = -res25;
-
 
         let xA37re  = out128[74];
         let xA37im  = out128[75];
         let xA53re  = out128[106];
         let xA53im  = out128[107];
-        let res26   = xA37re + (xA53re *  tA5re - xA53im * -tA3re);
-        let res27   = xA37im + (xA53re * -tA3re + xA53im *  tA5re);
-        let res58   = xA37re - (xA53re *  tA5re - xA53im * -tA3re);
-        let res59   = xA37im - (xA53re * -tA3re + xA53im *  tA5re);
-
-        out128[74]  = res26;
-        out128[75]  = res27;
-        out128[106] = res58;
-        out128[107] = res59;
-
-        out128[86]  =  res58;
-        out128[87]  = -res59;
-        out128[118] =  res26;
-        out128[119] = -res27;
-
 
         let xA38re  = out128[76];
         let xA38im  = out128[77];
         let xA54re  = out128[108];
         let xA54im  = out128[109];
-        let res28   = xA38re + (xA54re *  tA6re - xA54im * -tA2re);
-        let res29   = xA38im + (xA54re * -tA2re + xA54im *  tA6re);
-        let res60   = xA38re - (xA54re *  tA6re - xA54im * -tA2re);
-        let res61   = xA38im - (xA54re * -tA2re + xA54im *  tA6re);
-
-        out128[76]  = res28;
-        out128[77]  = res29;
-        out128[108] = res60;
-        out128[109] = res61;
-
-        out128[84]  =  res60;
-        out128[85]  = -res61;
-        out128[116] =  res28;
-        out128[117] = -res29;
-
 
         let xA39re  = out128[78];
         let xA39im  = out128[79];
         let xA55re  = out128[110];
         let xA55im  = out128[111];
-        let res30   = xA39re + (xA55re *  tA7re - xA55im * -tA1re);
-        let res31   = xA39im + (xA55re * -tA1re + xA55im *  tA7re);
-        let res62   = xA39re - (xA55re *  tA7re - xA55im * -tA1re);
-        let res63   = xA39im - (xA55re * -tA1re + xA55im *  tA7re);
-
-        out128[78]  = res30;
-        out128[79]  = res31;
-        out128[110] = res62;
-        out128[111] = res63;
-
-        out128[82]  =  res62;
-        out128[83]  = -res63;
-        out128[114] =  res30;
-        out128[115] = -res31;
 
         let xA40re  = out128[80];
         let xA40im  = out128[81];
         let xA56re  = out128[112];
         let xA56im  = out128[113];
-        out128[80]  = xA40re + xA56im;
-        out128[81]  = xA40im - xA56re;
-        out128[112] = xA40re - xA56im;
-        out128[113] = xA40im + xA56re;
+
+
+        let res2  = xA1re + (xA17re *  tA1re - xA17im * -tA7re);
+        let res3  = xA1im + (xA17re * -tA7re + xA17im *  tA1re);
+        let res34 = xA1re - (xA17re *  tA1re - xA17im * -tA7re);
+        let res35 = xA1im - (xA17re * -tA7re + xA17im *  tA1re);
+
+        let res4   = xA2re + (xA18re *  tA2re - xA18im * -tA6re);
+        let res5   = xA2im + (xA18re * -tA6re + xA18im *  tA2re);
+        let res36  = xA2re - (xA18re *  tA2re - xA18im * -tA6re);
+        let res37  = xA2im - (xA18re * -tA6re + xA18im *  tA2re);
+
+        let res6   = xA3re + (xA19re *  tA3re - xA19im * -tA5re);
+        let res7   = xA3im + (xA19re * -tA5re + xA19im *  tA3re);
+        let res38  = xA3re - (xA19re *  tA3re - xA19im * -tA5re);
+        let res39  = xA3im - (xA19re * -tA5re + xA19im *  tA3re);
+
+        let res8   = xA4re + (xA20re *  tA4re - xA20im * -tA4re);
+        let res9   = xA4im + (xA20re * -tA4re + xA20im *  tA4re);
+        let res40  = xA4re - (xA20re *  tA4re - xA20im * -tA4re);
+        let res41  = xA4im - (xA20re * -tA4re + xA20im *  tA4re);
+
+        let res10  = xA5re + (xA21re *  tA5re - xA21im * -tA3re);
+        let res11  = xA5im + (xA21re * -tA3re + xA21im *  tA5re);
+        let res42  = xA5re - (xA21re *  tA5re - xA21im * -tA3re);
+        let res43  = xA5im - (xA21re * -tA3re + xA21im *  tA5re);
+
+        let res12  = xA6re + (xA22re *  tA6re - xA22im * -tA2re);
+        let res13  = xA6im + (xA22re * -tA2re + xA22im *  tA6re);
+        let res44  = xA6re - (xA22re *  tA6re - xA22im * -tA2re);
+        let res45  = xA6im - (xA22re * -tA2re + xA22im *  tA6re);
+
+        let res14  = xA7re + (xA23re *  tA7re - xA23im * -tA1re);
+        let res15  = xA7im + (xA23re * -tA1re + xA23im *  tA7re);
+        let res46  = xA7re - (xA23re *  tA7re - xA23im * -tA1re);
+        let res47  = xA7im - (xA23re * -tA1re + xA23im *  tA7re);
+
+        let res18   = xA33re + (xA49re *  tA1re - xA49im * -tA7re);
+        let res19   = xA33im + (xA49re * -tA7re + xA49im *  tA1re);
+        let res50   = xA33re - (xA49re *  tA1re - xA49im * -tA7re);
+        let res51   = xA33im - (xA49re * -tA7re + xA49im *  tA1re);
+
+        let res20   = xA34re + (xA50re *  tA2re - xA50im * -tA6re);
+        let res21   = xA34im + (xA50re * -tA6re + xA50im *  tA2re);
+        let res52   = xA34re - (xA50re *  tA2re - xA50im * -tA6re);
+        let res53   = xA34im - (xA50re * -tA6re + xA50im *  tA2re);
+
+        let res22   = xA35re + (xA51re *  tA3re - xA51im * -tA5re);
+        let res23   = xA35im + (xA51re * -tA5re + xA51im *  tA3re);
+        let res54   = xA35re - (xA51re *  tA3re - xA51im * -tA5re);
+        let res55   = xA35im - (xA51re * -tA5re + xA51im *  tA3re);
+
+        let res24   = xA36re + (xA52re *  tA4re - xA52im * -tA4re);
+        let res25   = xA36im + (xA52re * -tA4re + xA52im *  tA4re);
+        let res56   = xA36re - (xA52re *  tA4re - xA52im * -tA4re);
+        let res57   = xA36im - (xA52re * -tA4re + xA52im *  tA4re);
+
+        let res26   = xA37re + (xA53re *  tA5re - xA53im * -tA3re);
+        let res27   = xA37im + (xA53re * -tA3re + xA53im *  tA5re);
+        let res58   = xA37re - (xA53re *  tA5re - xA53im * -tA3re);
+        let res59   = xA37im - (xA53re * -tA3re + xA53im *  tA5re);
+
+        let res28   = xA38re + (xA54re *  tA6re - xA54im * -tA2re);
+        let res29   = xA38im + (xA54re * -tA2re + xA54im *  tA6re);
+        let res60   = xA38re - (xA54re *  tA6re - xA54im * -tA2re);
+        let res61   = xA38im - (xA54re * -tA2re + xA54im *  tA6re);
+
+        let res30   = xA39re + (xA55re *  tA7re - xA55im * -tA1re);
+        let res31   = xA39im + (xA55re * -tA1re + xA55im *  tA7re);
+        let res62   = xA39re - (xA55re *  tA7re - xA55im * -tA1re);
+        let res63   = xA39im - (xA55re * -tA1re + xA55im *  tA7re);
+
+
+        let t1Re  = FFT_FAC_64[2];
+        let t2Re  = FFT_FAC_64[4];
+        let t3Re  = FFT_FAC_64[6];
+        let t4Re  = FFT_FAC_64[8];
+        let t5Re  = FFT_FAC_64[10];
+        let t6Re  = FFT_FAC_64[12];
+        let t7Re  = FFT_FAC_64[14];
+        let t8Re  = FFT_FAC_64[16];
+        let t9Re  = FFT_FAC_64[18];
+        let t10Re = FFT_FAC_64[20];
+        let t11Re = FFT_FAC_64[22];
+        let t12Re = FFT_FAC_64[24];
+        let t13Re = FFT_FAC_64[26];
+        let t14Re = FFT_FAC_64[28];
+        let t15Re = FFT_FAC_64[30];
+
+        out128[0]   =  xA0re + xA16re + xA32re + xA48re;
+        out128[1]   =  xA0im + xA16im + xA32im + xA48im;
+        out128[64]  =  xA0re + xA16re - xA32re - xA48re;
+        out128[65]  =  xA0im + xA16im - xA32im - xA48im;
+
+        let resB2   =  res2 + (res18 *  t1Re  - res19 * -t15Re);
+        let resB3   =  res3 + (res18 * -t15Re + res19 *  t1Re );
+        let resB66  =  res2 - (res18 *  t1Re  - res19 * -t15Re);
+        let resB67  =  res3 - (res18 * -t15Re + res19 *  t1Re );
+        out128[2]   =  resB2;
+        out128[3]   =  resB3;
+        out128[66]  =  resB66;
+        out128[67]  =  resB67;
+        out128[62]  =  resB66;
+        out128[63]  = -resB67;
+        out128[126] =  resB2;
+        out128[127] = -resB3;
+
+        let resB4   =  res4 + (res20 *  t2Re  - res21 * -t14Re);
+        let resB5   =  res5 + (res20 * -t14Re + res21 *  t2Re );
+        let resB68  =  res4 - (res20 *  t2Re  - res21 * -t14Re);
+        let resB69  =  res5 - (res20 * -t14Re + res21 *  t2Re );
+        out128[4]   =  resB4;
+        out128[5]   =  resB5;
+        out128[68]  =  resB68;
+        out128[69]  =  resB69;
+        out128[60]  =  resB68;
+        out128[61]  = -resB69;
+        out128[124] =  resB4;
+        out128[125] = -resB5;
+
+        let resB6   =  res6 + (res22 *  t3Re  - res23 * -t13Re);
+        let resB7   =  res7 + (res22 * -t13Re + res23 *  t3Re );
+        let resB70  =  res6 - (res22 *  t3Re  - res23 * -t13Re);
+        let resB71  =  res7 - (res22 * -t13Re + res23 *  t3Re );
+        out128[6]   =  resB6;
+        out128[7]   =  resB7;
+        out128[70]  =  resB70;
+        out128[71]  =  resB71;
+        out128[58]  =  resB70;
+        out128[59]  = -resB71;
+        out128[122] =  resB6;
+        out128[123] = -resB7;
+
+        let resB8   =  res8 + (res24 *  t4Re  - res25 * -t12Re);
+        let resB9   =  res9 + (res24 * -t12Re + res25 *  t4Re);
+        let resB72  =  res8 - (res24 *  t4Re  - res25 * -t12Re);
+        let resB73  =  res9 - (res24 * -t12Re + res25 *  t4Re);
+        out128[8]   =  resB8;
+        out128[9]   =  resB9;
+        out128[72]  =  resB72;
+        out128[73]  =  resB73;
+        out128[56]  =  resB72;
+        out128[57]  = -resB73;
+        out128[120] =  resB8;
+        out128[121] = -resB9;
+
+        let resB10  =  res10 + (res26 *  t5Re  - res27 * -t11Re);
+        let resB11  =  res11 + (res26 * -t11Re + res27 *  t5Re);
+        let resB74  =  res10 - (res26 *  t5Re  - res27 * -t11Re);
+        let resB75  =  res11 - (res26 * -t11Re + res27 *  t5Re);
+        out128[10]  =  resB10;
+        out128[11]  =  resB11;
+        out128[74]  =  resB74;
+        out128[75]  =  resB75;
+        out128[54]  =  resB74;
+        out128[55]  = -resB75;
+        out128[118] =  resB10;
+        out128[119] = -resB11;
+
+        let resB12  =  res12 + (res28 *  t6Re  - res29 * -t10Re);
+        let resB13  =  res13 + (res28 * -t10Re + res29 *  t6Re);
+        let resB76  =  res12 - (res28 *  t6Re  - res29 * -t10Re);
+        let resB77  =  res13 - (res28 * -t10Re + res29 *  t6Re);
+        out128[12]  =  resB12;
+        out128[13]  =  resB13;
+        out128[76]  =  resB76;
+        out128[77]  =  resB77;
+        out128[52]  =  resB76;
+        out128[53]  = -resB77;
+        out128[116] =  resB12;
+        out128[117] = -resB13;
+
+        let resB14  =  res14 + (res30 *  t7Re - res31 * -t9Re);
+        let resB15  =  res15 + (res30 * -t9Re + res31 *  t7Re);
+        let resB78  =  res14 - (res30 *  t7Re - res31 * -t9Re);
+        let resB79  =  res15 - (res30 * -t9Re + res31 *  t7Re);
+        out128[14]  =  resB14;
+        out128[15]  =  resB15;
+        out128[78]  =  resB78;
+        out128[79]  =  resB79;
+        out128[50]  =  resB78;
+        out128[51]  = -resB79;
+        out128[114] =  resB14;
+        out128[115] = -resB15;
+
+        out128[16]  =  xA8re + xA24im + ((xA40re + xA56im) *  t8Re - (xA40im - xA56re) * -t8Re);
+        out128[17]  =  xA8im - xA24re + ((xA40re + xA56im) * -t8Re + (xA40im - xA56re) *  t8Re);
+        out128[80]  =  xA8re + xA24im - ((xA40re + xA56im) *  t8Re - (xA40im - xA56re) * -t8Re);
+        out128[81]  =  xA8im - xA24re - ((xA40re + xA56im) * -t8Re + (xA40im - xA56re) *  t8Re);
+
+        let resB18  =  res46 + (res62 *  t9Re - -res63 * -t7Re);
+        let resB19  = -res47 + (res62 * -t7Re + -res63 *  t9Re);
+        let resB82  =  res46 - (res62 *  t9Re - -res63 * -t7Re);
+        let resB83  = -res47 - (res62 * -t7Re + -res63 *  t9Re);
+        out128[18]  =  resB18;
+        out128[19]  =  resB19;
+        out128[82]  =  resB82;
+        out128[83]  =  resB83;
+        out128[46]  =  resB82;
+        out128[47]  = -resB83;
+        out128[110] =  resB18;
+        out128[111] = -resB19;
+
+        let resB20  =  res44 + (res60 *  t10Re - -res61 * -t6Re );
+        let resB21  = -res45 + (res60 * -t6Re  + -res61 *  t10Re);
+        let resB84  =  res44 - (res60 *  t10Re - -res61 * -t6Re );
+        let resB85  = -res45 - (res60 * -t6Re  + -res61 *  t10Re);
+        out128[20]  =  resB20;
+        out128[21]  =  resB21;
+        out128[84]  =  resB84;
+        out128[85]  =  resB85;
+        out128[44]  =  resB84;
+        out128[45]  = -resB85;
+        out128[108] =  resB20;
+        out128[109] = -resB21;
+
+        let resB22  =  res42 + (res58 *  t11Re - -res59 * -t5Re );
+        let resB23  = -res43 + (res58 * -t5Re  + -res59 *  t11Re);
+        let resB86  =  res42 - (res58 *  t11Re - -res59 * -t5Re );
+        let resB87  = -res43 - (res58 * -t5Re  + -res59 *  t11Re);
+        out128[22]  =  resB22;
+        out128[23]  =  resB23;
+        out128[86]  =  resB86;
+        out128[87]  =  resB87;
+        out128[42]  =  resB86;
+        out128[43]  = -resB87;
+        out128[106] =  resB22;
+        out128[107] = -resB23;
+
+        let resB24  =  res40 + (res56 *  t12Re - -res57 * -t4Re );
+        let resB25  = -res41 + (res56 * -t4Re  + -res57 * t12Re );
+        let resB88  =  res40 - (res56 *  t12Re - -res57 * -t4Re );
+        let resB89  = -res41 - (res56 * -t4Re  + -res57 * t12Re );
+        out128[24]  =  resB24;
+        out128[25]  =  resB25;
+        out128[88]  =  resB88;
+        out128[89]  =  resB89;
+        out128[40]  =  resB88;
+        out128[41]  = -resB89;
+        out128[104] =  resB24;
+        out128[105] = -resB25;
+
+        let resB26  =  res38 + (res54 *  t13Re - -res55 * -t3Re );
+        let resB27  = -res39 + (res54 * -t3Re  + -res55 *  t13Re);
+        let resB90  =  res38 - (res54 *  t13Re - -res55 * -t3Re );
+        let resB91  = -res39 - (res54 * -t3Re  + -res55 *  t13Re);
+        out128[26]  =  resB26;
+        out128[27]  =  resB27;
+        out128[90]  =  resB90;
+        out128[91]  =  resB91;
+        out128[38]  =  resB90;
+        out128[39]  = -resB91;
+        out128[102] =  resB26;
+        out128[103] = -resB27;
+
+        let resB28  =  res36 + (res52 *  t14Re - -res53 * -t2Re );
+        let resB29  = -res37 + (res52 * -t2Re  + -res53 *  t14Re);
+        let resB92  =  res36 - (res52 *  t14Re - -res53 * -t2Re );
+        let resB93  = -res37 - (res52 * -t2Re  + -res53 *  t14Re);
+        out128[28]  =  resB28;
+        out128[29]  =  resB29;
+        out128[92]  =  resB92;
+        out128[93]  =  resB93;
+        out128[36]  =  resB92;
+        out128[37]  = -resB93;
+        out128[100] =  resB28;
+        out128[101] = -resB29;
+
+        let resB30  =  res34 + (res50 *  t15Re - -res51 * -t1Re );
+        let resB31  = -res35 + (res50 * -t1Re  + -res51 *  t15Re);
+        let resB94  =  res34 - (res50 *  t15Re - -res51 * -t1Re );
+        let resB95  = -res35 - (res50 * -t1Re  + -res51 *  t15Re);
+        out128[30]  =  resB30;
+        out128[31]  =  resB31;
+        out128[94]  =  resB94;
+        out128[95]  =  resB95;
+        out128[34]  =  resB94;
+        out128[35]  = -resB95;
+        out128[98]  =  resB30;
+        out128[99]  = -resB31;
+
+
+        out128[32]  = xA0re - xA16re + (xA32im - xA48im);
+        out128[33]  = xA0im - xA16im + (-(xA32re - xA48re));
+        out128[96]  = xA0re - xA16re - (xA32im - xA48im);
+        out128[97]  = xA0im - xA16im - (-(xA32re - xA48re));
+
+        out128[48]   = xA8re - xA24im + ((xA40re - xA56im) * -t8Re - (xA40im + xA56re) * -t8Re);
+        out128[49]   = xA8im + xA24re + ((xA40re - xA56im) * -t8Re + (xA40im + xA56re) * -t8Re);
+        out128[112]  = xA8re - xA24im - ((xA40re - xA56im) * -t8Re - (xA40im + xA56re) * -t8Re);
+        out128[113]  = xA8im + xA24re - ((xA40re - xA56im) * -t8Re + (xA40im + xA56re) * -t8Re);
+
      }
-     
-     /*
-     for (let j = 0; j < 16; j++) { 
-         let eI = 0 + j;
-         let oI = 0 + j + 16;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_32[j * 2 + 0];
-         let tIm  = FFT_FAC_32[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }*/
-     /*
-     for (let j = 0; j < 16; j++) { 
-         let eI = 32 + j;
-         let oI = 32 + j + 16;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_32[j * 2 + 0];
-         let tIm  = FFT_FAC_32[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }*/
-
-     for (let j = 0; j < 32; j++) { 
-         let eI = 0 + j;
-         let oI = 0 + j + 32;
-         let eRe  = out128[eI * 2    ];
-         let eIm  = out128[eI * 2 + 1];
-         let oRe  = out128[oI * 2    ];
-         let oIm  = out128[oI * 2 + 1];
-         let tRe  = FFT_FAC_64[j * 2 + 0];
-         let tIm  = FFT_FAC_64[j * 2 + 1];
-         let t_oRe = oRe * tRe - oIm * tIm;
-         let t_oIm = oRe * tIm + oIm * tRe;
-         out128[eI * 2    ] = eRe + t_oRe;
-         out128[eI * 2 + 1] = eIm + t_oIm;
-         out128[oI * 2    ] = eRe - t_oRe;
-         out128[oI * 2 + 1] = eIm - t_oIm;
-     }
-     
-
-
-
 
 
 
