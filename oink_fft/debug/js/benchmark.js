@@ -96,6 +96,7 @@ const measureFFT = (FFT_BANK, type, size, testData, NUM_OPS) => {
       case 8:    func = FFT_BANK.get(type).fft8;   break;
       case 16:   func = FFT_BANK.get(type).fft16;  break;
       case 32:   func = FFT_BANK.get(type).fft32;  break;
+      case 64:   func = FFT_BANK.get(type).fft64;  break;
       case 128:  func = FFT_BANK.get(type).fft128; break;
       case 256:  func = FFT_BANK.get(type).fft256; break;
       case 512:  func = FFT_BANK.get(type).fft512; break;
