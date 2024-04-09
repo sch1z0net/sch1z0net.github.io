@@ -202,7 +202,7 @@ function fftReal32(realInput) {
     ////////////////////////////////////////////////
     // RADIX 2 (rolled) - FFT step for SIZE 32 
     ////////////////////////////////////////////////
-    { 
+    /*{ 
      for (let j = 0; j < 16; j++) { 
          let eI = 0 + j;
          let oI = 0 + j + 16;
@@ -219,6 +219,38 @@ function fftReal32(realInput) {
          out32[oI * 2    ] = eRe - t_oRe;
          out32[oI * 2 + 1] = eIm - t_oIm;
      }
+    } */
+
+    ////////////////////////////////////////////////
+    ////////////////////////////////////////////////
+    // RADIX 2 (complete)
+    ////////////////////////////////////////////////
+    for (let size = 32; size <= 32; size*=2) { 
+        for (let i = 0; i < 32; i+=size) { 
+           for (let j = 0; j < size/2; j++) { 
+             let eI = i + j;
+             let oI = i + j + size/2;
+             if(j > size/4){
+                 out32[eI * 2    ] =  out32[size*2 - eI * 2    ];
+                 out32[eI * 2 + 1] = -out32[size*2 - eI * 2 + 1];
+                 out32[oI * 2    ] =  out32[size*2 - oI * 2    ];
+                 out32[oI * 2 + 1] = -out32[size*2 - oI * 2 + 1];
+                 continue;
+             } 
+             let eRe  = out32[eI * 2    ];
+             let eIm  = out32[eI * 2 + 1];
+             let oRe  = out32[oI * 2    ];
+             let oIm  = out32[oI * 2 + 1];
+             let tRe  = FFT_FAC_32[j * 2 + 0];
+             let tIm  = FFT_FAC_32[j * 2 + 1];
+             let t_oRe = oRe * tRe - oIm * tIm;
+             let t_oIm = oRe * tIm + oIm * tRe;
+             out32[eI * 2    ] = eRe + t_oRe;
+             out32[eI * 2 + 1] = eIm + t_oIm;
+             out32[oI * 2    ] = eRe - t_oRe;
+             out32[oI * 2 + 1] = eIm - t_oIm;
+           }
+       }
     } 
 
     return out32;

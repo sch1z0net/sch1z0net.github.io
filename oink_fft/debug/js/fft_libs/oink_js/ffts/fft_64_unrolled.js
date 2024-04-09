@@ -235,7 +235,7 @@ function fftReal64(realInput) {
     ////////////////////////////////////////////////
     // RADIX 4 - FFT step for SIZE 32/64
     ////////////////////////////////////////////////
-    {
+  /*  {
         let xA0re  = out64[ 0 ];
         let xA0im  = out64[ 1 ];
         let xA1re  = out64[ 2 ];
@@ -639,6 +639,39 @@ function fftReal64(realInput) {
         out64[96  ]  =  xA0re - xA16re - xA32im + xA48im;
         out64[97  ]  =  xA0im - xA16im + xA32re - xA48re;
      }
+*/
+
+    ////////////////////////////////////////////////
+    ////////////////////////////////////////////////
+    // RADIX 2 (complete)
+    ////////////////////////////////////////////////
+    for (let size = 32; size <= 64; size*=2) { 
+        for (let i = 0; i < 64; i+=size) { 
+           for (let j = 0; j < size/2; j++) { 
+             let eI = i + j;
+             let oI = i + j + size/2;
+             if(j > size/4){
+                 out64[eI * 2    ] =  out64[size*2 - eI * 2    ];
+                 out64[eI * 2 + 1] = -out64[size*2 - eI * 2 + 1];
+                 out64[oI * 2    ] =  out64[size*2 - oI * 2    ];
+                 out64[oI * 2 + 1] = -out64[size*2 - oI * 2 + 1];
+                 continue;
+             } 
+             let eRe  = out64[eI * 2    ];
+             let eIm  = out64[eI * 2 + 1];
+             let oRe  = out64[oI * 2    ];
+             let oIm  = out64[oI * 2 + 1];
+             let tRe  = FFT_FAC_64[j * 2 + 0];
+             let tIm  = FFT_FAC_64[j * 2 + 1];
+             let t_oRe = oRe * tRe - oIm * tIm;
+             let t_oIm = oRe * tIm + oIm * tRe;
+             out64[eI * 2    ] = eRe + t_oRe;
+             out64[eI * 2 + 1] = eIm + t_oIm;
+             out64[oI * 2    ] = eRe - t_oRe;
+             out64[oI * 2 + 1] = eIm - t_oIm;
+           }
+       }
+    } 
 
     return out64;
 } 
