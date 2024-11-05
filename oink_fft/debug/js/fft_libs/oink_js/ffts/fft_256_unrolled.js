@@ -483,14 +483,6 @@ function fftReal256(realInput) {
      for (let j = 0; j < 16; j++) { 
          let eI = 0 + j;
          let oI = 0 + j + 16;
-         /*
-         if(j > 8){
-            out256[eI * 2    ] =  out256[64 - eI * 2    ];
-            out256[eI * 2 + 1] = -out256[64 - eI * 2 + 1];
-            out256[oI * 2    ] =  out256[64 - oI * 2    ];
-            out256[oI * 2 + 1] = -out256[64 - oI * 2 + 1];
-            continue;
-         }*/
          let eRe  = out256[eI * 2    ];
          let eIm  = out256[eI * 2 + 1];
          let oRe  = out256[oI * 2    ];
@@ -621,7 +613,7 @@ function fftReal256(realInput) {
     ////////////////////////////////////////////////
     // RADIX 2 (rolled) - FFT step for SIZE 64 
     ////////////////////////////////////////////////
-    /*{ 
+    { 
      for (let j = 0; j < 32; j++) { 
          let eI = 0 + j;
          let oI = 0 + j + 32;
@@ -746,7 +738,7 @@ function fftReal256(realInput) {
          out256[oI * 2    ] = eRe - t_oRe;
          out256[oI * 2 + 1] = eIm - t_oIm;
      }
-    } */
+    }
 
     return out256;
 } 
