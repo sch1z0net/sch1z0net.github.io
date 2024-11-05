@@ -99,7 +99,7 @@ function fftReal32(realInput) {
     ////////////////////////////////////////////////
     // RADIX 4 - FFT step for SIZE 8/16 
     ////////////////////////////////////////////////
-
+    /*
     for (let idx = 0; idx < 64; idx += 32) {
         let x0aRe = out32[idx     ];
         let x0bRe = out32[idx +  2];
@@ -196,7 +196,102 @@ function fftReal32(realInput) {
         let resImD2 =-x0bIm  + x1sum_tRe_1b + tempImD;
         out32[idx +  23] =   resImD2;
         out32[idx +  11] = - resImD2;
+    }*/
+
+
+    for (let idx = 0; idx < 64; idx += 32) {
+        let xA0re  = out32[idx + 0];
+        let xA1re  = out32[idx + 2];
+        let xA1im  = out32[idx + 3];
+        let xA2re  = out32[idx + 4];
+
+        let xA4re  = out32[idx + 8];
+        out32[idx + 8]  =     xA0re - xA4re;
+        let xA5re  = out32[idx + 10];
+        let xA5im  = out32[idx + 11];
+        let xA6re  = out32[idx + 12];
+
+        let xA8re  = out32[idx + 16]; 
+        let xA9re  = out32[idx + 18]; 
+        let xA9im  = out32[idx + 19]; 
+        let xA10re = out32[idx + 20]; 
+
+        let xA12re = out32[idx + 24]; 
+        out32[idx + 24] =     xA0re - xA4re;
+        out32[idx + 25] =     xA8re - xA12re;
+        out32[idx + 9]  =   - xA8re + xA12re;
+        out32[idx + 0]  = xA0re + xA4re + (xA8re + xA12re);
+        out32[idx + 1]  = 0;
+        out32[idx + 16] = xA0re + xA4re - (xA8re + xA12re);
+        out32[idx + 17] = 0;
+        let xA13re = out32[idx + 26]; 
+        let xA13im = out32[idx + 27]; 
+        let xA14re = out32[idx + 28]; 
+
+
+
+         let tRe = 0.7071067690849304;  //FFT_FAC_8[2];
+         let x1re  =  xA1re + (xA5re  *  tRe + xA5im  *  tRe);    
+         let x1im  =  xA1im + (xA5re  * -tRe + xA5im  *  tRe);
+         let x9re  =  xA9re + (xA13re *  tRe - xA13im * -tRe); 
+         let x9im  =  xA9im + (xA13re * -tRe + xA13im *  tRe);
+
+         let t1re  = 0.9238795042037964; //FFT_FAC_16[2];
+         let t3re  = 0.3826834261417389; //FFT_FAC_16[6];
+         let res3  =  x1im + (x9re * -t3re  + x9im *  t1re);
+         out32[idx + 31] = -res3;
+         let res2  =  x1re + (x9re *  t1re  - x9im * -t3re);
+         out32[idx + 30] =  res2;
+         let res19 =  x1im - (x9re * -t3re  + x9im *  t1re);
+         out32[idx + 19] =  res19;
+         let res18 =  x1re - (x9re *  t1re  - x9im * -t3re);
+         out32[idx + 18] =  res18;
+
+         out32[idx + 15] = -res19;
+         out32[idx + 14] =  res18;
+         out32[idx + 3]  =  res3;
+         out32[idx + 2]  =  res2;
+
+         
+
+
+         let res4  = xA2re + (xA10re *  tRe + xA14re * -tRe);
+         out32[idx + 4]  =  res4;
+         let res5  =-xA6re + (xA10re * -tRe - xA14re *  tRe);
+         out32[idx + 5]  =  res5;
+         let res20 = xA2re - (xA10re *  tRe + xA14re * -tRe);
+         out32[idx + 12] =  res20;
+         let res21 =-xA6re - (xA10re * -tRe - xA14re *  tRe);
+         out32[idx + 13] = -res21;
+
+         out32[idx + 20] =  res20;
+         out32[idx + 21] =  res21;
+         out32[idx + 28] =  res4;
+         out32[idx + 29] = -res5;
+
+
+         let x3re  =  xA1re - (xA5re  *  tRe + xA5im  *  tRe);    
+         let x3im  = -xA1im + (xA5re  * -tRe + xA5im  *  tRe);
+         let x11re =  xA9re + (xA13re * -tRe - xA13im *  tRe); 
+         let x11im = -xA9im + (xA13re * -tRe + xA13im *  tRe);
+
+
+         let res7  = x3im + (x11re * -t1re + x11im *  t3re);
+         out32[idx + 27] = -res7;
+         let res6  = x3re + (x11re *  t3re - x11im * -t1re);
+         out32[idx + 26] =  res6;
+         let res23 = x3im - (x11re * -t1re + x11im *  t3re);
+         out32[idx + 23] =  res23;
+         let res22 = x3re - (x11re *  t3re - x11im * -t1re);
+         out32[idx + 22] =  res22;
+
+         out32[idx + 11] = -res23;
+         out32[idx + 10] =  res22;
+         out32[idx + 6]  =  res6;
+         out32[idx + 7]  =  res7;
     }
+
+
 
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
