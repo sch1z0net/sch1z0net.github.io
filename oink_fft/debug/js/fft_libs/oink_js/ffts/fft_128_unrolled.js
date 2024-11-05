@@ -772,13 +772,13 @@ function fftReal128(realInput) {
      for (let j = 0; j < 64; j++) { 
          let eI = 0 + j;
          let oI = 0 + j + 64;
-         if(j > 32){
+         /*if(j > 32){
             out128[eI * 2    ] =  out128[256 - eI * 2    ];
             out128[eI * 2 + 1] = -out128[256 - eI * 2 + 1];
             out128[oI * 2    ] =  out128[256 - oI * 2    ];
             out128[oI * 2 + 1] = -out128[256 - oI * 2 + 1];
             continue;
-         } 
+         }*/
          let eRe  = out128[eI * 2    ];
          let eIm  = out128[eI * 2 + 1];
          let oRe  = out128[oI * 2    ];
