@@ -13,7 +13,7 @@ async function setup(FFT_BANK){
     await registerPlugin(PLUGIN_INDUTNY, FFT_BANK);
     await registerPlugin(PLUGIN_DSP, FFT_BANK);
     await registerPlugin(PLUGIN_KISS, FFT_BANK);
-    await registerPlugin(PLUGIN_OOURA, FFT_BANK);
+    /*await registerPlugin(PLUGIN_OOURA, FFT_BANK);*/
     /*await registerPlugin(PLUGIN_OINK, FFT_BANK);*/
 };
 
