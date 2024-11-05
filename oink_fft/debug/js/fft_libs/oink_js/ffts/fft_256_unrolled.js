@@ -1143,6 +1143,13 @@ function fftReal256(realInput) {
      for (let j = 0; j < 128; j++) { 
          let eI = 0 + j;
          let oI = 0 + j + 128;
+         if(j > 64){
+            out256[eI * 2    ] =  out256[512 - eI * 2    ];
+            out256[eI * 2 + 1] = -out256[512 - eI * 2 + 1];
+            out256[oI * 2    ] =  out256[512 - oI * 2    ];
+            out256[oI * 2 + 1] = -out256[512 - oI * 2 + 1];
+            continue;
+         }
          let eRe  = out256[eI * 2    ];
          let eIm  = out256[eI * 2 + 1];
          let oRe  = out256[oI * 2    ];
