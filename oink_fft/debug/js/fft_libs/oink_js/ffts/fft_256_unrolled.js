@@ -479,7 +479,7 @@ function fftReal256(realInput) {
     ////////////////////////////////////////////////
     // RADIX 2 (rolled) - FFT step for SIZE 32 
     ////////////////////////////////////////////////
-    { 
+    /*{ 
      for (let j = 0; j < 16; j++) { 
          let eI = 0 + j;
          let oI = 0 + j + 16;
@@ -678,7 +678,425 @@ function fftReal256(realInput) {
          out256[oI * 2    ] = eRe - t_oRe;
          out256[oI * 2 + 1] = eIm - t_oIm;
      }
-    } 
+    } */
+
+
+    ////////////////////////////////////////////////
+    ////////////////////////////////////////////////
+    // RADIX 4 - FFT step for SIZE 32/64
+    ////////////////////////////////////////////////
+     for (let idx = 0; idx < 512; idx += 128) {
+        let xA1re   = out256[ 2 + idx];
+        let xA1im   = out256[ 3 + idx];
+        let xA17re  = out256[34 + idx];
+        let xA17im  = out256[35 + idx];
+        let xA33re  = out256[66 + idx];
+        let xA33im  = out256[67 + idx];
+        let xA49re  = out256[98 + idx];
+        let xA49im  = out256[99 + idx];
+
+        let tA1re   = 0.9807852506637573; //FFT_FAC_32[2];
+        let tA7re   = 0.1950903534889221; //FFT_FAC_32[14];
+        let res2    = xA1re  + (xA17re *  tA1re - xA17im * -tA7re);
+        let res3    = xA1im  + (xA17re * -tA7re + xA17im *  tA1re);
+        let res18   = xA33re + (xA49re *  tA1re - xA49im * -tA7re);
+        let res19   = xA33im + (xA49re * -tA7re + xA49im *  tA1re);
+        let t1Re    = 0.9951847195625305; //FFT_FAC_64[2];
+        let t15Re   = 0.0980171337723732; //FFT_FAC_64[30];
+
+        let resB3   =  res3 + (res18 * -t15Re + res19 *  t1Re );
+        out256[127 + idx]  = -resB3;
+        let resB2   =  res2 + (res18 *  t1Re  - res19 * -t15Re);
+        out256[126 + idx]  =  resB2;
+        let resB67  =  res3 - (res18 * -t15Re + res19 *  t1Re );
+        out256[67  + idx]  =  resB67;
+        let resB66  =  res2 - (res18 *  t1Re  - res19 * -t15Re);
+        out256[66  + idx]  =  resB66;
+
+        out256[63  + idx]  = -resB67;
+        out256[62  + idx]  =  resB66;
+        out256[3   + idx]  =  resB3;
+        out256[2   + idx]  =  resB2;
+
+
+
+        let xA2re   = out256[ 4 + idx];
+        let xA2im   = out256[ 5 + idx];
+        let xA18re  = out256[36 + idx];
+        let xA18im  = out256[37 + idx];
+        let xA34re  = out256[68 + idx];
+        let xA34im  = out256[69 + idx];
+        let xA50re  = out256[100 + idx];
+        let xA50im  = out256[101 + idx];  
+
+        let tA2re   = 0.9238795042037964; //FFT_FAC_32[4];
+        let tA6re   = 0.3826834261417389; //FFT_FAC_32[12];
+        let res4    = xA2re + (xA18re *  tA2re - xA18im * -tA6re);
+        let res5    = xA2im + (xA18re * -tA6re + xA18im *  tA2re);
+        let res20   = xA34re + (xA50re *  tA2re - xA50im * -tA6re);
+        let res21   = xA34im + (xA50re * -tA6re + xA50im *  tA2re);
+        let t2Re    = 0.9807852506637573; //FFT_FAC_64[4];
+        let t14Re   = 0.1950903534889221; //FFT_FAC_64[28];
+
+        let resB4   =  res4 + (res20 *  t2Re  - res21 * -t14Re);
+        out256[4  + idx]   =  resB4;
+        let resB5   =  res5 + (res20 * -t14Re + res21 *  t2Re );
+        out256[5  + idx]   =  resB5;
+        let resB68  =  res4 - (res20 *  t2Re  - res21 * -t14Re);
+        out256[60  + idx]  =  resB68;
+        let resB69  =  res5 - (res20 * -t14Re + res21 *  t2Re );
+        out256[61  + idx]  = -resB69;
+
+        out256[68  + idx]  =  resB68;
+        out256[69  + idx]  =  resB69;
+        out256[124  + idx] =  resB4;
+        out256[125  + idx] = -resB5;
+
+
+
+        let xA3re   = out256[ 6 + idx];
+        let xA3im   = out256[ 7 + idx];
+        let xA19re  = out256[38 + idx];
+        let xA19im  = out256[39 + idx];
+        let xA35re  = out256[70 + idx];
+        let xA35im  = out256[71 + idx];
+        let xA51re  = out256[102 + idx];
+        let xA51im  = out256[103 + idx];
+
+        let tA3re   = 0.8314695954322815; //FFT_FAC_32[6];
+        let tA5re   = 0.5555702447891235; //FFT_FAC_32[10];
+        let res6    = xA3re  + (xA19re *  tA3re - xA19im * -tA5re);
+        let res7    = xA3im  + (xA19re * -tA5re + xA19im *  tA3re);
+        let res22   = xA35re + (xA51re *  tA3re - xA51im * -tA5re);
+        let res23   = xA35im + (xA51re * -tA5re + xA51im *  tA3re);
+        let t3Re    = 0.9569403529167175; //FFT_FAC_64[6];
+        let t13Re   = 0.2902846336364746; //FFT_FAC_64[26];
+        let resB7   =  res7 + (res22 * -t13Re + res23 *  t3Re );
+        out256[123  + idx] = -resB7;
+        let resB6   =  res6 + (res22 *  t3Re  - res23 * -t13Re);
+        out256[122  + idx] =  resB6;
+        let resB71  =  res7 - (res22 * -t13Re + res23 *  t3Re );
+        out256[71  + idx]  =  resB71;
+        let resB70  =  res6 - (res22 *  t3Re  - res23 * -t13Re);
+        out256[70  + idx]  =  resB70;
+
+        out256[59  + idx]  = -resB71;
+        out256[58  + idx]  =  resB70;
+        out256[7  + idx]   =  resB7;
+        out256[6  + idx]   =  resB6;
+
+
+
+        let xA4re   = out256[ 8 + idx];
+        let xA4im   = out256[ 9 + idx];
+        let xA20re  = out256[40 + idx];
+        let xA20im  = out256[41 + idx];
+        let xA36re  = out256[72 + idx];
+        let xA36im  = out256[73 + idx];
+        let xA52re  = out256[104 + idx];
+        let xA52im  = out256[105 + idx];
+
+        let tA4re   = 0.7071067690849304; //FFT_FAC_32[8];
+        let res8    = xA4re + (xA20re *  tA4re - xA20im * -tA4re);
+        let res9    = xA4im + (xA20re * -tA4re + xA20im *  tA4re);
+        let res24   = xA36re + (xA52re *  tA4re - xA52im * -tA4re);
+        let res25   = xA36im + (xA52re * -tA4re + xA52im *  tA4re);
+        let t4Re    = 0.9238795042037964; //FFT_FAC_64[8];
+        let t12Re   = 0.3826834261417389; //FFT_FAC_64[24];
+        let resB8   =  res8 + (res24 *  t4Re  - res25 * -t12Re);
+        out256[8  + idx]   =  resB8;
+        let resB9   =  res9 + (res24 * -t12Re + res25 *  t4Re);
+        out256[9  + idx]   =  resB9;
+        let resB72  =  res8 - (res24 *  t4Re  - res25 * -t12Re);
+        out256[56  + idx]  =  resB72;
+        let resB73  =  res9 - (res24 * -t12Re + res25 *  t4Re);
+        out256[57  + idx]  = -resB73;
+
+        out256[72  + idx]  =  resB72;
+        out256[73  + idx]  =  resB73;
+        out256[120  + idx] =  resB8;
+        out256[121  + idx] = -resB9;
+
+
+
+        let xA5re   = out256[10 + idx];
+        let xA5im   = out256[11 + idx];
+        let xA21re  = out256[42 + idx];
+        let xA21im  = out256[43 + idx];
+        let xA37re  = out256[74 + idx];
+        let xA37im  = out256[75 + idx];
+        let xA53re  = out256[106 + idx];
+        let xA53im  = out256[107 + idx];
+
+        let res10   = xA5re + (xA21re *  tA5re - xA21im * -tA3re);
+        let res11   = xA5im + (xA21re * -tA3re + xA21im *  tA5re);
+        let res26   = xA37re + (xA53re *  tA5re - xA53im * -tA3re);
+        let res27   = xA37im + (xA53re * -tA3re + xA53im *  tA5re);
+        let t5Re  = 0.8819212913513184; //FFT_FAC_64[10];
+        let t11Re = 0.4713967740535736; //FFT_FAC_64[22];
+        let resB11  =  res11 + (res26 * -t11Re + res27 *  t5Re);
+        out256[119  + idx] = -resB11;
+        let resB10  =  res10 + (res26 *  t5Re  - res27 * -t11Re);
+        out256[118  + idx] =  resB10;
+        let resB75  =  res11 - (res26 * -t11Re + res27 *  t5Re);
+        out256[75  + idx]  =  resB75;
+        let resB74  =  res10 - (res26 *  t5Re  - res27 * -t11Re);
+        out256[74  + idx]  =  resB74;
+
+        out256[55  + idx]  = -resB75;
+        out256[54  + idx]  =  resB74;
+        out256[11  + idx]  =  resB11;
+        out256[10  + idx]  =  resB10;
+
+
+
+        let xA6re   = out256[12 + idx];
+        let xA6im   = out256[13 + idx];
+        let xA22re  = out256[44 + idx];
+        let xA22im  = out256[45 + idx];
+        let xA38re  = out256[76 + idx];
+        let xA38im  = out256[77 + idx];
+        let xA54re  = out256[108 + idx];
+        let xA54im  = out256[109 + idx];
+
+        let res12   = xA6re + (xA22re *  tA6re - xA22im * -tA2re);
+        let res13   = xA6im + (xA22re * -tA2re + xA22im *  tA6re);
+        let res28   = xA38re + (xA54re *  tA6re - xA54im * -tA2re);
+        let res29   = xA38im + (xA54re * -tA2re + xA54im *  tA6re);
+        let t6Re  = 0.8314695954322815; //FFT_FAC_64[12];
+        let t10Re = 0.5555702447891235; //FFT_FAC_64[20];
+        let resB12  =  res12 + (res28 *  t6Re  - res29 * -t10Re);
+        out256[12  + idx]  =  resB12;
+        let resB13  =  res13 + (res28 * -t10Re + res29 *  t6Re);
+        out256[13  + idx]  =  resB13;
+        let resB76  =  res12 - (res28 *  t6Re  - res29 * -t10Re);
+        out256[52  + idx]  =  resB76;
+        let resB77  =  res13 - (res28 * -t10Re + res29 *  t6Re);
+        out256[53  + idx]  = -resB77;
+
+        out256[76  + idx]  =  resB76;
+        out256[77  + idx]  =  resB77;
+        out256[116  + idx] =  resB12;
+        out256[117  + idx] = -resB13;
+
+
+
+        let xA7re   = out256[14 + idx];
+        let xA7im   = out256[15 + idx];
+        let xA23re  = out256[46 + idx];
+        let xA23im  = out256[47 + idx];
+        let xA39re  = out256[78 + idx];
+        let xA39im  = out256[79 + idx];
+        let xA55re  = out256[110 + idx];
+        let xA55im  = out256[111 + idx];
+
+        let res14   = xA7re + (xA23re *  tA7re - xA23im * -tA1re);
+        let res15   = xA7im + (xA23re * -tA1re + xA23im *  tA7re);
+        let res30   = xA39re + (xA55re *  tA7re - xA55im * -tA1re);
+        let res31   = xA39im + (xA55re * -tA1re + xA55im *  tA7re);
+        let t7Re  = 0.7730104923248291; //FFT_FAC_64[14];
+        let t9Re  = 0.6343932747840881; //FFT_FAC_64[18];
+        let resB15  =  res15 + (res30 * -t9Re + res31 *  t7Re);
+        out256[115  + idx] = -resB15;
+        let resB14  =  res14 + (res30 *  t7Re - res31 * -t9Re);
+        out256[114  + idx] =  resB14;
+        let resB79  =  res15 - (res30 * -t9Re + res31 *  t7Re);
+        out256[79  + idx]  =  resB79;
+        let resB78  =  res14 - (res30 *  t7Re - res31 * -t9Re);
+        out256[78  + idx]  =  resB78;
+        
+        out256[51  + idx]  = -resB79;
+        out256[50  + idx]  =  resB78;
+        out256[15  + idx]  =  resB15;
+        out256[14  + idx]  =  resB14;
+
+
+
+        let xA8re   = out256[16 + idx];
+        let xA8im   = out256[17 + idx];
+        let xA24re = out256[48 + idx];
+        let xA24im  = out256[49 + idx];
+        let xA40re  = out256[80 + idx];
+        let xA40im  = out256[81 + idx];
+        let xA56re  = out256[112 + idx];
+        let xA56im  = out256[113 + idx];
+
+        let t8Re  = 0.7071067690849304; //FFT_FAC_64[16];
+        out256[16  + idx]  =  xA8re + xA24im + ((xA40re + xA56im) *  t8Re - (xA40im - xA56re) * -t8Re);
+        out256[17  + idx]  =  xA8im - xA24re + ((xA40re + xA56im) * -t8Re + (xA40im - xA56re) *  t8Re);
+        out256[48  + idx]   = xA8re - xA24im + ((xA40re - xA56im) * -t8Re - (xA40im + xA56re) * -t8Re);
+        out256[49  + idx]   = xA8im + xA24re + ((xA40re - xA56im) * -t8Re + (xA40im + xA56re) * -t8Re);
+        out256[80  + idx]  =  xA8re + xA24im - ((xA40re + xA56im) *  t8Re - (xA40im - xA56re) * -t8Re);
+        out256[81  + idx]  =  xA8im - xA24re - ((xA40re + xA56im) * -t8Re + (xA40im - xA56re) *  t8Re);
+        out256[112  + idx]  = xA8re - xA24im - ((xA40re - xA56im) * -t8Re - (xA40im + xA56re) * -t8Re);
+        out256[113  + idx]  = xA8im + xA24re - ((xA40re - xA56im) * -t8Re + (xA40im + xA56re) * -t8Re);
+
+
+
+
+
+        let res46   =  xA7re  - (xA23re *  tA7re - xA23im * -tA1re);
+        let res47   =  xA7im  - (xA23re * -tA1re + xA23im *  tA7re);
+        let res62   =  xA39re - (xA55re *  tA7re - xA55im * -tA1re);
+        let res63   =  xA39im - (xA55re * -tA1re + xA55im *  tA7re);
+        let resB19  = -res47 + (res62 * -t7Re + -res63 *  t9Re);
+        out256[111  + idx] = -resB19;
+        let resB18  =  res46 + (res62 *  t9Re - -res63 * -t7Re);
+        out256[110  + idx] =  resB18;
+        let resB83  = -res47 - (res62 * -t7Re + -res63 *  t9Re);
+        out256[83  + idx]  =  resB83;
+        let resB82  =  res46 - (res62 *  t9Re - -res63 * -t7Re);
+        out256[82  + idx]  =  resB82;
+
+        out256[47  + idx]  = -resB83;
+        out256[46  + idx]  =  resB82;
+        out256[19  + idx]  =  resB19;
+        out256[18  + idx]  =  resB18;
+
+
+
+        let res44   =  xA6re  - (xA22re *  tA6re - xA22im * -tA2re);
+        let res45   =  xA6im  - (xA22re * -tA2re + xA22im *  tA6re);
+        let res60   =  xA38re - (xA54re *  tA6re - xA54im * -tA2re);
+        let res61   =  xA38im - (xA54re * -tA2re + xA54im *  tA6re);
+        let resB20  =  res44 + (res60 *  t10Re - -res61 * -t6Re );
+        out256[20  + idx]  =  resB20;
+        let resB21  = -res45 + (res60 * -t6Re  + -res61 *  t10Re);
+        out256[21  + idx]  =  resB21;
+        let resB84  =  res44 - (res60 *  t10Re - -res61 * -t6Re );
+        out256[44  + idx]  =  resB84;
+        let resB85  = -res45 - (res60 * -t6Re  + -res61 *  t10Re);
+        out256[45  + idx]  = -resB85;
+
+        out256[84  + idx]  =  resB84;
+        out256[85  + idx]  =  resB85;
+        out256[108  + idx] =  resB20;
+        out256[109  + idx] = -resB21;
+
+
+
+        let res42   =  xA5re  - (xA21re *  tA5re - xA21im * -tA3re);
+        let res43   =  xA5im  - (xA21re * -tA3re + xA21im *  tA5re);
+        let res58   =  xA37re - (xA53re *  tA5re - xA53im * -tA3re);
+        let res59   =  xA37im - (xA53re * -tA3re + xA53im *  tA5re);
+        let resB23  = -res43 + (res58 * -t5Re  + -res59 *  t11Re);
+        out256[107  + idx] = -resB23;
+        let resB22  =  res42 + (res58 *  t11Re - -res59 * -t5Re );
+        out256[106  + idx] =  resB22;
+        let resB87  = -res43 - (res58 * -t5Re  + -res59 *  t11Re);
+        out256[87  + idx]  =  resB87;
+        let resB86  =  res42 - (res58 *  t11Re - -res59 * -t5Re );
+        out256[86  + idx]  =  resB86;
+
+        out256[43  + idx]  = -resB87;
+        out256[42  + idx]  =  resB86;
+        out256[23  + idx]  =  resB23;
+        out256[22  + idx]  =  resB22;
+
+
+
+        let res40   =  xA4re  - (xA20re *  tA4re - xA20im * -tA4re);
+        let res41   =  xA4im  - (xA20re * -tA4re + xA20im *  tA4re);
+        let res56   =  xA36re - (xA52re *  tA4re - xA52im * -tA4re);
+        let res57   =  xA36im - (xA52re * -tA4re + xA52im *  tA4re);
+        let resB24  =  res40 + (res56 *  t12Re - -res57 * -t4Re );
+        out256[24  + idx]  =  resB24;
+        let resB25  = -res41 + (res56 * -t4Re  + -res57 * t12Re );
+        out256[25  + idx]  =  resB25;
+        let resB88  =  res40 - (res56 *  t12Re - -res57 * -t4Re );
+        out256[40  + idx]  =  resB88;
+        let resB89  = -res41 - (res56 * -t4Re  + -res57 * t12Re );
+        out256[41  + idx]  = -resB89;
+
+        out256[88  + idx]  =  resB88;
+        out256[89  + idx]  =  resB89;
+        out256[104  + idx] =  resB24;
+        out256[105  + idx] = -resB25;
+
+
+
+        let res38   =  xA3re  - (xA19re *  tA3re - xA19im * -tA5re);
+        let res39   =  xA3im  - (xA19re * -tA5re + xA19im *  tA3re);
+        let res54   =  xA35re - (xA51re *  tA3re - xA51im * -tA5re);
+        let res55   =  xA35im - (xA51re * -tA5re + xA51im *  tA3re);
+        let resB27  = -res39 + (res54 * -t3Re  + -res55 *  t13Re);
+        out256[103  + idx] = -resB27;
+        let resB26  =  res38 + (res54 *  t13Re - -res55 * -t3Re );
+        out256[102  + idx] =  resB26;
+        let resB91  = -res39 - (res54 * -t3Re  + -res55 *  t13Re);
+        out256[91  + idx]  =  resB91;
+        let resB90  =  res38 - (res54 *  t13Re - -res55 * -t3Re );
+        out256[90  + idx]  =  resB90;
+
+        out256[39  + idx]  = -resB91;
+        out256[38  + idx]  =  resB90;
+        out256[27  + idx]  =  resB27;
+        out256[26  + idx]  =  resB26;
+
+
+
+        let res36   = xA2re  - (xA18re *  tA2re - xA18im * -tA6re);
+        let res37   = xA2im  - (xA18re * -tA6re + xA18im *  tA2re);
+        let res52   = xA34re - (xA50re *  tA2re - xA50im * -tA6re);
+        let res53   = xA34im - (xA50re * -tA6re + xA50im *  tA2re);
+        let resB28  =  res36 + (res52 *  t14Re - -res53 * -t2Re );
+        out256[28  + idx]  =  resB28;
+        let resB29  = -res37 + (res52 * -t2Re  + -res53 *  t14Re);
+        out256[29  + idx]  =  resB29;
+        let resB92  =  res36 - (res52 *  t14Re - -res53 * -t2Re );
+        out256[36  + idx]  =  resB92;
+        let resB93  = -res37 - (res52 * -t2Re  + -res53 *  t14Re);
+        out256[37  + idx]  = -resB93;
+
+        out256[92  + idx]  =  resB92;
+        out256[93  + idx]  =  resB93;
+        out256[100  + idx] =  resB28;
+        out256[101  + idx] = -resB29;
+
+
+
+        let res34   =  xA1re - (xA17re *  tA1re - xA17im * -tA7re);
+        let res35   =  xA1im - (xA17re * -tA7re + xA17im *  tA1re);
+        let res50   =  xA33re - (xA49re *  tA1re - xA49im * -tA7re);
+        let res51   =  xA33im - (xA49re * -tA7re + xA49im *  tA1re);
+        let resB31  = -res35 + (res50 * -t1Re  + -res51 *  t15Re);
+        out256[99  + idx]  = -resB31;
+        let resB30  =  res34 + (res50 *  t15Re - -res51 * -t1Re );
+        out256[98  + idx]  =  resB30;
+        let resB95  = -res35 - (res50 * -t1Re  + -res51 *  t15Re);
+        out256[95  + idx]  =  resB95;
+        let resB94  =  res34 - (res50 *  t15Re - -res51 * -t1Re );
+        out256[94  + idx]  =  resB94;
+
+        out256[35  + idx]  = -resB95;
+        out256[34  + idx]  =  resB94;
+        out256[31  + idx]  =  resB31;
+        out256[30  + idx]  =  resB30;
+
+
+
+        let xA0re  = out256[ 0 + idx];
+        let xA0im  = out256[ 1 + idx];
+        let xA16re  = out256[32 + idx];
+        let xA16im  = out256[33 + idx];
+        let xA32re  = out256[64 + idx];
+        let xA32im  = out256[65 + idx];
+        let xA48re  = out256[96 + idx];
+        let xA48im  = out256[97 + idx]; 
+
+        out256[0   + idx]  =  xA0re + xA16re + xA32re + xA48re;
+        out256[1   + idx]  =  xA0im + xA16im + xA32im + xA48im;
+        out256[32  + idx]  =  xA0re - xA16re + xA32im - xA48im;
+        out256[33  + idx]  =  xA0im - xA16im - xA32re + xA48re;
+        out256[64  + idx]  =  xA0re + xA16re - xA32re - xA48re;
+        out256[65  + idx]  =  xA0im + xA16im - xA32im - xA48im;
+        out256[96  + idx]  =  xA0re - xA16re - xA32im + xA48im;
+        out256[97  + idx]  =  xA0im - xA16im + xA32re - xA48re;
+     }
+
+
+
+
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     // RADIX 2 (rolled) - FFT step for SIZE 128 
