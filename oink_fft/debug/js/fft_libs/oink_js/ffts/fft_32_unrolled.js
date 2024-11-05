@@ -230,13 +230,13 @@ function fftReal32(realInput) {
            for (let j = 0; j < size/2; j++) { 
              let eI = i + j;
              let oI = i + j + size/2;
-             if(j > size/4){
+             /*if(j > size/4){
                  out32[eI * 2    ] =  out32[size*2 - eI * 2    ];
                  out32[eI * 2 + 1] = -out32[size*2 - eI * 2 + 1];
                  out32[oI * 2    ] =  out32[size*2 - oI * 2    ];
                  out32[oI * 2 + 1] = -out32[size*2 - oI * 2 + 1];
                  continue;
-             } 
+             }*/ 
              let eRe  = out32[eI * 2    ];
              let eIm  = out32[eI * 2 + 1];
              let oRe  = out32[oI * 2    ];
