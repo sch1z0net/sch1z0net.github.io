@@ -483,6 +483,13 @@ function fftReal256(realInput) {
      for (let j = 0; j < 16; j++) { 
          let eI = 0 + j;
          let oI = 0 + j + 16;
+         if(j > 8){
+            out256[eI * 2    ] =  out256[1*64 - eI * 2    ];
+            out256[eI * 2 + 1] = -out256[1*64 - eI * 2 + 1];
+            out256[oI * 2    ] =  out256[1*64 - oI * 2    ];
+            out256[oI * 2 + 1] = -out256[1*64 - oI * 2 + 1];
+            continue;
+         }
          let eRe  = out256[eI * 2    ];
          let eIm  = out256[eI * 2 + 1];
          let oRe  = out256[oI * 2    ];
@@ -499,6 +506,13 @@ function fftReal256(realInput) {
      for (let j = 0; j < 16; j++) { 
          let eI = 32 + j;
          let oI = 32 + j + 16;
+         if(j > 8){
+            out256[eI * 2    ] =  out256[2*64 - eI * 2    ];
+            out256[eI * 2 + 1] = -out256[2*64 - eI * 2 + 1];
+            out256[oI * 2    ] =  out256[2*64 - oI * 2    ];
+            out256[oI * 2 + 1] = -out256[2*64 - oI * 2 + 1];
+            continue;
+         }
          let eRe  = out256[eI * 2    ];
          let eIm  = out256[eI * 2 + 1];
          let oRe  = out256[oI * 2    ];
@@ -515,6 +529,13 @@ function fftReal256(realInput) {
      for (let j = 0; j < 16; j++) { 
          let eI = 64 + j;
          let oI = 64 + j + 16;
+         if(j > 8){
+            out256[eI * 2    ] =  out256[3*64 - eI * 2    ];
+            out256[eI * 2 + 1] = -out256[3*64 - eI * 2 + 1];
+            out256[oI * 2    ] =  out256[3*64 - oI * 2    ];
+            out256[oI * 2 + 1] = -out256[3*64 - oI * 2 + 1];
+            continue;
+         }
          let eRe  = out256[eI * 2    ];
          let eIm  = out256[eI * 2 + 1];
          let oRe  = out256[oI * 2    ];
@@ -531,6 +552,13 @@ function fftReal256(realInput) {
      for (let j = 0; j < 16; j++) { 
          let eI = 96 + j;
          let oI = 96 + j + 16;
+         if(j > 8){
+            out256[eI * 2    ] =  out256[4*64 - eI * 2    ];
+            out256[eI * 2 + 1] = -out256[4*64 - eI * 2 + 1];
+            out256[oI * 2    ] =  out256[4*64 - oI * 2    ];
+            out256[oI * 2 + 1] = -out256[4*64 - oI * 2 + 1];
+            continue;
+         }
          let eRe  = out256[eI * 2    ];
          let eIm  = out256[eI * 2 + 1];
          let oRe  = out256[oI * 2    ];
@@ -547,6 +575,13 @@ function fftReal256(realInput) {
      for (let j = 0; j < 16; j++) { 
          let eI = 128 + j;
          let oI = 128 + j + 16;
+         if(j > 8){
+            out256[eI * 2    ] =  out256[5*64 - eI * 2    ];
+            out256[eI * 2 + 1] = -out256[5*64 - eI * 2 + 1];
+            out256[oI * 2    ] =  out256[5*64 - oI * 2    ];
+            out256[oI * 2 + 1] = -out256[5*64 - oI * 2 + 1];
+            continue;
+         }
          let eRe  = out256[eI * 2    ];
          let eIm  = out256[eI * 2 + 1];
          let oRe  = out256[oI * 2    ];
@@ -563,6 +598,13 @@ function fftReal256(realInput) {
      for (let j = 0; j < 16; j++) { 
          let eI = 160 + j;
          let oI = 160 + j + 16;
+         if(j > 8){
+            out256[eI * 2    ] =  out256[6*64 - eI * 2    ];
+            out256[eI * 2 + 1] = -out256[6*64 - eI * 2 + 1];
+            out256[oI * 2    ] =  out256[6*64 - oI * 2    ];
+            out256[oI * 2 + 1] = -out256[6*64 - oI * 2 + 1];
+            continue;
+         }
          let eRe  = out256[eI * 2    ];
          let eIm  = out256[eI * 2 + 1];
          let oRe  = out256[oI * 2    ];
@@ -579,6 +621,13 @@ function fftReal256(realInput) {
      for (let j = 0; j < 16; j++) { 
          let eI = 192 + j;
          let oI = 192 + j + 16;
+         if(j > 8){
+            out256[eI * 2    ] =  out256[7*64 - eI * 2    ];
+            out256[eI * 2 + 1] = -out256[7*64 - eI * 2 + 1];
+            out256[oI * 2    ] =  out256[7*64 - oI * 2    ];
+            out256[oI * 2 + 1] = -out256[7*64 - oI * 2 + 1];
+            continue;
+         }
          let eRe  = out256[eI * 2    ];
          let eIm  = out256[eI * 2 + 1];
          let oRe  = out256[oI * 2    ];
@@ -595,6 +644,13 @@ function fftReal256(realInput) {
      for (let j = 0; j < 16; j++) { 
          let eI = 224 + j;
          let oI = 224 + j + 16;
+         if(j > 8){
+            out256[eI * 2    ] =  out256[8*64 - eI * 2    ];
+            out256[eI * 2 + 1] = -out256[8*64 - eI * 2 + 1];
+            out256[oI * 2    ] =  out256[8*64 - oI * 2    ];
+            out256[oI * 2 + 1] = -out256[8*64 - oI * 2 + 1];
+            continue;
+         }
          let eRe  = out256[eI * 2    ];
          let eIm  = out256[eI * 2 + 1];
          let oRe  = out256[oI * 2    ];
