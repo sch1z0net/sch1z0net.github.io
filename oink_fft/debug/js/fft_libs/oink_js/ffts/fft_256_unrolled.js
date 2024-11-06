@@ -1159,8 +1159,8 @@ function fftReal256(realInput) {
          out256[i1imB] = eIm1 - t_oIm1;
 
          let i2reA = i + 256;
-         let i2imB = i + 257;
-         let i2reA = i + 384;
+         let i2imA = i + 257;
+         let i2reB = i + 384;
          let i2imB = i + 385;
 
          let eRe2  = out256[i2reA];
