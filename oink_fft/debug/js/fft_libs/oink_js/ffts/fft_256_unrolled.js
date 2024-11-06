@@ -1185,8 +1185,8 @@ function fftReal256(realInput) {
      for (let i = 0; i < 256; i+=2) { 
          let i1reA = i;
          let i1imA = i + 1;
-         let i1reB = i + 128;
-         let i1imB = i + 129;
+         let i1reB = i + 256;
+         let i1imB = i + 257;
 
          if(i > 128){
             out256[i1reA] =  out256[512 - i1reA];
