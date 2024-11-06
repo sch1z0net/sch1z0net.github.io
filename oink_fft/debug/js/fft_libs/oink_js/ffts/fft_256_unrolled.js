@@ -1101,6 +1101,7 @@ function fftReal256(realInput) {
     ////////////////////////////////////////////////
     // RADIX 2 (rolled) - FFT step for SIZE 128 
     ////////////////////////////////////////////////
+    /*
     { 
      for (let j = 0; j < 64; j++) { 
          let eI = 0 + j;
@@ -1134,7 +1135,43 @@ function fftReal256(realInput) {
          out256[oI * 2    ] = eRe - t_oRe;
          out256[oI * 2 + 1] = eIm - t_oIm;
      }
+    }*/
+
+    { 
+     for (let j = 0; j < 64; j++) { 
+         let eI  = j;
+         let oI  = eI  + 64;
+         let eI2 = oI  + 64;
+         let oI2 = eI2 + 64;
+
+         let tRe  = FFT_FAC_128[j * 2 + 0];
+         let tIm  = FFT_FAC_128[j * 2 + 1];
+
+         let eRe  = out256[eI * 2    ];
+         let eIm  = out256[eI * 2 + 1];
+         let oRe  = out256[oI * 2    ];
+         let oIm  = out256[oI * 2 + 1];
+         let t_oRe = oRe * tRe - oIm * tIm;
+         let t_oIm = oRe * tIm + oIm * tRe;
+         out256[eI * 2    ] = eRe + t_oRe;
+         out256[eI * 2 + 1] = eIm + t_oIm;
+         out256[oI * 2    ] = eRe - t_oRe;
+         out256[oI * 2 + 1] = eIm - t_oIm;
+
+         let eRe2  = out256[eI2 * 2    ];
+         let eIm2  = out256[eI2 * 2 + 1];
+         let oRe2  = out256[oI2 * 2    ];
+         let oIm2  = out256[oI2 * 2 + 1];
+         let t_oRe2 = oRe2 * tRe - oIm2 * tIm;
+         let t_oIm2 = oRe2 * tIm + oIm2 * tRe;
+         out256[eI * 2    ] = eRe2 + t_oRe2;
+         out256[eI * 2 + 1] = eIm2 + t_oIm2;
+         out256[oI * 2    ] = eRe2 - t_oRe2;
+         out256[oI * 2 + 1] = eIm2 - t_oIm2;
+     }
     } 
+
+
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     // RADIX 2 (rolled) - FFT step for SIZE 256 
