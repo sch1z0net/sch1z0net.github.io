@@ -1190,9 +1190,9 @@ function fftReal256(realInput) {
 
          if(i > 128){
             out256[i1reA] =  out256[512 - i1reA];
-            out256[i1imA] = -out256[512 - i1imA];
+            out256[i1imA] = -out256[512 - i1reA + 1];
             out256[i1reB] =  out256[512 - i1reB];
-            out256[i1imB] = -out256[512 - i1imB];
+            out256[i1imB] = -out256[512 - i1reB + 1];
             continue;
          }
 
