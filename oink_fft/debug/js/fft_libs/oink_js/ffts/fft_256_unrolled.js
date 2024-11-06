@@ -1206,8 +1206,8 @@ function fftReal256(realInput) {
 
          let t_oRe = oRe * tRe - oIm * tIm;
          let t_oIm = oRe * tIm + oIm * tRe;
-         out256[i1reB] = eRe + t_oRe;
-         out256[i1imB] = eIm + t_oIm;
+         out256[i1reA] = eRe + t_oRe;
+         out256[i1imA] = eIm + t_oIm;
          out256[i1reB] = eRe - t_oRe;
          out256[i1imB] = eIm - t_oIm;
      }
